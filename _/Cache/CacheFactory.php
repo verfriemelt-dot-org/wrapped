@@ -2,7 +2,8 @@
 
     namespace Wrapped\_\Cache;
 
-    use \core\Cache\CacheProviderInterface;
+    use \Wrapped\_\Cache\Cache;
+    use \Wrapped\_\Cache\CacheProviderInterface;
 
     class CacheFactory {
 

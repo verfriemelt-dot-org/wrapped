@@ -174,8 +174,8 @@
 
         /**
          * used to append it to its parent, only internal use
-         * @param \egg\core\CollectionObject $co
-         * @return \egg\core\CollectionObject
+         * @param \Wrapped\_\DataModel\Collection\CollectionObject $co
+         * @return $this
          */
         public function setParent( CollectionObject $co ) {
             $this->parentCollectionObject = $co;

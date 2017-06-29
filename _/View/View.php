@@ -12,12 +12,11 @@
 
         public $tplPath;
 
-        /** @var \Wrapped\_\Template\Template */
+        /** @var Template */
         public $tpl;
-
-        const TemplatePath = __DIR__ . "/../../_/Template";
-
         public static $isCacheable = false;
+
+        abstract function getTemplatePath(): string;
 
         public function __construct() {
 
@@ -26,7 +25,7 @@
             }
 
             $this->tpl = ( new Template )->parseFile(
-                self::TemplatePath . $this->tplPath
+                $this->getTemplatePath() . $this->tplPath
             );
         }
 

@@ -40,7 +40,7 @@
         /**
          *
          * @param FilterItem $item
-         * @return \egg\core\Filter
+         * @return Filter
          */
         public function addFilter( FilterItem $item ) {
             $this->items[] = $item;

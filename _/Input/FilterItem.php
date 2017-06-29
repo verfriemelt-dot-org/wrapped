@@ -2,8 +2,8 @@
 
     namespace Wrapped\_\Input;
 
-    use \Wrapped\_\Exception\Input\InputException;
-    use \Wrapped\_\Http\Request\Request;
+use \Wrapped\_\Exception\Input\InputException;
+use \Wrapped\_\Http\Request\Request;
 
     class FilterItem {
 
@@ -106,7 +106,7 @@
         /**
          * sets the name of the datafield in the request, eg. $_GET["varname"]
          * @param type $valueName
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function this( $valueName ) {
             $this->valueName = $valueName;
@@ -116,7 +116,7 @@
         /**
          * requires a variable name to be in the request
          * @param type $valueName
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function has( $valueName ) {
             return $this->this( $valueName );
@@ -144,7 +144,7 @@
         /**
          *
          * @param type $bool
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function optional( $bool = true ) {
             $this->optional = $bool;
@@ -154,7 +154,7 @@
         /**
          *
          * @param type $int
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function minLength( $int = 1 ) {
             $this->minLength = $int;
@@ -164,7 +164,7 @@
         /**
          *
          * @param type $int
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function maxLength( $int = 1 ) {
             $this->maxLength = $int;
@@ -174,7 +174,7 @@
         /**
          *
          * @param type $chars
-         * @return \egg\core\FilterItem
+         * @return FilterItem
          */
         public function allowedChars( $chars = "abcdefghijklmnopqrstuvwxyz" ) {
             $this->allowedChars = $chars;

@@ -1,6 +1,6 @@
 <?php
 
-    namespace core\Cache;
+    namespace Wrapped\_\Cache;
 
     class MemcachedProvider
     implements CacheProviderInterface {

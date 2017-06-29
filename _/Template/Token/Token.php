@@ -1,17 +1,17 @@
-<?php namespace Wrapped\_\Template\Token;
+<?php
+
+    namespace Wrapped\_\Template\Token;
 
     abstract class Token {
 
         public $currentContent = '';
-        public $currentLength = 0;
-
-        public $priority = 10;
-        public $maxLength = 0;
+        public $currentLength  = 0;
+        public $priority       = 10;
+        public $maxLength      = 0;
 
         /** @var Token */
         public $nextToken = null;
         public $prevToken = null;
-
         private $line;
         private $linePos;
         private $pos;
@@ -20,22 +20,22 @@
 
         /**
          *
-         * @param \core\core\ParserEngine\Token $prev
-         * @return \core\core\ParserEngine\Token
+         * @param Token $prev
+         * @return $this
          */
         public function setPrevToken( Token $prev ) {
-            $this->prevToken = $prev;
+            $this->prevToken            = $prev;
             $this->prevToken->nextToken = $this;
             return $this;
         }
 
         /**
          *
-         * @param \core\core\ParserEngine\Token $next
-         * @return \core\core\ParserEngine\Token
+         * @param Token $next
+         * @return $this
          */
         public function setNextToken( Token $next = null ) {
-            $this->nextToken = $next;
+            $this->nextToken            = $next;
             $this->nextToken->prevToken = $this;
             return $this;
         }
@@ -44,7 +44,7 @@
          *
          * @return string
          */
-        public function getContent() {
+        public function getContent(): string {
             return $this->currentContent;
         }
 
@@ -63,7 +63,7 @@
         /**
          *
          * @param type $line
-         * @return \core\core\ParserEngine\Token
+         * @return $this
          */
         public function setLine( $line ) {
             $this->line = $line;
@@ -73,7 +73,7 @@
         /**
          *
          * @param type $linePos
-         * @return \core\core\ParserEngine\Token
+         * @return $this
          */
         public function setLinePos( $linePos ) {
             $this->linePos = $linePos;
@@ -83,10 +83,11 @@
         /**
          *
          * @param type $pos
-         * @return \core\core\ParserEngine\Token
+         * @return $this
          */
         public function setPos( $pos ) {
             $this->pos = $pos;
             return $this;
         }
+
     }

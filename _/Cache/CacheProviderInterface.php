@@ -1,6 +1,6 @@
 <?php
 
-    namespace core\Cache;
+    namespace Wrapped\_\Cache;
 
     interface CacheProviderInterface {
 
@@ -14,4 +14,3 @@
 
         public function purge();
     }
-    

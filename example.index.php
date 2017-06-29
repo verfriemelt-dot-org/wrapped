@@ -2,15 +2,16 @@
 
     namespace www;
 
+    use \Exception;
+    use \Wrapped\_\Exception\Router\NoRouteMatching;
+    use \Wrapped\_\Exception\Router\NoRoutesPresent;
+    use \Wrapped\_\Exception\Router\RouteGotFiltered;
+    use \Wrapped\_\Http\Request\Request;
+    use \Wrapped\_\Http\Response\Response;
+    use \Wrapped\_\Router\Router;
     use \Wrapped\Bootstrap;
-    use \www\core\Exception\Router\NoRouteMatching;
-    use \www\core\Exception\Router\NoRoutesPresent;
-    use \www\core\Exception\Router\RouteGotFiltered;
-    use \www\core\Http\Request\Request;
-    use \www\core\Http\Response\Response;
-    use \www\core\Router\Router;
 
-    // define enviroment
+// define enviroment
     define( "_", true );
 
     require 'Bootstrap.php';
@@ -35,7 +36,7 @@
         if ( $response instanceof Response ) {
             $response->send();
         } else {
-            throw new \Exception( "no response given" );
+            throw new Exception( "no response given" );
         }
     } catch ( NoRouteMatching $e ) {
 
