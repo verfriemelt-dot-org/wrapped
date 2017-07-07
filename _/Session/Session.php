@@ -17,7 +17,7 @@
         private $storageObj  = null;
         private $currentData = [];
 
-        private function __construct( $sessionStorage = null ) {
+        private function __construct( SessionDataObject $sessionStorage = null ) {
 
             if ( $sessionStorage === null || class_implements( $sessionStorage, SessionDataObject::class ) ) {
                 $this->storageObj = SessionMysql::class;
