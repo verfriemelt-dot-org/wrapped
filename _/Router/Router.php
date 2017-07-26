@@ -19,6 +19,7 @@
         private $basePath           = null;
         private $uri;
         private $routeAttributeData = [];
+        private $globalFilter       = [];
 
         private function __construct( Request $request = null ) {
 
@@ -81,6 +82,17 @@
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );
+            }
+
+            if ( !empty( $this->globalFilter ) ) {
+                foreach ( $this->globalFilter as $filter ) {
+
+                    $result = $filter();
+
+                    if ( $result === true ) {
+                        throw new RouteGotFiltered( "route got filtered" );
+                    }
+                }
             }
 
             $this->stripBasePathFromRequest();
@@ -146,6 +158,16 @@
 
         public function destroy() {
             static::$handle = null;
+        }
+
+        /**
+         * runs a filter before matching any routes
+         * @param callable $filter
+         * @return $this
+         */
+        public function addGlobalFilter( callable $filter ) {
+            $this->globalFilter[] = $filter;
+            return $this;
         }
 
     }
