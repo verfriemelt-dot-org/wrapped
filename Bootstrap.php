@@ -31,7 +31,10 @@
                 if ( EnvironmentDetector::is( "live" ) )
                     die( "ein fehler. bad news!" );
 
-                header( "Content-type: text/plain" );
+                if ( !Console::isCli() ) {
+                    header( "Content-type: text/plain" );
+                }
+                
                 echo $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL;
                 print_r( $e );
                 die();
