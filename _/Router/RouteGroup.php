@@ -10,7 +10,7 @@
         use RouteIterator;
 
         private $prefix;
-        private $priority = 200;
+        private $priority = 100;
         private $filterCallback;
 
         /**
@@ -31,8 +31,12 @@
          * @param Route $route
          * @return RouteGroup
          */
-        public function add( Routable $route ) {
-            $this->routes[] = $route;
+        public function add( Routable ... $routes ) {
+
+            foreach( $routes as $route ) {
+                $this->routes[] = $route;
+            }
+
             return $this;
         }
 

@@ -22,23 +22,18 @@
         private $globalFilter       = [];
 
         private function __construct( Request $request = null ) {
+            $this->setRequest( $request ?: Request::getInstance() );
+        }
 
-            $this->request = $request ?: Request::getInstance();
+        public function setRequest( Request $request ) : Router {
+            $this->request = $request;
 
             if ( php_sapi_name() == "cli" ) {
                 $this->uri = $this->request->uri();
             } else {
                 $this->uri = $this->request->pathInfo();
             }
-        }
 
-        /**
-         *
-         * @param Routable $route
-         * @return Router
-         */
-        public function addRoute( Routable $route ) {
-            $this->routes[] = $route;
             return $this;
         }
 
@@ -50,7 +45,7 @@
         public function addRoutes( Routable ... $routes ) {
 
             foreach ( $routes as $route ) {
-                $this->addRoute( $route );
+                $this->routes[] = $route;
             }
 
             return $this;
@@ -99,6 +94,12 @@
             $this->sortRoutes( $this->routes );
 
             $route = $this->findMatchingRoute( $this->uri, $this->routes );
+
+            // nothing matching
+            if ( $route === false ) {
+                throw new NoRouteMatching( "Router has no matching routes for {$this->uri}" );
+            }
+
             $this->request->setAttributes( $this->routeAttributeData );
 
             return $route;
@@ -108,32 +109,41 @@
 
             foreach ( $routes as $routeable ) {
 
-                $routePath = $routeable->getPath();
+                if ( preg_match( "~^{$routeable->getPath()}~", $uri, $routeHits ) ) {
 
-                if ( preg_match( "~^{$routePath}~", $uri, $routeHits ) ) {
-
-                    // check for filter
+                    // check for filter on routes and routeGroups
                     if ( $routeable->getFilterCallback() !== null && call_user_func( $routeable->getFilterCallback() ) ) {
                         throw new RouteGotFiltered( "route got filtered" );
                     }
 
-                    // we store capturegroups in the attributes object of the request
-                    $this->routeAttributeData = array_merge( $this->routeAttributeData, array_slice( $routeHits, 1 ) );
+                    // this route is matching and were done
+                    if ( $routeable instanceof Route ) {
+                        // we store capturegroups in the attributes object of the request
+                        $this->routeAttributeData = array_merge( $this->routeAttributeData, array_slice( $routeHits, 1 ) );
 
-                    if ( $routeable instanceof RouteGroup ) {
-
-                        // remove the current matching routepart
-                        $uri = substr( $uri, mb_strlen( $routeHits[0] ) );
-                        return $this->findMatchingRoute( $uri, $routeable->getRoutes() );
+                        return $routeable;
                     }
 
-                    // route, were done!
-                    return $routeable;
+                    // routegroup
+                    // remove the current matching routepart
+                    $routeUri = substr( $uri, mb_strlen( $routeHits[0] ) );
+
+                    $routeGroupRoutes = $routeable->getRoutes();
+                    $this->sortRoutes( $routeGroupRoutes );
+
+                    $result = $this->findMatchingRoute( $routeUri, $routeGroupRoutes );
+
+                    if ( $result !== false ) {
+
+                        $this->routeAttributeData = array_merge( $this->routeAttributeData, array_slice( $routeHits, 1 ) );
+
+                        // route, were done!
+                        return $result;
+                    }
                 }
             }
 
-            // nothing matching
-            throw new NoRouteMatching( "Router has no matching routes for {$this->uri}" );
+            return false;
         }
 
         /**

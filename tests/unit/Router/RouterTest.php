@@ -24,7 +24,7 @@
         }
 
         public function testAddingRoutes() {
-            Router::getInstance()->addRoute(
+            Router::getInstance()->addRoutes(
                 Route::create( "/" )
             );
         }
@@ -33,7 +33,7 @@
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ]);
 
-            $router = Router::getInstance( $request )->addRoute(
+            $router = Router::getInstance( $request )->addRoutes(
                 Route::create( "/test" )
             );
 
@@ -52,7 +52,7 @@
             $this->expectException( RouteGotFiltered::class );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
-            $router  = Router::getInstance( $request )->addRoute(
+            $router  = Router::getInstance( $request )->addRoutes(
                 Route::create( "/test" )->setFilterCallback( function () {
                     return true;
                 } )
@@ -64,7 +64,7 @@
         public function testRouteGroup() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin/test" ] );
-            $router  = Router::getInstance( $request )->addRoute(
+            $router  = Router::getInstance( $request )->addRoutes(
                 RouteGroup::create( "/admin" )
                     ->add( Route::create( "/test" ) )
                     ->add( Route::create( "/test1" ) )
@@ -78,10 +78,10 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
             $router = Router::getInstance( $request );
-            $router->addRoute( Route::create( "/admin" )->call( function () {
+            $router->addRoutes( Route::create( "/admin" )->call( function () {
                     return "a";
                 } ) );
-            $router->addRoute(
+            $router->addRoutes(
                 RouteGroup::create( "/admin" )
                     ->add( Route::create( "/test" )->call( function () {
                             return "b";
@@ -101,7 +101,7 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
             $router = Router::getInstance( $request );
-            $router->addRoute(
+            $router->addRoutes(
                 RouteGroup::create( "/admin" )
                     ->add( Route::create( "/test" )->call( function () {
                             return "b";
@@ -110,7 +110,7 @@
                             return "b";
                         } ) )
             );
-            $router->addRoute( Route::create( "/admin" )->call( function () {
+            $router->addRoutes( Route::create( "/admin" )->call( function () {
                     return "a";
                 } ) );
 
@@ -122,14 +122,40 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/test/nice" ] );
 
             $router = Router::getInstance( $request );
-            $router->addRoute(
+            $router->addRoutes(
                 RouteGroup::create( "/api" )->add(
+
                     RouteGroup::create( '/test' )->add(
                         Route::create( "/nice" )->call( function () {
                             return "win";
                         } )
-                    )
+                    ),
+
+                    Route::create( ".*" )->call( function () {
+                        return "default";
+                    } )
                 )
+            );
+
+            $this->assertEquals( "win", $router->run()->runCallback( $request ) );
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/asd" ] );
+            $router->setRequest( $request );
+
+            $this->assertEquals( "default", $router->run()->runCallback( $request ) );
+
+        }
+
+        public function testMatchingGroupsWithNoChilds() {
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/win" ] );
+
+            $router = Router::getInstance( $request );
+            $router->addRoutes(
+                RouteGroup::create( "/api" ),
+                Route::create( ".*" )->call( function () {
+                    return "win";
+                } )
             );
 
             $this->assertEquals( "win", $router->run()->runCallback( $request ) );
@@ -139,7 +165,7 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/list/geocaches" ] );
 
             $router = Router::getInstance( $request );
-            $router->addRoute(
+            $router->addRoutes(
                 RouteGroup::create( "/(?<key>list)" )->add( Route::create("/(?<key2>geocaches)")->call( function () {
                     return "win";
                 } ))
