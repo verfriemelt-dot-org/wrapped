@@ -21,6 +21,8 @@
         private $routeAttributeData = [];
         private $globalFilter       = [];
 
+        private $rawRouteHits = [];
+
         private function __construct( Request $request = null ) {
             $this->setRequest( $request ?: Request::getInstance() );
         }
@@ -100,6 +102,11 @@
                 throw new NoRouteMatching( "Router has no matching routes for {$this->uri}" );
             }
 
+            // setup attributes
+            foreach( $this->rawRouteHits as $hits ) {
+                $this->routeAttributeData = array_merge( $this->routeAttributeData, $hits );
+            }
+
             $this->request->setAttributes( $this->routeAttributeData );
 
             return $route;
@@ -119,7 +126,7 @@
                     // this route is matching and were done
                     if ( $routeable instanceof Route ) {
                         // we store capturegroups in the attributes object of the request
-                        $this->routeAttributeData = array_merge( $this->routeAttributeData, array_slice( $routeHits, 1 ) );
+                        $this->rawRouteHits[] = array_slice( $routeHits, 1 );
 
                         return $routeable;
                     }
@@ -131,14 +138,19 @@
                     $routeGroupRoutes = $routeable->getRoutes();
                     $this->sortRoutes( $routeGroupRoutes );
 
+                    // add attributse data from matching requests
+                    $this->rawRouteHits[] = array_slice( $routeHits, 1 );
+                    
                     $result = $this->findMatchingRoute( $routeUri, $routeGroupRoutes );
 
                     if ( $result !== false ) {
 
-                        $this->routeAttributeData = array_merge( $this->routeAttributeData, array_slice( $routeHits, 1 ) );
-
                         // route, were done!
                         return $result;
+                    } else {
+
+                        // remove unmatched hits
+                        array_pop( $this->rawRouteHits );
                     }
                 }
             }
