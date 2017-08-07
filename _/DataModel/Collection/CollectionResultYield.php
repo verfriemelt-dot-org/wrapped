@@ -2,7 +2,6 @@
 
     namespace Wrapped\_\DataModel\Collection;
 
-    use \ArrayAccess;
     use \Countable;
     use \Exception;
     use \Iterator;
@@ -11,7 +10,7 @@
     use \Wrapped\_\DataModel\DataModel;
 
     class CollectionResultYield
-    implements Iterator, Countable, ArrayAccess {
+    implements Iterator, Countable {
 
         private $sqlResult    = null;
         private $objPrototype = null;
@@ -23,9 +22,8 @@
             $this->sqlResult    = $sqlResult;
             $this->objPrototype = $prototype;
 
-            if ( $this->count() > 0 ) {
-                $this->lastInstance = (new $this->objPrototype )->initData( $this->sqlResult->fetch( PDO::FETCH_ASSOC ) );
-            }
+            $this->readNext();
+            $this->index = 0;
         }
 
         private function readNext() {
@@ -42,6 +40,7 @@
 
         /**
          * countable implemententation
+         * returns 0 with unbuffered queries
          * @return type
          */
         public function count() {
@@ -87,49 +86,7 @@
          * @return bool
          */
         public function valid() {
-            return $this->index < $this->count();
-        }
-
-        /**
-         * array access implementation
-         * @return bool
-         */
-        public function offsetExists( $offset ) {
-            return $offset <= $this->count();
-        }
-
-        /**
-         * array access implementation
-         * @return mixed
-         */
-        public function offsetGet( $offset ) {
-
-            if ( $offset < $this->index ) {
-                throw new Exception( "cannot scroll back in Collection Results" );
-            }
-
-            // fast forward
-            while ( $offset > $this->index ) {
-                $this->readNext();
-            }
-
-            return $this->lastInstance;
-        }
-
-        /**
-         * array access implementation
-         * disabled
-         */
-        public function offsetSet( $offset, $value ) {
-            throw new Exception( "not allowed to write to results" );
-        }
-
-        /**
-         * array access implementation
-         * disabled
-         */
-        public function offsetUnset( $offset ) {
-            throw new Exception( "not allowed to write to results" );
+            return $this->lastInstance !== null;
         }
 
         public function fetchCollectionIds() {

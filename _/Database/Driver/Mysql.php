@@ -16,14 +16,14 @@
     class Mysql
     extends Database {
 
-        public $config = [];
+        public $config                    = [];
         public static $debug              = false;
         public static $debugHistory       = [];
         public static $debugLastStatement = null;
         public static $debugLastParams    = null;
         public static $debugQuerieCount   = 0;
-        public static $counter = 0;
-        public static $time    = 0;
+        public static $counter            = 0;
+        public static $time               = 0;
         public $connectionName;
 
         /** @var PDO */
@@ -71,6 +71,11 @@
                 "dbname={$this->config["dbDatabase"]}";
 
             return $this->connectionString;
+        }
+
+        public function enableUnbufferedMode( $bool = true ) {
+            $this->connectionHandle->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, !$bool );
+            return $this;
         }
 
         /**
@@ -192,7 +197,7 @@
                 return $this;
             }
 
-            $this->statements[$name] = $this->connectionHandle->prepare( $statement, $prepareOptions );
+            $this->statements[$name] = $this->connectionHandle->prepare( $statement );
             $this->lastStatement     = $this->statements[$name];
 
             return $this;
@@ -320,7 +325,7 @@
             $this->executeLast();
 
             $result = $this->lastStatement;
-            $result->setFetchMode( $fetchMode ?: PDO::FETCH_ASSOC );
+            $result->setFetchMode( $fetchMode ?: PDO::FETCH_ASSOC  );
 
             $this->freeLastStatement();
 
