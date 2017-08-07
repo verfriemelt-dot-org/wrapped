@@ -13,11 +13,18 @@
         private $collectionResult;
         private $currentJoin = null;
 
+        private $yieldMode = false;
+
         public function __construct( $model = null ) {
 
             if ( $model !== null ) {
                 $this->from( $model );
             }
+        }
+
+        public function enableYieldmode( $bool = true) {
+            $this->yieldMode = $bool;
+            return $this;
         }
 
         /**
@@ -45,7 +52,6 @@
         public function fetch() {
 
             if ( empty( $this->mainCollectionObject->getJoins() ) ) {
-
                 $this->collectionResult = $this->simpleSelect();
                 return $this;
             } else {
@@ -77,7 +83,12 @@
 
             $what = "`" . implode( "`, `", $model::fetchAnalyserObject()->fetchAllColumns() ) . "`";
 
-            return new CollectionResult( $db->select( $table, $what, $dbLogic ), $model );
+            if ( $this->yieldMode ) {
+                return new CollectionResultYield( $db->select( $table, $what, $dbLogic ), $model );
+            } else {
+                return new CollectionResult( $db->select( $table, $what, $dbLogic ), $model );
+            }
+
         }
 
         private function join() {
@@ -95,7 +106,11 @@
 
             $res = $this->currentJoin->execute();
 
-            return new CollectionResult( $res, $this->mainCollectionObject->fetchModel() );
+            if ( $this->yieldMode ) {
+                return new CollectionResultYield( $res, $this->mainCollectionObject->fetchModel() );
+            } else {
+                return new CollectionResult( $res, $this->mainCollectionObject->fetchModel() );
+            }
         }
 
         /**

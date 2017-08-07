@@ -149,7 +149,7 @@
             $co->getDbLogic()->limit( 1 );
             $collectionResult = $c->get();
 
-            return $collectionResult->isEmpty() ? null : $collectionResult[0];
+            return $collectionResult->isEmpty() ? null : $collectionResult->current();
         }
 
         /**

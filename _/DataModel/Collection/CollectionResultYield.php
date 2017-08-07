@@ -2,27 +2,42 @@
 
     namespace Wrapped\_\DataModel\Collection;
 
-    class CollectionResult
-    implements \Iterator, \ArrayAccess, \Countable {
+    use \ArrayAccess;
+    use \Countable;
+    use \Exception;
+    use \Iterator;
+    use \PDO;
+    use \PDOStatement;
+    use \Wrapped\_\DataModel\DataModel;
+
+    class CollectionResultYield
+    implements Iterator, Countable, ArrayAccess {
 
         private $sqlResult    = null;
         private $objPrototype = null;
-        private $results      = [];
+        private $lastInstance = null;
+        private $index        = 0;
 
-        public function __construct( $sqlResult = null, $prototype = null ) {
+        public function __construct( PDOStatement $sqlResult = null, DataModel $prototype = null ) {
+
             $this->sqlResult    = $sqlResult;
             $this->objPrototype = $prototype;
 
-            // fetch sql results
-
-            if ( $sqlResult ) {
-                $this->results = $this->sqlResult->fetchAll( \PDO::FETCH_ASSOC );
+            if ( $this->count() > 0 ) {
+                $this->lastInstance = (new $this->objPrototype )->initData( $this->sqlResult->fetch( PDO::FETCH_ASSOC ) );
             }
         }
 
-        public function setResults( $results ) {
-            $this->results = $results;
-            return $this;
+        private function readNext() {
+
+            $this->index++;
+            $data = $this->sqlResult->fetch( PDO::FETCH_ASSOC );
+
+            if ( $data !== false ) {
+                $this->lastInstance = (new $this->objPrototype )->initData( $data );
+            } else {
+                $this->lastInstance = null;
+            }
         }
 
         /**
@@ -30,7 +45,7 @@
          * @return type
          */
         public function count() {
-            return count( $this->results );
+            return $this->sqlResult->rowCount();
         }
 
         public function isEmpty() {
@@ -42,7 +57,7 @@
          * @return mixed
          */
         public function current() {
-            return $this->offsetGet( $this->key() );
+            return $this->lastInstance;
         }
 
         /**
@@ -50,21 +65,21 @@
          * @return mixed
          */
         public function key() {
-            return key( $this->results );
+            return $this->index;
         }
 
         /**
          * iterator implementation
          */
         public function next() {
-            next( $this->results );
+            $this->readNext();
         }
 
         /**
          * iterator implementation
          */
         public function rewind() {
-            reset( $this->results );
+            // nope
         }
 
         /**
@@ -72,16 +87,7 @@
          * @return bool
          */
         public function valid() {
-            return isset( $this->results[$this->key()] );
-        }
-
-        public function last() {
-
-            if ( $this->count() == 0 ) {
-                return null;
-            }
-
-            return $this->offsetGet( $this->count() - 1 );
+            return $this->index < $this->count();
         }
 
         /**
@@ -89,7 +95,7 @@
          * @return bool
          */
         public function offsetExists( $offset ) {
-            return isset( $this->results[$offset] );
+            return $offset <= $this->count();
         }
 
         /**
@@ -98,11 +104,16 @@
          */
         public function offsetGet( $offset ) {
 
-            if ( !isset( $this->results[$offset] ) ) {
-                throw new \Exception( "illegal offset {$offset} in result" );
+            if ( $offset < $this->index ) {
+                throw new Exception( "cannot scroll back in Collection Results" );
             }
 
-            return (new $this->objPrototype )->initData( $this->results[$offset] );
+            // fast forward
+            while ( $offset > $this->index ) {
+                $this->readNext();
+            }
+
+            return $this->lastInstance;
         }
 
         /**
@@ -110,7 +121,7 @@
          * disabled
          */
         public function offsetSet( $offset, $value ) {
-            throw new \Exception( "not allowed to write to results" );
+            throw new Exception( "not allowed to write to results" );
         }
 
         /**
@@ -118,33 +129,11 @@
          * disabled
          */
         public function offsetUnset( $offset ) {
-            throw new \Exception( "not allowed to write to results" );
+            throw new Exception( "not allowed to write to results" );
         }
 
         public function fetchCollectionIds() {
-            return $this->fetchColllectionValues( "id" );
-        }
-
-        /**
-         *
-         * @param type $key
-         * @return mixed
-         */
-        public function fetchColllectionValues( $key ) {
-
-            $metod = "get" . ucfirst( $key );
-            if ( !is_callable( [ $this->objPrototype, $metod ] ) ) {
-                return [];
-            }
-
-            $this->rewind();
-            $values = [];
-
-            foreach ( $this as $row ) {
-                $values[] = $row->{$metod}();
-            }
-
-            return $values;
+            return $this->propagateCall( "getId" );
         }
 
         /**
@@ -152,14 +141,14 @@
          * @param type $name
          * @param array $args
          * @return boolean
-         * @throws \Exception
+         * @throws Exception
          */
-        public function propagateCall( $name, array $args = [] ) {
+        public function propagateCall( string $name, array $args = [] ) {
 
             $results = [];
 
             if ( !is_callable( [ $this->objPrototype, $name ] ) ) {
-                throw new \Exception( "illegal method {$name} to propagate on object" );
+                throw new Exception( "illegal method {$name} to propagate on object" );
             }
 
             $this->rewind();
