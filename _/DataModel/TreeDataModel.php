@@ -630,7 +630,7 @@
          * @param \Wrapped\_\DataModel\TreeDataModel $model
          * @return bool
          */
-        public function isChildrenOf( \Wrapped\_\DataModel\TreeDataModel $model ): bool {
+        public function isChildOf( \Wrapped\_\DataModel\TreeDataModel $model ): bool {
 
             return
                 $this->getRight() < $model->getRight() &&
@@ -641,7 +641,7 @@
          * return the number of children
          * @return int
          */
-        public function fetchChildrenCount(): int {
+        public function fetchChildCount(): int {
             return ($this->right - $this->left - 1) / 2;
         }
 

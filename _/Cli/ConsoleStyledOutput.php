@@ -1,6 +1,9 @@
-<?php namespace Wrapped\_\Cli;
+<?php
 
-    class ConsoleStyledOutput extends ConsoleOutput {
+    namespace Wrapped\_\Cli;
+
+    class ConsoleStyledOutput
+    extends ConsoleOutput {
 
         const NONE   = 0;
         const BLACK  = 30;
@@ -11,7 +14,6 @@
         const PURPLE = 35;
         const CYAN   = 36;
         const WHITE  = 37;
-
         const REGULAR   = "0";
         const BOLD      = "1";
         const UNDERLINE = "4";
@@ -45,12 +47,15 @@
         }
 
         private function setStyle() {
-            if ( $this->fgColor !== null) $this->write("\e[{$this->style};{$this->fgColor}m");
-            if ( $this->bgColor !== null) $this->write("\e[{$this->bgColor}m");
+            if ( $this->fgColor !== null )
+                $this->write( "\e[{$this->style};{$this->fgColor}m" );
+            if ( $this->bgColor !== null )
+                $this->write( "\e[{$this->bgColor}m" );
         }
 
         public function __destruct() {
             $this->setBgColor( static::NONE );
             $this->setFgColor( static::NONE );
         }
+
     }

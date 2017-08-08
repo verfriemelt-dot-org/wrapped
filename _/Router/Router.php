@@ -140,7 +140,7 @@
 
                     // add attributse data from matching requests
                     $this->rawRouteHits[] = array_slice( $routeHits, 1 );
-                    
+
                     $result = $this->findMatchingRoute( $routeUri, $routeGroupRoutes );
 
                     if ( $result !== false ) {

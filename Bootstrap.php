@@ -2,6 +2,8 @@
 
     namespace Wrapped;
 
+    use \ErrorException;
+    use \Wrapped\_\Cli\Console;
     use \Wrapped\_\EnvironmentDetector;
 
     class Bootstrap {
@@ -32,16 +34,16 @@
                     die( "ein fehler. bad news!" );
 
                 if ( !Console::isCli() ) {
-                    header( "Content-type: text/plain" );
+//                    header( "Content-type: text/plain" );
                 }
-                
+
                 echo $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL;
                 print_r( $e );
                 die();
             } );
 
             set_error_handler( function ( $errno, $errstr, $errfile, $errline ) {
-                throw new \ErrorException( $errstr, 0, $errno, $errfile, $errline );
+                throw new ErrorException( $errstr, 0, $errno, $errfile, $errline );
             } );
         }
 

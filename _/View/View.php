@@ -14,7 +14,6 @@
 
         /** @var Template */
         public $tpl;
-        public static $isCacheable = false;
 
         abstract function getTemplatePath(): string;
 
@@ -55,11 +54,19 @@
             }
         }
 
+        /**
+         * this functions prepares the template, so that we can move the heavy
+         * lifting out of the constructor
+         */
+        abstract protected function prepare();
+
         public function getContents() {
+            $this->prepare();
             return $this->tpl->run();
         }
 
         public function yieldContents() {
+            $this->prepare();
             yield $this->tpl->yieldRun();
         }
 
