@@ -44,7 +44,7 @@
             return $this;
         }
 
-        public function writePadded( $text, $padding, $paddingChar = " " ) {
+        public function writePadded( $text, $padding = 4, $paddingChar = " " ) {
             $this->write( str_repeat( $paddingChar, $padding ) );
             $this->write( $text );
             return $this;
