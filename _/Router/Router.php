@@ -7,6 +7,7 @@
     use \Wrapped\_\Exception\Router\NoRoutesPresent;
     use \Wrapped\_\Exception\Router\RouteGotFiltered;
     use \Wrapped\_\Http\Request\Request;
+    use \Wrapped\_\Http\Response\Response;
     use \Wrapped\_\Singleton;
 
     class Router
@@ -20,14 +21,13 @@
         private $uri;
         private $routeAttributeData = [];
         private $globalFilter       = [];
-
         private $rawRouteHits = [];
 
         private function __construct( Request $request = null ) {
-            $this->setRequest( $request ?: Request::getInstance() );
+            $this->setRequest( $request ?: Request::getInstance()  );
         }
 
-        public function setRequest( Request $request ) : Router {
+        public function setRequest( Request $request ): Router {
             $this->request = $request;
 
             if ( php_sapi_name() == "cli" ) {
@@ -71,6 +71,27 @@
             return $this->basePath;
         }
 
+        private function isFiltered( &$filterFunction ): bool {
+
+            if ( !is_callable(  $filterFunction )) {
+                return false;
+            }
+
+            $functionResult = $filterFunction();
+
+            if ( $functionResult === false ) {
+                return false;
+            }
+
+            $filterException = new RouteGotFiltered( "route got filtered" );
+
+            if ( $functionResult instanceof Response ) {
+                $filterException->setResponse( $functionResult );
+            }
+
+            throw $filterException;
+        }
+
         /**
          *
          * @return boolean|Route
@@ -82,13 +103,9 @@
             }
 
             if ( !empty( $this->globalFilter ) ) {
+
                 foreach ( $this->globalFilter as $filter ) {
-
-                    $result = $filter();
-
-                    if ( $result === true ) {
-                        throw new RouteGotFiltered( "route got filtered" );
-                    }
+                    $this->isFiltered( $filter );
                 }
             }
 
@@ -103,7 +120,7 @@
             }
 
             // setup attributes
-            foreach( $this->rawRouteHits as $hits ) {
+            foreach ( $this->rawRouteHits as $hits ) {
                 $this->routeAttributeData = array_merge( $this->routeAttributeData, $hits );
             }
 
@@ -119,9 +136,7 @@
                 if ( preg_match( "~^{$routeable->getPath()}~", $uri, $routeHits ) ) {
 
                     // check for filter on routes and routeGroups
-                    if ( $routeable->getFilterCallback() !== null && call_user_func( $routeable->getFilterCallback() ) ) {
-                        throw new RouteGotFiltered( "route got filtered" );
-                    }
+                    $this->isFiltered( $routeable->getFilterCallback() );
 
                     // this route is matching and were done
                     if ( $routeable instanceof Route ) {
