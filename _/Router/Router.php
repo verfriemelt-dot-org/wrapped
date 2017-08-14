@@ -21,7 +21,7 @@
         private $uri;
         private $routeAttributeData = [];
         private $globalFilter       = [];
-        private $rawRouteHits = [];
+        private $rawRouteHits       = [];
 
         private function __construct( Request $request = null ) {
             $this->setRequest( $request ?: Request::getInstance()  );
@@ -71,9 +71,9 @@
             return $this->basePath;
         }
 
-        private function isFiltered( &$filterFunction ): bool {
+        private function isFiltered( $filterFunction ): bool {
 
-            if ( !is_callable(  $filterFunction )) {
+            if ( !is_callable( $filterFunction ) ) {
                 return false;
             }
 
