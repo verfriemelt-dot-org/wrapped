@@ -167,7 +167,7 @@
         }
 
         public function userAgent() {
-            return $this->server->get( "HTTP_USER_AGENT-user-agent" );
+            return $this->server->get( "HTTP_USER_AGENT" );
         }
 
         public function setAttributes( array $attributes ) {

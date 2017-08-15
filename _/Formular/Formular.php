@@ -7,6 +7,7 @@
     use \Wrapped\_\Formular\FormTypes\Checkbox;
     use \Wrapped\_\Formular\FormTypes\Hidden;
     use \Wrapped\_\Formular\FormTypes\Password;
+    use \Wrapped\_\Formular\FormTypes\Select;
     use \Wrapped\_\Formular\FormTypes\Text;
     use \Wrapped\_\Formular\FormTypes\Textarea;
     use \Wrapped\_\Http\Request\Request;
@@ -18,10 +19,13 @@
     class Formular
     implements Viewable {
 
+        const METHOD_POST = "POST";
+        const METHOD_GET  = "GET";
+
         /** @var Filter */
         private $filter;
         private $elements          = [];
-        private $method            = "post";
+        private $method            = SELF::METHOD_POST;
         private $cssClass          = "";
         private $cssId             = "";
         private $action;
@@ -37,7 +41,7 @@
             return $token;
         }
 
-        public function __construct( String $name, Filter $filter = null, Template $template = null, Session $session = null ) {
+        public function __construct( string $name, Filter $filter = null, Template $template = null, Session $session = null ) {
 
             $this->formname      = $name;
             $this->filter        = $filter ?? new Filter( "Form-" . $this->formname );
@@ -62,12 +66,12 @@
             $this->action = Request::getInstance()->uri();
         }
 
-        public function setCssClass( $cssClass ): \Wrapped\_\Formular\Formular {
+        public function setCssClass( $cssClass ): Formular {
             $this->cssClass = $cssClass;
             return $this;
         }
 
-        public function setCssId( $id ): \Wrapped\_\Formular\Formular {
+        public function setCssId( $id ): Formular {
             $this->cssId = $id;
             return $this;
         }
@@ -138,7 +142,7 @@
 
         public function addSelect( $name, $value = null ) {
 
-            $select = new FormTypes\Select( $name, $value );
+            $select = new Select( $name, $value );
             $select->setFilterItem( $this->filter->request()->has( $name ) );
 
             $this->elements[$name] = $select;
@@ -161,7 +165,7 @@
             return $this->addButton( "submit", $value )->type( "submit" )->setOptional();
         }
 
-        public function storeValuesOnFail( $bool = true ): \Wrapped\_\Formular\Formular {
+        public function storeValuesOnFail( $bool = true ): Formular {
             $this->storeValuesOnFail = $bool;
             return $this;
         }
@@ -185,11 +189,11 @@
         /**
          * switches between post and get method
          * @param type $method
-         * @return \Wrapped\_\Formular\Formular
+         * @return Formular
          */
-        public function setMethod( $method ): \Wrapped\_\Formular\Formular {
+        public function setMethod( $method ): Formular {
 
-            if ( !in_array( $method, [ "get", "post" ] ) ) {
+            if ( !in_array( $method, [ SELF::METHOD_GET, SELF::METHOD_POST ] ) ) {
                 return false;
             }
 
@@ -203,7 +207,7 @@
 
         public function get( $name ) {
 
-            $input = ($this->method == "post" ) ?
+            $input = ($this->method == SELF::METHOD_POST ) ?
                 Request::getInstance()->request() :
                 Request::getInstance()->query();
 
@@ -228,8 +232,8 @@
             $validated = false;
 
             if (
-                $this->method == "post" && Request::getInstance()->requestMethod() == "POST" ||
-                $this->method == "get" ) {
+                $this->method == SELF::METHOD_POST && Request::getInstance()->requestMethod() == "POST" ||
+                $this->method == SELF::METHOD_GET ) {
 
                 $failed = false;
 
@@ -247,8 +251,7 @@
                     $this->preFillFormWithSendData();
                 }
 
-                $token = $this->generateCSRF();
-                $this->addHidden( "_csrf", $token );
+                $this->addHidden( "_csrf", $this->generateCSRF() );
 
                 $validated = !$failed;
             }
