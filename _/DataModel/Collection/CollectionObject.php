@@ -5,6 +5,8 @@
     use \Exception;
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\DataModel\DataModel;
+    use \Wrapped\_\Exception\Database\DatabaseException;
+    use \Wrapped\_\ObjectAnalyser;
 
     class CollectionObject {
 
@@ -34,7 +36,7 @@
          * @param Collection $collection
          * @return CollectionObject
          */
-        public function setCollection( Collection $collection ) {
+        public function setCollection( Collection $collection ): CollectionObject {
             $this->collection = $collection;
             return $this;
         }
@@ -80,7 +82,7 @@
          * pass new DbLogic object
          * @return DbLogic Logic Object
          */
-        public function setLogic( DbLogic $dbLogic ) {
+        public function setLogic( DbLogic $dbLogic ): CollectionObject {
             $this->dbLogic = $dbLogic;
             return $this;
         }
@@ -99,7 +101,7 @@
         /**
          * @return DbLogic Logic Object
          */
-        public function getDbLogic() {
+        public function getDbLogic(): ?DbLogic {
             return $this->dbLogic;
         }
 
@@ -142,16 +144,16 @@
 
         /**
          *
-         * @param \Wrapped\_\DataModel\Collection\CollectionJoin $join
-         * @param \Wrapped\_\DataModel\Collection\CollectionObject $source
-         * @param \Wrapped\_\DataModel\Collection\CollectionObject $dest
+         * @param CollectionJoin $join
+         * @param CollectionObject $source
+         * @param CollectionObject $dest
          * @param type $columnName column name to probe for, usually id
          * @return boolean
          */
         private function _checkForPair( CollectionJoin $join, CollectionObject $source, CollectionObject $dest, $columnName ) {
 
-            $sourceAnalyser = new \Wrapped\_\ObjectAnalyser($source->fetchModel());
-            $destAnalyser = new \Wrapped\_\ObjectAnalyser($dest->fetchModel());
+            $sourceAnalyser = new ObjectAnalyser( $source->fetchModel() );
+            $destAnalyser   = new ObjectAnalyser( $dest->fetchModel() );
 
             // sources shoud have classFoo::id
             // so source has getId
@@ -159,12 +161,12 @@
             // so dest hast getClassFooId
 
             $methodNameSource = "get" . $columnName;
-            $methodNameDest = "get" .  $destAnalyser->getObjectShortName() . $columnName;
+            $methodNameDest   = "get" . $destAnalyser->getObjectShortName() . $columnName;
 
             if ( $destAnalyser->findMethodByName( $methodNameSource ) && $sourceAnalyser->findMethodByName( $methodNameDest ) ) {
 
                 $join->onSource( $columnName );
-                $join->onDestination( lcfirst( $destAnalyser->getObjectShortName()) . $columnName );
+                $join->onDestination( lcfirst( $destAnalyser->getObjectShortName() ) . $columnName );
 
                 return true;
             }
@@ -174,10 +176,10 @@
 
         /**
          * used to append it to its parent, only internal use
-         * @param \Wrapped\_\DataModel\Collection\CollectionObject $co
+         * @param CollectionObject $co
          * @return $this
          */
-        public function setParent( CollectionObject $co ) {
+        public function setParent( CollectionObject $co ): CollectionObject {
             $this->parentCollectionObject = $co;
             return $this;
         }
@@ -187,7 +189,7 @@
          * @param Array $override eg ["id"]
          * @return $this
          */
-        public function setSelectionColumnOverride( $override ) {
+        public function setSelectionColumnOverride( $override ): CollectionObject {
             $this->overrideSelection = $override;
             return $this;
         }
