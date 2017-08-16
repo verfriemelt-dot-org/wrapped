@@ -175,7 +175,7 @@
          * @param type $offset
          * @return static[]
          */
-        public static function take( $count, $offset = null, $params ) {
+        public static function take( $count, $offset = null, $params = [] ) {
 
             $c  = new Collection();
             $co = $c->from( static::class );
