@@ -26,8 +26,10 @@
 
         protected function writeTplValues(): FormType {
 
-            $this->tpl->setIf( "checked" , $this->value );
-            return parent::writeTplValues();
+            parent::writeTplValues();
+            $this->tpl->setIf( "checked", $this->value );
+
+            return $this;
         }
 
     }

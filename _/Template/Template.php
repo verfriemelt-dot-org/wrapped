@@ -1,23 +1,23 @@
-<?php namespace Wrapped\_\Template;
+<?php
+
+    namespace Wrapped\_\Template;
 
     class Template {
 
         private $if       = [];
         private $vars     = [];
         private $repeater = [];
-
         private $tokenChain;
-
         static private $chainCache = [];
 
         public function run() {
 
-            $parser = (new TemplateParser())
-              ->setChain( $this->tokenChain )
-              ->setData(
+            $parser = (new TemplateParser() )
+                ->setChain( $this->tokenChain )
+                ->setData(
                 [
-                    "vars" => $this->vars,
-                    "if" => $this->if,
+                    "vars"     => $this->vars,
+                    "if"       => $this->if,
                     "repeater" => $this->repeater
                 ]
             );
@@ -30,13 +30,13 @@
                 ->setChain( $this->tokenChain )
                 ->setData(
                 [
-                    "vars" => $this->vars,
-                    "if" => $this->if,
+                    "vars"     => $this->vars,
+                    "if"       => $this->if,
                     "repeater" => $this->repeater
                 ]
             );
 
-            foreach( $parser->alternateParse() as $output ) {
+            foreach ( $parser->alternateParse() as $output ) {
                 yield $output;
             }
         }
@@ -47,7 +47,7 @@
          * @return \Wrapped\_\Template\Template
          */
         public function setRawTemplate( $input ) {
-            $this->tokenChain = (new TemplateLexer())->lex( $input )->getChain();
+            $this->tokenChain = (new TemplateLexer() )->lex( $input )->getChain();
             return $this;
         }
 
@@ -55,13 +55,13 @@
          * loadfile
          * @return Template
          */
-        public function parseFile($path) {
+        public function parseFile( $path ) {
 
-            if ( !isset(self::$chainCache[$path]) ) {
+            if ( !isset( self::$chainCache[$path] ) ) {
 
                 $fileContent = file_get_contents( $path );
 
-                self::$chainCache[$path] = (new TemplateLexer())->lex($fileContent)->getChain();
+                self::$chainCache[$path] = (new TemplateLexer() )->lex( $fileContent )->getChain();
             }
 
             $this->tokenChain = self::$chainCache[$path];
@@ -73,10 +73,10 @@
          * @param type $name
          * @return \Wrapped\_\Template\Repeater
          */
-        public function createRepeater($name) {
+        public function createRepeater( $name ) {
 
-            if ( !isset($this->repeater[$name]) ) {
-                $this->repeater[$name] = new Repeater($name);
+            if ( !isset( $this->repeater[$name] ) ) {
+                $this->repeater[$name] = new Repeater( $name );
             }
 
             return $this->repeater[$name];
@@ -87,8 +87,8 @@
          * @param string $name
          * @param bool $bool
          */
-        public function setIf ($name,$bool = true) {
-            $this->if[$name] = new Ifelse($name,$bool);
+        public function setIf( $name, $bool = true ) {
+            $this->if[$name] = new Ifelse( $name, $bool );
             return $this;
         }
 
@@ -98,21 +98,27 @@
          * @param type $value value
          * @return static
          */
-        public function set($name,$value) {
-            $this->vars[$name] = new Variable($name,$value);
+        public function set( $name, $value ) {
+
+            if ( $value instanceof \Wrapped\_\Output\Viewable ) {
+                $value = $value->getContents();
+            }
+
+            $this->vars[$name] = new Variable( $name, $value );
             return $this;
         }
 
-        public function setArray($array) {
+        public function setArray( $array ) {
 
-            if ( !is_array($array) ) {
+            if ( !is_array( $array ) ) {
                 return false;
             }
 
-            foreach ($array AS $name => $value) {
-                $this->set($name,$value);
+            foreach ( $array AS $name => $value ) {
+                $this->set( $name, $value );
             }
 
             return true;
         }
+
     }
