@@ -90,6 +90,10 @@
                 $output = $variable->readValue();
             }
 
+            if ( is_object( $output ) ) {
+                throw new Exception( "object passed to template variable '{$name}'" );
+            }
+
             return $this->currentToken->escape ? htmlspecialchars( $output, ENT_QUOTES ) : $output;
         }
 
@@ -139,21 +143,21 @@
 
         public function searchForData( $type, $name ) {
 
-            $layers[] = $this->data;
+            $layers[]   = $this->data;
             $dataSource = $this->data;
 
             // stack repeater on top
             foreach ( $this->repeaterDataSourcePath as $repeaterLayer => $currentIndex ) {
 
                 // if next level not present, we return the current layer
-                if ( !isset( $dataSource["repeater"][$repeaterLayer] ) || !isset($dataSource["repeater"][$repeaterLayer]->data[$currentIndex]) ) {
+                if ( !isset( $dataSource["repeater"][$repeaterLayer] ) || !isset( $dataSource["repeater"][$repeaterLayer]->data[$currentIndex] ) ) {
                     // search from this layer on
                     break;
                 }
 
                 // go one level deepter into the layers of repeater
                 $dataSource = $dataSource["repeater"][$repeaterLayer]->data[$currentIndex];
-                $layers[] = $dataSource;
+                $layers[]   = $dataSource;
             }
 
             while ( $dataSource = array_pop( $layers ) ) {
@@ -170,18 +174,18 @@
 
             $name = $this->currentToken->currentContent;
 
-            $dataSource = $this->searchForData( "repeater", $name );
-            $this->repeaterDataSourcePath[ $name ] = 0;
+            $dataSource                            = $this->searchForData( "repeater", $name );
+            $this->repeaterDataSourcePath[$name] = 0;
 
 
             // delete all if not there or repeater empty
-            if ( $dataSource === false || empty($dataSource["repeater"][$name]->data) ) {
+            if ( $dataSource === false || empty( $dataSource["repeater"][$name]->data ) ) {
 
                 while ( $this->currentToken = $this->currentToken->nextToken ) {
 
                     // and quit if we hit t_IfClose
                     if ( $this->currentToken instanceof T_RepeaterClose && $this->currentToken->currentContent === $name ) {
-                        unset( $this->repeaterDataSourcePath[ $name ]);
+                        unset( $this->repeaterDataSourcePath[$name] );
                         return "";
                     }
                 }
@@ -196,8 +200,8 @@
             foreach ( $dataSource["repeater"][$name]->data as $index => $dataSource ) {
 
                 // set current index for path
-                $this->repeaterDataSourcePath[ $name ] = $index;
-                $this->currentToken = $startToken;
+                $this->repeaterDataSourcePath[$name] = $index;
+                $this->currentToken                    = $startToken;
 
                 while ( $this->currentToken = $this->currentToken->nextToken ) {
 
@@ -210,7 +214,7 @@
                 }
             }
 
-            unset( $this->repeaterDataSourcePath[ $name ]);
+            unset( $this->repeaterDataSourcePath[$name] );
             return $output;
         }
 
