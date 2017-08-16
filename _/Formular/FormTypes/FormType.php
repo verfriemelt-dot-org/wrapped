@@ -22,7 +22,7 @@
         public $filterItem;
         public $cssClasses = [];
 
-        abstract public function loadTemplate(): \Wrapped\_\Formular\FormTypes\FormType;
+        abstract public function loadTemplate(): FormType;
 
         abstract public function fetchHtml(): string;
 
@@ -39,7 +39,7 @@
             }
         }
 
-        public function setFilterItem( FilterItem $filterItem ) {
+        public function setFilterItem( FilterItem $filterItem ): FormType {
             $this->filterItem = $filterItem;
             return $this;
         }
@@ -48,7 +48,7 @@
             return $this->filterItem;
         }
 
-        public function setValue( $value ): \Wrapped\_\Formular\FormTypes\FormType {
+        public function setValue( $value ): FormType {
             $this->value = $value;
             return $this;
         }
@@ -57,7 +57,7 @@
             return $this->value;
         }
 
-        public function setOptional() {
+        public function setOptional(): FormType {
             $this->filterItem->optional( true );
             return $this;
         }
@@ -72,7 +72,7 @@
          * sets the element to disabled state;
          * disabled fields will not be sent along with the request
          * @param type $bool
-         * @return \Wrapped\_\Formular\FormTypes\FormType
+         * @return FormType
          */
         public function disabled( $bool = true ): FormType {
             $this->disabled = $bool;
@@ -84,7 +84,7 @@
          * this is just for frontend visuals
          * the field is sent along with the request
          * @param type $bool
-         * @return \Wrapped\_\Formular\FormTypes\FormType
+         * @return FormType
          */
         public function readonly( $bool = true ): FormType {
             $this->readonly = $bool;
@@ -125,7 +125,7 @@
          * @param type $title
          * @return $this
          */
-        public function setTitle( $title ) {
+        public function setTitle( $title ): FormType {
             $this->title = $title;
             return $this;
         }
@@ -136,12 +136,12 @@
          * @param type $pattern
          * @return $this
          */
-        public function setPattern( $pattern ) {
+        public function setPattern( $pattern ): FormType {
             $this->pattern = $pattern;
             return $this;
         }
 
-        public function required( $bool = true ) {
+        public function required( $bool = true ): FormType {
             $this->required = $bool;
             return $this;
         }

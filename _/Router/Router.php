@@ -41,10 +41,20 @@
 
         /**
          * used for adding multiple routes
+         * @deprecated since version number
          * @param Routeable $routes
          * @return Router
          */
         public function addRoutes( Routable ... $routes ) {
+            return $this->add( ... $routes );
+        }
+
+        /**
+         * adding routes to the router
+         * @param type $routes
+         * @return $this
+         */
+        public function add( Routable ... $routes ) {
 
             foreach ( $routes as $route ) {
                 $this->routes[] = $route;

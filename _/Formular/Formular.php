@@ -21,6 +21,7 @@
 
         const METHOD_POST = "POST";
         const METHOD_GET  = "GET";
+        CONST CSRF_FIELD_NAME = "_csrf";
 
         /** @var Filter */
         private $filter;
@@ -32,6 +33,7 @@
         private $formname;
         private $csrfTokenName;
         private $storeValuesOnFail = false;
+        private $prefilledWithSubmitData = false;
 
         private function generateCSRF() {
 
@@ -53,7 +55,7 @@
                 $token = Session::getInstance()->get( $this->csrfTokenName );
             }
 
-            $this->addHidden( "_csrf", $token );
+            $this->addHidden( self::CSRF_FIELD_NAME, $token );
             $this->addHidden( "_form", $this->formname );
 
             if ( !$template ) {
@@ -218,6 +220,11 @@
 
             foreach ( $this->elements as $element ) {
 
+                // skip csrf token, otherwise the form will silently fail
+                if ( $element->name === self::CSRF_FIELD_NAME ) {
+                    continue;
+                }
+
                 $data = $this->get( $element->name );
 
                 if ( is_string( $data ) ) {
@@ -229,6 +236,7 @@
         }
 
         public function hasValidated() {
+
             $validated = false;
 
             if (
@@ -248,15 +256,34 @@
                 }
 
                 if ( $this->storeValuesOnFail && $failed ) {
+
+                    $this->prefilledWithSubmitData = true;
                     $this->preFillFormWithSendData();
                 }
 
-                $this->addHidden( "_csrf", $this->generateCSRF() );
+                $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
 
                 $validated = !$failed;
             }
 
             return $validated;
+        }
+
+        public function markFailed( string $fieldName ): Formular {
+
+            if ( !isset( $this->elements[$fieldName] ) ) {
+                throw new Exception( "illegal form element {$fieldName}" );
+            }
+
+            $this->elements[$fieldName]->addCssClass( "input-error" );
+
+            if ( !$this->prefilledWithSubmitData ) {
+
+                $this->prefilledWithSubmitData = true;
+                $this->preFillFormWithSendData();
+            }
+
+            return $this;
         }
 
         public function getContents(): string {
