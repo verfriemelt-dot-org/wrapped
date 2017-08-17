@@ -5,6 +5,7 @@
     use \Wrapped\_\Exception\Input\InputException;
     use \Wrapped\_\Formular\FormTypes\Button;
     use \Wrapped\_\Formular\FormTypes\Checkbox;
+    use \Wrapped\_\Formular\FormTypes\FormType;
     use \Wrapped\_\Formular\FormTypes\Hidden;
     use \Wrapped\_\Formular\FormTypes\Password;
     use \Wrapped\_\Formular\FormTypes\Select;
@@ -19,20 +20,21 @@
     class Formular
     implements Viewable {
 
-        const METHOD_POST = "POST";
-        const METHOD_GET  = "GET";
+        const METHOD_POST     = "POST";
+        const METHOD_GET      = "GET";
         CONST CSRF_FIELD_NAME = "_csrf";
+        CONST FORM_FIELD_NAME = "_form";
 
         /** @var Filter */
         private $filter;
-        private $elements          = [];
-        private $method            = SELF::METHOD_POST;
-        private $cssClass          = "";
-        private $cssId             = "";
+        private $elements                = [];
+        private $method                  = SELF::METHOD_POST;
+        private $cssClass                = "";
+        private $cssId                   = "";
         private $action;
         private $formname;
         private $csrfTokenName;
-        private $storeValuesOnFail = false;
+        private $storeValuesOnFail       = false;
         private $prefilledWithSubmitData = false;
 
         private function generateCSRF() {
@@ -56,7 +58,7 @@
             }
 
             $this->addHidden( self::CSRF_FIELD_NAME, $token );
-            $this->addHidden( "_form", $this->formname );
+            $this->addHidden( self::FORM_FIELD_NAME, $this->formname );
 
             if ( !$template ) {
                 $this->tpl = new Template();
@@ -172,22 +174,6 @@
             return $this;
         }
 
-        public function fetchHtml(): string {
-
-            $r = $this->tpl->createRepeater( "elements" );
-            $this->tpl->set( "method", $this->method );
-            $this->tpl->set( "action", $this->action );
-            $this->tpl->set( "cssClass", $this->cssClass );
-            $this->tpl->set( "cssId", $this->cssId );
-
-            foreach ( $this->elements as $element ) {
-                $r->set( "element", $element->fetchHtml() );
-                $r->save();
-            }
-
-            return $this->tpl->run();
-        }
-
         /**
          * switches between post and get method
          * @param type $method
@@ -203,11 +189,20 @@
             return $this;
         }
 
-        public function isPosted() {
-            return Request::getInstance()->request()->get( "_form" ) == $this->formname;
+        /**
+         *
+         * @return bool
+         */
+        public function isPosted(): bool {
+            return Request::getInstance()->request()->get( self::FORM_FIELD_NAME ) === $this->formname;
         }
 
-        public function get( $name ) {
+        /**
+         *
+         * @param string $name
+         * @return mixed sended form values
+         */
+        public function get( string $name ) {
 
             $input = ($this->method == SELF::METHOD_POST ) ?
                 Request::getInstance()->request() :
@@ -221,7 +216,7 @@
             foreach ( $this->elements as $element ) {
 
                 // skip csrf token, otherwise the form will silently fail
-                if ( $element->name === self::CSRF_FIELD_NAME ) {
+                if ( in_array( $this->elements, [ self::CSRF_FIELD_NAME, self::FORM_FIELD_NAME ] ) ) {
                     continue;
                 }
 
@@ -235,12 +230,16 @@
             return $this;
         }
 
-        public function hasValidated() {
+        /**
+         * checks if form has been sent and all filter criteria are met
+         * @return bool
+         */
+        public function hasValidated(): bool {
 
             $validated = false;
 
             if (
-                $this->method == SELF::METHOD_POST && Request::getInstance()->requestMethod() == "POST" ||
+                $this->method == SELF::METHOD_POST && Request::getInstance()->requestMethod() == "POST" && $this->get( self::FORM_FIELD_NAME ) === $this->formname ||
                 $this->method == SELF::METHOD_GET ) {
 
                 $failed = false;
@@ -269,6 +268,12 @@
             return $validated;
         }
 
+        /**
+         * manually mark field as errorprone
+         * @param string $fieldName
+         * @return Formular
+         * @throws Exception
+         */
         public function markFailed( string $fieldName ): Formular {
 
             if ( !isset( $this->elements[$fieldName] ) ) {
@@ -287,7 +292,23 @@
         }
 
         public function getContents(): string {
-            return $this->fetchHtml();
+
+            $r = $this->tpl->createRepeater( "elements" );
+            $this->tpl->set( "method", $this->method );
+            $this->tpl->set( "action", $this->action );
+            $this->tpl->set( "cssClass", $this->cssClass );
+            $this->tpl->set( "cssId", $this->cssId );
+
+            foreach ( $this->elements as $element ) {
+                $r->set( "element", $element->fetchHtml() );
+                $r->save();
+            }
+
+            return $this->tpl->run();
+        }
+
+        public function fetchElement( string $name ): ?FormType {
+            return $this->elements[$name] ?? null;
         }
 
     }

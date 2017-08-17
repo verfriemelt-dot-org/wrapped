@@ -14,6 +14,10 @@
             if ( $content !== null ) {
                 $this->setContent( $content );
             }
+
+            if ( $content instanceof \Wrapped\_\DataModel\Collection\CollectionResult ) {
+                $this->setContent( $content->toArray() );
+            }
         }
 
         public function setContent( $content ) {

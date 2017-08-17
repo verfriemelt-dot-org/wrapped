@@ -2,11 +2,13 @@
 
     namespace Wrapped\_\Template;
 
+    use \Wrapped\_\Output\Viewable;
+
     class Template {
 
-        private $if       = [];
-        private $vars     = [];
-        private $repeater = [];
+        private $if                = [];
+        private $vars              = [];
+        private $repeater          = [];
         private $tokenChain;
         static private $chainCache = [];
 
@@ -44,7 +46,7 @@
         /**
          *
          * @param type $input
-         * @return \Wrapped\_\Template\Template
+         * @return Template
          */
         public function setRawTemplate( $input ) {
             $this->tokenChain = (new TemplateLexer() )->lex( $input )->getChain();
@@ -71,7 +73,7 @@
         /**
          *
          * @param type $name
-         * @return \Wrapped\_\Template\Repeater
+         * @return Repeater
          */
         public function createRepeater( $name ) {
 
@@ -100,7 +102,7 @@
          */
         public function set( $name, $value ) {
 
-            if ( $value instanceof \Wrapped\_\Output\Viewable ) {
+            if ( $value instanceof Viewable ) {
                 $value = $value->getContents();
             }
 
