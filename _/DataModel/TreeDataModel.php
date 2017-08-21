@@ -8,11 +8,11 @@
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class TreeDataModel
-    extends \Wrapped\_\DataModel\DataModel {
+    extends DataModel {
 
-        static protected $_saving = false;
+        static protected $_transactionInitiatorId = null;
         public $depth, $left, $right, $parentId, $id;
-        private $_after, $_before, $_under, $_atParentRight   = true;
+        private $_after, $_before, $_under, $_atParentRight                   = true;
 
         final protected static function _fetchMainAttribute(): string {
             return "id";
@@ -132,11 +132,11 @@
 
         /**
          * checks if given movement is allowed
-         * @param \Wrapped\_\DataModel\TreeDataModel $moveTo
+         * @param TreeDataModel $moveTo
          * @throws Exception
          * @throws DatabaseException
          */
-        private function validateMove( \Wrapped\_\DataModel\TreeDataModel $moveTo ) {
+        private function validateMove( TreeDataModel $moveTo ) {
 
             if ( !$moveTo instanceof $this ) {
                 throw new Exception( "illegal mix of items" );
@@ -161,7 +161,7 @@
          * @return boolean|static
          * @throws Exception
          */
-        public function after( \Wrapped\_\DataModel\TreeDataModel $after ) {
+        public function after( TreeDataModel $after ) {
 
             $this->validateMove( $after );
 
@@ -192,7 +192,7 @@
          * @return boolean|static
          * @throws Exception
          */
-        public function before( \Wrapped\_\DataModel\TreeDataModel $before ) {
+        public function before( TreeDataModel $before ) {
 
             $this->validateMove( $before );
 
@@ -209,7 +209,7 @@
          * @param type $parent
          * @return $this
          */
-        public function under( \Wrapped\_\DataModel\TreeDataModel $parent, $atEnd = true ) {
+        public function under( TreeDataModel $parent, $atEnd = true ) {
 
             $this->validateMove( $parent );
 
@@ -227,31 +227,28 @@
          */
         public function save() {
 
+            $transactionInitiatorId = uniqid( "", true );
+
             // start transaction if no other is currently used
-            if ( !static::getDatabase()->inTransaction() ) {
+            if ( static::$_transactionInitiatorId === null ) {
+                static::$_transactionInitiatorId = $transactionInitiatorId;
                 static::getDatabase()->startTransaction();
-                static::$_saving = true;
+                static::getDatabase()->query( "LOCK TABLE `" . static::getTableName() . "` WRITE, `" . static::getTableName() . "` AS parent WRITE, `" . static::getTableName() . "` AS node WRITE" );
             }
 
-            try {
-
-                if ( $this->_isPropertyFuzzy( "id", $this->id ) ) {
-                    $this->_insert();
-                } elseif ( $this->_isPropertyFuzzy( "parentId", $this->parentId ) ) {
-                    $this->_move();
-                }
-
-                parent::save();
-
-            } catch ( \Exception $e ) {
-
-                static::getDatabase()->rollbackTransaction();
-                throw $e;
+            if ( $this->id === null || $this->_isPropertyFuzzy( "id", $this->id ) ) {
+                $this->_insert();
+            } elseif ( $this->_isPropertyFuzzy( "parentId", $this->parentId ) ) {
+                $this->_move();
             }
 
-            if ( static::$_saving ) {
+            parent::save();
+
+            // close transaction
+            if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
+                static::getDatabase()->query( "UNLOCK TABLES" );
                 static::getDatabase()->commitTransaction();
-                static::$_saving = false;
+                static::$_transactionInitiatorId = null;
             }
 
             return $this;
@@ -384,6 +381,8 @@
                 } else {
 
                     if ( $this->_after instanceof $this ) {
+
+                        $this->_after->reload();
                         $alignment = $this->_after->getRight();
 
                         $this->setLeft( $alignment + 1 );
@@ -392,6 +391,8 @@
                         $this->shiftLeft( $alignment, 2 );
                         $this->shiftRight( $alignment, 2 );
                     } else {
+
+                        $this->_before->reload();
                         $alignment = $this->_before->getLeft();
 
                         $this->shiftLeft( $alignment - 1, 2 );
@@ -434,7 +435,7 @@
          * @param enum $leftOrRight right,left
          * @return static
          */
-        private function shift( int $offset, int $amount, string $leftOrRight = "left" ): \Wrapped\_\DataModel\TreeDataModel {
+        private function shift( int $offset, int $amount, string $leftOrRight = "left" ): TreeDataModel {
 
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
@@ -627,10 +628,10 @@
 
         /**
          * is the current node a child of the given node
-         * @param \Wrapped\_\DataModel\TreeDataModel $model
+         * @param TreeDataModel $model
          * @return bool
          */
-        public function isChildOf( \Wrapped\_\DataModel\TreeDataModel $model ): bool {
+        public function isChildOf( TreeDataModel $model ): bool {
 
             return
                 $this->getRight() < $model->getRight() &&
