@@ -83,7 +83,6 @@
 
         public function reload() {
 
-
             $tableName = static::getTableName();
             $db        = static::getDatabase();
 

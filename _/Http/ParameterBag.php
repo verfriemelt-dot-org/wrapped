@@ -27,15 +27,26 @@
             return new ArrayIterator( $this->parameters );
         }
 
-        public function hasNot( $key ) {
-            return !$this->has( $key );
+        public function hasNot( $param ): bool {
+            return !$this->has( $param );
         }
 
-        public function has( $key ) {
-            return isset( $this->parameters[$key] );
+        public function has( $key ): bool {
+
+            if ( !is_array( $key ) ) {
+                return isset( $this->parameters[$key] );
+            }
+
+            foreach ( $key as $name ) {
+                if ( !isset( $this->parameters[$name] ) ) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        public function get( $key, $default = null ) {
+        public function get( string $key, $default = null ) {
 
             if ( !$this->has( $key ) ) {
                 return $default;
