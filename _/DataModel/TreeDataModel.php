@@ -233,22 +233,32 @@
             if ( static::$_transactionInitiatorId === null ) {
                 static::$_transactionInitiatorId = $transactionInitiatorId;
                 static::getDatabase()->startTransaction();
+                static::getDatabase()->connectionHandle->setAttribute( \PDO::ATTR_AUTOCOMMIT, 0 );
                 static::getDatabase()->query( "LOCK TABLE `" . static::getTableName() . "` WRITE, `" . static::getTableName() . "` AS parent WRITE, `" . static::getTableName() . "` AS node WRITE" );
             }
 
-            if ( $this->id === null || $this->_isPropertyFuzzy( "id", $this->id ) ) {
-                $this->_insert();
-            } elseif ( $this->_isPropertyFuzzy( "parentId", $this->parentId ) ) {
-                $this->_move();
-            }
+            try {
 
-            parent::save();
+                if ( $this->id === null || $this->_isPropertyFuzzy( "id", $this->id ) ) {
+                    $this->_insert();
+                } elseif ( $this->_isPropertyFuzzy( "parentId", $this->parentId ) ) {
+                    $this->_move();
+                }
 
-            // close transaction
-            if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
+                parent::save();
+
+                // close transaction
+                if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
+                    static::getDatabase()->query( "UNLOCK TABLES" );
+                    static::getDatabase()->commitTransaction();
+                    static::getDatabase()->connectionHandle->setAttribute( \PDO::ATTR_AUTOCOMMIT, 1 );
+                    static::$_transactionInitiatorId = null;
+                }
+            } catch ( \Exception $e ) {
+
+                static::getDatabase()->rollbackTransaction();
                 static::getDatabase()->query( "UNLOCK TABLES" );
-                static::getDatabase()->commitTransaction();
-                static::$_transactionInitiatorId = null;
+                throw $e;
             }
 
             return $this;
