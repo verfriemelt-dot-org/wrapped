@@ -1,20 +1,22 @@
-<?php namespace Wrapped\_\Http\Response;
+<?php
+
+    namespace Wrapped\_\Http\Response;
 
     class Cookie {
 
         private $name,
-                $value,
-                $path,
-                $domain,
-                $expiresTime;
+            $value,
+            $path,
+            $domain,
+            $expiresTime;
 
-        public function __construct( $name, $value , $expires = 3600*24 ) {
-            $this->name = $name;
-            $this->value = $value;
+        public function __construct( $name, $value, $expires = 3600 * 24 ) {
+            $this->name    = $name;
+            $this->value   = $value;
             $this->expires = time() + $expires;
         }
 
-        public static function create( $name, $value , $expires = 3600*24 ) {
+        public static function create( $name, $value, $expires = 3600 * 24 ) {
             new static( $name, $value, $expires );
         }
 

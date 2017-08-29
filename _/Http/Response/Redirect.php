@@ -6,7 +6,7 @@
     use \Wrapped\_\Router\Router;
 
     class Redirect
-    extends \Wrapped\_\Http\Response\Response {
+    extends Response {
 
         private $to;
         private $ignoreBasePath = false;
@@ -16,7 +16,7 @@
             $this->temporarily();
         }
 
-        public function send() {
+        public function send(): Response {
 
             if ( $this->ignoreBasePath === false ) {
                 $path = Router::getInstance()->getBasePath() . $this->to;
@@ -24,16 +24,16 @@
                 $path = $this->to;
             }
 
-            $this->addHeader( new \Wrapped\_\Http\Response\HttpHeader( "Location", $path ) );
-            parent::send();
+            $this->addHeader( new HttpHeader( "Location", $path ) );
+            return parent::send();
         }
 
         /**
          * returns http 301
          * @return \Wrapped\_\Response\Redirect
          */
-        public function permanent() {
-            $this->setStatusCode( \Wrapped\_\Http\Response\Http::MOVED_PERMANENTLY );
+        public function permanent(): Redirect {
+            $this->setStatusCode( Http::MOVED_PERMANENTLY );
             return $this;
         }
 
@@ -41,13 +41,13 @@
          *
          * @return \Wrapped\_\Response\Redirect
          */
-        public function temporarily() {
-            $this->setStatusCode( \Wrapped\_\Http\Response\Http::TEMPORARY_REDIRECT );
+        public function temporarily(): Redirect {
+            $this->setStatusCode( Http::TEMPORARY_REDIRECT );
             return $this;
         }
 
-        public function seeOther( $to ) {
-            $this->setStatusCode( \Wrapped\_\Http\Response\Http::SEE_OTHER );
+        public function seeOther( $to ): Redirect {
+            $this->setStatusCode( Http::SEE_OTHER );
             $this->to = $to;
             return $this;
         }

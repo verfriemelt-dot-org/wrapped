@@ -1,4 +1,6 @@
-<?php namespace Wrapped\_\Http\Response;
+<?php
+
+    namespace Wrapped\_\Http\Response;
 
     class HttpHeader {
 
@@ -7,7 +9,7 @@
         private $replaces = true;
 
         public function __construct( $name, $value ) {
-            $this->name = $name;
+            $this->name  = $name;
             $this->value = $value;
         }
 
@@ -15,7 +17,7 @@
             $this->replaces = $bool;
             return $this;
         }
-        
+
         public function replaces() {
             return $this->replaces;
         }
