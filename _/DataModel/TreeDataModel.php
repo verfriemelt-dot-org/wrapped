@@ -636,6 +636,15 @@
             );
         }
 
+        public function fetchDirectChildren( $order = "left", $direction = "ASC" ) {
+
+            return static::find(
+                    DbLogic::create()
+                        ->where( "parentId", "=", $this->getId() )
+                        ->order( $order, $direction )
+            );
+        }
+
         /**
          * is the current node a child of the given node
          * @param TreeDataModel $model

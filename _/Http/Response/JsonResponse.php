@@ -20,7 +20,7 @@
             }
         }
 
-        public function setContent( $content ) {
+        public function setContent( $content ): Response  {
             return parent::setContent( json_encode( $content ) );
         }
 

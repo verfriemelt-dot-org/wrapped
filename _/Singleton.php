@@ -7,7 +7,7 @@
         /**
          * nope
          */
-        private function __construct() {}
+        protected function __construct() {}
 
         /**
          * static function for retriving the session handle
