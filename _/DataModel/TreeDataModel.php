@@ -526,19 +526,8 @@
                         AND node.id = {$id}
                         ORDER BY parent.`left`";
 
-            $res = $databaseHandle->query( $query );
 
-            $return = [];
-
-            while ( $item = $res->fetch( PDO::FETCH_ASSOC ) ) {
-
-                $instance = new static();
-                $instance->initData( $item );
-
-                $return[] = $instance;
-            }
-
-            return $return;
+            return new Collection\CollectionResult( $databaseHandle->query( $query ), static::class );
         }
 
         /**

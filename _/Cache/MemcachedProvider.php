@@ -8,6 +8,10 @@
         private $memcached;
         static private $prefix = "";
 
+        public static function isAvailable():bool {
+            return class_exists( "\\Memcached" );
+        }
+
         public static function setPrefix( string $prefix ) {
             static::$prefix = $prefix;
         }
@@ -17,6 +21,7 @@
         }
 
         public function __construct( $server = "127.0.0.1", $port = 11211 ) {
+            
             $this->memcached = new \Memcached();
             $this->memcached->addServer( $server, $port );
         }

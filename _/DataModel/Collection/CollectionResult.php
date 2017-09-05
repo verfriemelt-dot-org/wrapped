@@ -149,22 +149,28 @@
 
         /**
          *
-         * @param type $name
+         * @param type $func
          * @param array $args
          * @return boolean
          * @throws \Exception
          */
-        public function propagateCall( $name, array $args = [] ) {
+        public function propagateCall( $func, array $args = [] ) {
 
             $results = [];
 
-            if ( !is_callable( [ $this->objPrototype, $name ] ) ) {
-                throw new \Exception( "illegal method {$name} to propagate on object" );
+            if ( !is_callable($func) && !is_callable( [ $this->objPrototype, $func ] ) ) {
+                throw new \Exception( "illegal method {$func} to propagate on object" );
             }
 
             $this->rewind();
+
             foreach ( $this as $row ) {
-                $results[] = $row->{$name}();
+
+                if ( is_callable( $func ) ) {
+                    $results[] = $func( $row );
+                } else {
+                    $results[] = $row->{$func}();
+                }
             }
 
             return $results;
