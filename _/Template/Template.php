@@ -101,11 +101,6 @@
          * @return static
          */
         public function set( $name, $value ) {
-
-            if ( $value instanceof Viewable ) {
-                $value = $value->getContents();
-            }
-
             $this->vars[$name] = new Variable( $name, $value );
             return $this;
         }

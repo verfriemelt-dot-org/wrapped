@@ -2,20 +2,29 @@
 
     namespace Wrapped\_\Template;
 
+    use \Closure;
+    use \Wrapped\_\Output\Viewable;
+
     class Variable
     implements TemplateItem {
 
         public $name, $value, $formatCallback;
-        private static $formats = [ ];
+        private static $formats = [];
 
-        public function __construct( $name = null, $value = null ) {
+        public function __construct( string $name = null, $value = null ) {
+
             $this->name = $name;
-            $this->value = $value;
+
+            if ( $value instanceof Viewable ) {
+                $this->value = $value->getContents();
+            } else {
+                $this->value = $value;
+            }
         }
 
         public function readValue() {
 
-            if ( !$this->value instanceof \Closure ) {
+            if ( !$this->value instanceof Closure ) {
                 return $this->value;
             }
 
@@ -46,7 +55,7 @@
                 if ( isset( $row["format"] ) && isset( self::$formats[$row["format"]] ) ) {
 
                     $formatter = self::$formats[$row["format"]];
-                    $value = $formatter( $this->readValue() );
+                    $value     = $formatter( $this->readValue() );
                 } else {
                     $value = $this->readValue();
                 }
