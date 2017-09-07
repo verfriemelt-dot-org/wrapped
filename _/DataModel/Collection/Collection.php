@@ -22,7 +22,7 @@
             }
         }
 
-        public function enableYieldmode( $bool = true) {
+        public function enableYieldmode( $bool = true): CollectionObject {
             $this->yieldMode = $bool;
             return $this;
         }
@@ -49,7 +49,7 @@
          * fetch collection data
          * @return Collection
          */
-        public function fetch() {
+        public function fetch(): Collection {
 
             if ( empty( $this->mainCollectionObject->getJoins() ) ) {
                 $this->collectionResult = $this->simpleSelect();
@@ -64,7 +64,7 @@
          *
          * @return CollectionResult
          */
-        public function get() {
+        public function get(): CollectionResult {
 
             if ( $this->collectionResult === null ) {
                 $this->fetch();
