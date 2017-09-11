@@ -11,8 +11,9 @@
     extends DataModel {
 
         static protected $_transactionInitiatorId = null;
-        public $depth, $left, $right, $parentId, $id;
-        private $_after, $_before, $_under, $_atParentRight                   = true;
+        public $id;
+        protected $depth, $left, $right, $parentId;
+        private $_after, $_before, $_under, $_atParentRight = true;
 
         final protected static function _fetchMainAttribute(): string {
             return "id";
