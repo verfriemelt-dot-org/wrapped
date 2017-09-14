@@ -151,25 +151,36 @@
          *
          * @param type $func
          * @param array $args
-         * @return boolean
+         * @deprecated since version 0
          * @throws \Exception
          */
         public function propagateCall( $func, array $args = [] ) {
+            return $this->map( $func, $args );
+        }
+
+        /**
+         *
+         * @param type $callable
+         * @param array $args
+         * @return array
+         * @throws \Exception
+         */
+        public function map( $callable, array $args = [] ): array {
 
             $results = [];
 
-            if ( !is_callable($func) && !is_callable( [ $this->objPrototype, $func ] ) ) {
-                throw new \Exception( "illegal method {$func} to propagate on object" );
+            if ( !is_callable( $callable ) && !is_callable( [ $this->objPrototype, $callable ] ) ) {
+                throw new \Exception( "illegal method {$callable} to propagate on object" );
             }
 
             $this->rewind();
 
             foreach ( $this as $row ) {
 
-                if ( is_callable( $func ) ) {
-                    $results[] = $func( $row );
+                if ( is_callable( $callable ) ) {
+                    $results[] = $callable( $row );
                 } else {
-                    $results[] = $row->{$func}();
+                    $results[] = $row->{$callable}( ... $args );
                 }
             }
 
@@ -185,4 +196,5 @@
 
             return $tmp;
         }
+
     }
