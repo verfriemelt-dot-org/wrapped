@@ -3,6 +3,7 @@
     Interface SessionDataObject {
 
         public static function getBySessionId( $id );
+        public static function purgeOldSessions();
 
         public function getData();
         public function getTimeout();

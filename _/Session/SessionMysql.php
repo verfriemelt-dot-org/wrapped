@@ -14,6 +14,10 @@
             return static::findSingle( [ "sessionId" => $id ] );
         }
 
+        public static function purgeOldSessions() {
+            static::getDatabase()->delete( static::getTableName(), \Wrapped\_\Database\DbLogic::create()->where("timeout","<", time()));
+        }
+
         public static function fetchTablename() {
             return "Session";
         }

@@ -25,6 +25,8 @@
                 $this->storageObj = $sessionStorage;
             }
 
+            $this->storageObj::purgeOldSessions();
+
             if ( Request::getInstance()->cookies()->has( self::SESSION_COOKIE_NAME ) ) {
                 $this->resume( Request::getInstance()->cookies()->get( self::SESSION_COOKIE_NAME ) );
             } else {
@@ -37,7 +39,8 @@
             if ( $this->dataObj === null ) {
                 return false;
             }
-
+            
+            $this->dataObj->setTimeout( time() + static::SESSION_TIMEOUT );
             $this->dataObj->setData( serialize( $this->currentData ) );
             $this->dataObj->save();
         }
