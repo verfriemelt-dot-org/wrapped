@@ -10,7 +10,8 @@
     use \Wrapped\_\Http\ParameterBag;
     use \Wrapped\_\ObjectAnalyser;
 
-    abstract class DataModel {
+    abstract class DataModel
+    implements \Serializable {
 
         static public $_analyserObjectCache = [];
         protected $_propertyHashes          = [];
@@ -36,6 +37,23 @@
             $this->_storePropertyStates();
 
             return $this;
+        }
+
+        public function serialize() {
+
+            $analyser = new \Wrapped\_\ObjectAnalyser( static::class );
+            $values   = [];
+
+            foreach ( $analyser->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
+
+                $values[$column] = $this->{$getter}();
+            }
+
+            return json_encode( $values );
+        }
+
+        public function unserialize( $serialized ) {
+            $this->initData( (array) json_decode( $serialized ) );
         }
 
         protected static function _fetchMainAttribute(): string {
@@ -351,21 +369,6 @@
             }
 
             return $instance;
-        }
-
-        /**
-         * on serialisation return all attributes from object which will be stored
-         * @return array
-         */
-        public function __sleep() {
-            return static::fetchAnalyserObject()->fetchAllColumns();
-        }
-
-        /**
-         * restore current values for change detection
-         */
-        public function __wakeup() {
-            $this->_storePropertyStates();
         }
 
         /**

@@ -2,9 +2,10 @@
 
     namespace Wrapped\_\DataModel;
 
-    use \Exception;
-    use \PDO;
     use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\DataModel\Collection\CollectionResult;
+    use \Wrapped\_\DataModel\DataModel;
+    use \Wrapped\_\DataModel\TreeDataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class TreeDataModel
@@ -234,7 +235,7 @@
             if ( static::$_transactionInitiatorId === null ) {
                 static::$_transactionInitiatorId = $transactionInitiatorId;
                 static::getDatabase()->startTransaction();
-                static::getDatabase()->connectionHandle->setAttribute( \PDO::ATTR_AUTOCOMMIT, 0 );
+                static::getDatabase()->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 0 );
                 static::getDatabase()->query( "LOCK TABLE `" . static::getTableName() . "` WRITE, `" . static::getTableName() . "` AS parent WRITE, `" . static::getTableName() . "` AS node WRITE" );
             }
 
@@ -252,10 +253,10 @@
                 if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
                     static::getDatabase()->query( "UNLOCK TABLES" );
                     static::getDatabase()->commitTransaction();
-                    static::getDatabase()->connectionHandle->setAttribute( \PDO::ATTR_AUTOCOMMIT, 1 );
+                    static::getDatabase()->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 1 );
                     static::$_transactionInitiatorId = null;
                 }
-            } catch ( \Exception $e ) {
+            } catch ( Exception $e ) {
 
                 static::getDatabase()->rollbackTransaction();
                 static::getDatabase()->query( "UNLOCK TABLES" );
@@ -528,7 +529,7 @@
                         ORDER BY parent.`left`";
 
 
-            return new Collection\CollectionResult( $databaseHandle->query( $query ), static::class );
+            return new CollectionResult( $databaseHandle->query( $query ), static::class );
         }
 
         /**
