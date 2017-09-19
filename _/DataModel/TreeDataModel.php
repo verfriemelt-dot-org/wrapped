@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\DataModel;
 
+    use \PDO;
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\DataModel\Collection\CollectionResult;
     use \Wrapped\_\DataModel\DataModel;
@@ -14,7 +15,7 @@
         static protected $_transactionInitiatorId = null;
         public $id;
         protected $depth, $left, $right, $parentId;
-        private $_after, $_before, $_under, $_atParentRight = true;
+        private $_after, $_before, $_under, $_atParentRight                   = true;
 
         final protected static function _fetchMainAttribute(): string {
             return "id";
