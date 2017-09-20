@@ -85,4 +85,12 @@ use \Wrapped\_\Template\Variable;
 
             $this->assertEquals( $this->tpl->run(), "< > & ' \"" );
         }
+
+        public function testEmptyVariables() {
+
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate("{{ }}");
+            $this->assertEmpty($this->tpl->run());
+
+        }
 	}

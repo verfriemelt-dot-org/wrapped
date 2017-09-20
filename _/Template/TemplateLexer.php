@@ -1,18 +1,20 @@
-<?php namespace Wrapped\_\Template;
+<?php
 
-use \Exception;
-use \Wrapped\_\Template\Token\T_IfClose;
-use \Wrapped\_\Template\Token\T_IfElse;
-use \Wrapped\_\Template\Token\T_IfOpen;
-use \Wrapped\_\Template\Token\T_RepeaterClose;
-use \Wrapped\_\Template\Token\T_RepeaterOpen;
-use \Wrapped\_\Template\Token\T_String;
-use \Wrapped\_\Template\Token\T_Variable;
-use \Wrapped\_\Template\Token\Token;
+    namespace Wrapped\_\Template;
+
+    use \Exception;
+    use \Wrapped\_\Template\Token\T_IfClose;
+    use \Wrapped\_\Template\Token\T_IfElse;
+    use \Wrapped\_\Template\Token\T_IfOpen;
+    use \Wrapped\_\Template\Token\T_RepeaterClose;
+    use \Wrapped\_\Template\Token\T_RepeaterOpen;
+    use \Wrapped\_\Template\Token\T_String;
+    use \Wrapped\_\Template\Token\T_Variable;
+    use \Wrapped\_\Template\Token\Token;
 
     class TemplateLexer {
 
-        private $input = "";
+        private $input       = "";
         private $inputLength = 0;
 
         /**
@@ -26,16 +28,14 @@ use \Wrapped\_\Template\Token\Token;
          * @var \Wrapped\_\Template\Token
          */
         private $currentToken;
-
-        private $currentPos = 0;
-
+        private $currentPos   = 0;
         private $currentState = 1;
 
         // 0 = finished
         // 1 = Open CurlySuchen
         // 2 = CurlyOpenFound -> IF, ELSE, Repeater, Variable -> Closing
 
-        public function setTokenChain(Token $chain) {
+        public function setTokenChain( Token $chain ) {
             $this->tokenChain = $chain;
             return $this;
         }
@@ -46,7 +46,7 @@ use \Wrapped\_\Template\Token\Token;
          * @return TemplateLexer
          */
         public function lex( $input ) {
-            $this->input = $input;
+            $this->input       = $input;
             $this->inputLength = strlen( $this->input );
 
             if ( $this->inputLength > 0 ) {
@@ -61,7 +61,7 @@ use \Wrapped\_\Template\Token\Token;
         public function workon() {
 
             while ( $this->currentPos < $this->inputLength ) {
-                switch ($this->currentState) {
+                switch ( $this->currentState ) {
                     case 0 :
                         return true;
                     case 1 : $this->findOpenCurly();
@@ -76,49 +76,53 @@ use \Wrapped\_\Template\Token\Token;
 
         private function findCurlyContent() {
 
-            $closingCurlyPos = strpos( $this->input, "}}" , $this->currentPos );
+            $closingCurlyPos = strpos( $this->input, "}}", $this->currentPos );
 
             if ( $closingCurlyPos === false ) {
-                new Exception("closing curly missing");
+                new Exception( "closing curly missing" );
                 return;
             }
 
-            $contentBetween = substr( $this->input , $this->currentPos , $closingCurlyPos - $this->currentPos );
-            $hit = false;
+            $contentBetweenCurlyBraces = substr( $this->input, $this->currentPos, $closingCurlyPos - $this->currentPos );
+            $hit                       = false;
 
-            if ( preg_match( "~^ ?(?<negate>!)?(?<close>/)?(?<type>if|else)=['\"](?<name>[a-zA-Z0-9-_]+)['\"] ?$~", $contentBetween, $content) ) {
-
-                $token = $content["type"] === "else" ? new T_IfElse : ($content["close"] === "" ? new T_IfOpen() : new T_IfClose ) ;
-                $token->negated = $content["negate"] !== "";
-
-                $token->currentContent = $content["name"];
-                $hit = true;
+            if ( empty( trim( $contentBetweenCurlyBraces ) ) ) {
+                $this->currentState = 1;
+                $this->currentPos   = $closingCurlyPos + 2;
+                return false;
             }
 
-            if ( !$hit && preg_match( "~^ ?(?<close>/)?repeater=['\"](?<name>[a-zA-Z0-9-_]+)['\"] ?$~", $contentBetween, $content) ) {
+            if ( preg_match( "~^ ?(?<negate>!)?(?<close>/)?(?<type>if|else)=['\"](?<name>[a-zA-Z0-9-_]+)['\"] ?$~", $contentBetweenCurlyBraces, $pregHit ) ) {
 
-                $token = $content["close"] === "" ? new T_RepeaterOpen() : new T_RepeaterClose;
-                $token->currentContent = $content["name"];
+                $token                 = $pregHit["type"] === "else" ? new T_IfElse : ($pregHit["close"] === "" ? new T_IfOpen() : new T_IfClose );
+                $token->negated        = $pregHit["negate"] !== "";
+                $token->currentContent = $pregHit["name"];
+                $hit                   = true;
+            }
+
+            if ( !$hit && preg_match( "~^ ?(?<close>/)?repeater=['\"](?<name>[a-zA-Z0-9-_]+)['\"] ?$~", $contentBetweenCurlyBraces, $pregHit ) ) {
+
+                $token                 = $pregHit["close"] === "" ? new T_RepeaterOpen() : new T_RepeaterClose;
+                $token->currentContent = $pregHit["name"];
 
                 $this->appendToChain( $token );
             }
 
-            if ( !$hit && preg_match("~ ?(?<doNotEscape>!)? ?(?<name>[0-9a-zA-Z-_]+)\|?(?<format>[a-zA-Z0-9-_]+)? ?~", $contentBetween, $content) ) {
+            if ( !$hit && preg_match( "~ ?(?<doNotEscape>!)? ?(?<name>[0-9a-zA-Z-_]+)\|?(?<format>[a-zA-Z0-9-_]+)? ?~", $contentBetweenCurlyBraces, $pregHit ) ) {
 
                 // rest variable
-                $token = new T_Variable();
-                $token->currentContent = $content["name"];
+                $token                 = new T_Variable();
+                $token->currentContent = $pregHit["name"];
+                $token->escape         = $pregHit["doNotEscape"] !== "!";
 
-                if ( isset( $content["format"] )) {
-                    $token->formatCallback = $content["format"];
+                if ( isset( $pregHit["format"] ) ) {
+                    $token->formatCallback = $pregHit["format"];
                 }
-
-                $token->escape = $content["doNotEscape"] !== "!";
             }
 
             $this->appendToChain( $token );
 
-            $this->currentPos = $closingCurlyPos + 2;
+            $this->currentPos   = $closingCurlyPos + 2;
             $this->currentState = 1;
 
             return;
@@ -126,35 +130,33 @@ use \Wrapped\_\Template\Token\Token;
 
         private function findOpenCurly() {
 
-            $pos = strpos( $this->input , "{{", $this->currentPos);
+            $pos = strpos( $this->input, "{{", $this->currentPos );
 
             if ( $pos === false ) {
 
-                $content = substr( $this->input , $this->currentPos );
-                $token = new T_String();
+                $content               = substr( $this->input, $this->currentPos );
+                $token                 = new T_String();
                 $token->currentContent = $content;
-                $this->currentPos += strlen( $content );
-
+                $this->currentPos      += strlen( $content );
             } else {
 
                 // alles davor is string
-                $token = new T_String();
-                $token->currentContent = substr($this->input, $this->currentPos, $pos - $this->currentPos);
+                $token                 = new T_String();
+                $token->currentContent = substr( $this->input, $this->currentPos, $pos - $this->currentPos );
 
                 $this->currentState = 2;
-                $this->currentPos = $pos + 2;
-
+                $this->currentPos   = $pos + 2;
             }
 
             // zur chain
-            $this->appendToChain($token);
+            $this->appendToChain( $token );
         }
 
         private function appendToChain( \Wrapped\_\Template\Token\Token $token ) {
 
             if ( $this->tokenChain === null ) {
                 $this->tokenChain = $token;
-            }  else {
+            } else {
                 $this->currentToken->nextToken = $token;
             }
 
@@ -190,4 +192,5 @@ use \Wrapped\_\Template\Token\Token;
         public function getChain() {
             return $this->tokenChain;
         }
+
     }
