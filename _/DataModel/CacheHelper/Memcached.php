@@ -41,7 +41,7 @@
             }
 
             $cache = CacheFactory::getCache();
-            $data  = $cache->delete( static::class . $key );
+            $cache->delete( static::class . $key );
         }
 
         public function save() {
