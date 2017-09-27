@@ -40,8 +40,8 @@
          * @param mixed $params
          * @return static
          */
-        public static function make( ... $params ) {
-            return (new static( ... $params ) )->getContents();
+        public static function make( ... $params ): string {
+            return self::create( ... $params )->getContents();
         }
 
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {
