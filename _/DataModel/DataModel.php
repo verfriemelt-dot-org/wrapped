@@ -404,4 +404,12 @@
             return static::fetchAnalyserObject()->getObjectShortName();
         }
 
+        public function __clone() {
+
+            $mainAttribute = static::_fetchMainAttribute();
+            $setter = "set"  . ucfirst( $mainAttribute );
+
+            $this->{$setter}(null);
+        }
+
     }
