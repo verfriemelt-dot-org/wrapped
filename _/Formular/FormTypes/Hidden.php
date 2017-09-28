@@ -18,6 +18,8 @@
             $this->tpl->set( "name", $this->name );
             $this->tpl->set( "id", $this->name );
 
+            $this->tpl->set( "cssClasses", implode( " ", $this->cssClasses ) );
+
             return $this->tpl->run();
         }
 
