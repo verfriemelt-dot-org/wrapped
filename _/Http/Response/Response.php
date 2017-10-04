@@ -16,7 +16,7 @@
 
         public function __construct( int $statuscode = 200, string $content = null ) {
             $this->setStatusCode( $statuscode );
-            $this->setContent( $content );
+            $this->setContent( $content ?? "" );
         }
 
         public function setStatusCode( int $code ): Response {
@@ -34,7 +34,7 @@
             return $this;
         }
 
-        public function setContent( string $content ): Response {
+        public function setContent( $content ): Response {
             $this->content = $content;
             return $this;
         }
