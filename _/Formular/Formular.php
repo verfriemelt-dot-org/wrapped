@@ -12,6 +12,7 @@
     use \Wrapped\_\Formular\FormTypes\Text;
     use \Wrapped\_\Formular\FormTypes\Textarea;
     use \Wrapped\_\Http\Request\Request;
+    use \Wrapped\_\Input\CSRF;
     use \Wrapped\_\Input\Filter;
     use \Wrapped\_\Output\Viewable;
     use \Wrapped\_\Session\Session;
@@ -36,13 +37,12 @@
         private $csrfTokenName;
         private $storeValuesOnFail       = false;
         private $prefilledWithSubmitData = false;
+        private $session;
 
         private function generateCSRF() {
 
-            $token = md5( rand( 1, 10000000 ) . $this->formname . microtime( 1 ) );
-            Session::getInstance()->set( $this->csrfTokenName, $token );
-
-            return $token;
+            $csrf = new CSRF( $this->session );
+            return $csrf->generateToken( $this->csrfTokenName );
         }
 
         public function __construct( string $name, Filter $filter = null, Template $template = null, Session $session = null ) {
@@ -51,13 +51,9 @@
             $this->filter        = $filter ?? new Filter( "Form-" . $this->formname );
             $this->csrfTokenName = "csrf-" . md5( $this->formname );
 
-            if ( !Session::getInstance()->get( $this->csrfTokenName ) ) {
-                $token = $this->generateCSRF();
-            } else {
-                $token = Session::getInstance()->get( $this->csrfTokenName );
-            }
+            $this->session = $session ?? Session::getInstance();
 
-            $this->addHidden( self::CSRF_FIELD_NAME, $token );
+            $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
             $this->addHidden( self::FORM_FIELD_NAME, $this->formname );
 
             if ( !$template ) {

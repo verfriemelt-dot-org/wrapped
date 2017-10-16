@@ -1,7 +1,1 @@
-<input
-    type="hidden"
-    id="{{ name }}"
-    class="input-{{ name }}"
-    name="{{ name }}"
-    value="{{ value }}"
-    >
+<input type="hidden" id="{{ name }}" class="input-{{ name }} {{ cssClasses }}" name="{{ name }}" value="{{ value }}">

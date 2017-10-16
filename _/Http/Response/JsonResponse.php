@@ -2,8 +2,10 @@
 
     namespace Wrapped\_\Http\Response;
 
+    use \Wrapped\_\DataModel\Collection\CollectionResult;
+
     class JsonResponse
-    extends \Wrapped\_\Http\Response\Response {
+    extends Response {
 
         public function __construct( $content = null ) {
 
@@ -11,16 +13,14 @@
                 new HttpHeader( "Content-type", "application/json" )
             );
 
-            if ( $content !== null ) {
-                $this->setContent( $content );
-            }
-
-            if ( $content instanceof \Wrapped\_\DataModel\Collection\CollectionResult ) {
+            if ( $content instanceof CollectionResult ) {
                 $this->setContent( $content->toArray() );
+            } else {
+                $this->setContent( $content );
             }
         }
 
-        public function setContent( $content ): Response  {
+        public function setContent( $content ): Response {
             return parent::setContent( json_encode( $content ) );
         }
 

@@ -14,9 +14,9 @@
         private $statusText;
         private $contentCallback;
 
-        public function __construct( $statuscode = 200, $content = null ) {
+        public function __construct( int $statuscode = 200, string $content = null ) {
             $this->setStatusCode( $statuscode );
-            $this->setContent( $content );
+            $this->setContent( $content ?? "" );
         }
 
         public function setStatusCode( int $code ): Response {
@@ -29,7 +29,7 @@
             return $this;
         }
 
-        public function appendContent( $content ): Response {
+        public function appendContent( string $content ): Response {
             $this->content .= $content;
             return $this;
         }

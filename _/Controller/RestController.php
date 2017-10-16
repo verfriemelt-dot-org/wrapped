@@ -31,13 +31,4 @@
 
             return (new Response( Http::NOT_IMPLEMENTED ));
         }
-
-        abstract public function get( Request $request ): Response;
-
-        abstract public function put( Request $request ): Response;
-
-        abstract public function post( Request $request ): Response;
-
-        abstract public function delete( Request $request ): Response;
     }
-    
