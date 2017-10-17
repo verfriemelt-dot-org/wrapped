@@ -530,7 +530,7 @@
                         ORDER BY parent.`left`";
 
 
-            return new CollectionResult( $databaseHandle->query( $query ), static::class );
+            return new CollectionResult( $databaseHandle->query( $query ), new static() );
         }
 
         /**
