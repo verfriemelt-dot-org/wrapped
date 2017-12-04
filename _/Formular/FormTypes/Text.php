@@ -31,4 +31,5 @@
 
             return $this->tpl->run();
         }
+
     }

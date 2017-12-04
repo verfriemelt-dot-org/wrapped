@@ -6,6 +6,7 @@
     extends FormType {
 
         public $type = "checkbox";
+        private $checked;
 
         public function loadTemplate(): FormType {
             $this->tpl->parseFile( dirname( __DIR__ ) . "/Template/Checkbox.tpl.php" );
@@ -24,11 +25,16 @@
             return $this->tpl->run();
         }
 
+        public function checked( $bool = true ): FormType {
+            $this->checked = $bool;
+            return $this;
+        }
+
         protected function writeTplValues(): FormType {
 
             parent::writeTplValues();
-            $this->tpl->setIf( "checked", $this->value );
-
+            $this->tpl->setIf( "checked", $this->checked );
+            
             return $this;
         }
 

@@ -2,9 +2,11 @@
 
     namespace Wrapped\_\Formular;
 
+    use \Wrapped\_\DateTime\DateTime;
     use \Wrapped\_\Exception\Input\InputException;
     use \Wrapped\_\Formular\FormTypes\Button;
     use \Wrapped\_\Formular\FormTypes\Checkbox;
+    use \Wrapped\_\Formular\FormTypes\Date;
     use \Wrapped\_\Formular\FormTypes\FormType;
     use \Wrapped\_\Formular\FormTypes\Hidden;
     use \Wrapped\_\Formular\FormTypes\Password;
@@ -85,6 +87,21 @@
 
             $input = new Text( $name );
             $input->setValue( $value );
+            $input->setFilterItem( $this->filter->request()->has( $name ) );
+
+            $this->elements[$name] = $input;
+
+            return $input;
+        }
+
+        public function addDate( $name, DateTime $value = null ): Date {
+
+            $input = new Date( $name );
+
+            if ( $value ) {
+                $input->setValue( $value );
+            }
+
             $input->setFilterItem( $this->filter->request()->has( $name ) );
 
             $this->elements[$name] = $input;
@@ -204,7 +221,11 @@
                 Request::getInstance()->request() :
                 Request::getInstance()->query();
 
-            return $input->get( $name, null );
+            if ( !isset( $this->elements[$name]) ) {
+                return null;
+            }
+
+            return $this->elements[$name]->parseValue( $input->get( $name, null ) );
         }
 
         private function preFillFormWithSendData() {
