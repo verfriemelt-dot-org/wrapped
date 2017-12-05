@@ -55,7 +55,7 @@
          * @return mixed
          */
         public function current() {
-            return $this->offsetGet( $this->pointer );
+            return $this->valid() ? $this->offsetGet( $this->pointer ) : null;
         }
 
         /**
@@ -234,4 +234,13 @@
             return $this->resultObjects;
         }
 
+        /**
+         * on true, the item will be kept
+         * @param callable $function
+         * @return \Wrapped\_\DataModel\Collection\CollectionResult
+         */
+        public function filter(callable $function ): CollectionResult {
+            $newData = array_filter($this->resultObjects, $function );
+            return (new static(null, $this->objPrototype))->setResults( $newData );
+        }
     }
