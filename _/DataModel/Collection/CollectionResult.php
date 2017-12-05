@@ -55,7 +55,7 @@
          * @return mixed
          */
         public function current() {
-            return $this->valid() ? $this->offsetGet( $this->pointer ) : null;
+            return $this->valid() ? $this->offsetGet( $this->pointer ) : false;
         }
 
         /**
