@@ -33,7 +33,7 @@
         }
 
         public function setResults( $results ): CollectionResult {
-            $this->sqlResultAssoc = $results;
+            $this->sqlResultAssoc = array_values( $results );
             $this->resultLength   = count( $this->sqlResultAssoc );
             return $this;
         }
