@@ -16,12 +16,18 @@
         }
 
         public function setValue( $value ): FormType {
-            $this->value = $value->format( "Y-m-d" );
+
+            if ( $value instanceof DateTime ) {
+                $this->value = $value->format( "Y-m-d" );
+            } else {
+                $this->value = $value;
+            }
+
             return $this;
         }
 
         public function parseValue( $input ) {
-            return DateTime::createFromFormat( "Y-m-d", $input );
+            return DateTime::createFromFormat( "Y-m-d", $input )->setTime(0,0,0,0);
         }
 
         public function fetchHtml(): string {

@@ -8,6 +8,10 @@
         public $type = "checkbox";
         private $checked;
 
+        public function __construct( string $name, string $value = null, \Wrapped\_\Template\Template $template = null ) {
+            parent::__construct( $name, $value, $template );
+        }
+
         public function loadTemplate(): FormType {
             $this->tpl->parseFile( dirname( __DIR__ ) . "/Template/Checkbox.tpl.php" );
             return $this;
@@ -34,7 +38,7 @@
 
             parent::writeTplValues();
             $this->tpl->setIf( "checked", $this->checked );
-            
+
             return $this;
         }
 

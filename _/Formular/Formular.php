@@ -147,7 +147,7 @@
             return $button;
         }
 
-        public function addCheckbox( $name, $value = null ) {
+        public function addCheckbox( $name, $value = "check" ) {
 
             $checkbox              = new Checkbox( $name, $value );
             $this->elements[$name] = $checkbox;
@@ -239,7 +239,9 @@
 
                 $data = $this->get( $element->name );
 
-                if ( is_string( $data ) ) {
+                var_dump( $element->name,$data );
+
+                if ( is_string( $data ) || is_bool( $data ) ) {
                     $element->setValue( $this->get( $element->name ) );
                 }
             }
