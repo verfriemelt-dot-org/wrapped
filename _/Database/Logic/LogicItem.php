@@ -50,10 +50,6 @@
         }
 
         public function setTableName( $tableName ) {
-
-//            var_dump("!!!!!!!!!!!!!!!",$tableName);
-//            debug_print_backtrace();
-
             $this->tableName = $tableName;
             return $this;
         }

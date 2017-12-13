@@ -27,7 +27,15 @@
         }
 
         public function parseValue( $input ) {
-            return DateTime::createFromFormat( "Y-m-d", $input )->setTime(0,0,0,0);
+
+            $parsedTime = DateTime::createFromFormat( "Y-m-d", $input );
+
+            if ( $parsedTime ) {
+                $parsedTime->setTime(0,0,0,0);
+                return $parsedTime;
+            }
+
+            return null;
         }
 
         public function fetchHtml(): string {

@@ -239,8 +239,6 @@
 
                 $data = $this->get( $element->name );
 
-                var_dump( $element->name,$data );
-
                 if ( is_string( $data ) || is_bool( $data ) ) {
                     $element->setValue( $this->get( $element->name ) );
                 }

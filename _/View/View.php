@@ -28,6 +28,10 @@
             );
         }
 
+        public function fetchTemplateSource(): string {
+            return file_get_contents( $this->getTemplatePath() . $this->tplPath );
+        }
+
         /**
          * @return static
          */
