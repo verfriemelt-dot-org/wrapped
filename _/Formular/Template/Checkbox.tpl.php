@@ -6,7 +6,7 @@
         	id="{{ name }}"
         	class="input-{{ name }}"
         	name="{{ name }}"
-            value="{{ value }}"
+            value="check"
         	{{ if='placeholder' }} placeholder='{{ placeholder }}' {{ /if='placeholder' }}
         	{{ if='checked' }} checked="checked" {{ /if='checked'}}
         >
