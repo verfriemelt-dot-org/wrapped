@@ -18,7 +18,7 @@
             static::getDatabase()->delete( static::getTableName(), \Wrapped\_\Database\DbLogic::create()->where("timeout","<", time()));
         }
 
-        public static function fetchTablename() {
+        public static function fetchTablename(): string {
             return "Session";
         }
 
