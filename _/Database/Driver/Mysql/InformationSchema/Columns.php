@@ -37,7 +37,7 @@
             return Database::getConnection( "information-schema" );
         }
 
-        public static function fetchTablename() {
+        public static function fetchTablename(): string {
             return "COLUMNS";
         }
 
