@@ -166,7 +166,6 @@
                 return [];
             }
 
-            $this->rewind();
             $values = [];
 
             foreach ( $this as $row ) {
@@ -201,8 +200,6 @@
             if ( !is_callable( $callable ) && !is_callable( [ $this->objPrototype, $callable ] ) ) {
                 throw new Exception( "illegal method {$callable} to propagate on object" );
             }
-
-            $this->rewind();
 
             foreach ( $this as $row ) {
 

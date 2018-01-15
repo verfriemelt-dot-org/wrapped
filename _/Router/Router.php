@@ -27,13 +27,19 @@
             $this->setRequest( $request ?: Request::getInstance()  );
         }
 
+        /**
+         *
+         * @param Request $request
+         * @return \Wrapped\_\Router\Router
+         */
         public function setRequest( Request $request ): Router {
+
             $this->request = $request;
 
-            if ( php_sapi_name() == "cli" ) {
-                $this->uri = $this->request->uri();
-            } else {
+            if ( $this->request->pathInfo() !== null ) {
                 $this->uri = $this->request->pathInfo();
+            } else {
+                $this->uri = $this->request->uri();
             }
 
             return $this;

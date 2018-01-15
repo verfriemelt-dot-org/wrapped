@@ -123,7 +123,7 @@
         }
 
         /**
-         *
+         * The URI which was given in order to access this page; for instance, '/index.html'.
          * @return string
          */
         public function uri() {
@@ -134,6 +134,15 @@
             return explode( "?", $this->uri() )[0];
         }
 
+        /**
+         * Contains any client-provided pathname information trailing the actual
+         * script filename but preceding the query string, if available. For instance,
+         * if the current script was accessed via the
+         * URL http://www.example.com/php/path_info.php/some/stuff?foo=bar,
+         * then $_SERVER['PATH_INFO'] would contain /some/stuff
+         *
+         * @return type
+         */
         public function pathInfo() {
             return $this->server->get( "PATH_INFO" );
         }
