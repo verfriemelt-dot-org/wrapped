@@ -27,6 +27,7 @@
         protected $stderr           = STDERR;
         protected $linePrefixFunc;
         protected $hadLineOutput    = false;
+        protected $dimensions       = null;
 
         /**
          *
@@ -168,8 +169,8 @@
             return $this;
         }
 
-        public function jump( int $x = 0, int $y = 0 ):Console {
-            $this->write( "\e[{$y};{$x}f");
+        public function jump( int $x = 0, int $y = 0 ): Console {
+            $this->write( "\e[{$y};{$x}f" );
             return $this;
         }
 
@@ -178,6 +179,57 @@
          */
         public function __destruct() {
             $this->write( "\e[0m" );
+        }
+
+        public function getWidth() {
+
+            if ( $this->dimensions === null ) {
+                $this->updateDimensions();
+            }
+
+            return $this->dimensions[0] ?? null;
+        }
+
+        public function getHeight() {
+
+            if ( $this->dimensions === null ) {
+                $this->updateDimensions();
+            }
+
+            return $this->dimensions[1] ?? null;
+        }
+
+        public function updateDimensions(): bool {
+
+            $descriptorspec = [
+                1 => [ 'pipe', 'w' ],
+                2 => [ 'pipe', 'w' ],
+            ];
+
+            $process = proc_open( 'stty -a | grep columns', $descriptorspec, $pipes, null, null, [ 'suppress_errors' => true ] );
+
+            if ( is_resource( $process ) ) {
+                $info = stream_get_contents( $pipes[1] );
+                fclose( $pipes[1] );
+                fclose( $pipes[2] );
+                proc_close( $process );
+            } else {
+                return false;
+            }
+
+            if ( preg_match( '/rows.(\d+);.columns.(\d+);/i', $info, $matches ) ) {
+                // extract [w, h] from "rows h; columns w;"
+                $this->dimensions[0] = (int) $matches[2];
+                $this->dimensions[1] = (int) $matches[1];
+            } elseif ( preg_match( '/;.(\d+).rows;.(\d+).columns/i', $info, $matches ) ) {
+                // extract [w, h] from "; h rows; w columns"
+                $this->dimensions[0] = (int) $matches[2];
+                $this->dimensions[1] = (int) $matches[1];
+            } else {
+                return false;
+            }
+
+            return true;
         }
 
     }
