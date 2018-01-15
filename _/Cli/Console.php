@@ -59,20 +59,22 @@
             return implode( " ", $this->argv->except( [ 0 ] ) );
         }
 
-        public function setPrefixCallback( callable $func ) {
+        public function setPrefixCallback( callable $func ): Console {
             $this->linePrefixFunc = $func;
             return $this;
         }
 
-        public function toSTDOUT() {
+        public function toSTDOUT(): Console {
             $this->selectedStream = &$this->stdout;
+            return $this;
         }
 
-        public function toSTDERR() {
+        public function toSTDERR(): Console {
             $this->selectedStream = &$this->stderr;
+            return $this;
         }
 
-        public function write( $text ) {
+        public function write( $text ): Console {
 
             if ( $this->linePrefixFunc !== null && $this->hadLineOutput !== true ) {
                 fwrite( $this->selectedStream, ($this->linePrefixFunc)() );
@@ -81,6 +83,10 @@
 
             fwrite( $this->selectedStream, $text );
             return $this;
+        }
+
+        public function writeLn( $text ): Console {
+            return $this->write( $text )->eol();
         }
 
         public function eol(): Console {
@@ -127,7 +133,7 @@
             return $this;
         }
 
-        public function cls() {
+        public function cls(): Console {
             $this->write( "\e[2J" );
         }
 
@@ -181,7 +187,7 @@
             $this->write( "\e[0m" );
         }
 
-        public function getWidth() {
+        public function getWidth(): ?int {
 
             if ( $this->dimensions === null ) {
                 $this->updateDimensions();
@@ -190,7 +196,7 @@
             return $this->dimensions[0] ?? null;
         }
 
-        public function getHeight() {
+        public function getHeight(): ?int {
 
             if ( $this->dimensions === null ) {
                 $this->updateDimensions();

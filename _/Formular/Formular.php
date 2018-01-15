@@ -217,7 +217,7 @@
          */
         public function get( string $name ) {
 
-            $input = ($this->method == SELF::METHOD_POST ) ?
+            $input = ($this->method === SELF::METHOD_POST ) ?
                 Request::getInstance()->request() :
                 Request::getInstance()->query();
 
