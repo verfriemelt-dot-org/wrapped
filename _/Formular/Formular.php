@@ -2,9 +2,11 @@
 
     namespace Wrapped\_\Formular;
 
+    use \Wrapped\_\DateTime\DateTime;
     use \Wrapped\_\Exception\Input\InputException;
     use \Wrapped\_\Formular\FormTypes\Button;
     use \Wrapped\_\Formular\FormTypes\Checkbox;
+    use \Wrapped\_\Formular\FormTypes\Date;
     use \Wrapped\_\Formular\FormTypes\FormType;
     use \Wrapped\_\Formular\FormTypes\Hidden;
     use \Wrapped\_\Formular\FormTypes\Password;
@@ -92,6 +94,21 @@
             return $input;
         }
 
+        public function addDate( $name, DateTime $value = null ): Date {
+
+            $input = new Date( $name );
+
+            if ( $value ) {
+                $input->setValue( $value );
+            }
+
+            $input->setFilterItem( $this->filter->request()->has( $name ) );
+
+            $this->elements[$name] = $input;
+
+            return $input;
+        }
+
         public function addPassword( $name, $value = null ) {
             $input = new Password( $name );
             $input->setValue( $value );
@@ -130,7 +147,7 @@
             return $button;
         }
 
-        public function addCheckbox( $name, $value = null ) {
+        public function addCheckbox( $name, $value = "check" ) {
 
             $checkbox              = new Checkbox( $name, $value );
             $this->elements[$name] = $checkbox;
@@ -204,7 +221,11 @@
                 Request::getInstance()->request() :
                 Request::getInstance()->query();
 
-            return $input->get( $name, null );
+            if ( !isset( $this->elements[$name]) ) {
+                return null;
+            }
+
+            return $this->elements[$name]->parseValue( $input->get( $name, null ) );
         }
 
         private function preFillFormWithSendData() {
@@ -218,7 +239,7 @@
 
                 $data = $this->get( $element->name );
 
-                if ( is_string( $data ) ) {
+                if ( is_string( $data ) || is_bool( $data ) ) {
                     $element->setValue( $this->get( $element->name ) );
                 }
             }

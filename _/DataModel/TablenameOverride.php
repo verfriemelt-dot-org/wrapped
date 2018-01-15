@@ -2,7 +2,7 @@
 
     interface TablenameOverride {
 
-        static function fetchTablename();
+        static function fetchTablename(): string;
 
     }
 

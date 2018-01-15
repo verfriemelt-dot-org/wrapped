@@ -16,13 +16,17 @@
             // needed for in queries like SELECT * FROM foo WHERE id IN (1,2,3)
             if ( is_array($value) ) {
 
-                foreach ($value as &$valueItem) {
+                if ( !empty($value) ) {
 
-                    // rename for adding the colon!
-                    $valueItem = ":" . $logic->bindValue( $valueItem );
+                    foreach ( $value as &$valueItem ) {
+                        // rename for adding the colon!
+                        $valueItem = ":" . $logic->bindValue( $valueItem );
+                    }
+
+                    $this->sqlString .= "(" . implode( ",", $value ) . ")";
+                } else {
+                    $this->sqlString .= "('')";
                 }
-
-                $this->sqlString .= "(" . implode(",", $value) . ")";
 
             } else {
                 $this->sqlString .= ":" . $logic->bindValue( $value );

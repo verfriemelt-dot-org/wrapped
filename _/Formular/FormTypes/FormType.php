@@ -63,7 +63,6 @@
         }
 
         public function label( $label ): FormType {
-
             $this->label = $label;
             return $this;
         }
@@ -103,7 +102,7 @@
             $this->tpl->setIf( "required", $this->required );
 
             $this->tpl->set( "label", $this->label );
-            $this->tpl->setIf( "displayLabel", !empty( $this->label ) );
+            $this->tpl->setIf( "displayLabel", $this->label !== null );
 
             $this->tpl->set( "cssClasses", implode( " ", $this->cssClasses ) );
 
@@ -144,6 +143,10 @@
         public function required( $bool = true ): FormType {
             $this->required = $bool;
             return $this;
+        }
+
+        public function parseValue( $input ) {
+            return $input;
         }
 
     }
