@@ -282,7 +282,7 @@
          */
         public function delete( $table, DbLogic $where ) {
 
-            $statement = "DELETE FROM {$table} {$where->getString()}";
+            $statement = "DELETE FROM `{$table}` {$where->getString()}";
             $this->prepare( $statement );
 
             //bind where statement
@@ -308,7 +308,7 @@
          */
         public function select( $table, $what = "*", $dbLogic = null, $fetchMode = null ) {
 
-            $statement = "SELECT {$what} FROM {$table} ";
+            $statement = "SELECT {$what} FROM `{$table}` ";
 
             if ( $dbLogic !== null ) {
                 $statement .= $dbLogic->getString();
