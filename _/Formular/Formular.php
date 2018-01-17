@@ -147,7 +147,7 @@
             return $button;
         }
 
-        public function addCheckbox( $name, $value = "check" ) {
+        public function addCheckbox( $name, $value = null ) {
 
             $checkbox              = new Checkbox( $name, $value );
             $this->elements[$name] = $checkbox;
