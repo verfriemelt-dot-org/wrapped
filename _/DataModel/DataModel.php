@@ -40,12 +40,15 @@
         }
 
         public function serialize() {
+            return $this->toJson();
+        }
 
-            $analyser = new \Wrapped\_\ObjectAnalyser( static::class );
+        public function toJson(): string {
+
+            $analyser = $this::fetchAnalyserObject();
             $values   = [];
 
             foreach ( $analyser->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
-
                 $values[$column] = $this->{$getter}();
             }
 
