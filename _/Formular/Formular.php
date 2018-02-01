@@ -237,6 +237,10 @@
                     continue;
                 }
 
+                if ( $element instanceof Password ) {
+                    continue;
+                }
+
                 $data = $this->get( $element->name );
 
                 if ( is_string( $data ) || is_bool( $data ) ) {
