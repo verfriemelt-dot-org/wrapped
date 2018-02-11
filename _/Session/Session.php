@@ -129,6 +129,11 @@
         }
 
         public function fetchSessionId() {
+
+            if ( $this->sessionId === null ) {
+                $this->start();
+            }
+
             return $this->sessionId;
         }
 
