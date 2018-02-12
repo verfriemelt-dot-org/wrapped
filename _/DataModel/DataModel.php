@@ -43,7 +43,7 @@
             return $this->toJson();
         }
 
-        public function toJson(): string {
+        public function toJson( $pretty = false ): string {
 
             $analyser = $this::fetchAnalyserObject();
             $values   = [];
@@ -52,7 +52,7 @@
                 $values[$column] = $this->{$getter}();
             }
 
-            return json_encode( $values );
+            return json_encode( $values , $pretty ? 128 : null );
         }
 
         public function unserialize( $serialized ) {
