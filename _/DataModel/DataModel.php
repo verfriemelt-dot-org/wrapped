@@ -314,7 +314,7 @@
             );
         }
 
-        public static function count( $what = "*", $by = null, $and = true ) {
+        public static function count( $what = "*", $by = null, $and = true ): int {
 
             if ( is_array( $by ) ) {
 
@@ -343,7 +343,7 @@
                 static::getTableName(), "count(" . $what . ") as count", $by
             );
 
-            return $res->fetch()["count"];
+            return (int) $res->fetch()["count"];
         }
 
         /**
