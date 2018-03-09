@@ -29,6 +29,8 @@
         protected $hadLineOutput    = false;
         protected $dimensions       = null;
 
+        protected $inTerminal = false;
+
         protected $colorSupported = null;
         /**
          *
@@ -44,6 +46,8 @@
 
             $this->selectedStream = &$this->stdout;
             $this->argv           = new ParameterBag( $_SERVER["argv"] ?? [] );
+
+            $this->inTerminal = isset( $_SERVER['TERM'] );
         }
 
         public static function isCli(): bool {
@@ -250,6 +254,10 @@
         }
 
         public function supportsColor(): bool {
+
+            if ( !$this->inTerminal ) {
+                return false;
+            }
 
             $descriptorspec = [
                 1 => [ 'pipe', 'w' ],
