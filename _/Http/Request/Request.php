@@ -13,14 +13,14 @@
         protected static $instance;
 
         public function __construct(
-        array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
+            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
         ) {
 
             $this->initialize( $query, $request, $attributes, $cookies, $files, $server, $content );
         }
 
         private function initialize(
-        array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
+            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
         ) {
 
             $this->request    = new ParameterBag( $request );
@@ -36,7 +36,7 @@
                 parse_str( $content, $contents );
             }
 
-            $this->content = new ParameterBag( (array)$contents );
+            $this->content = new ParameterBag( (array) $contents );
         }
 
         /**

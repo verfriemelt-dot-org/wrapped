@@ -3,11 +3,12 @@
     namespace Wrapped\_\Session;
 
     use \Wrapped\_\Http\Request\Request;
+    use \Wrapped\_\Singleton;
 
     class Session
     implements SessionHandler {
 
-        use \Wrapped\_\Singleton;
+        use Singleton;
 
         CONST SESSION_COOKIE_NAME = "scId";
         CONST SESSION_TIMEOUT     = 60 * 60 * 24 * 7;
@@ -17,7 +18,7 @@
         private $storageObj  = null;
         private $currentData = [];
 
-        private function __construct( SessionDataObject $sessionStorage = null ) {
+        private function __construct( SessionDataObject $sessionStorage = null, Request $request = null ) {
 
             if ( $sessionStorage === null || class_implements( $sessionStorage, SessionDataObject::class ) ) {
                 $this->storageObj = SessionMysql::class;
@@ -27,10 +28,10 @@
 
             $this->storageObj::purgeOldSessions();
 
-            if ( Request::getInstance()->cookies()->has( self::SESSION_COOKIE_NAME ) ) {
-                $this->resume( Request::getInstance()->cookies()->get( self::SESSION_COOKIE_NAME ) );
-            } else {
-                $this->start();
+            $request = $request ?? Request::getInstance();
+
+            if ( $request->cookies()->has( self::SESSION_COOKIE_NAME ) ) {
+                $this->resume( $request->cookies()->get( self::SESSION_COOKIE_NAME ) );
             }
         }
 
@@ -39,7 +40,7 @@
             if ( $this->dataObj === null ) {
                 return false;
             }
-            
+
             $this->dataObj->setTimeout( time() + static::SESSION_TIMEOUT );
             $this->dataObj->setData( serialize( $this->currentData ) );
             $this->dataObj->save();
@@ -104,6 +105,10 @@
          */
         public function set( $name, $value ) {
 
+            if ( $this->sessionId === null ) {
+                $this->start();
+            }
+
             $this->currentData[$name] = $value;
             return $this;
         }
@@ -124,6 +129,12 @@
         }
 
         public function fetchSessionId() {
+
+            if ( $this->sessionId === null ) {
+                $this->start();
+            }
+
             return $this->sessionId;
         }
+
     }

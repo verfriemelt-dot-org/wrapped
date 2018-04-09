@@ -93,7 +93,7 @@
                 return false;
             }
 
-            $functionResult = $filterFunction();
+            $functionResult = $filterFunction( $this->request );
 
             if ( $functionResult === false ) {
                 return false;

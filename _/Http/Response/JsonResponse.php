@@ -3,6 +3,7 @@
     namespace Wrapped\_\Http\Response;
 
     use \Wrapped\_\DataModel\Collection\CollectionResult;
+    use \Wrapped\_\DataModel\DataModel;
 
     class JsonResponse
     extends Response {
@@ -21,7 +22,14 @@
         }
 
         public function setContent( $content ): Response {
-            return parent::setContent( json_encode( $content ) );
+
+            if ( $content instanceof DataModel ) {
+                $content = $content->toJson();
+            } else {
+                $content = json_encode( $content );
+            }
+
+            return parent::setContent( $content );
         }
 
     }

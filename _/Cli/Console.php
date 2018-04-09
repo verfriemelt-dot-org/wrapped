@@ -29,6 +29,9 @@
         protected $hadLineOutput    = false;
         protected $dimensions       = null;
 
+        protected $inTerminal = false;
+
+        protected $colorSupported = null;
         /**
          *
          * @var ParameterBag
@@ -43,6 +46,8 @@
 
             $this->selectedStream = &$this->stdout;
             $this->argv           = new ParameterBag( $_SERVER["argv"] ?? [] );
+
+            $this->inTerminal = isset( $_SERVER['TERM'] );
         }
 
         public static function isCli(): bool {
@@ -108,6 +113,15 @@
         }
 
         protected function setOutputStyling() {
+
+            if ( $this->colorSupported === null ) {
+                $this->colorSupported = $this->supportsColor();
+            }
+
+            if ( !$this->colorSupported ) {
+                return;
+            }
+
             $this->write( "\e[{$this->currentFontStyle};{$this->currentFgColor}m" );
 
             if ( $this->currentBgColor !== self::STYLE_NONE ) {
@@ -135,6 +149,7 @@
 
         public function cls(): Console {
             $this->write( "\e[2J" );
+            return $this;
         }
 
         public function up( int $amount = 1 ): Console {
@@ -236,6 +251,31 @@
             }
 
             return true;
+        }
+
+        public function supportsColor(): bool {
+
+            if ( !$this->inTerminal ) {
+                return false;
+            }
+
+            $descriptorspec = [
+                1 => [ 'pipe', 'w' ],
+                2 => [ 'pipe', 'w' ],
+            ];
+
+            $process = proc_open( 'tput colors', $descriptorspec, $pipes, null, null, [ 'suppress_errors' => true ] );
+
+            if ( is_resource( $process ) ) {
+                $info = stream_get_contents( $pipes[1] );
+                fclose( $pipes[1] );
+                fclose( $pipes[2] );
+                proc_close( $process );
+            } else {
+                return false;
+            }
+
+            return (int) $info > 1 ;
         }
 
     }

@@ -40,16 +40,19 @@
         }
 
         public function serialize() {
+            return $this->toJson();
+        }
 
-            $analyser = new \Wrapped\_\ObjectAnalyser( static::class );
+        public function toJson( $pretty = false ): string {
+
+            $analyser = $this::fetchAnalyserObject();
             $values   = [];
 
             foreach ( $analyser->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
-
                 $values[$column] = $this->{$getter}();
             }
 
-            return json_encode( $values );
+            return json_encode( $values , $pretty ? 128 : null );
         }
 
         public function fetchColumns() {
@@ -316,7 +319,7 @@
             );
         }
 
-        public static function count( $what = "*", $by = null, $and = true ) {
+        public static function count( $what = "*", $by = null, $and = true ): int {
 
             if ( is_array( $by ) ) {
 
@@ -345,7 +348,7 @@
                 static::getTableName(), "count(" . $what . ") as count", $by
             );
 
-            return $res->fetch()["count"];
+            return (int) $res->fetch()["count"];
         }
 
         /**
