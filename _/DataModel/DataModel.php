@@ -52,6 +52,11 @@
             return json_encode( $values );
         }
 
+        public function fetchColumns() {
+            $analyser = new \Wrapped\_\ObjectAnalyser( static::class );
+            return $analyser->fetchAllColumns();
+        }
+
         public function unserialize( $serialized ) {
             $this->initData( (array) json_decode( $serialized ) );
         }
