@@ -6,8 +6,6 @@
 
     trait Memcached {
 
-        protected static $_cacheKey;
-
         protected static function storeInCache( $instance, $key ): bool {
 
             if ( !CacheFactory::hasCache() ) {

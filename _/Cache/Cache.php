@@ -16,6 +16,11 @@
             return $this->provider->set( $key, $value, $timeout );
         }
 
+        /**
+         * false on not existing key
+         * @param string $key
+         * @return type
+         */
         public function get( string $key ) {
             return $this->provider->get( $key );
         }

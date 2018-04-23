@@ -8,7 +8,12 @@
         private $memcached;
         static private $prefix = "";
 
-        public static function isAvailable():bool {
+        public function __construct( $server = "127.0.0.1", $port = 11211 ) {
+            $this->memcached = new \Memcached();
+            $this->memcached->addServer( $server, $port );
+        }
+
+        public static function isAvailable(): bool {
             return class_exists( "\\Memcached" );
         }
 
@@ -20,12 +25,6 @@
             return static::$prefix . $key;
         }
 
-        public function __construct( $server = "127.0.0.1", $port = 11211 ) {
-            
-            $this->memcached = new \Memcached();
-            $this->memcached->addServer( $server, $port );
-        }
-
         public function set( string $key, $value, int $timeout = 0 ): bool {
             return $this->memcached->set( $this->prefix( $key ), $value, $timeout );
         }
@@ -34,6 +33,11 @@
             return $this->memcached->delete( $this->prefix( $key ) );
         }
 
+        /**
+         * returns false on not found key
+         * @param string $key
+         * @return type
+         */
         public function get( string $key ) {
             return $this->memcached->get( $this->prefix( $key ) );
         }
