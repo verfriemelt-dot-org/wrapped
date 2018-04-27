@@ -30,7 +30,7 @@
         private $statements = [];
         private $lastStatement;
 
-        public function __construct( $name, $user, $password, $host, $database ) {
+        public function __construct( $name, $user, $password, $host, $database, $port = null ) {
             $this->connectionName = $name;
 
             $this->config["dbUsername"] = $user;
@@ -38,6 +38,7 @@
             $this->config["dbPassword"] = $password;
             $this->config["dbDatabase"] = $database;
             $this->config["dbHost"]     = $host;
+            $this->config['dbPort'] = $port;
         }
 
         public function connect() {
@@ -55,8 +56,13 @@
         }
 
         private function getConnectionString() {
-            $this->connectionString = "pgsql:host={$this->config["dbHost"]};" .
-                "dbname={$this->config["dbDatabase"]}";
+            $this->connectionString = "pgsql:host={$this->config["dbHost"]};";
+
+            if ( $this->config['dbPort'] !== null ) {
+                $this->connectionString .= ";port={$this->config['dbPort']}";
+            }
+
+            $this->connectionString .= ";dbname={$this->config["dbDatabase"]}";
 
             return $this->connectionString;
         }

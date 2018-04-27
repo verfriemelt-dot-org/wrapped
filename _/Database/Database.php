@@ -1,8 +1,10 @@
-<?php namespace Wrapped\_\Database;
+<?php
+
+    namespace Wrapped\_\Database;
 
     class Database {
 
-        private static $connections = [ ];
+        private static $connections = [];
 
         /**
          *
@@ -12,7 +14,7 @@
          * @return Database\Driver\Mysql
          */
         public static function createNewConnection(
-          $name, $driver, $username, $password, $host, $database, $autoConnect = true ) {
+            $name, $driver, $username, $password, $host, $database, $port, $autoConnect = true ) {
 
             if ( !class_exists( $driver ) ) {
                 throw new Exception\Database\DatabaseDriverUnknown( "unknown driver {$driver}" );
@@ -56,4 +58,5 @@
         public function fetchConnectionHandle() {
             return $this->connectionHandle;
         }
+
     }
