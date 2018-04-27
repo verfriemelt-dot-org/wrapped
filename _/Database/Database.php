@@ -20,7 +20,7 @@
                 throw new Exception\Database\DatabaseDriverUnknown( "unknown driver {$driver}" );
             }
 
-            self::$connections[$name] = new $driver( $name, $username, $password, $host, $database );
+            self::$connections[$name] = new $driver( $name, $username, $password, $host, $database, $port );
 
             if ( $autoConnect ) {
                 self::$connections[$name]->connect();
