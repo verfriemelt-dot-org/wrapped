@@ -2,7 +2,7 @@
 
     namespace Wrapped\_\DataModel\Collection;
 
-    use \Wrapped\_\Database\Driver\Mysql\Table;
+    use \Wrapped\_\Database\Driver\SQL\Table;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
@@ -12,7 +12,6 @@
         private $mainCollectionObject;
         private $collectionResult;
         private $currentJoin = null;
-
         private $yieldMode = false;
 
         public function __construct( $model = null ) {
@@ -22,7 +21,7 @@
             }
         }
 
-        public function enableYieldmode( $bool = true): CollectionObject {
+        public function enableYieldmode( $bool = true ): CollectionObject {
             $this->yieldMode = $bool;
             return $this;
         }
@@ -88,7 +87,6 @@
             } else {
                 return new CollectionResult( $db->select( $table, $what, $dbLogic ), $model );
             }
-
         }
 
         private function join() {

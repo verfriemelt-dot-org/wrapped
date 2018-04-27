@@ -1,4 +1,4 @@
-<?php namespace Wrapped\_\Database\Logic;
+<?php namespace Wrapped\_\Database\SQL\Logic;
 
     abstract class LogicItem {
 

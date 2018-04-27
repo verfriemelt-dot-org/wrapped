@@ -1,10 +1,13 @@
 <?php
 
-    namespace Wrapped\_\Database\Driver\Mysql;
+    namespace Wrapped\_\Database\SQL;
+
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Mysql;
 
     class Join {
 
-        /** @var \Wrapped\_\Database\Driver\Mysql */
+        /** @var Mysql */
         private $db;
         private $table;
         private $stmt;
@@ -13,9 +16,9 @@
         private $dbLogic;
 
         public function __construct( Table $table, $db ) {
-            $this->table   = $table;
+            $this->table = $table;
             $this->table->setJoinHandle( $this );
-            $this->db      = $db;
+            $this->db    = $db;
         }
 
         public function with( $table, $on ) {
@@ -54,7 +57,7 @@
 
         /**
          * cycle through all the selections
-         * @param \Wrapped\_\Database\Driver\Mysql\Table $table
+         * @param \Wrapped\_\Database\Driver\SQL\Table $table
          * @return \Wrapped\_\Database\Driver\Mysql\Join
          */
         private function _parseSelects( Table $table ) {
@@ -111,7 +114,7 @@
             return $this;
         }
 
-        public function mergeDbLogic( \Wrapped\_\Database\DbLogic $logic ) {
+        public function mergeDbLogic( DbLogic $logic ) {
 
             if ( $this->dbLogic === null ) {
                 $this->dbLogic = $logic;

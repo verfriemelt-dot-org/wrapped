@@ -2,24 +2,29 @@
 
     namespace Wrapped\_\Database;
 
+    use \Wrapped\_\Database\SQL\Logic\Bracket;
+    use \Wrapped\_\Database\SQL\Logic\Column;
+    use \Wrapped\_\Database\SQL\Logic\Conjunction;
+    use \Wrapped\_\Database\SQL\Logic\LogicItem;
+    use \Wrapped\_\Database\SQL\Logic\NullValue;
+    use \Wrapped\_\Database\SQL\Logic\Operator;
+    use \Wrapped\_\Database\SQL\Logic\Raw;
+    use \Wrapped\_\Database\SQL\Logic\Value;
+    use \Wrapped\_\Database\SQL\Order;
+
     class DbLogic {
 
-
-        /** @var Logic\LogicItem **/
+        /** @var LogicItem * */
         public $logicChainStart;
 
-        /** @var Logic\LogicItem **/
+        /** @var LogicItem * */
         public $logicChainCurrent;
-
-        public $orderby = [];
-
-        private $bindings = [
-            "params" => [ ],
-            "vars" => [ ]
+        public $orderby          = [];
+        private $bindings        = [
+            "params" => [],
+            "vars"   => []
         ];
-
         private $rawString;
-
         private $tableName;
         private $bindingsCounter = 0;
         private $limit;
@@ -53,14 +58,14 @@
             return $this;
         }
 
-        private function appendToChain( Logic\LogicItem $item ) {
+        private function appendToChain( LogicItem $item ) {
 
             if ( $this->tableName !== null ) {
                 $item->setTableName( $this->tableName );
             }
 
             if ( $this->logicChainStart === null ) {
-                $this->logicChainStart = $item;
+                $this->logicChainStart   = $item;
                 $this->logicChainCurrent = $item;
             } else {
                 $this->logicChainCurrent->setNext( $item );
@@ -73,16 +78,15 @@
 
             if ( $this->logicChainCurrent === null ) {
 
-                $this->logicChainStart = $logic->logicChainStart;
+                $this->logicChainStart   = $logic->logicChainStart;
                 $this->logicChainCurrent = $logic->logicChainCurrent;
-
             } else {
 
                 $this->addAnd();
                 $this->logicChainCurrent->setNext( $logic->logicChainStart );
             }
 
-            foreach( $logic->getOrderBy() as $order) {
+            foreach ( $logic->getOrderBy() as $order ) {
                 $this->orderby[] = $order;
             }
 
@@ -95,55 +99,55 @@
          * @param type $column
          * @param type $op
          * @param type $value
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function where( $column, $op = null, $value = null, $bindToTable = null ) {
 
-            $logicColumn = new Logic\Column( $column );
+            $logicColumn = new Column( $column );
 
-            if ( $bindToTable !== null ) $logicColumn->setTableName ( $bindToTable );
+            if ( $bindToTable !== null )
+                $logicColumn->setTableName( $bindToTable );
 
             $this->appendToChain( $logicColumn );
 
-            $op !== null && $this->appendToChain( new Logic\Operator( $op ) );
-            $value !== null && $this->appendToChain( new Logic\Value( $value ) );
+            $op !== null && $this->appendToChain( new Operator( $op ) );
+            $value !== null && $this->appendToChain( new Value( $value ) );
 
             return $this;
         }
 
         public function isNull() {
-            $this->appendToChain( new Logic\Operator( "IS" ) );
-            $this->appendToChain( new Logic\NullValue() );
+            $this->appendToChain( new Operator( "IS" ) );
+            $this->appendToChain( new NullValue() );
 
             return $this;
         }
 
         public function isNotNull() {
-            $this->appendToChain( new Logic\Operator( "IS NOT" ) );
-            $this->appendToChain( new Logic\NullValue() );
+            $this->appendToChain( new Operator( "IS NOT" ) );
+            $this->appendToChain( new NullValue() );
 
             return $this;
         }
 
         public function isIn( array $param ) {
-            $this->appendToChain( new Logic\Operator( "IN" ) );
-            $this->appendToChain( new Logic\Value( $param ));
+            $this->appendToChain( new Operator( "IN" ) );
+            $this->appendToChain( new Value( $param ) );
 
             return $this;
         }
 
         public function isNotIn( array $param ) {
-            $this->appendToChain( new Logic\Operator( "NOT IN" ) );
-            $this->appendToChain( new Logic\Value( $param ));
+            $this->appendToChain( new Operator( "NOT IN" ) );
+            $this->appendToChain( new Value( $param ) );
 
             return $this;
         }
 
-
         /**
          *
          * @param type $column
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function column( $column ) {
             $this->appendToChain( $column );
@@ -154,73 +158,73 @@
         /**
          *
          * @param type $operator
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function op( $operator ) {
-            $this->appendToChain( new Logic\Operator( $operator ) );
+            $this->appendToChain( new Operator( $operator ) );
             return $this;
         }
 
         /**
          *
          * @param type $value
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function value( $value ) {
-            $this->appendToChain( new Logic\Value( $value ) );
+            $this->appendToChain( new Value( $value ) );
             return $this;
         }
 
         /**
          *
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function openBracket() {
-            $this->appendToChain( new Logic\Bracket( "(" ) );
+            $this->appendToChain( new Bracket( "(" ) );
             return $this;
         }
 
         /**
          *
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function closeBracket() {
-            $this->appendToChain( new Logic\Bracket( ")" ) );
+            $this->appendToChain( new Bracket( ")" ) );
             return $this;
         }
 
         /**
          *
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function addOr() {
-            $this->appendToChain( new Logic\Conjunction( "or" ) );
+            $this->appendToChain( new Conjunction( "or" ) );
             return $this;
         }
 
         /**
          *
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function addAnd() {
-            $this->appendToChain( new Logic\Conjunction( "and" ) );
+            $this->appendToChain( new Conjunction( "and" ) );
             return $this;
         }
 
         /**
          *
          * @param type $raw
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function raw( $raw ) {
-            $this->appendToChain( new Logic\Raw( $raw ) );
+            $this->appendToChain( new Raw( $raw ) );
             return $this;
         }
 
         private function parseLogicChain() {
 
             $currentLogicItem = $this->logicChainStart;
-            $string = "";
+            $string           = "";
 
             do {
                 $string .= " " . $currentLogicItem->fetchSqlString( $this );
@@ -247,10 +251,11 @@
             }
 
 
-            if ( !empty($this->orderby) ) {
+            if ( !empty( $this->orderby ) ) {
 
                 $orders = array_map( function ( Order $order ) {
-                    return $order->fetchOrderString(); }
+                    return $order->fetchOrderString();
+                }
                     , $this->orderby
                 );
 
@@ -279,13 +284,13 @@
          * @return string
          */
         public function getString( $withoutWhereBlock = false ) {
-            return $this->rawString ? : $this->compile( $withoutWhereBlock );
+            return $this->rawString ?: $this->compile( $withoutWhereBlock );
         }
 
         /**
          *
          * @param type $limit
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function limit( $limit ) {
             $this->limit = $limit;
@@ -323,7 +328,7 @@
          * @param type $type
          * @return static
          */
-        public function order( $column , $direction = "ASC", $overrideTable = null) {
+        public function order( $column, $direction = "ASC", $overrideTable = null ) {
             $this->orderby[] = new Order( $column, $direction, $overrideTable ?: $this->getTableName() );
             return $this;
         }
@@ -331,13 +336,13 @@
         /**
          * binds the given value to the query
          * @param type $value
-         * @return \Wrapped\_\Database\DbLogic
+         * @return DbLogic
          */
         public function bindValue( $value ) {
 
-            $binding = "bind" . $this->bindingsCounter++;
+            $binding                    = "bind" . $this->bindingsCounter++;
             $this->bindings["params"][] = $binding;
-            $this->bindings["vars"][] = $value;
+            $this->bindings["vars"][]   = $value;
 
             return $binding;
         }
@@ -357,7 +362,7 @@
         public function parseArray( $data ) {
 
             $count = count( $data );
-            $i = 0;
+            $i     = 0;
 
             foreach ( $data as $column => $value ) {
 
@@ -388,7 +393,7 @@
          * @return bool
          */
         public function lastItemWasConjunction() {
-            return $this->logicChainCurrent instanceof Logic\Conjunction;
+            return $this->logicChainCurrent instanceof Conjunction;
         }
 
         public function isEmpty() {
@@ -404,14 +409,15 @@
             $current = $this->logicChainStart;
 
             $this->logicChainCurrent = null;
-            $this->logicChainStart = null;
+            $this->logicChainStart   = null;
 
             $this->appendToChain( clone $current );
 
-            while( $next = $current->getNext() ) {
-                $clone = clone $next;
+            while ( $next = $current->getNext() ) {
+                $clone   = clone $next;
                 $this->appendToChain( $clone );
                 $current = $clone;
             }
         }
+
     }

@@ -8,12 +8,10 @@
     use \PDOStatement;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Mysql\Schema;
     use \Wrapped\_\Database\SQL\Join;
     use \Wrapped\_\Database\SQL\Table;
-    use \Wrapped\_\Exception\Database\DatabaseException;
 
-    class Mysql
+    class Postgres
     extends Database {
 
         public $config                    = [];
@@ -44,22 +42,12 @@
 
         public function connect() {
 
-            try {
-                $this->connectionHandle = new PDO(
-                    $this->getConnectionString(), $this->config["dbUsername"], $this->config["dbPassword"]
-                );
+            $this->connectionHandle = new PDO(
+                $this->getConnectionString(), $this->config["dbUsername"], $this->config["dbPassword"]
+            );
 
-                // switch to error mode to exceptions
-                $this->connectionHandle->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            } catch ( PDOException $e ) {
-                $msg = $e->getMessage();
-
-                if ( $msg == "could not find driver" ) {
-                    throw new DatabaseException( "PDO Mysql Driver not available" );
-                }
-
-                throw new DatabaseException( "PDO Exception {$e->getMessage()}" );
-            }
+            // switch to error mode to exceptions
+            $this->connectionHandle->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
             // unset config data
             $this->currentDatabase = $this->config["dbDatabase"];
@@ -67,7 +55,7 @@
         }
 
         private function getConnectionString() {
-            $this->connectionString = "mysql:host={$this->config["dbHost"]};" .
+            $this->connectionString = "pgsql:host={$this->config["dbHost"]};" .
                 "dbname={$this->config["dbDatabase"]}";
 
             return $this->connectionString;
@@ -381,24 +369,6 @@
             $j = new Join( $t, $this );
 
             return $t;
-        }
-
-        /**
-         *
-         * @param type $name
-         * @return Schema
-         */
-        public function createSchema( $name ) {
-            return Schema::create( $name, $this );
-        }
-
-        /**
-         *
-         * @param type $name
-         * @return Schema
-         */
-        public function getSchema( $name ) {
-            return $this->createSchema( $name );
         }
 
         public function getCurrentDatabase() {

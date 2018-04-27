@@ -1,6 +1,6 @@
 <?php
 
-    namespace Wrapped\_\Database\Driver\Mysql;
+    namespace Wrapped\_\Database\SQL;
 
     class Table {
 

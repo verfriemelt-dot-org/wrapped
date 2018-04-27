@@ -1,4 +1,6 @@
-<?php namespace Wrapped\_\Database;
+<?php
+
+    namespace Wrapped\_\Database\SQL;
 
     class Order {
 
@@ -6,10 +8,10 @@
         private $column;
         private $table = null;
 
-        public function __construct( $column , $direction, $table = null ) {
-            $this->column = $column;
+        public function __construct( $column, $direction, $table = null ) {
+            $this->column    = $column;
             $this->direction = $direction;
-            $this->table = $table;
+            $this->table     = $table;
         }
 
         public function fetchOrderString() {
@@ -19,4 +21,5 @@
 
             return $str;
         }
+
     }

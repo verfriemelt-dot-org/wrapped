@@ -1,6 +1,6 @@
-<?php namespace Wrapped\_\Database\Logic;
+<?php namespace Wrapped\_\Database\SQL\Logic;
 
-    class Column extends \Wrapped\_\Database\Logic\LogicItem {
+    class Column extends \Wrapped\_\Database\SQL\Logic\LogicItem {
 
         public function fetchSqlString( \Wrapped\_\Database\DbLogic $logic ) {
 
