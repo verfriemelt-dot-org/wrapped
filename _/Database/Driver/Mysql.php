@@ -2,210 +2,24 @@
 
     namespace Wrapped\_\Database\Driver;
 
-    use \Exception;
-    use \PDO;
-    use \PDOException;
-    use \PDOStatement;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Mysql\Schema;
-    use \Wrapped\_\Database\SQL\Join;
-    use \Wrapped\_\Database\SQL\Table;
-    use \Wrapped\_\Exception\Database\DatabaseException;
+use \PDO;
+use \PDOStatement;
+use \Wrapped\_\Database\DbLogic;
+use \Wrapped\_\Database\Driver\Mysql\Schema;
+use \Wrapped\_\Database\SQL\Join;
+use \Wrapped\_\Database\SQL\Table;
 
     class Mysql
-    extends Database {
+    extends Driver {
 
-        public $config                    = [];
-        public static $debug              = false;
-        public static $debugHistory       = [];
-        public static $debugLastStatement = null;
-        public static $debugLastParams    = null;
-        public static $debugQuerieCount   = 0;
-        public static $counter            = 0;
-        public static $time               = 0;
-        public $connectionName;
+        const PDO_NAME = 'mysql';
 
-        /** @var PDO */
-        public $connectionHandle;
-        private $currentDatabase;
-        private $statements = [];
-        private $lastStatement;
-
-        public function __construct( $name, $user, $password, $host, $database, $port = null ) {
-            $this->connectionName = $name;
-
-            $this->config["dbUsername"] = $user;
-            $this->config["dbPassword"] = $password;
-            $this->config["dbPassword"] = $password;
-            $this->config["dbDatabase"] = $database;
-            $this->config["dbHost"]     = $host;
-            $this->config['dbPort'] = $port;
-        }
-
-        public function connect() {
-
-            try {
-                $this->connectionHandle = new PDO(
-                    $this->getConnectionString(), $this->config["dbUsername"], $this->config["dbPassword"]
-                );
-
-                // switch to error mode to exceptions
-                $this->connectionHandle->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            } catch ( PDOException $e ) {
-                $msg = $e->getMessage();
-
-                if ( $msg == "could not find driver" ) {
-                    throw new DatabaseException( "PDO Mysql Driver not available" );
-                }
-
-                throw new DatabaseException( "PDO Exception {$e->getMessage()}" );
-            }
-
-            // unset config data
-            $this->currentDatabase = $this->config["dbDatabase"];
-            $this->config          = [];
-        }
-
-        private function getConnectionString() {
-            $this->connectionString = "mysql:host={$this->config["dbHost"]};";
-
-            if ( $this->config['dbPort'] !== null ) {
-                $this->connectionString .= ";port={$this->config['dbPort']}";
-            }
-
-            $this->connectionString .= ";dbname={$this->config["dbDatabase"]}";
-
-            return $this->connectionString;
+        public function quoteIdentifier( string $ident ): string {
+            return "`{$ident}`";
         }
 
         public function enableUnbufferedMode( $bool = true ) {
             $this->connectionHandle->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, !$bool );
-            return $this;
-        }
-
-        /**
-         * bind values to the pdo statement
-         * @param type $statement
-         * @param type $param
-         * @param type $var
-         * @return Mysql
-         */
-        public function bind( $statement, $param, $var ) {
-
-            if ( is_array( $param ) && is_array( $var ) && \count( $param ) == \count( $var ) ) {
-                for ( $i = 0, $count = \count( $var ); $i < $count; ++$i ) {
-                    $statement->bindValue( ":" . $param[$i], $var[$i] );
-                }
-            } else {
-                $statement->bindValue( ":" . $param, $var );
-            }
-
-            return $this;
-        }
-
-        private function bindLast( $param, $var ) {
-
-            self::$debugLastParams["param"][] = $param;
-            self::$debugLastParams["var"][]   = $var;
-
-            $this->bind( $this->lastStatement, $param, $var );
-            return $this;
-        }
-
-        private function freeLastStatement() {
-
-            if ( ($key = array_search( $this->lastStatement, $this->statements )) !== false ) {
-                unset( $this->statements[$key] );
-            }
-        }
-
-        /**
-         *
-         * @param type $statement
-         * @return boolean
-         * @throws Exception
-         */
-        public function execute( $statement ) {
-
-            $start = microtime( 1 );
-
-            $this->connectionHandle->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-            try {
-                $this->lastresult = $statement->execute();
-            } catch ( PDOException $e ) {
-                throw new Exception( $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" );
-            }
-
-            $time = microtime( 1 ) - $start;
-
-            if ( static::$debug ) {
-
-//                $trace = debug_backtrace();
-//                $log = [];
-//
-//                foreach( $trace as $entry ) {
-//
-//                    if ( !isset($entry["file"])) {
-//                        continue;
-//                    }
-//
-//                    $log[] = $entry["file"] . ":" . $entry["line"];
-//                }
-
-                static::$debugHistory[] = [
-                    "con"       => $this->connectionName,
-                    "count"     => ++static::$debugQuerieCount,
-                    "time"      => $time, "statement" => self::$debugLastStatement,
-                    "data"      => self::$debugLastParams,
-//                    "stack" => $log
-                ];
-            }
-
-            static::$time += $time;
-            return true;
-        }
-
-        /**
-         *
-         * @return PDOStatement
-         */
-        public function getLastResult() {
-            return $this->lastStatement;
-        }
-
-        /**
-         * executes last prepared statement
-         * @return bool
-         */
-        public function executeLast() {
-            return $this->execute( $this->lastStatement );
-        }
-
-        /**
-         * prepares statement
-         * @param type $statement
-         * @return Mysql
-         */
-        public function prepare( $statement, $prepareOptions = [] ) {
-
-            if ( self::$debug ) {
-                self::$debugLastParams    = [];
-                self::$debugLastStatement = $statement;
-            }
-
-            $name = md5( $statement );
-
-            if ( array_key_exists( $name, $this->statements ) ) {
-
-                $this->lastStatement = $this->statements[$name];
-                return $this;
-            }
-
-            $this->statements[$name] = $this->connectionHandle->prepare( $statement );
-            $this->lastStatement     = $this->statements[$name];
-
             return $this;
         }
 
@@ -281,62 +95,6 @@
             return $result;
         }
 
-        /**
-         * delete entries from tables
-         * @param type $table
-         * @param array $params
-         */
-        public function delete( $table, DbLogic $where ) {
-
-            $statement = "DELETE FROM `{$table}` {$where->getString()}";
-            $this->prepare( $statement );
-
-            //bind where statement
-            if ( $where !== null ) {
-                $bindings = $where->getBindings();
-                $this->bindLast( $bindings["params"], $bindings["vars"] );
-            }
-
-            $this->executeLast();
-            $result = $this->lastStatement->rowCount();
-            $this->freeLastStatement();
-
-            return $result;
-        }
-
-        /**
-         *
-         * @param type $table
-         * @param type $what
-         * @param DbLogic $dbLogic
-         * @param type $fetchMode
-         * @return PDOStatement
-         */
-        public function select( $table, $what = "*", $dbLogic = null, $fetchMode = null ) {
-
-            $statement = "SELECT {$what} FROM `{$table}` ";
-
-            if ( $dbLogic !== null ) {
-                $statement .= $dbLogic->getString();
-            }
-
-            $this->prepare( $statement );
-
-            //bind where statement
-            if ( $dbLogic !== null ) {
-                $bindings = $dbLogic->getBindings();
-                $this->bindLast( $bindings["params"], $bindings["vars"] );
-            }
-
-            $this->executeLast();
-
-            $result = $this->lastStatement;
-            $result->setFetchMode( $fetchMode ?: PDO::FETCH_ASSOC  );
-
-            $this->freeLastStatement();
-
-            return $result;
-        }
 
         /**
          * executes raw querie

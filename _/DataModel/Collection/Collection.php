@@ -12,7 +12,7 @@
         private $mainCollectionObject;
         private $collectionResult;
         private $currentJoin = null;
-        private $yieldMode = false;
+        private $yieldMode   = false;
 
         public function __construct( $model = null ) {
 
@@ -80,12 +80,17 @@
             $db    = $model::getDatabase();
             $table = $model::getTableName();
 
-            $what = "`" . implode( "`, `", $model::fetchAnalyserObject()->fetchAllColumns() ) . "`";
+            $select = $db->select( $table );
+            $select->setDbLogic( $dbLogic );
+
+            foreach ( $model::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
+            }
 
             if ( $this->yieldMode ) {
-                return new CollectionResultYield( $db->select( $table, $what, $dbLogic ), $model );
+                return new CollectionResultYield( $select->run(), $model );
             } else {
-                return new CollectionResult( $db->select( $table, $what, $dbLogic ), $model );
+                return new CollectionResult( $select->run(), $model );
             }
         }
 
