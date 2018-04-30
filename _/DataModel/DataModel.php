@@ -232,7 +232,12 @@
          * @return static
          */
         public function save() {
-            return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->_insertDbRecord() : $this->_updateDbRecord();
+
+            if ( static::_fetchPrimaryKey() !== null ) {
+                return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->_insertDbRecord() : $this->_updateDbRecord();
+            } else {
+                $this->_insertDbRecord();
+            }
         }
 
         private function _insertDbRecord() {
@@ -250,10 +255,10 @@
             }
 
             $insert->run();
-            $id = $db->fetchConnectionHandle()->lastInsertId();
 
             // should be refactored
             if ( static::_fetchPrimaryKey() == "id" ) {
+                $id = $db->fetchConnectionHandle()->lastInsertId();
                 $this->setId( $id );
             }
 
