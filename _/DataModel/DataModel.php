@@ -7,6 +7,7 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\DataModel\Collection\Collection;
+    use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
     use \Wrapped\_\ObjectAnalyser;
@@ -65,7 +66,7 @@
             $this->initData( (array) json_decode( $serialized ) );
         }
 
-        protected static function _fetchMainAttribute(): string {
+        protected static function _fetchPrimaryKey(): ?string {
             return "id";
         }
 
@@ -93,12 +94,18 @@
          */
         public static function get( $id ) {
 
+            $pk = static::_fetchPrimaryKey();
+
+            if ( $pk === null ) {
+                throw new DatabaseException( "::get is not possible without PK" );
+            }
+
             $tableName = static::getTableName();
             $db        = static::getDatabase();
 
             $select = $db->select( $tableName );
             $select->all();
-            $select->setDbLogic( (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $id )->limit( 1 ) );
+            $select->setDbLogic( (new DbLogic() )->where( $pk, "=", $id )->limit( 1 ) );
 
             $res = $select->run();
 
@@ -116,7 +123,7 @@
 
             $select = $db->select( $tableName );
             $select->all();
-            $select->setDbLogic( (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} )->limit( 1 ) );
+            $select->setDbLogic( (new DbLogic() )->where( static::_fetchPrimaryKey(), "=", $this->{static::_fetchPrimaryKey()} )->limit( 1 ) );
 
             $res = $select->run();
 
@@ -225,7 +232,7 @@
          * @return static
          */
         public function save() {
-            return $this->_isPropertyFuzzy( static::_fetchMainAttribute(), $this->{static::_fetchMainAttribute()} ) ? $this->_insertDbRecord() : $this->_updateDbRecord();
+            return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->_insertDbRecord() : $this->_updateDbRecord();
         }
 
         private function _insertDbRecord() {
@@ -235,7 +242,7 @@
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
-                if ( $col["column"] == static::_fetchMainAttribute() && $this->{static::_fetchMainAttribute()} === null ) {
+                if ( static::_fetchPrimaryKey() !== null && $col["column"] == static::_fetchPrimaryKey() && $this->{static::_fetchPrimaryKey()} === null ) {
                     continue;
                 }
 
@@ -245,7 +252,8 @@
             $insert->run();
             $id = $db->fetchConnectionHandle()->lastInsertId();
 
-            if ( static::_fetchMainAttribute() == "id" ) {
+            // should be refactored
+            if ( static::_fetchPrimaryKey() == "id" ) {
                 $this->setId( $id );
             }
 
@@ -256,7 +264,13 @@
 
         public function _updateDbRecord() {
 
-            $logic = (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} );
+            $pk = static::_fetchPrimaryKey();
+
+            if ( $pk === null ) {
+                throw new DatabaseException( "updating datamodels to database not possible without pk defined" );
+            }
+
+            $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
 
             $db     = static::getDatabase();
             $update = $db->update( static::getTableName() );
@@ -266,7 +280,7 @@
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
-                if ( $col["column"] === static::_fetchMainAttribute() ) {
+                if ( $col["column"] === $pk ) {
                     continue;
                 }
 
@@ -312,12 +326,18 @@
          */
         public function delete() {
 
-            if ( $this->{static::_fetchMainAttribute()} === null ) {
+            $pk = static::_fetchPrimaryKey();
+
+            if ( $pk === null ) {
+                throw new DatabaseException( 'deleting not possible without primary key' );
+            }
+
+            if ( $this->{$pk} === null ) {
                 return;
             }
 
             $db    = static::getDatabase();
-            $logic = (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} );
+            $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
 
             $delete = $db->delete( static::getTableName() );
             $delete->setDbLogic( $logic );
@@ -423,10 +443,12 @@
 
         public function __clone() {
 
-            $mainAttribute = static::_fetchMainAttribute();
-            $setter        = "set" . ucfirst( $mainAttribute );
+            $pk = static::_fetchPrimaryKey();
 
-            $this->{$setter}( null );
+            if ( $pk !== null ) {
+                $setter = "set" . ucfirst( $pk );
+                $this->{$setter}( null );
+            }
         }
 
     }

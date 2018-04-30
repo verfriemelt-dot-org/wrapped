@@ -17,7 +17,7 @@
         protected $depth, $left, $right, $parentId;
         private $_after, $_before, $_under, $_atParentRight                   = true;
 
-        final protected static function _fetchMainAttribute(): string {
+        final protected static function _fetchPrimaryKey(): string {
             return "id";
         }
 
