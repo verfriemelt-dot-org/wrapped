@@ -10,7 +10,8 @@
         public function compile(): string {
             return
                 static::VERB . " " .
-                "FROM " . $this->table;
+                "FROM " . $this->table .
+                $this->fetchLogic();
         }
 
     }

@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\DataModel;
 
+    use \Serializable;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\Mysql;
@@ -11,7 +12,7 @@
     use \Wrapped\_\ObjectAnalyser;
 
     abstract class DataModel
-    implements \Serializable {
+    implements Serializable {
 
         static public $_analyserObjectCache = [];
         protected $_propertyHashes          = [];
@@ -52,11 +53,11 @@
                 $values[$column] = $this->{$getter}();
             }
 
-            return json_encode( $values , $pretty ? 128 : null );
+            return json_encode( $values, $pretty ? 128 : null );
         }
 
         public function fetchColumns() {
-            $analyser = new \Wrapped\_\ObjectAnalyser( static::class );
+            $analyser = new ObjectAnalyser( static::class );
             return $analyser->fetchAllColumns();
         }
 
@@ -95,10 +96,11 @@
             $tableName = static::getTableName();
             $db        = static::getDatabase();
 
-            //loading from db
-            $res = $db->select(
-                $tableName, "*", (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $id )->limit( 1 )
-            );
+            $select = $db->select( $tableName );
+            $select->all();
+            $select->setDbLogic( (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $id )->limit( 1 ) );
+
+            $res = $select->run();
 
             if ( $res->rowCount() === 0 ) {
                 throw new DatabaseObjectNotFound( "no such object found in database with name " . static::class . " and id {$id}" );
@@ -112,10 +114,11 @@
             $tableName = static::getTableName();
             $db        = static::getDatabase();
 
-            //loading from db
-            $res = $db->select(
-                $tableName, "*", (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->id )->limit( 1 )
-            );
+            $select = $db->select( $tableName );
+            $select->all();
+            $select->setDbLogic( (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} )->limit( 1 ) );
+
+            $res = $select->run();
 
             if ( $res->rowCount() === 0 ) {
                 throw new DatabaseObjectNotFound( "no such object found in database with name " . static::class . " and id {$id}" );
@@ -227,7 +230,8 @@
 
         private function _insertDbRecord() {
 
-            $insert = [];
+            $db     = static::getDatabase();
+            $insert = $db->insert( static::getTableName() );
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
@@ -235,11 +239,11 @@
                     continue;
                 }
 
-                $insert[$col["column"]] = $this->{$col["getter"]}();
+                $insert->insert( $col["column"], $this->{$col["getter"]}() );
             }
 
-            $db = static::getDatabase();
-            $id = $db->insert( static::getTableName(), $insert );
+            $insert->run();
+            $id = $db->fetchConnectionHandle()->lastInsertId();
 
             if ( static::_fetchMainAttribute() == "id" ) {
                 $this->setId( $id );
@@ -252,7 +256,13 @@
 
         public function _updateDbRecord() {
 
-            $colsToUpdate = [];
+            $logic = (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} );
+
+            $db     = static::getDatabase();
+            $update = $db->update( static::getTableName() );
+            $update->setDbLogic( $logic );
+
+            $hasUpdates = false;
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
@@ -263,20 +273,15 @@
                 $currentData = $this->{$col["getter"]}();
 
                 if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
-                    $colsToUpdate[$col["column"]] = $currentData;
+                    $update->update( $col["column"], $currentData );
+
+                    $hasUpdates = true;
                 }
             }
 
-            if ( empty( $colsToUpdate ) ) {
-                return $this;
+            if ( $hasUpdates ) {
+                $update->run();
             }
-
-            $logic = (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} );
-
-            $db = static::getDatabase();
-            $db->update(
-                static::getTableName(), $colsToUpdate, $logic
-            );
 
             return $this;
         }
@@ -314,39 +319,43 @@
             $db    = static::getDatabase();
             $logic = (new DbLogic() )->where( static::_fetchMainAttribute(), "=", $this->{static::_fetchMainAttribute()} );
 
-            $db->delete(
-                static::getTableName(), $logic
-            );
+            $delete = $db->delete( static::getTableName() );
+            $delete->setDbLogic( $logic );
+            $delete->run();
         }
 
-        public static function count( $what = "*", $by = null, $and = true ): int {
+        public static function count( string $what = "*", $by = null, $and = true ): int {
+
+            $db     = static::getDatabase();
+            $select = $db->select( static::getTableName() );
 
             if ( is_array( $by ) ) {
 
                 $count = count( $by );
-                $data  = $by;
-                $by    = new DbLogic();
+                $logic = new DbLogic();
                 $i     = 0;
 
-                foreach ( $data as $column => $value ) {
+                foreach ( $by as $column => $value ) {
 
                     if ( is_array( $value ) ) {
-                        $by->where( $column, "IN", $value );
+                        $logic->where( $column, "IN", $value );
                     } else {
-                        $by->where( $column, "=", $value );
+                        $logic->where( $column, "=", $value );
                     }
 
                     if ( ++$i + 1 <= $count ) {
-                        ($and) ? $by->addAnd() : $by->addOr();
+                        ($and) ? $logic->addAnd() : $logic->addOr();
                     }
                 }
+
+                $select->setDbLogic( $logic );
             }
 
-            $db   = static::getDatabase();
-            $what = $db->quote( $what );
-            $res  = $db->select(
-                static::getTableName(), "count(" . $what . ") as count", $by
-            );
+            if ( $by instanceof DbLogic ) {
+                $select->setDbLogic( $by );
+            }
+
+            $res = $select->count( $what, 'count' )->run();
 
             return (int) $res->fetch()["count"];
         }
@@ -415,9 +424,9 @@
         public function __clone() {
 
             $mainAttribute = static::_fetchMainAttribute();
-            $setter = "set"  . ucfirst( $mainAttribute );
+            $setter        = "set" . ucfirst( $mainAttribute );
 
-            $this->{$setter}(null);
+            $this->{$setter}( null );
         }
 
     }

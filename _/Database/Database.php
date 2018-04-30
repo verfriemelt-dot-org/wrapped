@@ -42,12 +42,4 @@
             throw new DatabaseException( "No connection by that name, sorry" );
         }
 
-        /**
-         * returns PDO handle
-         * @return PDO
-         */
-        public function fetchConnectionHandle(): \PDO {
-            return $this->connectionHandle;
-        }
-
     }

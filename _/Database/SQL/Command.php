@@ -12,6 +12,7 @@
         protected $table;
         protected $logic     = null;
         protected $fetchMode = PDO::FETCH_ASSOC;
+        protected $bindings  = [];
 
         abstract function compile(): string;
 
@@ -31,12 +32,12 @@
             return $this;
         }
 
-        public function setDbLogic( DbLogic $logic ): Command {
+        public function setDbLogic( DbLogic $logic = null ): Command {
             $this->logic = $logic;
             return $this;
         }
 
-        public function getDbLogic(): DbLogic {
+        public function getDbLogic(): ?DbLogic {
             return $this->logic;
         }
 
@@ -49,7 +50,24 @@
             return $this->fetchMode;
         }
 
+        public function fetchBindings(): array {
+            return $this->bindings;
+        }
+
+        public function hasBindings(): bool {
+            return !empty( $this->bindings );
+        }
+
         public function run() {
             return $this->db->run( $this );
         }
+
+        protected function fetchLogic(): string {
+            if ( $this->logic === null ) {
+                return "";
+            }
+
+            return " {$this->logic->getString()}";
+        }
+
     }

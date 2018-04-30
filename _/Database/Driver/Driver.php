@@ -5,10 +5,11 @@
     use \PDO;
     use \PDOException;
     use \PDOStatement;
-    use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\SQL\Command;
     use \Wrapped\_\Database\SQL\Delete;
+    use \Wrapped\_\Database\SQL\Insert;
     use \Wrapped\_\Database\SQL\Select;
+    use \Wrapped\_\Database\SQL\Update;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class Driver {
@@ -18,7 +19,7 @@
         protected $statements             = [];
         protected $lastStatement;
         protected $config                 = [];
-        public static $debug              = false;
+        public static $debug              = true;
         public static $debugHistory       = [];
         public static $debugLastStatement = null;
         public static $debugLastParams    = null;
@@ -42,20 +43,30 @@
             $this->config['dbPort']     = $port;
         }
 
+        /**
+         * returns PDO handle
+         * @return PDO
+         */
+        public function fetchConnectionHandle(): \PDO {
+            return $this->connectionHandle;
+        }
+
+
         protected function getConnectionString() {
 
             $this->connectionString = static::PDO_NAME . ":host={$this->config["dbHost"]};";
 
             if ( $this->config['dbPort'] !== null ) {
-                $this->connectionString .= ";port={$this->config['dbPort']}";
+                $this->connectionString .= "port={$this->config['dbPort']};";
             }
 
-            $this->connectionString .= ";dbname={$this->config["dbDatabase"]}";
+            $this->connectionString .= "dbname={$this->config["dbDatabase"]}";
 
             return $this->connectionString;
         }
 
         public function connect() {
+
             try {
                 $this->connectionHandle = new PDO(
                     $this->getConnectionString(), $this->config["dbUsername"], $this->config["dbPassword"]
@@ -202,39 +213,33 @@
         }
 
         public function select( string $table, $fetchMode = null ): Select {
-
-            $select = new Select( $this );
-            $select->table( $table );
-
-            return $select;
+            return (new Select( $this ) )->table( $table );
         }
 
-        public function delete( $table, DbLogic $where ) {
-
-            $delete = new Delete( $this );
-            $delete->table( $table );
-
-            return $delete;
+        public function delete( string $table ): Delete {
+            return (new Delete( $this ) )->table( $table );
         }
 
-        public function update() {
-
+        public function update( string $table ): Update {
+            return (new Update( $this ) )->table( $table );
         }
 
-        public function insert() {
-
+        public function insert( string $table ): Insert {
+            return (new Insert( $this ) )->table( $table );
         }
 
         public function run( Command $command ) {
 
+            $logic = $command->getDbLogic();
             $this->prepare( $command->compile() );
 
-            $logic = $command->getDbLogic();
-
             if ( $logic ) {
-
                 $bindings = $logic->getBindings();
                 $this->bindLast( $bindings["params"], $bindings["vars"] );
+            }
+
+            foreach ( $command->fetchBindings() as $bind => $value ) {
+                $this->bindLast( $bind, $value );
             }
 
             $this->executeLast();

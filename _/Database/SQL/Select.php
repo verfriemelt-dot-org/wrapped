@@ -15,14 +15,7 @@
         }
 
         public function addColumn( string $column, $alias = null ): Select {
-
-            $alias = "";
-
-            if ( $alias ) {
-                $alias = " as {$this->db->quoteIdentifier( $alias )}";
-            }
-
-            $this->items[] = $this->db->quoteIdentifier( $column ) . $alias;
+            $this->items[] = $this->db->quoteIdentifier( $column ) . $this->alias( $alias );
             return $this;
         }
 
@@ -30,7 +23,28 @@
             return
                 static::VERB . " " .
                 implode( ",", $this->items ) . " " .
-                "FROM " . $this->table;
+                "FROM " . $this->table .
+                $this->fetchLogic();
+        }
+
+        private function alias( string $alias = null ): string {
+
+            if ( $alias === null ) {
+                return "";
+            }
+
+            return " as {$this->db->quoteIdentifier( $alias )}";
+        }
+
+        public function count( string $column = "*", string $alias = null ) {
+
+            if ( $column === "*" ) {
+                $this->items[] = "COUNT( * )" . $this->alias( $alias );
+            } else {
+                $this->items[] = "COUNT( {$this->db->quoteIdentifier( $column )} )" . $this->alias( $alias );
+            }
+
+            return $this;
         }
 
     }

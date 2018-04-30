@@ -23,78 +23,32 @@ use \Wrapped\_\Database\SQL\Table;
             return $this;
         }
 
-        public function insert( $table, array $columnsData ) {
-
-            $statement = "INSERT INTO `{$table}` (`";
-
-            $columnNames  = array_keys( $columnsData );
-            $columnValues = array_values( $columnsData );
-
-            $statement .= implode( "`,`", $columnNames );
-            $statement .= "`) VALUES (:";
-
-            $statement .= implode( ",:", $columnNames );
-            $statement .= ")";
-
-            //prepare statement
-            $this->prepare( $statement );
-
-            //bind table to statement
-            //$this->bindLast("table", $table);
-            //bind values to statement
-            $this->bindLast( $columnNames, $columnValues );
-
-            $this->executeLast();
-            $this->freeLastStatement();
-
-            return $this->connectionHandle->lastInsertId();
-        }
-
-        /**
-         * updates db record
-         * @param type $table
-         * @param array $columnsData
-         * @param DbLogic $dbLogic
-         * @return PDOStatement
-         */
-        public function update( $table, array $columnsData, $dbLogic = null ) {
-
-            $statement = "UPDATE `{$table}` SET ";
-
-            $columnNames = array_keys( $columnsData );
-            $columnCount = \count( $columnNames );
-
-            for ( $i = 0; $i < $columnCount; ++$i ) {
-                $statement .= "`{$columnNames[$i]}` = :{$columnNames[$i]}";
-
-                if ( $i != $columnCount - 1 )
-                    $statement .= ",";
-            }
-
-            if ( $dbLogic !== null ) {
-                $statement .= $dbLogic->getString();
-            }
-
-            $this->prepare( $statement );
-
-            //bind update vars
-            for ( $i = 0; $i < $columnCount; ++$i ) {
-                $this->bindLast( $columnNames[$i], $columnsData[$columnNames[$i]] );
-            }
-
-            //bind where statement
-            if ( $dbLogic !== null ) {
-                $bindings = $dbLogic->getBindings();
-                $this->bindLast( $bindings["params"], $bindings["vars"] );
-            }
-
-            $this->executeLast();
-            $result = $this->lastStatement->rowCount();
-            $this->freeLastStatement();
-
-            return $result;
-        }
-
+//        public function insert( $table, array $columnsData ) {
+//
+//            $statement = "INSERT INTO `{$table}` (`";
+//
+//            $columnNames  = array_keys( $columnsData );
+//            $columnValues = array_values( $columnsData );
+//
+//            $statement .= implode( "`,`", $columnNames );
+//            $statement .= "`) VALUES (:";
+//
+//            $statement .= implode( ",:", $columnNames );
+//            $statement .= ")";
+//
+//            //prepare statement
+//            $this->prepare( $statement );
+//
+//            //bind table to statement
+//            //$this->bindLast("table", $table);
+//            //bind values to statement
+//            $this->bindLast( $columnNames, $columnValues );
+//
+//            $this->executeLast();
+//            $this->freeLastStatement();
+//
+//            return $this->connectionHandle->lastInsertId();
+//        }
 
         /**
          * executes raw querie

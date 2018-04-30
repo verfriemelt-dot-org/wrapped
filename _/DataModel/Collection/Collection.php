@@ -2,7 +2,7 @@
 
     namespace Wrapped\_\DataModel\Collection;
 
-    use \Wrapped\_\Database\Driver\SQL\Table;
+    use \Wrapped\_\Database\SQL\Table;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 

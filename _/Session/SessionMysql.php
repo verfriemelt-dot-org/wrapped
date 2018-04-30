@@ -15,7 +15,10 @@
         }
 
         public static function purgeOldSessions() {
-            static::getDatabase()->delete( static::getTableName(), \Wrapped\_\Database\DbLogic::create()->where("timeout","<", time()));
+
+            $delete = static::getDatabase()->delete( static::getTableName());
+            $delete->setDbLogic(\Wrapped\_\Database\DbLogic::create()->where("timeout","<", time()));
+            $delete->run();
         }
 
         public static function fetchTablename(): string {
