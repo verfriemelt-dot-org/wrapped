@@ -65,10 +65,12 @@
             if ( !empty( $selectionColumns ) ) {
                 foreach ( $selectionColumns as $key => $column ) {
 
+                    $tableString = $this->db->quoteIdentifier($table->getName());
+
                     if ( is_string( $key ) ) {
-                        $this->select[] = "{$table->getName()}.`{$key}` as `{$column}`";
+                        $this->select[] = "{$tableString }.{$this->db->quoteIdentifier($key)} as {$this->db->quoteIdentifier($column)}";
                     } else {
-                        $this->select[] = "{$table->getName()}.`{$column}`";
+                        $this->select[] = "{$tableString }.{$this->db->quoteIdentifier($column)}";
                     }
                 }
             }
@@ -99,7 +101,7 @@
             foreach ( $joins as $join ) {
                 $name         = $join["table"]->getName();
                 $on           = $join["on"];
-                $this->join[] = " INNER JOIN {$name} ON ({$on})";
+                $this->join[] = " INNER JOIN {$this->db->quoteIdentifier( $name )} ON ({$on})";
 
                 if ( !empty( $join["table"]->getJoins() ) ) {
                     $this->_parseJoins( $join["table"] );

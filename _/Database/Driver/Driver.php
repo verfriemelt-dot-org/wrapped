@@ -2,15 +2,18 @@
 
     namespace Wrapped\_\Database\Driver;
 
-    use \PDO;
-    use \PDOException;
-    use \PDOStatement;
-    use \Wrapped\_\Database\SQL\Command;
-    use \Wrapped\_\Database\SQL\Delete;
-    use \Wrapped\_\Database\SQL\Insert;
-    use \Wrapped\_\Database\SQL\Select;
-    use \Wrapped\_\Database\SQL\Update;
-    use \Wrapped\_\Exception\Database\DatabaseException;
+use \PDO;
+use \PDOException;
+use \PDOStatement;
+use \Wrapped\_\Database\DbLogic;
+use \Wrapped\_\Database\SQL\Command;
+use \Wrapped\_\Database\SQL\Delete;
+use \Wrapped\_\Database\SQL\Insert;
+use \Wrapped\_\Database\SQL\Join;
+use \Wrapped\_\Database\SQL\Select;
+use \Wrapped\_\Database\SQL\Table;
+use \Wrapped\_\Database\SQL\Update;
+use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class Driver {
 
@@ -50,7 +53,6 @@
         public function fetchConnectionHandle(): \PDO {
             return $this->connectionHandle;
         }
-
 
         protected function getConnectionString() {
 
@@ -250,6 +252,121 @@
             $this->freeLastStatement();
 
             return $result;
+        }
+
+        public function quote( $string ) {
+            return $this->connectionHandle->quote( $string );
+        }
+
+        public function truncate( $tableName ) {
+
+            $statement = "TRUNCATE {$tableName}";
+            $this->prepare( $statement );
+            $this->executeLast();
+
+            $result = $this->lastStatement->rowCount();
+            $this->freeLastStatement();
+
+            return $result;
+        }
+
+
+        public function getCurrentDatabase() {
+            return $this->currentDatabase;
+        }
+
+        /**
+         *
+         * @return bool
+         */
+        public function startTransaction() {
+            return $this->connectionHandle->beginTransaction();
+        }
+
+        /**
+         *
+         * @return bool
+         */
+        public function inTransaction() {
+            return $this->connectionHandle->inTransaction();
+        }
+
+        /**
+         *
+         * @return bool
+         */
+        public function rollbackTransaction() {
+            return $this->connectionHandle->rollBack();
+        }
+
+        /**
+         *
+         * @return bool
+         */
+        public function commitTransaction() {
+            return $this->connectionHandle->commit();
+        }
+
+        public function fetchTableNames() {
+
+            $tableNames = [];
+
+            foreach ( $this->query( "SHOW TABLES" )->fetchAll() as $tableName ) {
+                $tableNames[] = $tableName[0];
+            }
+
+            return $tableNames;
+        }
+
+                /**
+         * executes raw querie
+         * @param type $sql
+         * @return PDOStatement
+         */
+        public function query( $sql, $prepareOptions = [] ) {
+            $this->prepare( $sql, $prepareOptions );
+            $this->executeLast();
+            return $this->lastStatement;
+        }
+
+        public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
+
+            $this->prepare( $sql . $dbLogic->compile( $this ) );
+
+            $bindings = $dbLogic->getBindings();
+            $this->bindLast( $bindings["params"], $bindings["vars"] );
+
+            $this->executeLast();
+
+            $result = $this->lastStatement;
+            $result->setFetchMode( PDO::FETCH_ASSOC );
+
+            return $result;
+        }
+
+        public function join( $table ) {
+            $t = new Table( $table );
+            $j = new Join( $t, $this );
+
+            return $t;
+        }
+
+        public function executeJoin( Join $join ) {
+
+            $join->prepare();
+            $sql = $join->getStatement();
+
+            $this->prepare( $sql );
+
+            $bindings = $join->getDbLogic()->getBindings();
+            $this->bindLast( $bindings["params"], $bindings["vars"] );
+
+            $this->executeLast();
+
+            $stmt = $this->lastStatement;
+            $stmt->setFetchMode( PDO::FETCH_ASSOC );
+
+            return $stmt;
         }
 
     }

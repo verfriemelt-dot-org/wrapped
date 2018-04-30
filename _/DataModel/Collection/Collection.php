@@ -122,9 +122,12 @@
          * @param Table $table
          */
         private function _readJoins( CollectionJoin $join, Table $table ) {
+
             $table
-                ->with( $join->getDestinationCollectionObject()->fetchModel()::getTableName(), $join->fetchOnString() )
-                ->setSelectionColumns( $join->getDestinationCollectionObject()->getSelectionColumns() );
+                ->with(
+                    $join->getDestinationCollectionObject()->fetchModel()::getTableName(),
+                    $join->fetchOnString( $this->mainCollectionObject->fetchModel()::getDatabase() )
+                )->setSelectionColumns( $join->getDestinationCollectionObject()->getSelectionColumns() );
         }
 
         public function _readWith( CollectionObject $o, Table $table ) {
