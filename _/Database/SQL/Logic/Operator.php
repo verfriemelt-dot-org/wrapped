@@ -1,3 +1,11 @@
-<?php namespace Wrapped\_\Database\SQL\Logic;
+<?php
 
-    class Operator extends \Wrapped\_\Database\SQL\Logic\LogicItem {}
+    namespace Wrapped\_\Database\SQL\Logic;
+
+    use \Wrapped\_\Database\SQL\Logic\LogicItem;
+
+    class Operator
+    extends LogicItem {
+
+    }
+    

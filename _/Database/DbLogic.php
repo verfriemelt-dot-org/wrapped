@@ -230,7 +230,7 @@
             $string           = "";
 
             do {
-                $string .= " " . $currentLogicItem->fetchSqlString( $this );
+                $string .= " " . $currentLogicItem->fetchSqlString( $this, $this->driver );
             } while ( $currentLogicItem = $currentLogicItem->getNext() );
 
             return $string;
@@ -238,8 +238,9 @@
 
         public function compile( Driver\Driver $driver ) {
 
-            $string = "";
             $this->driver = $driver;
+
+            $string = "";
 
             if ( $this->logicChainStart !== null ) {
                 $string .= " WHERE";
@@ -258,7 +259,7 @@
             if ( !empty( $this->orderby ) ) {
 
                 $orders = array_map( function ( Order $order ) {
-                    return $order->fetchOrderString();
+                    return $order->fetchOrderString( $driver );
                 }
                     , $this->orderby
                 );

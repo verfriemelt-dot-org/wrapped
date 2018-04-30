@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Logic;
 
     use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Driver;
 
     class Value
     extends LogicItem {
@@ -10,7 +11,7 @@
         private $isBound   = false;
         private $sqlString = "";
 
-        public function fetchSqlString( DbLogic $logic ) {
+        public function fetchSqlString( DbLogic $logic, Driver $driver ) {
 
             if ( $this->isBound ) {
                 return $this->sqlString;

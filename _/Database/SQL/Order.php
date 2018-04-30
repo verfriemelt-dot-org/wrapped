@@ -14,10 +14,10 @@
             $this->table     = $table;
         }
 
-        public function fetchOrderString() {
+        public function fetchOrderString( \Wrapped\_\Database\Driver\Driver $driver ) {
 
-            $str = $this->table ? "`{$this->table}`." : "";
-            $str .= "`{$this->column}` {$this->direction}";
+            $str = $this->table ? $driver->quoteIdentifier($this->table) . "." : "";
+            $str .= "{$driver->quoteIdentifier($this->column)} {$this->direction}";
 
             return $str;
         }

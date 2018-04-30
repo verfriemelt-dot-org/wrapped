@@ -1,11 +1,18 @@
-<?php namespace Wrapped\_\Database\SQL\Logic;
+<?php
 
-    class Column extends \Wrapped\_\Database\SQL\Logic\LogicItem {
+    namespace Wrapped\_\Database\SQL\Logic;
 
-        public function fetchSqlString( \Wrapped\_\Database\DbLogic $logic ) {
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Driver;
+
+    class Column
+    extends LogicItem {
+
+        public function fetchSqlString( DbLogic $logic, Driver $driver ) {
 
             return $this->tableName !== null ?
-                        "`{$this->tableName}`.`{$this->getValue()}`" :
-                        "`{$this->getValue()}`";
+                "{$driver->quoteIdentifier( $this->tableName )}.{$driver->quoteIdentifier( $this->getValue() )}" :
+                "{$driver->quoteIdentifier( $this->getValue() )}";
         }
+
     }
