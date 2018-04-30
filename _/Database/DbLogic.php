@@ -258,7 +258,7 @@
 
             if ( !empty( $this->orderby ) ) {
 
-                $orders = array_map( function ( Order $order ) {
+                $orders = array_map( function ( Order $order ) use ( $driver ) {
                     return $order->fetchOrderString( $driver );
                 }
                     , $this->orderby
