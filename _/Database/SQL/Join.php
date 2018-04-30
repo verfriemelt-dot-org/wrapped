@@ -133,7 +133,7 @@
         }
 
         public function _writeWhere() {
-            $this->stmt .= " {$this->dbLogic->getString()}";
+            $this->stmt .= " {$this->dbLogic->compile( $this->db )}";
         }
 
         /**

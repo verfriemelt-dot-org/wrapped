@@ -17,6 +17,9 @@
         /** @var LogicItem * */
         public $logicChainStart;
 
+        /** @var Driver\Driver */
+        protected $driver;
+
         /** @var LogicItem * */
         public $logicChainCurrent;
         public $orderby          = [];
@@ -233,12 +236,13 @@
             return $string;
         }
 
-        private function compile( $withoutWhereBlock = false ) {
+        public function compile( Driver\Driver $driver ) {
 
             $string = "";
+            $this->driver = $driver;
 
             if ( $this->logicChainStart !== null ) {
-                $string .= (!$withoutWhereBlock) ? " WHERE" : "";
+                $string .= " WHERE";
                 $string .= $this->parseLogicChain();
             }
 
@@ -277,14 +281,6 @@
          */
         public function getBindings() {
             return $this->bindings;
-        }
-
-        /**
-         *
-         * @return string
-         */
-        public function getString( $withoutWhereBlock = false ) {
-            return $this->rawString ?: $this->compile( $withoutWhereBlock );
         }
 
         /**

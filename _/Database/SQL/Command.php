@@ -67,7 +67,7 @@
                 return "";
             }
 
-            return " {$this->logic->getString()}";
+            return " {$this->logic->compile( $this->db )}";
         }
 
     }

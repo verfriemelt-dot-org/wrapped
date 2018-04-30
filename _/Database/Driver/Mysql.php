@@ -63,7 +63,7 @@ use \Wrapped\_\Database\SQL\Table;
 
         public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
 
-            $this->prepare( $sql . $dbLogic->getString() );
+            $this->prepare( $sql . $dbLogic->compile( $this ) );
 
             $bindings = $dbLogic->getBindings();
             $this->bindLast( $bindings["params"], $bindings["vars"] );
