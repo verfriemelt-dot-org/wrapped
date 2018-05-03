@@ -199,7 +199,9 @@
          * reset all style features
          */
         public function __destruct() {
-            $this->write( "\e[0m" );
+            if ( $this->currentFgColor !== self::STYLE_NONE || $this->currentBgColor !== self::STYLE_NONE ) {
+                $this->write( "\e[0m" );
+            }
         }
 
         public function getWidth(): ?int {
