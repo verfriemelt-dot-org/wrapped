@@ -6,7 +6,7 @@
 
     trait Memcached {
 
-        protected static function storeInCache( $instance, $key ): bool {
+        protected static function storeInCache( $instance, string $key ): bool {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
@@ -16,23 +16,20 @@
             return $cache->set( static::class . $key, serialize( $instance ), 600 );
         }
 
-        protected static function retriveFromCache( $key ) {
+        protected static function retriveFromCache( string $key ) {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
             }
 
-            $cache = CacheFactory::getCache();
-            $data  = $cache->get( static::class . $key );
-
-            if ( $data ) {
+            if ( $data = CacheFactory::getCache()->get( static::class . $key ) ) {
                 return unserialize( $data );
             }
 
             return false;
         }
 
-        protected static function deleteFromCache( $key ) {
+        protected static function deleteFromCache( string $key ) {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
@@ -63,7 +60,7 @@
         }
 
         public function delete() {
-            static::deleteFromCache( $this->{static::_fetchMainAttribute} );
+            static::deleteFromCache( $this->{static::_fetchMainAttribute()} );
             parent::delete();
         }
 
