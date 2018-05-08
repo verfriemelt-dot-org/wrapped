@@ -205,6 +205,14 @@
         }
 
         /**
+         * returns last Record in DB ( according to the PK )
+         * @return static
+         */
+        public static function last() {
+            return static::findSingle(DbLogic::create()->order( static::_fetchPrimaryKey(),"desc" )->limit(1));
+        }
+
+        /**
          *
          * @param type $count
          * @param type $offset
