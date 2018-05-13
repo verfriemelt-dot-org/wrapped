@@ -1,10 +1,13 @@
 <?php
 
-    namespace Wrapped\_\Database\Driver\Mysql;
+    namespace Wrapped\_\Database\SQL;
+
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Mysql;
 
     class Join {
 
-        /** @var \Wrapped\_\Database\Driver\Mysql */
+        /** @var Mysql */
         private $db;
         private $table;
         private $stmt;
@@ -13,9 +16,9 @@
         private $dbLogic;
 
         public function __construct( Table $table, $db ) {
-            $this->table   = $table;
+            $this->table = $table;
             $this->table->setJoinHandle( $this );
-            $this->db      = $db;
+            $this->db    = $db;
         }
 
         public function with( $table, $on ) {
@@ -54,7 +57,7 @@
 
         /**
          * cycle through all the selections
-         * @param \Wrapped\_\Database\Driver\Mysql\Table $table
+         * @param \Wrapped\_\Database\Driver\SQL\Table $table
          * @return \Wrapped\_\Database\Driver\Mysql\Join
          */
         private function _parseSelects( Table $table ) {
@@ -62,10 +65,12 @@
             if ( !empty( $selectionColumns ) ) {
                 foreach ( $selectionColumns as $key => $column ) {
 
+                    $tableString = $this->db->quoteIdentifier($table->getName());
+
                     if ( is_string( $key ) ) {
-                        $this->select[] = "{$table->getName()}.`{$key}` as `{$column}`";
+                        $this->select[] = "{$tableString }.{$this->db->quoteIdentifier($key)} as {$this->db->quoteIdentifier($column)}";
                     } else {
-                        $this->select[] = "{$table->getName()}.`{$column}`";
+                        $this->select[] = "{$tableString }.{$this->db->quoteIdentifier($column)}";
                     }
                 }
             }
@@ -96,7 +101,7 @@
             foreach ( $joins as $join ) {
                 $name         = $join["table"]->getName();
                 $on           = $join["on"];
-                $this->join[] = " INNER JOIN {$name} ON ({$on})";
+                $this->join[] = " INNER JOIN {$this->db->quoteIdentifier( $name )} ON ({$on})";
 
                 if ( !empty( $join["table"]->getJoins() ) ) {
                     $this->_parseJoins( $join["table"] );
@@ -111,7 +116,7 @@
             return $this;
         }
 
-        public function mergeDbLogic( \Wrapped\_\Database\DbLogic $logic ) {
+        public function mergeDbLogic( DbLogic $logic ) {
 
             if ( $this->dbLogic === null ) {
                 $this->dbLogic = $logic;
@@ -130,7 +135,7 @@
         }
 
         public function _writeWhere() {
-            $this->stmt .= " {$this->dbLogic->getString()}";
+            $this->stmt .= " {$this->dbLogic->compile( $this->db )}";
         }
 
         /**

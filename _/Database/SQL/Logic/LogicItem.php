@@ -1,4 +1,9 @@
-<?php namespace Wrapped\_\Database\Logic;
+<?php
+
+    namespace Wrapped\_\Database\SQL\Logic;
+
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Driver;
 
     abstract class LogicItem {
 
@@ -34,7 +39,7 @@
          * @param LogicItem $next
          * @return LogicItem
          */
-        public function setNext( LogicItem $next) {
+        public function setNext( LogicItem $next ) {
             $this->next = $next;
             return $this;
         }
@@ -44,7 +49,7 @@
          * @param LogicItem $prev
          * @return LogicItem
          */
-        public function setPrev( LogicItem  $prev) {
+        public function setPrev( LogicItem $prev ) {
             $this->prev = $prev;
             return $this;
         }
@@ -54,7 +59,8 @@
             return $this;
         }
 
-        public function fetchSqlString( \Wrapped\_\Database\DbLogic $logic ) {
+        public function fetchSqlString( DbLogic $logic, Driver $driver ) {
             return $this->getValue();
         }
+
     }

@@ -92,9 +92,7 @@
          * @return DbLogic
          */
         public function createLogic() {
-            // local copy for old php 5.6 support
-            $model = $this->model;
-            $this->setLogic( (new DbLogic() )->setTableName( $model::getTableName() ) );
+            $this->setLogic( (new DbLogic() )->setTableName( $this->model::getTableName() ) );
             return $this->getDbLogic();
         }
 

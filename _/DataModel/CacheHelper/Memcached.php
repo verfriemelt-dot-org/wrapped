@@ -42,7 +42,7 @@
         public function save() {
 
             $result = parent::save();
-            static::storeInCache( $this, $this->{static::_fetchMainAttribute()} );
+            static::storeInCache( $this, $this->{static::_fetchPrimaryKey()} );
 
             return $result;
         }
@@ -60,7 +60,7 @@
         }
 
         public function delete() {
-            static::deleteFromCache( $this->{static::_fetchMainAttribute()} );
+            static::deleteFromCache( $this->{static::_fetchPrimaryKey} );
             parent::delete();
         }
 

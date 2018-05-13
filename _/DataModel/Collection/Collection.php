@@ -2,7 +2,7 @@
 
     namespace Wrapped\_\DataModel\Collection;
 
-    use \Wrapped\_\Database\Driver\Mysql\Table;
+    use \Wrapped\_\Database\SQL\Table;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
@@ -12,8 +12,7 @@
         private $mainCollectionObject;
         private $collectionResult;
         private $currentJoin = null;
-
-        private $yieldMode = false;
+        private $yieldMode   = false;
 
         public function __construct( $model = null ) {
 
@@ -22,7 +21,7 @@
             }
         }
 
-        public function enableYieldmode( $bool = true): CollectionObject {
+        public function enableYieldmode( $bool = true ): CollectionObject {
             $this->yieldMode = $bool;
             return $this;
         }
@@ -81,14 +80,18 @@
             $db    = $model::getDatabase();
             $table = $model::getTableName();
 
-            $what = "`" . implode( "`, `", $model::fetchAnalyserObject()->fetchAllColumns() ) . "`";
+            $select = $db->select( $table );
+            $select->setDbLogic( $dbLogic );
 
-            if ( $this->yieldMode ) {
-                return new CollectionResultYield( $db->select( $table, $what, $dbLogic ), $model );
-            } else {
-                return new CollectionResult( $db->select( $table, $what, $dbLogic ), $model );
+            foreach ( $model::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
             }
 
+            if ( $this->yieldMode ) {
+                return new CollectionResultYield( $select->run(), $model );
+            } else {
+                return new CollectionResult( $select->run(), $model );
+            }
         }
 
         private function join() {
@@ -119,9 +122,12 @@
          * @param Table $table
          */
         private function _readJoins( CollectionJoin $join, Table $table ) {
+
             $table
-                ->with( $join->getDestinationCollectionObject()->fetchModel()::getTableName(), $join->fetchOnString() )
-                ->setSelectionColumns( $join->getDestinationCollectionObject()->getSelectionColumns() );
+                ->with(
+                    $join->getDestinationCollectionObject()->fetchModel()::getTableName(),
+                    $join->fetchOnString( $this->mainCollectionObject->fetchModel()::getDatabase() )
+                )->setSelectionColumns( $join->getDestinationCollectionObject()->getSelectionColumns() );
         }
 
         public function _readWith( CollectionObject $o, Table $table ) {

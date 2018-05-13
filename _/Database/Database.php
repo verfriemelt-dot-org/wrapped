@@ -1,24 +1,25 @@
-<?php namespace Wrapped\_\Database;
+<?php
+
+    namespace Wrapped\_\Database;
+
+    use \PDO;
+    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\Mysql;
+    use \Wrapped\_\Exception\Database\DatabaseDriverUnknown;
+    use \Wrapped\_\Exception\Database\DatabaseException;
 
     class Database {
 
-        private static $connections = [ ];
+        private static $connections = [];
 
-        /**
-         *
-         * @param type $name
-         * @param type $type
-         * @param type $autoConnect
-         * @return Database\Driver\Mysql
-         */
         public static function createNewConnection(
-          $name, $driver, $username, $password, $host, $database, $autoConnect = true ) {
+            $name, $driver, $username, $password, $host, $database, $port, $autoConnect = true ): Driver {
 
             if ( !class_exists( $driver ) ) {
-                throw new Exception\Database\DatabaseDriverUnknown( "unknown driver {$driver}" );
+                throw new DatabaseDriverUnknown( "unknown driver {$driver}" );
             }
 
-            self::$connections[$name] = new $driver( $name, $username, $password, $host, $database );
+            self::$connections[$name] = new $driver( $name, $username, $password, $host, $database, $port );
 
             if ( $autoConnect ) {
                 self::$connections[$name]->connect();
@@ -30,30 +31,15 @@
         /**
          *
          * @param type $name
-         * @return Driver\Mysql
-         * @throws \Exception
+         * @return Mysql
+         * @throws DatabaseException
          */
-        public static function getConnection( $name = "default" ) {
+        public static function getConnection( $name = "default" ): Driver {
             if ( isset( self::$connections[$name] ) ) {
                 return self::$connections[$name];
             }
 
-            throw new \Exception( "No connection by that name, sorry" );
+            throw new DatabaseException( "No connection by that name, sorry" );
         }
 
-        /**
-         * get the connection state
-         * @return type
-         */
-        public function isConnected() {
-            return $this->connected;
-        }
-
-        /**
-         * returns PDO handle
-         * @return \PDO
-         */
-        public function fetchConnectionHandle() {
-            return $this->connectionHandle;
-        }
     }
