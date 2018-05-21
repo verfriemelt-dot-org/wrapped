@@ -301,7 +301,6 @@
 
                 if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
                     $update->update( $col["column"], $currentData );
-
                     $hasUpdates = true;
                 }
             }
