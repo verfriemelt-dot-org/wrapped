@@ -32,6 +32,7 @@
         protected $inTerminal = false;
 
         protected $colorSupported = null;
+        protected $forceColor = false;
         /**
          *
          * @var ParameterBag
@@ -255,7 +256,16 @@
             return true;
         }
 
+        public function forceColorOutput( $bool = true ) {
+            $this->forceColor = $bool;
+            return $this;
+        }
+
         public function supportsColor(): bool {
+
+            if ( $this->forceColor ) {
+                return true;
+            }
 
             if ( !$this->inTerminal ) {
                 return false;
