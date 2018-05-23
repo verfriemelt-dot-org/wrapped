@@ -67,6 +67,10 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $this->connectionString;
         }
 
+        public function disconnet() {
+            $this->connectionHandle = null;
+        }
+
         public function connect() {
 
             try {

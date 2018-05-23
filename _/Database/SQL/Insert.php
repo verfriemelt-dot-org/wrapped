@@ -11,7 +11,7 @@
 
         public function insert( string $column, $value ): Insert {
 
-            $bindName = "bind" . count( $this->bindings );
+            $bindName = "ibind" . count( $this->bindings );
 
             $this->columns[]           = $this->db->quoteIdentifier( $column );
             $this->values[]            = ":{$bindName}";

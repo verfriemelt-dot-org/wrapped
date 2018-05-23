@@ -16,7 +16,7 @@
 
         public function update( string $column, $value ): Update {
 
-            $bindName = "bind" . count( $this->bindings );
+            $bindName = "ubind" . count( $this->bindings );
 
             $this->items[]             = $this->db->quoteIdentifier( $column ) . " = :{$bindName}";
             $this->bindings[$bindName] = $value;
