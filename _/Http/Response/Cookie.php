@@ -13,11 +13,11 @@
         public function __construct( $name, $value, $expires = 3600 * 24 ) {
             $this->name    = $name;
             $this->value   = $value;
-            $this->expires = time() + $expires;
+            $this->expiresTime = time() + $expires;
         }
 
         public static function create( $name, $value, $expires = 3600 * 24 ) {
-            new static( $name, $value, $expires );
+            return new static( $name, $value, $expires );
         }
 
         public function getName() {
