@@ -268,9 +268,11 @@
             }
 
             if ( $this->limit !== null ) {
-                $string .= " LIMIT ";
-                $string .= ($this->offset !== null) ? $this->offset . "," : "";
-                $string .= $this->limit;
+                $string .= " LIMIT {$this->limit}";
+            }
+
+            if ( $this->offset !== null ) {
+                $string .= ' OFFSET ' . $this->offset;
             }
 
             return $string;

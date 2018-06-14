@@ -213,6 +213,14 @@
             return $results;
         }
 
+        public function mapToCollectionResult(callable $callable, DataModel $prototype, array $args = []): CollectionResult {
+
+            $r = new CollectionResult( null, $prototype );
+            $r->setResults( $this->map( $callable, $args ) );
+
+            return $r;
+        }
+
         public function sort( callable $callable ): CollectionResult {
             $this->initAllObjects();
             usort( $this->resultObjects, $callable );
