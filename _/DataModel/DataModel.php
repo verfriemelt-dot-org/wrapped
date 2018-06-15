@@ -61,6 +61,10 @@
             return $values;
         }
 
+        public function fetchPrimaryKey() {
+            return static::_fetchPrimaryKey();
+        }
+
         public function fetchColumns() {
             $analyser = new ObjectAnalyser( static::class );
             return $analyser->fetchAllColumns();
