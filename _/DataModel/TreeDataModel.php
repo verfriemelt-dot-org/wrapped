@@ -124,7 +124,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "DELETE FROM {$tableName} WHERE `left` between {$this->left} and {$this->right}";
+            $sql1 = "DELETE FROM {$tableName} WHERE {$databaseHandle->quoteIdentifier('left')} between {$this->left} and {$this->right}";
             $databaseHandle->query( $sql1 );
 
             $this->shiftLeft( $this->right, -$width );
@@ -230,14 +230,24 @@
          */
         public function save() {
 
+            $db               = static::getDatabase();
+            $qoutedTableNanem = $db->quoteIdentifier( static::getTableName() );
+
             $transactionInitiatorId = uniqid( "", true );
 
             // start transaction if no other is currently used
             if ( static::$_transactionInitiatorId === null ) {
                 static::$_transactionInitiatorId = $transactionInitiatorId;
-                static::getDatabase()->startTransaction();
-                static::getDatabase()->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 0 );
-                static::getDatabase()->query( "LOCK TABLE `" . static::getTableName() . "` WRITE, `" . static::getTableName() . "` AS parent WRITE, `" . static::getTableName() . "` AS node WRITE" );
+                $db->startTransaction();
+
+                if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                    $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 0 );
+                    $db->query( "LOCK TABLE {$qoutedTableNanem} WRITE, {$qoutedTableNanem} AS parent WRITE, {$qoutedTableNanem} AS node WRITE" );
+                }
+
+                if ( $db instanceof \Wrapped\_\Database\Driver\Postgres ) {
+                    $db->query( "LOCK TABLE {$qoutedTableNanem}" );
+                }
             }
 
             try {
@@ -252,15 +262,27 @@
 
                 // close transaction
                 if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
-                    static::getDatabase()->query( "UNLOCK TABLES" );
-                    static::getDatabase()->commitTransaction();
-                    static::getDatabase()->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 1 );
+
+                    if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                        $db->query( "UNLOCK TABLES" );
+                    }
+
+                    $db->commitTransaction();
+
+                    if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                        $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 1 );
+                    }
+
                     static::$_transactionInitiatorId = null;
                 }
             } catch ( Exception $e ) {
 
-                static::getDatabase()->rollbackTransaction();
-                static::getDatabase()->query( "UNLOCK TABLES" );
+                $db->rollbackTransaction();
+
+                if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                    $db->query( "UNLOCK TABLES" );
+                }
+
                 throw $e;
             }
 
@@ -281,7 +303,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "UPDATE {$tableName} SET `left` = -1*`left`, `right` = -1*`right` WHERE `left` between {$this->left} and {$this->right}";
+            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier('left')} = -1*{$databaseHandle->quoteIdentifier('left')}, {$databaseHandle->quoteIdentifier('right')} = -1*{$databaseHandle->quoteIdentifier('right')} WHERE {$databaseHandle->quoteIdentifier('left')} between {$this->left} and {$this->right}";
             $databaseHandle->query( $sql1 );
         }
 
@@ -290,7 +312,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "UPDATE {$tableName} SET `left` = -1*`left`, `right` = -1*`right` WHERE `left` < 0";
+            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier('left')} = -1*{$databaseHandle->quoteIdentifier('left')}, {$databaseHandle->quoteIdentifier('right')} = -1*{$databaseHandle->quoteIdentifier('right')} WHERE {$databaseHandle->quoteIdentifier('left')} < 0";
             $databaseHandle->query( $sql1 );
         }
 
@@ -304,7 +326,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql = "UPDATE {$tableName} set `left` = `left` + {$amount},`right` = `right` + {$amount} WHERE `left` < 0";
+            $sql = "UPDATE {$tableName} set {$databaseHandle->quoteIdentifier('left')} = {$databaseHandle->quoteIdentifier('left')} + {$amount},{$databaseHandle->quoteIdentifier('right')} = {$databaseHandle->quoteIdentifier('right')} + {$amount} WHERE {$databaseHandle->quoteIdentifier('left')} < 0";
             $databaseHandle->query( $sql );
 
             return $this;
@@ -455,8 +477,8 @@
 
             $databaseHandle->query(
                 "UPDATE {$tableName}
-                 SET `{$leftOrRight}` = `{$leftOrRight}` + {$amount}
-                 WHERE `{$leftOrRight}` > {$offset}"
+                 SET {$databaseHandle->quoteIdentifier($leftOrRight)} = {$databaseHandle->quoteIdentifier($leftOrRight)} + {$amount}
+                 WHERE {$databaseHandle->quoteIdentifier($leftOrRight)} > {$offset}"
             );
 
             return $this;
@@ -500,10 +522,10 @@
             $query = "SELECT (COUNT(parent.id) - 1) AS depth
                         FROM {$tableName} AS node,
                                 {$tableName} AS parent
-                        WHERE node.`left` BETWEEN parent.`left` AND parent.`right`
+                        WHERE node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
                         and node.id = {$this->parentId}
                         GROUP BY node.id
-                        ORDER BY node.`left`";
+                        -- ORDER BY node.{$databaseHandle->quoteIdentifier('left')}";
 
             $this->setDepth( $databaseHandle->query( $query )->fetch()["depth"] + 1 );
 
@@ -525,9 +547,9 @@
 
             $query = "SELECT parent.*
                         FROM {$tableName} AS node, {$tableName} AS parent
-                        WHERE node.`left` BETWEEN parent.`left` AND parent.`right`
+                        WHERE node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
                         AND node.id = {$id}
-                        ORDER BY parent.`left`";
+                        ORDER BY parent.{$databaseHandle->quoteIdentifier('left')}";
 
 
             return new CollectionResult( $databaseHandle->query( $query ), new static() );
@@ -576,16 +598,16 @@
 
             $query = "SELECT
                         node.*,
-                        GROUP_CONCAT(parent.`{$field}` SEPARATOR '/') as path
+                        GROUP_CONCAT(parent.\"{$field}\" SEPARATOR '/') as path
                         FROM
                              {$tableName} AS node,
                              {$tableName} AS parent
                         WHERE
-                             node.`left` BETWEEN parent.`left` AND parent.`right`
+                             node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
 
                         GROUP BY node.id
                         HAVING path = {$path}
-                        ORDER BY node.`left`, parent.`left`";
+                        ORDER BY node.{$databaseHandle->quoteIdentifier('left')}, parent.{$databaseHandle->quoteIdentifier('left')}";
 
             $res = $databaseHandle->query( $query );
 

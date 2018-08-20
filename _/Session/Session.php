@@ -10,7 +10,7 @@
 
         use Singleton;
 
-        CONST SESSION_COOKIE_NAME = "scId";
+        CONST SESSION_COOKIE_NAME = "_";
         CONST SESSION_TIMEOUT     = 60 * 60 * 24 * 7;
 
         private $dataObj     = null;

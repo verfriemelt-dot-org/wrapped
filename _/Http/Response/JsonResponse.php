@@ -8,6 +8,9 @@
     class JsonResponse
     extends Response {
 
+        private $pretty = false;
+        private $content = null;
+
         public function __construct( $content = null ) {
 
             $this->addHeader(
@@ -21,15 +24,25 @@
             }
         }
 
-        public function setContent( $content ): Response {
+        public function pretty( $bool = true): JsonResponse {
+            $this->pretty = $bool;
+            return $this;
+        }
 
-            if ( $content instanceof DataModel ) {
-                $content = $content->toJson();
+        public function setContent( $content ): Response {
+            $this->content = $content;
+            return $this;
+        }
+
+        public function send(): Response {
+
+            if ( $this->content instanceof DataModel ) {
+                parent::setContent( $this->content->toJson( $this->pretty ) );
             } else {
-                $content = json_encode( $content );
+                parent::setContent( json_encode( $this->content , $this->pretty ? 128 : null ) );
             }
 
-            return parent::setContent( $content );
+            return parent::send();
         }
 
     }

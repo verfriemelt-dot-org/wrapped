@@ -7,8 +7,18 @@
 
         const PDO_NAME = 'pgsql';
 
+        static $convertToLower = true;
+
+        public static function castToLower( $bool = true ) {
+            static::$convertToLower = $bool;
+        }
+
         public function quoteIdentifier( string $ident ): string {
-            return "\"{$ident}\"";
+            if ( static::$convertToLower ) {
+                return '"' . strtolower( $ident ) . '"';
+            } else {
+                return '"' . $ident . '"';
+            }
         }
 
     }

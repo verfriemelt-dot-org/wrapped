@@ -34,7 +34,7 @@
                     die( "ein fehler. bad news!" );
 
                 if ( !Console::isCli() ) {
-//                    header( "Content-type: text/plain" );
+                    header( "Content-type: text/plain" );
                 }
 
                 echo $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL;

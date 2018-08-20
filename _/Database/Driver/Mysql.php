@@ -1,13 +1,9 @@
 <?php
 
-    namespace Wrapped\_\Database\Driver;
+    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\Mysql\Schema;
 
-use \PDO;
-use \PDOStatement;
-use \Wrapped\_\Database\DbLogic;
-use \Wrapped\_\Database\Driver\Mysql\Schema;
-use \Wrapped\_\Database\SQL\Join;
-use \Wrapped\_\Database\SQL\Table;
+    namespace Wrapped\_\Database\Driver;
 
     class Mysql
     extends Driver {
@@ -22,7 +18,6 @@ use \Wrapped\_\Database\SQL\Table;
             $this->connectionHandle->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, !$bool );
             return $this;
         }
-
 
         /**
          *
@@ -41,4 +36,5 @@ use \Wrapped\_\Database\SQL\Table;
         public function getSchema( $name ) {
             return $this->createSchema( $name );
         }
+
     }

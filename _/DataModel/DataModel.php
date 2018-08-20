@@ -46,6 +46,10 @@
         }
 
         public function toJson( $pretty = false ): string {
+            return json_encode( $this->toArray(), $pretty ? 128 : null );
+        }
+
+        public function toArray(): array {
 
             $analyser = $this::fetchAnalyserObject();
             $values   = [];
@@ -54,7 +58,11 @@
                 $values[$column] = $this->{$getter}();
             }
 
-            return json_encode( $values, $pretty ? 128 : null );
+            return $values;
+        }
+
+        public function fetchPrimaryKey() {
+            return static::_fetchPrimaryKey();
         }
 
         public function fetchColumns() {
@@ -209,7 +217,7 @@
          * @return static
          */
         public static function last() {
-            return static::findSingle(DbLogic::create()->order( static::_fetchPrimaryKey(),"desc" )->limit(1));
+            return static::findSingle( DbLogic::create()->order( static::_fetchPrimaryKey(), "desc" )->limit( 1 ) );
         }
 
         /**
@@ -301,7 +309,6 @@
 
                 if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
                     $update->update( $col["column"], $currentData );
-
                     $hasUpdates = true;
                 }
             }
