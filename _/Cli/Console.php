@@ -28,11 +28,10 @@
         protected $linePrefixFunc;
         protected $hadLineOutput    = false;
         protected $dimensions       = null;
-
         protected $inTerminal = false;
-
         protected $colorSupported = null;
-        protected $forceColor = false;
+        protected $forceColor     = false;
+
         /**
          *
          * @var ParameterBag
@@ -80,7 +79,11 @@
             return $this;
         }
 
-        public function write( $text ): Console {
+        public function write( $text, $color = null ): Console {
+
+            if ( $color !== null ) {
+                $this->setForegroundColor( $color );
+            }
 
             if ( $this->linePrefixFunc !== null && $this->hadLineOutput !== true ) {
                 fwrite( $this->selectedStream, ($this->linePrefixFunc)() );
@@ -88,11 +91,16 @@
             }
 
             fwrite( $this->selectedStream, $text );
+
+            if ( $color !== null ) {
+                $this->setForegroundColor( static::STYLE_NONE );
+            }
+
             return $this;
         }
 
-        public function writeLn( $text ): Console {
-            return $this->write( $text )->eol();
+        public function writeLn( $text, $color = null ): Console {
+            return $this->write( $text, $color )->eol();
         }
 
         public function cr(): Console {
@@ -106,9 +114,9 @@
             return $this;
         }
 
-        public function writePadded( $text, $padding = 4, $paddingChar = " " ): Console {
+        public function writePadded( $text, $padding = 4, $paddingChar = " ", $color = null ): Console {
             $this->write( str_repeat( $paddingChar, $padding ) );
-            $this->write( $text );
+            $this->write( $text, $color );
 
             return $this;
         }
@@ -292,7 +300,7 @@
                 return false;
             }
 
-            return (int) $info > 1 ;
+            return (int) $info > 1;
         }
 
     }
