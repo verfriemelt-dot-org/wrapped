@@ -95,6 +95,11 @@
             return $this->write( $text )->eol();
         }
 
+        public function cr(): Console {
+            $this->write( "\r" );
+            return $this;
+        }
+
         public function eol(): Console {
             $this->write( PHP_EOL );
             $this->hadLineOutput = false;
