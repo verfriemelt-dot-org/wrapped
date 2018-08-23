@@ -9,7 +9,7 @@
         /**
          * @var ParameterBag
          */
-        private $request, $query, $attributes, $cookies, $server, $files, $content;
+        private $request, $query, $attributes, $cookies, $server, $files, $content, $header;
         protected static $instance;
 
         public function __construct(
@@ -30,6 +30,7 @@
             $this->server     = new ParameterBag( $server );
             $this->files      = new ParameterBag( $files );
 
+
             $contents = json_decode( $content );
 
             if ( json_last_error() !== JSON_ERROR_NONE ) {
@@ -37,13 +38,26 @@
             }
 
             $this->content = new ParameterBag( (array) $contents );
+
+            $header = [];
+
+            foreach( $_SERVER as $key => $value ) {
+
+                if ( substr( $key, 0, 5 ) !== 'HTTP_' ) {
+                    continue;
+                }
+
+                $header[ $key  ] = $value;
+            }
+
+            $this->header = new ParameterBag( $header );
         }
 
         /**
          * get parameters
          * @return ParameterBag
          */
-        public function query() {
+        public function query(): ParameterBag {
             return $this->query;
         }
 
@@ -51,7 +65,7 @@
          * post parameters
          * @return ParameterBag
          */
-        public function request() {
+        public function request(): ParameterBag {
             return $this->request;
         }
 
@@ -59,7 +73,7 @@
          * cookies
          * @return ParameterBag
          */
-        public function cookies() {
+        public function cookies(): ParameterBag {
             return $this->cookies;
         }
 
@@ -67,7 +81,7 @@
          * $_SERVER variable
          * @return ParameterBag
          */
-        public function server() {
+        public function server(): ParameterBag {
             return $this->server;
         }
 
@@ -75,7 +89,7 @@
          * $_FILES
          * @return ParameterBag
          */
-        public function files() {
+        public function files(): ParameterBag {
             return $this->files;
         }
 
@@ -83,8 +97,16 @@
          * rawdata; $_POST
          * @return ParameterBag
          */
-        public function content() {
+        public function content(): ParameterBag {
             return $this->content;
+        }
+
+        /**
+         * HTTP_ header parsed from server
+         * @return ParameterBag
+         */
+        public function header(): ParameterBag {
+            return $this->header;
         }
 
         /**
