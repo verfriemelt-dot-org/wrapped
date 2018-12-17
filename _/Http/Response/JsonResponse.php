@@ -10,18 +10,22 @@
 
         private $pretty = false;
         private $content = null;
+        private $alreadyEncoded = false;
 
-        public function __construct( $content = null ) {
+        public function __construct( $content = null, $alreadyEncoded = false ) {
 
             $this->addHeader(
                 new HttpHeader( "Content-type", "application/json" )
             );
+
+            $this->alreadyEncoded = $alreadyEncoded;
 
             if ( $content instanceof CollectionResult ) {
                 $this->setContent( $content->toArray() );
             } else {
                 $this->setContent( $content );
             }
+
         }
 
         public function pretty( $bool = true): JsonResponse {
@@ -36,7 +40,13 @@
 
         public function send(): Response {
 
+            if ( $this->alreadyEncoded ) {
+                parent::setContent( $this->content );
+                return parent::send();
+            }
+
             if ( $this->content instanceof DataModel ) {
+
                 parent::setContent( $this->content->toJson( $this->pretty ) );
             } else {
                 parent::setContent( json_encode( $this->content , $this->pretty ? 128 : null ) );
