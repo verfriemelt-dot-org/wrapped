@@ -42,7 +42,7 @@
             return new static( isset( $_SERVER["argv"] ) ? $_SERVER["argv"] : [] );
         }
 
-        public function __construct( $argv ) {
+        public function __construct() {
 
             $this->selectedStream = &$this->stdout;
             $this->argv           = new ParameterBag( $_SERVER["argv"] ?? [] );
