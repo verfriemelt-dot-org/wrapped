@@ -139,6 +139,10 @@
             foreach ( $this->rawRouteHits as $hits ) {
                 $this->routeAttributeData = array_merge( $this->routeAttributeData, $hits );
             }
+//
+//            var_dump( $this->routeAttributeData ) ;
+//
+//            die();
 
             $this->request->setAttributes( $this->routeAttributeData );
 
