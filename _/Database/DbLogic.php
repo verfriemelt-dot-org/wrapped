@@ -17,7 +17,7 @@
         /** @var LogicItem * */
         public $logicChainStart;
 
-        /** @var Driver\Driver */
+        /** @var Driver\DatabaseDriver */
         protected $driver;
 
         /** @var LogicItem * */
@@ -236,7 +236,7 @@
             return $string;
         }
 
-        public function compile( Driver\Driver $driver ) {
+        public function compile( Driver\DatabaseDriver $driver ) {
 
             $this->driver = $driver;
 

@@ -4,7 +4,7 @@
 
     use \PDO;
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
 
     abstract class Command {
 
@@ -16,7 +16,7 @@
 
         abstract function compile(): string;
 
-        public function __construct( Driver $db ) {
+        public function __construct( DatabaseDriver $db ) {
             $this->db = $db;
         }
 

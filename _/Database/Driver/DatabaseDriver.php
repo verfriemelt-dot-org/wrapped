@@ -15,7 +15,7 @@ use \Wrapped\_\Database\SQL\Table;
 use \Wrapped\_\Database\SQL\Update;
 use \Wrapped\_\Exception\Database\DatabaseException;
 
-    abstract class Driver {
+    abstract class DatabaseDriver {
 
         public $connectionName;
         protected $currentDatabase;
@@ -106,10 +106,24 @@ use \Wrapped\_\Exception\Database\DatabaseException;
 
             if ( is_array( $param ) && is_array( $var ) && \count( $param ) == \count( $var ) ) {
                 for ( $i = 0, $count = \count( $var ); $i < $count; ++$i ) {
-                    $statement->bindValue( ":" . $param[$i], $var[$i] );
+
+                    $type = PDO::PARAM_STR;
+
+                    if ( gettype( $var[$i]) === 'boolean' ) {
+                        $type = PDO::PARAM_BOOL;
+                    }
+
+                    $statement->bindValue( ":" . $param[$i], $var[$i], $type );
                 }
             } else {
-                $statement->bindValue( ":" . $param, $var );
+
+                    $type = PDO::PARAM_STR;
+
+                    if ( gettype( $var ) === 'boolean' ) {
+                        $type = PDO::PARAM_BOOL;
+                    }
+
+                $statement->bindValue( ":" . $param, $var, $type );
             }
 
             return $this;

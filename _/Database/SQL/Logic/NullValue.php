@@ -3,7 +3,7 @@
     namespace Wrapped\_\Database\SQL\Logic;
 
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
 
     class NullValue
     extends Value {
@@ -12,7 +12,7 @@
             parent::__construct( null );
         }
 
-        public function fetchSqlString( DbLogic $logic, Driver $driver ) {
+        public function fetchSqlString( DbLogic $logic, DatabaseDriver $driver ) {
 
             return " NULL ";
         }
