@@ -22,7 +22,7 @@ use \Wrapped\_\Exception\Database\DatabaseException;
         protected $statements             = [];
         protected $lastStatement;
         protected $config                 = [];
-        public static $debug              = true;
+        public static $debug              = false;
         public static $debugHistory       = [];
         public static $debugLastStatement = null;
         public static $debugLastParams    = null;

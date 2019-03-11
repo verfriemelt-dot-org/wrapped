@@ -17,7 +17,7 @@
 
         public function write( QueueItem $item ) {
 
-            $this->data = serialize( $item );
+            $this->data = base64_encode( serialize( $item ) );
 
             $this->key       = $item->key;
             $this->uniqId    = $item->uniqId;
@@ -39,7 +39,7 @@
         }
 
         public function read(): QueueItem {
-            return unserialize( $this->data );
+            return unserialize( base64_decode( $this->data ) );
         }
 
         public function getId() {
