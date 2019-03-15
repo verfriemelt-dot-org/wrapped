@@ -245,7 +245,9 @@
          * @return \Wrapped\_\DataModel\Collection\CollectionResult
          */
         public function filter(callable $function ): CollectionResult {
-            $newData = array_filter($this->resultObjects, $function );
+
+            $newData = array_filter( $this->toArray(), $function );
+
             return (new static(null, $this->objPrototype))->setResults( $newData );
         }
     }
