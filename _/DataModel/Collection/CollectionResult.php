@@ -213,7 +213,7 @@
             return $results;
         }
 
-        public function mapToCollectionResult(callable $callable, DataModel $prototype, array $args = []): CollectionResult {
+        public function mapToCollectionResult( callable $callable, DataModel $prototype, array $args = [] ): CollectionResult {
 
             $r = new CollectionResult( null, $prototype );
             $r->setResults( $this->map( $callable, $args ) );
@@ -242,12 +242,31 @@
         /**
          * on true, the item will be kept
          * @param callable $function
-         * @return \Wrapped\_\DataModel\Collection\CollectionResult
+         * @return CollectionResult
          */
-        public function filter(callable $function ): CollectionResult {
+        public function filter( callable $function ): CollectionResult {
 
             $newData = array_filter( $this->toArray(), $function );
 
-            return (new static(null, $this->objPrototype))->setResults( $newData );
+            return (new static( null, $this->objPrototype ) )->setResults( $newData );
         }
+
+        /**
+         *
+         * returns the instance which checks out for the give filter function
+         *
+         * @param callable $checkfunc
+         * @return boolean
+         */
+        public function find( callable $checkfunc ) {
+
+            foreach ( $this->toArray() as $obj ) {
+                if ( $checkfunc( $obj ) ) {
+                    return $obj;
+                }
+            }
+
+            return false;
+        }
+
     }
