@@ -112,7 +112,11 @@
             $db        = static::getDatabase();
 
             $select = $db->select( $tableName );
-            $select->all();
+
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
+            }
+
             $select->setDbLogic( (new DbLogic() )->where( $pk, "=", $id )->limit( 1 ) );
 
             $res = $select->run();
@@ -130,7 +134,11 @@
             $db        = static::getDatabase();
 
             $select = $db->select( $tableName );
-            $select->all();
+
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
+            }
+
             $select->setDbLogic( (new DbLogic() )->where( static::_fetchPrimaryKey(), "=", $this->{static::_fetchPrimaryKey()} )->limit( 1 ) );
 
             $res = $select->run();
