@@ -14,7 +14,7 @@
             $this->statsdInstace = $statsd;
             $this->name = $key;
 
-            $this->start = microtime( 1 );
+            $this->restart();
         }
 
         /**
@@ -27,6 +27,13 @@
             }
 
             $this->statsdInstace->send( $this->name, $this->diff, StatsdClient::TIMER_MS );
+        }
+
+        /**
+         * sets set startingtime to the current time
+         */
+        public function restart() {
+            $this->start = microtime( 1 );
         }
 
         /**
