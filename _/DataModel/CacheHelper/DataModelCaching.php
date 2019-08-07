@@ -49,7 +49,6 @@
 
         public static function get( $id ) {
 
-
             $instance = static::retriveFromCache( $id );
 
             if ( !$instance ) {
@@ -62,18 +61,24 @@
 
         public static function fetchBy( string $field, $value ) {
 
-            $instance = static::retriveFromCache( $field . (string) $value );
+            // mapping
+            $pk = static::retriveFromCache( $field . (string) $value );
 
-            if ( !$instance ) {
+            if ( !$pk ) {
+
                 $instance = parent::fetchBy( $field, $value );
-                static::storeInCache( $instance, $field . (string) $value );
+
+                static::storeInCache( $instance, $instance->{static::_fetchPrimaryKey()} );
+                static::storeInCache( $pk, $field . (string) $value );
+
+                return $instance;
             }
 
-            return $instance;
+            return static::get( $pk );
         }
 
         public function delete() {
-            static::deleteFromCache( $this->{static::_fetchPrimaryKey} );
+            static::deleteFromCache( $this->{static::_fetchPrimaryKey()} );
             parent::delete();
         }
 
