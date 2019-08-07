@@ -47,7 +47,7 @@
          * @param type $autoDetect
          * @return CollectionObject
          */
-        public function with( $model, $autoDetect = true ) {
+        public function with( $model, $autoDetect = true ):CollectionObject {
 
             if ( !$model instanceof DataModel && !class_exists( $model ) ) {
                 throw new DatabaseException( "Illegal Datamodel passed {$model}" );

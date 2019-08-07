@@ -2,18 +2,18 @@
 
     namespace Wrapped\_\Database\Driver;
 
-use \PDO;
-use \PDOException;
-use \PDOStatement;
-use \Wrapped\_\Database\DbLogic;
-use \Wrapped\_\Database\SQL\Command;
-use \Wrapped\_\Database\SQL\Delete;
-use \Wrapped\_\Database\SQL\Insert;
-use \Wrapped\_\Database\SQL\Join;
-use \Wrapped\_\Database\SQL\Select;
-use \Wrapped\_\Database\SQL\Table;
-use \Wrapped\_\Database\SQL\Update;
-use \Wrapped\_\Exception\Database\DatabaseException;
+    use \PDO;
+    use \PDOException;
+    use \PDOStatement;
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\SQL\Command;
+    use \Wrapped\_\Database\SQL\Delete;
+    use \Wrapped\_\Database\SQL\Insert;
+    use \Wrapped\_\Database\SQL\Join;
+    use \Wrapped\_\Database\SQL\Select;
+    use \Wrapped\_\Database\SQL\Table;
+    use \Wrapped\_\Database\SQL\Update;
+    use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class DatabaseDriver {
 
@@ -109,7 +109,7 @@ use \Wrapped\_\Exception\Database\DatabaseException;
 
                     $type = PDO::PARAM_STR;
 
-                    if ( gettype( $var[$i]) === 'boolean' ) {
+                    if ( gettype( $var[$i] ) === 'boolean' ) {
                         $type = PDO::PARAM_BOOL;
                     }
 
@@ -117,11 +117,11 @@ use \Wrapped\_\Exception\Database\DatabaseException;
                 }
             } else {
 
-                    $type = PDO::PARAM_STR;
+                $type = PDO::PARAM_STR;
 
-                    if ( gettype( $var ) === 'boolean' ) {
-                        $type = PDO::PARAM_BOOL;
-                    }
+                if ( gettype( $var ) === 'boolean' ) {
+                    $type = PDO::PARAM_BOOL;
+                }
 
                 $statement->bindValue( ":" . $param, $var, $type );
             }
@@ -288,7 +288,6 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $result;
         }
 
-
         public function getCurrentDatabase() {
             return $this->currentDatabase;
         }
@@ -336,7 +335,7 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $tableNames;
         }
 
-                /**
+        /**
          * executes raw querie
          * @param type $sql
          * @return PDOStatement
@@ -347,6 +346,11 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $this->lastStatement;
         }
 
+        /**
+         * executes raw querie
+         * @param type $sql
+         * @return PDOStatement
+         */
         public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
 
             $this->prepare( $sql . $dbLogic->compile( $this ) );
