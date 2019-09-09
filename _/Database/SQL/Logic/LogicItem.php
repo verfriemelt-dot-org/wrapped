@@ -3,7 +3,7 @@
     namespace Wrapped\_\Database\SQL\Logic;
 
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
 
     abstract class LogicItem {
 
@@ -59,7 +59,7 @@
             return $this;
         }
 
-        public function fetchSqlString( DbLogic $logic, Driver $driver ) {
+        public function fetchSqlString( DbLogic $logic, DatabaseDriver $driver ) {
             return $this->getValue();
         }
 

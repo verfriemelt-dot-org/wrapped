@@ -14,7 +14,7 @@
             $this->table     = $table;
         }
 
-        public function fetchOrderString( \Wrapped\_\Database\Driver\Driver $driver ) {
+        public function fetchOrderString( \Wrapped\_\Database\Driver\DatabaseDriver $driver ) {
 
             $str = $this->table ? $driver->quoteIdentifier($this->table) . "." : "";
             $str .= "{$driver->quoteIdentifier($this->column)} {$this->direction}";

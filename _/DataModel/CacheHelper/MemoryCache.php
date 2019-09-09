@@ -7,8 +7,8 @@
         public static $_inMemoryObejectCache = [];
 
         /**
-         * stores the fetched instance in memory for reducing databaseload
-         * be aware, that this could create issues with updating models and reusing them afterswards
+         * stores the fetched instance in memory for reducing load on the database
+         * be aware, that this could create issues with updating models and reusing them afterwards
          * do not use this with treeDataModels
          * @param type $id
          * @return static
@@ -37,4 +37,3 @@
         }
 
     }
-    

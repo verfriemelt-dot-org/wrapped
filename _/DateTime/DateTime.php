@@ -2,10 +2,10 @@
 
     class DateTime extends \DateTime {
 
-        const MYSQL_FORMAT = "Y-m-d H:i:s";
+        const SQL_FORMAT = "Y-m-d H:i:s";
 
-        public function toMysqlFormat(): string {
-            return $this->format( self::MYSQL_FORMAT );
+        public function toSqlFormat(): string {
+            return $this->format( self::SQL_FORMAT );
         }
 
     }

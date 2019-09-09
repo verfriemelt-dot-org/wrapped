@@ -1,12 +1,12 @@
 <?php
 
-    use \Wrapped\_\Database\Driver\Driver;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql\Schema;
 
     namespace Wrapped\_\Database\Driver;
 
     class Mysql
-    extends Driver {
+    extends DatabaseDriver {
 
         const PDO_NAME = 'mysql';
 

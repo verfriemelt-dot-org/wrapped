@@ -94,6 +94,28 @@
             return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::_getStaticClassName();
         }
 
+        public static function fetchBy( string $field, $value ) {
+
+            $tableName = static::getTableName();
+            $db        = static::getDatabase();
+
+            $select = $db->select( $tableName );
+
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
+            }
+
+            $select->setDbLogic( (new DbLogic() )->where( $field, "=", $value )->limit( 1 ) );
+
+            $res = $select->run();
+
+            if ( $res->rowCount() === 0 ) {
+                return null;
+            }
+
+            return (new static() )->initData( $res->fetch() );
+        }
+
         /**
          * creates an object with the given id as param
          * @param type $id
@@ -108,20 +130,14 @@
                 throw new DatabaseException( "::get is not possible without PK" );
             }
 
-            $tableName = static::getTableName();
-            $db        = static::getDatabase();
+            $result = static::fetchBy( $pk, $id );
 
-            $select = $db->select( $tableName );
-            $select->all();
-            $select->setDbLogic( (new DbLogic() )->where( $pk, "=", $id )->limit( 1 ) );
-
-            $res = $select->run();
-
-            if ( $res->rowCount() === 0 ) {
+            // for backwards compatibility
+            if ( $result === null ) {
                 throw new DatabaseObjectNotFound( "no such object found in database with name " . static::class . " and id {$id}" );
             }
 
-            return (new static() )->initData( $res->fetch() );
+            return $result;
         }
 
         public function reload() {
@@ -130,7 +146,11 @@
             $db        = static::getDatabase();
 
             $select = $db->select( $tableName );
-            $select->all();
+
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->addColumn( $col );
+            }
+
             $select->setDbLogic( (new DbLogic() )->where( static::_fetchPrimaryKey(), "=", $this->{static::_fetchPrimaryKey()} )->limit( 1 ) );
 
             $res = $select->run();

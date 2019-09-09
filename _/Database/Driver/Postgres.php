@@ -3,7 +3,7 @@
     namespace Wrapped\_\Database\Driver;
 
     class Postgres
-    extends Driver {
+    extends DatabaseDriver {
 
         const PDO_NAME = 'pgsql';
 

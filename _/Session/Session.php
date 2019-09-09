@@ -42,7 +42,7 @@
             }
 
             $this->dataObj->setTimeout( time() + static::SESSION_TIMEOUT );
-            $this->dataObj->setData( serialize( $this->currentData ) );
+            $this->dataObj->setData( base64_encode(serialize( $this->currentData )) );
             $this->dataObj->save();
         }
 
@@ -92,7 +92,7 @@
             }
 
             $this->sessionId   = $sessionId;
-            $this->currentData = unserialize( $this->dataObj->getData() );
+            $this->currentData = unserialize( base64_decode( $this->dataObj->getData() ) );
 
             return $this;
         }

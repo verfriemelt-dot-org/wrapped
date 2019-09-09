@@ -2,27 +2,27 @@
 
     namespace Wrapped\_\Database\Driver;
 
-use \PDO;
-use \PDOException;
-use \PDOStatement;
-use \Wrapped\_\Database\DbLogic;
-use \Wrapped\_\Database\SQL\Command;
-use \Wrapped\_\Database\SQL\Delete;
-use \Wrapped\_\Database\SQL\Insert;
-use \Wrapped\_\Database\SQL\Join;
-use \Wrapped\_\Database\SQL\Select;
-use \Wrapped\_\Database\SQL\Table;
-use \Wrapped\_\Database\SQL\Update;
-use \Wrapped\_\Exception\Database\DatabaseException;
+    use \PDO;
+    use \PDOException;
+    use \PDOStatement;
+    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\SQL\Command;
+    use \Wrapped\_\Database\SQL\Delete;
+    use \Wrapped\_\Database\SQL\Insert;
+    use \Wrapped\_\Database\SQL\Join;
+    use \Wrapped\_\Database\SQL\Select;
+    use \Wrapped\_\Database\SQL\Table;
+    use \Wrapped\_\Database\SQL\Update;
+    use \Wrapped\_\Exception\Database\DatabaseException;
 
-    abstract class Driver {
+    abstract class DatabaseDriver {
 
         public $connectionName;
         protected $currentDatabase;
         protected $statements             = [];
         protected $lastStatement;
         protected $config                 = [];
-        public static $debug              = true;
+        public static $debug              = false;
         public static $debugHistory       = [];
         public static $debugLastStatement = null;
         public static $debugLastParams    = null;
@@ -106,10 +106,24 @@ use \Wrapped\_\Exception\Database\DatabaseException;
 
             if ( is_array( $param ) && is_array( $var ) && \count( $param ) == \count( $var ) ) {
                 for ( $i = 0, $count = \count( $var ); $i < $count; ++$i ) {
-                    $statement->bindValue( ":" . $param[$i], $var[$i] );
+
+                    $type = PDO::PARAM_STR;
+
+                    if ( gettype( $var[$i] ) === 'boolean' ) {
+                        $type = PDO::PARAM_BOOL;
+                    }
+
+                    $statement->bindValue( ":" . $param[$i], $var[$i], $type );
                 }
             } else {
-                $statement->bindValue( ":" . $param, $var );
+
+                $type = PDO::PARAM_STR;
+
+                if ( gettype( $var ) === 'boolean' ) {
+                    $type = PDO::PARAM_BOOL;
+                }
+
+                $statement->bindValue( ":" . $param, $var, $type );
             }
 
             return $this;
@@ -274,7 +288,6 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $result;
         }
 
-
         public function getCurrentDatabase() {
             return $this->currentDatabase;
         }
@@ -322,7 +335,7 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $tableNames;
         }
 
-                /**
+        /**
          * executes raw querie
          * @param type $sql
          * @return PDOStatement
@@ -337,6 +350,11 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             $this->connectionHandle->query( $sql );
         }
 
+        /**
+         * executes raw querie
+         * @param type $sql
+         * @return PDOStatement
+         */
         public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
 
             $this->prepare( $sql . $dbLogic->compile( $this ) );

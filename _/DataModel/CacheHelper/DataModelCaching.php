@@ -4,7 +4,7 @@
 
     use \Wrapped\_\Cache\CacheFactory;
 
-    trait Memcached {
+    trait DataModelCaching {
 
         protected static function storeInCache( $instance, string $key ): bool {
 
@@ -59,8 +59,26 @@
             return $instance;
         }
 
+        public static function fetchBy( string $field, $value ) {
+
+            // mapping
+            $pk = static::retriveFromCache( $field . (string) $value );
+
+            if ( !$pk ) {
+
+                $instance = parent::fetchBy( $field, $value );
+
+                static::storeInCache( $instance, $instance->{static::_fetchPrimaryKey()} );
+                static::storeInCache( $pk, $field . (string) $value );
+
+                return $instance;
+            }
+
+            return static::get( $pk );
+        }
+
         public function delete() {
-            static::deleteFromCache( $this->{static::_fetchPrimaryKey} );
+            static::deleteFromCache( $this->{static::_fetchPrimaryKey()} );
             parent::delete();
         }
 

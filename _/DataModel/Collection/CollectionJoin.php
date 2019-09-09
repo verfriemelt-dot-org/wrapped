@@ -28,7 +28,7 @@
          * build up the on string like user.id = userRole.userId
          * @return type
          */
-        public function fetchOnString( \Wrapped\_\Database\Driver\Driver $db ) {
+        public function fetchOnString( \Wrapped\_\Database\Driver\DatabaseDriver $db ) {
 
 
             return "{$db->quoteIdentifier($this->source)}.{$db->quoteIdentifier($this->onSource)} {$this->operator} {$db->quoteIdentifier($this->destination)}.{$db->quoteIdentifier($this->onDestination)}";

@@ -545,7 +545,14 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $query = "SELECT parent.*
+            $columns = [];
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $columns[] = 'parent.' . $col;
+            }
+
+            $selectString = implode( ",", $columns );
+
+            $query = "SELECT {$selectString}
                         FROM {$tableName} AS node, {$tableName} AS parent
                         WHERE node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
                         AND node.id = {$id}
@@ -596,8 +603,15 @@
 
             $path = $databaseHandle->fetchConnectionHandle()->quote( $path );
 
+            $columns = [];
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $columns[] = 'node.' . $col;
+            }
+
+            $selectString = implode(",", $columns);
+
             $query = "SELECT
-                        node.*,
+                        {$selectString}
                         GROUP_CONCAT(parent.\"{$field}\" SEPARATOR '/') as path
                         FROM
                              {$tableName} AS node,
