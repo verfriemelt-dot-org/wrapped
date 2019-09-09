@@ -333,6 +333,10 @@ use \Wrapped\_\Exception\Database\DatabaseException;
             return $this->lastStatement;
         }
 
+        public function queryUnbound( $sql ) {
+            $this->connectionHandle->query( $sql );
+        }
+
         public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
 
             $this->prepare( $sql . $dbLogic->compile( $this ) );
