@@ -51,6 +51,7 @@
 
             $instance = static::retriveFromCache( $id );
 
+
             if ( !$instance ) {
                 $instance = parent::get( $id );
                 static::storeInCache( $instance, $id );
@@ -59,17 +60,26 @@
             return $instance;
         }
 
+        /**
+         * this should only be used on unique column
+         * @param string $field
+         * @param type $value
+         * @return type
+         */
         public static function fetchBy( string $field, $value ) {
 
             // mapping
             $pk = static::retriveFromCache( $field . (string) $value );
 
-            if ( !$pk ) {
+            if ( $pk === false ) {
 
                 $instance = parent::fetchBy( $field, $value );
 
+                // store instance itself
                 static::storeInCache( $instance, $instance->{static::_fetchPrimaryKey()} );
-                static::storeInCache( $pk, $field . (string) $value );
+
+                // fetch keyvalue pair for set instance.
+                static::storeInCache( $instance->{static::_fetchPrimaryKey()}, $field . (string) $value );
 
                 return $instance;
             }
