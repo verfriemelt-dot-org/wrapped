@@ -11,7 +11,7 @@
         use Singleton;
 
         CONST SESSION_COOKIE_NAME = "_";
-        CONST SESSION_TIMEOUT     = 60 * 60 * 24 * 7;
+        CONST SESSION_TIMEOUT     = 60 * 60 * 24 * 365;
 
         private $dataObj     = null;
         private $sessionId   = null;
