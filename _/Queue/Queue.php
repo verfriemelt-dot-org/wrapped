@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Queue;
 
+    use \Wrapped\_\Queue\Backend\MysqlBackend;
     use \Wrapped\_\Queue\Interfaces\QueuePersistance;
 
     class Queue {
@@ -11,7 +12,7 @@
         private $storage = null;
 
         public function __construct( QueuePersistance $storage = null ) {
-            $this->storage = $storage ?? new Backend\MysqlBackend;
+            $this->storage = $storage ?? new MysqlBackend;
         }
 
         /**

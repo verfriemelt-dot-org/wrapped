@@ -346,6 +346,10 @@
             return $this->lastStatement;
         }
 
+        public function queryUnbound( $sql ) {
+            $this->connectionHandle->query( $sql );
+        }
+
         /**
          * executes raw querie
          * @param type $sql
