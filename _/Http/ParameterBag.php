@@ -9,7 +9,7 @@
     class ParameterBag
     implements Countable, IteratorAggregate {
 
-        private $parameters = [];
+        private $parameters = [], $raw = null;
 
         public function __construct( array $parameters ) {
             $this->parameters = $parameters;
@@ -99,6 +99,15 @@
         public function override( $key, $value ) {
             $this->parameters[$key] = $value;
             return $this;
+        }
+
+        public function setRawData( $content ): ParameterBag {
+            $this->raw = $content;
+            return $this;
+        }
+
+        public function getRawData() {
+            return $this->raw;
         }
 
     }
