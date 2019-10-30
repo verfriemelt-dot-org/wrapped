@@ -38,6 +38,7 @@
             }
 
             $this->content = new ParameterBag( (array) $contents );
+            $this->content->setRawData( $content );
 
             $header = [];
 
