@@ -327,8 +327,8 @@
          * @param type $type
          * @return static
          */
-        public function order( $column, $direction = "ASC", $overrideTable = null ) {
-            $this->orderby[] = new Order( $column, $direction, $overrideTable ?: $this->getTableName() );
+        public function order( $column, $direction = "ASC", $overrideTable = null, $skipQuote = false ) {
+            $this->orderby[] = new Order( $column, $direction, $overrideTable ?: $this->getTableName(), $skipQuote );
             return $this;
         }
 
