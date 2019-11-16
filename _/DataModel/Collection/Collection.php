@@ -21,7 +21,7 @@
             }
         }
 
-        public function enableYieldmode( $bool = true ): CollectionObject {
+        public function enableYieldmode( $bool = true ): Collection {
             $this->yieldMode = $bool;
             return $this;
         }
@@ -63,7 +63,7 @@
          *
          * @return CollectionResult
          */
-        public function get(): CollectionResult {
+        public function get() {
 
             if ( $this->collectionResult === null ) {
                 $this->fetch();
