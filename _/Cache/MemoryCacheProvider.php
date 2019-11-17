@@ -20,7 +20,8 @@
         }
 
         public function set( string $key, $value, int $timeout = 0 ): bool {
-            return static::$cache[$key] = $value;
+            static::$cache[$key] = $value;
+            return true;
         }
 
         public function delete( string $key ): bool {

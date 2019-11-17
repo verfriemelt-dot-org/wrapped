@@ -18,7 +18,10 @@
         }
 
         public static function getCache(): Cache {
+          
+          
             return new Cache( static::$cacheProvider );
+            
         }
 
     }
