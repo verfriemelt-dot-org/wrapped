@@ -75,6 +75,11 @@
 
                 $instance = parent::fetchBy( $field, $value );
 
+                // return null if not found
+                if ( !$instance ) {
+                    return null;
+                }
+
                 // store instance itself
                 static::storeInCache( $instance, $instance->{static::_fetchPrimaryKey()} );
 
