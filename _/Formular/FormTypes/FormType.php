@@ -17,6 +17,7 @@
         public $disabled = false;
         public $readonly = false;
         public $required = false;
+        public $postAsArray = false;
 
         /** @var FilterItem */
         public $filterItem;
@@ -94,6 +95,7 @@
 
             $this->tpl->set( "value", $this->value );
             $this->tpl->set( "name", $this->name );
+            $this->tpl->set( "postname", $this->name . ( $this->postAsArray ? '[]': ''));
             $this->tpl->set( "id", $this->name );
             $this->tpl->set( "type", $this->type );
 
@@ -147,6 +149,11 @@
 
         public function parseValue( $input ) {
             return $input;
+        }
+
+        public function postAsArray( bool $bool = true ): FormType {
+            $this->postAsArray = $bool;
+            return $this;
         }
 
     }

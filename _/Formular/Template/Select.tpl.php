@@ -4,7 +4,7 @@
         <label class="form-label-{{ name }}" for="{{ name }}">{{ label }}</label>
     {{ /if='displayLabel' }}
 
-    <select id="{{ name }}" class="form-control input-{{ name }}" name="{{ name }}">
+    <select id="{{ name }}" class="form-control input-{{ name }}" name="{{ postname }}">
 
         {{ repeater='options' }}
 
