@@ -481,14 +481,4 @@
             return static::fetchAnalyserObject()->getObjectShortName();
         }
 
-        public function __clone() {
-
-            $pk = static::_fetchPrimaryKey();
-
-            if ( $pk !== null ) {
-                $setter = "set" . ucfirst( $pk );
-                $this->{$setter}( null );
-            }
-        }
-
     }
