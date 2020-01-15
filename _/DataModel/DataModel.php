@@ -94,12 +94,22 @@
             return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::_getStaticClassName();
         }
 
+        /**
+         *
+         * @return ?String
+         */
+        public static function getSchemaName() {
+            return null;
+        }
+
         public static function fetchBy( string $field, $value ) {
 
-            $tableName = static::getTableName();
-            $db        = static::getDatabase();
+            $db         = static::getDatabase();
 
-            $select = $db->select( $tableName );
+            $select = $db->select(
+                static::getTableName(),
+                static::getSchemaName()
+            );
 
             foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
                 $select->addColumn( $col );
@@ -145,7 +155,7 @@
             $tableName = static::getTableName();
             $db        = static::getDatabase();
 
-            $select = $db->select( $tableName );
+            $select = $db->select( $tableName, static::getSchemaName() );
 
             foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
                 $select->addColumn( $col );
@@ -314,7 +324,7 @@
             $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
 
             $db     = static::getDatabase();
-            $update = $db->update( static::getTableName() );
+            $update = $db->update( static::getTableName(), static::getSchemaName() );
             $update->setDbLogic( $logic );
 
             $hasUpdates = false;
@@ -379,7 +389,7 @@
             $db    = static::getDatabase();
             $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
 
-            $delete = $db->delete( static::getTableName() );
+            $delete = $db->delete( static::getTableName(), static::getSchemaName() );
             $delete->setDbLogic( $logic );
             $delete->run();
         }
@@ -387,7 +397,7 @@
         public static function count( string $what = "*", $by = null, $and = true ): int {
 
             $db     = static::getDatabase();
-            $select = $db->select( static::getTableName() );
+            $select = $db->select( static::getTableName(), static::getSchemaName() );
 
             if ( is_array( $by ) ) {
 

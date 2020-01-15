@@ -80,7 +80,7 @@
             $db    = $model::getDatabase();
             $table = $model::getTableName();
 
-            $select = $db->select( $table );
+            $select = $db->select( $table, $model::getSchemaName() );
             $select->setDbLogic( $dbLogic );
 
             if ( $this->mainCollectionObject->getSelectionColumns() !== null ) {

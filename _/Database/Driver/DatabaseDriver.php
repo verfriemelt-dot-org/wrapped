@@ -232,20 +232,20 @@
             return $this;
         }
 
-        public function select( string $table, $fetchMode = null ): Select {
-            return (new Select( $this ) )->table( $table );
+        public function select( string $table, string $schema = null ): Select {
+            return (new Select( $this ) )->table( $table, $schema );
         }
 
-        public function delete( string $table ): Delete {
-            return (new Delete( $this ) )->table( $table );
+        public function delete( string $table, string $schema = null ): Delete {
+            return (new Delete( $this ) )->table( $table, $schema );
         }
 
-        public function update( string $table ): Update {
-            return (new Update( $this ) )->table( $table );
+        public function update( string $table, string $schema = null ): Update {
+            return (new Update( $this ) )->table( $table, $schema );
         }
 
-        public function insert( string $table ): Insert {
-            return (new Insert( $this ) )->table( $table );
+        public function insert( string $table, string $schema = null ): Insert {
+            return (new Insert( $this ) )->table( $table, $schema );
         }
 
         public function run( Command $command ) {

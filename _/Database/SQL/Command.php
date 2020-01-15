@@ -20,15 +20,16 @@
             $this->db = $db;
         }
 
-        public function table( string $table, string $alias = null ) {
+        public function table( string $table, string $schema = null ) {
 
-            $alias = '';
+            $tmp = '';
 
-            if ( $alias ) {
-                $alias = " {$this->db->quoteIdentifier( $alias )}";
+            if ( $schema ) {
+                $tmp = "{$this->db->quoteIdentifier( $schema )}.";
             }
 
-            $this->table = $this->db->quoteIdentifier( $table ) . $alias;
+            $this->table = $tmp . $this->db->quoteIdentifier( $table );
+
             return $this;
         }
 
