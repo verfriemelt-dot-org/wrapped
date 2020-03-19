@@ -131,8 +131,10 @@
 
         protected function bindLast( $param, $var ) {
 
-            self::$debugLastParams["param"][] = $param;
-            self::$debugLastParams["var"][]   = $var;
+            if ( self::$debug ) {
+                self::$debugLastParams["param"][] = $param;
+                self::$debugLastParams["var"][]   = $var;
+            }
 
             $this->bind( $this->lastStatement, $param, $var );
             return $this;
