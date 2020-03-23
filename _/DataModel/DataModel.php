@@ -15,7 +15,7 @@
     abstract class DataModel
     implements Serializable {
 
-        static public $_analyserObjectCache = [];
+        static protected $_analyserObjectCache = [];
         protected $_propertyHashes          = [];
 
         /**
@@ -41,7 +41,11 @@
             return $this;
         }
 
-        public function serialize() {
+        /**
+         * implementation for Serializable
+         * @return string
+         */
+        public function serialize(): string {
             return $this->toJson();
         }
 

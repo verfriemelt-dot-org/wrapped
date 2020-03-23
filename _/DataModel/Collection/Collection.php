@@ -83,15 +83,8 @@
             $select = $db->select( $table, $model::getSchemaName() );
             $select->setDbLogic( $dbLogic );
 
-            if ( $this->mainCollectionObject->getSelectionColumns() !== null ) {
-                // col override
-                foreach ( $this->mainCollectionObject->getSelectionColumns() as $col ) {
-                    $select->addColumn( $col );
-                }
-            } else {
-                foreach ( $model::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                    $select->addColumn( $col );
-                }
+            foreach ( $this->mainCollectionObject->getSelectionColumns() as $col ) {
+                $select->addColumn( $col );
             }
 
             if ( $this->yieldMode ) {

@@ -198,13 +198,7 @@
                 return $this->overrideSelection;
             }
 
-            $selectColumns = [];
-
-            foreach ( $this->model::fetchAnalyserObject()->fetchColumnsWithGetters() as $colum ) {
-                $selectColumns[] = $colum["column"];
-            }
-
-            return $selectColumns;
+            return $this->model::fetchAnalyserObject()->fetchAllColumns();
         }
 
         /**

@@ -2,40 +2,63 @@
 
     namespace Wrapped\_;
 
+    use \ReflectionClass;
+    use \ReflectionException;
+    use \ReflectionMethod;
+    use \ReflectionProperty;
+
     class ObjectAnalyser {
 
-        private $object;
+        /** @var ReflectionClass */
+        private ReflectionClass $reflection;
 
-        /** @var \ReflectionClass */
-        private $reflection;
-        private static $_cache = [];
+        /** @var ReflectionProperty[] */
+        private $properties       = [];
+        private $publicProperties = [];
 
-        /**
-         * @return static
-         * @param type $object
-         * @throws \Exception
-         */
         public function __construct( $object ) {
-            $this->object     = $object;
-            $this->reflection = new \ReflectionClass( $this->object );
+            $this->inspect( $object );
+        }
+
+        private function inspect( $object ) {
+
+            $this->reflection = new ReflectionClass( $object );
+            $this->properties = $this->reflection->getProperties();
+
+            foreach ( $this->properties as $prop ) {
+
+                if ( !$prop->isPublic() ) {
+                    continue;
+                }
+
+                try {
+
+                    // check if getters and setters are present
+                    $this->reflection->getMethod( 'get' . ucfirst( $prop->getName() ) );
+                    $this->reflection->getMethod( 'set' . ucfirst( $prop->getName() ) );
+                } catch ( ReflectionException $e ) {
+
+                    // if not, continue
+                    continue;
+                }
+
+                $this->publicProperties[] = $prop->getName();
+            }
         }
 
         public function getObjectShortName() {
             return $this->reflection->getShortName();
         }
 
-        public function getMethods() {
-            return $this->reflection->getMethods();
-        }
-
         /**
          * finds a method with the given name
          * @param type $name
-         * @return \ReflectionMethod
+         * @return ReflectionMethod
          */
-        public function findMethodByName( $name ) {
+        public function findMethodByName( string $name ) {
 
-            foreach ( $this->getMethods() as $method ) {
+            foreach ( $this->reflection->getMethods() as $method ) {
+
                 if ( $method->name == $name ) {
                     return $method;
                 }
@@ -44,80 +67,27 @@
             return false;
         }
 
-        public function getObject() {
-            return $this->object;
-        }
-
         public function fetchSetters() {
 
             $setters = [];
-            $methods = $this->reflection->getMethods( \ReflectionMethod::IS_PUBLIC );
 
-            $filter = [ "id" ];
-
-            foreach ( $methods as $method ) {
-
-                // if static method, we wont save this to database
-                if ( $method->isStatic() ) {
-                    continue;
-                }
-
-                // only load on getter
-                if ( substr( $method->name, 0, 3 ) !== "set" ) {
-                    continue;
-                }
-
-                $column = lcfirst( substr( $method->name, 3 ) );
-
-                if ( in_array( $column, $filter ) ) {
-                    continue;
-                }
-
-                $setters[] = [ "setter" => $method->name, "column" => $column ];
+            foreach ( $this->publicProperties as $prop ) {
+                $setters[] = [
+                    "setter" => 'set' . ucfirst( $prop ),
+                    "getter" => 'get' . ucfirst( $prop ),
+                    "column" => $prop
+                ];
             }
 
             return $setters;
         }
 
         public function fetchAllColumns() {
-
-            $columns = [];
-
-            foreach ( $this->reflection->getProperties() as $property ) {
-
-                if ( !$property->isStatic() && substr( $property->name, 0, 1 ) !== "_" ) {
-                    $columns[] = $property->name;
-                }
-            }
-
-            return $columns;
+            return $this->publicProperties;
         }
 
         public function fetchColumnsWithGetters() {
-
-            if ( isset( static::$_cache["fetchColumnsWithGetters"][$this->reflection->getName()] ) ) {
-                return static::$_cache["fetchColumnsWithGetters"][$this->reflection->getName()];
-            }
-
-            $getters = [];
-            $methods = $this->reflection->getMethods( \ReflectionMethod::IS_PUBLIC );
-
-            foreach ( $methods as $method ) {
-
-                // if static method, we wont save this to database
-                if ( $method->isStatic() || substr( $method->name, 0, 3 ) !== "get" ) {
-                    continue;
-                }
-
-                $column = lcfirst( substr( $method->name, 3 ) );
-
-
-                $getters[] = [ "getter" => $method->name, "column" => "$column" ];
-            }
-
-            static::$_cache["fetchColumnsWithGetters"][$this->reflection->getName()] = $getters;
-
-            return $getters;
+            return $this->fetchSetters();
         }
 
     }

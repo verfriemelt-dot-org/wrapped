@@ -13,103 +13,62 @@
     extends DataModel {
 
         static protected $_transactionInitiatorId = null;
-        public $id;
-        protected $depth, $left, $right, $parentId;
-        private $_after, $_before, $_under, $_atParentRight                   = true;
+        public int $id;
+        public ?int $depth           = null;
+        public ?int $left            = null;
+        public ?int $right           = null;
+        public ?int $parentId        = null;
+        private $_after, $_before, $_under, $_atParentRight = true;
 
         final protected static function _fetchPrimaryKey(): string {
             return "id";
         }
 
-        /**
-         *
-         * @return int
-         */
-        public function getDepth() {
+        public function getId(): int {
+            return $this->id;
+        }
+
+        public function getDepth(): ?int {
             return $this->depth;
         }
 
-        /**
-         *
-         * @return int
-         */
-        public function getLeft() {
+        public function getLeft(): ?int {
             return $this->left;
         }
 
-        /**
-         *
-         * @return int
-         */
-        public function getRight() {
+        public function getRight(): ?int {
             return $this->right;
         }
 
-        /**
-         *
-         * @return int
-         */
-        public function getParentId() {
+        public function getParentId(): ?int {
             return $this->parentId;
         }
 
-        /**
-         *
-         * @param int $depth
-         * @return static
-         */
-        public function setDepth( $depth ) {
+        public function setId( int $id ) {
+            $this->id = $id;
+            return $this;
+        }
+
+        public function setDepth( ?int $depth ) {
             $this->depth = $depth;
             return $this;
         }
 
-        /**
-         *
-         * @param int $left
-         * @return static
-         */
-        public function setLeft( $left ) {
+        public function setLeft( ?int $left ) {
             $this->left = $left;
             return $this;
         }
 
-        /**
-         *
-         * @param int $right
-         * @return static
-         */
-        public function setRight( $right ) {
+        public function setRight( ?int $right ) {
             $this->right = $right;
             return $this;
         }
 
-        /**
-         *
-         * @param int $parentId
-         * @return static
-         */
-        public function setParentId( $parentId ) {
+        public function setParentId( ?int $parentId ) {
             $this->parentId = $parentId;
             return $this;
         }
 
-        /**
-         *
-         * @return int
-         */
-        public function getId() {
-            return $this->id;
-        }
-
-        /**
-         *
-         * @param int $id
-         * @return static
-         */
-        public function setId( $id ) {
-            $this->id = $id;
-            return $this;
-        }
 
         /**
          * this deletes all children together with the node
@@ -124,7 +83,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "DELETE FROM {$tableName} WHERE {$databaseHandle->quoteIdentifier('left')} between {$this->left} and {$this->right}";
+            $sql1 = "DELETE FROM {$tableName} WHERE {$databaseHandle->quoteIdentifier( 'left' )} between {$this->left} and {$this->right}";
             $databaseHandle->query( $sql1 );
 
             $this->shiftLeft( $this->right, -$width );
@@ -303,7 +262,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier('left')} = -1*{$databaseHandle->quoteIdentifier('left')}, {$databaseHandle->quoteIdentifier('right')} = -1*{$databaseHandle->quoteIdentifier('right')} WHERE {$databaseHandle->quoteIdentifier('left')} between {$this->left} and {$this->right}";
+            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier( 'left' )} = -1*{$databaseHandle->quoteIdentifier( 'left' )}, {$databaseHandle->quoteIdentifier( 'right' )} = -1*{$databaseHandle->quoteIdentifier( 'right' )} WHERE {$databaseHandle->quoteIdentifier( 'left' )} between {$this->left} and {$this->right}";
             $databaseHandle->query( $sql1 );
         }
 
@@ -312,7 +271,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier('left')} = -1*{$databaseHandle->quoteIdentifier('left')}, {$databaseHandle->quoteIdentifier('right')} = -1*{$databaseHandle->quoteIdentifier('right')} WHERE {$databaseHandle->quoteIdentifier('left')} < 0";
+            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier( 'left' )} = -1*{$databaseHandle->quoteIdentifier( 'left' )}, {$databaseHandle->quoteIdentifier( 'right' )} = -1*{$databaseHandle->quoteIdentifier( 'right' )} WHERE {$databaseHandle->quoteIdentifier( 'left' )} < 0";
             $databaseHandle->query( $sql1 );
         }
 
@@ -326,7 +285,7 @@
             $tableName      = static::getTableName();
             $databaseHandle = static::getDatabase();
 
-            $sql = "UPDATE {$tableName} set {$databaseHandle->quoteIdentifier('left')} = {$databaseHandle->quoteIdentifier('left')} + {$amount},{$databaseHandle->quoteIdentifier('right')} = {$databaseHandle->quoteIdentifier('right')} + {$amount} WHERE {$databaseHandle->quoteIdentifier('left')} < 0";
+            $sql = "UPDATE {$tableName} set {$databaseHandle->quoteIdentifier( 'left' )} = {$databaseHandle->quoteIdentifier( 'left' )} + {$amount},{$databaseHandle->quoteIdentifier( 'right' )} = {$databaseHandle->quoteIdentifier( 'right' )} + {$amount} WHERE {$databaseHandle->quoteIdentifier( 'left' )} < 0";
             $databaseHandle->query( $sql );
 
             return $this;
@@ -477,8 +436,8 @@
 
             $databaseHandle->query(
                 "UPDATE {$tableName}
-                 SET {$databaseHandle->quoteIdentifier($leftOrRight)} = {$databaseHandle->quoteIdentifier($leftOrRight)} + {$amount}
-                 WHERE {$databaseHandle->quoteIdentifier($leftOrRight)} > {$offset}"
+                 SET {$databaseHandle->quoteIdentifier( $leftOrRight )} = {$databaseHandle->quoteIdentifier( $leftOrRight )} + {$amount}
+                 WHERE {$databaseHandle->quoteIdentifier( $leftOrRight )} > {$offset}"
             );
 
             return $this;
@@ -522,10 +481,10 @@
             $query = "SELECT (COUNT(parent.id) - 1) AS depth
                         FROM {$tableName} AS node,
                                 {$tableName} AS parent
-                        WHERE node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
+                        WHERE node.{$databaseHandle->quoteIdentifier( 'left' )} BETWEEN parent.{$databaseHandle->quoteIdentifier( 'left' )} AND parent.{$databaseHandle->quoteIdentifier( 'right' )}
                         and node.id = {$this->parentId}
                         GROUP BY node.id
-                        -- ORDER BY node.{$databaseHandle->quoteIdentifier('left')}";
+                        -- ORDER BY node.{$databaseHandle->quoteIdentifier( 'left' )}";
 
             $this->setDepth( $databaseHandle->query( $query )->fetch()["depth"] + 1 );
 
@@ -554,9 +513,9 @@
 
             $query = "SELECT {$selectString}
                         FROM {$tableName} AS node, {$tableName} AS parent
-                        WHERE node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
+                        WHERE node.{$databaseHandle->quoteIdentifier( 'left' )} BETWEEN parent.{$databaseHandle->quoteIdentifier( 'left' )} AND parent.{$databaseHandle->quoteIdentifier( 'right' )}
                         AND node.id = {$id}
-                        ORDER BY parent.{$databaseHandle->quoteIdentifier('left')}";
+                        ORDER BY parent.{$databaseHandle->quoteIdentifier( 'left' )}";
 
 
             return new CollectionResult( $databaseHandle->query( $query ), new static() );
@@ -608,7 +567,7 @@
                 $columns[] = 'node.' . $col;
             }
 
-            $selectString = implode(",", $columns);
+            $selectString = implode( ",", $columns );
 
             $query = "SELECT
                         {$selectString}
@@ -617,11 +576,11 @@
                              {$tableName} AS node,
                              {$tableName} AS parent
                         WHERE
-                             node.{$databaseHandle->quoteIdentifier('left')} BETWEEN parent.{$databaseHandle->quoteIdentifier('left')} AND parent.{$databaseHandle->quoteIdentifier('right')}
+                             node.{$databaseHandle->quoteIdentifier( 'left' )} BETWEEN parent.{$databaseHandle->quoteIdentifier( 'left' )} AND parent.{$databaseHandle->quoteIdentifier( 'right' )}
 
                         GROUP BY node.id
                         HAVING path = {$path}
-                        ORDER BY node.{$databaseHandle->quoteIdentifier('left')}, parent.{$databaseHandle->quoteIdentifier('left')}";
+                        ORDER BY node.{$databaseHandle->quoteIdentifier( 'left' )}, parent.{$databaseHandle->quoteIdentifier( 'left' )}";
 
             $res = $databaseHandle->query( $query );
 
@@ -655,7 +614,6 @@
          * @return static[]
          */
         public function fetchChildren( $order = "left", $direction = "ASC" ) {
-
             return static::find(
                     DbLogic::create()
                         ->where( "left", ">", $this->getLeft() )->addAnd()
