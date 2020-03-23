@@ -16,7 +16,7 @@
     implements Serializable {
 
         static protected $_analyserObjectCache = [];
-        protected $_propertyHashes          = [];
+        protected $_propertyHashes             = [];
 
         /**
          * should only be used, to initialise a set of objects
@@ -27,12 +27,29 @@
          */
         public function initData( $data ) {
 
-            foreach ( $data as $key => $value ) {
+            $props = static::fetchAnalyserObject()->fetchSetters();
+            $lowerCaseProps = [];
+            foreach( $props as $key => $value ) {
+                $lowerCaseProps[strtolower( $key )] = $value;
+            }
 
-                $method = "set" . ucfirst( $key );
+            foreach ( $data as $key => &$value ) {
 
-                if ( \method_exists( $this, $method ) ) {
-                    $this->$method( $value );
+                $key = strtolower( $key );
+
+                if ( !isset( $lowerCaseProps[$key] ) ) {
+                    continue;
+                }
+
+                if (
+                    class_exists( $lowerCaseProps[$key]['type'] ) && class_implements( $lowerCaseProps[$key]['type'], PropertyObjectInterface::class )
+                ) {
+
+                    $class = $lowerCaseProps[$key]['type'];
+                    $this->{$lowerCaseProps[$key]['setter']}( $class::hydrateFromString( $value ) );
+                } else {
+
+                    $this->{$lowerCaseProps[$key]['setter']}( $value );
                 }
             }
 
@@ -55,10 +72,9 @@
 
         public function toArray(): array {
 
-            $analyser = $this::fetchAnalyserObject();
-            $values   = [];
+            $values = [];
 
-            foreach ( $analyser->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
+            foreach ( $this::fetchAnalyserObject()->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
                 $values[$column] = $this->{$getter}();
             }
 
@@ -70,8 +86,7 @@
         }
 
         public function fetchColumns() {
-            $analyser = new ObjectAnalyser( static::class );
-            return $analyser->fetchAllColumns();
+            return static::fetchAnalyserObject()->fetchAllColumns();
         }
 
         public function unserialize( $serialized ) {
@@ -108,7 +123,7 @@
 
         public static function fetchBy( string $field, $value ) {
 
-            $db         = static::getDatabase();
+            $db = static::getDatabase();
 
             $select = $db->select(
                 static::getTableName(),
@@ -360,7 +375,14 @@
         protected function _storePropertyStates() {
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
-                $this->_propertyHashes[$col["column"]] = \crc32( $this->{$col["getter"]}() );
+
+                $data = $this->{$col["getter"]}();
+
+                if ( is_object( $data ) ) {
+                    $data = $data->dehydrateToString();
+                }
+
+                $this->_propertyHashes[$col["column"]] = \crc32( $data );
             }
         }
 

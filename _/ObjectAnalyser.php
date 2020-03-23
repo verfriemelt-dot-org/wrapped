@@ -13,8 +13,8 @@
         private ReflectionClass $reflection;
 
         /** @var ReflectionProperty[] */
-        private $properties       = [];
-        private $publicProperties = [];
+        private $publicPropertiesExtended = [];
+        private $publicProperties         = [];
 
         public function __construct( $object ) {
             $this->inspect( $object );
@@ -23,9 +23,8 @@
         private function inspect( $object ) {
 
             $this->reflection = new ReflectionClass( $object );
-            $this->properties = $this->reflection->getProperties();
 
-            foreach ( $this->properties as $prop ) {
+            foreach ( $this->reflection->getProperties() as $prop ) {
 
                 if ( !$prop->isPublic() ) {
                     continue;
@@ -43,6 +42,13 @@
                 }
 
                 $this->publicProperties[] = $prop->getName();
+
+                $this->publicPropertiesExtended[$prop->getName()] = [
+                    "setter" => 'set' . ucfirst( $prop->getName() ),
+                    "getter" => 'get' . ucfirst( $prop->getName() ),
+                    "type"   => $prop->getType() ? $prop->getType()->getName() : null,
+                    "column" => $prop->getName()
+                ];
             }
         }
 
@@ -68,18 +74,7 @@
         }
 
         public function fetchSetters() {
-
-            $setters = [];
-
-            foreach ( $this->publicProperties as $prop ) {
-                $setters[] = [
-                    "setter" => 'set' . ucfirst( $prop ),
-                    "getter" => 'get' . ucfirst( $prop ),
-                    "column" => $prop
-                ];
-            }
-
-            return $setters;
+            return $this->publicPropertiesExtended;
         }
 
         public function fetchAllColumns() {

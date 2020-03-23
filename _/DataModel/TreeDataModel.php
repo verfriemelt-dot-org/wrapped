@@ -12,19 +12,19 @@
     abstract class TreeDataModel
     extends DataModel {
 
-        static protected $_transactionInitiatorId = null;
-        public int $id;
+        public ?int $id              = null;
         public ?int $depth           = null;
         public ?int $left            = null;
         public ?int $right           = null;
         public ?int $parentId        = null;
         private $_after, $_before, $_under, $_atParentRight = true;
+        static protected $_transactionInitiatorId = null;
 
         final protected static function _fetchPrimaryKey(): string {
             return "id";
         }
 
-        public function getId(): int {
+        public function getId(): ?int {
             return $this->id;
         }
 
@@ -44,7 +44,7 @@
             return $this->parentId;
         }
 
-        public function setId( int $id ) {
+        public function setId( ?int $id ) {
             $this->id = $id;
             return $this;
         }
@@ -69,7 +69,7 @@
             return $this;
         }
 
-
+        
         /**
          * this deletes all children together with the node
          * be aware of funky features, if you're saving children after parents death!
