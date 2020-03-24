@@ -5,6 +5,7 @@
     use \Serializable;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\DataModel\Collection\Collection;
     use \Wrapped\_\Exception\Database\DatabaseException;
@@ -17,6 +18,10 @@
 
         static protected $_analyserObjectCache = [];
         protected $_propertyHashes             = [];
+
+        protected static function _fetchPrimaryKey(): ?string {
+            return "id";
+        }
 
         /**
          * should only be used, to initialise a set of objects
@@ -93,15 +98,11 @@
             $this->initData( (array) json_decode( $serialized ) );
         }
 
-        protected static function _fetchPrimaryKey(): ?string {
-            return "id";
-        }
-
         /**
          *
          * @return Mysql
          */
-        public static function getDatabase() {
+        public static function getDatabase(): DatabaseDriver {
             return in_array( DatabaseOverride::class, class_implements( static::class ) ) ? static::fetchDatabase() : Database::getConnection();
         }
 
@@ -109,7 +110,7 @@
          *
          * @return String
          */
-        public static function getTableName() {
+        public static function getTableName(): string {
             return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::_getStaticClassName();
         }
 
@@ -117,7 +118,7 @@
          *
          * @return ?String
          */
-        public static function getSchemaName() {
+        public static function getSchemaName(): ?string {
             return null;
         }
 
