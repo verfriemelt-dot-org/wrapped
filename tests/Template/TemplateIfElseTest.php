@@ -1,6 +1,6 @@
 <?php
 
-	class TemplateIfElseTest extends PHPUnit_Framework_TestCase {
+	class TemplateIfElseTest extends \PHPUnit\Framework\TestCase {
 
         private $tpl;
 

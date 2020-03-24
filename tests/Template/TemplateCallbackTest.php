@@ -8,7 +8,7 @@
 
     }
 
-    class TemplateCallbackTest extends PHPUnit_Framework_TestCase {
+    class TemplateCallbackTest extends \PHPUnit\Framework\TestCase {
 
         private $tpl;
 

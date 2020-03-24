@@ -4,9 +4,9 @@
     use \Wrapped\_\Input\Filter;
 
     class FilterTest
-    extends PHPUnit_Framework_TestCase {
+    extends \PHPUnit\Framework\TestCase {
 
-        public function setUp() {
+        public function setUp():void {
 
             $_SERVER = array(
                 'REDIRECT_HTTPS'        => 'on',
@@ -73,7 +73,7 @@
         }
 
         public function testFilterCreation() {
-            $filter = new Filter();
+            $this->assertTrue( new Filter() instanceof Filter );
         }
 
         public function testFilterLength() {

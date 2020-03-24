@@ -11,7 +11,7 @@
     use \Wrapped\_\Singleton;
 
     class Router
-    implements Iterator {
+    implements Iterator, \Countable {
 
         use RouteIterator;
         use Singleton;
@@ -225,6 +225,10 @@
         public function addGlobalFilter( callable $filter ) {
             $this->globalFilter[] = $filter;
             return $this;
+        }
+
+        public function count(): int {
+            return count( $this->routes );
         }
 
     }

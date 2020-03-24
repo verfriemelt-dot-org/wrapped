@@ -5,10 +5,11 @@
     use \Wrapped\_\Queue\QueueItem;
 
     class QueueTest
-    extends \PHPUnit_Framework_TestCase {
+    extends \PHPUnit\Framework\TestCase {
 
         public function testCreateInstance() {
             $queue = new Queue( new MemoryBackend );
+            $this->assertTrue( $queue instanceof Queue );
         }
 
         public function testAddingQueueItem() {

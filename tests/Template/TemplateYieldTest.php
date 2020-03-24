@@ -1,6 +1,6 @@
 <?php
 
-	class TemplateYieldTest extends PHPUnit_Framework_TestCase {
+	class TemplateYieldTest extends \PHPUnit\Framework\TestCase {
 
         private $tpl;
 

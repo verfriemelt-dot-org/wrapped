@@ -3,9 +3,9 @@
     use \Wrapped\_\Http\Request\Request;
 
     class RequestTest
-    extends PHPUnit_Framework_TestCase {
+    extends \PHPUnit\Framework\TestCase {
 
-        public function setUp() {
+        public function setUp():void {
 
             $_SERVER = array(
                 'REDIRECT_HTTPS' => 'on',
@@ -52,10 +52,6 @@
 
             $_COOKIE = [ "testCookie" => "testValue" ];
             $_GET = array( 'foo' => array( 0 => 'test1', 1 => 'test2', 'test' => 'test3' ), 'bar' => '1', );
-        }
-
-        public function testCanCreateInstance() {
-            Request::createFromGlobals();
         }
 
         public function testCanDetectHttp() {

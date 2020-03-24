@@ -85,4 +85,7 @@
             return $this->fetchSetters();
         }
 
+        public function fetchAttributes() {
+            return $this->publicPropertiesExtended;
+        }
     }

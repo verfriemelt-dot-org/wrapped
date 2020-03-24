@@ -8,9 +8,9 @@
     use \Wrapped\_\Router\Router;
 
     class RouterTest
-    extends PHPUnit_Framework_TestCase {
+    extends \PHPUnit\Framework\TestCase {
 
-        public function tearDown() {
+        public function tearDown(): void {
             Router::destroy();
             Request::destroy();
         }
@@ -19,19 +19,19 @@
             $this->assertTrue(
                 Router::getInstance() instanceof Router
             );
-
-            Router::getInstance();
         }
 
         public function testAddingRoutes() {
             Router::getInstance()->addRoutes(
                 Route::create( "/" )
             );
+
+            $this->assertSame( 1, Router::getInstance()->count() );
         }
 
         public function testRouterMatchingSingleRoute() {
 
-            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ]);
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
 
             $router = Router::getInstance( $request )->addRoutes(
                 Route::create( "/test" )
@@ -124,13 +124,11 @@
             $router = Router::getInstance( $request );
             $router->addRoutes(
                 RouteGroup::create( "/api" )->add(
-
                     RouteGroup::create( '/test' )->add(
                         Route::create( "/nice" )->call( function () {
                             return "win";
                         } )
                     ),
-
                     Route::create( ".*" )->call( function () {
                         return "default";
                     } )
@@ -143,7 +141,6 @@
             $router->setRequest( $request );
 
             $this->assertEquals( "default", $router->run()->runCallback( $request ) );
-
         }
 
         public function testMatchingGroupsWithNoChilds() {
@@ -166,15 +163,15 @@
 
             $router = Router::getInstance( $request );
             $router->addRoutes(
-                RouteGroup::create( "/(?<key>list)" )->add( Route::create("/(?<key2>geocaches)")->call( function () {
-                    return "win";
-                } ))
+                RouteGroup::create( "/(?<key>list)" )->add( Route::create( "/(?<key2>geocaches)" )->call( function () {
+                        return "win";
+                    } ) )
             );
 
             $router->run();
 
-            $this->assertTrue( $request->attributes()->has("key"));
-            $this->assertTrue( $request->attributes()->has("key2"));
+            $this->assertTrue( $request->attributes()->has( "key" ) );
+            $this->assertTrue( $request->attributes()->has( "key2" ) );
         }
 
     }

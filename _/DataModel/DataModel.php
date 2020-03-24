@@ -27,9 +27,9 @@
          */
         public function initData( $data ) {
 
-            $props = static::fetchAnalyserObject()->fetchSetters();
+            $props          = static::fetchAnalyserObject()->fetchSetters();
             $lowerCaseProps = [];
-            foreach( $props as $key => $value ) {
+            foreach ( $props as $key => &$value ) {
                 $lowerCaseProps[strtolower( $key )] = $value;
             }
 
@@ -374,7 +374,7 @@
          */
         protected function _storePropertyStates() {
 
-            foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
+            foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as &$col ) {
 
                 $data = $this->{$col["getter"]}();
 
@@ -389,11 +389,16 @@
         /**
          * checks whether
          * @param type $name
-         * @param type $value
+         * @param type $data
          * @return bool
          */
-        protected function _isPropertyFuzzy( $name, $value ) {
-            return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( $value );
+        protected function _isPropertyFuzzy( $name, $data ) {
+
+            if ( is_object( $data ) ) {
+                $data = $data->dehydrateToString();
+            }
+
+            return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( $data );
         }
 
         /**
@@ -431,7 +436,7 @@
                 $logic = new DbLogic();
                 $i     = 0;
 
-                foreach ( $by as $column => $value ) {
+                foreach ( $by as $column => &$value ) {
 
                     if ( is_array( $value ) ) {
                         $logic->where( $column, "IN", $value );
