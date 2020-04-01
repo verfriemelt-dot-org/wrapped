@@ -12,12 +12,18 @@
     abstract class TreeDataModel
     extends DataModel {
 
-        public ?int $id              = null;
-        public ?int $depth           = null;
-        public ?int $left            = null;
-        public ?int $right           = null;
-        public ?int $parentId        = null;
+        public ?int $id = null;
+
+        public ?int $depth = null;
+
+        public ?int $left = null;
+
+        public ?int $right = null;
+
+        public ?int $parentId = null;
+
         private $_after, $_before, $_under, $_atParentRight = true;
+
         static protected $_transactionInitiatorId = null;
 
         final protected static function _fetchPrimaryKey(): string {
@@ -69,7 +75,6 @@
             return $this;
         }
 
-        
         /**
          * this deletes all children together with the node
          * be aware of funky features, if you're saving children after parents death!
@@ -613,12 +618,21 @@
          *
          * @return static[]
          */
-        public function fetchChildren( $order = "left", $direction = "ASC" ) {
+        public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ) {
+
+            $logic = DbLogic::create()
+                ->where( "left", ">", $this->getLeft() )->addAnd()
+                ->where( "right", "<", $this->getRight() )
+                ->order( $order, $direction );
+
+            if ( $depth !== null ) {
+                $logic
+                    ->addAnd()
+                    ->where( "depth", "<=", $this->getDepth() + $depth );
+            }
+
             return static::find(
-                    DbLogic::create()
-                        ->where( "left", ">", $this->getLeft() )->addAnd()
-                        ->where( "right", "<", $this->getRight() )
-                        ->order( $order, $direction )
+                    $logic
             );
         }
 
