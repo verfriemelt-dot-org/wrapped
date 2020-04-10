@@ -636,6 +636,28 @@
             );
         }
 
+        /**
+         *
+         * @return static[]
+         */
+        public function fetchChildrenInclusive( $order = "left", $direction = "ASC", int $depth = null ) {
+
+            $logic = DbLogic::create()
+                ->where( "left", ">=", $this->getLeft() )->addAnd()
+                ->where( "right", "<=", $this->getRight() )
+                ->order( $order, $direction );
+
+            if ( $depth !== null ) {
+                $logic
+                    ->addAnd()
+                    ->where( "depth", "<=", $this->getDepth() + $depth );
+            }
+
+            return static::find(
+                    $logic
+            );
+        }
+
         public function fetchDirectChildren( $order = "left", $direction = "ASC" ) {
 
             return static::find(

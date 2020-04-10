@@ -22,7 +22,9 @@
                 return false;
             }
 
+
             if ( $data = CacheFactory::getCache()->get( static::class . $key ) ) {
+//                var_dump(unserialize( $data )); die();
                 return unserialize( $data );
             }
 
@@ -49,8 +51,8 @@
 
         public static function get( $id ) {
 
-            $instance = static::retriveFromCache( $id );
 
+            $instance = static::retriveFromCache( $id );
 
             if ( !$instance ) {
                 $instance = parent::get( $id );
