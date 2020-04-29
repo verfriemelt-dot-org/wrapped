@@ -88,4 +88,12 @@
         public function fetchAttributes() {
             return $this->publicPropertiesExtended;
         }
+
+        public function fetchAttributeInformation( string $name ) {
+            return $this->publicPropertiesExtended[ $name ];
+        }
+
+        public function fetchAttributeInformationType( string $name ) {
+            return $this->publicPropertiesExtended[ $name ]['type'];
+        }
     }

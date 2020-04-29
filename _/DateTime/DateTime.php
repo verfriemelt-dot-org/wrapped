@@ -11,7 +11,7 @@
         const SQL_FORMAT = "Y-m-d H:i:s";
 
         public function toSqlFormat(): string {
-            return $this->format( self::SQL_FORMAT );
+            return $this->format( static::SQL_FORMAT );
         }
 
         public static function hydrateFromString( $storedValue ) {
@@ -19,6 +19,10 @@
         }
 
         public function dehydrateToString(): string {
+            return $this->toSqlFormat();
+        }
+
+        public function toString(): string {
             return $this->toSqlFormat();
         }
 

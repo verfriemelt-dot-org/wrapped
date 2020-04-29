@@ -17,6 +17,7 @@
     implements Serializable {
 
         static protected $_analyserObjectCache = [];
+
         protected $_propertyHashes             = [];
 
         protected static function _fetchPrimaryKey(): ?string {
@@ -317,7 +318,13 @@
                     continue;
                 }
 
-                $insert->insert( $col["column"], $this->{$col["getter"]}() );
+                $data = $this->{$col["getter"]}();
+
+                if ( is_object( $data ) ) {
+                    $data = $data->dehydrateToString();
+                }
+
+                $insert->insert( $col["column"], $data );
             }
 
             $insert->run();
@@ -358,6 +365,11 @@
                 $currentData = $this->{$col["getter"]}();
 
                 if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
+
+                    if ( is_object( $currentData ) ) {
+                        $currentData = $currentData->dehydrateToString();
+                    }
+
                     $update->update( $col["column"], $currentData );
                     $hasUpdates = true;
                 }

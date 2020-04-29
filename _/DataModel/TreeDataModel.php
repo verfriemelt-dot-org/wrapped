@@ -4,6 +4,8 @@
 
     use \PDO;
     use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\Driver\Mysql;
+    use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\DataModel\Collection\CollectionResult;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TreeDataModel;
@@ -204,12 +206,12 @@
                 static::$_transactionInitiatorId = $transactionInitiatorId;
                 $db->startTransaction();
 
-                if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                if ( $db instanceof Mysql ) {
                     $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 0 );
                     $db->query( "LOCK TABLE {$qoutedTableNanem} WRITE, {$qoutedTableNanem} AS parent WRITE, {$qoutedTableNanem} AS node WRITE" );
                 }
 
-                if ( $db instanceof \Wrapped\_\Database\Driver\Postgres ) {
+                if ( $db instanceof Postgres ) {
                     $db->query( "LOCK TABLE {$qoutedTableNanem}" );
                 }
             }
@@ -227,13 +229,13 @@
                 // close transaction
                 if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
 
-                    if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                    if ( $db instanceof Mysql ) {
                         $db->query( "UNLOCK TABLES" );
                     }
 
                     $db->commitTransaction();
 
-                    if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                    if ( $db instanceof Mysql ) {
                         $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 1 );
                     }
 
@@ -243,7 +245,7 @@
 
                 $db->rollbackTransaction();
 
-                if ( $db instanceof \Wrapped\_\Database\Driver\Mysql ) {
+                if ( $db instanceof Mysql ) {
                     $db->query( "UNLOCK TABLES" );
                 }
 

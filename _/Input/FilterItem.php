@@ -2,18 +2,25 @@
 
     namespace Wrapped\_\Input;
 
-use \Wrapped\_\Exception\Input\InputException;
-use \Wrapped\_\Http\Request\Request;
+    use \Wrapped\_\Exception\Input\InputException;
+    use \Wrapped\_\Http\Request\Request;
 
     class FilterItem {
 
         private $input = "query";
+
         private $valueName = null;
+
         private $optional = false;
+
         private $minLength = false;
+
         private $maxLength = false;
+
         private $allowedChars = false;
+
         private $allowedValues = null;
+
         private $allowMultipleValuesSent = false;
 
         public function __construct( $input ) {
@@ -61,7 +68,7 @@ use \Wrapped\_\Http\Request\Request;
                     throw new InputException( "inputtype not allowed [{$this->valueName}]" );
                 }
 
-                foreach( $input as $inputItem ) {
+                foreach ( $input as $inputItem ) {
                     $this->checkValues( $inputItem );
                 }
             } else {

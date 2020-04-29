@@ -357,9 +357,14 @@
          * @param type $sql
          * @return PDOStatement
          */
-        public function queryWithDbLogic( $sql, DbLogic $dbLogic ) {
+        public function queryWithDbLogic( $sql, DbLogic $dbLogic, $precompiled = false ) {
 
-            $this->prepare( $sql . $dbLogic->compile( $this ) );
+            // uh is this hacky
+            if ( !$precompiled ) {
+                $this->prepare( $sql . $dbLogic->compile( $this ) );
+            } else {
+                $this->prepare( $sql );
+            }
 
             $bindings = $dbLogic->getBindings();
             $this->bindLast( $bindings["params"], $bindings["vars"] );
