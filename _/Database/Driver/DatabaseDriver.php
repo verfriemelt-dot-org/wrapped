@@ -18,16 +18,27 @@
     abstract class DatabaseDriver {
 
         public $connectionName;
+
         protected $currentDatabase;
+
         protected $statements             = [];
+
         protected $lastStatement;
+
         protected $config                 = [];
+
         public static $debug              = false;
+
         public static $debugHistory       = [];
+
         public static $debugLastStatement = null;
+
         public static $debugLastParams    = null;
+
         public static $debugQuerieCount   = 0;
+
         public static $counter            = 0;
+
         public static $time               = 0;
 
         /** @var PDO */
@@ -140,13 +151,6 @@
             return $this;
         }
 
-        protected function freeLastStatement() {
-
-            if ( ($key = array_search( $this->lastStatement, $this->statements )) !== false ) {
-                unset( $this->statements[$key] );
-            }
-        }
-
         /**
          *
          * @param type $statement
@@ -213,23 +217,14 @@
          * @param type $statement
          * @return Mysql
          */
-        public function prepare( $statement, $prepareOptions = [] ) {
+        public function prepare( $statement ) {
 
             if ( self::$debug ) {
                 self::$debugLastParams    = [];
                 self::$debugLastStatement = $statement;
             }
 
-            $name = md5( $statement );
-
-            if ( array_key_exists( $name, $this->statements ) ) {
-
-                $this->lastStatement = $this->statements[$name];
-                return $this;
-            }
-
-            $this->statements[$name] = $this->connectionHandle->prepare( $statement );
-            $this->lastStatement     = $this->statements[$name];
+            $this->lastStatement = $this->connectionHandle->prepare( $statement );
 
             return $this;
         }
@@ -269,8 +264,6 @@
             $result = $this->lastStatement;
             $result->setFetchMode( $command->getFetchMode() );
 
-            $this->freeLastStatement();
-
             return $result;
         }
 
@@ -285,7 +278,6 @@
             $this->executeLast();
 
             $result = $this->lastStatement->rowCount();
-            $this->freeLastStatement();
 
             return $result;
         }
@@ -342,8 +334,8 @@
          * @param type $sql
          * @return PDOStatement
          */
-        public function query( $sql, $prepareOptions = [] ) {
-            $this->prepare( $sql, $prepareOptions );
+        public function query( $sql ) {
+            $this->prepare( $sql );
             $this->executeLast();
             return $this->lastStatement;
         }
