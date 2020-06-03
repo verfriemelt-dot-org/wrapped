@@ -394,4 +394,8 @@
             return $stmt;
         }
 
+        public function setAttribute( int $key, $value ) {
+            $this->connectionHandle->setAttribute( $key, $value);
+            return $this;
+        }
     }
