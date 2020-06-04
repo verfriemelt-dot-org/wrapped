@@ -2,13 +2,16 @@
 
     namespace Wrapped\_\Database;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Logic\Bracket;
     use \Wrapped\_\Database\SQL\Logic\Column;
     use \Wrapped\_\Database\SQL\Logic\Conjunction;
+    use \Wrapped\_\Database\SQL\Logic\FalseValue;
     use \Wrapped\_\Database\SQL\Logic\LogicItem;
     use \Wrapped\_\Database\SQL\Logic\NullValue;
     use \Wrapped\_\Database\SQL\Logic\Operator;
     use \Wrapped\_\Database\SQL\Logic\Raw;
+    use \Wrapped\_\Database\SQL\Logic\TrueValue;
     use \Wrapped\_\Database\SQL\Logic\Value;
     use \Wrapped\_\Database\SQL\Order;
 
@@ -17,22 +20,31 @@
         /** @var LogicItem * */
         public $logicChainStart;
 
-        /** @var Driver\DatabaseDriver */
+        /** @var DatabaseDriver */
         protected $driver;
 
         /** @var LogicItem * */
         public $logicChainCurrent;
+
         public $orderby          = [];
+
         private $bindings        = [
             "params" => [],
             "vars"   => []
         ];
+
         private $rawString;
+
         private $tableName;
+
         private $bindingsCounter = 0;
+
         private $limit;
+
         private $offset;
+
         private $groupBy;
+
         private $having;
 
         /**
@@ -129,6 +141,20 @@
         public function isNotNull() {
             $this->appendToChain( new Operator( "IS NOT" ) );
             $this->appendToChain( new NullValue() );
+
+            return $this;
+        }
+
+        public function isTrue() {
+            $this->appendToChain( new Operator( "IS" ) );
+            $this->appendToChain( new TrueValue() );
+
+            return $this;
+        }
+
+        public function isFalse() {
+            $this->appendToChain( new Operator( "IS" ) );
+            $this->appendToChain( new FalseValue() );
 
             return $this;
         }
@@ -236,7 +262,7 @@
             return $string;
         }
 
-        public function compile( Driver\DatabaseDriver $driver ) {
+        public function compile( DatabaseDriver $driver ) {
 
             $this->driver = $driver;
 
