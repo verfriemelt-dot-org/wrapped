@@ -94,7 +94,10 @@
                 $message = sprintf( '%s:%s|%s', $key, $value, $type );
             }
 
-            $this->connection->send( $message );
+            if ( $this->connection ) {
+                $this->connection->send( $message );
+            }
+
             return $this;
         }
 
