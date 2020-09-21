@@ -37,8 +37,26 @@
                     header( "Content-type: text/plain" );
                 }
 
-                echo $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL;
-                print_r( $e );
+                $trace = $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL . print_r( $e, 1 );
+                $trace .= PHP_EOL . PHP_EOL ;
+                $trace .= "SERVER:" ;
+                $trace .= PHP_EOL;
+
+                $trace .= print_r( $_SERVER, 1 );
+
+                $trace .= PHP_EOL . PHP_EOL;
+                $trace .= "GET:";
+                $trace .= PHP_EOL;
+
+                $trace .= print_r( $_GET, 1 );
+
+                $trace .= PHP_EOL . PHP_EOL;
+                $trace .= "POST:";
+                $trace .= PHP_EOL;
+                $trace .= print_r( $_POST, 1 );
+
+                echo $trace;
+
                 die();
             } );
 
