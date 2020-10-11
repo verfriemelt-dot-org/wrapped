@@ -22,9 +22,7 @@
                 return false;
             }
 
-
             if ( $data = CacheFactory::getCache()->get( static::class . $key ) ) {
-//                var_dump(unserialize( $data )); die();
                 return unserialize( $data );
             }
 

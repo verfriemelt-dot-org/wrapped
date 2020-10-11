@@ -18,7 +18,7 @@
 
         static protected $_analyserObjectCache = [];
 
-        protected $_propertyHashes             = [];
+        protected $_propertyHashes = [];
 
         protected static function _fetchPrimaryKey(): ?string {
             return "id";
@@ -33,6 +33,7 @@
          */
         public function initData( $data ) {
 
+            var_dump($data);
             $props          = static::fetchAnalyserObject()->fetchSetters();
             $lowerCaseProps = [];
             foreach ( $props as $key => &$value ) {
@@ -50,11 +51,9 @@
                 if (
                     class_exists( $lowerCaseProps[$key]['type'] ) && class_implements( $lowerCaseProps[$key]['type'], PropertyObjectInterface::class )
                 ) {
-
                     $class = $lowerCaseProps[$key]['type'];
                     $this->{$lowerCaseProps[$key]['setter']}( $class::hydrateFromString( $value ) );
                 } else {
-
                     $this->{$lowerCaseProps[$key]['setter']}( $value );
                 }
             }
@@ -81,7 +80,10 @@
             $values = [];
 
             foreach ( $this::fetchAnalyserObject()->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
-                $values[$column] = $this->{$getter}();
+
+                $data = $this->{$getter}();
+
+                $values[$column] = ( $data instanceof PropertyObjectInterface ) ? $data->dehydrateToString() : $data;
             }
 
             return $values;
@@ -320,7 +322,7 @@
 
                 $data = $this->{$col["getter"]}();
 
-                if ( is_object( $data ) ) {
+                if ( $data instanceof PropertyObjectInterface ) {
                     $data = $data->dehydrateToString();
                 }
 
@@ -366,7 +368,7 @@
 
                 if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
 
-                    if ( is_object( $currentData ) ) {
+                    if ( $currentData instanceof PropertyObjectInterface ) {
                         $currentData = $currentData->dehydrateToString();
                     }
 
@@ -391,7 +393,7 @@
 
                 $data = $this->{$col["getter"]}();
 
-                if ( is_object( $data ) ) {
+                if ( $data instanceof PropertyObjectInterface ) {
                     $data = $data->dehydrateToString();
                 }
 
@@ -407,7 +409,7 @@
          */
         protected function _isPropertyFuzzy( $name, $data ) {
 
-            if ( is_object( $data ) ) {
+            if ( $data instanceof PropertyObjectInterface ) {
                 $data = $data->dehydrateToString();
             }
 

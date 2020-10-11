@@ -273,7 +273,7 @@
 
         public function truncate( $tableName ) {
 
-            $statement = "TRUNCATE {$tableName}";
+            $statement = "TRUNCATE {$tableName} RESTART IDENTITY CASCADE";
             $this->prepare( $statement );
             $this->executeLast();
 
