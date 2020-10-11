@@ -33,7 +33,6 @@
          */
         public function initData( $data ) {
 
-            var_dump($data);
             $props          = static::fetchAnalyserObject()->fetchSetters();
             $lowerCaseProps = [];
             foreach ( $props as $key => &$value ) {
