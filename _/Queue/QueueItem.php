@@ -2,24 +2,28 @@
 
     namespace Wrapped\_\Queue;
 
-    use \Wrapped\_\DataModel\DateTimeHandler;
+    use \Wrapped\_\DateTime\DateTime;
 
     class QueueItem {
 
-        use DateTimeHandler;
-
         public $channel  = Queue::DEFAULT_CHANNEL;
+
         public $key;
+
         public $uniqId;
-        public $priority = 100;
-        public $startDate;
-        public $locked   = false;
+
+        public int $priority = 100;
+
+        public ?DateTime $startDate = null;
+
+        public bool $locked   = false;
+
         public $data;
 
         public function __construct( $key, $channel = null ) {
             $this->key     = $key;
             $this->channel = $channel ?? "default";
-            $this->uniqId  = md5(uniqid( rand() ) . uniqid());
+            $this->uniqId  = md5( uniqid( rand() ) . uniqid() );
         }
 
         public function setQueue( Queue $queue ): QueueItem {
@@ -42,7 +46,7 @@
         }
 
         public function setStartDate( $startDate ) {
-            $this->startDate = $this->dateTimeToMysql( $startDate );
+            $this->startDate = $startDate;
             return $this;
         }
 
@@ -53,7 +57,7 @@
         /**
          * locks item on the queue
          * locked items are not retrived by the queuebackend
-         * @return \Wrapped\_\Queue\QueueItem
+         * @return QueueItem
          */
         public function lock(): QueueItem {
             $this->queue->lock( $this );
@@ -63,7 +67,7 @@
 
         /**
          * unlocks item on the queue
-         * @return \Wrapped\_\Queue\QueueItem
+         * @return QueueItem
          */
         public function unlock(): QueueItem {
             $this->queue->unlock( $this );

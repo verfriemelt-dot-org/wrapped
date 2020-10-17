@@ -93,7 +93,7 @@
             return $this->publicPropertiesExtended[ $name ];
         }
 
-        public function fetchAttributeInformationType( string $name ) {
+        public function fetchAttributeType( string $name ) {
             return $this->publicPropertiesExtended[ $name ]['type'];
         }
     }
