@@ -8,4 +8,3 @@
         const SQL_FORMAT = "Y-m-d";
 
     }
-    
