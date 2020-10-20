@@ -16,8 +16,8 @@
         use RouteIterator;
         use Singleton;
 
-        private $request;
-        private $basePath           = null;
+        private Request $request;
+        private ?string $basePath           = null;
         private $uri;
         private $routeAttributeData = [];
         private $globalFilter       = [];

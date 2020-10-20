@@ -9,3 +9,9 @@ bootstrap: bootstrap.php
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+coverage:
+    driver: phpdbg
+    enabled: true
+    remote: false
+    include:
+        - _/*.php
