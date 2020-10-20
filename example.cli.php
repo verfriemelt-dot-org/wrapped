@@ -23,7 +23,7 @@
     // setup request object
     $request = Request::getInstance();
     $request->server()->override(
-        "REQUEST_URI", Console::getInstance()->getArgsAsString()
+        "REQUEST_URI", Console::getInstance()
     );
 
     // run setup functions
