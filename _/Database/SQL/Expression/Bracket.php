@@ -7,8 +7,7 @@
 
         public function stringify(): string {
 
-            return "( ". parent::stringify()." )";
-
+            return "( " . parent::stringify() . " )";
         }
 
     }

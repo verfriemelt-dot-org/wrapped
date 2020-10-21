@@ -4,9 +4,10 @@
 
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Delete
-    implements Command {
+    implements Command, QueryPart {
 
         private const COMMAND = 'DELETE FROM %s';
 

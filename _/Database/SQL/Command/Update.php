@@ -5,9 +5,10 @@
     use \Exception;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Update
-    implements Command {
+    implements Command, QueryPart {
 
         private Identifier $table;
 

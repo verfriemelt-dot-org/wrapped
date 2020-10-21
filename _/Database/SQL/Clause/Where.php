@@ -3,8 +3,10 @@
     namespace Wrapped\_\Database\SQL\Clause;
 
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
-    class Where {
+    class Where
+    implements QueryPart {
 
         public const CLAUSE = "WHERE %s";
 

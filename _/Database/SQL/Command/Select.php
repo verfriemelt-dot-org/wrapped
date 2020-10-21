@@ -4,9 +4,10 @@
 
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Select
-    implements Command {
+    implements Command, QueryPart {
 
         private const COMMAND = 'SELECT %s';
 

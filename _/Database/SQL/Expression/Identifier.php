@@ -4,9 +4,10 @@
 
     use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Identifier
-    implements ExpressionItem {
+    implements ExpressionItem, QueryPart {
 
         protected string $column;
 

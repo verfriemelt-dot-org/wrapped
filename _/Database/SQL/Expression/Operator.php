@@ -2,8 +2,11 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
+    use \TheSeer\Tokenizer\Exception;
+    use \Wrapped\_\Database\SQL\QueryPart;
+
     class Operator
-    implements ExpressionItem {
+    implements ExpressionItem, QueryPart {
 
         public const OPTERATORS = [
             '+',

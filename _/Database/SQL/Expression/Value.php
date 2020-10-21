@@ -1,7 +1,9 @@
 <?php namespace Wrapped\_\Database\SQL\Expression;
 
+use \Wrapped\_\Database\SQL\QueryPart;
+
     class Value
-    implements ExpressionItem {
+    implements ExpressionItem, QueryPart {
 
         protected $value;
 

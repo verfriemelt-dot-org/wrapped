@@ -2,8 +2,11 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
+    use \Exception;
+    use \Wrapped\_\Database\SQL\QueryPart;
+
     class Expression
-    implements ExpressionItem {
+    implements ExpressionItem, QueryPart {
 
         protected array $expressions = [];
 
@@ -16,7 +19,7 @@
         public function stringify(): string {
 
             if ( count( $this->expressions ) === 0 ) {
-                throw new \Exception( 'empty expression' );
+                throw new Exception( 'empty expression' );
             }
 
             return implode(
