@@ -1,9 +1,10 @@
 <?php
 
+    namespace Wrapped\_\Database\Driver;
+
+    use \PDO;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql\Schema;
-
-    namespace Wrapped\_\Database\Driver;
 
     class Mysql
     extends DatabaseDriver {

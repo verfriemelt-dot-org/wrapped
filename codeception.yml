@@ -10,8 +10,8 @@ extensions:
     enabled:
         - Codeception\Extension\RunFailed
 coverage:
-    driver: phpdbg
     enabled: true
     remote: false
+    show_uncovered: false
     include:
         - _/*.php

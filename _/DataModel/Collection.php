@@ -107,17 +107,37 @@
             return $this->offsetGet( $this->count() - 1 );
         }
 
+        public function first() {
+
+            if ( $this->count() == 0 ) {
+                return null;
+            }
+
+            return $this->offsetGet( 0 );
+        }
+
         /**
          * array access implementation
          * @return bool
          */
         public function offsetExists( $offset ): bool {
 
-            if ( $offset > $length - 1 ) {
-                return false;
+            if ( $offset < 0 || $offset >= $this->length ) {
+                throw new Exception( "illegal offset {$offset} in result" );
             }
 
             // todo load more results
+            if ( !isset( $this->data[$offset] ) ) {
+
+                // data loading
+                $obj = ($this->loadMoreCallback)( $offset );
+
+                if ( !$obj ) {
+                    throw new Exception( "unable to fetch offset {$offset}" );
+                }
+
+                $this->data[$offset] = $obj;
+            }
 
             return isset( $this->data[$offset] );
         }
@@ -128,13 +148,8 @@
          */
         public function offsetGet( $offset ) {
 
-            if ( $offset < 0 || $offset >= $this->length ) {
-                throw new Exception( "illegal offset {$offset} in result" );
-            }
-
-            if ( !isset( $this->data[$offset] ) ) {
-                $this->data[$offset] = ($this->loadMoreCallback)( $offset );
-            }
+            // validate offset
+            $this->offsetExists( $offset );
 
             return $this->data[$offset];
         }
@@ -175,7 +190,7 @@
 
             $result = [];
 
-            foreach( $this as $element ) {
+            foreach ( $this as $element ) {
                 $result[] = $callable( $element );
             }
 
