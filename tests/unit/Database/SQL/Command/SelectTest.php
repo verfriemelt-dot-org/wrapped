@@ -2,9 +2,10 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Expression;
-    use \Wrapped\_\Database\SQL\Operator;
-    use \Wrapped\_\Database\SQL\Primitives;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
 
     class SelectTest
     extends TestCase {
@@ -15,7 +16,7 @@
 
         public function testTrue() {
             $select = new Select();
-            $select->add( new Primitives( 'true' ) );
+            $select->add( new Primitive( true ) );
 
             $this->assertSame( 'SELECT true', $select->stringify() );
         }
@@ -24,9 +25,9 @@
             $select = new Select();
             $select->add(
                 (new Expression() )
-                    ->add( new Primitives( 1 ) )
+                    ->add( new Value( 1 ) )
                     ->add( new Operator( '+' ) )
-                    ->add( new Primitives( 1 ) )
+                    ->add( new Value( 1 ) )
             );
 
             $this->assertSame( 'SELECT 1 + 1', $select->stringify() );

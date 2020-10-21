@@ -1,6 +1,6 @@
 <?php
 
-    namespace Wrapped\_\Database\SQL;
+    namespace Wrapped\_\Database\SQL\Expression;
 
     class Operator
     implements ExpressionItem {
@@ -10,13 +10,14 @@
             '-',
             '*',
             '/',
+            '%',
             '~',
             '~*',
             '~~', 'like',
             '~~*', 'ilike',
         ];
 
-        private string $operator;
+        protected string $operator;
 
         public function __construct( string $op ) {
             if ( !in_array( $op, static::OPTERATORS ) ) {

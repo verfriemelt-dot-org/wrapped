@@ -2,8 +2,10 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Command\Update;
-    use \Wrapped\_\Database\SQL\Identifier;
-    use \Wrapped\_\Database\SQL\Primitives;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\Value;
 
     class UpdateTest
     extends TestCase {
@@ -21,7 +23,7 @@
 
         public function testSimple() {
             $update = new Update( new Identifier( 'table' ) );
-            $update->add( new Identifier( 'test' ), new Primitives( 1 ) );
+            $update->add( new Identifier( 'test' ), new Value( 1 ) );
 
             $expected = 'UPDATE table SET test = 1';
 
@@ -31,13 +33,13 @@
         public function testComplex() {
 
             $update = new Update( new Identifier( 'table' ) );
-            $update->add( new Identifier( 'test' ), new Primitives( 1 ) );
+            $update->add( new Identifier( 'test' ), new Value( 1 ) );
             $update->add(
                 new Identifier( 'complex' ),
-                (new \Wrapped\_\Database\SQL\Expression() )
+                (new Expression() )
                     ->add( new Identifier( 'complex' ) )
-                    ->add( new \Wrapped\_\Database\SQL\Operator( '+' ) )
-                    ->add( new Primitives( 1 ) )
+                    ->add( new Operator( '+' ) )
+                    ->add( new Value( 1 ) )
             );
 
             $expected = 'UPDATE table SET test = 1, complex = complex + 1';

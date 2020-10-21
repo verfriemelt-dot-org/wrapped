@@ -2,9 +2,9 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\Database\SQL\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
 
-    class CollectionTest
+    class IdentifierTest
     extends TestCase {
 
         public function testInit() {

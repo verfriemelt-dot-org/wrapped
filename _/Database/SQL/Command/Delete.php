@@ -3,7 +3,7 @@
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Wrapped\_\Database\SQL\Command\Command;
-    use \Wrapped\_\Database\SQL\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
 
     class Delete
     implements Command {

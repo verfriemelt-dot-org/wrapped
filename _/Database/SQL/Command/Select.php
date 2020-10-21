@@ -3,7 +3,7 @@
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Wrapped\_\Database\SQL\Command\Command;
-    use \Wrapped\_\Database\SQL\ExpressionItem;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
 
     class Select
     implements Command {

@@ -1,11 +1,11 @@
 <?php
 
-    namespace Wrapped\_\Database\SQL;
+    namespace Wrapped\_\Database\SQL\Expression;
 
     class Expression
     implements ExpressionItem {
 
-        private array $expressions = [];
+        protected array $expressions = [];
 
         //Identifier | Primitives | Operator
         public function add( ExpressionItem $expression ) {

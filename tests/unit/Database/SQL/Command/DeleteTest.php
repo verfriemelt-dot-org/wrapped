@@ -2,7 +2,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Command\Delete;
-    use \Wrapped\_\Database\SQL\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
 
     class DeleteTest
     extends TestCase {

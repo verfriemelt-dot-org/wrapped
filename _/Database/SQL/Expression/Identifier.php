@@ -1,6 +1,6 @@
 <?php
 
-    namespace Wrapped\_\Database\SQL;
+    namespace Wrapped\_\Database\SQL\Expression;
 
     use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
@@ -8,13 +8,13 @@
     class Identifier
     implements ExpressionItem {
 
-        private string $column;
+        protected string $column;
 
-        private ?string $table = null;
+        protected ?string $table = null;
 
-        private ?string $schema = null;
+        protected ?string $schema = null;
 
-        private ?DatabaseDriver $connection = null;
+        protected ?DatabaseDriver $connection = null;
 
         public function __construct( string $column, string $table = null, string $schema = null ) {
 

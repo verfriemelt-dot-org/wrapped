@@ -3,8 +3,8 @@
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Exception;
-    use \Wrapped\_\Database\SQL\ExpressionItem;
-    use \Wrapped\_\Database\SQL\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
 
     class Update
     implements Command {
