@@ -19,7 +19,9 @@
         private ExpressionItem $source;
 
         public function __construct( ExpressionItem $source ) {
+
             $this->source = $this->wrap( $source );
+            $this->addChild( $this->source );
         }
 
         public function stringify( DatabaseDriver $driver = null ): string {

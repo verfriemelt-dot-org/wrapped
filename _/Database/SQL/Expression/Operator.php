@@ -26,7 +26,9 @@
             'or',
             'not',
             'is',
-            'is distrinct from'
+            'is distrinct from',
+            'asc',
+            'desc',
         ];
 
         protected string $operator;

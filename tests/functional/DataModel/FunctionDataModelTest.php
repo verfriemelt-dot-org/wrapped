@@ -39,25 +39,64 @@
 
         static $connection;
 
-        public function setUp(): void {
-
+        public static function setUpBeforeClass(): void {
             static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
-            static::$connection->query( 'create table if not exists dummy ( id serial primary key, name text );' );
+        }
+
+        public function setUp(): void {
+            static::$connection->query( "set log_statement = 'all'" );
+            static::$connection->query( 'create table dummy ( id serial primary key, name text );' );
         }
 
         public function tearDown(): void {
-            static::$connection->query( 'drop table if exists dummy ;' );
+            static::$connection->query( 'drop table dummy ;' );
         }
 
-        public function testObject() {
+        public function saveInstance( $name = 'test') {
 
             $obj = new Dummy;
-            $obj->setName( 'test' );
+            $obj->setName( $name );
             $obj->save();
 
+            return $obj;
+        }
+
+        public function testObjectSaveAutoGenerateId() {
+
+            $obj = $this->saveInstance();
+
+            $this->assertSame( 1, $obj->getId() );
+        }
+
+        public function testObjectGet() {
+
+            $this->saveInstance();
             $newObj = Dummy::get( 1 );
 
             $this->assertSame( 'test', $newObj->getName() );
+        }
+
+        public function testObjectFetch() {
+
+            $this->saveInstance( 'test1' );
+            $this->saveInstance( 'test2' );
+            $this->saveInstance( 'test3' );
+
+            $newObj = Dummy::findSingle( [ 'id' => 1, 'name' => 'test1' ] );
+
+            $this->assertSame( 'test1', $newObj->getName() );
+
+        }
+
+        public function testObjectFetchSorted() {
+
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+
+            $this->assertSame( 3, Dummy::findSingle( [ 'name' => 'test' ], 'id', 'desc' )->getId() );
+            $this->assertSame( 1, Dummy::findSingle( [ 'name' => 'test' ], 'id' )->getId() );
+
         }
 
         public function testObjectReload() {
@@ -66,7 +105,7 @@
             $obj->setName( 'test' );
             $obj->save();
 
-            Database::getConnection()->query("update dummy set name = 'epic'");
+            Database::getConnection()->query( "update dummy set name = 'epic'" );
 
             $obj->reload();
 

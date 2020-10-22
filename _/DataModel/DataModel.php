@@ -9,6 +9,7 @@
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Limit;
+    use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Where;
     use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
@@ -199,7 +200,7 @@
         }
 
         public function reload() {
-            return self::fetchBy( static::_fetchPrimaryKey(),  $this->{static::_fetchPrimaryKey()} ) ;
+            return self::fetchBy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} );
         }
 
         /**
@@ -234,23 +235,59 @@
          */
         public static function findSingle( $params = [], $orderBy = null, $order = "asc" ) {
 
-            $c  = new Collection();
-            $co = $c->from( static::class );
-
             if ( $params instanceof DbLogic ) {
-                $co->setLogic( $params );
-            } else {
-                $co->createLogic()->parseArray( $params );
+
+                throw new Exception( 'not supported' );
             }
+
+            $db = static::getDatabase();
+
+            $select = new Select();
+            $from   = new From( new Identifier( static::getSchemaName(), static::getTableName() ) );
+            $limit  = new Limit( new Value( 1 ) );
+
+            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
+                $select->add( new Identifier( $col ) );
+            }
+
+            $whereExpression = new \Wrapped\_\Database\SQL\Expression\Expression();
+
+            $counter = 0;
+            foreach ( $params as $field => $value ) {
+
+                $whereExpression
+                    ->add( new Identifier( $field ) )
+                    ->add( new Operator( '=' ) )
+                    ->add( new Value( $value ) );
+
+                if ( ++$counter < count( $params ) ) {
+                    $whereExpression->add( new Operator( 'and' ) );
+                }
+            }
+
+            $where = new Where( $whereExpression );
+
+            $stmt = (new Statement( $select ) )
+                ->add( $from )
+                ->add( $where )
+            ;
 
             if ( $orderBy !== null ) {
-                $co->getDbLogic()->order( $orderBy, $order );
+                $stmt->add(
+                    (new Order( ) )
+                        ->add( new Identifier( $orderBy ), $order )
+                );
             }
 
-            $co->getDbLogic()->limit( 1 );
-            $collectionResult = $c->get();
+            $stmt->add( $limit );
 
-            return $collectionResult->isEmpty() ? null : $collectionResult->current();
+            $res = $db->run( $stmt );
+
+            if ( $res->rowCount() === 0 ) {
+                return null;
+            }
+
+            return (new static() )->initData( $res->fetch() );
         }
 
         /**
