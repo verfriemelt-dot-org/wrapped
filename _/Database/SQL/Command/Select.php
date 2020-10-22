@@ -4,17 +4,18 @@
 
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Select
-    implements Command, QueryPart {
+    implements Command, CommandExpression {
+
+        use CommandWrapperTrait;
 
         private const COMMAND = 'SELECT %s';
 
         private array $items = [];
 
         public function add( ExpressionItem $item ) {
-            $this->items[] = $item;
+            $this->items[] = $this->wrap( $item );
             return $this;
         }
 

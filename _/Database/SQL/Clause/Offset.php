@@ -2,25 +2,26 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\SQL\Clause\Clause;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
-    class Limit
+    class Offset
     implements Clause, QueryPart {
 
-        public const CLAUSE = "LIMIT %s";
+        public const CLAUSE = "OFFSET %s";
 
-        protected ExpressionItem $limit;
+        protected ExpressionItem $offset;
 
-        public function __construct( ExpressionItem $limit ) {
-            $this->limit = $limit;
+        public function __construct( ExpressionItem $offset ) {
+            $this->offset = $offset;
         }
 
         public function stringify(): string {
 
             return sprintf(
                 static::CLAUSE,
-                $this->limit->stringify()
+                $this->offset->stringify()
             );
         }
 

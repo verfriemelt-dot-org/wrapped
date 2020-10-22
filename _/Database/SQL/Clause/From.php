@@ -6,24 +6,24 @@
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
-    class Where
+    class From
     implements QueryPart {
 
         use CommandWrapperTrait;
 
-        public const CLAUSE = "WHERE %s";
+        public const CLAUSE = "FROM %s";
 
-        private ExpressionItem $expression;
+        private ExpressionItem $source;
 
-        public function __construct( ExpressionItem $expression ) {
-            $this->expression = $this->wrap( $expression );
+        public function __construct( ExpressionItem $source ) {
+            $this->source = $this->wrap( $source );
         }
 
         public function stringify(): string {
 
             return sprintf(
                 static::CLAUSE,
-                $this->expression->stringify()
+                $this->source->stringify(),
             );
         }
 

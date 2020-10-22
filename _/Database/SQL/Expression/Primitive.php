@@ -3,10 +3,14 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \TheSeer\Tokenizer\Exception;
+    use \Wrapped\_\Database\SQL\Alias;
+    use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Primitive
-    implements ExpressionItem, QueryPart {
+    implements ExpressionItem, QueryPart, Aliasable {
+
+        use Alias;
 
         public const PRIMITIVES = [
             true,
@@ -27,11 +31,13 @@
 
         public function stringify(): string {
 
-            if ( is_bool( $this->primitive ) ) {
-                return $this->primitive ? 'true' : 'false';
+            switch ( getType( $this->primitive ) ) {
+                case 'boolean': $result = $this->primitive ? 'true' : 'false';
+                    break;
+                default: $result = 'null';
             }
 
-            return 'null';
+            return $result . $this->stringifyAlias();
         }
 
     }

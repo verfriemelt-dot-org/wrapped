@@ -1,9 +1,16 @@
-<?php namespace Wrapped\_\Database\SQL\Expression;
+<?php
 
-use \Wrapped\_\Database\SQL\QueryPart;
+    namespace Wrapped\_\Database\SQL\Expression;
+
+    use \Wrapped\_\Database\SQL\Alias;
+    use \Wrapped\_\Database\SQL\Aliasable;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Value
-    implements ExpressionItem, QueryPart {
+    implements ExpressionItem, QueryPart, Aliasable {
+
+        use Alias;
 
         protected $value;
 
@@ -12,7 +19,7 @@ use \Wrapped\_\Database\SQL\QueryPart;
         }
 
         public function stringify(): string {
-            return $this->value;
+            return $this->value . $this->stringifyAlias();
         }
 
     }

@@ -2,12 +2,21 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
+    use \Wrapped\_\Database\SQL\Alias;
+    use \Wrapped\_\Database\SQL\Aliasable;
+
     class Bracket
-    extends Expression {
+    extends Expression
+    implements Aliasable {
+
+        use Alias;
 
         public function stringify(): string {
 
-            return "( " . parent::stringify() . " )";
+            return sprintf(
+                    "( %s )",
+                    parent::stringify(),
+                ) . $this->stringifyAlias();
         }
 
     }

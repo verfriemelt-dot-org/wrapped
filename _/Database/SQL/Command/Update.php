@@ -8,7 +8,9 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Update
-    implements Command, QueryPart {
+    implements Command {
+
+        use CommandWrapperTrait;
 
         private Identifier $table;
 
@@ -24,7 +26,7 @@
 
             $this->cols [] = [
                 $column,
-                $expression
+                $this->wrap( $expression )
             ];
 
             return $this;

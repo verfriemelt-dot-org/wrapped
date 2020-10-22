@@ -14,7 +14,7 @@
         }
 
         public function stringify(): string {
-            return $this->stringify();
+            return $this->command->stringify();
         }
 
     }

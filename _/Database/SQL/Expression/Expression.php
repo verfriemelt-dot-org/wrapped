@@ -3,10 +3,13 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \Exception;
+    use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Expression
     implements ExpressionItem, QueryPart {
+
+        use CommandWrapperTrait;
 
         protected array $expressions = [];
 

@@ -6,24 +6,28 @@
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
-    class Where
+    class Join
     implements QueryPart {
 
         use CommandWrapperTrait;
 
-        public const CLAUSE = "WHERE %s";
+        public const CLAUSE = "JOIN %s ON %s";
 
-        private ExpressionItem $expression;
+        private ExpressionItem $source;
 
-        public function __construct( ExpressionItem $expression ) {
-            $this->expression = $this->wrap( $expression );
+        private ExpressionItem $on;
+
+        public function __construct( ExpressionItem $source, ExpressionItem $on ) {
+            $this->source = $source;
+            $this->on     = $on;
         }
 
         public function stringify(): string {
 
             return sprintf(
                 static::CLAUSE,
-                $this->expression->stringify()
+                $this->source->stringify(),
+                $this->on->stringify(),
             );
         }
 

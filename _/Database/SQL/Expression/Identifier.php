@@ -4,10 +4,14 @@
 
     use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Alias;
+    use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Identifier
-    implements ExpressionItem, QueryPart {
+    implements ExpressionItem, QueryPart, Aliasable {
+
+        use Alias;
 
         protected string $column;
 
@@ -61,7 +65,7 @@
 
             $ident .= $this->quote( $this->column );
 
-            return $ident;
+            return $ident . $this->stringifyAlias();
         }
 
     }
