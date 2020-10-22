@@ -14,7 +14,7 @@
 
         private Identifier $table;
 
-        private array $cols = [];
+        private array $columns = [];
 
         private const COMMAND = 'UPDATE %s SET %s';
 
@@ -24,7 +24,7 @@
 
         public function add( Identifier $column, ExpressionItem $expression ) {
 
-            $this->cols [] = [
+            $this->columns [] = [
                 $column,
                 $this->wrap( $expression )
             ];
@@ -34,13 +34,13 @@
 
         public function stringify(): string {
 
-            if ( count( $this->cols ) === 0 ) {
+            if ( count( $this->columns ) === 0 ) {
                 throw new Exception( "empty update statement" );
             }
 
             $colParts = [];
 
-            foreach ( $this->cols as [$column, $expression] ) {
+            foreach ( $this->columns as [$column, $expression] ) {
                 $colParts[] = "{$column->stringify()} = {$expression->stringify()}";
             }
 

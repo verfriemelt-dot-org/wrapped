@@ -5,12 +5,12 @@
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
 
-    class Select
+    class Values
     implements Command, CommandExpression {
 
         use CommandWrapperTrait;
 
-        private const COMMAND = 'SELECT %s';
+        private const COMMAND = 'VALUES ( %s )';
 
         private array $expressions = [];
 
