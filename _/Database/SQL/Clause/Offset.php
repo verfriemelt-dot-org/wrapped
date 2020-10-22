@@ -7,7 +7,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Offset
-    implements Clause, QueryPart {
+    extends QueryPart
+    implements Clause {
 
         public const CLAUSE = "OFFSET %s";
 

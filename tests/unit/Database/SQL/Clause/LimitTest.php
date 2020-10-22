@@ -10,7 +10,7 @@
         public function testSimple() {
 
             $limit = new Limit(
-                new Value( 1 )
+                (new Value( 1 ) )->useBinding( false )
             );
             $this->assertSame( 'LIMIT 1', $limit->stringify() );
         }

@@ -2,8 +2,25 @@
 
     namespace Wrapped\_\Database\SQL;
 
-    interface QueryPart {
+    abstract class QueryPart {
 
-        public function stringify(): string;
+        protected array $children = [];
+
+        protected function addChild( QueryPart $child ) {
+            $this->children[] = $child;
+            return $this;
+        }
+
+        public function getChildren() {
+            return $this->children;
+        }
+
+        public function fetchBindings() {
+
+
+
+
+            return array_merge( [], ... array_map( fn( $child ) => $child->fetchBindings(), $this->children ) );
+        }
+
     }
-    

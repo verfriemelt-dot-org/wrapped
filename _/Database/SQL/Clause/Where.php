@@ -2,12 +2,14 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\SQL\Clause\Clause;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Where
-    implements QueryPart, Clause {
+    extends QueryPart
+    implements Clause {
 
         use CommandWrapperTrait;
 
@@ -16,7 +18,11 @@
         private ExpressionItem $expression;
 
         public function __construct( ExpressionItem $expression ) {
-            $this->expression = $this->wrap( $expression );
+
+            $wrap = $this->wrap( $expression );
+
+            $this->addChild( $wrap );
+            $this->expression = $wrap;
         }
 
         public function stringify(): string {

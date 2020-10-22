@@ -26,12 +26,12 @@
             $select = new Values();
             $select->add(
                 (new Expression() )
-                    ->add( new Value( 1 ) )
+                    ->add( (new Value( 1 ))->useBinding( false ) )
                     ->add( new Operator( '+' ) )
-                    ->add( new Value( 1 ) )
+                    ->add( (new Value( 3 ))->useBinding( false ) )
             );
 
-            $this->assertSame( 'VALUES ( 1 + 1 )', $select->stringify() );
+            $this->assertSame( 'VALUES ( 1 + 3 )', $select->stringify() );
         }
 
     }

@@ -8,6 +8,7 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Update
+    extends QueryPart
     implements Command {
 
         use CommandWrapperTrait;
@@ -24,9 +25,12 @@
 
         public function add( Identifier $column, ExpressionItem $expression ) {
 
+            $wrappedExpression = $this->wrap( $expression );
+            $this->addChild( $wrappedExpression );
+
             $this->columns [] = [
                 $column,
-                $this->wrap( $expression )
+                $wrappedExpression
             ];
 
             return $this;

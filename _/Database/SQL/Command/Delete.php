@@ -7,6 +7,7 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Delete
+    extends QueryPart
     implements Command {
 
         private const COMMAND = 'DELETE FROM %s';

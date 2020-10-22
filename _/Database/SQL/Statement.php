@@ -6,17 +6,19 @@
     use \Wrapped\_\Database\SQL\Command\Command;
 
     class Statement
-    implements QueryPart {
+    extends QueryPart {
 
         private Command $command;
 
         private array $clauses = [];
 
         public function __construct( Command $command ) {
+            $this->addChild( $command );
             $this->command = $command;
         }
 
-        public function add( Clause $clause ) {
+        public function add( QueryPart $clause ) {
+            $this->addChild( $clause );
             $this->clauses[] = $clause;
             return $this;
         }
@@ -26,7 +28,7 @@
                 $this->command->stringify() . " " .
                 implode(
                     " ",
-                    array_map( fn( Clause $i ) => $i->stringify(), $this->clauses )
+                    array_map( fn( QueryPart $i ) => $i->stringify(), $this->clauses )
                 )
             );
         }

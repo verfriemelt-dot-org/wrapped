@@ -7,7 +7,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Expression
-    implements ExpressionItem, QueryPart {
+    extends QueryPart
+    implements ExpressionItem {
 
         use CommandWrapperTrait;
 
@@ -15,6 +16,9 @@
 
         //Identifier | Primitives | Operator
         public function add( ExpressionItem $expression ) {
+
+            $this->addChild( $expression );
+
             $this->expressions[] = $expression;
             return $this;
         }

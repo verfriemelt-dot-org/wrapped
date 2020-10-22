@@ -6,9 +6,11 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Operator
-    implements ExpressionItem, QueryPart {
+    extends QueryPart
+    implements ExpressionItem {
 
         public const OPTERATORS = [
+            '=',
             '+',
             '-',
             '*',
@@ -18,12 +20,20 @@
             '~*',
             '~~', 'like',
             '~~*', 'ilike',
+            '@>', '<@',
+            'and',
+            'or',
+            'not',
+            'is',
+            'is distrinct from'
+
         ];
 
         protected string $operator;
 
         public function __construct( string $op ) {
-            if ( !in_array( $op, static::OPTERATORS ) ) {
+
+            if ( !in_array( strtolower( $op ), static::OPTERATORS ) ) {
                 throw new Exception( 'illegal operator' );
             }
 
@@ -31,7 +41,7 @@
         }
 
         public function stringify(): string {
-            return $this->operator;
+            return strtoupper( $this->operator );
         }
 
     }

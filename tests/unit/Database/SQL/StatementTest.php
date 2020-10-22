@@ -4,9 +4,11 @@
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
 
     class StatementTest
@@ -43,6 +45,47 @@
             $statement->add( new From( new Identifier( 'table' ) ) );
             $statement->add( new Where( new Primitive( true ) ) );
             $this->assertSame( 'SELECT column_a FROM table WHERE true', $statement->stringify() );
+        }
+
+        public function testInsert() {
+            $statement = new Statement(
+                (new Insert( new Identifier( 'test' ) ) )
+                    ->add(
+                        new Identifier( 'column_a' )
+                    )
+            );
+            $statement->add( (new Select() )->add( new Primitive( true ) ) );
+            $this->assertSame( 'INSERT INTO test ( column_a ) SELECT true', $statement->stringify() );
+        }
+
+        public function testDataBindings() {
+
+            $statement = new Statement(
+                (new Select() )
+                    ->add(
+                        (new Select )
+                        ->add( new Value( 15 ) )
+                        ->add( new Value( 1 ) )
+                    )
+            );
+
+            $this->assertSame( [ 15, 1 ], array_values( $statement->fetchBindings() ) );
+        }
+
+        public function testDataBindingsClause() {
+
+            $statement = new Statement(
+                (new Select() )
+                    ->add(
+                        (new Select )
+                        ->add( new Value( 15 ) )
+                        ->add( new Value( 1 ) )
+                    )
+            );
+            $statement->add( new Where( new Value( 666 ) ) );
+
+            $this->assertTrue( in_array( 666, array_values( $statement->fetchBindings() ) ) );
+            $this->assertTrue( in_array( 1, array_values( $statement->fetchBindings() ) ) );
         }
 
     }

@@ -9,9 +9,8 @@
 
         public function testSimple() {
 
-            $offset = new Offset( new Value( 1 ) );
+            $offset = new Offset( (new Value( 1 ))->useBinding( false ) );
             $this->assertSame( 'OFFSET 1', $offset->stringify() );
         }
 
     }
-    

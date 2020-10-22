@@ -9,7 +9,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Identifier
-    implements ExpressionItem, QueryPart, Aliasable {
+    extends QueryPart
+    implements ExpressionItem, Aliasable {
 
         use Alias;
 

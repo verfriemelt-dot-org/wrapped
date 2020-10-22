@@ -4,6 +4,6 @@
 
     use \Wrapped\_\Database\SQL\QueryPart;
 
-    interface Command extends QueryPart {
+    interface Command {
 
     }

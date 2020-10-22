@@ -2,11 +2,14 @@
 
     namespace Wrapped\_\Database\SQL\Command;
 
+    use \Exception;
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Insert
+    extends QueryPart
     implements Command, CommandExpression {
 
         private const COMMAND = 'INSERT INTO %s ( %s )';

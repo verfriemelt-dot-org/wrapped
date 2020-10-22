@@ -8,7 +8,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Primitive
-    implements ExpressionItem, QueryPart, Aliasable {
+    extends QueryPart
+    implements ExpressionItem, Aliasable {
 
         use Alias;
 

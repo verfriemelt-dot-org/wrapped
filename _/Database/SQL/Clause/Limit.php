@@ -6,7 +6,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Limit
-    implements Clause, QueryPart {
+    extends QueryPart
+    implements Clause {
 
         public const CLAUSE = "LIMIT %s";
 

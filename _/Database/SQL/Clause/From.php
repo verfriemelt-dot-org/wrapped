@@ -8,7 +8,8 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class From
-    implements QueryPart, Clause {
+    extends QueryPart
+    implements Clause {
 
         use CommandWrapperTrait;
 
