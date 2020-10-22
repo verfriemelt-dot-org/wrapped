@@ -2,12 +2,13 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\SQL\Clause\Clause;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class From
-    implements QueryPart {
+    implements QueryPart, Clause {
 
         use CommandWrapperTrait;
 
@@ -23,7 +24,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                $this->source->stringify(),
+                $this->source->stringify()
             );
         }
 

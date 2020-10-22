@@ -7,7 +7,7 @@
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Join
-    implements QueryPart {
+    implements QueryPart, Clause {
 
         use CommandWrapperTrait;
 
