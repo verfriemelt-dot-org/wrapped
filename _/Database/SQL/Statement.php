@@ -2,7 +2,7 @@
 
     namespace Wrapped\_\Database\SQL;
 
-    use \Wrapped\_\Database\SQL\Clause\Clause;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\Command;
 
     class Statement
@@ -23,7 +23,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
             return trim(
                 $this->command->stringify() . " " .
                 implode(

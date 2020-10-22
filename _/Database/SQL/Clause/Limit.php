@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
@@ -14,10 +15,11 @@
         protected ExpressionItem $limit;
 
         public function __construct( ExpressionItem $limit ) {
+            $this->addChild( $limit );
             $this->limit = $limit;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::CLAUSE,

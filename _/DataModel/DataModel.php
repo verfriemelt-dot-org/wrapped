@@ -7,11 +7,24 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
+    use \Wrapped\_\Database\SQL\Clause\From;
+    use \Wrapped\_\Database\SQL\Clause\Limit;
+    use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Command\Insert;
+    use \Wrapped\_\Database\SQL\Command\Select;
+    use \Wrapped\_\Database\SQL\Command\Values;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Wrapped\_\Database\SQL\Statement;
     use \Wrapped\_\DataModel\Collection\Collection;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
     use \Wrapped\_\ObjectAnalyser;
+    use function \GuzzleHttp\json_decode;
+    use function \GuzzleHttp\json_encode;
 
     abstract class DataModel
     implements Serializable {
@@ -124,25 +137,38 @@
             return null;
         }
 
-        public static function fetchBy( string $field, $value ) {
+        public static function fetchBy( string $field, $value, DataModel $instance = null ) {
 
             $db = static::getDatabase();
 
-            $select = $db->select(
-                static::getTableName(),
-                static::getSchemaName()
-            );
+            $select = new Select();
+            $from   = new From( new Identifier( static::getSchemaName(), static::getTableName() ) );
+            $limit  = new Limit( new Value( 1 ) );
 
             foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $select->addColumn( $col );
+                $select->add( new Identifier( $col ) );
             }
 
-            $select->setDbLogic( (new DbLogic() )->where( $field, "=", $value )->limit( 1 ) );
+            $where = new Where(
+                ( new Expression() )
+                    ->add( new Identifier( $field ) )
+                    ->add( new Operator( '=' ) )
+                    ->add( new Value( $value ) )
+            );
 
-            $res = $select->run();
+            $res = $db->run(
+                (new Statement( $select ) )
+                    ->add( $from )
+                    ->add( $where )
+                    ->add( $limit )
+            );
 
             if ( $res->rowCount() === 0 ) {
                 return null;
+            }
+
+            if ( $instance ) {
+                return $instance->initData( $res->fetch() );
             }
 
             return (new static() )->initData( $res->fetch() );
@@ -173,27 +199,7 @@
         }
 
         public function reload() {
-
-            $tableName = static::getTableName();
-            $db        = static::getDatabase();
-
-            $select = $db->select( $tableName, static::getSchemaName() );
-
-            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $select->addColumn( $col );
-            }
-
-            $select->setDbLogic( (new DbLogic() )->where( static::_fetchPrimaryKey(), "=", $this->{static::_fetchPrimaryKey()} )->limit( 1 ) );
-
-            $res = $select->run();
-
-            if ( $res->rowCount() === 0 ) {
-                throw new DatabaseObjectNotFound( "no such object found in database with name " . static::class . " and id {$id}" );
-            }
-
-            $this->initData( $res->fetch() );
-
-            return $this;
+            return self::fetchBy( static::_fetchPrimaryKey(),  $this->{static::_fetchPrimaryKey()} ) ;
         }
 
         /**
@@ -310,8 +316,10 @@
 
         private function _insertDbRecord() {
 
-            $db     = static::getDatabase();
-            $insert = $db->insert( static::getTableName() );
+            $db = static::getDatabase();
+
+            $insert = new Insert( new Identifier( static::getTableName() ) );
+            $values = new Values();
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
@@ -325,10 +333,14 @@
                     $data = $data->dehydrateToString();
                 }
 
-                $insert->insert( $col["column"], $data );
+                $insert->add( new Identifier( $col["column"] ) );
+                $values->add( new Value( $data ) );
             }
 
-            $insert->run();
+            $statement = new Statement( $insert );
+            $statement->add( $values );
+
+            $db->run( $statement );
 
             // should be refactored
             if ( static::_fetchPrimaryKey() == "id" ) {

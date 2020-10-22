@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \TheSeer\Tokenizer\Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Alias;
     use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\QueryPart;
@@ -30,7 +31,7 @@
             $this->primitive = $primitive;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             switch ( getType( $this->primitive ) ) {
                 case 'boolean': $result = $this->primitive ? 'true' : 'false';

@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\QueryPart;
 
@@ -23,7 +24,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( count( $this->expressions ) === 0 ) {
                 throw new Exception( 'empty expression' );

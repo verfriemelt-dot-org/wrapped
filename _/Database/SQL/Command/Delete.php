@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Command;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\QueryPart;
@@ -18,7 +19,7 @@
             $this->table = $table;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::COMMAND,

@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\Clause;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
@@ -18,7 +19,7 @@
             $this->offset = $offset;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::CLAUSE,

@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \TheSeer\Tokenizer\Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Operator
@@ -26,7 +27,6 @@
             'not',
             'is',
             'is distrinct from'
-
         ];
 
         protected string $operator;
@@ -40,7 +40,7 @@
             $this->operator = $op;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
             return strtoupper( $this->operator );
         }
 

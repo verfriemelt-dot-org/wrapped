@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Alias;
     use \Wrapped\_\Database\SQL\Aliasable;
 
@@ -11,7 +12,7 @@
 
         use Alias;
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                     "( %s )",

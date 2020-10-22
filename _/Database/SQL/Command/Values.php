@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Command;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Command\CommandExpression;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
@@ -29,7 +30,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::COMMAND,

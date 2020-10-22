@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\Clause;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
@@ -25,7 +26,7 @@
             $this->expression = $wrap;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::CLAUSE,

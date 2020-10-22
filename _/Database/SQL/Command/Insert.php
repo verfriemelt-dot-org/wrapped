@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
@@ -27,7 +28,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( count( $this->columns ) === 0 ) {
                 throw new Exception( "empty insert into statement" );

@@ -36,7 +36,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( count( $this->columns ) === 0 ) {
                 throw new Exception( "empty update statement" );

@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Alias;
     use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\DataBinding;
@@ -26,7 +27,7 @@
 
         public function __construct( $value ) {
             $this->value = $value;
-            $this->bind .= (string) ++static::$counter;
+            $this->bind  .= (string) ++static::$counter;
         }
 
         public function getBinding() {
@@ -38,7 +39,7 @@
             return $this;
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( $this->useBinding ) {
                 return $this->bind . $this->stringifyAlias();

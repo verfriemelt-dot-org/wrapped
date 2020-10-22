@@ -6,13 +6,9 @@
     use \PDOException;
     use \PDOStatement;
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\SQL\Command;
-    use \Wrapped\_\Database\SQL\Delete;
-    use \Wrapped\_\Database\SQL\Insert;
     use \Wrapped\_\Database\SQL\Join;
-    use \Wrapped\_\Database\SQL\Select;
+    use \Wrapped\_\Database\SQL\QueryPart;
     use \Wrapped\_\Database\SQL\Table;
-    use \Wrapped\_\Database\SQL\Update;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class DatabaseDriver {
@@ -21,25 +17,25 @@
 
         protected $currentDatabase;
 
-        protected $statements             = [];
+        protected $statements = [];
 
         protected $lastStatement;
 
-        protected $config                 = [];
+        protected $config = [];
 
-        public static $debug              = false;
+        public static $debug = false;
 
-        public static $debugHistory       = [];
+        public static $debugHistory = [];
 
         public static $debugLastStatement = null;
 
-        public static $debugLastParams    = null;
+        public static $debugLastParams = null;
 
-        public static $debugQuerieCount   = 0;
+        public static $debugQuerieCount = 0;
 
-        public static $counter            = 0;
+        public static $counter = 0;
 
-        public static $time               = 0;
+        public static $time = 0;
 
         /** @var PDO */
         public $connectionHandle;
@@ -229,40 +225,20 @@
             return $this;
         }
 
-        public function select( string $table, string $schema = null ): Select {
-            return (new Select( $this ) )->table( $table, $schema );
-        }
+        public function run( QueryPart $query ) {
 
-        public function delete( string $table, string $schema = null ): Delete {
-            return (new Delete( $this ) )->table( $table, $schema );
-        }
+            $this->prepare( $query->stringify() );
 
-        public function update( string $table, string $schema = null ): Update {
-            return (new Update( $this ) )->table( $table, $schema );
-        }
+            foreach ( $query->fetchBindings() as $bind => $value ) {
 
-        public function insert( string $table, string $schema = null ): Insert {
-            return (new Insert( $this ) )->table( $table, $schema );
-        }
-
-        public function run( Command $command ) {
-
-            $logic = $command->getDbLogic();
-            $this->prepare( $command->compile() );
-
-            if ( $logic ) {
-                $bindings = $logic->getBindings();
-                $this->bindLast( $bindings["params"], $bindings["vars"] );
-            }
-
-            foreach ( $command->fetchBindings() as $bind => $value ) {
-                $this->bindLast( $bind, $value );
+                // remove the colon from the bindname
+                $this->bindLast( substr( $bind, 1 ), $value );
             }
 
             $this->executeLast();
 
             $result = $this->lastStatement;
-            $result->setFetchMode( $command->getFetchMode() );
+            $result->setFetchMode( PDO::FETCH_ASSOC );
 
             return $result;
         }
@@ -395,7 +371,8 @@
         }
 
         public function setAttribute( int $key, $value ) {
-            $this->connectionHandle->setAttribute( $key, $value);
+            $this->connectionHandle->setAttribute( $key, $value );
             return $this;
         }
+
     }

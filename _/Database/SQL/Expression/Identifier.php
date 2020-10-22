@@ -14,59 +14,48 @@
 
         use Alias;
 
-        protected string $column;
+        protected $parts = [];
 
-        protected ?string $table = null;
+        protected ?DatabaseDriver $driver = null;
 
-        protected ?string $schema = null;
+        public function __construct( ... $parts ) {
 
-        protected ?DatabaseDriver $connection = null;
+            // filter out null values
+            $parts = array_filter( $parts, fn( $p ) => !is_null( $p ) );
 
-        public function __construct( string $column, string $table = null, string $schema = null ) {
-
-            if ( strlen( $column ) === 0 ) {
+            // validation
+            if ( count( $parts ) === 0 || count( $parts ) > 3 ) {
                 throw new Exception( 'illegal identifier' );
             }
 
-            $this->column = $column;
-
-            if ( !$table && $schema ) {
-                throw new Exception( 'table ident is missing, while schema is present' );
+            foreach ( $parts as $part ) {
+                if ( strlen( $part ) === 0 ) {
+                    throw new Exception( 'illegal identifier' );
+                }
             }
 
-            $this->table  = $table;
-            $this->schema = $schema;
-        }
-
-        public function setConnection( DatabaseDriver $connection ) {
-            $this->connection = $connection;
-            return $this;
+            $this->parts = $parts;
         }
 
         public function quote( string $ident ): string {
 
-            if ( !$this->connection ) {
+            if ( !$this->driver ) {
                 return $ident;
             }
 
-            return $this->connection->quoteIdentifier( $ident );
+            return $this->driver->quoteIdentifier( $ident );
         }
 
-        public function stringify(): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
-            $ident = '';
-
-            if ( $this->schema ) {
-                $ident .= "{$this->quote( $this->schema )}.";
-            }
-
-            if ( $this->table ) {
-                $ident .= "{$this->quote( $this->table )}.";
-            }
-
-            $ident .= $this->quote( $this->column );
-
-            return $ident . $this->stringifyAlias();
+            $this->driver = $driver;
+            return implode(
+                    '.',
+                    array_map(
+                        fn( string $p ) => $this->quote( $p ),
+                        $this->parts
+                    )
+                ) . $this->stringifyAlias();
         }
 
     }
