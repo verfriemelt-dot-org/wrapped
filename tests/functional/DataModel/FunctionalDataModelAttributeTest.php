@@ -14,7 +14,7 @@
 
         public ?int $id = null;
 
-        #[\Wrapped\_\NamingConvention\LowerCase]
+        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public ?string $complexFieldName = null;
 
@@ -45,7 +45,7 @@
     class CamelCaseDummy
     extends LowerDummy {
 
-        #[\Wrapped\_\NamingConvention\CamelCase]
+        #[\Wrapped\_\DataModel\Attribute\Naming\CamelCase]
 
         public ?string $complexFieldName = null;
 
@@ -54,7 +54,7 @@
     class SnakeCaseDummy
     extends LowerDummy {
 
-        #[\Wrapped\_\NamingConvention\SnakeCase]
+        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
 
         public ?string $complexFieldName = null;
 

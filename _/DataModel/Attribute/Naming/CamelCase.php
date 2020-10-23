@@ -1,6 +1,6 @@
 <?php
 
-    namespace Wrapped\_\NamingConvention;
+    namespace Wrapped\_\DataModel\Attribute\Naming;
 
 
     #[\Attribute]

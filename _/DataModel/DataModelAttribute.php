@@ -2,9 +2,9 @@
 
     namespace Wrapped\_\DataModel;
 
-    use \Wrapped\_\NamingConvention\CamelCase;
-    use \Wrapped\_\NamingConvention\Convention;
-    use \Wrapped\_\NamingConvention\LowerCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\Convention;
+    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
 
     class DataModelAttribute {
 

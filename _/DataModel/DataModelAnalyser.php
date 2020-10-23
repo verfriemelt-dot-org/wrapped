@@ -4,8 +4,8 @@
 
     use \ReflectionClass;
     use \ReflectionException;
-    use \Wrapped\_\NamingConvention\CamelCase;
-    use \Wrapped\_\NamingConvention\Convention;
+    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\Convention;
 
     class DataModelAnalyser {
 
