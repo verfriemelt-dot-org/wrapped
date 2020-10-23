@@ -2,18 +2,17 @@
 
     namespace Wrapped\_\DataModel;
 
+    use \ReflectionClass;
     use \Serializable;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\Facade\Query;
+//    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
-    use \Wrapped\_\ObjectAnalyser;
-    use function \GuzzleHttp\json_decode;
-    use function \GuzzleHttp\json_encode;
 
     abstract class DataModel
     implements Serializable {
@@ -478,6 +477,41 @@
          */
         protected static function _getStaticClassName() {
             return static::createDataModelAnalyser()->getStaticName();
+        }
+
+        public function __get( $propertyName ): DataModel {
+
+            // creates reflecteion
+            $reflection = new ReflectionClass( $this );
+
+            // checks the existance for the requested prop
+            if ( !property_exists( $this, $propertyName ) ) {
+                throw new \Exception( "not existing property: {$propertyName}" );
+            }
+
+            // fetches typ and prop informations
+            $property     = $reflection->getProperty( $propertyName );
+            $propertyType = $property->getType();
+
+            $attachedAttributes = [];
+            $resolvAttribute    = $property->getAttributes( \Wrapped\_\DataModel\Attribute\PropertyResolver::class )[0] ?? null;
+
+            if ( !$resolvAttribute ) {
+                throw new \Exception( "missing resolvAttribute on {$propertyName}" );
+            }
+
+
+
+            if ( $this->{ $propertyName } === null ) {
+
+                // fetches the data
+                $resolv                  = $resolvAttribute->newInstance();
+                // set prop
+                $this->{ $propertyName } = $propertyType->getName()::fetchBy( $resolv->destinationProperty, $this->{ $resolv->sourceProperty } );
+            }
+
+            // return prop
+            return $this->{ $propertyName };
         }
 
     }
