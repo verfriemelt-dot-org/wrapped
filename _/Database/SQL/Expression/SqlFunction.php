@@ -34,7 +34,7 @@
 
             return sprintf(
                 static::SYNTAX,
-                $this->name->stringify(),
+                $this->name->stringify( $driver ),
                 implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments ) )
             );
         }

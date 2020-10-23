@@ -42,10 +42,10 @@
         public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( $this->useBinding ) {
-                return $this->bind . $this->stringifyAlias();
+                return $this->bind . $this->stringifyAlias( $driver );
             }
 
-            return (string) $this->value . $this->stringifyAlias();
+            return (string) $this->value . $this->stringifyAlias( $driver );
         }
 
         public function fetchBindings() {

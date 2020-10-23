@@ -57,7 +57,7 @@
                         fn( string $p ) => $p !== '*' ? $this->quote( $p ) : '*',
                         $this->parts
                     )
-                ) . $this->stringifyAlias();
+                ) . $this->stringifyAlias( $driver );
         }
 
     }

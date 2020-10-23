@@ -39,7 +39,7 @@
                 default: $result = 'null';
             }
 
-            return $result . $this->stringifyAlias();
+            return $result . $this->stringifyAlias( $driver );
         }
 
     }

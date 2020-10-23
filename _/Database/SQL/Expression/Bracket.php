@@ -17,7 +17,7 @@
             return sprintf(
                     "( %s )",
                     parent::stringify( $driver ),
-                ) . $this->stringifyAlias();
+                ) . $this->stringifyAlias( $driver );
         }
 
     }
