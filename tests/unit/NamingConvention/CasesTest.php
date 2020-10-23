@@ -1,9 +1,9 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\NamingConvention\CamelCase;
-    use \Wrapped\_\NamingConvention\LowerCase;
-    use \Wrapped\_\NamingConvention\SpaceCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\SpaceCase;
 
     class CasesTest
     extends TestCase {
@@ -33,7 +33,7 @@
 
             $case = new CamelCase( 'thisIsSparta' );
 
-            $this->assertSame([ 'this', 'is', 'sparta' ], $case->fetchStringParts());
+            $this->assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
 
 //            $this->assertSame( 'this is sparta', $case->convertTo( SpaceCase::class )->getString() );
         }
