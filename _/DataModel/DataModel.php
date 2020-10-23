@@ -35,27 +35,23 @@
          */
         public function initData( $data ) {
 
-            $props          = static::fetchAnalyserObject()->fetchSetters();
-            $lowerCaseProps = [];
-            foreach ( $props as $key => &$value ) {
-                $lowerCaseProps[strtolower( $key )] = $value;
-            }
+            $analyser = new DataModelAnalyser( $this );
 
-            foreach ( $data as $key => &$value ) {
+            foreach ( $analyser->fetchAttributes() as $attribute ) {
 
-                $key = strtolower( $key );
+                $conventionName = $attribute->getNamingConvention()->getString();
 
-                if ( !isset( $lowerCaseProps[$key] ) ) {
+                // skip attribute
+                if ( !isset( $data[$conventionName] ) ) {
                     continue;
                 }
 
-                if (
-                    class_exists( $lowerCaseProps[$key]['type'] ) && class_implements( $lowerCaseProps[$key]['type'], PropertyObjectInterface::class )
-                ) {
-                    $class = $lowerCaseProps[$key]['type'];
-                    $this->{$lowerCaseProps[$key]['setter']}( $class::hydrateFromString( $value ) );
+                $attributeType = $attribute->getType();
+
+                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                    $this->{$attribute->getSetter()}( $attributeType::hydrateFromString( $data[$conventionName] ) );
                 } else {
-                    $this->{$lowerCaseProps[$key]['setter']}( $value );
+                    $this->{$attribute->getSetter()}( $data[$conventionName] );
                 }
             }
 
@@ -78,16 +74,22 @@
 
         public function toArray(): array {
 
-            $values = [];
+            $data = [];
 
-            foreach ( $this::fetchAnalyserObject()->fetchColumnsWithGetters() as list("getter" => $getter, "column" => $column ) ) {
+            $analyser = new DataModelAnalyser( $this );
 
-                $data = $this->{$getter}();
+            foreach ( $analyser->fetchAttributes() as $attribute ) {
 
-                $values[$column] = ( $data instanceof PropertyObjectInterface ) ? $data->dehydrateToString() : $data;
+                $attributeType = $attribute->getType();
+
+                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                    $data [$attribute->getName()] = $this->{$attribute->getGetter()}()->dehydrateToString();
+                } else {
+                    $data [$attribute->getName()] = $this->{$attribute->getGetter()}();
+                }
             }
 
-            return $values;
+            return $data;
         }
 
         public function fetchPrimaryKey() {
@@ -95,7 +97,7 @@
         }
 
         public function fetchColumns() {
-            return static::fetchAnalyserObject()->fetchAllColumns();
+            return array_map( fn( DataModelAttribute $a ) => $a->getName(), (new DataModelAnalyser( new static ) )->fetchAttributes() );
         }
 
         public function unserialize( $serialized ) {
@@ -115,7 +117,7 @@
          * @return String
          */
         public static function getTableName(): string {
-            return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::_getStaticClassName();
+            return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : (new DataModelAnalyser( new static ) )->getBaseName();
         }
 
         /**
@@ -166,7 +168,9 @@
         public static function find( $params, $orderBy = null, $order = "asc" ) {
 
             $query = new Query( static::getDatabase() );
-            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+
             $query->from( static::getSchemaName(), static::getTableName() );
             $query->where( $params );
 
@@ -191,7 +195,8 @@
             }
 
             $query = new Query( static::getDatabase() );
-            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+
             $query->from( static::getSchemaName(), static::getTableName() );
             $query->where( $params );
 
@@ -212,7 +217,8 @@
         public static function all( $orderBy = null, $order = "asc" ) {
 
             $query = new Query( static::getDatabase() );
-            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+
             $query->from( static::getSchemaName(), static::getTableName() );
 
             if ( $orderBy !== null ) {
@@ -270,19 +276,22 @@
 
             $insertData = [];
 
-            foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
 
-                if ( static::_fetchPrimaryKey() !== null && $col["column"] == static::_fetchPrimaryKey() && $this->{static::_fetchPrimaryKey()} === null ) {
+                // skip pk
+                if ( static::_fetchPrimaryKey() !== null && $attribute->getName() == static::_fetchPrimaryKey() && $this->{static::_fetchPrimaryKey()} === null ) {
                     continue;
                 }
 
-                $data = $this->{$col["getter"]}();
+                $attributeType = $attribute->getType();
 
-                if ( $data instanceof PropertyObjectInterface ) {
-                    $data = $data->dehydrateToString();
+                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                    $data = $this->{$attribute->getGetter()}()->dehydrateToString();
+                } else {
+                    $data = $this->{$attribute->getGetter()}();
                 }
 
-                $insertData[$col["column"]] = $data;
+                $insertData[$attribute->getNamingConvention()->getString()] = $data;
             }
 
             $query = new Query( static::getDatabase() );
@@ -293,11 +302,11 @@
 
             $query->values( $insertData );
             $query->returning( static::_fetchPrimaryKey() );
-            $data = $query->fetch();
+            $result = $query->fetch();
 
             // fetch autoincrement if defined
             if ( static::_fetchPrimaryKey() ) {
-                $this->{static::_fetchPrimaryKey()} = $data[static::_fetchPrimaryKey()];
+                $this->{static::_fetchPrimaryKey()} = $result[static::_fetchPrimaryKey()];
             }
 
             $this->_storePropertyStates();
@@ -315,21 +324,21 @@
 
             $updateColumns = [];
 
-            foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
 
-                if ( $col["column"] === $pk ) {
+                if ( $attribute->getName() === $pk ) {
                     continue;
                 }
 
-                $data = $this->{$col["getter"]}();
+                $data = $this->{ $attribute->getGetter() }();
 
-                if ( $this->_isPropertyFuzzy( $col["column"], $data ) ) {
+                if ( $this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
 
                     if ( $data instanceof PropertyObjectInterface ) {
                         $data = $data->dehydrateToString();
                     }
 
-                    $updateColumns[$col["column"]] = $data;
+                    $updateColumns[$attribute->getNamingConvention()->getString()] = $data;
                 }
             }
 
@@ -354,15 +363,15 @@
          */
         protected function _storePropertyStates() {
 
-            foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as &$col ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
 
-                $data = $this->{$col["getter"]}();
+                $data = $this->{$attribute->getGetter()}();
 
                 if ( $data instanceof PropertyObjectInterface ) {
                     $data = $data->dehydrateToString();
                 }
 
-                $this->_propertyHashes[$col["column"]] = \crc32( $data );
+                $this->_propertyHashes[$attribute->getName()] = \crc32( $data );
             }
         }
 
@@ -424,33 +433,7 @@
          * @return \static returns the unsaved object instance
          */
         public static function createFromParameterBag( ParameterBag $params ) {
-
-            $instance = new static();
-            $setters  = static::fetchAnalyserObject()->fetchSetters();
-
-            foreach ( $setters as $setter ) {
-
-                if ( !$params->has( $setter["column"] ) ) {
-                    continue;
-                }
-
-                $instance->{$setter["setter"]}( $params->get( $setter["column"] ) );
-            }
-
-            return $instance;
-        }
-
-        /**
-         *
-         * @return ObjectAnalyser;
-         */
-        static public function fetchAnalyserObject() {
-
-            if ( !isset( static::$_analyserObjectCache[static::class] ) ) {
-                static::$_analyserObjectCache[static::class] = new ObjectAnalyser( static::class );
-            }
-
-            return static::$_analyserObjectCache[static::class];
+            return (new static() )->initData( $params->all() );
         }
 
         public static function truncate() {
@@ -461,16 +444,9 @@
          * returns short name of static
          * @return string
          */
-        protected function _getClassName() {
-            return static::fetchAnalyserObject()->getObjectShortName();
-        }
-
-        /**
-         * returns short name of static
-         * @return string
-         */
         protected static function _getStaticClassName() {
-            return static::fetchAnalyserObject()->getObjectShortName();
+            return (new DataModelAnalyser( new static ) )->getStaticName();
         }
 
     }
+    
