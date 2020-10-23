@@ -209,7 +209,7 @@
                 $query->order( [ [ $orderBy, $order ] ] );
             }
 
-            return Collection::buildFromQuery( new (static::class), $query );
+            return Collection::buildFromQuery( new static, $query );
         }
 
         /**
@@ -256,7 +256,7 @@
                 $query->order( [ [ $orderBy, $order ] ] );
             }
 
-            return Collection::buildFromQuery( new (static::class), $query );
+            return Collection::buildFromQuery( new static, $query );
         }
 
         /**

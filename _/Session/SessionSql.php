@@ -2,11 +2,17 @@
 
     namespace Wrapped\_\Session;
 
-    use \Wrapped\_\Database\DbLogic;
+    use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Command\Delete;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Wrapped\_\Database\SQL\Statement;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TablenameOverride;
 
-    class SessionMysql
+    class SessionSql
     extends DataModel
     implements TablenameOverride, SessionDataObject {
 
@@ -18,13 +24,18 @@
 
         public static function purgeOldSessions() {
 
-            $delete = static::getDatabase()->delete( static::getTableName() );
-            $delete->setDbLogic( DbLogic::create()->where( "timeout", "<", time() ) );
-            $delete->run();
+            $stmt = new Statement( new Delete( new Identifier( static::getTableName() ) ) );
+            $stmt->add( new Where( (new Expression () )
+                        ->add( new Identifier( 'timeout' ) )
+                        ->add( new Operator( '<' ) )
+                        ->add( new Value( time() ) )
+            ) );
+
+            static::getDatabase()->run( $stmt );
         }
 
         public static function fetchTablename(): string {
-            return "Session";
+            return "session";
         }
 
         public function getId() {

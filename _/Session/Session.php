@@ -21,7 +21,7 @@
         private function __construct( SessionDataObject $sessionStorage = null, Request $request = null ) {
 
             if ( $sessionStorage === null || class_implements( $sessionStorage, SessionDataObject::class ) ) {
-                $this->storageObj = SessionMysql::class;
+                $this->storageObj = SessionSql::class;
             } else {
                 $this->storageObj = $sessionStorage;
             }

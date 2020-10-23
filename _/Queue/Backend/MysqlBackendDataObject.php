@@ -12,7 +12,7 @@
         public $id, $uniqId, $channel, $key, $data, $startDate, $priority = 100, $locked   = 0;
 
         public static function fetchTablename(): string {
-            return "QueueBackend";
+            return "queuebackend";
         }
 
         public function write( QueueItem $item ) {

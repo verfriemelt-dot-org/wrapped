@@ -29,35 +29,16 @@
 
         public function fetchByKey( string $key, string $channel = Queue::DEFAULT_CHANNEL, int $limit = null ): array {
 
-            $logic = DbLogic::create()
-                ->where( "channel", "=", $channel )->addAnd()
-                ->where( "key", "=", $key )->addAnd()
-                ->where( "locked", "=", 0 )
-                ->order( "date", "asc" );
-
-            if ( $limit ) {
-                $logic->limit( $limit );
-            }
-
-            $collection = MysqlBackendDataObject::find( $logic );
-            $queueItems = $collection->propagateCall( "read" );
+            $collection = MysqlBackendDataObject::find( [ "channel" => $channel, "locked" => 0, "key" => $key ], 'date' );
+            $queueItems = $collection->map( fn ( MysqlBackendDataObject $i ) => $i->read() );
 
             return $queueItems;
         }
 
         public function fetchChannel( string $channel = Queue::DEFAULT_CHANNEL, int $limit = null ): array {
 
-            $logic = DbLogic::create()
-                ->where( "channel", "=", $channel )->addAnd()
-                ->where( "locked", "=", 0 )
-                ->order( "date", "asc" );
-
-            if ( $limit ) {
-                $logic->limit( $limit );
-            }
-
-            $collection = MysqlBackendDataObject::find( $logic );
-            $queueItems = $collection->propagateCall( "read" );
+            $collection = MysqlBackendDataObject::find( [ "channel" => $channel, "locked" => 0 ], 'date' );
+            $queueItems = $collection->map( fn ( MysqlBackendDataObject $i ) => $i->read() );
 
             return $queueItems;
         }
