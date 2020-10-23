@@ -7,19 +7,7 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
-    use \Wrapped\_\Database\SQL\Clause\From;
-    use \Wrapped\_\Database\SQL\Clause\Limit;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Command\Insert;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Command\Values;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\Facade\Query;
-    use \Wrapped\_\Database\SQL\Statement;
-    use \Wrapped\_\DataModel\Collection\Collection;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
@@ -177,20 +165,16 @@
          */
         public static function find( $params, $orderBy = null, $order = "asc" ) {
 
-            $c  = new Collection();
-            $co = $c->from( static::class );
-
-            if ( $params instanceof DbLogic ) {
-                $co->setLogic( $params );
-            } else {
-                $co->createLogic()->parseArray( $params );
-            }
+            $query = new Query( static::getDatabase() );
+            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+            $query->from( static::getSchemaName(), static::getTableName() );
+            $query->where( $params );
 
             if ( $orderBy !== null ) {
-                $co->getDbLogic()->order( $orderBy, $order );
+                $query->order( [ [ $orderBy, $order ] ] );
             }
 
-            return $c->get();
+            return Collection::buildFromQuery( new (static::class), $query );
         }
 
         /**
@@ -217,9 +201,6 @@
             }
 
             $query->limit( 1 );
-//
-//            var_dump( $query->fetch() );
-//            die();
 
             return (new static() )->initData( $query->fetch() );
         }
@@ -230,15 +211,15 @@
          */
         public static function all( $orderBy = null, $order = "asc" ) {
 
-            $c  = new Collection();
-            $co = $c->from( static::class );
+            $query = new Query( static::getDatabase() );
+            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+            $query->from( static::getSchemaName(), static::getTableName() );
 
             if ( $orderBy !== null ) {
-                $co->createLogic();
-                $co->getDbLogic()->order( $orderBy, $order );
+                $query->order( [ [ $orderBy, $order ] ] );
             }
 
-            return $c->get();
+            return Collection::buildFromQuery( new (static::class), $query );
         }
 
         /**

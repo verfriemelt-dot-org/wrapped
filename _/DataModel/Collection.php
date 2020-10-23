@@ -4,10 +4,11 @@
 
     use \ArrayAccess;
     use \Countable;
+    use \Exception;
+    use \Iterator;
     use \OutOfBoundsException;
     use \SeekableIterator;
-    use \Iterator;
-    use \Exception;
+    use \Wrapped\_\Database\Facade\Query;
 
     class Collection
     implements Iterator, ArrayAccess, Countable, SeekableIterator {
@@ -25,6 +26,20 @@
             if ( $data ) {
                 $this->initialize( ... $data );
             }
+        }
+
+        public static function buildFromQuery( DataModel $prototype, Query $query ) {
+
+            $collection = new static();
+            $result     = $query->run();
+
+            $instances = [];
+
+            while ( $data = $result->fetch() ) {
+                $instances[] = (new $prototype() )->initData( $data );
+            }
+
+            return $collection->initialize( ... $instances );
         }
 
         public function setLoadingCallback( callable $func ) {

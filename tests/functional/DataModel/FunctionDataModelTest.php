@@ -144,4 +144,13 @@
             $this->assertSame( 'test', $obj->getName() );
         }
 
+        public function testObjectAll() {
+
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+
+            $this->assertSame( 3, count( Dummy::all() ) );
+        }
+
     }
