@@ -308,7 +308,7 @@
             );
 
             $query->values( $insertData );
-            $query->returning('id id id');
+            $query->returning('id');
             $data = $query->fetch();
 
             $this->{static::_fetchPrimaryKey()} = $data['id'];
