@@ -6,7 +6,6 @@
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\ObjectAnalyser;
 
     class Dummy
     extends DataModel {
@@ -24,12 +23,13 @@
             return $this;
         }
 
-        function getName(): ?string {
+        public function getName(): ?string {
             return $this->name;
         }
 
-        function setName( ?string $name ): void {
+        public function setName( ?string $name ) {
             $this->name = $name;
+            return $this;
         }
 
     }
@@ -52,7 +52,7 @@
             static::$connection->query( 'drop table dummy ;' );
         }
 
-        public function saveInstance( $name = 'test') {
+        public function saveInstance( $name = 'test' ) {
 
             $obj = new Dummy;
             $obj->setName( $name );
@@ -85,7 +85,6 @@
             $newObj = Dummy::findSingle( [ 'id' => 1, 'name' => 'test1' ] );
 
             $this->assertSame( 'test1', $newObj->getName() );
-
         }
 
         public function testObjectFetchSorted() {
@@ -96,7 +95,29 @@
 
             $this->assertSame( 3, Dummy::findSingle( [ 'name' => 'test' ], 'id', 'desc' )->getId() );
             $this->assertSame( 1, Dummy::findSingle( [ 'name' => 'test' ], 'id' )->getId() );
+        }
 
+        public function testObjectUpdate() {
+
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+
+            $newObj = Dummy::get( 1 )->setName( 'updated' )->save();
+
+            $this->assertSame( 'test', Dummy::get( 2 )->getName(), 'should not update other objects' );
+            $this->assertSame( 'updated', Dummy::get( 1 )->getName(), 'should have updated itself' );
+        }
+
+        public function testObjectDelete() {
+
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+            $this->saveInstance( 'test' );
+
+            $newObj = Dummy::get( 1 )->delete();
+
+            $this->assertSame( 2, Dummy::count(), 'only two should remain' );
         }
 
         public function testObjectReload() {

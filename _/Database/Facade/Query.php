@@ -9,12 +9,15 @@
     use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Returning;
     use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Command\Delete;
     use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
+    use \Wrapped\_\Database\SQL\Command\Update;
     use \Wrapped\_\Database\SQL\Command\Values;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
 
@@ -25,6 +28,10 @@
         private Select $select;
 
         private Insert $insert;
+
+        private Update $update;
+
+        private Delete $delete;
 
         private Values $values;
 
@@ -51,6 +58,34 @@
             $this->stmt   = new Statement( $this->select );
 
             array_map( fn( string $column ) => $this->select->add( new Identifier( $column ) ), $cols );
+
+            return $this;
+        }
+
+        public function count( ?string ... $table ) {
+
+            $this->select = new Select();
+            $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( '*' ) ) );
+            $this->stmt   = new Statement( $this->select );
+            $this->from( ... $table );
+
+            return $this;
+        }
+
+        public function delete( $table ) {
+
+            $this->delete = new Delete( new Identifier( ... $table ) );
+            $this->stmt   = new Statement( $this->delete );
+
+            return $this;
+        }
+
+        public function update( $table, array $cols ) {
+
+            $this->update = new Update( new Identifier( ... $table ) );
+            $this->stmt   = new Statement( $this->update );
+
+            array_map( fn( string $column, $value ) => $this->update->add( new Identifier( $column ), new Value( $value ) ), array_keys( $cols ), $cols );
 
             return $this;
         }
@@ -136,7 +171,11 @@
         }
 
         public function fetch() {
-            return $res = $this->db->run( $this->stmt )->fetch();
+            return $this->run()->fetch();
+        }
+
+        public function run() {
+            return $this->db->run( $this->stmt );
         }
 
     }

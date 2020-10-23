@@ -48,11 +48,13 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
+            // special star case
+
             $this->driver = $driver;
             return implode(
                     '.',
                     array_map(
-                        fn( string $p ) => $this->quote( $p ),
+                        fn( string $p ) => $p !== '*' ? $this->quote( $p ) : '*',
                         $this->parts
                     )
                 ) . $this->stringifyAlias();

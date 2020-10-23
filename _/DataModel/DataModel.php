@@ -308,10 +308,13 @@
             );
 
             $query->values( $insertData );
-            $query->returning('id');
+            $query->returning( static::_fetchPrimaryKey() );
             $data = $query->fetch();
 
-            $this->{static::_fetchPrimaryKey()} = $data['id'];
+            // fetch autoincrement if defined
+            if ( static::_fetchPrimaryKey() ) {
+                $this->{static::_fetchPrimaryKey()} = $data[static::_fetchPrimaryKey()];
+            }
 
             $this->_storePropertyStates();
 
@@ -326,13 +329,7 @@
                 throw new DatabaseException( "updating datamodels to database not possible without pk defined" );
             }
 
-            $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
-
-            $db     = static::getDatabase();
-            $update = $db->update( static::getTableName(), static::getSchemaName() );
-            $update->setDbLogic( $logic );
-
-            $hasUpdates = false;
+            $updateColumns = [];
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
@@ -340,22 +337,30 @@
                     continue;
                 }
 
-                $currentData = $this->{$col["getter"]}();
+                $data = $this->{$col["getter"]}();
 
-                if ( $this->_isPropertyFuzzy( $col["column"], $currentData ) ) {
+                if ( $this->_isPropertyFuzzy( $col["column"], $data ) ) {
 
-                    if ( $currentData instanceof PropertyObjectInterface ) {
-                        $currentData = $currentData->dehydrateToString();
+                    if ( $data instanceof PropertyObjectInterface ) {
+                        $data = $data->dehydrateToString();
                     }
 
-                    $update->update( $col["column"], $currentData );
-                    $hasUpdates = true;
+                    $updateColumns[$col["column"]] = $data;
                 }
             }
 
-            if ( $hasUpdates ) {
-                $update->run();
+            if ( empty( $updateColumns ) ) {
+                return $this;
             }
+
+            $query = new Query( static::getDatabase() );
+            $query->update(
+                [ static::getSchemaName(), static::getTableName() ],
+                $updateColumns
+            );
+
+            $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
+            $query->run();
 
             return $this;
         }
@@ -392,10 +397,6 @@
             return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( $data );
         }
 
-        /**
-         * deletes object
-         * @return bool
-         */
         public function delete() {
 
             $pk = static::_fetchPrimaryKey();
@@ -404,52 +405,27 @@
                 throw new DatabaseException( 'deleting not possible without primary key' );
             }
 
-            if ( $this->{$pk} === null ) {
-                return;
-            }
+            $pk = static::_fetchPrimaryKey();
 
-            $db    = static::getDatabase();
-            $logic = (new DbLogic() )->where( $pk, "=", $this->{$pk} );
+            $query = new Query( static::getDatabase() );
+            $query->delete( [ static::getSchemaName(), static::getTableName() ] );
+            $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
 
-            $delete = $db->delete( static::getTableName(), static::getSchemaName() );
-            $delete->setDbLogic( $logic );
-            $delete->run();
+            $query->run();
+
+            return $this;
         }
 
-        public static function count( string $what = "*", $by = null, $and = true ): int {
+        public static function count( string $what = "*", $params = null, $and = true ): int {
 
-            $db     = static::getDatabase();
-            $select = $db->select( static::getTableName(), static::getSchemaName() );
+            $query = new Query( static::getDatabase() );
+            $query->count( static::getSchemaName(), static::getTableName() );
 
-            if ( is_array( $by ) ) {
-
-                $count = count( $by );
-                $logic = new DbLogic();
-                $i     = 0;
-
-                foreach ( $by as $column => &$value ) {
-
-                    if ( is_array( $value ) ) {
-                        $logic->where( $column, "IN", $value );
-                    } else {
-                        $logic->where( $column, "=", $value );
-                    }
-
-                    if ( ++$i + 1 <= $count ) {
-                        ($and) ? $logic->addAnd() : $logic->addOr();
-                    }
-                }
-
-                $select->setDbLogic( $logic );
+            if ( $params ) {
+                $query->where( $params );
             }
 
-            if ( $by instanceof DbLogic ) {
-                $select->setDbLogic( $by );
-            }
-
-            $res = $select->count( $what, 'count' )->run();
-
-            return (int) $res->fetch()["count"];
+            return (int) $query->fetch()['count'];
         }
 
         /**
