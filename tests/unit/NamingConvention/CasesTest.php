@@ -35,7 +35,7 @@
 
             $this->assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
 
-//            $this->assertSame( 'this is sparta', $case->convertTo( SpaceCase::class )->getString() );
+            $this->assertSame( 'this is sparta', $case->convertTo( SpaceCase::class )->getString() );
         }
 
     }
