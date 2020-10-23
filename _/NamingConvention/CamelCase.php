@@ -2,6 +2,8 @@
 
     namespace Wrapped\_\NamingConvention;
 
+
+    #[\Attribute]
     class CamelCase
     extends Convention {
 

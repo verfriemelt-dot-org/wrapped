@@ -5,6 +5,7 @@
     use \ReflectionClass;
     use \ReflectionException;
     use \Wrapped\_\NamingConvention\CamelCase;
+    use \Wrapped\_\NamingConvention\Convention;
 
     class DataModelAnalyser {
 
@@ -19,7 +20,11 @@
             $this->reflection = new ReflectionClass( $model );
         }
 
-        public function fetchAttributes(): array {
+        /**
+         *
+         * @return DataModelAttribute[]
+         */
+        public function fetchPropertyAttributes(): array {
 
             if ( $this->attributes === null ) {
                 $this->prepareAttributes();
@@ -67,10 +72,14 @@
                     continue;
                 }
 
-                $dma = new DataModelAttribute( $name );
+                $attachtedConventionAttributes = $attrib->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF );
+                $attachtedConventionAttribute  = $attachtedConventionAttributes[0] ?? null;
+
+                $dma = new DataModelAttribute( $name, $attachtedConventionAttribute ? $attachtedConventionAttribute->newInstance() : null );
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
                 $dma->setType( $attrib->getType() );
+
 
                 $this->attributes[] = $dma;
             }

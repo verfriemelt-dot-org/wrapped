@@ -37,7 +37,7 @@
 
             $analyser = new DataModelAnalyser( $this );
 
-            foreach ( $analyser->fetchAttributes() as $attribute ) {
+            foreach ( $analyser->fetchPropertyAttributes() as $attribute ) {
 
                 $conventionName = $attribute->getNamingConvention()->getString();
 
@@ -60,6 +60,40 @@
             return $this;
         }
 
+        public static function createDataModelAnalyser(): DataModelAnalyser {
+
+            if ( !isset( static::$_analyserObjectCache[static::class] ) ) {
+                static::$_analyserObjectCache[static::class] = new DataModelAnalyser( new static );
+            }
+
+            return static::$_analyserObjectCache[static::class];
+        }
+
+        public static function translateFieldName( string $fieldName ): DataModelAttribute {
+
+            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $field ) {
+
+                if ( $fieldName == $field->getNamingConvention()->getString() || $fieldName == $field->getName() ) {
+                    return $field;
+                }
+            }
+
+            throw new \Exception( "field not translateable »{$fieldName}«" );
+        }
+
+        public static function translateFieldNameArray( array $array, $torwardsDatabase = true ): array {
+
+            $keys = array_keys( $array );
+
+            if ( $torwardsDatabase ) {
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->getNamingConvention()->getString(), $keys );
+            } else {
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, false )->getName(), $keys );
+            }
+
+            return array_combine( $keysTranslated, array_values( $array ) );
+        }
+
         /**
          * implementation for Serializable
          * @return string
@@ -76,9 +110,7 @@
 
             $data = [];
 
-            $analyser = new DataModelAnalyser( $this );
-
-            foreach ( $analyser->fetchAttributes() as $attribute ) {
+            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
 
                 $attributeType = $attribute->getType();
 
@@ -97,7 +129,7 @@
         }
 
         public function fetchColumns() {
-            return array_map( fn( DataModelAttribute $a ) => $a->getName(), (new DataModelAnalyser( new static ) )->fetchAttributes() );
+            return array_map( fn( DataModelAttribute $a ) => $a->getName(), static::createDataModelAnalyser()->fetchPropertyAttributes() );
         }
 
         public function unserialize( $serialized ) {
@@ -117,7 +149,7 @@
          * @return String
          */
         public static function getTableName(): string {
-            return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : (new DataModelAnalyser( new static ) )->getBaseName();
+            return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::createDataModelAnalyser()->getBaseName();
         }
 
         /**
@@ -169,10 +201,10 @@
 
             $query = new Query( static::getDatabase() );
 
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
             $query->from( static::getSchemaName(), static::getTableName() );
-            $query->where( $params );
+            $query->where( static::translateFieldNameArray( $params ) );
 
             if ( $orderBy !== null ) {
                 $query->order( [ [ $orderBy, $order ] ] );
@@ -195,10 +227,10 @@
             }
 
             $query = new Query( static::getDatabase() );
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
             $query->from( static::getSchemaName(), static::getTableName() );
-            $query->where( $params );
+            $query->where( static::translateFieldNameArray( $params ) );
 
             if ( $orderBy !== null ) {
 
@@ -217,7 +249,7 @@
         public static function all( $orderBy = null, $order = "asc" ) {
 
             $query = new Query( static::getDatabase() );
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), (new DataModelAnalyser( new static ) )->fetchAttributes() ) );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
             $query->from( static::getSchemaName(), static::getTableName() );
 
@@ -276,7 +308,7 @@
 
             $insertData = [];
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
 
                 // skip pk
                 if ( static::_fetchPrimaryKey() !== null && $attribute->getName() == static::_fetchPrimaryKey() && $this->{static::_fetchPrimaryKey()} === null ) {
@@ -324,7 +356,7 @@
 
             $updateColumns = [];
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
 
                 if ( $attribute->getName() === $pk ) {
                     continue;
@@ -363,7 +395,7 @@
          */
         protected function _storePropertyStates() {
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchAttributes() as $attribute ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
 
                 $data = $this->{$attribute->getGetter()}();
 
@@ -415,7 +447,7 @@
             $query->count( static::getSchemaName(), static::getTableName() );
 
             if ( $params ) {
-                $query->where( $params );
+                $query->where( static::translateFieldNameArray( $params ) );
             }
 
             return (int) $query->fetch()['count'];
@@ -445,8 +477,7 @@
          * @return string
          */
         protected static function _getStaticClassName() {
-            return (new DataModelAnalyser( new static ) )->getStaticName();
+            return static::createDataModelAnalyser()->getStaticName();
         }
 
     }
-    

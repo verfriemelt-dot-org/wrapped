@@ -46,12 +46,12 @@
         public function testAttributes() {
             $analyser = new DataModelAnalyser( new LowerDummy );
 
-            $this->assertSame( 2, count( $analyser->fetchAttributes() ), 'two valid attributes' );
+            $this->assertSame( 2, count( $analyser->fetchPropertyAttributes() ), 'two valid attributes' );
 
             // default naming convention all lower case
 
-            $this->assertSame( 'id', $analyser->fetchAttributes()[0]->getNamingConvention()->getString() );
-            $this->assertSame( 'complexfieldname', $analyser->fetchAttributes()[1]->getNamingConvention()->getString() );
+            $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
+            $this->assertSame( 'complexfieldname', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
         }
 
     }

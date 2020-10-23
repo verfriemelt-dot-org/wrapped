@@ -6,9 +6,11 @@
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\DataModel\DataModel;
+    use \Wrapped\_\DataModel\TablenameOverride;
 
     class Dummy
-    extends DataModel {
+    extends DataModel
+    implements TablenameOverride {
 
         public ?int $id = null;
 
@@ -30,6 +32,10 @@
         public function setName( ?string $name ) {
             $this->name = $name;
             return $this;
+        }
+
+        public static function fetchTablename(): string {
+            return 'dummy';
         }
 
     }

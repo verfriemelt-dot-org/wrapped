@@ -2,6 +2,7 @@
 
     namespace Wrapped\_\NamingConvention;
 
+    #[\Attribute]
     class LowerCase
     extends Convention {
 

@@ -2,7 +2,6 @@
 
     namespace Wrapped\_\NamingConvention;
 
-    #[\Attribute]
     abstract class Convention {
 
         public const DESTRUCTIVE = false;

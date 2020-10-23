@@ -2,6 +2,8 @@
 
     namespace Wrapped\_\NamingConvention;
 
+
+    #[\Attribute]
     class SnakeCase
     extends Convention {
 
