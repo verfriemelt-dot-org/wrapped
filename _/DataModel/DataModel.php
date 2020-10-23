@@ -217,6 +217,9 @@
             }
 
             $query->limit( 1 );
+//
+//            var_dump( $query->fetch() );
+//            die();
 
             return (new static() )->initData( $query->fetch() );
         }

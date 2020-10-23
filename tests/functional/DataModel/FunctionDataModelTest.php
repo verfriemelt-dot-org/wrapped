@@ -87,6 +87,17 @@
             $this->assertSame( 'test1', $newObj->getName() );
         }
 
+        public function testObjectFetchWithArray() {
+
+            $this->saveInstance( 'test1' );
+            $this->saveInstance( 'test2' );
+            $this->saveInstance( 'test3' );
+
+            $newObj = Dummy::findSingle( [ 'id' => [ 1, 2, 3 ], 'name' => 'test2' ] );
+
+            $this->assertSame( 'test2', $newObj->getName() );
+        }
+
         public function testObjectFetchSorted() {
 
             $this->saveInstance( 'test' );

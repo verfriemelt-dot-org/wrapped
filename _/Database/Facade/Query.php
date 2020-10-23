@@ -17,6 +17,7 @@
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
@@ -132,15 +133,24 @@
 
             array_map( function ( string $column, $value ) use ( $expression ) {
 
-                if ( $expression->fetchLastExpressionItem() instanceof Value ) {
+                if ( $expression->fetchLastExpressionItem() !== null && !($expression->fetchLastExpressionItem() instanceof Operator) ) {
                     $expression->add(
                         new Operator( 'and' )
                     );
                 }
 
-                $expression->add( new Identifier( $column ) );
-                $expression->add( new Operator( '=' ) );
-                $expression->add( new Value( $value ) );
+                if ( is_array( $value ) ) {
+
+                    $expression->add( new Identifier( $column ) );
+
+                    $op = new OperatorExpression( 'in', ... array_map( fn( string $value ) => new Value( $value ), $value ) );
+                    $expression->add( $op );
+                } else {
+
+                    $expression->add( new Identifier( $column ) );
+                    $expression->add( new Operator( '=' ) );
+                    $expression->add( new Value( $value ) );
+                }
             }, array_keys( $where ), $where );
 
 
