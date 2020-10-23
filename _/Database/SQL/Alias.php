@@ -14,7 +14,7 @@
         }
 
         protected function stringifyAlias(): string {
-            return $this->alias ? " AS {$this->alias->stringify()}" : '';
+            return $this->alias ? " AS {$this->alias->stringify( $driver )}" : '';
         }
 
     }

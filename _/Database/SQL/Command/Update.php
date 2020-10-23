@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\QueryPart;
@@ -45,12 +46,12 @@
             $colParts = [];
 
             foreach ( $this->columns as [$column, $expression] ) {
-                $colParts[] = "{$column->stringify()} = {$expression->stringify()}";
+                $colParts[] = "{$column->stringify( $driver )} = {$expression->stringify( $driver )}";
             }
 
             return sprintf(
                 static::COMMAND,
-                $this->table->stringify(),
+                $this->table->stringify( $driver ),
                 implode(
                     ", ",
                     $colParts

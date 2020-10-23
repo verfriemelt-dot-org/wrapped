@@ -30,7 +30,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                $this->expression->stringify()
+                $this->expression->stringify( $driver )
             );
         }
 

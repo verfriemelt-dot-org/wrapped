@@ -23,7 +23,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                $this->limit->stringify()
+                $this->limit->stringify( $driver )
             );
         }
 

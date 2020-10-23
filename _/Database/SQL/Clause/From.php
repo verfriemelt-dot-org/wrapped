@@ -28,7 +28,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                $this->source->stringify()
+                $this->source->stringify( $driver )
             );
         }
 

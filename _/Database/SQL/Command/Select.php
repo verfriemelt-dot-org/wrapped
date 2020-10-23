@@ -35,7 +35,7 @@
                 static::COMMAND,
                 implode(
                     ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify(), $this->expressions )
+                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
                 )
             );
         }

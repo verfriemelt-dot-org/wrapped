@@ -25,7 +25,7 @@
 
             // validation
             if ( count( $parts ) === 0 || count( $parts ) > 3 ) {
-                throw new Exception( 'illegal identifier' );
+                throw new Exception( 'illegal identifier to much or less identifier' );
             }
 
             foreach ( $parts as $part ) {

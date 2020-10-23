@@ -36,10 +36,10 @@
 
             return sprintf(
                 static::COMMAND,
-                $this->into->stringify(),
+                $this->into->stringify( $driver ),
                 implode(
                     ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify(), $this->columns )
+                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->columns )
                 )
             );
         }

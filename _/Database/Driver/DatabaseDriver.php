@@ -227,7 +227,7 @@
 
         public function run( QueryPart $query ) {
 
-            $this->prepare( $query->stringify() );
+            $this->prepare( $query->stringify( $this ) );
 
             foreach ( $query->fetchBindings() as $bind => $value ) {
 

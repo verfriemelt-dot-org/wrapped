@@ -23,7 +23,7 @@
 
             return sprintf(
                 static::COMMAND,
-                $this->table->stringify()
+                $this->table->stringify( $driver )
             );
         }
 

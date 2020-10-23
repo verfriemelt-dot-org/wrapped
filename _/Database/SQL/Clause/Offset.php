@@ -23,7 +23,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                $this->offset->stringify()
+                $this->offset->stringify( $driver )
             );
         }
 

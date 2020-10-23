@@ -24,7 +24,6 @@
         }
 
         public function fetchAllChildren() {
-
             return array_merge( [ $this ], ... array_map( fn( $child ) => $child->fetchAllChildren(), $this->children ) );
         }
 

@@ -25,10 +25,10 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
             return trim(
-                $this->command->stringify() . " " .
+                $this->command->stringify( $driver ) . " " .
                 implode(
                     " ",
-                    array_map( fn( QueryPart $i ) => $i->stringify(), $this->clauses )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->clauses )
                 )
             );
         }

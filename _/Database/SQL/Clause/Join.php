@@ -28,8 +28,8 @@ use \Wrapped\_\Database\SQL\QueryPart;
 
             return sprintf(
                 static::CLAUSE,
-                $this->source->stringify(),
-                $this->on->stringify(),
+                $this->source->stringify( $driver ),
+                $this->on->stringify( $driver ),
             );
         }
 

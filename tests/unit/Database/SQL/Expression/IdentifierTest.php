@@ -13,19 +13,13 @@
         }
 
         public function testTable() {
-            $ident = new Identifier( 'column', 'table' );
+            $ident = new Identifier( 'table', 'column' );
             $this->assertSame( 'table.column', $ident->stringify() );
         }
 
         public function testSchema() {
-            $ident = new Identifier( 'column', 'table', 'schema' );
+            $ident = new Identifier( 'schema', 'table', 'column' );
             $this->assertSame( 'schema.table.column', $ident->stringify() );
-        }
-
-        public function testMissingTable() {
-
-            $this->expectExceptionObject( new Exception( 'table ident is missing' ) );
-            $ident = new Identifier( 'column', null, 'schema' );
         }
 
         public function testQuotedIdent() {
@@ -33,9 +27,9 @@
             $driver = new Postgres( 'test', 'test', 'test', 'test', 'test' );
 
             $ident = new Identifier( 'column' );
-            $ident->setConnection( $driver );
 
-            $this->assertSame( '"column"', $ident->stringify() );
+            $this->assertSame( '"column"', $ident->stringify( $driver ) );
         }
 
     }
+    

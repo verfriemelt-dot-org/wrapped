@@ -32,8 +32,17 @@
 
             return implode(
                 " ",
-                array_map( fn( ExpressionItem $i ) => $i->stringify(), $this->expressions )
+                array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
             );
+        }
+
+        public function fetchLastExpressionItem(): ?ExpressionItem {
+
+            if ( empty( $this->expressions ) ) {
+                return null;
+            }
+
+            return $this->expressions[count( $this->expressions ) - 1];
         }
 
     }

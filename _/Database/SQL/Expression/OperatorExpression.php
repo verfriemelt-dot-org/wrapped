@@ -60,13 +60,13 @@
                 case 'in':
                     return sprintf(
                         static::OPTERATORS[$this->operator]['string'],
-                        implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify(), $this->arguments ) )
+                        implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments ) )
                     );
             }
 
             return sprintf(
                 static::OPTERATORS[$this->operator]['string'],
-                ... array_map( fn( ExpressionItem $i ) => $i->stringify(), $this->arguments )
+                ... array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments )
             );
         }
 

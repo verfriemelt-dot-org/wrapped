@@ -9,7 +9,6 @@
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Limit;
-    use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Where;
     use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
@@ -18,6 +17,7 @@
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Wrapped\_\Database\Facade\Query;
     use \Wrapped\_\Database\SQL\Statement;
     use \Wrapped\_\DataModel\Collection\Collection;
     use \Wrapped\_\Exception\Database\DatabaseException;
@@ -139,40 +139,7 @@
         }
 
         public static function fetchBy( string $field, $value, DataModel $instance = null ) {
-
-            $db = static::getDatabase();
-
-            $select = new Select();
-            $from   = new From( new Identifier( static::getSchemaName(), static::getTableName() ) );
-            $limit  = new Limit( new Value( 1 ) );
-
-            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $select->add( new Identifier( $col ) );
-            }
-
-            $where = new Where(
-                ( new Expression() )
-                    ->add( new Identifier( $field ) )
-                    ->add( new Operator( '=' ) )
-                    ->add( new Value( $value ) )
-            );
-
-            $res = $db->run(
-                (new Statement( $select ) )
-                    ->add( $from )
-                    ->add( $where )
-                    ->add( $limit )
-            );
-
-            if ( $res->rowCount() === 0 ) {
-                return null;
-            }
-
-            if ( $instance ) {
-                return $instance->initData( $res->fetch() );
-            }
-
-            return (new static() )->initData( $res->fetch() );
+            return static::findSingle( [ $field => $value ] );
         }
 
         /**
@@ -236,58 +203,22 @@
         public static function findSingle( $params = [], $orderBy = null, $order = "asc" ) {
 
             if ( $params instanceof DbLogic ) {
-
                 throw new Exception( 'not supported' );
             }
 
-            $db = static::getDatabase();
-
-            $select = new Select();
-            $from   = new From( new Identifier( static::getSchemaName(), static::getTableName() ) );
-            $limit  = new Limit( new Value( 1 ) );
-
-            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $select->add( new Identifier( $col ) );
-            }
-
-            $whereExpression = new \Wrapped\_\Database\SQL\Expression\Expression();
-
-            $counter = 0;
-            foreach ( $params as $field => $value ) {
-
-                $whereExpression
-                    ->add( new Identifier( $field ) )
-                    ->add( new Operator( '=' ) )
-                    ->add( new Value( $value ) );
-
-                if ( ++$counter < count( $params ) ) {
-                    $whereExpression->add( new Operator( 'and' ) );
-                }
-            }
-
-            $where = new Where( $whereExpression );
-
-            $stmt = (new Statement( $select ) )
-                ->add( $from )
-                ->add( $where )
-            ;
+            $query = new Query( static::getDatabase() );
+            $query->select( ... static::fetchAnalyserObject()->fetchAllColumns() );
+            $query->from( static::getSchemaName(), static::getTableName() );
+            $query->where( $params );
 
             if ( $orderBy !== null ) {
-                $stmt->add(
-                    (new Order( ) )
-                        ->add( new Identifier( $orderBy ), $order )
-                );
+
+                $query->order( [ [ $orderBy, $order ] ] );
             }
 
-            $stmt->add( $limit );
+            $query->limit( 1 );
 
-            $res = $db->run( $stmt );
-
-            if ( $res->rowCount() === 0 ) {
-                return null;
-            }
-
-            return (new static() )->initData( $res->fetch() );
+            return (new static() )->initData( $query->fetch() );
         }
 
         /**
@@ -345,18 +276,15 @@
         public function save() {
 
             if ( static::_fetchPrimaryKey() !== null ) {
-                return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->_insertDbRecord() : $this->_updateDbRecord();
+                return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->insertIntoDatabase() : $this->saveToDatabase();
             } else {
-                $this->_insertDbRecord();
+                $this->insertIntoDatabase();
             }
         }
 
-        private function _insertDbRecord() {
+        private function insertIntoDatabase() {
 
-            $db = static::getDatabase();
-
-            $insert = new Insert( new Identifier( static::getTableName() ) );
-            $values = new Values();
+            $insertData = [];
 
             foreach ( static::fetchAnalyserObject()->fetchColumnsWithGetters() as $col ) {
 
@@ -370,27 +298,27 @@
                     $data = $data->dehydrateToString();
                 }
 
-                $insert->add( new Identifier( $col["column"] ) );
-                $values->add( new Value( $data ) );
+                $insertData[$col["column"]] = $data;
             }
 
-            $statement = new Statement( $insert );
-            $statement->add( $values );
+            $query = new Query( static::getDatabase() );
+            $query->insert(
+                [ static::getSchemaName(), static::getTableName() ],
+                array_keys( $insertData )
+            );
 
-            $db->run( $statement );
+            $query->values( $insertData );
+            $query->returning('id id id');
+            $data = $query->fetch();
 
-            // should be refactored
-            if ( static::_fetchPrimaryKey() == "id" ) {
-                $id = $db->fetchConnectionHandle()->lastInsertId();
-                $this->setId( $id );
-            }
+            $this->{static::_fetchPrimaryKey()} = $data['id'];
 
             $this->_storePropertyStates();
 
             return $this;
         }
 
-        public function _updateDbRecord() {
+        private function saveToDatabase() {
 
             $pk = static::_fetchPrimaryKey();
 
