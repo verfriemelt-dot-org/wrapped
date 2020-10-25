@@ -97,7 +97,7 @@
 
             // read
             $data = TypedDummy::get( 1 );
-            $this->assertTrue( is_object( $data->getPubtime() ) );
+            $this->assertTrue( $data->getPubtime() ===  null );
         }
 
     }

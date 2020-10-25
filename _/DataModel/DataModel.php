@@ -45,18 +45,36 @@
                     continue;
                 }
 
-                $attributeType = $attribute->getType();
-
-                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
-                    $this->{$attribute->getSetter()}( $attributeType::hydrateFromString( $data[$conventionName] ) );
-                } else {
-                    $this->{$attribute->getSetter()}( $data[$conventionName] );
-                }
+                $this->{$attribute->getSetter()}( $this->hydrateAttribute( $attribute, $data[$conventionName] ) );
             }
 
             $this->_storePropertyStates();
 
             return $this;
+        }
+
+        private function hydrateAttribute( DataModelAttribute $attribute, $value ) {
+
+            $attributeType = $attribute->getType();
+
+            if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                return $attributeType::hydrateFromString( $value );
+            }
+
+            return $value;
+        }
+
+        private function dehydrateAttribute( DataModelAttribute $attribute ) {
+
+            $attributeType = $attribute->getType();
+
+            $value = $this->{$attribute->getGetter()}();
+
+            if ( $value !== null && class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                return $value->dehydrateToString();
+            }
+
+            return $value;
         }
 
         public static function createDataModelAnalyser(): DataModelAnalyser {
@@ -110,17 +128,7 @@
             $data = [];
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
-
-                $attributeType = $attribute->getType();
-
-                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
-
-                    $value = $this->{$attribute->getGetter()}();
-
-                    $data [$attribute->getName()] = $value !== null ? $value->dehydrateToString() : null;
-                } else {
-                    $data [$attribute->getName()] = $this->{$attribute->getGetter()}();
-                }
+                $data [$attribute->getName()] = $this->dehydrateAttribute( $attribute );
             }
 
             return $data;
@@ -340,15 +348,7 @@
                     continue;
                 }
 
-                $attributeType = $attribute->getType();
-
-                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
-                    $data = $this->{$attribute->getGetter()}()->dehydrateToString();
-                } else {
-                    $data = $this->{$attribute->getGetter()}();
-                }
-
-                $insertData[$attribute->getNamingConvention()->getString()] = $data;
+                $insertData[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
             }
 
             $query = new Query( static::getDatabase() );
