@@ -159,8 +159,18 @@
             return null;
         }
 
-        public static function fetchBy( string $field, $value, DataModel $instance = null ) {
+        public static function fetchBy( string $field, $value ) {
             return static::findSingle( [ $field => $value ] );
+        }
+
+        private static function buildSeletQuery(): Query {
+
+            $query = new Query( static::getDatabase() );
+
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+            $query->from( static::getSchemaName(), static::getTableName() );
+
+            return $query;
         }
 
         /**
@@ -198,15 +208,16 @@
          */
         public static function find( $params, $orderBy = null, $order = "asc" ) {
 
-            $query = new Query( static::getDatabase() );
+            if ( $params instanceof DbLogic ) {
+                $query = static::buildQueryFromDbLogic( $params );
+            } else {
 
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+                $query = static::buildSeletQuery();
+                $query->where( static::translateFieldNameArray( $params ) );
 
-            $query->from( static::getSchemaName(), static::getTableName() );
-            $query->where( static::translateFieldNameArray( $params ) );
-
-            if ( $orderBy !== null ) {
-                $query->order( [ [ $orderBy, $order ] ] );
+                if ( $orderBy !== null ) {
+                    $query->order( [ [ $orderBy, $order ] ] );
+                }
             }
 
             return Collection::buildFromQuery( new static, $query );
@@ -222,23 +233,35 @@
         public static function findSingle( $params = [], $orderBy = null, $order = "asc" ) {
 
             if ( $params instanceof DbLogic ) {
-                throw new Exception( 'not supported' );
-            }
+                $query = $this->buildQueryFromDbLogic( $params );
+            } else {
 
-            $query = new Query( static::getDatabase() );
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+                $query = static::buildSeletQuery();
+                $query->where( static::translateFieldNameArray( $params ) );
 
-            $query->from( static::getSchemaName(), static::getTableName() );
-            $query->where( static::translateFieldNameArray( $params ) );
-
-            if ( $orderBy !== null ) {
-
-                $query->order( [ [ $orderBy, $order ] ] );
+                if ( $orderBy !== null ) {
+                    $query->order( [ [ $orderBy, $order ] ] );
+                }
             }
 
             $query->limit( 1 );
 
+
             return (new static() )->initData( $query->fetch() );
+        }
+
+        private static function buildQueryFromDbLogic( DbLogic $logic ): Query {
+
+            $query = new Query( );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+            $query->from( static::getSchemaName(), static::getTableName() );
+
+            $logic->getWhere() && $query->fetchStatement()->add( $logic->getWhere() );
+            $logic->getOrder() && $query->fetchStatement()->add( $logic->getOrder() );
+            $logic->getLimit() && $query->fetchStatement()->add( $logic->getLimit() );
+            $logic->getOffset() && $query->fetchStatement()->add( $logic->getOffset() );
+
+            return $query;
         }
 
         /**

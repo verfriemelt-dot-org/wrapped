@@ -2,50 +2,28 @@
 
     namespace Wrapped\_\Database;
 
+    use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Logic\Bracket;
-    use \Wrapped\_\Database\SQL\Logic\Column;
-    use \Wrapped\_\Database\SQL\Logic\Conjunction;
-    use \Wrapped\_\Database\SQL\Logic\FalseValue;
-    use \Wrapped\_\Database\SQL\Logic\LogicItem;
-    use \Wrapped\_\Database\SQL\Logic\NullValue;
-    use \Wrapped\_\Database\SQL\Logic\Operator;
-    use \Wrapped\_\Database\SQL\Logic\Raw;
-    use \Wrapped\_\Database\SQL\Logic\TrueValue;
-    use \Wrapped\_\Database\SQL\Logic\Value;
+    use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Order;
 
     class DbLogic {
 
-        /** @var LogicItem * */
-        public $logicChainStart;
+        private ?SQL\Clause\Limit $limit = null;
 
-        /** @var DatabaseDriver */
-        protected $driver;
+        private ?SQL\Clause\Offset $offset  = null;
 
-        /** @var LogicItem * */
-        public $logicChainCurrent;
+        private ?SQL\Clause\GroupBy $groupBy = null;
 
-        public $orderby          = [];
+        private Expression $expression;
 
-        private $bindings        = [
-            "params" => [],
-            "vars"   => []
-        ];
-
-        private $rawString;
-
-        private $tableName;
-
-        private $bindingsCounter = 0;
-
-        private $limit;
-
-        private $offset;
-
-        private $groupBy;
-
-        private $having;
+        private ?SQL\Clause\Order $order = null;
 
         /**
          *
@@ -56,16 +34,15 @@
         }
 
         public function __construct( $raw = null ) {
-            $this->rawString = $raw;
+            if ( $raw !== null ) {
+                throw new Exception( 'raw not supported' );
+            }
+
+            $this->expression = new Expression;
         }
 
         public function getBindingsCounter() {
             return $this->bindingsCounter;
-        }
-
-        public function setBindingsCounter( $count ) {
-            $this->bindingsCounter = $count;
-            return $this;
         }
 
         public function setTableName( $table ) {
@@ -73,102 +50,69 @@
             return $this;
         }
 
-        private function appendToChain( LogicItem $item ) {
-
-            if ( $this->tableName !== null ) {
-                $item->setTableName( $this->tableName );
-            }
-
-            if ( $this->logicChainStart === null ) {
-                $this->logicChainStart   = $item;
-                $this->logicChainCurrent = $item;
-            } else {
-                $this->logicChainCurrent->setNext( $item );
-            }
-
-            $this->logicChainCurrent = $item;
-        }
-
         public function merge( DbLogic $logic ) {
 
-            if ( $this->logicChainCurrent === null ) {
-
-                $this->logicChainStart   = $logic->logicChainStart;
-                $this->logicChainCurrent = $logic->logicChainCurrent;
-            } else {
-
-                $this->addAnd();
-                $this->logicChainCurrent->setNext( $logic->logicChainStart );
-            }
-
-            foreach ( $logic->getOrderBy() as $order ) {
-                $this->orderby[] = $order;
-            }
-
-            $this->logicChainCurrent = $logic->logicChainCurrent;
-            return $this;
+            throw new Exception( 'merging not supported' );
         }
 
-        /**
-         *
-         * @param type $column
-         * @param type $op
-         * @param type $value
-         * @return DbLogic
-         */
         public function where( $column, $op = null, $value = null, $bindToTable = null ) {
 
-            $logicColumn = new Column( $column );
+            $this->expression->add( new Identifier( ... [ $bindToTable, $column ] ) );
 
-            if ( $bindToTable !== null )
-                $logicColumn->setTableName( $bindToTable );
+            // special case for in
+            if ( strtolower( $op ) == 'in' ) {
+                return $this->isIn( $value );
+            }
 
-            $this->appendToChain( $logicColumn );
+            if ( $op ) {
+                $this->expression->add( new Operator( $op ) );
+            }
 
-            $op !== null && $this->appendToChain( new Operator( $op ) );
-            $value !== null && $this->appendToChain( new Value( $value ) );
+            if ( $value ) {
+                $this->expression->add( new Value( $value ) );
+            }
 
             return $this;
         }
 
         public function isNull() {
-            $this->appendToChain( new Operator( "IS" ) );
-            $this->appendToChain( new NullValue() );
+            $this->expression->add( new Operator( 'is' ) );
+            $this->expression->add( new Primitive( null ) );
 
             return $this;
         }
 
         public function isNotNull() {
-            $this->appendToChain( new Operator( "IS NOT" ) );
-            $this->appendToChain( new NullValue() );
+            $this->expression->add( new Operator( 'is not' ) );
+            $this->expression->add( new Primitive( null ) );
 
             return $this;
         }
 
         public function isTrue() {
-            $this->appendToChain( new Operator( "IS" ) );
-            $this->appendToChain( new TrueValue() );
+            $this->expression->add( new Operator( 'is' ) );
+            $this->expression->add( new Primitive( true ) );
+
 
             return $this;
         }
 
         public function isFalse() {
-            $this->appendToChain( new Operator( "IS" ) );
-            $this->appendToChain( new FalseValue() );
+            $this->expression->add( new Operator( 'is' ) );
+            $this->expression->add( new Primitive( false ) );
+
 
             return $this;
         }
 
         public function isIn( array $param ) {
-            $this->appendToChain( new Operator( "IN" ) );
-            $this->appendToChain( new Value( $param ) );
+            $this->expression->add( new OperatorExpression( "in", ... array_map( fn( $p ) => new Value( $p ), $param ) ) );
 
             return $this;
         }
 
         public function isNotIn( array $param ) {
-            $this->appendToChain( new Operator( "NOT IN" ) );
-            $this->appendToChain( new Value( $param ) );
+            $this->expression->add( new OperatorExpression( "not in", ... $param ) );
 
             return $this;
         }
@@ -179,8 +123,7 @@
          * @return DbLogic
          */
         public function column( $column ) {
-            $this->appendToChain( $column );
-
+            $this->expression->add( new Identifier( $column ) );
             return $this;
         }
 
@@ -190,7 +133,7 @@
          * @return DbLogic
          */
         public function op( $operator ) {
-            $this->appendToChain( new Operator( $operator ) );
+            $this->expression->add( new Operator( $operator ) );
             return $this;
         }
 
@@ -200,7 +143,7 @@
          * @return DbLogic
          */
         public function value( $value ) {
-            $this->appendToChain( new Value( $value ) );
+            $this->expression->add( new Value( $value ) );
             return $this;
         }
 
@@ -209,7 +152,8 @@
          * @return DbLogic
          */
         public function openBracket() {
-            $this->appendToChain( new Bracket( "(" ) );
+            throw new \Expression( 'not supported' );
+            $this->expression->add( new Bracket( "(" ) );
             return $this;
         }
 
@@ -218,7 +162,8 @@
          * @return DbLogic
          */
         public function closeBracket() {
-            $this->appendToChain( new Bracket( ")" ) );
+            throw new \Expression( 'not supported' );
+            $this->expression->add( new Bracket( ")" ) );
             return $this;
         }
 
@@ -227,7 +172,7 @@
          * @return DbLogic
          */
         public function addOr() {
-            $this->appendToChain( new Conjunction( "or" ) );
+            $this->expression->add( new Operator( "or" ) );
             return $this;
         }
 
@@ -236,7 +181,7 @@
          * @return DbLogic
          */
         public function addAnd() {
-            $this->appendToChain( new Conjunction( "and" ) );
+            $this->expression->add( new Operator( "and" ) );
             return $this;
         }
 
@@ -246,88 +191,26 @@
          * @return DbLogic
          */
         public function raw( $raw ) {
-            $this->appendToChain( new Raw( $raw ) );
+            throw new \Expression( 'not supported' );
+            $this->expression->add( new Raw( $raw ) );
             return $this;
         }
 
-        private function parseLogicChain() {
+        public function compile( DatabaseDriver $driver ): Where {
 
-            $currentLogicItem = $this->logicChainStart;
-            $string           = "";
+            $where = new Where( $this->expression );
 
-            do {
-                $string .= " " . $currentLogicItem->fetchSqlString( $this, $this->driver );
-            } while ( $currentLogicItem = $currentLogicItem->getNext() );
-
-            return $string;
+            return $where;
         }
 
-        public function compile( DatabaseDriver $driver ) {
-
-            $this->driver = $driver;
-
-            $string = "";
-
-            if ( $this->logicChainStart !== null ) {
-                $string .= " WHERE";
-                $string .= $this->parseLogicChain();
-            }
-
-            if ( $this->groupBy !== null ) {
-                $string .= " " . $this->groupBy;
-            }
-
-            if ( $this->having !== null ) {
-                $string .= " HAVING " . $this->having;
-            }
-
-
-            if ( !empty( $this->orderby ) ) {
-
-                $orders = array_map( function ( Order $order ) use ( $driver ) {
-                    return $order->fetchOrderString( $driver );
-                }
-                    , $this->orderby
-                );
-
-                $string .= " ORDER BY " . implode( ",", $orders );
-            }
-
-            if ( $this->limit !== null ) {
-                $string .= " LIMIT {$this->limit}";
-            }
-
-            if ( $this->offset !== null ) {
-                $string .= ' OFFSET ' . $this->offset;
-            }
-
-            return $string;
-        }
-
-        /**
-         *
-         * @return []
-         */
-        public function getBindings() {
-            return $this->bindings;
-        }
-
-        /**
-         *
-         * @param type $limit
-         * @return DbLogic
-         */
         public function limit( $limit ) {
-            $this->limit = $limit;
+
+            $this->limit = new SQL\Clause\Limit( new Value( $limit ) );
             return $this;
         }
 
-        /**
-         * @param type $offset
-         * @return static
-         */
         public function offset( $offset ) {
-            $this->offset = $offset;
+            $this->offset = new SQL\Clause\Offset( new Value( $offset ) );
             return $this;
         }
 
@@ -338,11 +221,14 @@
          * @return static
          */
         public function groupBy( $by ) {
-            $this->groupBy = " GROUP BY {$by} ";
+
+            $this->groupBy = new SQL\Clause\GroupBy( new Identifier( $by ) );
+
             return $this;
         }
 
         public function having( $having ) {
+            throw new Exception( 'having not supported' );
             $this->having = $having;
             return $this;
         }
@@ -354,63 +240,37 @@
          * @return static
          */
         public function order( $column, $direction = "ASC", $overrideTable = null, $skipQuote = false ) {
-            $this->orderby[] = new Order( $column, $direction, $overrideTable ?: $this->getTableName(), $skipQuote );
+
+            if ( !$this->order ) {
+                $this->order = new SQL\Clause\Order();
+            }
+
+            $this->order->add(
+                new Identifier( ... [ $overrideTable, $column ] ),
+                $direction
+            );
+
             return $this;
         }
 
-        /**
-         * binds the given value to the query
-         * @param type $value
-         * @return DbLogic
-         */
-        public function bindValue( $value ) {
-
-            $binding                    = "bind" . $this->bindingsCounter++;
-            $this->bindings["params"][] = $binding;
-            $this->bindings["vars"][]   = $value;
-
-            return $binding;
+        public function getOrder(): ?SQL\Clause\Order {
+            return $this->order;
         }
 
-        /**
-         * returns the current tablename selected
-         * @return type
-         */
-        public function getTableName() {
-            return $this->tableName;
+        public function getLimit() {
+            return $this->limit;
         }
 
-        /**
-         * transforms arrays to logic
-         * @param type $array
-         */
-        public function parseArray( $data ) {
-
-            $count = count( $data );
-            $i     = 0;
-
-            foreach ( $data as $column => $value ) {
-
-                ++$i;
-
-                if ( is_array( $value ) ) {
-                    $this->where( $column, "IN", $value );
-                } else {
-                    $this->where( $column, "=", $value );
-                }
-
-                if ( $i + 1 <= $count ) {
-                    $this->addAnd();
-                }
-            }
+        public function getWhere() {
+            return new Where($this->expression);
         }
 
-        /**
-         *
-         * @return Order[]
-         */
-        public function getOrderBy() {
-            return $this->orderby;
+        public function getGroupBy() {
+            return $this->groupBy;
+        }
+
+        public function getOffset() {
+            return $this->offset;
         }
 
         /**
@@ -418,31 +278,18 @@
          * @return bool
          */
         public function lastItemWasConjunction() {
-            return $this->logicChainCurrent instanceof Conjunction;
+            return
+                $this->expression->fetchLastExpressionItem() === null || $this->expression->fetchLastExpressionItem() instanceof Operator;
         }
 
         public function isEmpty() {
-            return $this->logicChainCurrent === null;
+            return $this->expression->fetchLastExpressionItem() === null;
         }
 
         public function __clone() {
-
-            if ( $this->logicChainStart === null ) {
-                return;
-            }
-
-            $current = $this->logicChainStart;
-
-            $this->logicChainCurrent = null;
-            $this->logicChainStart   = null;
-
-            $this->appendToChain( clone $current );
-
-            while ( $next = $current->getNext() ) {
-                $clone   = clone $next;
-                $this->appendToChain( $clone );
-                $current = $clone;
-            }
+            throw new Exception( 'molly the sheep says no' );
         }
+
+
 
     }

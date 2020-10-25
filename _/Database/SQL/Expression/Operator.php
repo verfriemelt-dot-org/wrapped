@@ -30,17 +30,24 @@
             'or',
             'not',
             'is',
+            'is not',
             'is distrinct from',
             'asc',
             'desc',
+            'asc nulls last',
+            'desc nulls last',
+            'asc nulls first',
+            'desc nulls first',
         ];
 
         protected string $operator;
 
         public function __construct( string $op ) {
 
+
+
             if ( !in_array( strtolower( $op ), static::OPTERATORS ) ) {
-                throw new Exception( 'illegal operator' );
+                throw new Exception( "illegal operator: »{$op}«" );
             }
 
             $this->operator = $op;

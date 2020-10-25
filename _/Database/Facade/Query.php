@@ -53,6 +53,10 @@
             $this->db = $database ?? Database::getConnection();
         }
 
+        public function fetchStatement(): Statement {
+            return $this->stmt;
+        }
+
         public function select( string ... $cols ) {
 
             $this->select = new Select();
