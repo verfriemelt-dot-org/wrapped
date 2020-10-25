@@ -114,7 +114,10 @@
                 $attributeType = $attribute->getType();
 
                 if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
-                    $data [$attribute->getName()] = $this->{$attribute->getGetter()}()->dehydrateToString();
+
+                    $value = $this->{$attribute->getGetter()}();
+
+                    $data [$attribute->getName()] = $value !== null ? $value->dehydrateToString() : null;
                 } else {
                     $data [$attribute->getName()] = $this->{$attribute->getGetter()}();
                 }

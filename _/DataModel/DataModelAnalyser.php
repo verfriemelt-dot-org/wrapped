@@ -79,9 +79,9 @@
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
 
-                $dma->setType( $attrib->getType()->getName() );
-
-
+                if ( $attrib->getType() ) {
+                    $dma->setType( $attrib->getType()->getName() );
+                }
 
                 $this->attributes[] = $dma;
             }
