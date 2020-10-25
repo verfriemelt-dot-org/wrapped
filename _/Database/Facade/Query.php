@@ -152,8 +152,16 @@
                 } else {
 
                     $expression->add( new Identifier( $column ) );
-                    $expression->add( new Operator( '=' ) );
-                    $expression->add( new Value( $value ) );
+
+                    if  ( in_array( $value, [ false, true, null ], true ) ) {
+                        $expression->add( new Operator( 'is' ) );
+                        $expression->add( new \Wrapped\_\Database\SQL\Expression\Primitive( $value ) );
+
+                    } else {
+                            $expression->add( new Operator( '=' ) );
+                        $expression->add( new \Wrapped\_\Database\SQL\Expression\Value( $value ) );
+                    }
+
                 }
             }, array_keys( $where ), $where );
 
