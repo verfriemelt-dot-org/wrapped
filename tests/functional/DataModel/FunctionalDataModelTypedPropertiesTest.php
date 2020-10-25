@@ -18,6 +18,8 @@
 
         public ?\Wrapped\_\DateTime\DateTime $pubtime = null;
 
+        public $untyped;
+
         public function getId(): ?int {
             return $this->id;
         }
@@ -49,6 +51,16 @@
             return $this;
         }
 
+        public function getUntyped() {
+            return $this->untyped;
+        }
+
+        public function setUntyped( $untyped ) {
+            $this->untyped = $untyped;
+            return $this;
+        }
+
+
     }
 
     class FunctionalDataModelTypedPropertiesTest
@@ -62,7 +74,7 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table dummy ( id serial primary key, name text, pubtime timestamp );' );
+            static::$connection->query( 'create table dummy ( id serial primary key, name text, pubtime timestamp, untyped text );' );
         }
 
         public function tearDown(): void {
@@ -72,6 +84,15 @@
         public function testSave() {
             $test = new TypedDummy();
             $test->setPubtime( new \Wrapped\_\DateTime\DateTime );
+            $test->save();
+
+            // read
+            $data = TypedDummy::get( 1 );
+            $this->assertTrue( is_object( $data->getPubtime() ) );
+        }
+
+        public function testSaveWithNull() {
+            $test = new TypedDummy();
             $test->save();
 
             // read
