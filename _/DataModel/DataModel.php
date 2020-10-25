@@ -47,7 +47,7 @@
 
                 $attributeType = $attribute->getType();
 
-                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
                     $this->{$attribute->getSetter()}( $attributeType::hydrateFromString( $data[$conventionName] ) );
                 } else {
                     $this->{$attribute->getSetter()}( $data[$conventionName] );
@@ -113,7 +113,7 @@
 
                 $attributeType = $attribute->getType();
 
-                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
                     $data [$attribute->getName()] = $this->{$attribute->getGetter()}()->dehydrateToString();
                 } else {
                     $data [$attribute->getName()] = $this->{$attribute->getGetter()}();
@@ -339,7 +339,7 @@
 
                 $attributeType = $attribute->getType();
 
-                if ( is_object( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+                if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
                     $data = $this->{$attribute->getGetter()}()->dehydrateToString();
                 } else {
                     $data = $this->{$attribute->getGetter()}();

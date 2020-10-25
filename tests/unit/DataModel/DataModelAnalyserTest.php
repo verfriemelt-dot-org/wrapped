@@ -13,6 +13,8 @@
 
         public ?string $complexFieldName = null;
 
+        public ?\Wrapped\_\DateTime\DateTime $typed = null;
+
         public function getId(): ?int {
             return $this->id;
         }
@@ -31,6 +33,15 @@
             return $this;
         }
 
+        public function getTyped(): ?\Wrapped\_\DateTime\DateTime {
+            return $this->typed;
+        }
+
+        public function setTyped( ?\Wrapped\_\DateTime\DateTime $typed ) {
+            $this->typed = $typed;
+            return $this;
+        }
+
     }
 
     class FunctionDataModelAttributeTest
@@ -46,12 +57,22 @@
         public function testAttributes() {
             $analyser = new DataModelAnalyser( new LowerDummy );
 
-            $this->assertSame( 2, count( $analyser->fetchPropertyAttributes() ), 'two valid attributes' );
+            $this->assertSame( 3, count( $analyser->fetchPropertyAttributes() ), 'three valid attributes' );
 
             // default naming convention all lower case
 
             $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
             $this->assertSame( 'complexfieldname', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
+        }
+
+        public function testTypedAttributes() {
+
+            $analyser = new DataModelAnalyser( new LowerDummy );
+            $this->assertSame( 'typed', $analyser->fetchPropertyAttributes()[2]->getNamingConvention()->getString() );
+            $this->assertSame( 'Wrapped\\_\\DateTime\\DateTime', $analyser->fetchPropertyAttributes()[2]->getType() );
+
+
+            $this->assertTrue( class_exists( $analyser->fetchPropertyAttributes()[2]->getType() ) );
         }
 
     }

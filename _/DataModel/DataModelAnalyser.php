@@ -78,7 +78,9 @@
                 $dma = new DataModelAttribute( $name, $attachtedConventionAttribute ? $attachtedConventionAttribute->newInstance() : null );
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
-                $dma->setType( $attrib->getType() );
+
+                $dma->setType( $attrib->getType()->getName() );
+
 
 
                 $this->attributes[] = $dma;
