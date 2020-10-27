@@ -8,7 +8,7 @@
     use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\DataModel\DataModel;
 
-    class a
+    class A
     extends DataModel {
 
         public ?int $id = null;
@@ -37,7 +37,7 @@
 
     }
 
-    class b
+    class B
     extends DataModel {
 
         public ?int $id = null;
@@ -85,13 +85,13 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table a ( id serial primary key, bid int );' );
-            static::$connection->query( 'create table b ( id serial primary key, aid int );' );
+            static::$connection->query( 'create table "A" ( id serial primary key, bid int );' );
+            static::$connection->query( 'create table "B" ( id serial primary key, aid int );' );
         }
 
         public function tearDown(): void {
-            static::$connection->query( 'drop table if exists a;' );
-            static::$connection->query( 'drop table if exists b;' );
+            static::$connection->query( 'drop table if exists "A";' );
+            static::$connection->query( 'drop table if exists "B";' );
         }
 
         public function buildObjects() {

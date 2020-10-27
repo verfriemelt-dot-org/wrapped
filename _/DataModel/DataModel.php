@@ -2,6 +2,9 @@
 
     namespace Wrapped\_\DataModel;
 
+//    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
+
+
     use \ReflectionClass;
     use \Serializable;
     use \Wrapped\_\Database\Database;
@@ -9,10 +12,13 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\Facade\Query;
-//    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
+    use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
+    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
+    use function \GuzzleHttp\json_decode;
+    use function \GuzzleHttp\json_encode;
 
     abstract class DataModel
     implements Serializable {
@@ -157,7 +163,11 @@
          * @return String
          */
         public static function getTableName(): string {
-            return in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::createDataModelAnalyser()->getBaseName();
+
+            $name = in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::createDataModelAnalyser()->getBaseName();
+            $casing = (new PascalCase( $name ) )->convertTo( static::createDataModelAnalyser()->fetchTableNamingConvention() );
+
+            return $casing->getString();
         }
 
         /**
@@ -519,7 +529,7 @@
             $propertyType = $property->getType();
 
             $attachedAttributes = [];
-            $resolvAttribute    = $property->getAttributes( \Wrapped\_\DataModel\Attribute\PropertyResolver::class )[0] ?? null;
+            $resolvAttribute    = $property->getAttributes( PropertyResolver::class )[0] ?? null;
 
             if ( !$resolvAttribute ) {
                 throw new \Exception( "missing resolvAttribute on {$propertyName}" );

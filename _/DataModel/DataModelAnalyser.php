@@ -6,6 +6,7 @@
     use \ReflectionException;
     use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
     use \Wrapped\_\DataModel\Attribute\Naming\Convention;
+    use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
 
     class DataModelAnalyser {
 
@@ -13,7 +14,7 @@
 
         private ReflectionClass $reflection;
 
-        private ?array $attributes = null;
+        private ?array $properties = null;
 
         public function __construct( DataModel $model ) {
             $this->model      = $model;
@@ -26,11 +27,11 @@
          */
         public function fetchPropertyAttributes(): array {
 
-            if ( $this->attributes === null ) {
+            if ( $this->properties === null ) {
                 $this->prepareAttributes();
             }
 
-            return $this->attributes ?? [];
+            return $this->properties ?? [];
         }
 
         public function getBaseName(): string {
@@ -41,13 +42,22 @@
             return $this->reflection->name;
         }
 
+        public function fetchTableNamingConvention(): Convention {
+            return $this->fetchNamingConventionAttributes( $this->reflection ) ? $this->fetchNamingConventionAttributes( $this->reflection )->newInstance() : new PascalCase();
+        }
+
+        public function fetchNamingConventionAttributes( $element ): ?\ReflectionAttribute {
+            $attributes = $element->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF );
+            return $attributes [0] ?? null;
+        }
+
         protected function prepareAttributes() {
 
             $hasDataModelAttribute = false;
 
-            foreach ( $this->reflection->getProperties() as $attrib ) {
+            foreach ( $this->reflection->getProperties() as $property ) {
 
-                $name = $attrib->getName();
+                $name = $property->getName();
 
                 // ignore underscore attributes
                 if ( $name[0] == "_" ) {
@@ -72,18 +82,17 @@
                     continue;
                 }
 
-                $attachtedConventionAttributes = $attrib->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF );
-                $attachtedConventionAttribute  = $attachtedConventionAttributes[0] ?? null;
+                $convetion = $this->fetchNamingConventionAttributes( $property );
 
-                $dma = new DataModelAttribute( $name, $attachtedConventionAttribute ? $attachtedConventionAttribute->newInstance() : null );
+                $dma = new DataModelAttribute( $name, $convetion ? $convetion->newInstance() : null );
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
 
-                if ( $attrib->getType() ) {
-                    $dma->setType( $attrib->getType()->getName() );
+                if ( $property->getType() ) {
+                    $dma->setType( $property->getType()->getName() );
                 }
 
-                $this->attributes[] = $dma;
+                $this->properties[] = $dma;
             }
         }
 

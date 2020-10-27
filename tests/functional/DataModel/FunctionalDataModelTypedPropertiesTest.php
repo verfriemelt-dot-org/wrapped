@@ -74,11 +74,11 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table dummy ( id serial primary key, name text, pubtime timestamp, untyped text );' );
+            static::$connection->query( 'create table "Dummy" ( id serial primary key, name text, pubtime timestamp, untyped text );' );
         }
 
         public function tearDown(): void {
-            static::$connection->query( 'drop table dummy ;' );
+            static::$connection->query( 'drop table "Dummy" ;' );
         }
 
         public function testSave() {

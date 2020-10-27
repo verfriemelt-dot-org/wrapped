@@ -6,21 +6,16 @@
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\TablenameOverride;
 
+    #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
     class LowerDummy
-    extends DataModel
-    implements TablenameOverride {
+    extends DataModel {
 
         public ?int $id = null;
 
         #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public ?string $complexFieldName = null;
-
-        public static function fetchTablename(): string {
-            return 'dummy';
-        }
 
         public function getId(): ?int {
             return $this->id;
@@ -42,6 +37,8 @@
 
     }
 
+    #[\Wrapped\_\DataModel\Attribute\Naming\CamelCase]
+
     class CamelCaseDummy
     extends LowerDummy {
 
@@ -50,6 +47,8 @@
         public ?string $complexFieldName = null;
 
     }
+
+    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
 
     class SnakeCaseDummy
     extends LowerDummy {
@@ -75,6 +74,9 @@
 
         public function tearDown(): void {
             static::$connection->query( 'drop table if exists dummy;' );
+            static::$connection->query( 'drop table if exists lowerdummy ;' );
+            static::$connection->query( 'drop table if exists snake_case_dummy;' );
+            static::$connection->query( 'drop table if exists "camelCaseDummy";' );
         }
 
         public function saveInstance( $class, $name = 'test' ) {
@@ -87,7 +89,7 @@
         }
 
         public function testallLower() {
-            static::$connection->query( 'create table dummy ( id serial primary key, complexfieldname text );' );
+            static::$connection->query( 'create table lowerdummy ( id serial primary key, complexfieldname text );' );
             $this->saveInstance( LowerDummy::class, 'test' );
 
             $this->assertNotNull( LowerDummy::findSingle( [ 'complexfieldname' => 'test' ] ) );
@@ -95,7 +97,7 @@
         }
 
         public function testCamelCase() {
-            static::$connection->query( 'create table dummy ( id serial primary key, "complexFieldName" text );' );
+            static::$connection->query( 'create table "camelCaseDummy" ( id serial primary key, "complexFieldName" text );' );
             $this->saveInstance( CamelCaseDummy::class, 'test' );
 
             $this->assertNotNull( CamelCaseDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
@@ -103,7 +105,7 @@
 
         public function testSnakeCase() {
 
-            static::$connection->query( 'create table dummy ( id serial primary key, complex_field_name text );' );
+            static::$connection->query( 'create table snake_case_dummy ( id serial primary key, complex_field_name text );' );
             $this->saveInstance( SnakeCaseDummy::class, 'test' );
 
             $this->assertNotNull( SnakeCaseDummy::findSingle( [ 'complex_field_name' => 'test' ] ) );

@@ -6,7 +6,7 @@
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\DataModelAnalyser;
 
-    class LowerDummy
+    class Example
     extends DataModel {
 
         public ?int $id = null;
@@ -48,26 +48,25 @@
     extends TestCase {
 
         public function testNames() {
-            $analyser = new DataModelAnalyser( new LowerDummy );
+            $analyser = new DataModelAnalyser( new Example );
 
-            $this->assertSame( 'LowerDummy', $analyser->getBaseName() );
-            $this->assertSame( 'extraNamespace\\LowerDummy', $analyser->getStaticName() );
+            $this->assertSame( 'Example', $analyser->getBaseName() );
+            $this->assertSame( 'extraNamespace\\Example', $analyser->getStaticName() );
         }
 
         public function testAttributes() {
-            $analyser = new DataModelAnalyser( new LowerDummy );
+            $analyser = new DataModelAnalyser( new Example );
 
             $this->assertSame( 3, count( $analyser->fetchPropertyAttributes() ), 'three valid attributes' );
 
             // default naming convention all lower case
-
             $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
             $this->assertSame( 'complexfieldname', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
         }
 
         public function testTypedAttributes() {
 
-            $analyser = new DataModelAnalyser( new LowerDummy );
+            $analyser = new DataModelAnalyser( new Example );
             $this->assertSame( 'typed', $analyser->fetchPropertyAttributes()[2]->getNamingConvention()->getString() );
             $this->assertSame( 'Wrapped\\_\\DateTime\\DateTime', $analyser->fetchPropertyAttributes()[2]->getType() );
 

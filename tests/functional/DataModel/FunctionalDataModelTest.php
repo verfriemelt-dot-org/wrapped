@@ -9,8 +9,7 @@
     use \Wrapped\_\DataModel\TablenameOverride;
 
     class Dummy
-    extends DataModel
-    implements TablenameOverride {
+    extends DataModel {
 
         public ?int $id = null;
 
@@ -34,10 +33,6 @@
             return $this;
         }
 
-        public static function fetchTablename(): string {
-            return 'dummy';
-        }
-
     }
 
     class FunctionDataModelTest
@@ -51,11 +46,11 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table dummy ( id serial primary key, name text );' );
+            static::$connection->query( 'create table "Dummy" ( id serial primary key, name text );' );
         }
 
         public function tearDown(): void {
-            static::$connection->query( 'drop table dummy ;' );
+            static::$connection->query( 'drop table "Dummy" ;' );
         }
 
         public function saveInstance( $name = 'test' ) {
@@ -143,7 +138,7 @@
             $obj->setName( 'test' );
             $obj->save();
 
-            Database::getConnection()->query( "update dummy set name = 'epic'" );
+            Database::getConnection()->query( "update \"Dummy\" set name = 'epic'" );
 
             $obj->reload();
 
