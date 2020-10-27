@@ -164,7 +164,11 @@
          */
         public static function getTableName(): string {
 
-            $name = in_array( TablenameOverride::class, class_implements( static::class ) ) ? static::fetchTablename() : static::createDataModelAnalyser()->getBaseName();
+            if ( in_array( TablenameOverride::class, class_implements( static::class ) ) ) {
+                return static::fetchTablename();
+            }
+
+            $name   = static::createDataModelAnalyser()->getBaseName();
             $casing = (new PascalCase( $name ) )->convertTo( static::createDataModelAnalyser()->fetchTableNamingConvention() );
 
             return $casing->getString();

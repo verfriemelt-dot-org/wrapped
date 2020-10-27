@@ -12,6 +12,7 @@
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TablenameOverride;
 
+    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     class SessionSql
     extends DataModel
     implements TablenameOverride, SessionDataObject {

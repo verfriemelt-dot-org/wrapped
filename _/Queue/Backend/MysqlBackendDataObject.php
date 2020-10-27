@@ -5,6 +5,8 @@
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\Queue\QueueItem;
 
+
+    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     class MysqlBackendDataObject
     extends DataModel
     implements \Wrapped\_\DataModel\TablenameOverride {
