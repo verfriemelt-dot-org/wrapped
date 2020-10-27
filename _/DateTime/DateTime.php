@@ -5,7 +5,7 @@
     use \Wrapped\_\DataModel\PropertyObjectInterface;
 
     class DateTime
-    extends \DateTimeImmutable
+    extends \DateTime
     implements PropertyObjectInterface {
 
         const SQL_FORMAT = "Y-m-d H:i:s";

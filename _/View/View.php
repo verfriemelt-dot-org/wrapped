@@ -50,11 +50,11 @@
 
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {
 
-            $getters = $object::fetchAnalyserObject()->fetchColumnsWithGetters();
+            $properties = $object::createDataModelAnalyser()->fetchPropertyAttributes();
             $context = $context ?? $this->tpl;
 
-            foreach ( $getters as $getter ) {
-                $context->set( $prefix . ucfirst( $getter["column"] ), $object->{$getter["getter"]}() );
+            foreach ( $properties as $prop ) {
+                $context->set( $prefix . ucfirst( $prop->getName() ), $object->{$prop->getGetter()}() );
             }
         }
 

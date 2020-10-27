@@ -212,4 +212,12 @@
             return $result;
         }
 
+        public function filter( callable $function ): Collection {
+            return new static( ... array_filter( $this->data, $function ));
+        }
+
+        public function toArray() {
+            return $this->data;
+        }
+
     }

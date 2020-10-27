@@ -34,9 +34,7 @@
          */
         public function initData( $data ) {
 
-            $analyser = new DataModelAnalyser( $this );
-
-            foreach ( $analyser->fetchPropertyAttributes() as $attribute ) {
+            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
 
                 $conventionName = $attribute->getNamingConvention()->getString();
 
@@ -174,11 +172,11 @@
             return static::findSingle( [ $field => $value ] );
         }
 
-        private static function buildSeletQuery(): Query {
+        public static function buildSelectQuery(): Query {
 
             $query = new Query( static::getDatabase() );
 
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->getNamingConvention()->getString() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
             return $query;
@@ -223,7 +221,7 @@
                 $query = static::buildQueryFromDbLogic( $params );
             } else {
 
-                $query = static::buildSeletQuery();
+                $query = static::buildSelectQuery();
                 $query->where( static::translateFieldNameArray( $params ) );
 
                 if ( $orderBy !== null ) {
@@ -247,7 +245,7 @@
                 $query = $this->buildQueryFromDbLogic( $params );
             } else {
 
-                $query = static::buildSeletQuery();
+                $query = static::buildSelectQuery();
                 $query->where( static::translateFieldNameArray( $params ) );
 
                 if ( $orderBy !== null ) {
@@ -309,19 +307,20 @@
          */
         public static function take( $count, $offset = null, $params = [] ) {
 
-            $c  = new Collection();
-            $co = $c->from( static::class );
+            $query = static::buildSelectQuery();
 
             if ( $params instanceof DbLogic ) {
-                $co->setLogic( $params );
+                $query = static::buildQueryFromDbLogic( $params );
             } else {
-                $co->createLogic()->parseArray( $params );
+
+                $query = static::buildSelectQuery();
+                $query->where( static::translateFieldNameArray( $params ) );
             }
 
-            $co->getDbLogic()->offset( $offset );
-            $co->getDbLogic()->limit( $count );
+            $query->offset( $offset );
+            $query->limit( $count );
 
-            return $c->get();
+            return Collection::buildFromQuery( new static, $query );
         }
 
         /**

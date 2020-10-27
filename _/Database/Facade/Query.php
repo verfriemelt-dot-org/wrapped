@@ -6,6 +6,7 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Limit;
+    use \Wrapped\_\Database\SQL\Clause\Offset;
     use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Returning;
     use \Wrapped\_\Database\SQL\Clause\Where;
@@ -18,35 +19,39 @@
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \Wrapped\_\Database\SQL\Expression\Primitive;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
+    use \Wrapped\_\DataModel\PropertyObjectInterface;
 
     class Query {
 
-        private Statement $stmt;
+        public Statement $stmt;
 
-        private Select $select;
+        public Select $select;
 
-        private Insert $insert;
+        public Insert $insert;
 
-        private Update $update;
+        public Update $update;
 
-        private Delete $delete;
+        public Delete $delete;
 
-        private Values $values;
+        public Values $values;
 
-        private From $from;
+        public From $from;
 
-        private Where $where;
+        public Where $where;
 
-        private Returning $returning;
+        public Returning $returning;
 
-        private Order $order;
+        public Order $order;
 
-        private Limit $limit;
+        public Limit $limit;
 
-        private DatabaseDriver $db;
+        public Offset $offset;
+
+        public DatabaseDriver $db;
 
         public function __construct( DatabaseDriver $database = null ) {
 
@@ -57,12 +62,18 @@
             return $this->stmt;
         }
 
-        public function select( string ... $cols ) {
+        public function select( ... $cols ) {
 
             $this->select = new Select();
             $this->stmt   = new Statement( $this->select );
 
-            array_map( fn( string $column ) => $this->select->add( new Identifier( $column ) ), $cols );
+            array_map( function( $column ) {
+                if ( is_array($column) ) {
+                    $this->select->add( new Identifier( ... $column ) );
+                } else {
+                    $this->select->add( new Identifier( $column ) );
+                }
+            }, $cols );
 
             return $this;
         }
@@ -153,15 +164,17 @@
 
                     $expression->add( new Identifier( $column ) );
 
-                    if  ( in_array( $value, [ false, true, null ], true ) ) {
-                        $expression->add( new Operator( 'is' ) );
-                        $expression->add( new \Wrapped\_\Database\SQL\Expression\Primitive( $value ) );
-
-                    } else {
-                            $expression->add( new Operator( '=' ) );
-                        $expression->add( new \Wrapped\_\Database\SQL\Expression\Value( $value ) );
+                    if ( $value instanceof PropertyObjectInterface ) {
+                        $value = $value->dehydrateToString();
                     }
 
+                    if ( in_array( $value, [ false, true, null ], true ) ) {
+                        $expression->add( new Operator( 'is' ) );
+                        $expression->add( new Primitive( $value ) );
+                    } else {
+                        $expression->add( new Operator( '=' ) );
+                        $expression->add( new Value( $value ) );
+                    }
                 }
             }, array_keys( $where ), $where );
 
@@ -178,7 +191,7 @@
 
                 [$column, $direction] = $element;
 
-                $this->order->add( new Identifier( $column ), $direction );
+                $this->order->add( new Identifier( $column ), $direction ?? 'ASC' );
             }, $order );
 
             return $this;
@@ -190,6 +203,18 @@
             $this->stmt->add( $this->limit );
 
             return $this;
+        }
+
+        public function offset( int $offset ) {
+
+            $this->offset = new Offset( new Value( $offset ) );
+            $this->stmt->add( $this->offset );
+
+            return $this;
+        }
+
+        public function fetchAll() {
+            return $this->run()->fetchAll();
         }
 
         public function fetch() {

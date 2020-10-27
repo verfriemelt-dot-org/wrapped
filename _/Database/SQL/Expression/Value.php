@@ -26,7 +26,13 @@
         protected bool $useBinding = true;
 
         public function __construct( $value ) {
-            $this->value = $value;
+
+            if ( is_object( $value ) && $value instanceof \Wrapped\_\DataModel\PropertyObjectInterface ) {
+                $this->value = $value->dehydrateToString();
+            } else {
+                $this->value = $value;
+            }
+
             $this->bind  .= (string) ++static::$counter;
         }
 
@@ -41,11 +47,24 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
-            if ( $this->useBinding ) {
+            if ( $driver ) {
                 return $this->bind . $this->stringifyAlias( $driver );
             }
 
-            return (string) $this->value . $this->stringifyAlias( $driver );
+            $type = is_object( $this->value ) ? ($this->value)::class : gettype( $this->value );
+
+            switch ( $type ) {
+
+                case 'integer':
+                    $value = $this->value;
+                    break;
+                case 'string':
+                    $value = "'{$this->value}'";
+                    break;
+                default: throw new \Exception("unsupported type: " . gettype( $this->value ) );
+            }
+
+            return $value . $this->stringifyAlias( $driver );
         }
 
         public function fetchBindings() {

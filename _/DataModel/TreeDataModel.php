@@ -12,7 +12,8 @@
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class TreeDataModel
-    extends DataModel {
+    extends DataModel
+    implements TablenameOverride {
 
         public ?int $id = null;
 
@@ -47,6 +48,8 @@
         public function getRight(): ?int {
             return $this->right;
         }
+
+        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public function getParentId(): ?int {
             return $this->parentId;
@@ -664,7 +667,7 @@
 
             return static::find(
                     DbLogic::create()
-                        ->where( "parentId", "=", $this->getId() )
+                        ->where( "parentid", "=", $this->getId() )
                         ->order( $order, $direction )
             );
         }
