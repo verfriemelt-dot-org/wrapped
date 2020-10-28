@@ -2,15 +2,14 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\Facade\Query;
 
     class QueryTest
     extends TestCase {
 
         public function testWhereWithValueFromArray() {
 
-            $query = new \Wrapped\_\Database\Facade\Query();
+            $query = new Query();
 
             $query->select( 'column' );
             $query->from( "table" );
@@ -23,7 +22,7 @@
 
         public function testWhereWithNullFromArray() {
 
-            $query = new \Wrapped\_\Database\Facade\Query();
+            $query = new Query();
 
             $query->select( 'column' );
             $query->from( "table" );

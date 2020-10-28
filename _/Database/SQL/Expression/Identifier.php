@@ -7,6 +7,7 @@
     use \Wrapped\_\Database\SQL\Alias;
     use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\QueryPart;
+    use \Wrapped\_\DataModel\DataModel;
 
     class Identifier
     extends QueryPart
@@ -34,7 +35,7 @@
                 }
             }
 
-            $this->parts = $parts;
+            $this->parts = array_values( $parts );
         }
 
         public function quote( string $ident ): string {
@@ -46,16 +47,72 @@
             return $this->driver->quoteIdentifier( $ident );
         }
 
+        protected function translateIdentifier( string $ident ) {
+
+            if ( $ident === '*' || count( $this->context ) === 0 ) {
+                return $ident;
+            }
+
+            $translations = array_map( function( DataModel $context ) use ( $ident ) {
+                try {
+                    return $context::translateFieldName( $ident );
+                } catch ( \Exception $e ) {
+                    return null;
+                }
+            }, $this->context );
+
+            // filter null values;
+            $translations = array_filter( $translations );
+
+            switch ( count( $translations ) ) {
+                case 0: return $ident;
+                case 1: return $translations[0]->getNamingConvention()->getString();
+                default: throw new \Exception( 'to many options' );
+            }
+        }
+
         public function stringify( DatabaseDriver $driver = null ): string {
 
-            // special star case
+            switch ( count( $this->parts ) ) {
+                case 3:
+
+                    [$schema, $table, $column] = $this->parts;
+
+                    $parts = [
+                        $schema,
+                        $table,
+                        $this->translateIdentifier( $column )
+                    ];
+
+                    break;
+                case 2:
+
+
+                    [$table, $column] = $this->parts;
+
+                    $parts = [
+                        $table,
+                        $this->translateIdentifier( $column )
+                    ];
+
+                    break;
+                case 1:
+
+                    [$column] = $this->parts;
+
+                    $parts = [
+                        $this->translateIdentifier( $column )
+                    ];
+
+                    break;
+            }
 
             $this->driver = $driver;
             return implode(
                     '.',
                     array_map(
                         fn( string $p ) => $p !== '*' ? $this->quote( $p ) : '*',
-                        $this->parts
+                        $parts
                     )
                 ) . $this->stringifyAlias( $driver );
         }

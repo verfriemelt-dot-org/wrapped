@@ -12,7 +12,13 @@
 
         private array $clauses = [];
 
-        public function __construct( Command $command ) {
+        public function __construct( ?Command $command = null ) {
+            if ( $command ) {
+                $this->setCommand( $command );
+            }
+        }
+
+        public function setCommand( Command$command ) {
             $this->addChild( $command );
             $this->command = $command;
         }

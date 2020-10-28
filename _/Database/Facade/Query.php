@@ -51,11 +51,11 @@
 
         public Offset $offset;
 
-        public DatabaseDriver $db;
+        public ?DatabaseDriver $db = null;
 
         public function __construct( DatabaseDriver $database = null ) {
-
-            $this->db = $database ?? Database::getConnection();
+            $this->db   = $database;
+            $this->stmt = new Statement();
         }
 
         public function fetchStatement(): Statement {
@@ -63,12 +63,12 @@
         }
 
         public function select( ... $cols ) {
-
             $this->select = new Select();
-            $this->stmt   = new Statement( $this->select );
+            $this->stmt->setCommand( $this->select );
+
 
             array_map( function( $column ) {
-                if ( is_array($column) ) {
+                if ( is_array( $column ) ) {
                     $this->select->add( new Identifier( ... $column ) );
                 } else {
                     $this->select->add( new Identifier( $column ) );
@@ -91,7 +91,7 @@
         public function delete( $table ) {
 
             $this->delete = new Delete( new Identifier( ... $table ) );
-            $this->stmt   = new Statement( $this->delete );
+            $this->stmt->setCommand( $this->delete );
 
             return $this;
         }
@@ -99,9 +99,19 @@
         public function update( $table, array $cols ) {
 
             $this->update = new Update( new Identifier( ... $table ) );
-            $this->stmt   = new Statement( $this->update );
+            $this->stmt->setCommand( $this->update );
 
             array_map( fn( string $column, $value ) => $this->update->add( new Identifier( $column ), new Value( $value ) ), array_keys( $cols ), $cols );
+
+            return $this;
+        }
+
+        public function insert( $table, $cols ) {
+
+            $this->insert = new Insert( new Identifier( ... $table ) );
+            $this->stmt->setCommand( $this->insert );
+
+            array_map( fn( string $column ) => $this->insert->add( new Identifier( $column ) ), $cols );
 
             return $this;
         }
@@ -112,16 +122,6 @@
             $this->stmt->add( $this->returning );
 
             array_map( fn( string $column ) => $this->returning->add( new Identifier( $column ) ), $cols );
-
-            return $this;
-        }
-
-        public function insert( $table, $cols ) {
-
-            $this->insert = new Insert( new Identifier( ... $table ) );
-            $this->stmt   = new Statement( $this->insert );
-
-            array_map( fn( string $column ) => $this->insert->add( new Identifier( $column ) ), $cols );
 
             return $this;
         }
@@ -191,7 +191,7 @@
 
                 [$column, $direction] = $element;
 
-                $this->order->add( new Identifier( $column ), $direction ?? 'ASC' );
+                $this->order->add( new Identifier( $column ), $direction ?? 'ASC'  );
             }, $order );
 
             return $this;
@@ -222,6 +222,11 @@
         }
 
         public function run() {
+
+            if ( !$this->db ) {
+                throw new Exception( 'cannot run query without a databaseconnection' );
+            }
+
             return $this->db->run( $this->stmt );
         }
 

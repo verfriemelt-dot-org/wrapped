@@ -190,6 +190,8 @@
 
             $query = new Query( static::getDatabase() );
 
+            $query->fetchStatement()->addDataModelContext( new static );
+
             $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->getNamingConvention()->getString() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
