@@ -6,16 +6,19 @@
     use \Wrapped\_\Database\Driver\Postgres;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
 
-    class Example extends \Wrapped\_\DataModel\DataModel {
+    class Example
+    extends \Wrapped\_\DataModel\DataModel {
 
         #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $TEST;
 
         #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+
         public $snakeCase;
 
         #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+
         public $StrAngECAse;
 
         public function getSnakeCase() {
@@ -45,7 +48,6 @@
             return $this;
         }
 
-    
     }
 
     class IdentifierTest
@@ -100,3 +102,4 @@
         }
 
     }
+    

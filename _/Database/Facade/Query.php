@@ -224,7 +224,7 @@
         public function run() {
 
             if ( !$this->db ) {
-                throw new Exception( 'cannot run query without a databaseconnection' );
+                throw new \Exception( 'cannot run query without a databaseconnection' );
             }
 
             return $this->db->run( $this->stmt );

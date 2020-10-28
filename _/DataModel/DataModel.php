@@ -238,7 +238,7 @@
             } else {
 
                 $query = static::buildSelectQuery();
-                $query->where( static::translateFieldNameArray( $params ) );
+                $query->where( $params );
 
                 if ( $orderBy !== null ) {
                     $query->order( [ [ $orderBy, $order ] ] );
@@ -262,7 +262,7 @@
             } else {
 
                 $query = static::buildSelectQuery();
-                $query->where( static::translateFieldNameArray( $params ) );
+                $query->where( $params );
 
                 if ( $orderBy !== null ) {
                     $query->order( [ [ $orderBy, $order ] ] );
@@ -277,7 +277,7 @@
 
         private static function buildQueryFromDbLogic( DbLogic $logic ): Query {
 
-            $query = new Query( );
+            $query = new Query( static::getDatabase() );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
@@ -330,7 +330,7 @@
             } else {
 
                 $query = static::buildSelectQuery();
-                $query->where( static::translateFieldNameArray( $params ) );
+                $query->where( $params );
             }
 
             $query->offset( $offset );
