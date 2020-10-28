@@ -39,7 +39,7 @@
         }
 
         public static function fetchTablename(): string {
-            return 'dummy';
+            return 'Dummy';
         }
 
         public function getPubtime(): ?\Wrapped\_\DateTime\DateTime {
