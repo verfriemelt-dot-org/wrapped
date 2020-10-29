@@ -4,7 +4,6 @@
 
     use \Wrapped\_\Database\SQL\Clause\Join;
     use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
 
@@ -12,7 +11,7 @@
 
         private Identifier $joinedTable;
 
-        private ExpressionItem $on;
+        private Expression $on;
 
         public function __construct( ?string ... $source ) {
             $this->joinedTable = new Identifier( ... $source );
@@ -35,6 +34,10 @@
             $this->on->add( $dest );
 
             return $this;
+        }
+
+        public function getExpression(): Expression {
+            return $this->on;
         }
 
         public function fetchJoinClause(): Join {
