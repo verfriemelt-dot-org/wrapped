@@ -8,7 +8,7 @@
     use \Iterator;
     use \OutOfBoundsException;
     use \SeekableIterator;
-    use \Wrapped\_\Database\Facade\Query;
+    use \Wrapped\_\Database\Facade\QueryBuilder;
 
     class Collection
     implements Iterator, ArrayAccess, Countable, SeekableIterator {
@@ -28,7 +28,7 @@
             }
         }
 
-        public static function buildFromQuery( DataModel $prototype, Query $query ) {
+        public static function buildFromQuery( DataModel $prototype, QueryBuilder $query ) {
 
             $collection = new static();
             $result     = $query->run();
@@ -213,7 +213,7 @@
         }
 
         public function filter( callable $function ): Collection {
-            return new static( ... array_filter( $this->data, $function ));
+            return new static( ... array_filter( $this->data, $function ) );
         }
 
         public function toArray() {

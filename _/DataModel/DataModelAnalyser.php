@@ -28,7 +28,7 @@
         public function fetchPropertyAttributes(): array {
 
             if ( $this->properties === null ) {
-                $this->prepareAttributes();
+                $this->preparePropertyAttributes();
             }
 
             return $this->properties ?? [];
@@ -51,7 +51,7 @@
             return $attributes [0] ?? null;
         }
 
-        protected function prepareAttributes() {
+        protected function preparePropertyAttributes() {
 
             $hasDataModelAttribute = false;
 
@@ -79,6 +79,8 @@
                     $getter = $this->reflection->getMethod( $getterName )->getName();
                     $setter = $this->reflection->getMethod( $setterName )->getName();
                 } catch ( ReflectionException $e ) {
+
+                    // both setters and getters must be present to be a valid property
                     continue;
                 }
 

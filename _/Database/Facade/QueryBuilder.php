@@ -2,7 +2,7 @@
 
     namespace Wrapped\_\Database\Facade;
 
-    use \Wrapped\_\Database\Database;
+    use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Limit;
@@ -25,7 +25,7 @@
     use \Wrapped\_\Database\SQL\Statement;
     use \Wrapped\_\DataModel\PropertyObjectInterface;
 
-    class Query {
+    class QueryBuilder {
 
         public Statement $stmt;
 
@@ -224,7 +224,7 @@
         public function run() {
 
             if ( !$this->db ) {
-                throw new \Exception( 'cannot run query without a databaseconnection' );
+                throw new Exception( 'cannot run query without a databaseconnection' );
             }
 
             return $this->db->run( $this->stmt );

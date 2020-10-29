@@ -2,12 +2,13 @@
 
     namespace IdentifierTest;
 
-    use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
+use \PHPUnit\Framework\TestCase;
+use \Wrapped\_\Database\Driver\Postgres;
+use \Wrapped\_\Database\SQL\Expression\Identifier;
+use \Wrapped\_\DataModel\DataModel;
 
     class Example
-    extends \Wrapped\_\DataModel\DataModel {
+    extends DataModel {
 
         #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
@@ -45,6 +46,65 @@
 
         public function setStrAngECAse( $StrAngECAse ) {
             $this->StrAngECAse = $StrAngECAse;
+            return $this;
+        }
+
+    }
+
+
+   class A
+    extends DataModel {
+
+        public ?int $id = null;
+
+        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+
+        public ?int $bId = null;
+
+        public function getId(): ?int {
+            return $this->id;
+        }
+
+        public function getBId(): ?int {
+            return $this->bId;
+        }
+
+        public function setId( ?int $id ) {
+            $this->id = $id;
+            return $this;
+        }
+
+        public function setBId( ?int $bId ) {
+            $this->bId = $bId;
+            return $this;
+        }
+
+    }
+
+    class B
+    extends DataModel {
+
+        public ?int $id = null;
+
+        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+
+        public ?int $aId = null;
+
+        public function getId(): ?int {
+            return $this->id;
+        }
+
+        public function getAId(): ?int {
+            return $this->aId;
+        }
+
+        public function setId( ?int $id ) {
+            $this->id = $id;
+            return $this;
+        }
+
+        public function setAId( ?int $aId ) {
+            $this->aId = $aId;
             return $this;
         }
 
@@ -101,5 +161,15 @@
             $this->assertSame( "strangecase", $ident->stringify() );
         }
 
+        public function testTranslateMultipleContext() {
+
+
+            $ident = new Identifier('bId');
+            $ident->addDataModelContext( new A );
+            $ident->addDataModelContext( new B );
+
+            $this->assertSame( 'b_id' , $ident->stringify() );
+
+        }
+
     }
-    

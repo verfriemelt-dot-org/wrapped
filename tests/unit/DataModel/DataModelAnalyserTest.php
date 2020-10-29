@@ -15,6 +15,9 @@
 
         public ?\Wrapped\_\DateTime\DateTime $typed = null;
 
+        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+        public $complexFieldNameSnakeCase = null;
+
         public function getId(): ?int {
             return $this->id;
         }
@@ -42,6 +45,15 @@
             return $this;
         }
 
+        public function getComplexFieldNameSnakeCase(): ?string {
+            return $this->complexFieldNameSnakeCase;
+        }
+
+        public function setComplexFieldNameSnakeCase( ?string $complexFieldNameSnakeCase ) {
+            $this->complexFieldNameSnakeCase = $complexFieldNameSnakeCase;
+            return $this;
+        }
+
     }
 
     class FunctionDataModelAttributeTest
@@ -57,7 +69,7 @@
         public function testAttributes() {
             $analyser = new DataModelAnalyser( new Example );
 
-            $this->assertSame( 3, count( $analyser->fetchPropertyAttributes() ), 'three valid attributes' );
+            $this->assertSame( 4, count( $analyser->fetchPropertyAttributes() ), 'four valid attributes' );
 
             // default naming convention all lower case
             $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
@@ -72,6 +84,12 @@
 
 
             $this->assertTrue( class_exists( $analyser->fetchPropertyAttributes()[2]->getType() ) );
+        }
+
+        public function testSnakeCaseConvention() {
+
+            $analyser = new DataModelAnalyser( new Example );
+            $this->assertSame( 'complex_field_name_snake_case', $analyser->fetchPropertyAttributes()[3]->getNamingConvention()->getString() );
         }
 
     }

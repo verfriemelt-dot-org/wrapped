@@ -110,7 +110,7 @@
             $this->buildObjects();
             $this->expectExceptionObject( new Exception( 'Attribute' ) );
 
-            b::get( 1 )->aObjectNotMarked;
+            b::get( 1 )->aObjectNotMarked();
         }
 
         public function testResolv() {
@@ -118,7 +118,7 @@
             $this->buildObjects();
 
             $this->assertSame( 1, b::get( 1 )->getAId() );
-            $this->assertSame( 1, b::get( 1 )->aObject->getId() );
+            $this->assertSame( 1, b::get( 1 )->aObject()->getId() );
         }
 
         public function testWrongMarked() {
@@ -128,7 +128,7 @@
             $this->markTestIncomplete( 'not implemented' );
             $this->expectExceptionObject( new Exception( 'not translateable' ) );
 
-            b::get( 1 )->aWrongMarked;
+            b::get( 1 )->aWrongMarked();
         }
 
     }

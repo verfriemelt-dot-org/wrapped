@@ -11,14 +11,14 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
+    use \Wrapped\_\Database\Facade\JoinBuilder;
     use \Wrapped\_\Database\Facade\Query;
+    use \Wrapped\_\Database\Facade\QueryBuilder;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
     use \Wrapped\_\DataModel\Attribute\PropertyResolver;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
-    use function \GuzzleHttp\json_decode;
-    use function \GuzzleHttp\json_encode;
 
     abstract class DataModel
     implements Serializable {
@@ -186,9 +186,9 @@
             return static::findSingle( [ $field => $value ] );
         }
 
-        public static function buildSelectQuery(): Query {
+        public static function buildSelectQuery(): QueryBuilder {
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
 
             $query->fetchStatement()->addDataModelContext( new static );
 
@@ -277,7 +277,7 @@
 
         private static function buildQueryFromDbLogic( DbLogic $logic ): Query {
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
@@ -295,7 +295,7 @@
          */
         public static function all( $orderBy = null, $order = "asc" ) {
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
             $query->from( static::getSchemaName(), static::getTableName() );
@@ -366,7 +366,9 @@
                 $insertData[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
             }
 
-            $query = new Query( static::getDatabase() );
+            $insertData = static::translateFieldNameArray( $insertData );
+
+            $query = new QueryBuilder( static::getDatabase() );
             $query->insert(
                 [ static::getSchemaName(), static::getTableName() ],
                 array_keys( $insertData )
@@ -374,6 +376,7 @@
 
             $query->values( $insertData );
             $query->returning( static::_fetchPrimaryKey() );
+
             $result = $query->fetch();
 
             // fetch autoincrement if defined
@@ -418,7 +421,7 @@
                 return $this;
             }
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
             $query->update(
                 [ static::getSchemaName(), static::getTableName() ],
                 $updateColumns
@@ -472,7 +475,7 @@
 
             $pk = static::_fetchPrimaryKey();
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
             $query->delete( [ static::getSchemaName(), static::getTableName() ] );
             $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
 
@@ -483,7 +486,7 @@
 
         public static function count( string $what = "*", $params = null, $and = true ): int {
 
-            $query = new Query( static::getDatabase() );
+            $query = new QueryBuilder( static::getDatabase() );
             $query->count( static::getSchemaName(), static::getTableName() );
 
             if ( $params ) {
@@ -520,7 +523,7 @@
             return static::createDataModelAnalyser()->getStaticName();
         }
 
-        public function __get( $propertyName ): DataModel {
+        public function __call( string $propertyName, $args ): DataModel {
 
             // creates reflecteion
             $reflection = new ReflectionClass( $this );
@@ -541,8 +544,6 @@
                 throw new \Exception( "missing resolvAttribute on {$propertyName}" );
             }
 
-
-
             if ( $this->{ $propertyName } === null ) {
 
                 // fetches the data
@@ -553,6 +554,20 @@
 
             // return prop
             return $this->{ $propertyName };
+        }
+
+        public static function with( DataModel $dest, callable $callback, $params = [] ) {
+
+            $query = static::buildSelectQuery();
+            $query->fetchStatement()->addDataModelContext( new $dest );
+
+            $join = $callback( new JoinBuilder($dest::getSchemaName(), $dest::getTableName() ) );
+
+
+            $query->fetchStatement()->add( $join->fetchJoinClause() );
+
+            return Collection::buildFromQuery( new static, $query );
+
         }
 
     }

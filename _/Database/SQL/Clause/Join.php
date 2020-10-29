@@ -20,6 +20,10 @@ use \Wrapped\_\Database\SQL\QueryPart;
         private ExpressionItem $on;
 
         public function __construct( ExpressionItem $source, ExpressionItem $on ) {
+
+            $this->addChild( $source );
+            $this->addChild( $on );
+
             $this->source = $source;
             $this->on     = $on;
         }
