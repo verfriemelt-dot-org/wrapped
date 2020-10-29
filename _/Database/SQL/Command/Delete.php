@@ -19,6 +19,10 @@
             $this->table = $table;
         }
 
+        public function getWeight(): int {
+            return 10;
+        }
+
         public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(

@@ -89,15 +89,19 @@
 
         public function test() {
 
+            $bId = (new B())->save()->getId();
+
             (new A() )->save();
             (new A() )->save();
-            (new A() )->setBId( (new B())->save()->getId() )->save();
+            (new A() )->save();
+            (new A() )->setBId( $bId )->save();
+            (new A() )->setBId( $bId )->save();
 
             $result = A::with( new B, function ( JoinBuilder $j ) {
                     return $j->on( 'bId', [ 'B', 'id' ] );
                 } );
 
-            $this->assertSame( 1, $result->count() );
+            $this->assertSame( 2, $result->count() );
             $result[0]->b()->getId();
         }
 

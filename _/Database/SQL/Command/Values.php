@@ -19,6 +19,10 @@
 
         private array $expressions = [];
 
+        public function getWeight(): int {
+            return 15;
+        }
+
         public function add( ExpressionItem $item ) {
 
             // wrap in brackets if need be

@@ -2,10 +2,10 @@
 
     namespace Wrapped\_\Database\SQL\Clause;
 
-use \Wrapped\_\Database\Driver\DatabaseDriver;
-use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
-use \Wrapped\_\Database\SQL\QueryPart;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \Wrapped\_\Database\SQL\QueryPart;
 
     class Join
     extends QueryPart
@@ -19,6 +19,10 @@ use \Wrapped\_\Database\SQL\QueryPart;
 
         private ExpressionItem $on;
 
+        public function getWeight(): int {
+            return 30;
+        }
+
         public function __construct( ExpressionItem $source, ExpressionItem $on ) {
 
             $this->addChild( $source );
@@ -28,7 +32,7 @@ use \Wrapped\_\Database\SQL\QueryPart;
             $this->on     = $on;
         }
 
-        public function stringify(DatabaseDriver $driver = null ): string {
+        public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::CLAUSE,

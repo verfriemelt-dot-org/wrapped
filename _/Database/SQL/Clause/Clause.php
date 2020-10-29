@@ -4,5 +4,5 @@
 
     interface Clause {
 
+        public function getWeight(): int;
     }
-    

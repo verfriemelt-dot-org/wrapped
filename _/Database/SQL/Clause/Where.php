@@ -18,6 +18,10 @@
 
         private ExpressionItem $expression;
 
+        public function getWeight(): int {
+            return 40;
+        }
+
         public function __construct( ExpressionItem $expression ) {
 
             $wrap = $this->wrap( $expression );

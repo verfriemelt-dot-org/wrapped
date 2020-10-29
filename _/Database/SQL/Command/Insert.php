@@ -23,6 +23,10 @@
             $this->into = $ident;
         }
 
+        public function getWeight(): int {
+            return 10;
+        }
+
         public function add( Identifier $column ) {
             $this->columns[] = $column;
             return $this;

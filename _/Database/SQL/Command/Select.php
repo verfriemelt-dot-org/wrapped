@@ -19,6 +19,10 @@
 
         private array $expressions = [];
 
+        public function getWeight(): int {
+            return 10;
+        }
+
         public function add( ExpressionItem $item ) {
 
             $expression = $this->wrap( $item );

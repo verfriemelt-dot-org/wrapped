@@ -19,13 +19,23 @@
 
         private $expressions = [];
 
+        public function __construct( ExpressionItem $by = null ) {
+
+            if ( $by ) {
+                $this->add( $by );
+            }
+        }
+
+        public function getWeight(): int {
+            return 50;
+        }
+
         public function add( ExpressionItem $source ) {
 
             $wrap = (new Expression() )
                 ->add( $this->wrap( $source ) );
 
             $this->addChild( $wrap );
-
             $this->expressions[] = $wrap;
 
             return $this;

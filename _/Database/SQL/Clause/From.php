@@ -18,6 +18,10 @@
 
         private ExpressionItem $source;
 
+        public function getWeight(): int {
+            return 20;
+        }
+
         public function __construct( ExpressionItem $source ) {
 
             $this->source = $this->wrap( $source );

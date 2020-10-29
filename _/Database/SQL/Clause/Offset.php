@@ -15,6 +15,10 @@
 
         protected ExpressionItem $offset;
 
+        public function getWeight(): int {
+            return 70;
+        }
+
         public function __construct( ExpressionItem $offset ) {
             $this->addChild( $offset );
             $this->offset = $offset;

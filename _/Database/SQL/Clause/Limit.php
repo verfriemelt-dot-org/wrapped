@@ -14,6 +14,10 @@
 
         protected ExpressionItem $limit;
 
+        public function getWeight(): int {
+            return 60;
+        }
+
         public function __construct( ExpressionItem $limit ) {
             $this->addChild( $limit );
             $this->limit = $limit;

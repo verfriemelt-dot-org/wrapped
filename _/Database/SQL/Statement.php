@@ -23,6 +23,10 @@
             $this->command = $command;
         }
 
+        public function getCommand(): Command {
+            return $this->command;
+        }
+
         public function add( QueryPart $clause ) {
             $this->addChild( $clause );
             $this->clauses[] = $clause;
@@ -30,6 +34,9 @@
         }
 
         public function stringify( DatabaseDriver $driver = null ): string {
+
+            usort( $this->clauses, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
+
             return trim(
                 $this->command->stringify( $driver ) . " " .
                 implode(

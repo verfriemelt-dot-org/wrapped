@@ -13,7 +13,6 @@
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\Facade\JoinBuilder;
     use \Wrapped\_\Database\Facade\Query;
-    use \Wrapped\_\Database\Facade\QueryBuilder;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
     use \Wrapped\_\DataModel\Attribute\PropertyResolver;
     use \Wrapped\_\Exception\Database\DatabaseException;
@@ -186,9 +185,9 @@
             return static::findSingle( [ $field => $value ] );
         }
 
-        public static function buildSelectQuery(): QueryBuilder {
+        public static function buildSelectQuery(): DataModelQueryBuilder {
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
 
             $query->fetchStatement()->addDataModelContext( new static );
 
@@ -277,7 +276,7 @@
 
         private static function buildQueryFromDbLogic( DbLogic $logic ): Query {
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
@@ -295,7 +294,7 @@
          */
         public static function all( $orderBy = null, $order = "asc" ) {
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
             $query->from( static::getSchemaName(), static::getTableName() );
@@ -368,7 +367,7 @@
 
             $insertData = static::translateFieldNameArray( $insertData );
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->insert(
                 [ static::getSchemaName(), static::getTableName() ],
                 array_keys( $insertData )
@@ -421,7 +420,7 @@
                 return $this;
             }
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->update(
                 [ static::getSchemaName(), static::getTableName() ],
                 $updateColumns
@@ -475,7 +474,7 @@
 
             $pk = static::_fetchPrimaryKey();
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->delete( [ static::getSchemaName(), static::getTableName() ] );
             $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
 
@@ -486,7 +485,7 @@
 
         public static function count( string $what = "*", $params = null, $and = true ): int {
 
-            $query = new QueryBuilder( static::getDatabase() );
+            $query = new DataModelQueryBuilder( new static );
             $query->count( static::getSchemaName(), static::getTableName() );
 
             if ( $params ) {
@@ -561,13 +560,12 @@
             $query = static::buildSelectQuery();
             $query->fetchStatement()->addDataModelContext( new $dest );
 
-            $join = $callback( new JoinBuilder($dest::getSchemaName(), $dest::getTableName() ) );
+            $join = $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) );
 
 
             $query->fetchStatement()->add( $join->fetchJoinClause() );
 
             return Collection::buildFromQuery( new static, $query );
-
         }
 
     }
