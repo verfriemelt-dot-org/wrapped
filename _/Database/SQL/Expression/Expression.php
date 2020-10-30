@@ -15,6 +15,12 @@
 
         protected array $expressions = [];
 
+        public function __construct( ExpressionItem ... $args ) {
+            foreach ( $args as $arg ) {
+                $this->add( $arg );
+            }
+        }
+
         //Identifier | Primitives | Operator
         public function add( ExpressionItem $expression ) {
 

@@ -2,8 +2,8 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
-    use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Operator
@@ -38,6 +38,7 @@
             'desc nulls last',
             'asc nulls first',
             'desc nulls first',
+            'distinct',
         ];
 
         protected string $operator;

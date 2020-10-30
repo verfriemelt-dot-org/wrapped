@@ -2,7 +2,6 @@
 
     namespace Wrapped\_\Database\SQL\Expression;
 
-    use \TheSeer\Tokenizer\Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\QueryPart;
 

@@ -79,11 +79,17 @@
             return $this;
         }
 
-        public function count( ?string ... $table ) {
+        public function count( $table, $what = '*', bool $district = false ) {
 
             $this->select = new Select();
-            $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( '*' ) ) );
-            $this->stmt   = new Statement( $this->select );
+
+            if ( $district ) {
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( $what ) ) ) );
+            } else {
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( $what ) ) );
+            }
+
+            $this->stmt = new Statement( $this->select );
             $this->from( ... $table );
 
             return $this;
