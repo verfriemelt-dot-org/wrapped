@@ -11,13 +11,13 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
-    use \Wrapped\_\Database\Facade\JoinBuilder;
-    use \Wrapped\_\Database\Facade\Query;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
     use \Wrapped\_\DataModel\Attribute\PropertyResolver;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
+    use function \json_decode;
+    use function \json_encode;
 
     abstract class DataModel
     implements Serializable {
@@ -188,7 +188,6 @@
         public static function buildSelectQuery(): DataModelQueryBuilder {
 
             $query = new DataModelQueryBuilder( new static );
-
             $query->fetchStatement()->addDataModelContext( new static );
 
             $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->getNamingConvention()->getString() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
@@ -257,11 +256,15 @@
         public static function findSingle( $params = [], $orderBy = null, $order = "asc" ) {
 
             if ( $params instanceof DbLogic ) {
-                $query = $this->buildQueryFromDbLogic( $params );
+                $query = static::buildQueryFromDbLogic( $params );
             } else {
 
                 $query = static::buildSelectQuery();
-                $query->where( $params );
+
+                if ( !empty( $params ) ) {
+                    $query->where( $params );
+                }
+
 
                 if ( $orderBy !== null ) {
                     $query->order( [ [ $orderBy, $order ] ] );
@@ -274,7 +277,7 @@
             return (new static() )->initData( $query->fetch() );
         }
 
-        private static function buildQueryFromDbLogic( DbLogic $logic ): Query {
+        private static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
 
             $query = new DataModelQueryBuilder( new static );
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
@@ -311,7 +314,7 @@
          * @return static
          */
         public static function last() {
-            return static::findSingle( DbLogic::create()->order( static::_fetchPrimaryKey(), "desc" )->limit( 1 ) );
+            return static::findSingle( [], static::_fetchPrimaryKey(), 'desc' );
         }
 
         /**
@@ -555,17 +558,12 @@
             return $this->{ $propertyName };
         }
 
-        public static function with( DataModel $dest, callable $callback, $params = [] ) {
+        public static function with( DataModel $dest, callable $callback ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
-            $query->fetchStatement()->addDataModelContext( new $dest );
+            $query->with( $dest, $callback );
 
-            $join = $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) );
-
-
-            $query->fetchStatement()->add( $join->fetchJoinClause() );
-
-            return Collection::buildFromQuery( new static, $query );
+            return $query;
         }
 
     }

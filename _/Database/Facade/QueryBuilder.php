@@ -213,11 +213,11 @@
             return $this;
         }
 
-        public function fetchAll() {
+        public function fetchAll(): array {
             return $this->run()->fetchAll();
         }
 
-        public function fetch() {
+        public function fetch(): array {
             return $this->run()->fetch();
         }
 

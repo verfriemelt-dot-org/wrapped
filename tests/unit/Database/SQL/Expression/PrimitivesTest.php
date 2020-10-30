@@ -22,10 +22,8 @@
         }
 
         public function testOther() {
-
             $this->expectExceptionObject(new \Exception('not'));
             $primitive = new Primitive( 1 );
-
         }
 
     }

@@ -14,9 +14,11 @@
         public ?int $id = null;
 
         #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+
         public ?int $bId = null;
 
         #[\Wrapped\_\DataModel\Attribute\PropertyResolver('bId', 'id')]
+
         protected ?B $b = null;
 
         public function getId(): ?int {
@@ -45,6 +47,7 @@
         public ?int $id = null;
 
         #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+
         public ?int $aId = null;
 
         public function getId(): ?int {
@@ -67,6 +70,35 @@
 
     }
 
+    class C
+    extends DataModel {
+
+        public ?int $id = null;
+
+        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+
+        public ?int $bId = null;
+
+        public function getId(): ?int {
+            return $this->id;
+        }
+
+        public function getBId(): ?int {
+            return $this->bId;
+        }
+
+        public function setId( ?int $id ) {
+            $this->id = $id;
+            return $this;
+        }
+
+        public function setBId( ?int $bId ) {
+            $this->bId = $bId;
+            return $this;
+        }
+
+    }
+
     class FunctionalDataModelResolverAttributeTest
     extends TestCase {
 
@@ -80,27 +112,39 @@
             static::$connection->query( "set log_statement = 'all'" );
             static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
             static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
+            static::$connection->query( 'create table "C" ( id serial primary key, b_id int );' );
         }
 
         public function tearDown(): void {
             static::$connection->query( 'drop table if exists "A";' );
             static::$connection->query( 'drop table if exists "B";' );
+            static::$connection->query( 'drop table if exists "C";' );
         }
 
-        public function test() {
+        public function testJoining() {
+
+
 
             (new A() )->save();
             (new A() )->save();
             (new A() )->save();
-            (new A() )->setBId( (new B())->save()->getId() )->save();
-            (new A() )->setBId( (new B())->save()->getId() )->save();
+            (new A() )->setBId( (new B() )->save()->getId() )->save();
+            (new A() )->setBId( (new B() )->save()->getId() )->save();
 
-            $result = A::with( new B, function ( JoinBuilder $j ) {
-                    return $j->on( 'bId', [ 'B', 'id' ] );
+            (new C() )->setBId( B::last()->getId() )->save();
+
+            $query = A::with( new B, function ( JoinBuilder $j ) {
+                    return $j->on( [ 'A', 'bId' ], [ 'B', 'id' ] );
                 } );
 
-            $this->assertSame( 2, $result->count() );
-            $result[0]->b()->getId();
+            $query->with( new C, function ( JoinBuilder $j ) {
+                return $j->on( [ 'B', 'id' ], [ 'C', 'bId' ] );
+            } );
+
+            $result = $query->get();
+
+            $this->assertSame( 1, $result->count() );
+            $this->assertInstanceOf( B::class, $result[0]->b() );
         }
 
     }
