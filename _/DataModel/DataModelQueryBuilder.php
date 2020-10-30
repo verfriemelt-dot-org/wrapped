@@ -14,6 +14,8 @@
 
         protected DataModel $prototype;
 
+        protected $context = [];
+
         protected bool $disableAutomaticGroupBy = false;
 
         public function __construct( DataModel $prototype ) {
@@ -21,6 +23,7 @@
             parent::__construct( $prototype->getDatabase() );
 
             $this->prototype = $prototype;
+            $this->context[] = $prototype;
         }
 
         public function disableAutomaticGroupBy( bool $bool = true ): static {
@@ -49,13 +52,20 @@
             return parent::run();
         }
 
-        public function with( DataModel $dest, callable $callback ): DataModelQueryBuilder {
+        public function with( DataModel $dest, callable $callback = null ): DataModelQueryBuilder {
+
+            if ( !$callback ) {
+                $callback = array_values( array_filter( array_map( fn( $c ) => $c::fetchPredefinedJoins( $dest::class ), $this->context ) ) )[0] ?? null;
+            }
+
+            $join = $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) );
 
             $this->fetchStatement()->addDataModelContext( new $dest );
             $this->fetchStatement()->add(
-                $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) )
-                    ->fetchJoinClause()
+                $join->fetchJoinClause()
             );
+
+            $this->context[] = $dest;
 
             return $this;
         }

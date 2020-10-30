@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\Facade;
 
     use \Exception;
+    use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\Limit;
@@ -228,6 +229,43 @@
             }
 
             return $this->db->run( $this->stmt );
+        }
+
+        public function stringify(): string {
+            return $this->stmt->stringify();
+        }
+
+        /**
+         *
+         * @param DbLogic $logic
+         * @return static
+         * @deprecated since version number
+         */
+        public function translateDbLogic( DbLogic $logic ): static {
+
+            if ( $logic->getLimit() ) {
+                $this->limit = $logic->getLimit();
+                $this->stmt->add( $this->limit );
+            }
+
+
+            if ( $logic->getOffset() ) {
+                $this->offset = $logic->getOffset();
+                $this->stmt->add( $this->offset );
+            }
+
+
+            if ( $logic->getWhere() ) {
+                $this->where = $logic->getWhere();
+                $this->stmt->add( $this->where );
+            }
+
+            if ( $logic->getOrder() ) {
+                $this->order = $logic->getOrder();
+                $this->stmt->add( $this->order );
+            }
+
+            return $this;
         }
 
     }

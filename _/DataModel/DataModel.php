@@ -283,10 +283,7 @@
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
-            $logic->getWhere() && $query->fetchStatement()->add( $logic->getWhere() );
-            $logic->getOrder() && $query->fetchStatement()->add( $logic->getOrder() );
-            $logic->getLimit() && $query->fetchStatement()->add( $logic->getLimit() );
-            $logic->getOffset() && $query->fetchStatement()->add( $logic->getOffset() );
+            $query->translateDbLogic($logic);
 
             return $query;
         }
@@ -556,6 +553,10 @@
 
             // return prop
             return $this->{ $propertyName };
+        }
+
+        public static function fetchPredefinedJoins( string $class ): ?callable {
+            return null;
         }
 
         public static function with( DataModel $dest, callable $callback ): DataModelQueryBuilder {

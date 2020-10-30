@@ -152,7 +152,7 @@
          * @return DbLogic
          */
         public function openBracket() {
-            throw new \Expression( 'not supported' );
+            throw new \Exception( 'not supported' );
             $this->expression->add( new Bracket( "(" ) );
             return $this;
         }
@@ -162,7 +162,7 @@
          * @return DbLogic
          */
         public function closeBracket() {
-            throw new \Expression( 'not supported' );
+            throw new \Exception( 'not supported' );
             $this->expression->add( new Bracket( ")" ) );
             return $this;
         }
@@ -263,6 +263,10 @@
 
         public function getWhere() {
             return new Where($this->expression);
+        }
+
+        public function getExpression() {
+            return $this->expression;
         }
 
         public function getGroupBy() {

@@ -68,6 +68,15 @@
             return $this;
         }
 
+        public static function fetchPredefinedJoins( string $class ): ?callable {
+
+            return [
+                C::class => function ( JoinBuilder $j ) {
+                    return $j->on( [ 'B', 'id' ], [ 'C', 'bId' ] );
+                }
+            ][$class];
+        }
+
     }
 
     class C
@@ -110,6 +119,9 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
+
+            $this->tearDown();
+
             static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
             static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
             static::$connection->query( 'create table "C" ( id serial primary key, b_id int );' );
@@ -123,8 +135,6 @@
 
         public function testJoining() {
 
-
-
             (new A() )->save();
             (new A() )->save();
             (new A() )->save();
@@ -137,9 +147,7 @@
                     return $j->on( [ 'A', 'bId' ], [ 'B', 'id' ] );
                 } );
 
-            $query->with( new C, function ( JoinBuilder $j ) {
-                return $j->on( [ 'B', 'id' ], [ 'C', 'bId' ] );
-            } );
+            $query->with( new C );
 
             $result = $query->get();
 
