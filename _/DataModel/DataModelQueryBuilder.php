@@ -23,7 +23,7 @@
             parent::__construct( $prototype->getDatabase() );
 
             $this->prototype = $prototype;
-            $this->context[] = $prototype;
+            $this->addContext( $prototype );
         }
 
         public function disableAutomaticGroupBy( bool $bool = true ): static {
@@ -31,16 +31,20 @@
             return $this;
         }
 
-        public function run() {
+        public function addContext( DataModel $context ): static {
 
             $classesInContext = array_map( fn( $o ) => $o::class, $this->context );
 
+            if ( !in_array( $context::class, $classesInContext ) ) {
+                $this->context[] = $context;
+            }
+
+            return $this;
+        }
+
+        public function run() {
+
             foreach ( $this->context as $context ) {
-
-                if ( in_array( $context::class, $classesInContext ) ) {
-                    continue;
-                }
-
                 $this->stmt->addDataModelContext( $context );
             }
 
@@ -75,7 +79,7 @@
                 $join->fetchJoinClause()
             );
 
-            $this->context[] = $dest;
+            $this->addContext( $dest );
 
             return $this;
         }

@@ -185,9 +185,13 @@
             return static::findSingle( [ $field => $value ] );
         }
 
+        protected static function buildQuery(): DataModelQueryBuilder {
+            return new DataModelQueryBuilder( new static );
+        }
+
         public static function buildSelectQuery(): DataModelQueryBuilder {
 
-            $query = new DataModelQueryBuilder( new static );
+            $query = static::buildQuery();
 
             $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->getNamingConvention()->getString() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
@@ -264,14 +268,12 @@
                     $query->where( $params );
                 }
 
-
                 if ( $orderBy !== null ) {
                     $query->order( [ [ $orderBy, $order ] ] );
                 }
             }
 
             $query->limit( 1 );
-
 
             return (new static() )->initData( $query->fetch() );
         }
@@ -365,7 +367,7 @@
 
             $insertData = static::translateFieldNameArray( $insertData );
 
-            $query = static::buildSelectQuery();
+            $query = static::buildQuery();
             $query->insert(
                 [ static::getSchemaName(), static::getTableName() ],
                 array_keys( $insertData )
@@ -418,7 +420,7 @@
                 return $this;
             }
 
-            $query = static::buildSelectQuery();
+            $query = static::buildQuery();
             $query->update(
                 [ static::getSchemaName(), static::getTableName() ],
                 $updateColumns
@@ -472,7 +474,7 @@
 
             $pk = static::_fetchPrimaryKey();
 
-            $query = static::buildSelectQuery();
+            $query = static::buildQuery();
             $query->delete( [ static::getSchemaName(), static::getTableName() ] );
             $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
 

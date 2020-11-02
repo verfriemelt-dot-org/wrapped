@@ -74,7 +74,6 @@
             $this->select = new Select();
             $this->stmt->setCommand( $this->select );
 
-
             array_map( function( $column ) {
                 if ( is_array( $column ) ) {
                     $this->select->add( new Identifier( ... $column ) );
