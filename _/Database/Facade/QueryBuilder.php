@@ -268,12 +268,10 @@
                 $this->stmt->add( $this->limit );
             }
 
-
             if ( $logic->getOffset() ) {
                 $this->offset = $logic->getOffset();
                 $this->stmt->add( $this->offset );
             }
-
 
             if ( $logic->getWhere() ) {
                 $this->where = $logic->getWhere();

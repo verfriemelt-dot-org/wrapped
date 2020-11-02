@@ -18,6 +18,13 @@
         abstract function stringify( DatabaseDriver $driver = null ): string;
 
         public function addDataModelContext( DataModel $context ) {
+//
+//            if ( static::class == 'Wrapped\\_\\Database\\SQL\\Statement' ) {
+//
+//                var_dump( 'context added from ' . static::class . ' added ' . $context::class );
+//                debug_print_backtrace();
+//            }
+
 
             $this->context[] = $context;
 

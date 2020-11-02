@@ -12,12 +12,17 @@
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TablenameOverride;
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     class SessionSql
     extends DataModel
     implements TablenameOverride, SessionDataObject {
 
-        public $id, $data, $timeout, $ip, $sessionId;
+        public $id;
+        public $data;
+        public $timeout;
+        public $ip;
+
+        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        public $sessionId;
 
         public static function getBySessionId( $id ) {
             return static::findSingle( [ "sessionId" => $id ] );

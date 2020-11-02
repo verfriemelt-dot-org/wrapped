@@ -68,7 +68,7 @@
                 $this->expression->add( new Operator( $op ) );
             }
 
-            if ( $value ) {
+            if ( $value !== null ) {
                 $this->expression->add( new Value( $value ) );
             }
 

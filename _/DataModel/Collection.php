@@ -218,6 +218,17 @@
             return new static( ... array_filter( $this->data, $function ) );
         }
 
+        public function find( callable $function ): ?DataModel {
+
+            foreach ( $this as $element ) {
+                if ( $function( $element ) ) {
+                    return $element;
+                }
+            }
+
+            return null;
+        }
+
         public function toArray() {
             return $this->data;
         }

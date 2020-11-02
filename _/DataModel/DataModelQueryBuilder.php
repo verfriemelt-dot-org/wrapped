@@ -33,6 +33,17 @@
 
         public function run() {
 
+            $classesInContext = array_map( fn( $o ) => $o::class, $this->context );
+
+            foreach ( $this->context as $context ) {
+
+                if ( in_array( $context::class, $classesInContext ) ) {
+                    continue;
+                }
+
+                $this->stmt->addDataModelContext( $context );
+            }
+
             if ( !$this->disableAutomaticGroupBy && $this->stmt->getCommand() instanceof Select ) {
 
                 // checks if a join is present, than we need the group by pk
@@ -60,7 +71,6 @@
 
             $join = $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) );
 
-            $this->fetchStatement()->addDataModelContext( new $dest );
             $this->fetchStatement()->add(
                 $join->fetchJoinClause()
             );
