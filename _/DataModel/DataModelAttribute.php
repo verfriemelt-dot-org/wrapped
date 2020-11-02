@@ -4,7 +4,7 @@
 
     use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
     use \Wrapped\_\DataModel\Attribute\Naming\Convention;
-    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 
     class DataModelAttribute {
 
@@ -20,7 +20,7 @@
 
         public function __construct( string $name, ?Convention $case = null ) {
             $this->name = $name;
-            $this->case = (new CamelCase( $name ) )->convertTo( $case ?? LowerCase::class );
+            $this->case = (new CamelCase( $name ) )->convertTo( $case ?? SnakeCase::class );
         }
 
         public function getName(): string {

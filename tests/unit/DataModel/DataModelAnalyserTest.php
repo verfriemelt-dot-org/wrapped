@@ -71,9 +71,9 @@
 
             $this->assertSame( 4, count( $analyser->fetchPropertyAttributes() ), 'four valid attributes' );
 
-            // default naming convention all lower case
+            // default naming convention snake case
             $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
-            $this->assertSame( 'complexfieldname', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
+            $this->assertSame( 'complex_field_name', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
         }
 
         public function testTypedAttributes() {

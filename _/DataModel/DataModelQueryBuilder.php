@@ -57,7 +57,7 @@
                             new Identifier(
                                 $this->prototype::getSchemaName(),
                                 $this->prototype::getTableName(),
-                                $this->prototype->fetchPrimaryKey(),
+                                $this->prototype->getPrimaryKey(),
                             )
                         )
                     );

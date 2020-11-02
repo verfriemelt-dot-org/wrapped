@@ -6,14 +6,12 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\Collection\CollectionResult;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TreeDataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
     abstract class TreeDataModel
-    extends DataModel
-    implements TablenameOverride {
+    extends DataModel {
 
         public ?int $id = null;
 
@@ -29,7 +27,7 @@
 
         static protected $_transactionInitiatorId = null;
 
-        final protected static function _fetchPrimaryKey(): string {
+        final public static function getPrimaryKey(): string {
             return "id";
         }
 
@@ -48,8 +46,6 @@
         public function getRight(): ?int {
             return $this->right;
         }
-
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public function getParentId(): ?int {
             return $this->parentId;
@@ -197,7 +193,7 @@
          * @return static|boolean
          * @throws Exception
          */
-        public function save() {
+        public function save():static {
 
             $db               = static::getDatabase();
             $qoutedTableNanem = $db->quoteIdentifier( static::getTableName() );

@@ -85,8 +85,8 @@
 
         public function setUp(): void {
             static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table "A" ( id serial primary key, bid int );' );
-            static::$connection->query( 'create table "B" ( id serial primary key, aid int );' );
+            static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
+            static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
         }
 
         public function tearDown(): void {

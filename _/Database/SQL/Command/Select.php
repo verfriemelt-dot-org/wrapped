@@ -19,6 +19,10 @@
 
         private array $expressions = [];
 
+        public function __construct( ExpressionItem ... $items ) {
+            array_map( fn( $i ) => $this->add( $i ) , $items );
+        }
+
         public function getWeight(): int {
             return 10;
         }

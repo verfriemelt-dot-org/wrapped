@@ -26,7 +26,7 @@
 
         protected $_propertyHashes = [];
 
-        protected static function _fetchPrimaryKey(): ?string {
+        public static function getPrimaryKey(): ?string {
             return "id";
         }
 
@@ -137,10 +137,6 @@
             return $data;
         }
 
-        public function fetchPrimaryKey() {
-            return static::_fetchPrimaryKey();
-        }
-
         public function fetchColumns() {
             return array_map( fn( DataModelAttribute $a ) => $a->getName(), static::createDataModelAnalyser()->fetchPropertyAttributes() );
         }
@@ -207,7 +203,7 @@
          */
         public static function get( $id ) {
 
-            $pk = static::_fetchPrimaryKey();
+            $pk = static::getPrimaryKey();
 
             if ( $pk === null ) {
                 throw new DatabaseException( "::get is not possible without PK" );
@@ -224,7 +220,7 @@
         }
 
         public function reload() {
-            return self::fetchBy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} );
+            return self::fetchBy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} );
         }
 
         /**
@@ -283,7 +279,6 @@
             $query = static::buildSelectQuery();
             $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
 
-
             $query->translateDbLogic( $logic );
 
             return $query;
@@ -311,7 +306,7 @@
          * @return static
          */
         public static function last() {
-            return static::findSingle( [], static::_fetchPrimaryKey(), 'desc' );
+            return static::findSingle( [], static::getPrimaryKey(), 'desc' );
         }
 
         /**
@@ -338,34 +333,49 @@
             return Collection::buildFromQuery( new static, $query );
         }
 
-        /**
-         *
-         * @return static
-         */
-        public function save() {
+        public function save(): static {
 
-            if ( static::_fetchPrimaryKey() !== null ) {
-                return $this->_isPropertyFuzzy( static::_fetchPrimaryKey(), $this->{static::_fetchPrimaryKey()} ) ? $this->insertIntoDatabase() : $this->saveToDatabase();
-            } else {
-                $this->insertIntoDatabase();
+            $pk = static::getPrimaryKey();
+
+            if ( $pk === null ) {
+                throw new DatabaseException( "saving datamodels to database not possible without pk defined" );
             }
+
+            if ( $this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
+                $this->insertIntoDatabase();
+            } else {
+                $this->saveToDatabase();
+            }
+
+            return $this;
         }
 
-        private function insertIntoDatabase() {
+        protected function prepareDataForStorage( bool $includeNonFuzzy = false ):array {
 
-            $insertData = [];
+            $result = [];
 
             foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
 
                 // skip pk
-                if ( static::_fetchPrimaryKey() !== null && $attribute->getName() == static::_fetchPrimaryKey() && $this->{static::_fetchPrimaryKey()} === null ) {
+                if ( static::getPrimaryKey() !== null && $attribute->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
                     continue;
                 }
 
-                $insertData[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
+                $data = $this->{ $attribute->getGetter() }();
+
+                if ( !$includeNonFuzzy && !$this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
+                    continue;
+                }
+
+                $result[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
             }
 
-            $insertData = static::translateFieldNameArray( $insertData );
+            return $result;
+        }
+
+        private function insertIntoDatabase(): static {
+
+            $insertData = $this->prepareDataForStorage( true );
 
             $query = static::buildQuery();
             $query->insert(
@@ -374,14 +384,10 @@
             );
 
             $query->values( $insertData );
-            $query->returning( static::_fetchPrimaryKey() );
+            $query->returning( static::getPrimaryKey() );
 
-            $result = $query->fetch();
-
-            // fetch autoincrement if defined
-            if ( static::_fetchPrimaryKey() ) {
-                $this->{static::_fetchPrimaryKey()} = $result[static::_fetchPrimaryKey()];
-            }
+            // store autoincrement
+            $this->{static::getPrimaryKey()} = $query->fetch()[static::getPrimaryKey()];
 
             $this->_storePropertyStates();
 
@@ -390,31 +396,13 @@
 
         private function saveToDatabase() {
 
-            $pk = static::_fetchPrimaryKey();
+            $pk = static::getPrimaryKey();
 
             if ( $pk === null ) {
                 throw new DatabaseException( "updating datamodels to database not possible without pk defined" );
             }
 
-            $updateColumns = [];
-
-            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
-
-                if ( $attribute->getName() === $pk ) {
-                    continue;
-                }
-
-                $data = $this->{ $attribute->getGetter() }();
-
-                if ( $this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
-
-                    if ( $data instanceof PropertyObjectInterface ) {
-                        $data = $data->dehydrateToString();
-                    }
-
-                    $updateColumns[$attribute->getNamingConvention()->getString()] = $data;
-                }
-            }
+            $updateColumns = $this->prepareDataForStorage();
 
             if ( empty( $updateColumns ) ) {
                 return $this;
@@ -426,7 +414,7 @@
                 $updateColumns
             );
 
-            $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
+            $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
             $query->run();
 
             return $this;
@@ -466,18 +454,15 @@
 
         public function delete() {
 
-            $pk = static::_fetchPrimaryKey();
+            $pk = static::getPrimaryKey();
 
             if ( $pk === null ) {
-                throw new DatabaseException( 'deleting not possible without primary key' );
+                throw new DatabaseException( "deleting datamodels from database not possible without pk defined" );
             }
-
-            $pk = static::_fetchPrimaryKey();
 
             $query = static::buildQuery();
             $query->delete( [ static::getSchemaName(), static::getTableName() ] );
-            $query->where( [ static::_fetchPrimaryKey() => $this->{static::_fetchPrimaryKey()} ] );
-
+            $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
             $query->run();
 
             return $this;
