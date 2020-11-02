@@ -20,8 +20,6 @@
         public $data;
         public $timeout;
         public $ip;
-
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
         public $sessionId;
 
         public static function getBySessionId( $id ) {
@@ -41,7 +39,7 @@
         }
 
         public static function fetchTablename(): string {
-            return "session";
+            return "Session";
         }
 
         public function getId() {

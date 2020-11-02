@@ -3,13 +3,12 @@
     namespace Wrapped\_\Queue\Backend;
 
     use \Wrapped\_\DataModel\DataModel;
+    use \Wrapped\_\DataModel\TablenameOverride;
     use \Wrapped\_\Queue\QueueItem;
 
-
-    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     class MysqlBackendDataObject
     extends DataModel
-    implements \Wrapped\_\DataModel\TablenameOverride {
+    implements TablenameOverride {
 
         public $id, $uniqId, $channel, $key, $data, $startDate, $priority = 100, $locked   = 0;
 

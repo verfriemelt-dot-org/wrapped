@@ -39,10 +39,10 @@
             $cache->delete( static::class . $key );
         }
 
-        public function save() {
+        public function save(): static {
 
             $result = parent::save();
-            static::storeInCache( $this, $this->{static::_fetchPrimaryKey()} );
+            static::storeInCache( $this, $this->{static::getPrimaryKey()} );
 
             return $result;
         }
@@ -81,10 +81,10 @@
                 }
 
                 // store instance itself
-                static::storeInCache( $instance, $instance->{static::_fetchPrimaryKey()} );
+                static::storeInCache( $instance, $instance->{static::getPrimaryKey()} );
 
                 // fetch keyvalue pair for set instance.
-                static::storeInCache( $instance->{static::_fetchPrimaryKey()}, $field . (string) $value );
+                static::storeInCache( $instance->{static::getPrimaryKey()}, $field . (string) $value );
 
                 return $instance;
             }
@@ -93,7 +93,7 @@
         }
 
         public function delete() {
-            static::deleteFromCache( $this->{static::_fetchPrimaryKey()} );
+            static::deleteFromCache( $this->{static::getPrimaryKey()} );
             parent::delete();
         }
 
