@@ -29,11 +29,13 @@
         }
 
         public static function buildFromQuery( DataModel $prototype, QueryBuilder $query ) {
+            return static::buildFromPdoResult( $prototype, $query->run() );
+        }
+
+        public static function buildFromPdoResult( DataModel $prototype, $result ) {
 
             $collection = new static();
-            $result     = $query->run();
-
-            $instances = [];
+            $instances  = [];
 
             while ( $data = $result->fetch() ) {
                 $instances[] = (new $prototype() )->initData( $data );

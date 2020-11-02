@@ -3,6 +3,7 @@
     namespace Wrapped\_\Database\SQL;
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\DataModel\DataModel;
 
     abstract class QueryPart {
 
@@ -10,13 +11,13 @@
 
         /**
          *
-         * @var \Wrapped\_\DataModel\DataModel[]
+         * @var DataModel[]
          */
         protected array $context = [];
 
         abstract function stringify( DatabaseDriver $driver = null ): string;
 
-        public function addDataModelContext( \Wrapped\_\DataModel\DataModel $context ) {
+        public function addDataModelContext( DataModel $context ) {
 
             $this->context[] = $context;
 

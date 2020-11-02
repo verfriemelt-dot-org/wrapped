@@ -6,6 +6,7 @@
     use \Wrapped\_\Database\DbLogic;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\From;
+    use \Wrapped\_\Database\SQL\Clause\GroupBy;
     use \Wrapped\_\Database\SQL\Clause\Limit;
     use \Wrapped\_\Database\SQL\Clause\Offset;
     use \Wrapped\_\Database\SQL\Clause\Order;
@@ -52,11 +53,17 @@
 
         public Offset $offset;
 
+        public GroupBy $groupBy;
+
         public ?DatabaseDriver $db = null;
 
         public function __construct( DatabaseDriver $database = null ) {
             $this->db   = $database;
             $this->stmt = new Statement();
+        }
+
+        protected function boxIdent( $ident ): array {
+            return !is_array( $ident ) ? [ $ident ] : $ident;
         }
 
         public function fetchStatement(): Statement {
@@ -90,14 +97,15 @@
             }
 
             $this->stmt = new Statement( $this->select );
-            $this->from( ... $table );
+
+            $this->from( ... $this->boxIdent( $table ) );
 
             return $this;
         }
 
         public function delete( $table ) {
 
-            $this->delete = new Delete( new Identifier( ... $table ) );
+            $this->delete = new Delete( new Identifier( ...  $this->boxIdent($table) ) );
             $this->stmt->setCommand( $this->delete );
 
             return $this;
@@ -105,7 +113,7 @@
 
         public function update( $table, array $cols ) {
 
-            $this->update = new Update( new Identifier( ... $table ) );
+            $this->update = new Update( new Identifier( ...  $this->boxIdent($table) ) );
             $this->stmt->setCommand( $this->update );
 
             array_map( fn( string $column, $value ) => $this->update->add( new Identifier( $column ), new Value( $value ) ), array_keys( $cols ), $cols );
@@ -115,7 +123,7 @@
 
         public function insert( $table, $cols ) {
 
-            $this->insert = new Insert( new Identifier( ... $table ) );
+            $this->insert = new Insert( new Identifier( ...  $this->boxIdent($table) ) );
             $this->stmt->setCommand( $this->insert );
 
             array_map( fn( string $column ) => $this->insert->add( new Identifier( $column ) ), $cols );
@@ -201,6 +209,12 @@
                 $this->order->add( new Identifier( $column ), $direction ?? 'ASC'  );
             }, $order );
 
+            return $this;
+        }
+
+        public function groupBy( array $f ) {
+            $this->groupBy = new GroupBy( new Identifier( ... $f ) );
+            $this->stmt->add( $this->groupBy );
             return $this;
         }
 

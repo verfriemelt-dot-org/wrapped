@@ -486,9 +486,11 @@
         public static function count( string $what = "*", $params = null, $and = true ): int {
 
             $query = new DataModelQueryBuilder( new static );
-            $query->count( static::getSchemaName(), static::getTableName() );
+            $query->count( [static::getSchemaName(), static::getTableName()] );
 
-            if ( $params ) {
+            if ( $params instanceof DbLogic ) {
+                $query->translateDbLogic($params);
+            } elseif ( $params ) {
                 $query->where( static::translateFieldNameArray( $params ) );
             }
 

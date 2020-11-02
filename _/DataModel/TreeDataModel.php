@@ -515,8 +515,8 @@
             $databaseHandle = static::getDatabase();
 
             $columns = [];
-            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $columns[] = 'parent.' . $col;
+            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $col ) {
+                $columns[] = 'parent.' . $col->getName();
             }
 
             $selectString = implode( ",", $columns );
@@ -528,7 +528,7 @@
                         ORDER BY parent.{$databaseHandle->quoteIdentifier( 'left' )}";
 
 
-            return new CollectionResult( $databaseHandle->query( $query ), new static() );
+            return Collection::buildFromPdoResult( new static, $databaseHandle->query( $query ) );
         }
 
         /**
