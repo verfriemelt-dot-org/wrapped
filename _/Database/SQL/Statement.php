@@ -10,7 +10,7 @@
 
         private Command $command;
 
-        private array $clauses = [];
+        private array $parts = [];
 
         public function __construct( ?Command $command = null ) {
             if ( $command ) {
@@ -18,9 +18,12 @@
             }
         }
 
-        public function setCommand( Command$command ) {
+        public function setCommand( Command $command ):static {
             $this->addChild( $command );
             $this->command = $command;
+
+            $this->parts[] = $command;
+            return $this;
         }
 
         public function getCommand(): Command {
@@ -29,19 +32,19 @@
 
         public function add( QueryPart $clause ) {
             $this->addChild( $clause );
-            $this->clauses[] = $clause;
+            $this->parts[] = $clause;
             return $this;
         }
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
-            usort( $this->clauses, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
+            usort( $this->parts, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
 
             return trim(
-                $this->command->stringify( $driver ) . " " .
+                
                 implode(
                     " ",
-                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->clauses )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->parts )
                 )
             );
         }

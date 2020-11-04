@@ -3,11 +3,14 @@
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Alias;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class SqlFunction
     extends QueryPart
     implements ExpressionItem {
+
+        use Alias;
 
         public const SYNTAX = '%s( %s )';
 
@@ -16,8 +19,6 @@
         protected array $arguments;
 
         public function __construct( Identifier $name, ExpressionItem ... $args ) {
-
-
 
             $this->addChild( $name );
 
@@ -31,11 +32,20 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
+            if ( $this->name->stringify() === 'coalesce' ) {
+                $name = $this->name->stringify( null );
+            } else {
+                $name = $this->name->stringify( $driver );
+            }
+
+            $func = $this->name->stringify( $driver );
+
             return sprintf(
-                static::SYNTAX,
-                $this->name->stringify( $driver ),
-                implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments ) )
-            );
+                    static::SYNTAX,
+                    $name,
+                    implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments ) )
+                )
+                . $this->stringifyAlias( $driver );
         }
 
     }

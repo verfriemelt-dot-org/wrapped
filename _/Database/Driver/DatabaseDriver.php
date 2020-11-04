@@ -111,27 +111,17 @@
          */
         public function bind( PDOStatement $statement, $param, $var ) {
 
-            if ( is_array( $param ) && is_array( $var ) && \count( $param ) == \count( $var ) ) {
-                for ( $i = 0, $count = \count( $var ); $i < $count; ++$i ) {
+            $type = PDO::PARAM_STR;
 
-                    $type = PDO::PARAM_STR;
-
-                    if ( gettype( $var[$i] ) === 'boolean' ) {
-                        $type = PDO::PARAM_BOOL;
-                    }
-
-                    $statement->bindValue( ":" . $param[$i], $var[$i], $type );
-                }
-            } else {
-
-                $type = PDO::PARAM_STR;
-
-                if ( gettype( $var ) === 'boolean' ) {
-                    $type = PDO::PARAM_BOOL;
-                }
-
-                $statement->bindValue( ":" . $param, $var, $type );
+            if ( gettype( $var ) === 'boolean' ) {
+                $type = PDO::PARAM_BOOL;
             }
+
+            if ( gettype( $var ) === 'integer' ) {
+                $type = PDO::PARAM_INT;
+            }
+
+            $statement->bindValue( $param, $var, PDO::PARAM_INT );
 
             return $this;
         }
@@ -228,11 +218,12 @@
         public function run( QueryPart $query ) {
 
             $this->prepare( $query->stringify( $this ) );
+//            var_dump( $query->fetchBindings(), $query->stringify( $this ) ); die();
+
+//            var_dump($query->fetchBindings()); die();
 
             foreach ( $query->fetchBindings() as $bind => $value ) {
-
-                // remove the colon from the bindname
-                $this->bindLast( substr( $bind, 1 ), $value );
+                $this->bindLast( $bind, $value );
             }
 
             $this->executeLast();

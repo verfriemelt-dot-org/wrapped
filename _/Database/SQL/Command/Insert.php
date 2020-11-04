@@ -8,6 +8,7 @@
     use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\QueryPart;
+    use \Wrapped\_\Database\SQL\Statement;
 
     class Insert
     extends QueryPart
@@ -16,6 +17,8 @@
         private const COMMAND = 'INSERT INTO %s ( %s )';
 
         private array $columns = [];
+
+        private ?Statement $query = null;
 
         private Identifier $into;
 
@@ -27,8 +30,18 @@
             return 10;
         }
 
-        public function add( Identifier $column ) {
-            $this->columns[] = $column;
+        public function add( Identifier ... $column ) {
+
+            $this->columns = [
+                ...$this->columns,
+                ...$column
+            ];
+
+            return $this;
+        }
+
+        public function addQuery( Statement $stmt ): static {
+            $this->query = $stmt;
             return $this;
         }
 
@@ -45,7 +58,7 @@
                     ", ",
                     array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->columns )
                 )
-            );
+            ) . ( $this->query ? " " . $this->query->stringify( $driver ) : '');
         }
 
     }

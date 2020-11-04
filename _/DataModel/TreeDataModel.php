@@ -4,8 +4,18 @@
 
     use \PDO;
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\Mysql;
-    use \Wrapped\_\Database\Driver\Postgres;
+    use \Wrapped\_\Database\SQL\Clause\From;
+    use \Wrapped\_\Database\SQL\Clause\CTE;
+    use \Wrapped\_\Database\SQL\Command\Insert;
+    use \Wrapped\_\Database\SQL\Command\Select;
+    use \Wrapped\_\Database\SQL\Expression\Bracket;
+    use \Wrapped\_\Database\SQL\Expression\Cast;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
+    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Wrapped\_\Database\SQL\Statement;
     use \Wrapped\_\DataModel\DataModel;
     use \Wrapped\_\DataModel\TreeDataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
@@ -193,63 +203,75 @@
          * @return static|boolean
          * @throws Exception
          */
-        public function save():static {
+        public function save(): static {
 
-            $db               = static::getDatabase();
-            $qoutedTableNanem = $db->quoteIdentifier( static::getTableName() );
 
-            $transactionInitiatorId = uniqid( "", true );
+            $insertColumns = [
+                "left",
+                "right",
+            ];
 
-            // start transaction if no other is currently used
-            if ( static::$_transactionInitiatorId === null ) {
-                static::$_transactionInitiatorId = $transactionInitiatorId;
-                $db->startTransaction();
+            $query = static::buildQuery();
 
-                if ( $db instanceof Mysql ) {
-                    $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 0 );
-                    $db->query( "LOCK TABLE {$qoutedTableNanem} WRITE, {$qoutedTableNanem} AS parent WRITE, {$qoutedTableNanem} AS node WRITE" );
-                }
+            $tableIdent = new Identifier( static::getSchemaName(), static::getTableName() );
 
-                if ( $db instanceof Postgres ) {
-                    $db->query( "LOCK TABLE {$qoutedTableNanem}" );
-                }
-            }
+            $query->stmt->add(
+                    (new CTE() )
+                    ->with(
+                        new Identifier( '_left' ),
+                        (new Statement(
+                            (new Select() )
+                            ->add(
+                                (new SqlFunction(
+                                    new Identifier( 'coalesce' ),
+                                    new SqlFunction(
+                                        new Identifier( 'max' ),
+                                        new Identifier( 'left' )
+                                    ),
+                                    new Value( 0 )
+                                ) )->addAlias( new Identifier( '_left' ) )
+                            )
+                            ->add(
+                                (new Expression() )
+                                ->add(
+                                    (new SqlFunction(
+                                        new Identifier( 'coalesce' ),
+                                        new SqlFunction(
+                                            new Identifier( 'max' ),
+                                            new Identifier( 'left' )
+                                        ),
+                                        new Value( 0 )
+                                    ) )
+                                )
+                                ->add( new Operator( '+' ) )
+                                ->add( new Value( 1 ) )
+                                ->addAlias( new Identifier( '_right' ) )
+                            )
+                        )
+                        )
+                        ->add( new From( $tableIdent ) )
+                    )
+                )
+                ->setCommand(
+                    (new Insert( $tableIdent ) )
+                    ->add( ... array_map( fn( $i ) => new Identifier( $i ), $insertColumns ) )
+                    ->addQuery(
+                        (new Statement(
+                            (new Select() )
+                            ->add( new Identifier( '_left' ) )
+                            ->add( new Identifier( '_right' ) )
+                        )
+                        )
+                        ->add( new From( new Identifier( '_left' ) ) )
+                    )
+            );
+//
+//            var_dump( $query->stringify() );
+//            die();
+//            new \Wrapped\_\Database\SQL\Command\Insert( $tableIdent )
+//            ;
 
-            try {
-
-                if ( $this->id === null || $this->_isPropertyFuzzy( "id", $this->id ) ) {
-                    $this->_insert();
-                } elseif ( $this->_isPropertyFuzzy( "parentId", $this->parentId ) ) {
-                    $this->_move();
-                }
-
-                parent::save();
-
-                // close transaction
-                if ( static::$_transactionInitiatorId === $transactionInitiatorId ) {
-
-                    if ( $db instanceof Mysql ) {
-                        $db->query( "UNLOCK TABLES" );
-                    }
-
-                    $db->commitTransaction();
-
-                    if ( $db instanceof Mysql ) {
-                        $db->connectionHandle->setAttribute( PDO::ATTR_AUTOCOMMIT, 1 );
-                    }
-
-                    static::$_transactionInitiatorId = null;
-                }
-            } catch ( Exception $e ) {
-
-                $db->rollbackTransaction();
-
-                if ( $db instanceof Mysql ) {
-                    $db->query( "UNLOCK TABLES" );
-                }
-
-                throw $e;
-            }
+            $query->run();
 
             return $this;
         }

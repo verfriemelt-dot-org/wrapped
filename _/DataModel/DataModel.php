@@ -277,8 +277,6 @@
         private static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
-
             $query->translateDbLogic( $logic );
 
             return $query;
@@ -291,8 +289,6 @@
         public static function all( $orderBy = null, $order = "asc" ) {
 
             $query = static::buildSelectQuery();
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => $a->getNamingConvention()->getString(), static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
-
 
             if ( $orderBy !== null ) {
                 $query->order( [ [ $orderBy, $order ] ] );

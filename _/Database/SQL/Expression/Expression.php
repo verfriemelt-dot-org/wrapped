@@ -4,14 +4,17 @@
 
     use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Alias;
+    use \Wrapped\_\Database\SQL\Aliasable;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\QueryPart;
 
     class Expression
     extends QueryPart
-    implements ExpressionItem {
+    implements ExpressionItem, Aliasable {
 
         use CommandWrapperTrait;
+        use Alias;
 
         protected array $expressions = [];
 
@@ -37,9 +40,9 @@
             }
 
             return implode(
-                " ",
-                array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
-            );
+                    " ",
+                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
+                ) . $this->stringifyAlias( $driver );
         }
 
         public function fetchLastExpressionItem(): ?ExpressionItem {

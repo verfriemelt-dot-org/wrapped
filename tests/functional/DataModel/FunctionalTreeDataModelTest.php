@@ -2,10 +2,15 @@
 
     namespace functional;
 
-    use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\TreeDataModel;
+use \PHPUnit\Framework\TestCase;
+use \Wrapped\_\Database\Database;
+use \Wrapped\_\Database\Driver\Postgres;
+use \Wrapped\_\Database\SQL\Command\Select;
+use \Wrapped\_\Database\SQL\Expression\Identifier;
+use \Wrapped\_\Database\SQL\Expression\SqlFunction;
+use \Wrapped\_\Database\SQL\Expression\Value;
+use \Wrapped\_\Database\SQL\Statement;
+use \Wrapped\_\DataModel\TreeDataModel;
 
     class TreeDummy
     extends TreeDataModel {
@@ -60,6 +65,20 @@
         public function testSave() {
             $dummy = new TreeDummy;
             $dummy->save();
+
+
+//            $stmt = new Statement(
+//                (new Select() )
+//                    ->add(
+//                        (new SqlFunction(
+//                            new Identifier( 'coalesce' ),
+//                            new Value( '1' ),
+//                            new Value( '1' )
+//                        ) )
+//                    )
+//            );
+//
+//            Database::getConnection()->run( $stmt );
         }
 
     }

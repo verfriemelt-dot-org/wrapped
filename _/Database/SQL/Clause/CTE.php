@@ -9,7 +9,7 @@
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\QueryPart;
 
-    class With
+    class CTE
     extends QueryPart
     implements Clause {
 
@@ -23,12 +23,12 @@
             return 5;
         }
 
-        public function with( Identifier $ident, Command $command ): static {
+        public function with( Identifier $ident, \Wrapped\_\Database\SQL\Statement $stmt ): static {
 
             $this->addChild( $ident );
-            $this->addChild( $command );
+            $this->addChild( $stmt );
 
-            $this->with[] = [ "ident" => $ident, "command" => $command ];
+            $this->with[] = [ "ident" => $ident, "stmt" => $stmt ];
             return $this;
         }
 
@@ -38,7 +38,7 @@
 
             return sprintf(
                 static::CLAUSE,
-                implode( ', ', array_map( fn( $o ) => "{$o['ident']->stringify( $driver )} AS ( {$o['command']->stringify( $driver )} )", $this->with ) ),
+                implode( ', ', array_map( fn( $o ) => "{$o['ident']->stringify( $driver )} AS ( {$o['stmt']->stringify( $driver )} )", $this->with ) ),
             );
         }
 

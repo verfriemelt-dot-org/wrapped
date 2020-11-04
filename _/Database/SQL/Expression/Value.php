@@ -27,7 +27,7 @@
 
         protected bool $useBinding = true;
 
-        public function __construct( $value ) {
+        public function __construct( mixed $value ) {
 
             if ( is_object( $value ) && $value instanceof PropertyObjectInterface ) {
                 $this->value = $value->dehydrateToString();
