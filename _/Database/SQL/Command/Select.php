@@ -27,13 +27,16 @@
             return 10;
         }
 
-        public function add( ExpressionItem $item ) {
+        public function add( ExpressionItem ... $item ) {
 
-            $expression = $this->wrap( $item );
+            foreach( $item as $i ) {
 
-            $this->addChild( $expression );
+                $expression = $this->wrap( $i );
 
-            $this->expressions[] = $expression;
+                $this->addChild( $expression );
+                $this->expressions[] = $expression;
+            }
+
             return $this;
         }
 

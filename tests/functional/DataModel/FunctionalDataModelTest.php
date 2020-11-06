@@ -142,7 +142,7 @@
 
             $obj->reload();
 
-            $this->assertSame( 'test', $obj->getName() );
+            $this->assertSame( 'epic', $obj->getName() );
         }
 
         public function testObjectAll() {

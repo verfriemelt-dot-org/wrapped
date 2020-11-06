@@ -41,6 +41,7 @@
         }
 
         public function addQuery( Statement $stmt ): static {
+            $this->addChild( $stmt );
             $this->query = $stmt;
             return $this;
         }

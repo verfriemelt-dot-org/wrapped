@@ -4,10 +4,10 @@
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\Clause;
-    use \Wrapped\_\Database\SQL\Command\Command;
     use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\QueryPart;
+    use \Wrapped\_\Database\SQL\Statement;
 
     class CTE
     extends QueryPart
@@ -23,7 +23,7 @@
             return 5;
         }
 
-        public function with( Identifier $ident, \Wrapped\_\Database\SQL\Statement $stmt ): static {
+        public function with( Identifier $ident, Statement $stmt ): static {
 
             $this->addChild( $ident );
             $this->addChild( $stmt );
@@ -33,8 +33,6 @@
         }
 
         public function stringify( DatabaseDriver $driver = null ): string {
-
-
 
             return sprintf(
                 static::CLAUSE,

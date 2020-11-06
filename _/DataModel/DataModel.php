@@ -56,7 +56,7 @@
             return $this;
         }
 
-        private function hydrateAttribute( DataModelAttribute $attribute, $value ) {
+        protected function hydrateAttribute( DataModelAttribute $attribute, $value ) {
 
             $attributeType = $attribute->getType();
 
@@ -67,7 +67,7 @@
             return $value;
         }
 
-        private function dehydrateAttribute( DataModelAttribute $attribute ) {
+        protected function dehydrateAttribute( DataModelAttribute $attribute ) {
 
             $attributeType = $attribute->getType();
 
@@ -220,7 +220,16 @@
         }
 
         public function reload() {
-            return self::fetchBy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} );
+
+            $pk = static::getPrimaryKey();
+
+            if ( $pk === null ) {
+                throw new DatabaseException( "::reload is not possible without PK" );
+            }
+
+            $this->initData( self::get( $this->{static::getPrimaryKey()} )->toArray() );
+
+            return $this;
         }
 
         /**
@@ -274,7 +283,7 @@
             return (new static() )->initData( $query->fetch() );
         }
 
-        private static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
+        protected static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
             $query->translateDbLogic( $logic );
@@ -369,7 +378,7 @@
             return $result;
         }
 
-        private function insertIntoDatabase(): static {
+        protected function insertIntoDatabase(): static {
 
             $insertData = $this->prepareDataForStorage( true );
 
@@ -390,7 +399,7 @@
             return $this;
         }
 
-        private function saveToDatabase() {
+        protected function saveToDatabase() {
 
             $pk = static::getPrimaryKey();
 

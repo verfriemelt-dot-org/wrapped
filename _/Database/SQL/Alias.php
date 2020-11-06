@@ -9,7 +9,7 @@
 
         protected ?Identifier $alias = null;
 
-        public function addAlias( Identifier $ident ) {
+        public function addAlias( Identifier $ident ): static {
             $this->alias = $ident;
             return $this;
         }
@@ -19,3 +19,4 @@
         }
 
     }
+    

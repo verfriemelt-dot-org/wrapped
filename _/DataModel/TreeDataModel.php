@@ -4,15 +4,19 @@
 
     use \PDO;
     use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\CTE;
+    use \Wrapped\_\Database\SQL\Clause\From;
+    use \Wrapped\_\Database\SQL\Clause\Where;
     use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
+    use \Wrapped\_\Database\SQL\Command\Update;
     use \Wrapped\_\Database\SQL\Expression\Bracket;
+    use \Wrapped\_\Database\SQL\Expression\CaseWhen;
     use \Wrapped\_\Database\SQL\Expression\Cast;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\Primitive;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
@@ -191,11 +195,226 @@
 
             $this->validateMove( $parent );
 
-            $this->parentId       = $parent->getId();
             $this->_under         = $parent;
             $this->_atParentRight = $atEnd;
 
             return $this;
+        }
+
+        protected function prepareDataForStorage( bool $includeNonFuzzy = false ): array {
+
+            $result   = [];
+            $skiplist = [ 'left', 'right', 'depth', 'parentId' ];
+
+            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
+
+                // skip pk
+                if ( static::getPrimaryKey() !== null && $attribute->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
+                    continue;
+                }
+
+                if ( in_array( $attribute->getName(), $skiplist ) ) {
+                    continue;
+                }
+
+                $data = $this->{ $attribute->getGetter() }();
+
+                if ( !$includeNonFuzzy && !$this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
+                    continue;
+                }
+
+                $result[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
+            }
+
+            return $result;
+        }
+
+        /**
+         * generates the insert part for the cte used to save new instances
+         * @return Insert
+         */
+        protected function generateInsertCommand( string $datasource = '_bounds' ): Insert {
+
+            return (new Insert( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( ... array_map( fn( $i ) => new Identifier( $i ), array_keys( $this->prepareDataForStorage( true ) ) ) )
+                    ->add( new Identifier( 'left' ) )
+                    ->add( new Identifier( 'right' ) )
+                    ->add( new Identifier( 'depth' ) )
+                    ->add( new Identifier( 'parent_id' ) )
+                    ->addQuery(
+                        (new Statement(
+                            (new Select() )
+                            ->add( ... array_map( fn( $i ) => new Value( $i ), array_values( $this->prepareDataForStorage( true ) ) ) )
+                            ->add( new Identifier( '_left' ) )
+                            ->add( new Identifier( '_right' ) )
+                            ->add( new Identifier( '_depth' ) )
+                            ->add( new Identifier( '_parent_id' ) )
+                        )
+                        )
+                        ->add( new From( new Identifier( $datasource ) ) )
+            );
+        }
+
+        protected function appendBoundsSelect( CTE $cte ) {
+            $cte->with(
+                new Identifier( '_bounds' ),
+                (new Statement(
+                        (new Select() )
+                        ->add(
+                            (new Expression() )
+                            ->add(
+                                (new SqlFunction(
+                                    new Identifier( 'coalesce' ),
+                                    new SqlFunction(
+                                        new Identifier( 'max' ),
+                                        new Identifier( 'right' )
+                                    ),
+                                    new Value( 0 )
+                                ) )
+                            )
+                            ->add( new Operator( '+' ) )
+                            ->add( new Value( 1 ) )
+                            ->addAlias( new Identifier( '_left' ) )
+                        )
+                        ->add(
+                            (new Expression() )
+                            ->add(
+                                (new SqlFunction(
+                                    new Identifier( 'coalesce' ),
+                                    new SqlFunction(
+                                        new Identifier( 'max' ),
+                                        new Identifier( 'right' )
+                                    ),
+                                    new Value( 0 )
+                                ) )
+                            )
+                            ->add( new Operator( '+' ) )
+                            ->add( new Value( 2 ) )
+                            ->addAlias( new Identifier( '_right' ) )
+                        )
+                        ->add(
+                            (new Expression(
+                                new Value( 0 ),
+                                new Cast( 'int' )
+                            ) )->addAlias( new Identifier( '_depth' ) )
+                        )
+                        ->add(
+                            (new Expression(
+                                new Primitive( null ),
+                                new Cast( 'int' )
+                            ) )->addAlias( new Identifier( '_parent_id' ) )
+                        )
+                    )
+                    )
+                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+            );
+        }
+
+        /**
+         *
+         *  under:
+         *  with
+         *  _parent as (
+         *    select id,lft,rgt,depth
+         *      from tree
+         *     where id = 1
+         *  )
+         *  ,
+         *  _widen_nodes_right as (
+         *      update tree
+         *         set
+         *             lft = CASE WHEN lft > ( select lft from _parent ) THEN lft + 2 ELSE lft END,
+         *             rgt = rgt + 2
+         *        where rgt > ( select lft from _parent )
+         *  )
+         *  insert into tree ( lft, rgt, parentId, depth )
+         *  select lft + 1, lft + 2, id, depth + 1
+         *  from _parent;
+         *
+         * @param CTE $cte
+         */
+        public function appendUnderSelect( CTE $cte ) {
+
+            $parentId = $this->_under->getId();
+            // parent
+            $cte->with(
+                new Identifier( '_parent' ),
+                (new Statement(
+                        new Select(
+                            (new Identifier( 'left' ) )->addAlias( new Identifier( '_left_old' ) ),
+                            (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_left' ) ),
+                            (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 2 ) ) )->addAlias( new Identifier( '_right' ) ),
+                            (new Expression( new Identifier( 'depth' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_depth' ) ),
+                            (new Expression( new Identifier( 'id' ) ) )->addAlias( new Identifier( '_parent_id' ) ),
+                        )
+                    ) )
+                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new Where( new Expression(
+                                new Identifier( 'id' ),
+                                new Operator( "=" ),
+                                new Value( $parentId )
+                        ) ) )
+            );
+
+            // update other nodes
+            $cte->with(
+                new Identifier( '_widen_nodes_right' ),
+                (new Statement(
+                        (new Update( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+
+                        // left
+                        ->add(
+                            new Identifier( 'left' ),
+                            new Expression(
+                                (new CaseWhen() )
+                                ->when(
+                                    (new Expression(
+                                        new Identifier( 'left' ),
+                                        new Operator( ">" ),
+                                        (new Bracket )
+                                        ->add(
+                                            (new Statement(
+                                                new Select( new Identifier( '_left_old' ) )
+                                            ) )
+                                            ->add(
+                                                new From( new Identifier( "_parent" ) )
+                                            )
+                                        )
+                                    ) ),
+                                    (new Expression(
+                                        new Identifier( 'left' ),
+                                        new Operator( "+" ),
+                                        new Value( 2 )
+                                    ) ),
+                                )
+                                ->else( new Identifier( 'left' ) )
+                            )
+                        )
+                        // right
+                        ->add(
+                            new Identifier( 'right' ),
+                            (new Expression(
+                                new Identifier( 'right' ),
+                                new Operator( "+" ),
+                                new Value( 2 )
+                        ) ) )
+                    ) )
+                    ->add(
+                        new Where(
+                            new Expression(
+                                new Identifier( 'right' ),
+                                new Operator( '>' ),
+                                (new Bracket )
+                                ->add(
+                                    (new Statement(
+                                        new Select( new Identifier( '_left_old' ) )
+                                    ) )
+                                    ->add(
+                                        new From( new Identifier( "_parent" ) )
+                                    )
+                                ) )
+                    ) )
+            );
         }
 
         /**
@@ -205,73 +424,36 @@
          */
         public function save(): static {
 
-
-            $insertColumns = [
-                "left",
-                "right",
-            ];
-
             $query = static::buildQuery();
 
-            $tableIdent = new Identifier( static::getSchemaName(), static::getTableName() );
+            $specialColumns = [
+                'left',
+                'right',
+                'depth',
+                'parent_id',
+            ];
 
-            $query->stmt->add(
-                    (new CTE() )
-                    ->with(
-                        new Identifier( '_left' ),
-                        (new Statement(
-                            (new Select() )
-                            ->add(
-                                (new SqlFunction(
-                                    new Identifier( 'coalesce' ),
-                                    new SqlFunction(
-                                        new Identifier( 'max' ),
-                                        new Identifier( 'left' )
-                                    ),
-                                    new Value( 0 )
-                                ) )->addAlias( new Identifier( '_left' ) )
-                            )
-                            ->add(
-                                (new Expression() )
-                                ->add(
-                                    (new SqlFunction(
-                                        new Identifier( 'coalesce' ),
-                                        new SqlFunction(
-                                            new Identifier( 'max' ),
-                                            new Identifier( 'left' )
-                                        ),
-                                        new Value( 0 )
-                                    ) )
-                                )
-                                ->add( new Operator( '+' ) )
-                                ->add( new Value( 1 ) )
-                                ->addAlias( new Identifier( '_right' ) )
-                            )
-                        )
-                        )
-                        ->add( new From( $tableIdent ) )
-                    )
-                )
-                ->setCommand(
-                    (new Insert( $tableIdent ) )
-                    ->add( ... array_map( fn( $i ) => new Identifier( $i ), $insertColumns ) )
-                    ->addQuery(
-                        (new Statement(
-                            (new Select() )
-                            ->add( new Identifier( '_left' ) )
-                            ->add( new Identifier( '_right' ) )
-                        )
-                        )
-                        ->add( new From( new Identifier( '_left' ) ) )
-                    )
-            );
-//
-//            var_dump( $query->stringify() );
-//            die();
-//            new \Wrapped\_\Database\SQL\Command\Insert( $tableIdent )
-//            ;
 
-            $query->run();
+            $cte = new CTE();
+            $query->stmt->add( $cte );
+
+            if ( $this->_under ) {
+                $this->appendUnderSelect( $cte );
+                $query->stmt->setCommand( $this->generateInsertCommand( '_parent' ) );
+
+//                var_dump( $query->stringify() );
+//                die();
+            } else {
+                $this->appendBoundsSelect( $cte );
+                $query->stmt->setCommand( $this->generateInsertCommand( '_bounds' ) );
+            }
+
+            $query->returning( ... [
+                static::getPrimaryKey(),
+                ... $specialColumns
+            ] );
+
+            $this->initData( $query->fetch() );
 
             return $this;
         }

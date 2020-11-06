@@ -4,9 +4,11 @@
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Command\Command;
+    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
 
     class Statement
-    extends QueryPart {
+    extends QueryPart
+    implements ExpressionItem {
 
         private Command $command;
 
@@ -18,7 +20,7 @@
             }
         }
 
-        public function setCommand( Command $command ):static {
+        public function setCommand( Command $command ): static {
             $this->addChild( $command );
             $this->command = $command;
 
@@ -41,7 +43,6 @@
             usort( $this->parts, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
 
             return trim(
-                
                 implode(
                     " ",
                     array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->parts )

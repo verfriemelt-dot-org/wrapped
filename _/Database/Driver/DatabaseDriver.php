@@ -121,7 +121,7 @@
                 $type = PDO::PARAM_INT;
             }
 
-            $statement->bindValue( $param, $var, PDO::PARAM_INT );
+            $statement->bindValue( $param, $var );
 
             return $this;
         }
@@ -217,10 +217,9 @@
 
         public function run( QueryPart $query ) {
 
-            $this->prepare( $query->stringify( $this ) );
-//            var_dump( $query->fetchBindings(), $query->stringify( $this ) ); die();
+//            $result = $this->connectionHandle->query( $query->stringify( $this ) );
 
-//            var_dump($query->fetchBindings()); die();
+            $this->prepare( $query->stringify( $this ) );
 
             foreach ( $query->fetchBindings() as $bind => $value ) {
                 $this->bindLast( $bind, $value );
@@ -234,8 +233,8 @@
             return $result;
         }
 
-        public function quote( $string ) {
-            return $this->connectionHandle->quote( $string );
+        public function quote( $data ) {
+            return $this->connectionHandle->quote( $data );
         }
 
         public function truncate( $tableName ) {

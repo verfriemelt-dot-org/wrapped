@@ -38,8 +38,6 @@
                 $name = $this->name->stringify( $driver );
             }
 
-            $func = $this->name->stringify( $driver );
-
             return sprintf(
                     static::SYNTAX,
                     $name,

@@ -2,15 +2,10 @@
 
     namespace functional;
 
-use \PHPUnit\Framework\TestCase;
-use \Wrapped\_\Database\Database;
-use \Wrapped\_\Database\Driver\Postgres;
-use \Wrapped\_\Database\SQL\Command\Select;
-use \Wrapped\_\Database\SQL\Expression\Identifier;
-use \Wrapped\_\Database\SQL\Expression\SqlFunction;
-use \Wrapped\_\Database\SQL\Expression\Value;
-use \Wrapped\_\Database\SQL\Statement;
-use \Wrapped\_\DataModel\TreeDataModel;
+    use \PHPUnit\Framework\TestCase;
+    use \Wrapped\_\Database\Database;
+    use \Wrapped\_\Database\Driver\Postgres;
+    use \Wrapped\_\DataModel\TreeDataModel;
 
     class TreeDummy
     extends TreeDataModel {
@@ -63,22 +58,77 @@ use \Wrapped\_\DataModel\TreeDataModel;
         }
 
         public function testSave() {
+
+            // first
             $dummy = new TreeDummy;
+            $dummy->setName( 'nice' );
             $dummy->save();
 
+            $dummy = TreeDummy::get( 1 );
 
-//            $stmt = new Statement(
-//                (new Select() )
-//                    ->add(
-//                        (new SqlFunction(
-//                            new Identifier( 'coalesce' ),
-//                            new Value( '1' ),
-//                            new Value( '1' )
-//                        ) )
-//                    )
-//            );
-//
-//            Database::getConnection()->run( $stmt );
+            $this->assertSame( 1, $dummy->getId(), 'id' );
+            $this->assertSame( 1, $dummy->getLeft(), 'left' );
+            $this->assertSame( 2, $dummy->getRight(), 'right' );
+            $this->assertSame( 0, $dummy->getDepth(), 'depth' );
+            $this->assertSame( 'nice', $dummy->getName(), 'name' );
+            $this->assertSame( null, $dummy->getParentId(), 'parent' );
+
+            // second
+            $dummy = new TreeDummy;
+            $dummy->setName( 'nice2' );
+            $dummy->save();
+
+            $dummy = TreeDummy::get( 2 );
+
+            $this->assertSame( 2, $dummy->getId(), 'id' );
+            $this->assertSame( 3, $dummy->getLeft(), 'left' );
+            $this->assertSame( 4, $dummy->getRight(), 'right' );
+            $this->assertSame( 0, $dummy->getDepth(), 'depth' );
+            $this->assertSame( 'nice2', $dummy->getName(), 'name' );
+            $this->assertSame( null, $dummy->getParentId(), 'parent' );
+
+            // second
+            $dummy = new TreeDummy;
+            $dummy->setName( 'nice3' );
+            $dummy->save();
+
+            $dummy->reload();
+
+            $this->assertSame( 3, $dummy->getId(), 'id' );
+            $this->assertSame( 5, $dummy->getLeft(), 'left' );
+            $this->assertSame( 6, $dummy->getRight(), 'right' );
+            $this->assertSame( 0, $dummy->getDepth(), 'depth' );
+            $this->assertSame( 'nice3', $dummy->getName(), 'name' );
+            $this->assertSame( null, $dummy->getParentId(), 'parent' );
+        }
+
+        public function testSaveUnder() {
+
+            $parent = new TreeDummy;
+            $parent->setName( 'parent' );
+            $parent->save();
+
+            $child = new TreeDummy;
+            $child->under( $parent );
+            $child->setName( 'child' );
+            $child->save();
+
+            $parent->reload();
+            $child->reload();
+
+            $this->assertSame( 2, $child->getId(), 'id' );
+            $this->assertSame( 2, $child->getLeft(), 'left' );
+            $this->assertSame( 3, $child->getRight(), 'right' );
+            $this->assertSame( 1, $child->getDepth(), 'depth' );
+            $this->assertSame( 'child', $child->getName(), 'name' );
+            $this->assertSame( 1, $child->getParentId(), 'parent' );
+
+            $this->assertSame( 1, $parent->getId(), 'id' );
+            $this->assertSame( 1, $parent->getLeft(), 'left' );
+            $this->assertSame( 4, $parent->getRight(), 'right' );
+            $this->assertSame( 0, $parent->getDepth(), 'depth' );
+            $this->assertSame( 'parent', $parent->getName(), 'name' );
+            $this->assertSame( null, $parent->getParentId(), 'parent' );
         }
 
     }

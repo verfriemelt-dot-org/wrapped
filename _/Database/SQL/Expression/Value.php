@@ -61,7 +61,12 @@
                     $value = $this->value;
                     break;
                 case 'string':
+                    // this is the non quoted representation! this is not a security issue
+                    // because this should never be executed
                     $value = "'{$this->value}'";
+                    break;
+                case 'NULL':
+                    $value = 'NULL';
                     break;
                 default: throw new Exception( "unsupported type: " . gettype( $this->value ) );
             }
