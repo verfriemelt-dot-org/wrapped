@@ -114,7 +114,13 @@
             $child->save();
 
             $parent->reload();
-            $child->reload();
+
+            $this->assertSame( 1, $parent->getId(), 'id' );
+            $this->assertSame( 1, $parent->getLeft(), 'left' );
+            $this->assertSame( 4, $parent->getRight(), 'right' );
+            $this->assertSame( 0, $parent->getDepth(), 'depth' );
+            $this->assertSame( 'parent', $parent->getName(), 'name' );
+            $this->assertSame( null, $parent->getParentId(), 'parent' );
 
             $this->assertSame( 2, $child->getId(), 'id' );
             $this->assertSame( 2, $child->getLeft(), 'left' );
@@ -123,12 +129,43 @@
             $this->assertSame( 'child', $child->getName(), 'name' );
             $this->assertSame( 1, $child->getParentId(), 'parent' );
 
-            $this->assertSame( 1, $parent->getId(), 'id' );
+            $child2 = new TreeDummy;
+            $child2->under( $parent );
+            $child2->setName( '2nd child' );
+            $child2->save();
+
+            $parent->reload();
+            $child->reload();
+
             $this->assertSame( 1, $parent->getLeft(), 'left' );
-            $this->assertSame( 4, $parent->getRight(), 'right' );
-            $this->assertSame( 0, $parent->getDepth(), 'depth' );
-            $this->assertSame( 'parent', $parent->getName(), 'name' );
-            $this->assertSame( null, $parent->getParentId(), 'parent' );
+            $this->assertSame( 6, $parent->getRight(), 'right' );
+
+            $this->assertSame( 4, $child->getLeft(), 'left' );
+            $this->assertSame( 5, $child->getRight(), 'right' );
+
+            $this->assertSame( 2, $child2->getLeft(), 'left' );
+            $this->assertSame( 3, $child2->getRight(), 'right' );
+
+            $child3 = new TreeDummy;
+            $child3->under( $child2 );
+            $child3->setName( '3nd child' );
+            $child3->save();
+
+            $parent->reload();
+            $child->reload();
+            $child2->reload();
+
+            $this->assertSame( 1, $parent->getLeft(), 'left' );
+            $this->assertSame( 8, $parent->getRight(), 'right' );
+
+            $this->assertSame( 6, $child->getLeft(), 'left' );
+            $this->assertSame( 7, $child->getRight(), 'right' );
+
+            $this->assertSame( 2, $child2->getLeft(), 'left' );
+            $this->assertSame( 5, $child2->getRight(), 'right' );
+
+            $this->assertSame( 3, $child3->getLeft(), 'left' );
+            $this->assertSame( 4, $child3->getRight(), 'right' );
         }
 
     }
