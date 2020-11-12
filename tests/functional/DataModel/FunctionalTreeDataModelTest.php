@@ -168,4 +168,39 @@
             $this->assertSame( 4, $child3->getRight(), 'right' );
         }
 
+        public function testUpdate() {
+
+            $parent = new TreeDummy;
+            $parent->setName( 'parent' );
+            $parent->save();
+
+            $child = new TreeDummy;
+            $child->under( $parent );
+            $child->setName( 'child' );
+            $child->save();
+
+            $child2 = new TreeDummy;
+            $child2->under( $parent );
+            $child2->setName( '2nd child' );
+            $child2->save();
+
+            $child3 = new TreeDummy;
+            $child3->under( $child2 );
+            $child3->setName( '3nd child' );
+            $child3->save();
+
+            $parent->reload();
+            $child->reload();
+            $child2->reload();
+
+            // update
+            $child3->setName( 'update' )->save();
+            $child3 = TreeDummy::get( 4 );
+
+            $this->assertSame( 'update', $child3->getName() );
+
+            $this->assertSame( 3, $child3->getLeft(), 'left' );
+            $this->assertSame( 4, $child3->getRight(), 'right' );
+        }
+
     }

@@ -255,6 +255,10 @@
             );
         }
 
+        /**
+         * fetches max( right ) from the tree
+         * @param CTE $cte
+         */
         protected function appendBoundsSelect( CTE $cte ) {
             $cte->with(
                 new Identifier( '_bounds' ),
@@ -265,10 +269,7 @@
                             ->add(
                                 (new SqlFunction(
                                     new Identifier( 'coalesce' ),
-                                    new SqlFunction(
-                                        new Identifier( 'max' ),
-                                        new Identifier( 'right' )
-                                    ),
+                                    new SqlFunction( new Identifier( 'max' ), new Identifier( 'right' ) ),
                                     new Value( 0 )
                                 ) )
                             )
@@ -281,10 +282,7 @@
                             ->add(
                                 (new SqlFunction(
                                     new Identifier( 'coalesce' ),
-                                    new SqlFunction(
-                                        new Identifier( 'max' ),
-                                        new Identifier( 'right' )
-                                    ),
+                                    new SqlFunction( new Identifier( 'max' ), new Identifier( 'right' ) ),
                                     new Value( 0 )
                                 ) )
                             )
@@ -294,14 +292,12 @@
                         )
                         ->add(
                             (new Expression(
-                                new Value( 0 ),
-                                new Cast( 'int' )
+                                new Value( 0 ), new Cast( 'int' )
                             ) )->addAlias( new Identifier( '_depth' ) )
                         )
                         ->add(
                             (new Expression(
-                                new Primitive( null ),
-                                new Cast( 'int' )
+                                new Primitive( null ), new Cast( 'int' )
                             ) )->addAlias( new Identifier( '_parent_id' ) )
                         )
                     )
@@ -311,6 +307,7 @@
         }
 
         /**
+         * updates the tree to insert a new child
          *
          *  under:
          *  with
@@ -424,6 +421,11 @@
          */
         public function save(): static {
 
+            // update or insert?
+            if ( !$this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
+                return $this->saveToDatabase();
+            }
+
             $query = static::buildQuery();
 
             $specialColumns = [
@@ -433,16 +435,12 @@
                 'parent_id',
             ];
 
-
             $cte = new CTE();
             $query->stmt->add( $cte );
 
             if ( $this->_under ) {
                 $this->appendUnderSelect( $cte );
                 $query->stmt->setCommand( $this->generateInsertCommand( '_parent' ) );
-
-//                var_dump( $query->stringify() );
-//                die();
             } else {
                 $this->appendBoundsSelect( $cte );
                 $query->stmt->setCommand( $this->generateInsertCommand( '_bounds' ) );
@@ -455,6 +453,12 @@
 
             $this->initData( $query->fetch() );
 
+            // clear out every movement operation
+
+            $this->_after  = null;
+            $this->_before = null;
+            $this->_under  = null;
+
             return $this;
         }
 
@@ -463,241 +467,6 @@
          * @return $this
          */
         public function move() {
-            return $this;
-        }
-
-        private function _flipNegative() {
-
-            // table
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
-
-            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier( 'left' )} = -1*{$databaseHandle->quoteIdentifier( 'left' )}, {$databaseHandle->quoteIdentifier( 'right' )} = -1*{$databaseHandle->quoteIdentifier( 'right' )} WHERE {$databaseHandle->quoteIdentifier( 'left' )} between {$this->left} and {$this->right}";
-            $databaseHandle->query( $sql1 );
-        }
-
-        private function _flipPositive() {
-            // table
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
-
-            $sql1 = "UPDATE {$tableName} SET {$databaseHandle->quoteIdentifier( 'left' )} = -1*{$databaseHandle->quoteIdentifier( 'left' )}, {$databaseHandle->quoteIdentifier( 'right' )} = -1*{$databaseHandle->quoteIdentifier( 'right' )} WHERE {$databaseHandle->quoteIdentifier( 'left' )} < 0";
-            $databaseHandle->query( $sql1 );
-        }
-
-        /**
-         * used for shifting flipped nodes into their places
-         * @param type $amount
-         * @return $this
-         */
-        private function shiftFlippedNodes( $amount ) {
-
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
-
-            $sql = "UPDATE {$tableName} set {$databaseHandle->quoteIdentifier( 'left' )} = {$databaseHandle->quoteIdentifier( 'left' )} + {$amount},{$databaseHandle->quoteIdentifier( 'right' )} = {$databaseHandle->quoteIdentifier( 'right' )} + {$amount} WHERE {$databaseHandle->quoteIdentifier( 'left' )} < 0";
-            $databaseHandle->query( $sql );
-
-            return $this;
-        }
-
-        private function _move() {
-
-            $this->_flipNegative();
-
-            $width = $this->right - $this->left + 1;
-
-            // shift left and rights on old neighbours
-            $this->shiftLeft( $this->right, -$width );
-            $this->shiftRight( $this->right, -$width );
-
-            // shift left and rights for new parents
-            if ( $this->_before ) {
-
-                $this->_before->reload();
-
-                // all inkl parents left
-                $this->shiftLeft( $this->_before->left - 1, $width );
-                $this->shiftRight( $this->_before->left - 1, $width );
-
-                $newLeft     = $this->_before->left;
-                $newParentId = $this->_before->parentId;
-            } elseif ( $this->_after ) {
-
-                $this->_after->reload();
-
-                // all after parents right
-                $this->shiftLeft( $this->_after->right, $width );
-                $this->shiftRight( $this->_after->right, $width );
-
-                $newLeft     = $this->_after->right + 1;
-                $newParentId = $this->_after->parentId;
-            } elseif ( $this->_under ) {
-
-                $this->_under->reload();
-
-                // excluding parents left
-                $this->shiftLeft( $this->_under->left, $width );
-                $this->shiftRight( $this->_under->left - 1, $width );
-
-                $newLeft     = $this->_under->left + 1;
-                $newParentId = $this->_under->id;
-            }
-
-            // move to new pos and flip again
-            $this->shiftFlippedNodes( ($this->left - $newLeft ) );
-            $this->_flipPositive();
-
-            $this->reload();
-            $this->setParentId( $newParentId );
-
-            $oldDepth = $this->depth;
-
-            // update depth
-            $this->_generateDepth();
-
-            $depthDiff = $this->depth - $oldDepth;
-
-            foreach ( $this->fetchChildren() as $child ) {
-                $child->setDepth( $child->getDepth() + $depthDiff );
-                $child->save();
-            }
-
-            return $this;
-        }
-
-        /**
-         *
-         * @return static|boolean
-         */
-        private function _insert() {
-
-            if ( $this->parentId !== null ) {
-
-                // insert under parent
-                $this->_insertUnderParent();
-            } else {
-
-                // no placed insert
-                if ( $this->_after === null && $this->_before === null ) {
-
-                    $this->_insertAsNewRoot();
-                } else {
-
-                    if ( $this->_after instanceof $this ) {
-
-                        $this->_after->reload();
-                        $alignment = $this->_after->getRight();
-
-                        $this->setLeft( $alignment + 1 );
-                        $this->setRight( $alignment + 2 );
-
-                        $this->shiftLeft( $alignment, 2 );
-                        $this->shiftRight( $alignment, 2 );
-                    } else {
-
-                        $this->_before->reload();
-                        $alignment = $this->_before->getLeft();
-
-                        $this->shiftLeft( $alignment - 1, 2 );
-                        $this->shiftRight( $alignment - 1, 2 );
-
-                        $this->setLeft( $alignment );
-                        $this->setRight( $alignment + 1 );
-                    }
-                }
-            }
-
-            $this->_generateDepth();
-            return $this;
-        }
-
-        private function _insertAsNewRoot() {
-
-            $maxRightNode = static::findSingle( [], "right", "desc" );
-
-            // when no object is present, we just set left and right to 1 and 2
-            // otherwise get the current max right value
-            $maxRight = $maxRightNode === null ? 0 : $maxRightNode->getRight();
-
-            $this->setLeft( $maxRight + 1 );
-            $this->setRight( $maxRight + 2 );
-        }
-
-        private function shiftLeft( $offset, $amount, $maxOffset = null ) {
-            return $this->shift( $offset, $amount, "left", $maxOffset );
-        }
-
-        private function shiftRight( $offset, $amount, $maxOffset = null ) {
-            return $this->shift( $offset, $amount, "right", $maxOffset );
-        }
-
-        /**
-         *
-         * @param int $offset
-         * @param int $amount
-         * @param enum $leftOrRight right,left
-         * @return static
-         */
-        private function shift( int $offset, int $amount, string $leftOrRight = "left" ): TreeDataModel {
-
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
-
-            $databaseHandle->query(
-                "UPDATE {$tableName}
-                 SET {$databaseHandle->quoteIdentifier( $leftOrRight )} = {$databaseHandle->quoteIdentifier( $leftOrRight )} + {$amount}
-                 WHERE {$databaseHandle->quoteIdentifier( $leftOrRight )} > {$offset}"
-            );
-
-            return $this;
-        }
-
-        /**
-         * shifts the parent and child items accordingly to insert
-         */
-        private function _insertUnderParent() {
-
-            $parent = static::get( $this->parentId );
-
-            $myLeft = $this->_atParentRight ? $parent->getRight() : $parent->getLeft();
-
-            $this->shiftLeft( $myLeft, 2 );
-            $this->shiftRight( $myLeft - 1, 2 );
-
-            if ( !$this->_atParentRight ) {
-                $myLeft = $myLeft + 1;
-            }
-
-            // update myself
-            $this->setLeft( $myLeft );
-            $this->setRight( $myLeft + 1 );
-        }
-
-        /**
-         *
-         * @return static
-         */
-        private function _generateDepth() {
-
-            if ( $this->parentId === null ) {
-                return $this->setDepth( 0 );
-            }
-
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
-
-            // count sql query
-            $query = "SELECT (COUNT(parent.id) - 1) AS depth
-                        FROM {$tableName} AS node,
-                                {$tableName} AS parent
-                        WHERE node.{$databaseHandle->quoteIdentifier( 'left' )} BETWEEN parent.{$databaseHandle->quoteIdentifier( 'left' )} AND parent.{$databaseHandle->quoteIdentifier( 'right' )}
-                        and node.id = {$this->parentId}
-                        GROUP BY node.id
-                        -- ORDER BY node.{$databaseHandle->quoteIdentifier( 'left' )}";
-
-            $this->setDepth( $databaseHandle->query( $query )->fetch()["depth"] + 1 );
-
             return $this;
         }
 
