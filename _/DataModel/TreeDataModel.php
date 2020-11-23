@@ -256,6 +256,28 @@
         }
 
         /**
+         * generates the insert part for the cte used to save new instances
+         * @return Insert
+         */
+        protected function generateUpdateCommand( string $datasource = '_bounds' ): Insert {
+
+            $update = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
+
+            $update->add( new Identifier( 'left' ), new Identifier( '_left' ) );
+            $update->add( new Identifier( 'right' ), new Identifier( '_right' ) );
+            $update->add( new Identifier( 'depth' ), new Identifier( '_depth' ) );
+            $update->add( new Identifier( 'parent_id' ), new Identifier( '_parent_id' ) );
+
+            foreach ( $this->prepareDataForStorage() as $prop => $value ) {
+                $update->add( new Identifier( $prop ), new Value( $value ) );
+            }
+
+            $upadte->add( new From( new Identifier( $datasource ) ) );
+
+            return $update;
+        }
+
+        /**
          * fetches max( right ) from the tree
          * @param CTE $cte
          */
@@ -414,6 +436,416 @@
             );
         }
 
+        protected function cteMove( TreeDataModel $to, $placement = 'under' ) {
+
+            $cte = new CTE();
+
+            // boundary of current element
+            $cte->with(
+                new Identifier( '_move' ),
+                (new Statement( new Select(
+                            (new Identifier( 'left' ) )->as( new Identifier( '_left' ) ),
+                            (new Identifier( 'right' ) )->as( new Identifier( '_right' ) )
+                        )
+                    ) )
+                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new Where( new Expression( new Identifier( static::getPrimaryKey() ), new Operator( '=' ), new Value( $this->{static::getPrimaryKey()} ) ) ) )
+            );
+
+            // move to
+            $cte->with(
+                new Identifier( '_to' ),
+                (new Statement( new Select(
+                            (new Identifier( 'id' ) )->as( new Identifier( '_id' ) ),
+                            (new CaseWhen( new Value( $placement ) ) )
+                            ->when(
+                                new Value( 'before' ),
+                                (new Expression( new Identifier( 'left' ) ) )
+                            )
+                            ->when(
+                                new Value( 'under' ),
+                                (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 1 ) ) )
+                            )
+                            ->when(
+                                new Value( 'after' ),
+                                (new Expression( new Identifier( 'right' ), new Operator( "+" ), new Value( 1 ) ) ),
+                            )
+                            ->as( new Identifier( '_to_pos' ) )
+                        )
+                    ) )
+                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new Where( new Expression( new Identifier( static::getPrimaryKey() ), new Operator( '=' ), new Value( $to->{static::getPrimaryKey()} ) ) ) )
+            );
+
+            // move context
+            $cte->with(
+                new Identifier( '_context' ),
+                new Statement(
+                    new Select(
+                        //
+                        (new Expression( new Bracket(
+                                new Statement(
+                                    new Select( new Expression( new Identifier( '_right' ), new Operator( "-" ), new Identifier( "_left" ), new Operator( "+" ), new Value( 1 ) ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ) ) )->as( new Identifier( "_width" ) ),
+                        //
+                        (new CaseWhen() )
+                            ->when(
+                                new Expression(
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Identifier( '_to_pos' ) ),
+                                            new From( new Identifier( '_to' ) )
+                                        )
+                                    ),
+                                    new Operator( "<" ),
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Identifier( '_left' ) ),
+                                            new From( new Identifier( '_move' ) )
+                                        )
+                                    ),
+                                ),
+                                new Expression(
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Identifier( '_left' ) ),
+                                            new From( new Identifier( '_move' ) )
+                                        )
+                                    ),
+                                    new Operator( "-" ),
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Identifier( '_to_pos' ) ),
+                                            new From( new Identifier( '_to' ) )
+                                        )
+                                    ),
+                                ),
+                            )
+                            ->else(
+                                new Expression(
+                                    new Bracket(
+                                        new Bracket(
+                                            new Statement(
+                                                new Select( new Identifier( '_to_pos' ) ),
+                                                new From( new Identifier( '_to' ) )
+                                            )
+                                        ),
+                                        new Operator( "-" ),
+                                        new Bracket(
+                                            new Statement(
+                                                new Select( new Expression( new Identifier( '_right' ), new Operator( "+" ), new Value( 1 ) ) ),
+                                                new From( new Identifier( '_move' ) )
+                                            )
+                                        )
+                                    ),
+                                    new Operator( "*" ),
+                                    new Value( -1 )
+                                ),
+                            )
+                            ->as( new Identifier( '_distance' ) ),
+                        //
+                        (new SqlFunction(
+                            new Identifier( 'least' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ) )->as( new Identifier( '_left_min' ) ),
+                        //
+                        (new SqlFunction(
+                            new Identifier( 'greatest' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ) )->as( new Identifier( '_left_max' ) )
+                    )
+                )
+            );
+
+            $upd = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
+
+            $upd->add(
+                new Identifier( 'left' ),
+                (new CaseWhen )
+                    // make space to the left
+                    ->when(
+                        new Expression(
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Operator( "<" ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '>=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_min' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_max' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            ),
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'left' ) )
+                        ->add( new Operator( '+' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_width' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+                    // make space, to right
+                    ->when(
+                        new Expression(
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Operator( ">" ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '>' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_max' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            )
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'left' ) )
+                        ->add( new Operator( '-' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_width' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+                    // update self
+                    ->when(
+                        new Expression(
+                            new Identifier( 'left' ),
+                            new Operator( '>=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'left' ) )
+                        ->add( new Operator( '-' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_distance' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+                    // rest
+                    ->else( new Identifier( 'left' ) )
+            );
+
+            $upd->add(
+                new Identifier( 'right' ),
+                (new CaseWhen )
+                    // make space to the left
+                    ->when(
+                        new Expression(
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Operator( "<" ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '>' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_min' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_max' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            ),
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'right' ) )
+                        ->add( new Operator( '+' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_width' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+
+                    // update self
+                    ->when(
+                        new Expression(
+                            new Identifier( 'left' ),
+                            new Operator( '>=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'left' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'right' ) )
+                        ->add( new Operator( '-' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_distance' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+
+                    // make space, to right
+                    ->when(
+                        new Expression(
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_to_pos' ) ),
+                                    new From( new Identifier( '_to' ) )
+                                )
+                            ),
+                            new Operator( ">" ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '>' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '<' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left_max' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                            )
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'right' ) )
+                        ->add( new Operator( '-' ) )
+                        ->add( new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_width' ) ),
+                                    new From( new Identifier( '_context' ) )
+                                )
+                        ) )
+                    )
+
+                    // rest
+                    ->else( new Identifier( 'right' ) )
+            );
+
+
+            return [ $cte, $upd ];
+        }
+
         /**
          *
          * @return static|boolean
@@ -421,10 +853,47 @@
          */
         public function save(): static {
 
-            // update or insert?
-            if ( !$this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
-                return $this->saveToDatabase();
+            if ( $this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
+                $this->insertIntoDatabase();
+            } else {
+                $this->saveToDatabase();
             }
+
+            // clear out every movement operation
+            $this->_after  = null;
+            $this->_before = null;
+            $this->_under  = null;
+
+            return $this;
+        }
+
+        protected function saveToDatabase(): static {
+
+            $isMovement = $this->_after !== null || $this->_before !== null || $this->_under !== null;
+
+
+            if ( !$isMovement ) {
+                parent::saveToDatabase();
+            } else {
+
+                if ( $this->_under ) {
+                    [$cte, $upd] = $this->cteMove( $this->_under, 'under' );
+
+                    $query = static::buildQuery();
+                    $query->stmt->add( $cte );
+                    $query->stmt->setCommand( $upd );
+
+//                    var_dump( $query->stmt->stringify() );
+//                    die();
+
+                    $query->run();
+                }
+            }
+
+            return $this;
+        }
+
+        protected function insertIntoDatabase(): static {
 
             $query = static::buildQuery();
 
@@ -451,15 +920,7 @@
                 ... $specialColumns
             ] );
 
-            $this->initData( $query->fetch() );
-
-            // clear out every movement operation
-
-            $this->_after  = null;
-            $this->_before = null;
-            $this->_under  = null;
-
-            return $this;
+            return $this->initData( $query->fetch() );
         }
 
         /**

@@ -203,4 +203,52 @@
             $this->assertSame( 4, $child3->getRight(), 'right' );
         }
 
+        public function testMove() {
+
+            $a = new TreeDummy;
+            $a->setName( 'a' );
+            $a->save();
+
+            $b = new TreeDummy;
+            $b->setName( 'b' );
+            $b->save();
+
+            $c = new TreeDummy;
+            $c->under( $a );
+            $c->setName( 'c' );
+            $c->save();
+
+            $c->reload()->move()->under( $b );
+            $c->save();
+
+            $a->reload();
+            $b->reload();
+            $c->reload();
+
+            $this->assertSame( 1, $a->getLeft(), 'left' );
+            $this->assertSame( 2, $a->getRight(), 'right' );
+
+            $this->assertSame( 3, $b->getLeft(), 'left' );
+            $this->assertSame( 6, $b->getRight(), 'right' );
+
+            $this->assertSame( 4, $c->getLeft(), 'left' );
+            $this->assertSame( 5, $c->getRight(), 'right' );
+
+            $b->move()->under($a)->save();
+
+
+            $a->reload();
+            $b->reload();
+            $c->reload();
+
+            $this->assertSame( 1, $a->getLeft(), 'left' );
+            $this->assertSame( 6, $a->getRight(), 'right' );
+
+            $this->assertSame( 2, $b->getLeft(), 'left' );
+            $this->assertSame( 5, $b->getRight(), 'right' );
+
+            $this->assertSame( 3, $c->getLeft(), 'left' );
+            $this->assertSame( 4, $c->getRight(), 'right' );
+        }
+
     }

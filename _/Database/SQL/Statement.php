@@ -14,9 +14,13 @@
 
         private array $parts = [];
 
-        public function __construct( ?Command $command = null ) {
+        public function __construct( ?Command $command = null, QueryPart ... $parts ) {
             if ( $command ) {
                 $this->setCommand( $command );
+            }
+
+            foreach( $parts as $part ) {
+                $this->add( $part );
             }
         }
 

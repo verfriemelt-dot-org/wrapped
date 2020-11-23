@@ -14,9 +14,12 @@
             return $this;
         }
 
+        public function as( Identifier $ident ): static {
+            return $this->addAlias( $ident );
+        }
+
         protected function stringifyAlias( DatabaseDriver $driver = null ): string {
             return $this->alias ? " AS {$this->alias->stringify( $driver )}" : '';
         }
 
     }
-    

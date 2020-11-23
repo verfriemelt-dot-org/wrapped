@@ -32,7 +32,14 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
-            if ( $this->name->stringify() === 'coalesce' ) {
+            // some functions are keywords
+            $keywords = [
+                'coalesce',
+                'least',
+                'greatest',
+            ];
+
+            if ( in_array( $this->name->stringify(), $keywords ) ) {
                 $name = $this->name->stringify( null );
             } else {
                 $name = $this->name->stringify( $driver );
