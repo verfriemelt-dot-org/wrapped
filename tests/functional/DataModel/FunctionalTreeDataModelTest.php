@@ -234,8 +234,7 @@
             $this->assertSame( 4, $c->getLeft(), 'left' );
             $this->assertSame( 5, $c->getRight(), 'right' );
 
-            $b->move()->under($a)->save();
-
+            $b->move()->under( $a )->save();
 
             $a->reload();
             $b->reload();

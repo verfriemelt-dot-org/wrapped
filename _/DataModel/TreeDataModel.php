@@ -732,7 +732,7 @@
                             ),
                             new Operator( 'and' ),
                             new Identifier( 'right' ),
-                            new Operator( '>' ),
+                            new Operator( '>=' ),
                             new Bracket(
                                 new Statement(
                                     new Select( new Identifier( '_left_min' ) ),

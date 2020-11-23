@@ -37,6 +37,7 @@
                 'coalesce',
                 'least',
                 'greatest',
+                'nullif',
             ];
 
             if ( in_array( $this->name->stringify(), $keywords ) ) {
