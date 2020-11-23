@@ -360,9 +360,8 @@
                 new Identifier( '_parent' ),
                 (new Statement(
                         new Select(
-                            (new Identifier( 'left' ) )->addAlias( new Identifier( '_left_old' ) ),
-                            (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_left' ) ),
-                            (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 2 ) ) )->addAlias( new Identifier( '_right' ) ),
+                            (new Expression( new Identifier( 'right' ), new Operator( "-" ), new Value( 0 ) ) )->addAlias( new Identifier( '_left' ) ),
+                            (new Expression( new Identifier( 'right' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_right' ) ),
                             (new Expression( new Identifier( 'depth' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_depth' ) ),
                             (new Expression( new Identifier( 'id' ) ) )->addAlias( new Identifier( '_parent_id' ) ),
                         )
@@ -389,11 +388,11 @@
                                 ->when(
                                     (new Expression(
                                         new Identifier( 'left' ),
-                                        new Operator( ">" ),
+                                        new Operator( ">=" ),
                                         (new Bracket )
                                         ->add(
                                             (new Statement(
-                                                new Select( new Identifier( '_left_old' ) )
+                                                new Select( new Identifier( '_left' ) )
                                             ) )
                                             ->add(
                                                 new From( new Identifier( "_parent" ) )
@@ -422,11 +421,11 @@
                         new Where(
                             new Expression(
                                 new Identifier( 'right' ),
-                                new Operator( '>' ),
+                                new Operator( '>=' ),
                                 (new Bracket )
                                 ->add(
                                     (new Statement(
-                                        new Select( new Identifier( '_left_old' ) )
+                                        new Select( new Identifier( '_left' ) )
                                     ) )
                                     ->add(
                                         new From( new Identifier( "_parent" ) )

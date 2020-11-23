@@ -134,17 +134,20 @@
             $child2->setName( '2nd child' );
             $child2->save();
 
+
             $parent->reload();
             $child->reload();
+
+//            codecept_debug( $parent );
 
             $this->assertSame( 1, $parent->getLeft(), 'left' );
             $this->assertSame( 6, $parent->getRight(), 'right' );
 
-            $this->assertSame( 4, $child->getLeft(), 'left' );
-            $this->assertSame( 5, $child->getRight(), 'right' );
+            $this->assertSame( 2, $child->getLeft(), 'left' );
+            $this->assertSame( 3, $child->getRight(), 'right' );
 
-            $this->assertSame( 2, $child2->getLeft(), 'left' );
-            $this->assertSame( 3, $child2->getRight(), 'right' );
+            $this->assertSame( 4, $child2->getLeft(), 'left' );
+            $this->assertSame( 5, $child2->getRight(), 'right' );
 
             $child3 = new TreeDummy;
             $child3->under( $child2 );
@@ -158,14 +161,14 @@
             $this->assertSame( 1, $parent->getLeft(), 'left' );
             $this->assertSame( 8, $parent->getRight(), 'right' );
 
-            $this->assertSame( 6, $child->getLeft(), 'left' );
-            $this->assertSame( 7, $child->getRight(), 'right' );
+            $this->assertSame( 2, $child->getLeft(), 'left' );
+            $this->assertSame( 3, $child->getRight(), 'right' );
 
-            $this->assertSame( 2, $child2->getLeft(), 'left' );
-            $this->assertSame( 5, $child2->getRight(), 'right' );
+            $this->assertSame( 4, $child2->getLeft(), 'left' );
+            $this->assertSame( 7, $child2->getRight(), 'right' );
 
-            $this->assertSame( 3, $child3->getLeft(), 'left' );
-            $this->assertSame( 4, $child3->getRight(), 'right' );
+            $this->assertSame( 5, $child3->getLeft(), 'left' );
+            $this->assertSame( 6, $child3->getRight(), 'right' );
         }
 
         public function testUpdate() {
@@ -199,55 +202,175 @@
 
             $this->assertSame( 'update', $child3->getName() );
 
-            $this->assertSame( 3, $child3->getLeft(), 'left' );
-            $this->assertSame( 4, $child3->getRight(), 'right' );
+            $this->assertSame( 5, $child3->getLeft(), 'left' );
+            $this->assertSame( 6, $child3->getRight(), 'right' );
+        }
+
+        public function createStructure( $struct, $parent = null ) {
+
+            foreach ( $struct as $e => $s ) {
+
+                $i = (new TreeDummy() )->setName( $e );
+
+                if ( $parent ) {
+                    $i->under( $parent );
+                }
+
+                $i->save();
+                $i->reload();
+
+                $this->createStructure( $s, $i );
+            }
+        }
+
+        public function validateStruct( $struct, &$c = 0 ) {
+
+
+            foreach ( $struct as $e => $s ) {
+
+                $instance = TreeDummy::findSingle( [ 'name' => $e ] );
+
+                $this->assertSame( ++$c, $instance->getLeft(), $e . ' left' );
+
+                $this->validateStruct( $s, $c );
+
+                $this->assertSame( ++$c, $instance->getRight(), $e . ' right' );
+            }
+        }
+
+        public function getStruct( $struct, &$res = [] ) {
+            foreach ( $struct as $e => $s ) {
+                $res[] = TreeDummy::findSingle( [ 'name' => $e ] );
+                $this->getStruct( $s, $res );
+            }
+
+            return $res;
         }
 
         public function testMove() {
 
-            $a = new TreeDummy;
-            $a->setName( 'a' );
-            $a->save();
+            $struct = [
+                "a" => [
+                    "c" => [],
+                ],
+                "b" => [],
+            ];
 
-            $b = new TreeDummy;
-            $b->setName( 'b' );
-            $b->save();
+            $this->createStructure( $struct );
+            [$a, $c, $b] = $this->getStruct( $struct );
 
-            $c = new TreeDummy;
-            $c->under( $a );
-            $c->setName( 'c' );
+            $c->move()->under( $b );
             $c->save();
 
-            $c->reload()->move()->under( $b );
-            $c->save();
+            $struct = [
+                "a" => [],
+                "b" => [
+                    "c" => [],
+                ],
+            ];
 
-            $a->reload();
-            $b->reload();
-            $c->reload();
+            $this->validateStruct( $struct );
 
-            $this->assertSame( 1, $a->getLeft(), 'left' );
-            $this->assertSame( 2, $a->getRight(), 'right' );
-
-            $this->assertSame( 3, $b->getLeft(), 'left' );
-            $this->assertSame( 6, $b->getRight(), 'right' );
-
-            $this->assertSame( 4, $c->getLeft(), 'left' );
-            $this->assertSame( 5, $c->getRight(), 'right' );
 
             $b->move()->under( $a )->save();
 
-            $a->reload();
-            $b->reload();
-            $c->reload();
+            $struct = [
+                "a" => [
+                    "b" => [
+                        "c" => [],
+                    ]
+                ],
+            ];
 
-            $this->assertSame( 1, $a->getLeft(), 'left' );
-            $this->assertSame( 6, $a->getRight(), 'right' );
+            $this->validateStruct( $struct );
 
-            $this->assertSame( 2, $b->getLeft(), 'left' );
-            $this->assertSame( 5, $b->getRight(), 'right' );
+            $c->move()->under( $a )->save();
 
-            $this->assertSame( 3, $c->getLeft(), 'left' );
-            $this->assertSame( 4, $c->getRight(), 'right' );
+            $struct = [
+                "a" => [
+                    "c" => [],
+                    "b" => [],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+        }
+
+        public function testDeeplyNestedMove() {
+
+            $struct = [
+                "a" => [
+                    "b" => [
+                        "c" => [],
+                        "d" => []
+                    ],
+                ],
+                "e" => [
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->createStructure( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'b' ] )->under( TreeDummy::findSingle( [ 'name' => 'e' ] ) )->save();
+
+            $struct = [
+                "a" => [],
+                "e" => [
+                    "b" => [
+                        "c" => [],
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'c' ] )->under( TreeDummy::findSingle( [ 'name' => 'a' ] ) )->save();
+
+            $struct = [
+                "a" => [
+                    "c" => [],
+                ],
+                "e" => [
+                    "b" => [
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'a' ] )->under( TreeDummy::findSingle( [ 'name' => 'h' ] ) )->save();
+
+            $struct = [
+                "e" => [
+                    "b" => [
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => [
+                            "a" => [
+                                "c" => [],
+                            ],
+                        ]
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
         }
 
     }
