@@ -29,7 +29,7 @@
 
         public ?int $id = null;
 
-        public ?int $depth = null;
+        public int $depth = 0;
 
         public ?int $left = null;
 
@@ -444,7 +444,8 @@
                 new Identifier( '_move' ),
                 (new Statement( new Select(
                             (new Identifier( 'left' ) )->as( new Identifier( '_left' ) ),
-                            (new Identifier( 'right' ) )->as( new Identifier( '_right' ) )
+                            (new Identifier( 'right' ) )->as( new Identifier( '_right' ) ),
+                            ( new Identifier( 'depth' ) )->as( new Identifier( '_depth' ) )
                         )
                     ) )
                     ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
@@ -455,8 +456,66 @@
             $cte->with(
                 new Identifier( '_to' ),
                 (new Statement( new Select(
-                            (new Identifier( 'id' ) )->as( new Identifier( '_id' ) ),
-                            (new CaseWhen( new Value( $placement ) ) )
+                            // parent id
+                            ( new CaseWhen( new Value( $placement ) ) )
+                            ->when(
+                                new Value( 'under' ),
+                                new Identifier( 'id' )
+                            )->else( new Identifier( 'parent_id' ) )
+                            ->as( new Identifier( '_new_parent' ) ),
+                            // new depth
+                            (new CaseWhen() )
+                            ->when(
+                                // same depth
+                                new Expression(
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Expression( new Identifier( '_depth' ) ) ),
+                                            new From( new Identifier( '_move' ) )
+                                        )
+                                    ),
+                                    new Operator( ">=" ),
+                                    new Identifier( 'depth' ),
+                                ),
+                                // substract when under -1
+                                new Expression(
+                                    new Identifier( 'depth' ),
+                                    new Operator( "+" ),
+                                    ( new CaseWhen( new Value( $placement ) ) )
+                                    ->when(
+                                        new Value( 'under' ),
+                                        new Expression( new Value( 1 ), new Cast( 'int' ) )
+                                    )->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) ),
+                                    new Operator( "-" ),
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Expression( new Identifier( '_depth' ) ) ),
+                                            new From( new Identifier( '_move' ) )
+                                        )
+                                    )
+                                )
+                            )
+                            ->else(
+                                new Expression(
+                                    new Bracket(
+                                        new Statement(
+                                            new Select( new Expression( new Identifier( '_depth' ) ) ),
+                                            new From( new Identifier( '_move' ) )
+                                        )
+                                    ),
+                                    new Operator( "+" ),
+                                    new Identifier( 'depth' ),
+                                    new Operator( "+" ),
+                                    ( new CaseWhen( new Value( $placement ) ) )
+                                    ->when(
+                                        new Value( 'under' ),
+                                        new Expression( new Value( 1 ), new Cast( 'int' ) )
+                                    )->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) )
+                                )
+                            )
+                            ->as( new Identifier( '_depth_diff' ) ),
+                            // new left
+                            ( new CaseWhen( new Value( $placement ) ) )
                             ->when(
                                 new Value( 'before' ),
                                 (new Expression( new Identifier( 'left' ) ) )
@@ -581,7 +640,6 @@
             );
 
             $upd = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
-
             $upd->add(
                 new Identifier( 'left' ),
                 (new CaseWhen )
@@ -841,6 +899,85 @@
                     ->else( new Identifier( 'right' ) )
             );
 
+            // depth
+            $upd->add(
+                new Identifier( 'depth' ),
+                (new CaseWhen )
+                    // update new depth on moved branch
+                    ->when(
+                        new Expression(
+                            new Identifier( 'left' ),
+                            new Operator( '>=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '<=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ),
+                        (new Expression() )
+                        ->add( new Identifier( 'depth' ) )
+                        ->add( new Operator( '+' ) )
+                        ->add( new Expression(
+                                new Bracket(
+                                    new Statement(
+                                        new Select( new Identifier( '_depth_diff' ) ),
+                                        new From( new Identifier( '_to' ) )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    ->else( new Identifier( 'depth' ) )
+            );
+
+            // update parent id
+            $upd->add(
+                new Identifier( 'parentId' ),
+                (new CaseWhen )
+                    // update new depth on moved branch
+                    ->when(
+                        new Expression(
+                            new Identifier( 'left' ),
+                            new Operator( '=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_left' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                            new Operator( 'and' ),
+                            new Identifier( 'right' ),
+                            new Operator( '=' ),
+                            new Bracket(
+                                new Statement(
+                                    new Select( new Identifier( '_right' ) ),
+                                    new From( new Identifier( '_move' ) )
+                                )
+                            ),
+                        ),
+                        new Bracket(
+                            new Statement(
+                                new Select( new Identifier( '_new_parent' ) ),
+                                new From( new Identifier( '_to' ) )
+                            )
+                        )
+                    )
+                    ->else( new Identifier( 'parentId' ) )
+            );
+
+//            var_dump( $cte->stringify() );
+//            die();
+
 
             return [ $cte, $upd ];
         }
@@ -877,16 +1014,22 @@
 
                 if ( $this->_under ) {
                     [$cte, $upd] = $this->cteMove( $this->_under, 'under' );
-
-                    $query = static::buildQuery();
-                    $query->stmt->add( $cte );
-                    $query->stmt->setCommand( $upd );
-
-//                    var_dump( $query->stmt->stringify() );
-//                    die();
-
-                    $query->run();
                 }
+
+                if ( $this->_after ) {
+                    [$cte, $upd] = $this->cteMove( $this->_after, 'after' );
+                }
+
+                if ( $this->_before ) {
+                    [$cte, $upd] = $this->cteMove( $this->_after, 'before' );
+                }
+
+
+                $query = static::buildQuery();
+                $query->stmt->add( $cte );
+                $query->stmt->setCommand( $upd );
+
+                $query->run();
             }
 
             return $this;
@@ -900,7 +1043,7 @@
                 'left',
                 'right',
                 'depth',
-                'parent_id',
+                'parentId',
             ];
 
             $cte = new CTE();
