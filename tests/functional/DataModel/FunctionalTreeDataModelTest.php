@@ -323,82 +323,82 @@
             ] );
         }
 
-//        public function testDeeplyNestedMove() {
-//
-//
-//            $struct = [
-//                "a" => [
-//                    "b" => [
-//                        "c" => [],
-//                        "d" => []
-//                    ],
-//                ],
-//                "e" => [
-//                    "f" => [
-//                        "g" => [],
-//                        "h" => []
-//                    ],
-//                ],
-//            ];
-//
-//            $this->createStructure( $struct );
-//
-//            TreeDummy::findSingle( [ 'name' => 'b' ] )->under( TreeDummy::findSingle( [ 'name' => 'e' ] ) )->save();
-//
-//            $struct = [
-//                "a" => [],
-//                "e" => [
-//                    "b" => [
-//                        "c" => [],
-//                        "d" => []
-//                    ],
-//                    "f" => [
-//                        "g" => [],
-//                        "h" => []
-//                    ],
-//                ],
-//            ];
-//
-//            $this->validateStruct( $struct );
-//
-//            TreeDummy::findSingle( [ 'name' => 'c' ] )->under( TreeDummy::findSingle( [ 'name' => 'a' ] ) )->save();
-//
-//            $struct = [
-//                "a" => [
-//                    "c" => [],
-//                ],
-//                "e" => [
-//                    "b" => [
-//                        "d" => []
-//                    ],
-//                    "f" => [
-//                        "g" => [],
-//                        "h" => []
-//                    ],
-//                ],
-//            ];
-//
-//            $this->validateStruct( $struct );
-//
-//            TreeDummy::findSingle( [ 'name' => 'a' ] )->under( TreeDummy::findSingle( [ 'name' => 'h' ] ) )->save();
-//
-//            $struct = [
-//                "e" => [
-//                    "b" => [
-//                        "d" => []
-//                    ],
-//                    "f" => [
-//                        "g" => [],
-//                        "h" => [
-//                            "a" => [
-//                                "c" => [],
-//                            ],
-//                        ]
-//                    ],
-//                ],
-//            ];
-//
-//            $this->validateStruct( $struct );
-//        }
+        public function testDeeplyNestedMove() {
+
+
+            $struct = [
+                "a" => [
+                    "b" => [
+                        "c" => [],
+                        "d" => []
+                    ],
+                ],
+                "e" => [
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->createStructure( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'b' ] )->under( TreeDummy::findSingle( [ 'name' => 'e' ] ) )->save();
+
+            $struct = [
+                "a" => [],
+                "e" => [
+                    "b" => [
+                        "c" => [],
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'c' ] )->under( TreeDummy::findSingle( [ 'name' => 'a' ] ) )->save();
+
+            $struct = [
+                "a" => [
+                    "c" => [],
+                ],
+                "e" => [
+                    "b" => [
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => []
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+
+            TreeDummy::findSingle( [ 'name' => 'a' ] )->under( TreeDummy::findSingle( [ 'name' => 'h' ] ) )->save();
+
+            $struct = [
+                "e" => [
+                    "b" => [
+                        "d" => []
+                    ],
+                    "f" => [
+                        "g" => [],
+                        "h" => [
+                            "a" => [
+                                "c" => [],
+                            ],
+                        ]
+                    ],
+                ],
+            ];
+
+            $this->validateStruct( $struct );
+        }
 
     }
