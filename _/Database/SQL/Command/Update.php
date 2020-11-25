@@ -32,6 +32,7 @@
 
             $wrappedExpression = $this->wrap( $expression );
             $this->addChild( $wrappedExpression );
+            $this->addChild( $column );
 
             $this->columns [] = [
                 $column,
