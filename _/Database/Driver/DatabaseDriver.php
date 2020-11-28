@@ -217,8 +217,6 @@
 
         public function run( QueryPart $query ) {
 
-//            $result = $this->connectionHandle->query( $query->stringify( $this ) );
-
             $this->prepare( $query->stringify( $this ) );
 
             foreach ( $query->fetchBindings() as $bind => $value ) {

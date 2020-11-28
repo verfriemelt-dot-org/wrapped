@@ -280,7 +280,13 @@
 
             $query->limit( 1 );
 
-            return (new static() )->initData( $query->fetch() );
+            $result = $query->fetch();
+
+            if ( $result ) {
+                return (new static() )->initData( $result );
+            }
+
+            return null;
         }
 
         protected static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
@@ -355,7 +361,7 @@
             return $this;
         }
 
-        protected function prepareDataForStorage( bool $includeNonFuzzy = false ):array {
+        protected function prepareDataForStorage( bool $includeNonFuzzy = false ): array {
 
             $result = [];
 

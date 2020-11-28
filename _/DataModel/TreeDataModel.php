@@ -1093,14 +1093,17 @@
 
             $selectString = implode( ",", $columns );
 
-            $query = "SELECT {$selectString}
-                        FROM {$tableName} AS node, {$tableName} AS parent
-                        WHERE node.{$databaseHandle->quoteIdentifier( 'left' )} BETWEEN parent.{$databaseHandle->quoteIdentifier( 'left' )} AND parent.{$databaseHandle->quoteIdentifier( 'right' )}
-                        AND node.id = {$id}
-                        ORDER BY parent.{$databaseHandle->quoteIdentifier( 'left' )}";
+            $query = static::buildSelectQuery();
 
+            $query->stmt->add( new Where( new Expression(
+                        new Identifier( "left" ), new Operator( "<=" ), new Value( $this->getLeft() ),
+                        new Operator( "AND" ),
+                        new Identifier( "right" ), new Operator( ">=" ), new Value( $this->getLeft() ),
+                ) ) );
 
-            return Collection::buildFromPdoResult( new static, $databaseHandle->query( $query ) );
+            $query->order( [ [ 'left', 'asc' ] ] );
+
+            return Collection::buildFromQuery( new static, $query );
         }
 
         /**

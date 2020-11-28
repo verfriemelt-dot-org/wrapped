@@ -234,11 +234,11 @@
         }
 
         public function fetchAll(): array {
-            return $this->run()->fetchAll();
+            return $this->run()->fetchAll() ?: [];
         }
 
-        public function fetch(): array {
-            return $this->run()->fetch();
+        public function fetch(): ?array {
+            return $this->run()->fetch() ?: null;
         }
 
         public function run() {
