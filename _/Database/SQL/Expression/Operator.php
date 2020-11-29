@@ -41,13 +41,20 @@
             'asc nulls first',
             'desc nulls first',
             'distinct',
+            'is true',
+            'is false',
+            'is null',
+            'is not true',
+            'is not false',
+            'is not null',
+            'is distinct from true',
+            'is distinct from false',
+            'is distinct from null',
         ];
 
         protected string $operator;
 
         public function __construct( string $op ) {
-
-
 
             if ( !in_array( strtolower( $op ), static::OPTERATORS ) ) {
                 throw new Exception( "illegal operator: »{$op}«" );

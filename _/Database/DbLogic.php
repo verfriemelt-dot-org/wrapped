@@ -10,7 +10,6 @@
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
     use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Order;
 
     class DbLogic {
@@ -76,31 +75,26 @@
         }
 
         public function isNull() {
-            $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Value( null ) );
+            $this->expression->add( new Operator( 'is null' ) );
 
             return $this;
         }
 
         public function isNotNull() {
-            $this->expression->add( new Operator( 'is not' ) );
-            $this->expression->add( new Value( null ) );
+            $this->expression->add( new Operator( 'is not null' ) );
 
             return $this;
         }
 
         public function isTrue() {
-            $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Value( true ) );
+            $this->expression->add( new Operator( 'is true' ) );
 
 
             return $this;
         }
 
         public function isFalse() {
-            $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Value( false ) );
-
+            $this->expression->add( new Operator( 'is false' ) );
 
             return $this;
         }

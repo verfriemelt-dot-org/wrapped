@@ -161,7 +161,7 @@
 
             array_map( function ( string $column, $value ) use ( $expression ) {
 
-                if ( $expression->fetchLastExpressionItem() !== null && !($expression->fetchLastExpressionItem() instanceof Operator) ) {
+                if ( $expression->fetchLastExpressionItem() !== null ) {
                     $expression->add(
                         new Operator( 'and' )
                     );
@@ -182,8 +182,8 @@
                     }
 
                     if ( in_array( $value, [ false, true, null ], true ) ) {
-                        $expression->add( new Operator( 'is' ) );
-                        $expression->add( new Value( $value ) );
+                        // cast to operator directly IS TRUE, IS FALSE, IS NULL
+                        $expression->add( new Operator( 'is ' . (new Value( $value ))->stringify() ) );
                     } else {
                         $expression->add( new Operator( '=' ) );
                         $expression->add( new Value( $value ) );

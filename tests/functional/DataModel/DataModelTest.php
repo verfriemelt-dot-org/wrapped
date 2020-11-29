@@ -1,6 +1,6 @@
 <?php
 
-    namespace functional;
+    namespace functional\DataModel;
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\Database;
@@ -35,7 +35,7 @@
 
     }
 
-    class FunctionDataModelTest
+    class DataModelTest
     extends TestCase {
 
         static $connection;
