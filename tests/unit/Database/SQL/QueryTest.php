@@ -29,8 +29,7 @@
                 "column" => null
             ] );
 
-            $this->assertStringContainsString( 'SELECT column FROM table WHERE column IS null', $query->fetchStatement()->stringify() );
+            $this->assertStringContainsString( 'SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify() );
         }
 
     }
-    

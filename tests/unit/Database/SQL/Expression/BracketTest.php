@@ -2,7 +2,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
 
     class BracketTest
     extends TestCase {
@@ -15,7 +15,7 @@
 
             $bracket = new Bracket;
             $bracket->add(
-                new Primitive( true )
+                new Value( true )
             );
 
             $this->assertSame( '( true )', $bracket->stringify() );

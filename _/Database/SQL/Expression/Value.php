@@ -57,13 +57,28 @@
 
             switch ( $type ) {
 
+
+                case 'array':
+
+                    $values = array_map( fn( $e ) => (new Value( $e ) )->stringify(), $this->value );
+                    $value = "{" . implode( ',', $values ) . "}";
+                    break;
                 case 'integer':
                     $value = $this->value;
                     break;
+                case 'boolean':
+                    $value = $this->value ? 'true' : 'false';
+                    break;
                 case 'string':
-                    // this is the non quoted representation! this is not a security issue
-                    // because this should never be executed
-                    $value = "'{$this->value}'";
+
+                    if ( $this->value === '' ) {
+                        $value = '';
+                        break;
+                    }
+
+                    $value = str_replace( "'", "''", $this->value );
+                    $value = "'{$value}'";
+
                     break;
                 case 'NULL':
                     $value = 'NULL';

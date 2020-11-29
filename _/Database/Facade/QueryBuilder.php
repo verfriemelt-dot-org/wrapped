@@ -21,7 +21,6 @@
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
@@ -104,7 +103,7 @@
 
         public function delete( $table ) {
 
-            $this->delete = new Delete( new Identifier( ...  $this->boxIdent($table) ) );
+            $this->delete = new Delete( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->delete );
 
             return $this;
@@ -112,7 +111,7 @@
 
         public function update( $table, array $cols ) {
 
-            $this->update = new Update( new Identifier( ...  $this->boxIdent($table) ) );
+            $this->update = new Update( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->update );
 
             array_map( fn( string $column, $value ) => $this->update->add( new Identifier( $column ), new Value( $value ) ), array_keys( $cols ), $cols );
@@ -122,7 +121,7 @@
 
         public function insert( $table, $cols ) {
 
-            $this->insert = new Insert( new Identifier( ...  $this->boxIdent($table) ) );
+            $this->insert = new Insert( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->insert );
 
             array_map( fn( string $column ) => $this->insert->add( new Identifier( $column ) ), $cols );
@@ -184,7 +183,7 @@
 
                     if ( in_array( $value, [ false, true, null ], true ) ) {
                         $expression->add( new Operator( 'is' ) );
-                        $expression->add( new Primitive( $value ) );
+                        $expression->add( new Value( $value ) );
                     } else {
                         $expression->add( new Operator( '=' ) );
                         $expression->add( new Value( $value ) );

@@ -2,7 +2,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
 
     class ExpressionTest
     extends TestCase {
@@ -16,7 +16,7 @@
             $exp = new Expression();
             $exp->add(
                 (new Expression() )
-                    ->add( new Primitive( true ) )
+                    ->add( new Value( true ) )
             );
 
 

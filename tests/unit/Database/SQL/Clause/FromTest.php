@@ -4,7 +4,7 @@
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Command\Select;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
 
     class FromTest
     extends TestCase {
@@ -24,7 +24,7 @@
 
         public function testFromExpression() {
             $from = new From(
-                (new Select( ) )->add( new Primitive( true ) )
+                (new Select( ) )->add( new Value( true ) )
             );
             $this->assertSame( 'FROM ( SELECT true )', $from->stringify() );
         }

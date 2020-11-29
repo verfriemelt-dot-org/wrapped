@@ -9,7 +9,7 @@
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
+    use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Order;
 
@@ -77,21 +77,21 @@
 
         public function isNull() {
             $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Primitive( null ) );
+            $this->expression->add( new Value( null ) );
 
             return $this;
         }
 
         public function isNotNull() {
             $this->expression->add( new Operator( 'is not' ) );
-            $this->expression->add( new Primitive( null ) );
+            $this->expression->add( new Value( null ) );
 
             return $this;
         }
 
         public function isTrue() {
             $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Primitive( true ) );
+            $this->expression->add( new Value( true ) );
 
 
             return $this;
@@ -99,7 +99,7 @@
 
         public function isFalse() {
             $this->expression->add( new Operator( 'is' ) );
-            $this->expression->add( new Primitive( false ) );
+            $this->expression->add( new Value( false ) );
 
 
             return $this;

@@ -7,7 +7,6 @@
     use \Wrapped\_\Database\SQL\Command\Insert;
     use \Wrapped\_\Database\SQL\Command\Select;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
 
@@ -19,7 +18,7 @@
         }
 
         public function testMinimalSelect() {
-            $statement = new Statement( (new Select() )->add( new Primitive( true ) ) );
+            $statement = new Statement( (new Select() )->add( new Value( true ) ) );
             $this->assertSame( 'SELECT true', $statement->stringify() );
         }
 
@@ -28,7 +27,7 @@
                 (new Select() )
                     ->add(
                         (new Select() )
-                        ->add( new Primitive( true ) )
+                        ->add( new Value( true ) )
                     )
             );
             $this->assertSame( 'SELECT ( SELECT true )', $statement->stringify() );
@@ -43,7 +42,7 @@
             );
 
             $statement->add( new From( new Identifier( 'table' ) ) );
-            $statement->add( new Where( new Primitive( true ) ) );
+            $statement->add( new Where( new Value( true ) ) );
             $this->assertSame( 'SELECT column_a FROM table WHERE true', $statement->stringify() );
         }
 
@@ -54,7 +53,7 @@
                         new Identifier( 'column_a' )
                     )
             );
-            $statement->add( (new Select() )->add( new Primitive( true ) ) );
+            $statement->add( (new Select() )->add( new Value( true ) ) );
             $this->assertSame( 'INSERT INTO test ( column_a ) SELECT true', $statement->stringify() );
         }
 

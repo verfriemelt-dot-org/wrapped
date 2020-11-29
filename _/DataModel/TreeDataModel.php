@@ -16,7 +16,6 @@
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\Primitive;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
@@ -319,7 +318,7 @@
                         )
                         ->add(
                             (new Expression(
-                                new Primitive( null ), new Cast( 'int' )
+                                new Value( null ), new Cast( 'int' )
                             ) )->addAlias( new Identifier( '_parent_id' ) )
                         )
                     )
