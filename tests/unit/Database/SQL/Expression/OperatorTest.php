@@ -11,7 +11,7 @@
         public function testInit() {
 
             new Operator( '=' );
-            new OperatorExpression( 'in', (new Value( 1 ) )->useBinding( false ) );
+            new OperatorExpression( 'in', (new Value( 1 ) ) );
         }
 
         public function testSimpleOperator() {
@@ -22,13 +22,12 @@
 
         public function testOperatorExpression() {
             $op = new OperatorExpression( 'in',
-                (new Value( 1 ) )->useBinding( false ),
-                (new Value( 2 ) )->useBinding( false ),
-                (new Value( 3 ) )->useBinding( false ),
+                (new Value( 1 ) ),
+                (new Value( 2 ) ),
+                (new Value( 3 ) ),
             );
 
             $this->assertSame( 'IN ( 1, 2, 3 )', $op->stringify() );
         }
 
     }
-    

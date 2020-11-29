@@ -23,7 +23,7 @@
 
         public function testSimple() {
             $update = new Update( new Identifier( 'table' ) );
-            $update->add( new Identifier( 'test' ), (new Value( 1 ) )->useBinding( false ) );
+            $update->add( new Identifier( 'test' ), (new Value( 1 ) ) );
 
             $expected = 'UPDATE table SET test = 1';
 
@@ -33,13 +33,13 @@
         public function testComplex() {
 
             $update = new Update( new Identifier( 'table' ) );
-            $update->add( new Identifier( 'test' ), (new Value( 1 ) )->useBinding( false ) );
+            $update->add( new Identifier( 'test' ), (new Value( 1 ) ) );
             $update->add(
                 new Identifier( 'complex' ),
                 (new Expression() )
                     ->add( new Identifier( 'complex' ) )
                     ->add( new Operator( '+' ) )
-                    ->add( (new Value( 1 ) )->useBinding( false ) )
+                    ->add( (new Value( 1 ) ) )
             );
 
             $expected = 'UPDATE table SET test = 1, complex = complex + 1';

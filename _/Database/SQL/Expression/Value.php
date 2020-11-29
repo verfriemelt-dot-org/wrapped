@@ -25,8 +25,6 @@
 
         protected string $bind = ':bind';
 
-        protected bool $useBinding = true;
-
         public function __construct( mixed $value ) {
 
             if ( is_object( $value ) && $value instanceof PropertyObjectInterface ) {
@@ -42,11 +40,6 @@
             return $this->value;
         }
 
-        public function useBinding( $bool = true ) {
-            $this->useBinding = $bool;
-            return $this;
-        }
-
         public function stringify( DatabaseDriver $driver = null ): string {
 
             if ( $driver ) {
@@ -59,16 +52,18 @@
 
 
                 case 'array':
-
                     $values = array_map( fn( $e ) => (new Value( $e ) )->stringify(), $this->value );
-                    $value = "{" . implode( ',', $values ) . "}";
+                    $value  = "{" . implode( ',', $values ) . "}";
                     break;
+
                 case 'integer':
                     $value = $this->value;
                     break;
+
                 case 'boolean':
                     $value = $this->value ? 'true' : 'false';
                     break;
+
                 case 'string':
 
                     if ( $this->value === '' ) {
@@ -80,9 +75,11 @@
                     $value = "'{$value}'";
 
                     break;
+
                 case 'NULL':
                     $value = 'NULL';
                     break;
+
                 default: throw new Exception( "unsupported type: " . gettype( $this->value ) );
             }
 

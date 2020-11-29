@@ -111,15 +111,20 @@
          */
         public function bind( PDOStatement $statement, $param, $var ) {
 
-            $type = PDO::PARAM_STR;
-
-            if ( gettype( $var ) === 'boolean' ) {
-                $type = PDO::PARAM_BOOL;
-            }
-
-            if ( gettype( $var ) === 'integer' ) {
-                $type = PDO::PARAM_INT;
-            }
+//            $type = PDO::PARAM_STR;
+//
+//            switch ( gettype( $var ) ) {
+//                case 'boolean':
+//                    $type = PDO::PARAM_BOOL;
+//                    break;
+//                case 'integer':
+//                case 'integer':
+//                    $type = PDO::PARAM_INT;
+//                    break;
+//                case 'NULL':
+//                    $type = PDO::PARAM_NULL;
+//                    break;
+//            }
 
             $statement->bindValue( $param, $var );
 
