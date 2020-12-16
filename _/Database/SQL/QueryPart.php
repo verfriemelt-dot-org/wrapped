@@ -19,6 +19,11 @@
 
         public function addDataModelContext( DataModel $context ) {
 
+            if ( in_array($context, $this->context )) {
+                return $this;
+            }
+
+
             $this->context[] = $context;
 
             // attach context to every child
@@ -49,5 +54,4 @@
         public function fetchAllChildren() {
             return array_merge( [ $this ], ... array_map( fn( $child ) => $child->fetchAllChildren(), $this->children ) );
         }
-
     }
