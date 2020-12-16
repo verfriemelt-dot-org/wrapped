@@ -34,7 +34,7 @@
 
     }
 
-    class FunctionalTreeDataModelTest
+    class lTreeDataModelTest
     extends TestCase {
 
         static $connection;

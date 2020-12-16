@@ -63,7 +63,7 @@
 
     }
 
-    class FunctionalDataModelTypedPropertiesTest
+    class DataModelTypedPropertiesTest
     extends TestCase {
 
         static $connection;
