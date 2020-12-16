@@ -11,6 +11,7 @@
     class Dummy
     extends DataModel {
 
+        #[test]
         public ?int $id = null;
 
         public ?string $name = null;

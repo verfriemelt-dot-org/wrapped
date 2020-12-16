@@ -36,7 +36,17 @@
 
         public ?int $parentId = null;
 
-        private $_after, $_before, $_under, $_atParentRight = true;
+        CONST INSERT_AFTER = 'after';
+
+        CONST INSERT_BEFORE = 'before';
+
+        CONST INSERT_UNDER_LEFT = 'under_left';
+
+        CONST INSERT_UNDER_RIGHT = 'under_right';
+
+        private string $insertMode = self::INSERT_UNDER_LEFT;
+
+        private ?TreeDataModel $insertPosition = null;
 
         static protected $_transactionInitiatorId = null;
 
@@ -146,9 +156,8 @@
 
             $this->validateMove( $after );
 
-            $this->_after   = $after;
-            $this->parentId = $after->getId();
-
+            $this->insertMode       = self::INSERT_AFTER;
+            $this->insertPosition = $after;
             return $this;
         }
 
@@ -177,8 +186,8 @@
 
             $this->validateMove( $before );
 
-            $this->_before  = $before;
-            $this->parentId = $before->getId();
+            $this->insertMode       = self::INSERT_BEFORE;
+            $this->insertPosition = $before;
 
             return $this;
         }
@@ -194,8 +203,8 @@
 
             $this->validateMove( $parent );
 
-            $this->_under         = $parent;
-            $this->_atParentRight = $atEnd;
+            $this->insertMode       = $atEnd ? self::INSERT_UNDER_RIGHT : self::INSERT_UNDER_LEFT;
+            $this->insertPosition = $parent;
 
             return $this;
         }
@@ -353,7 +362,8 @@
          */
         public function appendUnderSelect( CTE $cte ) {
 
-            $parentId = $this->_under->getId();
+            $parentId = $this->insertPosition->getId();
+
             // parent
             $cte->with(
                 new Identifier( '_parent' ),
@@ -434,7 +444,7 @@
             );
         }
 
-        protected function cteMove( TreeDataModel $to, $placement = 'under' ) {
+        protected function cteMove( TreeDataModel $to ) {
 
             $cte = new CTE();
 
@@ -456,11 +466,16 @@
                 new Identifier( '_to' ),
                 (new Statement( new Select(
                             // parent id
-                            ( new CaseWhen( new Value( $placement ) ) )
+                            ( new CaseWhen( new Value( $this->insertMode ) ) )
                             ->when(
-                                new Value( 'under' ),
+                                new Value( self::INSERT_UNDER_LEFT ),
                                 new Identifier( 'id' )
-                            )->else( new Identifier( 'parent_id' ) )
+                            )
+                            ->when(
+                                new Value( self::INSERT_UNDER_RIGHT ),
+                                new Identifier( 'id' )
+                            )
+                            ->else( new Identifier( 'parent_id' ) )
                             ->as( new Identifier( '_new_parent' ) ),
                             // new depth
                             (new CaseWhen() )
@@ -480,11 +495,16 @@
                                 new Expression(
                                     new Identifier( 'depth' ),
                                     new Operator( "+" ),
-                                    ( new CaseWhen( new Value( $placement ) ) )
+                                    ( new CaseWhen( new Value( $this->insertMode ) ) )
                                     ->when(
-                                        new Value( 'under' ),
+                                        new Value( self::INSERT_UNDER_LEFT ),
                                         new Expression( new Value( 1 ), new Cast( 'int' ) )
-                                    )->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) ),
+                                    )
+                                    ->when(
+                                        new Value( self::INSERT_UNDER_RIGHT ),
+                                        new Expression( new Value( 1 ), new Cast( 'int' ) )
+                                    )
+                                    ->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) ),
                                     new Operator( "-" ),
                                     new Bracket(
                                         new Statement(
@@ -505,26 +525,35 @@
                                     new Operator( "+" ),
                                     new Identifier( 'depth' ),
                                     new Operator( "+" ),
-                                    ( new CaseWhen( new Value( $placement ) ) )
+                                    ( new CaseWhen( new Value( $this->insertMode ) ) )
                                     ->when(
-                                        new Value( 'under' ),
+                                        new Value( self::INSERT_UNDER_LEFT ),
                                         new Expression( new Value( 1 ), new Cast( 'int' ) )
-                                    )->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) )
+                                    )
+                                    ->when(
+                                        new Value( self::INSERT_UNDER_RIGHT ),
+                                        new Expression( new Value( 1 ), new Cast( 'int' ) )
+                                    )
+                                    ->else( new Expression( new Value( 0 ), new Cast( 'int' ) ) )
                                 )
                             )
                             ->as( new Identifier( '_depth_diff' ) ),
                             // new left
-                            ( new CaseWhen( new Value( $placement ) ) )
+                            ( new CaseWhen( new Value( $this->insertMode ) ) )
                             ->when(
-                                new Value( 'before' ),
+                                new Value( self::INSERT_BEFORE ),
                                 (new Expression( new Identifier( 'left' ) ) )
                             )
                             ->when(
-                                new Value( 'under' ),
+                                new Value( self::INSERT_UNDER_LEFT ),
                                 (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 1 ) ) )
                             )
                             ->when(
-                                new Value( 'after' ),
+                                new Value( self::INSERT_UNDER_RIGHT ),
+                                new Identifier( 'right' )
+                            )
+                            ->when(
+                                new Value( self::INSERT_AFTER ),
                                 (new Expression( new Identifier( 'right' ), new Operator( "+" ), new Value( 1 ) ) ),
                             )
                             ->as( new Identifier( '_to_pos' ) )
@@ -995,34 +1024,20 @@
             }
 
             // clear out every movement operation
-            $this->_after  = null;
-            $this->_before = null;
-            $this->_under  = null;
+            $this->insertPosition = null;
 
             return $this;
         }
 
         protected function saveToDatabase(): static {
 
-            $isMovement = $this->_after !== null || $this->_before !== null || $this->_under !== null;
-
+            $isMovement = $this->insertPosition !== null;
 
             if ( !$isMovement ) {
                 parent::saveToDatabase();
             } else {
 
-                if ( $this->_under ) {
-                    [$cte, $upd] = $this->cteMove( $this->_under, 'under' );
-                }
-
-                if ( $this->_after ) {
-                    [$cte, $upd] = $this->cteMove( $this->_after, 'after' );
-                }
-
-                if ( $this->_before ) {
-                    [$cte, $upd] = $this->cteMove( $this->_after, 'before' );
-                }
-
+                [$cte, $upd] = $this->cteMove( $this->insertPosition, $this->insertMode );
 
                 $query = static::buildQuery();
                 $query->stmt->add( $cte );
@@ -1048,7 +1063,7 @@
             $cte = new CTE();
             $query->stmt->add( $cte );
 
-            if ( $this->_under ) {
+            if ( $this->insertPosition ) {
                 $this->appendUnderSelect( $cte );
                 $query->stmt->setCommand( $this->generateInsertCommand( '_parent' ) );
             } else {
