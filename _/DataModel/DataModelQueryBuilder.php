@@ -84,7 +84,12 @@
             return $this;
         }
 
-        public function get(): Collection {
+        public function get( ?Collection $overrideInstance = null ): Collection {
+
+            if ( $overrideInstance ) {
+                return $overrideInstance::buildFromQuery( $this->prototype, $this );
+            }
+
             return Collection::buildFromQuery( $this->prototype, $this );
         }
 
