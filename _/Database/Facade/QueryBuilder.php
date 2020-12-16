@@ -211,6 +211,7 @@
         }
 
         public function groupBy( array $f ) {
+
             $this->groupBy = new GroupBy( new Identifier( ... $f ) );
             $this->stmt->add( $this->groupBy );
             return $this;
@@ -279,6 +280,11 @@
             if ( $logic->getOrder() ) {
                 $this->order = $logic->getOrder();
                 $this->stmt->add( $this->order );
+            }
+
+            if ( $logic->getGroupBy() ) {
+                $this->groupBy = $logic->getGroupBy();
+                $this->stmt->add( $this->groupBy );
             }
 
             return $this;
