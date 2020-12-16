@@ -37,11 +37,11 @@
          * [ "key" => "value" ]
          * @param type $data
          */
-        public function initData( $data ) {
+        public function initData( $data, bool $deserialize = false ) {
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
 
-                $conventionName = $attribute->getNamingConvention()->getString();
+                $conventionName = $deserialize ? $attribute->getName() : $attribute->getNamingConvention()->getString() ;
 
                 // skip attribute
                 if ( !isset( $data[$conventionName] ) ) {
@@ -142,7 +142,7 @@
         }
 
         public function unserialize( $serialized ) {
-            $this->initData( (array) json_decode( $serialized ) );
+            $this->initData( (array) json_decode( $serialized ), true );
         }
 
         /**

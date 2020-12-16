@@ -10,7 +10,24 @@
     extends DataModel
     implements TablenameOverride {
 
-        public $id, $uniqId, $channel, $key, $data, $startDate, $priority = 100, $locked   = 0;
+        public $id;
+
+#[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+
+        public $uniqId;
+
+        public $channel;
+
+        public $key;
+
+        public $data;
+#[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+
+        public $startDate;
+
+        public $priority = 100;
+
+        public $locked   = 0;
 
         public static function fetchTablename(): string {
             return "queuebackend";
