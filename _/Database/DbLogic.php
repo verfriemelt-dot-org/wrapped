@@ -29,6 +29,8 @@
 
         private ?Order $order = null;
 
+        private ?Having $having = null;
+
         /**
          *
          * @return \static
@@ -274,6 +276,10 @@
 
         public function getOffset() {
             return $this->offset;
+        }
+
+        public function getHaving() {
+            return $this->having;
         }
 
         /**

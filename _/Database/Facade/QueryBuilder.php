@@ -7,6 +7,7 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\SQL\Clause\From;
     use \Wrapped\_\Database\SQL\Clause\GroupBy;
+    use \Wrapped\_\Database\SQL\Clause\Having;
     use \Wrapped\_\Database\SQL\Clause\Limit;
     use \Wrapped\_\Database\SQL\Clause\Offset;
     use \Wrapped\_\Database\SQL\Clause\Order;
@@ -53,6 +54,8 @@
         public Offset $offset;
 
         public GroupBy $groupBy;
+
+        public Having $having;
 
         public ?DatabaseDriver $db = null;
 
@@ -183,7 +186,7 @@
 
                     if ( in_array( $value, [ false, true, null ], true ) ) {
                         // cast to operator directly IS TRUE, IS FALSE, IS NULL
-                        $expression->add( new Operator( 'is ' . (new Value( $value ))->stringify() ) );
+                        $expression->add( new Operator( 'is ' . (new Value( $value ) )->stringify() ) );
                     } else {
                         $expression->add( new Operator( '=' ) );
                         $expression->add( new Value( $value ) );
@@ -285,6 +288,11 @@
             if ( $logic->getGroupBy() ) {
                 $this->groupBy = $logic->getGroupBy();
                 $this->stmt->add( $this->groupBy );
+            }
+
+            if ( $logic->getHaving() ) {
+                $this->having = $logic->getHaving();
+                $this->stmt->add( $this->having );
             }
 
             return $this;
