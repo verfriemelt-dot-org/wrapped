@@ -72,7 +72,7 @@
             $parent->reload();
 
             $this->assertSame( 1, $parent->getId(), 'id' );
-            $this->assertSame( 1, $parent->getLeft(), 'left' );
+            $this->assertSame( 1, $parent->getLeft(), 'parent left' );
             $this->assertSame( 4, $parent->getRight(), 'right' );
             $this->assertSame( 0, $parent->getDepth(), 'depth' );
             $this->assertSame( 'parent', $parent->getName(), 'name' );
@@ -542,15 +542,27 @@
 
             $instance = new TreeDummy();
             $instance->setName( "i" );
-            $instance->after( TreeDummy::findSingle( [ 'name' => "a" ] ) );
-
             $instance->save();
 
             $this->validateStruct( $struct = [
                 "a" => [],
-                "i" => [],
                 "b" => [],
                 "c" => [],
+                "i" => [],
+            ] );
+
+            $instance = new TreeDummy();
+            $instance->setName( "i2" );
+            $instance->after( TreeDummy::findSingle( [ 'name' => 'a' ] ) );
+            $instance->save();
+
+
+            $this->validateStruct( $struct = [
+                "a" => [],
+                "i2" => [],
+                "b" => [],
+                "c" => [],
+                "i" => [],
             ] );
         }
 

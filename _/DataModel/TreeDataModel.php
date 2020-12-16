@@ -133,8 +133,8 @@
                 throw new Exception( "illegal mix of items" );
             }
 
-            if ( $this->id == $moveTo->getId() ) {
-                throw new DatabaseException( "cannot move model after itself" );
+            if ( $this->id && $this->id === $moveTo->getId() ) {
+                throw new DatabaseException( "cannot move model »{$this->id}« after »{$moveTo->getId()}«" );
             }
 
             if (
@@ -156,7 +156,7 @@
 
             $this->validateMove( $after );
 
-            $this->insertMode       = self::INSERT_AFTER;
+            $this->insertMode     = self::INSERT_AFTER;
             $this->insertPosition = $after;
             return $this;
         }
@@ -186,7 +186,7 @@
 
             $this->validateMove( $before );
 
-            $this->insertMode       = self::INSERT_BEFORE;
+            $this->insertMode     = self::INSERT_BEFORE;
             $this->insertPosition = $before;
 
             return $this;
@@ -203,7 +203,7 @@
 
             $this->validateMove( $parent );
 
-            $this->insertMode       = $atEnd ? self::INSERT_UNDER_RIGHT : self::INSERT_UNDER_LEFT;
+            $this->insertMode     = $atEnd ? self::INSERT_UNDER_RIGHT : self::INSERT_UNDER_LEFT;
             $this->insertPosition = $parent;
 
             return $this;
@@ -241,32 +241,6 @@
          * generates the insert part for the cte used to save new instances
          * @return Insert
          */
-        protected function generateInsertCommand( string $datasource = '_bounds' ): Insert {
-
-            return (new Insert( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
-                    ->add( ... array_map( fn( $i ) => new Identifier( $i ), array_keys( $this->prepareDataForStorage( true ) ) ) )
-                    ->add( new Identifier( 'left' ) )
-                    ->add( new Identifier( 'right' ) )
-                    ->add( new Identifier( 'depth' ) )
-                    ->add( new Identifier( 'parent_id' ) )
-                    ->addQuery(
-                        (new Statement(
-                            (new Select() )
-                            ->add( ... array_map( fn( $i ) => new Value( $i ), array_values( $this->prepareDataForStorage( true ) ) ) )
-                            ->add( new Identifier( '_left' ) )
-                            ->add( new Identifier( '_right' ) )
-                            ->add( new Identifier( '_depth' ) )
-                            ->add( new Identifier( '_parent_id' ) )
-                        )
-                        )
-                        ->add( new From( new Identifier( $datasource ) ) )
-            );
-        }
-
-        /**
-         * generates the insert part for the cte used to save new instances
-         * @return Insert
-         */
         protected function generateUpdateCommand( string $datasource = '_bounds' ): Insert {
 
             $update = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
@@ -283,57 +257,6 @@
             $upadte->add( new From( new Identifier( $datasource ) ) );
 
             return $update;
-        }
-
-        /**
-         * fetches max( right ) from the tree
-         * @param CTE $cte
-         */
-        protected function appendBoundsSelect( CTE $cte ) {
-            $cte->with(
-                new Identifier( '_bounds' ),
-                (new Statement(
-                        (new Select() )
-                        ->add(
-                            (new Expression() )
-                            ->add(
-                                (new SqlFunction(
-                                    new Identifier( 'coalesce' ),
-                                    new SqlFunction( new Identifier( 'max' ), new Identifier( 'right' ) ),
-                                    new Value( 0 )
-                                ) )
-                            )
-                            ->add( new Operator( '+' ) )
-                            ->add( new Value( 1 ) )
-                            ->addAlias( new Identifier( '_left' ) )
-                        )
-                        ->add(
-                            (new Expression() )
-                            ->add(
-                                (new SqlFunction(
-                                    new Identifier( 'coalesce' ),
-                                    new SqlFunction( new Identifier( 'max' ), new Identifier( 'right' ) ),
-                                    new Value( 0 )
-                                ) )
-                            )
-                            ->add( new Operator( '+' ) )
-                            ->add( new Value( 2 ) )
-                            ->addAlias( new Identifier( '_right' ) )
-                        )
-                        ->add(
-                            (new Expression(
-                                new Value( 0 ), new Cast( 'int' )
-                            ) )->addAlias( new Identifier( '_depth' ) )
-                        )
-                        ->add(
-                            (new Expression(
-                                new Value( null ), new Cast( 'int' )
-                            ) )->addAlias( new Identifier( '_parent_id' ) )
-                        )
-                    )
-                    )
-                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
-            );
         }
 
         /**
@@ -360,88 +283,184 @@
          *
          * @param CTE $cte
          */
-        public function appendUnderSelect( CTE $cte ) {
+        public function cteInsert() {
 
-            $parentId = $this->insertPosition->getId();
 
-            // parent
-            $cte->with(
-                new Identifier( '_parent' ),
-                (new Statement(
-                        new Select(
-                            (new Expression( new Identifier( 'right' ), new Operator( "-" ), new Value( 0 ) ) )->addAlias( new Identifier( '_left' ) ),
-                            (new Expression( new Identifier( 'right' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_right' ) ),
-                            (new Expression( new Identifier( 'depth' ), new Operator( "+" ), new Value( 1 ) ) )->addAlias( new Identifier( '_depth' ) ),
-                            (new Expression( new Identifier( 'id' ) ) )->addAlias( new Identifier( '_parent_id' ) ),
-                        )
-                    ) )
-                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
-                    ->add( new Where( new Expression(
-                                new Identifier( 'id' ),
-                                new Operator( "=" ),
-                                new Value( $parentId )
-                        ) ) )
-            );
+            $parentId = $this->insertPosition?->getId();
 
-            // update other nodes
-            $cte->with(
-                new Identifier( '_widen_nodes_right' ),
-                (new Statement(
-                        (new Update( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
 
-                        // left
-                        ->add(
-                            new Identifier( 'left' ),
-                            new Expression(
-                                (new CaseWhen() )
+            $cte = new CTE();
+
+            if ( $parentId ) {
+
+                $cte->with(
+                    new Identifier( '_move' ),
+                    (new Statement(
+                            new Select(
+                                // _new_parent
+                                ( new CaseWhen( new Value( $this->insertMode ) ) )
                                 ->when(
-                                    (new Expression(
-                                        new Identifier( 'left' ),
-                                        new Operator( ">=" ),
-                                        (new Bracket )
-                                        ->add(
-                                            (new Statement(
-                                                new Select( new Identifier( '_left' ) )
-                                            ) )
-                                            ->add(
-                                                new From( new Identifier( "_parent" ) )
-                                            )
-                                        )
-                                    ) ),
-                                    (new Expression(
-                                        new Identifier( 'left' ),
-                                        new Operator( "+" ),
-                                        new Value( 2 )
-                                    ) ),
+                                    new Value( self::INSERT_UNDER_LEFT ),
+                                    new Identifier( 'id' )
                                 )
-                                ->else( new Identifier( 'left' ) )
+                                ->when(
+                                    new Value( self::INSERT_UNDER_RIGHT ),
+                                    new Identifier( 'id' )
+                                )
+                                ->else( new Identifier( 'parent_id' ) )
+                                ->as( new Identifier( '_parent_id' ) )
+                                ,
+                                // _to_pos
+                                ( new CaseWhen( new Value( $this->insertMode ) ) )
+                                ->when(
+                                    new Value( self::INSERT_BEFORE ),
+                                    (new Expression( new Identifier( 'left' ) ) )
+                                )
+                                ->when(
+                                    new Value( self::INSERT_UNDER_LEFT ),
+                                    (new Expression( new Identifier( 'left' ), new Operator( "+" ), new Value( 1 ) ) )
+                                )
+                                ->when(
+                                    new Value( self::INSERT_UNDER_RIGHT ),
+                                    new Identifier( 'right' )
+                                )
+                                ->when(
+                                    new Value( self::INSERT_AFTER ),
+                                    (new Expression( new Identifier( 'right' ), new Operator( "+" ), new Value( 1 ) ) ),
+                                )
+                                ->as( new Identifier( '_to_pos' ) ),
+                                // depth
+                                ( new CaseWhen( new Value( $this->insertMode ) ) )
+                                ->when(
+                                    new Value( self::INSERT_UNDER_LEFT ),
+                                    (new Expression( new Identifier( 'depth' ), new Operator( "+" ), new Value( 1 ) ) )
+                                )
+                                ->when(
+                                    new Value( self::INSERT_UNDER_RIGHT ),
+                                    (new Expression( new Identifier( 'depth' ), new Operator( "+" ), new Value( 1 ) ) )
+                                )
+                                ->else( new Identifier( 'depth' ) )
+                                ->as( new Identifier( '_depth' ) )
                             )
-                        )
-                        // right
-                        ->add(
-                            new Identifier( 'right' ),
-                            (new Expression(
-                                new Identifier( 'right' ),
-                                new Operator( "+" ),
-                                new Value( 2 )
-                        ) ) )
-                    ) )
-                    ->add(
-                        new Where(
-                            new Expression(
-                                new Identifier( 'right' ),
-                                new Operator( '>=' ),
-                                (new Bracket )
-                                ->add(
-                                    (new Statement(
-                                        new Select( new Identifier( '_left' ) )
-                                    ) )
-                                    ->add(
-                                        new From( new Identifier( "_parent" ) )
+                        ) )
+                        ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                        ->add( new Where( new Expression(
+                                    new Identifier( 'id' ),
+                                    new Operator( "=" ),
+                                    new Value( $parentId )
+                            ) ) )
+                );
+
+                // update other nodes
+                $cte->with(
+                    new Identifier( '_widen_nodes_right' ),
+                    (new Statement(
+                            (new Update( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+
+                            // left
+                            ->add(
+                                new Identifier( 'left' ),
+                                new Expression(
+                                    (new CaseWhen() )
+                                    ->when(
+                                        (new Expression(
+                                            new Identifier( 'left' ),
+                                            new Operator( ">=" ),
+                                            (new Bracket )
+                                            ->add(
+                                                (new Statement(
+                                                    new Select( new Identifier( '_to_pos' ) )
+                                                ) )
+                                                ->add(
+                                                    new From( new Identifier( "_move" ) )
+                                                )
+                                            )
+                                        ) ),
+                                        (new Expression(
+                                            new Identifier( 'left' ),
+                                            new Operator( "+" ),
+                                            new Value( 2 )
+                                        ) ),
                                     )
-                                ) )
-                    ) )
+                                    ->else( new Identifier( 'left' ) )
+                                )
+                            )
+                            // right
+                            ->add(
+                                new Identifier( 'right' ),
+                                (new Expression(
+                                    new Identifier( 'right' ),
+                                    new Operator( "+" ),
+                                    new Value( 2 )
+                            ) ) )
+                        ) )
+                        ->add(
+                            new Where(
+                                new Expression(
+                                    new Identifier( 'right' ),
+                                    new Operator( '>=' ),
+                                    (new Bracket )
+                                    ->add(
+                                        (new Statement(
+                                            new Select( new Identifier( '_to_pos' ) )
+                                        ) )
+                                        ->add(
+                                            new From( new Identifier( "_move" ) )
+                                        )
+                                    ) )
+                        ) )
+                );
+            } else {
+
+
+                $cte->with(
+                    new Identifier( '_move' ),
+                    (new Statement(
+                            new Select(
+                                (new Expression() )
+                                ->add(
+                                    (new SqlFunction(
+                                        new Identifier( 'coalesce' ),
+                                        new SqlFunction( new Identifier( 'max' ), new Identifier( 'right' ) ),
+                                        new Value( 0 )
+                                    ) )
+                                )
+                                ->add( new Operator( '+' ) )
+                                ->add( new Value( 1 ) )
+                                ->addAlias( new Identifier( '_to_pos' ) ),
+                                // under
+                                ( new Expression( new Value( 0 ), new Cast( 'int' ) ) )->addAlias( new Identifier( '_depth' ) ),
+                                (new Expression( new Value( null ), new Cast( 'int' ) ) )->addAlias( new Identifier( '_parent_id' ) ),
+                            )
+                        ) )
+                        ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                );
+            }
+
+
+
+
+
+            $insert = (new Insert( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                ->add( ... array_map( fn( $i ) => new Identifier( $i ), array_keys( $this->prepareDataForStorage( true ) ) ) )
+                ->add( new Identifier( 'left' ) )
+                ->add( new Identifier( 'right' ) )
+                ->add( new Identifier( 'depth' ) )
+                ->add( new Identifier( 'parent_id' ) )
+                ->addQuery(
+                (new Statement(
+                    (new Select() )
+                    ->add( ... array_map( fn( $i ) => new Value( $i ), array_values( $this->prepareDataForStorage( true ) ) ) )
+                    ->add( new Expression( new Identifier( '_to_pos' ) ) )
+                    ->add( new Expression( new Identifier( '_to_pos' ), new Operator( "+" ), new Value( 1 ) ) )
+                    ->add( new Identifier( '_depth' ) )
+                    ->add( new Identifier( '_parent_id' ) )
+                )
+                )
+                ->add( new From( new Identifier( '_move' ) ) )
             );
+
+            return [ $cte, $insert ];
         }
 
         protected function cteMove( TreeDataModel $to ) {
@@ -1025,6 +1044,7 @@
 
             // clear out every movement operation
             $this->insertPosition = null;
+            $this->insertMode     = self::INSERT_UNDER_RIGHT;
 
             return $this;
         }
@@ -1060,21 +1080,19 @@
                 'parentId',
             ];
 
-            $cte = new CTE();
+            [$cte, $insert] = $this->cteInsert();
+
+            $query->stmt->setCommand( $insert );
+
             $query->stmt->add( $cte );
-
-            if ( $this->insertPosition ) {
-                $this->appendUnderSelect( $cte );
-                $query->stmt->setCommand( $this->generateInsertCommand( '_parent' ) );
-            } else {
-                $this->appendBoundsSelect( $cte );
-                $query->stmt->setCommand( $this->generateInsertCommand( '_bounds' ) );
-            }
-
             $query->returning( ... [
                 static::getPrimaryKey(),
                 ... $specialColumns
             ] );
+
+//            var_dump( $query->stringify() );
+//            die();
+
 
             return $this->initData( $query->fetch() );
         }
