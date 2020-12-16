@@ -4,25 +4,30 @@
 
     use \Exception;
     use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Clause\GroupBy;
+    use \Wrapped\_\Database\SQL\Clause\Having;
+    use \Wrapped\_\Database\SQL\Clause\Limit;
+    use \Wrapped\_\Database\SQL\Clause\Offset;
+    use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Expression\Bracket;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
     use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Order;
 
     class DbLogic {
 
-        private ?SQL\Clause\Limit $limit = null;
+        private ?Limit $limit = null;
 
-        private ?SQL\Clause\Offset $offset  = null;
+        private ?Offset $offset = null;
 
-        private ?SQL\Clause\GroupBy $groupBy = null;
+        private ?GroupBy $groupBy = null;
 
         private Expression $expression;
 
-        private ?SQL\Clause\Order $order = null;
+        private ?Order $order = null;
 
         /**
          *
@@ -190,21 +195,21 @@
             return $this;
         }
 
-        public function compile( DatabaseDriver $driver ): Where {
+        public function compile( DatabaseDriver $driver ): string {
 
             $where = new Where( $this->expression );
 
-            return $where;
+            return $where->stringify( $driver );
         }
 
         public function limit( $limit ) {
 
-            $this->limit = new SQL\Clause\Limit( new Value( $limit ) );
+            $this->limit = new Limit( new Value( $limit ) );
             return $this;
         }
 
         public function offset( $offset ) {
-            $this->offset = new SQL\Clause\Offset( new Value( $offset ) );
+            $this->offset = new Offset( new Value( $offset ) );
             return $this;
         }
 
@@ -216,13 +221,13 @@
          */
         public function groupBy( $by ) {
 
-            $this->groupBy = new SQL\Clause\GroupBy( new Identifier( $by ) );
+            $this->groupBy = new GroupBy( new Identifier( $by ) );
 
             return $this;
         }
 
-        public function having( $having ) {
-            throw new Exception( 'having not supported' );
+        public function having( Having $having ) {
+
             $this->having = $having;
             return $this;
         }
@@ -236,7 +241,7 @@
         public function order( $column, $direction = "ASC", $overrideTable = null, $skipQuote = false ) {
 
             if ( !$this->order ) {
-                $this->order = new SQL\Clause\Order();
+                $this->order = new Order();
             }
 
             $this->order->add(
@@ -247,7 +252,7 @@
             return $this;
         }
 
-        public function getOrder(): ?SQL\Clause\Order {
+        public function getOrder(): ?Order {
             return $this->order;
         }
 
@@ -256,7 +261,7 @@
         }
 
         public function getWhere() {
-            return new Where($this->expression);
+            return new Where( $this->expression );
         }
 
         public function getExpression() {
@@ -287,7 +292,5 @@
         public function __clone() {
             throw new Exception( 'molly the sheep says no' );
         }
-
-
 
     }

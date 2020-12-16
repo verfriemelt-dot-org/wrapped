@@ -326,8 +326,9 @@
                 $this->prepare( $sql );
             }
 
-            $bindings = $dbLogic->getBindings();
-            $this->bindLast( $bindings["params"], $bindings["vars"] );
+            foreach ( $dbLogic->getExpression()->fetchBindings() as $bind => $value ) {
+                $this->bindLast( $bind, $value );
+            }
 
             $this->executeLast();
 
