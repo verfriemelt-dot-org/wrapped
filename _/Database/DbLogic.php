@@ -2,20 +2,21 @@
 
     namespace Wrapped\_\Database;
 
-    use \Exception;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Clause\GroupBy;
-    use \Wrapped\_\Database\SQL\Clause\Having;
-    use \Wrapped\_\Database\SQL\Clause\Limit;
-    use \Wrapped\_\Database\SQL\Clause\Offset;
-    use \Wrapped\_\Database\SQL\Clause\Order;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\Value;
+use \Exception;
+use \Wrapped\_\Database\Driver\DatabaseDriver;
+use \Wrapped\_\Database\SQL\Clause\GroupBy;
+use \Wrapped\_\Database\SQL\Clause\Having;
+use \Wrapped\_\Database\SQL\Clause\Limit;
+use \Wrapped\_\Database\SQL\Clause\Offset;
+use \Wrapped\_\Database\SQL\Clause\Order;
+use \Wrapped\_\Database\SQL\Clause\Where;
+use \Wrapped\_\Database\SQL\Expression\Bracket;
+use \Wrapped\_\Database\SQL\Expression\Conjunction;
+use \Wrapped\_\Database\SQL\Expression\Expression;
+use \Wrapped\_\Database\SQL\Expression\Identifier;
+use \Wrapped\_\Database\SQL\Expression\Operator;
+use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
+use \Wrapped\_\Database\SQL\Expression\Value;
 
     class DbLogic {
 
@@ -173,7 +174,7 @@
          * @return DbLogic
          */
         public function addOr() {
-            $this->expression->add( new Operator( "or" ) );
+            $this->expression->add( new Conjunction( "or" ) );
             return $this;
         }
 
@@ -182,7 +183,7 @@
          * @return DbLogic
          */
         public function addAnd() {
-            $this->expression->add( new Operator( "and" ) );
+            $this->expression->add( new Conjunction( "and" ) );
             return $this;
         }
 
@@ -288,7 +289,7 @@
          */
         public function lastItemWasConjunction() {
             return
-                $this->expression->fetchLastExpressionItem() === null || $this->expression->fetchLastExpressionItem() instanceof Operator;
+                $this->expression->fetchLastExpressionItem() === null || $this->expression->fetchLastExpressionItem() instanceof Conjunction;
         }
 
         public function isEmpty() {

@@ -166,7 +166,7 @@
 
                 if ( $expression->fetchLastExpressionItem() !== null ) {
                     $expression->add(
-                        new Operator( 'and' )
+                    new \Wrapped\_\Database\SQL\Expression\Conjunction( 'and' )
                     );
                 }
 

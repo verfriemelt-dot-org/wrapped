@@ -13,13 +13,16 @@
     use \Wrapped\_\Database\SQL\Expression\Bracket;
     use \Wrapped\_\Database\SQL\Expression\CaseWhen;
     use \Wrapped\_\Database\SQL\Expression\Cast;
+    use \Wrapped\_\Database\SQL\Expression\Conjunction;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
     use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\Database\SQL\Statement;
+    use \Wrapped\_\DataModel\Collection;
     use \Wrapped\_\DataModel\DataModel;
+    use \Wrapped\_\DataModel\DataModelAnalyser;
     use \Wrapped\_\DataModel\TreeDataModel;
     use \Wrapped\_\Exception\Database\DatabaseException;
 
@@ -706,7 +709,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '>=' ),
                             new Bracket(
@@ -715,7 +718,7 @@
                                     new From( new Identifier( '_context' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -751,7 +754,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '>' ),
                             new Bracket(
@@ -760,7 +763,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -791,7 +794,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -834,7 +837,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '>=' ),
                             new Bracket(
@@ -843,7 +846,7 @@
                                     new From( new Identifier( '_context' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -875,7 +878,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'left' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -912,7 +915,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '>' ),
                             new Bracket(
@@ -921,7 +924,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '<' ),
                             new Bracket(
@@ -961,7 +964,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '<=' ),
                             new Bracket(
@@ -1002,7 +1005,7 @@
                                     new From( new Identifier( '_move' ) )
                                 )
                             ),
-                            new Operator( 'and' ),
+                            new Conjunction( 'and' ),
                             new Identifier( 'right' ),
                             new Operator( '=' ),
                             new Bracket(

@@ -34,7 +34,7 @@
 
     }
 
-    class lTreeDataModelTest
+    class TreeDataModelTest
     extends TestCase {
 
         static $connection;
@@ -558,11 +558,11 @@
 
 
             $this->validateStruct( $struct = [
-                "a" => [],
+                "a"  => [],
                 "i2" => [],
-                "b" => [],
-                "c" => [],
-                "i" => [],
+                "b"  => [],
+                "c"  => [],
+                "i"  => [],
             ] );
         }
 

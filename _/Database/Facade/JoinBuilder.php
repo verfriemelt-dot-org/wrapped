@@ -26,7 +26,7 @@
             $op = new Operator( '=' );
 
             if ( $this->on->fetchLastExpressionItem() !== null && $this->on->fetchLastExpressionItem() instanceof Operator ) {
-                $this->on->add( new Operator( 'and' ) );
+                $this->on->add( new Conjunction( 'and' ) );
             }
 
             $this->on->add( $source );
