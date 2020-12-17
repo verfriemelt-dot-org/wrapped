@@ -201,6 +201,10 @@
             if ( isset( $this->groupBy ) ) {
                 $out .= " {$this->groupBy->stringify( $driver )}";
             }
+            
+            if ( isset( $this->order ) ) {
+                $out .= " {$this->order->stringify( $driver )}";
+            }
 
             if ( isset( $this->limit ) ) {
                 $out .= " {$this->limit->stringify( $driver )}";
@@ -209,6 +213,7 @@
             if ( isset( $this->offset ) ) {
                 $out .= " {$this->offset->stringify( $driver )}";
             }
+
 
             return $out;
         }
