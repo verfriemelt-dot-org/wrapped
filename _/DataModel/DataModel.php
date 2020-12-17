@@ -557,7 +557,7 @@
             return null;
         }
 
-        public static function with( DataModel $dest, callable $callback ): DataModelQueryBuilder {
+        public static function with( DataModel $dest, callable $callback = null ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
             $query->with( $dest, $callback );
