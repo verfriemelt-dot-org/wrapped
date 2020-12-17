@@ -2,21 +2,21 @@
 
     namespace Wrapped\_\Database;
 
-use \Exception;
-use \Wrapped\_\Database\Driver\DatabaseDriver;
-use \Wrapped\_\Database\SQL\Clause\GroupBy;
-use \Wrapped\_\Database\SQL\Clause\Having;
-use \Wrapped\_\Database\SQL\Clause\Limit;
-use \Wrapped\_\Database\SQL\Clause\Offset;
-use \Wrapped\_\Database\SQL\Clause\Order;
-use \Wrapped\_\Database\SQL\Clause\Where;
-use \Wrapped\_\Database\SQL\Expression\Bracket;
-use \Wrapped\_\Database\SQL\Expression\Conjunction;
-use \Wrapped\_\Database\SQL\Expression\Expression;
-use \Wrapped\_\Database\SQL\Expression\Identifier;
-use \Wrapped\_\Database\SQL\Expression\Operator;
-use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-use \Wrapped\_\Database\SQL\Expression\Value;
+    use \Exception;
+    use \Wrapped\_\Database\Driver\DatabaseDriver;
+    use \Wrapped\_\Database\SQL\Clause\GroupBy;
+    use \Wrapped\_\Database\SQL\Clause\Having;
+    use \Wrapped\_\Database\SQL\Clause\Limit;
+    use \Wrapped\_\Database\SQL\Clause\Offset;
+    use \Wrapped\_\Database\SQL\Clause\Order;
+    use \Wrapped\_\Database\SQL\Clause\Where;
+    use \Wrapped\_\Database\SQL\Expression\Bracket;
+    use \Wrapped\_\Database\SQL\Expression\Conjunction;
+    use \Wrapped\_\Database\SQL\Expression\Expression;
+    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \Wrapped\_\Database\SQL\Expression\Value;
 
     class DbLogic {
 
@@ -46,10 +46,6 @@ use \Wrapped\_\Database\SQL\Expression\Value;
             }
 
             $this->expression = new Expression;
-        }
-
-        public function getBindingsCounter() {
-            return $this->bindingsCounter;
         }
 
         public function setTableName( $table ) {
@@ -200,9 +196,21 @@ use \Wrapped\_\Database\SQL\Expression\Value;
 
         public function compile( DatabaseDriver $driver ): string {
 
-            $where = new Where( $this->expression );
+            $out = ' ' . (new Where( $this->expression ) )->stringify( $driver );
 
-            return $where->stringify( $driver );
+            if ( isset( $this->groupBy ) ) {
+                $out .= " {$this->groupBy->stringify( $driver )}";
+            }
+
+            if ( isset( $this->limit ) ) {
+                $out .= " {$this->limit->stringify( $driver )}";
+            }
+
+            if ( isset( $this->offset ) ) {
+                $out .= " {$this->offset->stringify( $driver )}";
+            }
+
+            return $out;
         }
 
         public function limit( $limit ) {
@@ -222,9 +230,9 @@ use \Wrapped\_\Database\SQL\Expression\Value;
          * @param type $type
          * @return static
          */
-        public function groupBy( $by ) {
+        public function groupBy( ... $by ) {
 
-            $this->groupBy = new GroupBy( new Identifier( $by ) );
+            $this->groupBy = new GroupBy( new Identifier( ... $by ) );
 
             return $this;
         }
@@ -298,6 +306,15 @@ use \Wrapped\_\Database\SQL\Expression\Value;
 
         public function __clone() {
             throw new Exception( 'molly the sheep says no' );
+        }
+
+        public function fetchBindings() {
+            return array_merge(
+                $this->expression->fetchBindings(),
+                $this->limit?->fetchBindings() ?: [],
+                $this->order?->fetchBindings() ?: [],
+                $this->offset?->fetchBindings() ?: [],
+            );
         }
 
     }

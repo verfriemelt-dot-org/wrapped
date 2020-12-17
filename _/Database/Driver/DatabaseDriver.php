@@ -326,7 +326,7 @@
                 $this->prepare( $sql );
             }
 
-            foreach ( $dbLogic->getExpression()->fetchBindings() as $bind => $value ) {
+            foreach ( $dbLogic->fetchBindings() as $bind => $value ) {
                 $this->bindLast( $bind, $value );
             }
 

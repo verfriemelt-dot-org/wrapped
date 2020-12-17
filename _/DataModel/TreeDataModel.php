@@ -1132,7 +1132,7 @@
 
             $query->stmt->add( new Where( new Expression(
                         new Identifier( "left" ), new Operator( "<=" ), new Value( $this->getLeft() ),
-                        new Operator( "AND" ),
+                        new Conjunction( "and" ),
                         new Identifier( "right" ), new Operator( ">=" ), new Value( $this->getLeft() ),
                 ) ) );
 
