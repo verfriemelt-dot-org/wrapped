@@ -32,6 +32,10 @@
 
         public function add( Identifier ... $column ) {
 
+            foreach( $column as $col ) {
+                $this->addChild( $col );
+            }
+
             $this->columns = [
                 ...$this->columns,
                 ...$column
