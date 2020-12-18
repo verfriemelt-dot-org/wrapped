@@ -28,7 +28,7 @@
 
         private Expression $expression;
 
-        private ?Order $order = null;
+        public ?Order $order = null;
 
         private ?Having $having = null;
 
@@ -201,7 +201,7 @@
             if ( isset( $this->groupBy ) ) {
                 $out .= " {$this->groupBy->stringify( $driver )}";
             }
-            
+
             if ( isset( $this->order ) ) {
                 $out .= " {$this->order->stringify( $driver )}";
             }

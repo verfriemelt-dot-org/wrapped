@@ -251,7 +251,7 @@
             $update->add( new Identifier( 'left' ), new Identifier( '_left' ) );
             $update->add( new Identifier( 'right' ), new Identifier( '_right' ) );
             $update->add( new Identifier( 'depth' ), new Identifier( '_depth' ) );
-            $update->add( new Identifier( 'parent_id' ), new Identifier( '_parent_id' ) );
+            $update->add( new Identifier( 'parentId' ), new Identifier( '_parent_id' ) );
 
             foreach ( $this->prepareDataForStorage() as $prop => $value ) {
                 $update->add( new Identifier( $prop ), new Value( $value ) );
@@ -290,8 +290,6 @@
 
 
             $parentId = $this->insertPosition?->getId();
-
-
             $cte = new CTE();
 
             if ( $parentId ) {
@@ -310,7 +308,7 @@
                                     new Value( self::INSERT_UNDER_RIGHT ),
                                     new Identifier( 'id' )
                                 )
-                                ->else( new Identifier( 'parent_id' ) )
+                                ->else( new Identifier( 'parentId' ) )
                                 ->as( new Identifier( '_parent_id' ) )
                                 ,
                                 // _to_pos
@@ -449,7 +447,7 @@
                 ->add( new Identifier( 'left' ) )
                 ->add( new Identifier( 'right' ) )
                 ->add( new Identifier( 'depth' ) )
-                ->add( new Identifier( 'parent_id' ) )
+                ->add( new Identifier( 'parentId' ) )
                 ->addQuery(
                 (new Statement(
                     (new Select() )
@@ -497,7 +495,7 @@
                                 new Value( self::INSERT_UNDER_RIGHT ),
                                 new Identifier( 'id' )
                             )
-                            ->else( new Identifier( 'parent_id' ) )
+                            ->else( new Identifier( 'parentId' ) )
                             ->as( new Identifier( '_new_parent' ) ),
                             // new depth
                             (new CaseWhen() )
@@ -1066,6 +1064,8 @@
                 $query->stmt->add( $cte );
                 $query->stmt->setCommand( $upd );
 
+                $query->addContext( $this );
+
                 $query->run();
             }
 
@@ -1092,6 +1092,8 @@
                 static::getPrimaryKey(),
                 ... $specialColumns
             ] );
+
+            $query->addContext( $this );
 
 //            var_dump( $query->stringify() );
 //            die();
