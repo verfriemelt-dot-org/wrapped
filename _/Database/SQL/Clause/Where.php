@@ -16,7 +16,7 @@
 
         public const CLAUSE = "WHERE %s";
 
-        private ExpressionItem $expression;
+        public ExpressionItem $expression;
 
         public function getWeight(): int {
             return 40;

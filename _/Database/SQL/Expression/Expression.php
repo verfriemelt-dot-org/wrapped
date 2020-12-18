@@ -45,7 +45,7 @@
                 ) . $this->stringifyAlias( $driver );
         }
 
-        public function fetchLastExpressionItem(): ?ExpressionItem {
+        public function fetchLast(): ?ExpressionItem {
 
             if ( empty( $this->expressions ) ) {
                 return null;

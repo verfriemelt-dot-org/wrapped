@@ -302,11 +302,11 @@
          */
         public function lastItemWasConjunction() {
             return
-                $this->expression->fetchLastExpressionItem() === null || $this->expression->fetchLastExpressionItem() instanceof Conjunction;
+                $this->expression->fetchLast() === null || $this->expression->fetchLast() instanceof Conjunction;
         }
 
         public function isEmpty() {
-            return $this->expression->fetchLastExpressionItem() === null;
+            return $this->expression->fetchLast() === null;
         }
 
         public function __clone() {

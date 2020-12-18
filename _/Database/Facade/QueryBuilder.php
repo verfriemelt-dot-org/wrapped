@@ -164,7 +164,7 @@
 
             array_map( function ( string $column, $value ) use ( $expression ) {
 
-                if ( $expression->fetchLastExpressionItem() !== null ) {
+                if ( $expression->fetchLast() !== null ) {
                     $expression->add(
                     new \Wrapped\_\Database\SQL\Expression\Conjunction( 'and' )
                     );
