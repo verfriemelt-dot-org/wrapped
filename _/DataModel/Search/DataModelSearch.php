@@ -3,12 +3,14 @@
     namespace Wrapped\_\DataModel\Search;
 
     use \Wrapped\_\Database\Facade\QueryBuilder;
+    use \Wrapped\_\Database\SQL\Clause\Order;
     use \Wrapped\_\Database\SQL\Clause\Where;
     use \Wrapped\_\Database\SQL\Expression\Bracket;
     use \Wrapped\_\Database\SQL\Expression\Conjunction;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
     use \Wrapped\_\Database\SQL\Expression\Value;
     use \Wrapped\_\DataModel\Collection;
     use \Wrapped\_\DataModel\DataModel;
@@ -53,6 +55,7 @@
 
             if ( !isset( $query->where ) ) {
                 $query->where = new Where( new Expression() );
+                $query->stmt->add( $query->where );
             }
 
             $expression = $query->where->expression;
@@ -78,6 +81,16 @@
 
                 $expression->add( $bracket );
             }
+
+            // identifier list
+            $fieldIdentifier  = array_map( fn( $f ) => new Identifier( $this->prototype->getTableName(), $f ), $fields );
+
+            // distance expressions list
+            $fieldExpressions = array_map( fn( Identifier $i ) => new Expression( $i, new Operator( '<->' ), new Value( $searchString ) ), $fieldIdentifier );
+
+            $query->order = new Order();
+            $query->order->add( new Expression( new SqlFunction( new Identifier( 'least' ), ... $fieldExpressions ) ), 'asc' );
+            $query->stmt->add( $query->order );
 
             return $query;
         }
