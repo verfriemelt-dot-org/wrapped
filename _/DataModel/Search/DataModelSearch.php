@@ -53,6 +53,10 @@
             $pieces = $this->split( $this->escapeLike( $searchString ) );
             $fields = $this->prototype::getSearchFields();
 
+            if ( count($pieces) === 0 ) {
+                return $query;
+            }
+
             if ( !isset( $query->where ) ) {
                 $query->where = new Where( new Expression() );
                 $query->stmt->add( $query->where );
