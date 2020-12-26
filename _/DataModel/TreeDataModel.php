@@ -1279,7 +1279,7 @@
 
             return static::find(
                     DbLogic::create()
-                        ->where( "parentid", "=", $this->getId() )
+                        ->where( "parentId", "=", $this->getId() )
                         ->order( $order, $direction )
             );
         }

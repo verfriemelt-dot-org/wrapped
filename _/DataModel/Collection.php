@@ -22,10 +22,7 @@
         private $loadMoreCallback;
 
         public function __construct( DataModel ... $data ) {
-
-            if ( $data ) {
-                $this->initialize( ... $data );
-            }
+            $this->initialize( ... $data );
         }
 
         public static function buildFromQuery( DataModel $prototype, QueryBuilder $query ) {
