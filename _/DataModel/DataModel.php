@@ -41,7 +41,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
 
-                $conventionName = $deserialize ? $attribute->getName() : $attribute->getNamingConvention()->getString() ;
+                $conventionName = $deserialize ? $attribute->getName() : $attribute->getNamingConvention()->getString();
 
                 // skip attribute
                 if ( !isset( $data[$conventionName] ) ) {
@@ -131,7 +131,7 @@
             $data = [];
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
-                $data [$attribute->getName()] = $this->dehydrateAttribute( $attribute );
+                $data[$attribute->getName()] = $this->dehydrateAttribute( $attribute );
             }
 
             return $data;
@@ -520,7 +520,7 @@
             return static::createDataModelAnalyser()->getStaticName();
         }
 
-        public function __call( string $propertyName, $args ): DataModel {
+        public function __call( string $propertyName, $args ): DataModel|Collection {
 
             // creates reflecteion
             $reflection = new ReflectionClass( $this );
@@ -544,9 +544,18 @@
             if ( $this->{ $propertyName } === null ) {
 
                 // fetches the data
-                $resolv                  = $resolvAttribute->newInstance();
+                $resolv = $resolvAttribute->newInstance();
+
+                if ( new ($propertyType->getName()) instanceof Collection ) {
+
+                    $model = $propertyType->getName()::fetchPrototype();
+                    $instance = new ($propertyType->getName())( ... $model::find( [ $resolv->destinationProperty => $this->{ $resolv->sourceProperty } ] ) );
+                } else {
+                    $instance = $propertyType->getName()::fetchBy( $resolv->destinationProperty, $this->{ $resolv->sourceProperty } );
+                }
+
                 // set prop
-                $this->{ $propertyName } = $propertyType->getName()::fetchBy( $resolv->destinationProperty, $this->{ $resolv->sourceProperty } );
+                $this->{ $propertyName } = $instance;
             }
 
             // return prop

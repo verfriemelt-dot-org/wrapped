@@ -20,7 +20,7 @@
 
             $this->alreadyEncoded = $alreadyEncoded;
 
-            if ( $content instanceof CollectionResult ) {
+            if ( $content instanceof \Wrapped\_\DataModel\Collection ) {
                 $this->setContent( $content->toArray() );
             } else {
                 $this->setContent( $content );
