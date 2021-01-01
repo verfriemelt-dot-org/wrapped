@@ -25,11 +25,13 @@
         }
 
         //Identifier | Primitives | Operator
-        public function add( ExpressionItem $expression ) {
+        public function add( ExpressionItem ... $expressions ) {
 
-            $this->addChild( $expression );
+            foreach ( $expressions as $expression ) {
+                $this->addChild( $expression );
+                $this->expressions[] = $expression;
+            }
 
-            $this->expressions[] = $expression;
             return $this;
         }
 
