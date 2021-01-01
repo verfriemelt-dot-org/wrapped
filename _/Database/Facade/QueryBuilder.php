@@ -87,14 +87,14 @@
             return $this;
         }
 
-        public function count( $table, $what = '*', bool $district = false ) {
+        public function count( $table, $what = '*', bool $distinct = false ) {
 
             $this->select = new Select();
 
-            if ( $district ) {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( $what ) ) ) );
+            if ( $distinct ) {
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( $table, $what ) ) ) );
             } else {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( $what ) ) );
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( $table, $what ) ) );
             }
 
             $this->stmt = new Statement( $this->select );
