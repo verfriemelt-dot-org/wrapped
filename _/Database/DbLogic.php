@@ -189,7 +189,7 @@
          * @return DbLogic
          */
         public function raw( $raw ) {
-            throw new \Expression( 'not supported' );
+            throw new \Exception( 'not supported' );
             $this->expression->add( new Raw( $raw ) );
             return $this;
         }
