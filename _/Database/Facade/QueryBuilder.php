@@ -91,10 +91,12 @@
 
             $this->select = new Select();
 
+            $what = [ ... ( is_array( $table ) ? $table : [ $table ]), $what ];
+
             if ( $distinct ) {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( $table, $what ) ) ) );
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ) );
             } else {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( $table, $what ) ) );
+                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( ... $what ) ) );
             }
 
             $this->stmt = new Statement( $this->select );
@@ -166,7 +168,7 @@
 
                 if ( $expression->fetchLast() !== null ) {
                     $expression->add(
-                    new \Wrapped\_\Database\SQL\Expression\Conjunction( 'and' )
+                        new \Wrapped\_\Database\SQL\Expression\Conjunction( 'and' )
                     );
                 }
 
