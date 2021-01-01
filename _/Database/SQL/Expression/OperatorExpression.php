@@ -21,11 +21,6 @@
                 "maxArgs" => \INF,
                 "string"  => 'IN ( %s )',
             ],
-            'not in'      => [
-                "minArgs" => 1,
-                "maxArgs" => \INF,
-                "string"  => 'NOT IN ( %s )',
-            ],
             'between' => [
                 "minArgs" => 2,
                 "maxArgs" => 2,
