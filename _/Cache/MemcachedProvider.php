@@ -5,8 +5,8 @@
     class MemcachedProvider
     implements CacheProviderInterface {
 
-        private $memcached;
-        static private $prefix = "";
+        private \Memcached $memcached;
+        static private string $prefix = "";
 
         public function __construct( $server = "127.0.0.1", $port = 11211 ) {
             $this->memcached = new \Memcached();

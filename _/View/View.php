@@ -10,7 +10,7 @@
     abstract class View
     implements Viewable {
 
-        public $tplPath;
+        public string $tplPath;
 
         /** @var Template */
         public $tpl;
@@ -51,7 +51,7 @@
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {
 
             $properties = $object::createDataModelAnalyser()->fetchPropertyAttributes();
-            $context = $context ?? $this->tpl;
+            $context    = $context ?? $this->tpl;
 
             foreach ( $properties as $prop ) {
                 $context->set( $prefix . ucfirst( $prop->getName() ), $object->{$prop->getGetter()}() );

@@ -3,9 +3,10 @@
     namespace Wrapped\_\Formular\FormTypes;
 
     class Select
-    extends \Wrapped\_\Formular\FormTypes\FormType {
+    extends FormType {
 
         private $options   = [];
+
         private $optGroups = [];
 
         public function addOption( $name, $value, $optGroupName = null ) {
@@ -13,7 +14,7 @@
             if ( $optGroupName !== null ) {
 
                 if ( !isset( $this->optGroups[$optGroupName] ) ) {
-                    $this->optGroups[$optGroupName] = new \Wrapped\_\Formular\FormTypes\SelectGroup( $optGroupName );
+                    $this->optGroups[$optGroupName] = new SelectGroup( $optGroupName );
                     $this->options[]                = $this->optGroups[$optGroupName];
                 }
 
@@ -34,7 +35,7 @@
                 $this->filterItem->addAllowedValue( $value );
             }
 
-            return new \Wrapped\_\Formular\FormTypes\SelectItem( $name, $value );
+            return new SelectItem( $name, $value );
         }
 
         private function writeOption( $r, $o ) {
@@ -52,7 +53,7 @@
 
             foreach ( $this->options as $entry ) {
 
-                if ( $entry instanceof \Wrapped\_\Formular\FormTypes\SelectGroup ) {
+                if ( $entry instanceof SelectGroup ) {
 
                     $optionsRepeater->setIf( "openOptGroup" );
                     $optionsRepeater->set( "optGroupName", $entry->name );
@@ -74,7 +75,7 @@
             return $this->tpl->run();
         }
 
-        public function loadTemplate(): \Wrapped\_\Formular\FormTypes\FormType {
+        public function loadTemplate(): FormType {
             $this->tpl->parseFile( dirname( __DIR__ ) . "/Template/Select.tpl.php" );
             return $this;
         }
@@ -95,13 +96,14 @@
     class SelectGroup {
 
         public $name;
+
         private $children = [];
 
         public function __construct( $name ) {
             $this->name = $name;
         }
 
-        public function addChild( \Wrapped\_\Formular\FormTypes\SelectItem $item ) {
+        public function addChild( SelectItem $item ) {
             $this->children[] = $item;
             return $this;
         }
