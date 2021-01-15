@@ -44,7 +44,7 @@
                 $conventionName = $deserialize ? $attribute->getName() : $attribute->getNamingConvention()->getString();
 
                 // skip attribute
-                if ( !isset( $data[$conventionName] ) ) {
+                if ( !array_key_exists( $conventionName, $data ) ) {
                     continue;
                 }
 
@@ -227,7 +227,7 @@
                 throw new DatabaseException( "::reload is not possible without PK" );
             }
 
-            $this->initData( self::get( $this->{static::getPrimaryKey()} )->toArray() );
+            $this->initData( self::get( $this->{static::getPrimaryKey()} )->toArray(), true );
 
             return $this;
         }
@@ -358,6 +358,8 @@
                 $this->saveToDatabase();
             }
 
+            $this->_storePropertyStates();
+
             return $this;
         }
 
@@ -372,7 +374,7 @@
                     continue;
                 }
 
-                $data = $this->{ $attribute->getGetter() }();
+                $data = $this->dehydrateAttribute( $attribute );
 
                 if ( !$includeNonFuzzy && !$this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
                     continue;
@@ -415,7 +417,7 @@
 
             $updateColumns = $this->prepareDataForStorage();
 
-            if ( empty( $updateColumns ) ) {
+            if ( empty( array_keys( $updateColumns ) ) ) {
                 return $this;
             }
 
@@ -437,14 +439,7 @@
         protected function _storePropertyStates() {
 
             foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
-
-                $data = $this->{$attribute->getGetter()}();
-
-                if ( $data instanceof PropertyObjectInterface ) {
-                    $data = $data->dehydrateToString();
-                }
-
-                $this->_propertyHashes[$attribute->getName()] = \crc32( $data );
+                $this->_propertyHashes[$attribute->getName()] = \crc32( $this->dehydrateAttribute( $attribute ) );
             }
         }
 
@@ -534,7 +529,6 @@
             $property     = $reflection->getProperty( $propertyName );
             $propertyType = $property->getType();
 
-            $attachedAttributes = [];
             $resolvAttribute    = $property->getAttributes( PropertyResolver::class )[0] ?? null;
 
             if ( !$resolvAttribute ) {
