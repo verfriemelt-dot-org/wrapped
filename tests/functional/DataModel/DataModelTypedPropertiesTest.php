@@ -74,7 +74,6 @@
             return $this;
         }
 
-
     }
 
     class DataModelTypedPropertiesTest
@@ -120,16 +119,17 @@
 
             $secondInstance = TypedDummy::last();
 
-            $this->assertEquals( $test->getId(), $secondInstance->getId());
+            $this->assertEquals( $test->getId(), $secondInstance->getId() );
 
             $this->assertNull( $test->getLastFoundDate() );
             $this->assertNull( $secondInstance->getLastFoundDate() );
 
-            $test->setLastFoundDate( new DateTime('2020-04-01') );
+            $test->setLastFoundDate( new DateTime( '2012-07-08 11:14:15.889342' ) );
             $test->save();
 
             // read updated value
             $this->assertNotNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated with datetime' );
+            $this->assertEquals( $secondInstance->getLastFoundDate()->toSqlFormat(), '2012-07-08 11:14:15.889342' );
 
             $test->setLastFoundDate( null );
             $test->save();

@@ -8,7 +8,7 @@
     extends \DateTime
     implements PropertyObjectInterface {
 
-        const SQL_FORMAT = "Y-m-d H:i:s";
+        const SQL_FORMAT = "Y-m-d H:i:s.u";
 
         public function toSqlFormat(): string {
             return $this->format( static::SQL_FORMAT );
