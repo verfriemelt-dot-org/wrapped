@@ -221,6 +221,14 @@ use \Wrapped\_\Database\Facade\QueryBuilder;
             return new static( ... array_filter( $this->data, $function ) );
         }
 
+        public function reverse(): Collection {
+            return new static( ... array_reverse( $this->data ) );
+        }
+
+        public function reduce( callable $function, $initial = null ) {
+            return array_reduce( $this->data, $function, $initial );
+        }
+
         public function find( callable $function ): ?DataModel {
 
             foreach ( $this as $element ) {
