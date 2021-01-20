@@ -24,7 +24,7 @@
             'between' => [
                 "minArgs" => 2,
                 "maxArgs" => 2,
-                "string"  => 'BETWEEN ( %s ) AND ( %s )'
+                "string"  => 'BETWEEN %s AND %s'
             ]
         ];
 
