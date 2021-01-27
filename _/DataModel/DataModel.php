@@ -12,7 +12,7 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
-    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
+    use \Wrapped\_\DataModel\Attribute\AutoJoin;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
@@ -529,7 +529,7 @@
             $property     = $reflection->getProperty( $propertyName );
             $propertyType = $property->getType();
 
-            $resolvAttribute    = $property->getAttributes( PropertyResolver::class )[0] ?? null;
+            $resolvAttribute    = $property->getAttributes( AutoJoin::class )[0] ?? null;
 
             if ( !$resolvAttribute ) {
                 throw new \Exception( "missing resolvAttribute on {$propertyName}" );
@@ -543,9 +543,9 @@
                 if ( new ($propertyType->getName()) instanceof Collection ) {
 
                     $model = $propertyType->getName()::fetchPrototype();
-                    $instance = new ($propertyType->getName())( ... $model::find( [ $resolv->destinationProperty => $this->{ $resolv->sourceProperty } ] ) );
+                    $instance = new ($propertyType->getName())( ... $model::find( [ $resolv->rightColumn => $this->{ $resolv->leftColumn } ] ) );
                 } else {
-                    $instance = $propertyType->getName()::fetchBy( $resolv->destinationProperty, $this->{ $resolv->sourceProperty } );
+                    $instance = $propertyType->getName()::fetchBy( $resolv->rightColumn, $this->{ $resolv->leftColumn } );
                 }
 
                 // set prop

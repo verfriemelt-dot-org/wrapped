@@ -44,11 +44,11 @@
 
         public ?int $aId = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\PropertyResolver('aId', 'id') ]
+        #[ \Wrapped\_\DataModel\Attribute\AutoJoin('aId', 'id') ]
 
         protected ?a $aObject = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\PropertyResolver('aId', 'did') ]
+        #[ \Wrapped\_\DataModel\Attribute\AutoJoin('aId', 'did') ]
 
         protected ?a $aWrongMarked = null;
 
