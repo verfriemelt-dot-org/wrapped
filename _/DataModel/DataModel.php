@@ -195,6 +195,15 @@
             return $query;
         }
 
+        public static function buildCountQuery(): DataModelQueryBuilder {
+
+            $query = static::buildQuery();
+            $query->count( static::getTableName() );
+            $query->disableAutomaticGroupBy();
+
+            return $query;
+        }
+
         /**
          * creates an object with the given id as param
          * @param type $id
