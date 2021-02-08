@@ -18,6 +18,7 @@
     use \Wrapped\_\Database\SQL\Command\Select;
     use \Wrapped\_\Database\SQL\Command\Update;
     use \Wrapped\_\Database\SQL\Command\Values;
+    use \Wrapped\_\Database\SQL\Expression\Conjunction;
     use \Wrapped\_\Database\SQL\Expression\Expression;
     use \Wrapped\_\Database\SQL\Expression\Identifier;
     use \Wrapped\_\Database\SQL\Expression\Operator;
@@ -76,7 +77,7 @@
             $this->select = new Select();
             $this->stmt->setCommand( $this->select );
 
-            array_map( function( $column ) {
+            array_map( function ( $column ) {
                 if ( is_array( $column ) ) {
                     $this->select->add( new Identifier( ... $column ) );
                 } else {
@@ -158,18 +159,38 @@
             return $this;
         }
 
-        public function where( array $where ) {
+        protected function getWhereExpression(): Expression {
 
-            $expression  = new Expression;
-            $this->where = new Where( $expression );
+            if ( isset( $this->where ) ) {
+                return $this->where->expression;
+            }
+
+            $this->where = new Where( new Expression );
             $this->stmt->add( $this->where );
 
-            array_map( function ( string $column, $value ) use ( $expression ) {
+            return $this->where->expression;
+        }
+
+        public function where( array $where ) {
+
+            $expression = $this->getWhereExpression();
+
+            array_map( function ( $column, $value ) use ( $expression ) {
 
                 if ( $expression->fetchLast() !== null ) {
                     $expression->add(
-                        new \Wrapped\_\Database\SQL\Expression\Conjunction( 'and' )
+                        new Conjunction( 'and' )
                     );
+                }
+
+                // special handling for where parameters in the style of [ 'col', 'op', 'value' ];
+                if ( is_integer( $column ) && count( $value ) === 3 ) {
+
+                    $expression->add( new Identifier( $value[0] ) );
+                    $expression->add( new Operator( $value[1] ) );
+                    $expression->add( new Value( $value[2] ) );
+
+                    return;
                 }
 
                 if ( is_array( $value ) ) {
@@ -195,7 +216,6 @@
                     }
                 }
             }, array_keys( $where ), $where );
-
 
             return $this;
         }
