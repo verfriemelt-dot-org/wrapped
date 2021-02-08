@@ -26,6 +26,11 @@
             $this->addContext( $prototype );
         }
 
+        public function count( $table, $what = '*', bool $distinct = false ): static {
+            $this->disableAutomaticGroupBy();
+            return parent::count( $table, $what, $distinct );
+        }
+
         public function disableAutomaticGroupBy( bool $bool = true ): static {
             $this->disableAutomaticGroupBy = $bool;
             return $this;
