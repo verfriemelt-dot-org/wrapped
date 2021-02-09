@@ -23,7 +23,7 @@
         private $globalFilter       = [];
         private $rawRouteHits       = [];
 
-        private function __construct( Request $request = null ) {
+        public function __construct( Request $request = null ) {
             $this->setRequest( $request ?: Request::getInstance()  );
         }
 
@@ -112,7 +112,11 @@
          *
          * @return boolean|Route
          */
-        public function run() {
+        public function run( \Wrapped\_\Http\Request\Request $request = null ) {
+
+            if ( $request ) {
+                $this->setRequest( $request );
+            }
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );

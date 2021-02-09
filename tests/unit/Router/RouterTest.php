@@ -91,8 +91,6 @@
                         } ) )
             );
 
-
-
             $this->assertEquals( "a", $router->run()->runCallback( $request ) );
         }
 
@@ -172,6 +170,49 @@
 
             $this->assertTrue( $request->attributes()->has( "key" ) );
             $this->assertTrue( $request->attributes()->has( "key2" ) );
+        }
+
+        public function testOptionalRouteGroup() {
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test/a" ] );
+
+            $router = Router::getInstance();
+            $router->addRoutes(
+                RouteGroup::create( '(?:/[a-z]{4})?' )->add( Route::create( "/a" )->call( function () {
+                        return true;
+                    } ) )
+            );
+            $this->assertTrue( $router->run( $request )->runCallback( $request ) );
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/a" ] );
+            $this->assertTrue( $router->run( $request )->runCallback( $request ) );
+        }
+
+        public function testWut() {
+
+            $router = new Router();
+
+            $router->addRoutes(
+                RouteGroup::create( '^(?:/([a-z]{2})(?=/))?' )->add(
+                    RouteGroup::create( "(?:/detail)?" )
+                        ->add( Route::create( "/geocacher/(?<geocacherId>[0-9]+)" )->call( fn() => true ) )
+                )
+            );
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
+            $result = $router->run( $request );
+
+            $this->assertTrue ( $result->runCallback( $request ) );
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/geocacher/1" ] );
+            $result = $router->run( $request );
+
+            $this->assertTrue ( $result->runCallback( $request ) );
+
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/detail/geocacher/1" ] );
+            $result = $router->run( $request );
+
+            $this->assertTrue ( $result->runCallback( $request ) );
         }
 
     }
