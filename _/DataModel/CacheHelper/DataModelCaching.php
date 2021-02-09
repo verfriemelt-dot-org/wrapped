@@ -66,7 +66,7 @@
          * @param type $value
          * @return type
          */
-        public static function fetchBy( string $field, $value ) {
+        public static function fetchBy( string $field, $value ): static {
 
             // mapping
             $pk = static::retriveFromCache( $field . (string) $value );
