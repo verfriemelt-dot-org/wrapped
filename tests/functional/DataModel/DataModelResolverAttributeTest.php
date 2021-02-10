@@ -44,11 +44,11 @@
 
         public ?int $aId = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\AutoJoin('aId', 'id') ]
+        #[ \Wrapped\_\DataModel\Attribute\OneToOneRelation('aId', 'id') ]
 
         protected ?a $aObject = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\AutoJoin('aId', 'did') ]
+        #[ \Wrapped\_\DataModel\Attribute\OneToOneRelation('aId', 'did') ]
 
         protected ?a $aWrongMarked = null;
 

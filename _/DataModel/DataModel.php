@@ -12,7 +12,7 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
-    use \Wrapped\_\DataModel\Attribute\AutoJoin;
+    use \Wrapped\_\DataModel\Attribute\OneToOneRelation;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
@@ -325,7 +325,7 @@
          * returns last Record in DB ( according to the PK )
          * @return static
          */
-        public static function last() {
+        public static function last(): static {
             return static::findSingle( [], static::getPrimaryKey(), 'desc' );
         }
 
@@ -524,7 +524,7 @@
             return static::createDataModelAnalyser()->getStaticName();
         }
 
-        public function __call( string $propertyName, $args ): DataModel|Collection {
+        public function __call( string $propertyName, $args ): DataModel | Collection | null {
 
             // creates reflecteion
             $reflection = new ReflectionClass( $this );
@@ -538,11 +538,15 @@
             $property     = $reflection->getProperty( $propertyName );
             $propertyType = $property->getType();
 
-            $resolvAttribute    = $property->getAttributes( AutoJoin::class )[0] ?? null;
+            $resolvAttribute =
+                $property->getAttributes( Attribute\Relation\OneToOneRelation::class )[0] ??
+                $property->getAttributes( Attribute\Relation\OneToManyRelation::class )[0] ?? null;
 
             if ( !$resolvAttribute ) {
-                throw new \Exception( "missing resolvAttribute on {$propertyName}" );
+                throw new \Exception( "missing relation attribute on {$propertyName}" );
             }
+
+
 
             if ( $this->{ $propertyName } === null ) {
 
@@ -551,8 +555,17 @@
 
                 if ( new ($propertyType->getName()) instanceof Collection ) {
 
-                    $model = $propertyType->getName()::fetchPrototype();
-                    $instance = new ($propertyType->getName())( ... $model::find( [ $resolv->rightColumn => $this->{ $resolv->leftColumn } ] ) );
+                    // query part
+
+
+
+
+                    $query = isset($args[0]) ? [$args[0]] : [];
+                    $query [] = [ $resolv->rightColumn, "=", $this->{ $resolv->leftColumn } ];
+//                    var_dump( $query );
+
+                    $model    = $resolv->rightClass;
+                    $instance = new ($propertyType->getName())( ... $model::find( $query ) );
                 } else {
                     $instance = $propertyType->getName()::fetchBy( $resolv->rightColumn, $this->{ $resolv->leftColumn } );
                 }

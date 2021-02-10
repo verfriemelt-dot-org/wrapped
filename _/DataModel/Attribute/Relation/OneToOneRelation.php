@@ -1,9 +1,9 @@
 <?php
 
-    namespace Wrapped\_\DataModel\Attribute;
+    namespace Wrapped\_\DataModel\Attribute\Relation;
 
     #[ \Attribute ]
-    class AutoJoin {
+    class OneToOneRelation {
 
         public string $leftColumn;
 
@@ -15,3 +15,4 @@
         }
 
     }
+    
