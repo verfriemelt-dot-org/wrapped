@@ -546,8 +546,6 @@
                 throw new \Exception( "missing relation attribute on {$propertyName}" );
             }
 
-
-
             if ( $this->{ $propertyName } === null ) {
 
                 // fetches the data
