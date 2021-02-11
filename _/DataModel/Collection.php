@@ -2,14 +2,14 @@
 
     namespace Wrapped\_\DataModel;
 
-use \ArrayAccess;
-use \Countable;
-use \Exception;
-use \Iterator;
-use \JsonSerializable;
-use \OutOfBoundsException;
-use \SeekableIterator;
-use \Wrapped\_\Database\Facade\QueryBuilder;
+    use \ArrayAccess;
+    use \Countable;
+    use \Exception;
+    use \Iterator;
+    use \JsonSerializable;
+    use \OutOfBoundsException;
+    use \SeekableIterator;
+    use \Wrapped\_\Database\Facade\QueryBuilder;
 
     class Collection
     implements Iterator, ArrayAccess, Countable, SeekableIterator, JsonSerializable {
@@ -213,7 +213,7 @@ use \Wrapped\_\Database\Facade\QueryBuilder;
         }
 
         public function call( callable $function ) {
-            array_map( $function , $this->data );
+            array_map( $function, $this->data );
             return $this;
         }
 
@@ -227,6 +227,14 @@ use \Wrapped\_\Database\Facade\QueryBuilder;
 
         public function reduce( callable $function, $initial = null ) {
             return array_reduce( $this->data, $function, $initial );
+        }
+
+        public function sort( callable $function ) {
+
+            $copy = $this->data;
+            usort( $copy, $function );
+
+            return new static( ... $copy  );
         }
 
         public function find( callable $function ): ?DataModel {

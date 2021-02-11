@@ -554,11 +554,7 @@
                 if ( new ($propertyType->getName()) instanceof Collection ) {
 
                     // query part
-
-
-
-
-                    $query = isset($args[0]) ? [$args[0]] : [];
+                    $query = isset($args[0]) ? $args[0] : [];
                     $query [] = [ $resolv->rightColumn, "=", $this->{ $resolv->leftColumn } ];
 //                    var_dump( $query );
 
