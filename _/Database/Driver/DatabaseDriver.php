@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\Driver;
 
     use \PDO;
@@ -149,7 +151,7 @@
          */
         public function execute( PDOStatement $statement ) {
 
-            $start = microtime( 1 );
+            $start = microtime( true );
 
             try {
                 $this->lastresult = $statement->execute();
@@ -157,7 +159,7 @@
                 throw new DatabaseException( $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" );
             }
 
-            $time = microtime( 1 ) - $start;
+            $time = microtime( true ) - $start;
 
             if ( static::$debug ) {
 

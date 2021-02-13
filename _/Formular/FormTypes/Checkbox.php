@@ -1,11 +1,14 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     class Checkbox
     extends FormType {
 
         public $type = "checkbox";
+
         private $checked;
 
         public function __construct( string $name, string $value = null, \Wrapped\_\Template\Template $template = null ) {

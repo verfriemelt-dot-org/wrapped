@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template;
 
     use \Exception;
@@ -14,7 +16,8 @@
 
     class TemplateLexer {
 
-        private $input       = "";
+        private $input = "";
+
         private $inputLength = 0;
 
         /**
@@ -28,7 +31,9 @@
          * @var \Wrapped\_\Template\Token
          */
         private $currentToken;
-        private $currentPos   = 0;
+
+        private $currentPos = 0;
+
         private $currentState = 1;
 
         // 0 = finished

@@ -1,19 +1,28 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template\Token;
 
     abstract class Token {
 
         public $currentContent = '';
-        public $currentLength  = 0;
-        public $priority       = 10;
-        public $maxLength      = 0;
+
+        public $currentLength = 0;
+
+        public $priority = 10;
+
+        public $maxLength = 0;
 
         /** @var Token */
         public $nextToken = null;
+
         public $prevToken = null;
+
         private $line;
+
         private $linePos;
+
         private $pos;
 
         abstract public function getTokenName();

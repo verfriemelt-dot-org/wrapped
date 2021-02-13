@@ -6,7 +6,9 @@
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\Driver\Postgres;
+    use \Wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
     use \Wrapped\_\DataModel\DataModel;
+    use function \Symfony\Component\String\b;
 
     class A
     extends DataModel {
@@ -44,12 +46,10 @@
 
         public ?int $aId = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\OneToOneRelation('aId', 'id') ]
-
+        #[ OneToOneRelation( 'aId', 'id' ) ]
         protected ?a $aObject = null;
 
-        #[ \Wrapped\_\DataModel\Attribute\OneToOneRelation('aId', 'did') ]
-
+        #[ OneToOneRelation( 'aId', 'did' ) ]
         protected ?a $aWrongMarked = null;
 
         protected ?a $aObjectNotMarked = null;
@@ -108,7 +108,7 @@
         public function testNotPrepped() {
 
             $this->buildObjects();
-            $this->expectExceptionObject( new Exception( 'Attribute' ) );
+            $this->expectExceptionObject( new Exception( 'attribute' ) );
 
             b::get( 1 )->aObjectNotMarked();
         }
@@ -130,5 +130,4 @@
 //
 //            b::get( 1 )->aWrongMarked();
 //        }
-
     }

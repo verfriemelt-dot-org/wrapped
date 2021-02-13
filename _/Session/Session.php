@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Session;
 
     use \Wrapped\_\Http\Request\Request;
@@ -11,11 +13,15 @@
         use Singleton;
 
         CONST SESSION_COOKIE_NAME = "_";
-        CONST SESSION_TIMEOUT     = 60 * 60 * 24 * 365;
 
-        private $dataObj     = null;
-        private $sessionId   = null;
-        private $storageObj  = null;
+        CONST SESSION_TIMEOUT = 60 * 60 * 24 * 365;
+
+        private $dataObj = null;
+
+        private $sessionId = null;
+
+        private $storageObj = null;
+
         private $currentData = [];
 
         private function __construct( SessionDataObject $sessionStorage = null, Request $request = null ) {
@@ -42,7 +48,7 @@
             }
 
             $this->dataObj->setTimeout( time() + static::SESSION_TIMEOUT );
-            $this->dataObj->setData( base64_encode(serialize( $this->currentData )) );
+            $this->dataObj->setData( base64_encode( serialize( $this->currentData ) ) );
             $this->dataObj->save();
         }
 

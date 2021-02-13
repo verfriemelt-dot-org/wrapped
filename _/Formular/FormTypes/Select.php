@@ -1,11 +1,13 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     class Select
     extends FormType {
 
-        private $options   = [];
+        private $options = [];
 
         private $optGroups = [];
 

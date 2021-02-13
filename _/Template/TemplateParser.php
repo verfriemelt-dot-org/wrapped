@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template;
 
     use \Exception;
@@ -15,8 +17,11 @@
     class TemplateParser {
 
         private $chain;
-        private $data                   = [];
+
+        private $data = [];
+
         private $currentToken;
+
         private $repeaterDataSourcePath = [];
 
         public function setChain( Token $token ) {
@@ -174,9 +179,8 @@
 
             $name = $this->currentToken->currentContent;
 
-            $dataSource                            = $this->searchForData( "repeater", $name );
+            $dataSource                          = $this->searchForData( "repeater", $name );
             $this->repeaterDataSourcePath[$name] = 0;
-
 
             // delete all if not there or repeater empty
             if ( $dataSource === false || empty( $dataSource["repeater"][$name]->data ) ) {
@@ -201,7 +205,7 @@
 
                 // set current index for path
                 $this->repeaterDataSourcePath[$name] = $index;
-                $this->currentToken                    = $startToken;
+                $this->currentToken                  = $startToken;
 
                 while ( $this->currentToken = $this->currentToken->nextToken ) {
 

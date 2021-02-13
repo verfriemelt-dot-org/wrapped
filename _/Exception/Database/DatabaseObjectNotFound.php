@@ -1,3 +1,10 @@
-<?php namespace Wrapped\_\Exception\Database;
+<?php
 
-    class DatabaseObjectNotFound extends DatabaseException {}
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Exception\Database;
+
+    class DatabaseObjectNotFound
+    extends DatabaseException {
+
+    }

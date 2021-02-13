@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Session;
 
     use \Wrapped\_\Database\SQL\Clause\Where;
@@ -17,9 +19,13 @@
     implements TablenameOverride, SessionDataObject {
 
         public $id;
+
         public $data;
+
         public $timeout;
+
         public $ip;
+
         public $sessionId;
 
         public static function getBySessionId( $id ) {

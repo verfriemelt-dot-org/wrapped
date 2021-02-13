@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel;
 
     use \ArrayAccess;
@@ -234,7 +236,7 @@
             $copy = $this->data;
             usort( $copy, $function );
 
-            return new static( ... $copy  );
+            return new static( ... $copy );
         }
 
         public function find( callable $function ): ?DataModel {

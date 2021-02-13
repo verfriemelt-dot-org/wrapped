@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel\Search;
 
     use \Wrapped\_\Database\Facade\QueryBuilder;
@@ -53,7 +55,7 @@
             $pieces = $this->split( $this->escapeLike( $searchString ) );
             $fields = $this->prototype::getSearchFields();
 
-            if ( count($pieces) === 0 ) {
+            if ( count( $pieces ) === 0 ) {
                 return $query;
             }
 
@@ -87,7 +89,7 @@
             }
 
             // identifier list
-            $fieldIdentifier  = array_map( fn( $f ) => new Identifier( $this->prototype->getTableName(), $f ), $fields );
+            $fieldIdentifier = array_map( fn( $f ) => new Identifier( $this->prototype->getTableName(), $f ), $fields );
 
             // distance expressions list
             $fieldExpressions = array_map( fn( Identifier $i ) => new Expression( $i, new Operator( '<->' ), new Value( $searchString ) ), $fieldIdentifier );

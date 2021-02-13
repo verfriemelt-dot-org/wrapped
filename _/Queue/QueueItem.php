@@ -1,12 +1,14 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Queue;
 
     use \Wrapped\_\DateTime\DateTime;
 
     class QueueItem {
 
-        public $channel  = Queue::DEFAULT_CHANNEL;
+        public $channel = Queue::DEFAULT_CHANNEL;
 
         public $key;
 
@@ -16,14 +18,14 @@
 
         public ?DateTime $startDate = null;
 
-        public bool $locked   = false;
+        public bool $locked = false;
 
         public $data;
 
         public function __construct( $key, $channel = null ) {
             $this->key     = $key;
             $this->channel = $channel ?? "default";
-            $this->uniqId  = md5( uniqid( rand() ) . uniqid() );
+            $this->uniqId  = md5( uniqid( (string) rand() ) . uniqid() );
         }
 
         public function setQueue( Queue $queue ): QueueItem {

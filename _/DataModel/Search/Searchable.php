@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel\Search;
 
     use \Wrapped\_\Database\Facade\QueryBuilder;

@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     use \Wrapped\_\Formular\FormTypes\Text;
@@ -8,6 +10,7 @@
     extends Text {
 
         public $type = "textarea";
+
         public $placeholder;
 
         public function loadTemplate(): FormType {
@@ -31,4 +34,5 @@
 
             return $this->tpl->run();
         }
+
     }

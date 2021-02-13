@@ -1,3 +1,10 @@
-<?php namespace Wrapped\_\Exception\Router;
+<?php
 
-    class NoRoutesPresent extends RouterException {}
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Exception\Router;
+
+    class NoRoutesPresent
+    extends RouterException {
+
+    }

@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database;
 
     use \Exception;
@@ -92,7 +94,6 @@
 
         public function isTrue() {
             $this->expression->add( new Operator( 'is true' ) );
-
 
             return $this;
         }

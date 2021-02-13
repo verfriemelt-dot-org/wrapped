@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel;
 
     use \PDO;
@@ -290,7 +292,7 @@
 
 
             $parentId = $this->insertPosition?->getId();
-            $cte = new CTE();
+            $cte      = new CTE();
 
             if ( $parentId ) {
 

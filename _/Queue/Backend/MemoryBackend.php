@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Queue\Backend;
 
     use \Wrapped\_\Queue\Interfaces\QueuePersistance;

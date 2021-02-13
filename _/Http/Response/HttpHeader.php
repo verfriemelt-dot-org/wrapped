@@ -1,11 +1,15 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     class HttpHeader {
 
         private $name;
+
         private $value;
+
         private $replaces = true;
 
         public function __construct( $name, $value ) {

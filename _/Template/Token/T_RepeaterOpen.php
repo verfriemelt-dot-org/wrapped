@@ -1,8 +1,14 @@
-<?php namespace Wrapped\_\Template\Token;
+<?php
 
-    class T_RepeaterOpen extends Token {
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Template\Token;
+
+    class T_RepeaterOpen
+    extends Token {
 
         public function getTokenName() {
             return 'T_RepeaterOpen';
         }
+
     }

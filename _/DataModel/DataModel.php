@@ -1,5 +1,7 @@
 <?php
 
+//    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel;
 
 //    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
@@ -12,7 +14,8 @@
     use \Wrapped\_\Database\Driver\DatabaseDriver;
     use \Wrapped\_\Database\Driver\Mysql;
     use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
-    use \Wrapped\_\DataModel\Attribute\OneToOneRelation;
+    use \Wrapped\_\DataModel\Attribute\Relation\OneToManyRelation;
+    use \Wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
     use \Wrapped\_\Exception\Database\DatabaseException;
     use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
     use \Wrapped\_\Http\ParameterBag;
@@ -56,11 +59,11 @@
             return $this;
         }
 
-        protected function hydrateAttribute( DataModelAttribute $attribute, $value ) {
+        protected function hydrateAttribute( DataModelAttribute $attribute, mixed $value ): mixed {
 
             $attributeType = $attribute->getType();
 
-            if ( class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+            if ( $attributeType !== null && class_exists( $attributeType ) && in_array( PropertyObjectInterface::class, class_implements( $attributeType ) ) ) {
                 return $attributeType::hydrateFromString( $value );
             }
 
@@ -73,7 +76,7 @@
 
             $value = $this->{$attribute->getGetter()}();
 
-            if ( $value !== null && class_exists( $attributeType ) && class_implements( $attributeType, PropertyObjectInterface::class ) ) {
+            if ( $value !== null && class_exists( $attributeType ) && $value instanceof PropertyObjectInterface ) {
                 return $value->dehydrateToString();
             }
 
@@ -448,7 +451,7 @@
         protected function _storePropertyStates() {
 
             foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
-                $this->_propertyHashes[$attribute->getName()] = \crc32( $this->dehydrateAttribute( $attribute ) );
+                $this->_propertyHashes[$attribute->getName()] = \crc32( (string) $this->dehydrateAttribute( $attribute ) );
             }
         }
 
@@ -464,7 +467,7 @@
                 $data = $data->dehydrateToString();
             }
 
-            return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( $data );
+            return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( (string) $data );
         }
 
         public function delete() {
@@ -538,9 +541,8 @@
             $property     = $reflection->getProperty( $propertyName );
             $propertyType = $property->getType();
 
-            $resolvAttribute =
-                $property->getAttributes( Attribute\Relation\OneToOneRelation::class )[0] ??
-                $property->getAttributes( Attribute\Relation\OneToManyRelation::class )[0] ?? null;
+            $resolvAttribute = $property->getAttributes( OneToOneRelation::class )[0] ??
+                $property->getAttributes( OneToManyRelation::class )[0] ?? null;
 
             if ( !$resolvAttribute ) {
                 throw new \Exception( "missing relation attribute on {$propertyName}" );
@@ -554,7 +556,7 @@
                 if ( new ($propertyType->getName()) instanceof Collection ) {
 
                     // query part
-                    $query = isset($args[0]) ? $args[0] : [];
+                    $query    = isset( $args[0] ) ? $args[0] : [];
                     $query [] = [ $resolv->rightColumn, "=", $this->{ $resolv->leftColumn } ];
 //                    var_dump( $query );
 

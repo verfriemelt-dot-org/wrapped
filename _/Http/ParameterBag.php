@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http;
 
     use \ArrayIterator;
@@ -9,7 +11,7 @@
     class ParameterBag
     implements Countable, IteratorAggregate {
 
-        private $parameters = [], $raw = null;
+        private $parameters = [], $raw        = null;
 
         public function __construct( array $parameters ) {
             $this->parameters = $parameters;

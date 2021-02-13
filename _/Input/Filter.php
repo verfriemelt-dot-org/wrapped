@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Input;
 
     use \Wrapped\_\Exception\Input\InputException;
@@ -7,8 +9,10 @@
     class Filter {
 
         private $name;
+
         private $failed = false;
-        private $messageStack = [ ];
+
+        private $messageStack = [];
 
         public function __construct( $name = null ) {
             $this->name = $name;
@@ -25,7 +29,7 @@
                 try {
                     !$item->validate();
                 } catch ( InputException $inputException ) {
-                    $this->failed = true;
+                    $this->failed         = true;
                     $this->messageStack[] = $inputException->getMessage();
                 }
             }
@@ -46,7 +50,6 @@
             $this->items[] = $item;
             return $this;
         }
-
 
         /**
          *
@@ -95,4 +98,5 @@
         public function content() {
             return $this->createFilterItem( "content" );
         }
+
     }

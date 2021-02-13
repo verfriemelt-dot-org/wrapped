@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     use \Wrapped\_\Http\Request\Request;
@@ -9,6 +11,7 @@
     extends Response {
 
         private $to;
+
         private $ignoreBasePath = false;
 
         public function __construct( $path = null ) {

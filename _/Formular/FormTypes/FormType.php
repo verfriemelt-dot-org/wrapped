@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     use \Wrapped\_\Input\FilterItem;
@@ -8,19 +10,30 @@
     abstract class FormType {
 
         public $name;
+
         public $value;
+
         public $label;
+
         public $tpl;
+
         public $type;
+
         public $pattern;
+
         public $title;
+
         public $disabled = false;
+
         public $readonly = false;
+
         public $required = false;
+
         public $postAsArray = false;
 
         /** @var FilterItem */
         public $filterItem;
+
         public $cssClasses = [];
 
         abstract public function loadTemplate(): FormType;
@@ -95,7 +108,7 @@
 
             $this->tpl->set( "value", $this->value );
             $this->tpl->set( "name", $this->name );
-            $this->tpl->set( "postname", $this->name . ( $this->postAsArray ? '[]': ''));
+            $this->tpl->set( "postname", $this->name . ( $this->postAsArray ? '[]' : '') );
             $this->tpl->set( "id", $this->name );
             $this->tpl->set( "type", $this->type );
 
@@ -111,7 +124,6 @@
             $this->tpl->setIf( "pattern", !empty( $this->pattern ) );
             $this->tpl->set( "title", $this->title );
             $this->tpl->set( "pattern", $this->pattern );
-
 
             return $this;
         }

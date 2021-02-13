@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     use \Wrapped\_\Cli\Console;
@@ -7,16 +9,22 @@
     class Response {
 
         private $statusCode = Http::OK;
-        private $content    = '';
-        private $cookies    = [];
-        private $version    = "1.1";
-        private $headers    = [];
+
+        private $content = '';
+
+        private $cookies = [];
+
+        private $version = "1.1";
+
+        private $headers = [];
+
         private $statusText;
+
         private $contentCallback;
 
         public function __construct( int $statuscode = 200, string $content = null ) {
             $this->setStatusCode( $statuscode );
-            $this->setContent( $content ?? "" );
+            $this->setContent( $content ?? ""  );
         }
 
         public function setStatusCode( int $code ): Response {

@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Request;
 
     use \Wrapped\_\Http\ParameterBag;
@@ -10,17 +12,18 @@
          * @var ParameterBag
          */
         private $request, $query, $attributes, $cookies, $server, $files, $content, $header;
+
         protected static $instance;
 
         public function __construct(
-            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
+            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], string $content = null
         ) {
 
             $this->initialize( $query, $request, $attributes, $cookies, $files, $server, $content );
         }
 
         private function initialize(
-            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null
+            array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], string $content = null
         ) {
 
             $this->request    = new ParameterBag( $request );
@@ -30,25 +33,28 @@
             $this->server     = new ParameterBag( $server );
             $this->files      = new ParameterBag( $files );
 
+            if ( $content !== null ) {
+                $contents = json_decode( $content );
 
-            $contents = json_decode( $content );
+                if ( json_last_error() !== JSON_ERROR_NONE ) {
+                    parse_str( $content, $contents );
+                }
 
-            if ( json_last_error() !== JSON_ERROR_NONE ) {
-                parse_str( $content, $contents );
+                $this->content = new ParameterBag( (array) $contents );
+                $this->content->setRawData( $content );
+            } else {
+                $this->content = new ParameterBag( [] );
             }
-
-            $this->content = new ParameterBag( (array) $contents );
-            $this->content->setRawData( $content );
 
             $header = [];
 
-            foreach( $_SERVER as $key => $value ) {
+            foreach ( $_SERVER as $key => $value ) {
 
                 if ( substr( $key, 0, 5 ) !== 'HTTP_' ) {
                     continue;
                 }
 
-                $header[ $key  ] = $value;
+                $header[$key] = $value;
             }
 
             $this->header = new ParameterBag( $header );

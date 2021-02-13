@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\Facade;
 
     use \Wrapped\_\Database\SQL\Clause\Join;

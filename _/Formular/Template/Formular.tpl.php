@@ -1,5 +1,5 @@
 <form method='{{ method }}' class="{{ cssClass }}" action="{{ action }}" id="{{ cssId }}">
     {{ repeater='elements' }}
-        {{ !element }}
+    {{ !element }}
     {{ /repeater='elements' }}
 </form>

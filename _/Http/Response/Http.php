@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     class Http {
@@ -65,7 +67,7 @@
             LOOP_DETECTED = 508,
             NOT_EXTENDED = 510,
             NETWORK_AUTHENTICATION_REQUIRED = 511;
-        
+
         Const STATUS_TEXT = [
             self::CONTINUE                                                  => 'Continue',
             self::SWITCHING_PROTOCOLS                                       => 'Switching Protocols',

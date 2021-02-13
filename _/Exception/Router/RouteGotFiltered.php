@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Exception\Router;
 
     use \Wrapped\_\Http\Response\Response;

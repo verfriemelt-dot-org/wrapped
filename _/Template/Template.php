@@ -1,15 +1,21 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template;
 
     use \Wrapped\_\Output\Viewable;
 
     class Template {
 
-        private $if                = [];
-        private $vars              = [];
-        private $repeater          = [];
+        private $if = [];
+
+        private $vars = [];
+
+        private $repeater = [];
+
         private $tokenChain;
+
         static private $chainCache = [];
 
         public function run() {

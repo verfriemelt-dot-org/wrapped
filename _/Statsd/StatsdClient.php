@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Statsd;
 
     class StatsdClient {
@@ -7,10 +9,13 @@
         use \Wrapped\_\Singleton;
 
         CONST COUNTER = "c";
+
         CONST TIMER_MS = "ms";
+
         CONST GAUGE = "g";
 
         private $connection;
+
         private $namespace = "";
 
         public function setConnection( Connection $connection ) {
@@ -22,6 +27,7 @@
             $this->namespace = $namespace;
             return $this;
         }
+
         /**
          *
          * @param type $key

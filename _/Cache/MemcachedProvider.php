@@ -1,11 +1,14 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Cache;
 
     class MemcachedProvider
     implements CacheProviderInterface {
 
         private \Memcached $memcached;
+
         static private string $prefix = "";
 
         public function __construct( $server = "127.0.0.1", $port = 11211 ) {

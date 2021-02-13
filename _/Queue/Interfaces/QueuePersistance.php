@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Queue\Interfaces;
 
     use \Wrapped\_\Queue\Queue;

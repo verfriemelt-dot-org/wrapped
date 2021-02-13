@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Controller;
 
     use \Wrapped\_\Http\Request\Request;
@@ -31,4 +33,5 @@
 
             return (new Response( Http::NOT_IMPLEMENTED ));
         }
+
     }

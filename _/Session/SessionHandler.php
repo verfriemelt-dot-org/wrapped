@@ -1,4 +1,8 @@
-<?php namespace Wrapped\_\Session;
+<?php
+
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Session;
 
     interface SessionHandler {
 

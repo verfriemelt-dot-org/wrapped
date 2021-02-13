@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     class Cookie {
@@ -11,8 +13,8 @@
             $expiresTime;
 
         public function __construct( $name, $value, $expires = 3600 * 24 ) {
-            $this->name    = $name;
-            $this->value   = $value;
+            $this->name        = $name;
+            $this->value       = $value;
             $this->expiresTime = time() + $expires;
         }
 

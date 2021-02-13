@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\SQL;
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
@@ -19,7 +21,7 @@
 
         public function addDataModelContext( DataModel $context ) {
 
-            if ( in_array($context, $this->context )) {
+            if ( in_array( $context, $this->context ) ) {
                 return $this;
             }
 
@@ -28,7 +30,6 @@
 
             // attach context to every child
             array_map( fn( $child ) => $child->addDataModelContext( $context ), $this->children );
-
 
             return $this;
         }
@@ -54,4 +55,5 @@
         public function fetchAllChildren() {
             return array_merge( [ $this ], ... array_map( fn( $child ) => $child->fetchAllChildren(), $this->children ) );
         }
+
     }

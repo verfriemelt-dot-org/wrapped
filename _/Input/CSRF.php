@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Input;
 
     use \Wrapped\_\Session\Session;

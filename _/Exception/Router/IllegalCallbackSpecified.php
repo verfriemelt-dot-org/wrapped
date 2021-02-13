@@ -1,3 +1,10 @@
-<?php namespace Wrapped\_\Exception\Router;
+<?php
 
-    class IllegalCallbackSpecified extends RouterException {}
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Exception\Router;
+
+    class IllegalCallbackSpecified
+    extends RouterException {
+
+    }

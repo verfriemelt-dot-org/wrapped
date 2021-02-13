@@ -1,4 +1,8 @@
-<?php namespace Wrapped\_\Output;
+<?php
+
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Output;
 
     Interface Viewable {
 

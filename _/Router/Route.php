@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Router;
 
     use \Wrapped\_\Controller\ControllerInterface;
@@ -11,8 +13,11 @@
     implements Routable {
 
         private $path;
+
         private $callback;
+
         private $filter;
+
         private $priority = 100;
 
         /**
@@ -107,7 +112,7 @@
             }
 
             throw new IllegalCallbackSpecified(
-            "invalid callback \"{$this->callback}\""
+                    "invalid callback \"{$this->callback}\""
             );
         }
 

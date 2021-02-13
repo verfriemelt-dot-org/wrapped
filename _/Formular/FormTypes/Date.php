@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     use \DateTime;
@@ -31,7 +33,7 @@
             $parsedTime = DateTime::createFromFormat( "Y-m-d", $input );
 
             if ( $parsedTime ) {
-                $parsedTime->setTime(0,0,0,0);
+                $parsedTime->setTime( 0, 0, 0, 0 );
                 return $parsedTime;
             }
 

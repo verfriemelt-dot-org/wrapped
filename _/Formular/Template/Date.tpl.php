@@ -1,7 +1,7 @@
 <div class="form-group form-group-{{ name }} {{ cssClasses }}">
 
     {{ if='displayLabel' }}
-        <label class="form-label-{{ name }}" for="{{ name }}">{{ label }}</label>
+    <label class="form-label-{{ name }}" for="{{ name }}">{{ label }}</label>
     {{ /if='displayLabel' }}
 
     <input

@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Router;
 
     use \Iterator;
@@ -10,7 +12,9 @@
         use RouteIterator;
 
         private $prefix;
+
         private $priority = 100;
+
         private $filterCallback;
 
         /**
@@ -33,7 +37,7 @@
          */
         public function add( Routable ... $routes ) {
 
-            foreach( $routes as $route ) {
+            foreach ( $routes as $route ) {
                 $this->routes[] = $route;
             }
 

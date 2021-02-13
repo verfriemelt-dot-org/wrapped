@@ -1,10 +1,12 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_;
 
     class EnvironmentDetector {
 
-        private static $detector = [ ];
+        private static $detector = [];
 
         /**
          *
@@ -50,11 +52,12 @@
          * @return mixed
          */
         public static function dumpDetectorsResults() {
-            $detectors = [ ];
+            $detectors = [];
             foreach ( self::$detector as $name => $func ) {
                 $detectors[$name] = $func();
             }
 
             return $detectors;
         }
+
     }

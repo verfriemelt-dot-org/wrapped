@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Http\Response;
 
     use \Wrapped\_\DataModel\Collection\CollectionResult;
@@ -9,7 +11,9 @@
     extends Response {
 
         private $pretty = false;
+
         private $content = null;
+
         private $alreadyEncoded = false;
 
         public function __construct( $content = null, $alreadyEncoded = false ) {
@@ -25,10 +29,9 @@
             } else {
                 $this->setContent( $content );
             }
-
         }
 
-        public function pretty( $bool = true): JsonResponse {
+        public function pretty( $bool = true ): JsonResponse {
             $this->pretty = $bool;
             return $this;
         }
@@ -49,7 +52,7 @@
 
                 parent::setContent( $this->content->toJson( $this->pretty ) );
             } else {
-                parent::setContent( json_encode( $this->content , $this->pretty ? 128 : null ) );
+                parent::setContent( json_encode( $this->content, $this->pretty ? 128 : null  ) );
             }
 
             return parent::send();

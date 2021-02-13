@@ -1,36 +1,60 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Cli;
 
     use \Wrapped\_\Http\ParameterBag;
 
     class Console {
 
-        const STYLE_NONE      = 0;
-        const STYLE_BLACK     = 30;
-        const STYLE_RED       = 31;
-        const STYLE_GREEN     = 32;
-        const STYLE_YELLOW    = 33;
-        const STYLE_BLUE      = 34;
-        const STYLE_PURPLE    = 35;
-        const STYLE_CYAN      = 36;
-        const STYLE_WHITE     = 37;
-        const STYLE_REGULAR   = "0";
-        const STYLE_BOLD      = "1";
+        const STYLE_NONE = 0;
+
+        const STYLE_BLACK = 30;
+
+        const STYLE_RED = 31;
+
+        const STYLE_GREEN = 32;
+
+        const STYLE_YELLOW = 33;
+
+        const STYLE_BLUE = 34;
+
+        const STYLE_PURPLE = 35;
+
+        const STYLE_CYAN = 36;
+
+        const STYLE_WHITE = 37;
+
+        const STYLE_REGULAR = "0";
+
+        const STYLE_BOLD = "1";
+
         const STYLE_UNDERLINE = "4";
 
-        protected $currentFgColor   = SELF::STYLE_NONE;
-        protected $currentBgColor   = SELF::STYLE_NONE;
+        protected $currentFgColor = SELF::STYLE_NONE;
+
+        protected $currentBgColor = SELF::STYLE_NONE;
+
         protected $currentFontStyle = SELF::STYLE_REGULAR;
+
         protected $selectedStream;
-        protected $stdout           = STDOUT;
-        protected $stderr           = STDERR;
+
+        protected $stdout = STDOUT;
+
+        protected $stderr = STDERR;
+
         protected $linePrefixFunc;
-        protected $hadLineOutput    = false;
-        protected $dimensions       = null;
+
+        protected $hadLineOutput = false;
+
+        protected $dimensions = null;
+
         protected $inTerminal = false;
+
         protected $colorSupported = null;
-        protected $forceColor     = false;
+
+        protected $forceColor = false;
 
         /**
          *

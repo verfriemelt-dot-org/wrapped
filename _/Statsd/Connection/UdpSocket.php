@@ -1,13 +1,18 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Statsd\Connection;
 
     class UdpSocket
     implements \Wrapped\_\Statsd\Connection {
 
         private $host;
+
         private $port;
+
         private $socket;
+
         private $isConnected = false;
 
         public function __construct( $host = "127.0.0.1", $port = 8125 ) {
@@ -20,7 +25,7 @@
 
             $url = "udp://" . $this->host;
 
-            $errorNumber = null;
+            $errorNumber  = null;
             $errorMessage = null;
 
             $this->socket = fsockopen( $url, $this->port, $errorNumber, $errorMessage );

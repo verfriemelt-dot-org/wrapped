@@ -2,19 +2,24 @@
 
     namespace functional\DataModel\AttributeTest;
 
+    use \functional\DataModel\AttributeTest\CamelCaseDummy;
+    use \functional\DataModel\AttributeTest\LowerDummy;
+    use \functional\DataModel\AttributeTest\SnakeCaseDummy;
     use \PHPUnit\Framework\TestCase;
     use \Wrapped\_\Database\Database;
     use \Wrapped\_\Database\Driver\Postgres;
+    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
     use \Wrapped\_\DataModel\DataModel;
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+    #[ LowerCase ]
     class LowerDummy
     extends DataModel {
 
         public ?int $id = null;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
-
+        #[ LowerCase ]
         public ?string $complexFieldName = null;
 
         public function getId(): ?int {
@@ -37,24 +42,20 @@
 
     }
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\CamelCase]
-
+    #[ CamelCase ]
     class CamelCaseDummy
     extends LowerDummy {
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\CamelCase]
-
+        #[ CamelCase ]
         public ?string $complexFieldName = null;
 
     }
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
-
+    #[ SnakeCase ]
     class SnakeCaseDummy
     extends LowerDummy {
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
-
+        #[ SnakeCase ]
         public ?string $complexFieldName = null;
 
     }

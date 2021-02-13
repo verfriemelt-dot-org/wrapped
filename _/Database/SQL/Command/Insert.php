@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Exception;
@@ -32,7 +34,7 @@
 
         public function add( Identifier ... $column ) {
 
-            foreach( $column as $col ) {
+            foreach ( $column as $col ) {
                 $this->addChild( $col );
             }
 
@@ -57,13 +59,13 @@
             }
 
             return sprintf(
-                static::COMMAND,
-                $this->into->stringify( $driver ),
-                implode(
-                    ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->columns )
-                )
-            ) . ( $this->query ? " " . $this->query->stringify( $driver ) : '');
+                    static::COMMAND,
+                    $this->into->stringify( $driver ),
+                    implode(
+                        ", ",
+                        array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->columns )
+                    )
+                ) . ( $this->query ? " " . $this->query->stringify( $driver ) : '');
         }
 
     }

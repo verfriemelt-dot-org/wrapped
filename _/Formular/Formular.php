@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular;
 
     use \Wrapped\_\DateTime\DateTime;
@@ -23,22 +25,35 @@
     class Formular
     implements Viewable {
 
-        const METHOD_POST     = "POST";
-        const METHOD_GET      = "GET";
+        const METHOD_POST = "POST";
+
+        const METHOD_GET = "GET";
+
         CONST CSRF_FIELD_NAME = "_csrf";
+
         CONST FORM_FIELD_NAME = "_form";
 
         /** @var Filter */
         private $filter;
-        private $elements                = [];
-        private $method                  = SELF::METHOD_POST;
-        private $cssClass                = "";
-        private $cssId                   = "";
+
+        private $elements = [];
+
+        private $method = SELF::METHOD_POST;
+
+        private $cssClass = "";
+
+        private $cssId = "";
+
         private $action;
+
         private $formname;
+
         private $csrfTokenName;
-        private $storeValuesOnFail       = false;
+
+        private $storeValuesOnFail = false;
+
         private $prefilledWithSubmitData = false;
+
         private $session;
 
         private function generateCSRF() {
@@ -221,7 +236,7 @@
                 Request::getInstance()->request() :
                 Request::getInstance()->query();
 
-            if ( !isset( $this->elements[$name]) ) {
+            if ( !isset( $this->elements[$name] ) ) {
                 return null;
             }
 

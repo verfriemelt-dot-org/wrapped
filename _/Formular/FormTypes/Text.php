@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     use \Wrapped\_\Formular\FormTypes\FormType;
@@ -8,6 +10,7 @@
     extends FormType {
 
         public $type = "text";
+
         public $placeholder;
 
         public function loadTemplate(): FormType {

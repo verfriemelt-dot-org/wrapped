@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Queue\Backend;
 
     use \Wrapped\_\DataModel\DataModel;
@@ -12,8 +14,7 @@
 
         public $id;
 
-#[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
-
+        #[ \Wrapped\_\DataModel\Attribute\Naming\LowerCase ]
         public $uniqId;
 
         public $channel;
@@ -21,13 +22,13 @@
         public $key;
 
         public $data;
-#[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
+        #[ \Wrapped\_\DataModel\Attribute\Naming\LowerCase ]
         public $startDate;
 
         public $priority = 100;
 
-        public $locked   = 0;
+        public $locked = 0;
 
         public static function fetchTablename(): string {
             return "queuebackend";

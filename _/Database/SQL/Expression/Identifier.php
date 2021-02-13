@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\SQL\Expression;
 
     use \Exception;
@@ -51,7 +53,7 @@
                 return $ident;
             }
 
-            $translations = array_map( function( DataModel $context ) use ( $ident, $table ) {
+            $translations = array_map( function ( DataModel $context ) use ( $ident, $table ) {
                 try {
 
                     if ( $table !== null && $context->getTableName() !== $table ) {

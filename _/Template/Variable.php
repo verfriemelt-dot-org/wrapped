@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template;
 
     use \Closure;
@@ -9,6 +11,7 @@
     implements TemplateItem {
 
         public $name, $value, $formatCallback;
+
         private static $formats = [];
 
         public function __construct( string $name = null, $value = null ) {

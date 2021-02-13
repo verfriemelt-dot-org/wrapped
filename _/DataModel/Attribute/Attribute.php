@@ -1,6 +1,10 @@
-<?php namespace Wrapped\_\DataModel\Attribute;
+<?php
 
-    #[\Attribute]
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\DataModel\Attribute;
+
+    #[ \Attribute ]
     class Attribute {
-        
+
     }

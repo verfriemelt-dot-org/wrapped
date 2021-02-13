@@ -1,18 +1,23 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Statsd;
 
     class StatsdTimer {
 
         private $statsdInstace = null;
+
         private $start = 0;
+
         private $diff = null;
+
         private $name = "";
 
         public function __construct( StatsdClient $statsd, $key ) {
 
             $this->statsdInstace = $statsd;
-            $this->name = $key;
+            $this->name          = $key;
 
             $this->restart();
         }

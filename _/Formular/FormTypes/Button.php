@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Formular\FormTypes;
 
     class Button
@@ -10,7 +12,7 @@
         public function __construct( string $name, string $value = null, \Wrapped\_\Template\Template $template = null ) {
             parent::__construct( $name, $value, $template );
 
-            $this->addCssClass("btn btn-default");
+            $this->addCssClass( "btn btn-default" );
         }
 
         public function loadTemplate(): FormType {
@@ -26,7 +28,7 @@
         public function fetchHtml(): string {
 
             $this->writeTplValues();
-            
+
             return $this->tpl->run();
         }
 

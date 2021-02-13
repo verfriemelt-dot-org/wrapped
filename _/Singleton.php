@@ -1,4 +1,8 @@
-<?php namespace Wrapped\_;
+<?php
+
+    declare(strict_types = 1);
+
+    namespace Wrapped\_;
 
     trait Singleton {
 
@@ -7,7 +11,9 @@
         /**
          * nope
          */
-        protected function __construct() {}
+        protected function __construct() {
+
+        }
 
         /**
          * static function for retriving the session handle
@@ -21,4 +27,5 @@
 
             return static::$handle;
         }
+
     }

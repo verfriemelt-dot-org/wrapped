@@ -1,14 +1,19 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Template;
 
     class Repeater
     implements TemplateItem {
 
         public $name = '';
-        public $data = [ ];
+
+        public $data = [];
+
         private $currentDataLine = null;
-        private $foundRepeater = [ ];
+
+        private $foundRepeater = [];
 
         public function __construct( $name ) {
             $this->name = $name;
@@ -33,7 +38,7 @@
          * @return \Wrapped\_\Template\Repeater
          */
         public function set( $name, $value ) {
-            $this->currentDataLine["vars"][$name] = new Variable( $name, $value );
+            $this->currentDataLine["vars"][$name] = new Variable( $name, (string) $value );
             return $this;
         }
 
@@ -51,8 +56,8 @@
          * @return integer current index number of entry
          */
         public function save() {
-            $this->data[] = $this->currentDataLine;
-            $this->currentDataLine = [ ];
+            $this->data[]          = $this->currentDataLine;
+            $this->currentDataLine = [];
             return $this;
         }
 

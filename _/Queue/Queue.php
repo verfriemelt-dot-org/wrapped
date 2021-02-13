@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Queue;
 
     use \Wrapped\_\Queue\Backend\MysqlBackend;

@@ -1,4 +1,8 @@
-<?php namespace Wrapped\_\File;
+<?php
+
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\File;
 
     class Path {
 

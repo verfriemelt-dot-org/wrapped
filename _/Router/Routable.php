@@ -1,4 +1,8 @@
-<?php namespace Wrapped\_\Router;
+<?php
+
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Router;
 
     interface Routable {
 

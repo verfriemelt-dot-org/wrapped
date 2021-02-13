@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Router;
 
     use \Iterator;
@@ -17,11 +19,16 @@
         use Singleton;
 
         private Request $request;
-        private ?string $basePath           = null;
+
+        private ?string $basePath = null;
+
         private $uri;
+
         private $routeAttributeData = [];
-        private $globalFilter       = [];
-        private $rawRouteHits       = [];
+
+        private $globalFilter = [];
+
+        private $rawRouteHits = [];
 
         public function __construct( Request $request = null ) {
             $this->setRequest( $request ?: Request::getInstance()  );

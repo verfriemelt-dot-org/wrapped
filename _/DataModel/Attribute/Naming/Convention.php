@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\DataModel\Attribute\Naming;
 
     abstract class Convention {
@@ -24,7 +26,7 @@
         public function convertTo( $class ) {
 
             if ( static::DESTRUCTIVE ) {
-                throw new \Exception('not possible');
+                throw new \Exception( 'not possible' );
             }
 
             return $class::fromStringParts( ... $this->fetchStringParts() );

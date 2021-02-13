@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace Wrapped\_\Database\SQL\Command;
 
     use \Wrapped\_\Database\Driver\DatabaseDriver;
@@ -20,7 +22,7 @@
         private array $expressions = [];
 
         public function __construct( ExpressionItem ... $items ) {
-            array_map( fn( $i ) => $this->add( $i ) , $items );
+            array_map( fn( $i ) => $this->add( $i ), $items );
         }
 
         public function getWeight(): int {
@@ -29,7 +31,7 @@
 
         public function add( ExpressionItem ... $item ) {
 
-            foreach( $item as $i ) {
+            foreach ( $item as $i ) {
 
                 $expression = $this->wrap( $i );
 

@@ -1,3 +1,10 @@
-<?php namespace Wrapped\_\Exception\Database;
+<?php
 
-    class DatabaseException extends \Wrapped\_\Exception\CoreException {}
+    declare(strict_types = 1);
+
+    namespace Wrapped\_\Exception\Database;
+
+    class DatabaseException
+    extends \Wrapped\_\Exception\CoreException {
+
+    }
