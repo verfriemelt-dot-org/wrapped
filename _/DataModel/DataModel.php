@@ -1,11 +1,8 @@
 <?php
 
-//    declare(strict_types = 1);
+    declare(strict_types = 1);
 
     namespace Wrapped\_\DataModel;
-
-//    use \Wrapped\_\DataModel\Attribute\PropertyResolver;
-
 
     use \ReflectionClass;
     use \Serializable;
@@ -63,7 +60,27 @@
 
             $attributeType = $attribute->getType();
 
-            if ( $attributeType !== null && class_exists( $attributeType ) && in_array( PropertyObjectInterface::class, class_implements( $attributeType ) ) ) {
+            // non typehinted property
+            if ( $attributeType === null ) {
+                return $value;
+            }
+
+            // preserve nulls
+            if ( $value === null ) {
+                return null;
+            }
+
+            // scalar properties
+            if ( in_array( $attributeType, [ 'float' ] ) ) {
+
+                if ( !settype( $value, $attributeType ) ) {
+                    throw new \Exception( 'casting of property failed' );
+                }
+
+                return $value;
+            }
+
+            if ( class_exists( $attributeType ) && in_array( PropertyObjectInterface::class, class_implements( $attributeType ) ) ) {
                 return $attributeType::hydrateFromString( $value );
             }
 
