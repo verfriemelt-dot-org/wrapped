@@ -43,7 +43,7 @@
             }
 
             if ( count( $args ) < static::OPTERATORS[$op]['minArgs'] || count( $args ) > static::OPTERATORS[$op]['maxArgs'] ) {
-                throw new Exception( 'missing arguments for operator' );
+                throw new Exception( "missing arguments for operator »{$op}«" );
             }
 
             foreach ( $args as $arg ) {
