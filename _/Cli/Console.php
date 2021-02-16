@@ -114,7 +114,7 @@
                 $this->hadLineOutput = true;
             }
 
-            fwrite( $this->selectedStream, $text );
+            fwrite( $this->selectedStream, (string) $text );
 
             if ( $color !== null ) {
                 $this->setForegroundColor( static::STYLE_NONE );
