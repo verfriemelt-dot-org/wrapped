@@ -9,7 +9,7 @@
     use \Wrapped\_\DataModel\Attribute\Naming\Rename;
     use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 
-    class DataModelAttribute {
+    class DataModelProperty {
 
         private string $name;
 

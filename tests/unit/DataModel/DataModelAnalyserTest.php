@@ -69,27 +69,27 @@
         public function testAttributes() {
             $analyser = new DataModelAnalyser( new Example );
 
-            $this->assertSame( 4, count( $analyser->fetchPropertyAttributes() ), 'four valid attributes' );
+            $this->assertSame( 4, count( $analyser->fetchProperties() ), 'four valid attributes' );
 
             // default naming convention snake case
-            $this->assertSame( 'id', $analyser->fetchPropertyAttributes()[0]->getNamingConvention()->getString() );
-            $this->assertSame( 'complex_field_name', $analyser->fetchPropertyAttributes()[1]->getNamingConvention()->getString() );
+            $this->assertSame( 'id', $analyser->fetchProperties()[0]->getNamingConvention()->getString() );
+            $this->assertSame( 'complex_field_name', $analyser->fetchProperties()[1]->getNamingConvention()->getString() );
         }
 
         public function testTypedAttributes() {
 
             $analyser = new DataModelAnalyser( new Example );
-            $this->assertSame( 'typed', $analyser->fetchPropertyAttributes()[2]->getNamingConvention()->getString() );
-            $this->assertSame( 'Wrapped\\_\\DateTime\\DateTime', $analyser->fetchPropertyAttributes()[2]->getType() );
+            $this->assertSame( 'typed', $analyser->fetchProperties()[2]->getNamingConvention()->getString() );
+            $this->assertSame( 'Wrapped\\_\\DateTime\\DateTime', $analyser->fetchProperties()[2]->getType() );
 
 
-            $this->assertTrue( class_exists( $analyser->fetchPropertyAttributes()[2]->getType() ) );
+            $this->assertTrue( class_exists( $analyser->fetchProperties()[2]->getType() ) );
         }
 
         public function testSnakeCaseConvention() {
 
             $analyser = new DataModelAnalyser( new Example );
-            $this->assertSame( 'complex_field_name_snake_case', $analyser->fetchPropertyAttributes()[3]->getNamingConvention()->getString() );
+            $this->assertSame( 'complex_field_name_snake_case', $analyser->fetchProperties()[3]->getNamingConvention()->getString() );
         }
 
     }

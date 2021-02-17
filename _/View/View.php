@@ -52,7 +52,7 @@
 
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {
 
-            $properties = $object::createDataModelAnalyser()->fetchPropertyAttributes();
+            $properties = $object::createDataModelAnalyser()->fetchProperties();
             $context    = $context ?? $this->tpl;
 
             foreach ( $properties as $prop ) {

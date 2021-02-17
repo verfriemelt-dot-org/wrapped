@@ -25,15 +25,30 @@
 
         /**
          *
-         * @return DataModelAttribute[]
+         * @return DataModelProperty[]
          */
-        public function fetchPropertyAttributes(): array {
+        public function fetchProperties(): array {
 
             if ( $this->properties === null ) {
-                $this->preparePropertyAttributes();
+                $this->prepareProperties();
             }
 
             return $this->properties ?? [];
+        }
+
+        public function fetchPropertyByName( string $name ): DataModelProperty {
+
+            if ( $this->properties === null ) {
+                $this->prepareProperties();
+            }
+
+            foreach ( $this->properties as $prop ) {
+                if ( $prop->getName() == $name ) {
+                    return $prop;
+                }
+            }
+
+            throw new \Exception( "prop »{$name}« not found " );
         }
 
         public function getBaseName(): string {
@@ -56,7 +71,7 @@
             return $attributes = $element->getAttributes( Attribute\Naming\Rename::class, \ReflectionAttribute::IS_INSTANCEOF )[0] ?? null;
         }
 
-        protected function preparePropertyAttributes() {
+        protected function prepareProperties() {
 
             $hasDataModelAttribute = false;
 
@@ -91,7 +106,7 @@
 
                 $convetion = $this->fetchNamingConventionAttributes( $property );
 
-                $dma = new DataModelAttribute( $name, $convetion ? $convetion->newInstance() : null );
+                $dma = new DataModelProperty( $name, $convetion ? $convetion->newInstance() : null );
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
 

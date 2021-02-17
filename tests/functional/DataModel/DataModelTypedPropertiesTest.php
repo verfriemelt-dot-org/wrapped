@@ -16,7 +16,7 @@
 
         public ?int $id = null;
 
-        public ?string $name = null;
+        public ?string $name;
 
         public ?DateTime $pubtime = null;
 
@@ -114,7 +114,7 @@
         }
 
         public function testReloadWithTime() {
-            $test = new TypedDummy();
+            $test = new TypedDummy(); 
             $test->save();
 
             $secondInstance = TypedDummy::last();
@@ -136,6 +136,7 @@
 
             $test->reload();
             $this->assertNull( $test->getLastFoundDate(), 'original is null' );
+
 
             // read updated value
             $this->assertNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated to null again' );

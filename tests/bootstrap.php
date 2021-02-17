@@ -9,3 +9,4 @@
     require __DIR__ . '/../Bootstrap.php';
 
     Bootstrap::registerAutoloader();
+    Bootstrap::registerExceptionHandling();

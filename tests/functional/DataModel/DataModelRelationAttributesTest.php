@@ -19,20 +19,20 @@
 
         protected ?b $aObject = null;
 
-        public function getId(): int {
+        public function getId(): ?int {
             return $this->id;
         }
 
-        public function getBId(): int {
+        public function getBId(): ?int {
             return $this->bId;
         }
 
-        public function setId( int $id ) {
+        public function setId( ?int $id ) {
             $this->id = $id;
             return $this;
         }
 
-        public function setBId( int $bId ) {
+        public function setBId( ?int $bId ) {
             $this->bId = $bId;
             return $this;
         }
@@ -54,17 +54,17 @@
 
         protected ?a $aObjectNotMarked = null;
 
-        public function getId(): int {
+        public function getId(): ?int {
             return $this->id;
-        }
-
-        public function setId( int $id ) {
-            $this->id = $id;
-            return $this;
         }
 
         public function getAId(): ?int {
             return $this->aId;
+        }
+
+        public function setId( ?int $id ) {
+            $this->id = $id;
+            return $this;
         }
 
         public function setAId( ?int $aId ) {

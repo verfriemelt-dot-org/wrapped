@@ -219,7 +219,7 @@
             $result   = [];
             $skiplist = [ 'left', 'right', 'depth', 'parentId' ];
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $attribute ) {
 
                 // skip pk
                 if ( static::getPrimaryKey() !== null && $attribute->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
@@ -236,7 +236,7 @@
                     continue;
                 }
 
-                $result[$attribute->fetchDatabaseName()] = $this->dehydrateAttribute( $attribute );
+                $result[$attribute->fetchDatabaseName()] = $this->dehydrateProperty( $attribute );
             }
 
             return $result;
@@ -1040,9 +1040,9 @@
         public function save(): static {
 
             if ( $this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
-                $this->insertIntoDatabase();
+                $this->insertRecord();
             } else {
-                $this->saveToDatabase();
+                $this->updateRecord();
             }
 
             // clear out every movement operation
@@ -1052,12 +1052,12 @@
             return $this;
         }
 
-        protected function saveToDatabase(): static {
+        protected function updateRecord(): static {
 
             $isMovement = $this->insertPosition !== null;
 
             if ( !$isMovement ) {
-                parent::saveToDatabase();
+                parent::updateRecord();
             } else {
 
                 [$cte, $upd] = $this->cteMove( $this->insertPosition, $this->insertMode );
@@ -1074,7 +1074,7 @@
             return $this;
         }
 
-        protected function insertIntoDatabase(): static {
+        protected function insertRecord(): static {
 
             $query = static::buildQuery();
 
@@ -1126,7 +1126,7 @@
             $databaseHandle = static::getDatabase();
 
             $columns = [];
-            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $col ) {
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $col ) {
                 $columns[] = 'parent.' . $col->getName();
             }
 

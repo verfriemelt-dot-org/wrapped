@@ -26,6 +26,10 @@
 
         protected $_propertyHashes = [];
 
+        public function __construct() {
+            $this->_storePropertyStates();
+        }
+
         public static function getPrimaryKey(): ?string {
             return "id";
         }
@@ -39,7 +43,7 @@
          */
         public function initData( $data, bool $deserialize = false ) {
 
-            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
 
                 $conventionName = $deserialize ? $attribute->getName() : $attribute->fetchDatabaseName();
 
@@ -48,7 +52,7 @@
                     continue;
                 }
 
-                $this->{$attribute->getSetter()}( $this->hydrateAttribute( $attribute, $data[$conventionName] ) );
+                $this->{$attribute->getSetter()}( $this->hydrateProperty( $attribute, $data[$conventionName] ) );
             }
 
             $this->_storePropertyStates();
@@ -56,44 +60,63 @@
             return $this;
         }
 
-        protected function hydrateAttribute( DataModelAttribute $attribute, mixed $value ): mixed {
+        protected function isPropertyInitialized( DataModelProperty $property ) {
 
-            $attributeType = $attribute->getType();
+            // used to exclude it frmo the try except block
+            $propName = $property->getName();
+
+            if ( isset( $this->{ $propName } ) ) {
+                return true;
+            }
+
+            // this will result in either a null value or not initialized error
+            try {
+                if ( is_null( $this->{ $propName } ) ) {
+                    return true;
+                }
+            } catch ( \Error $e ) {
+                return false;
+            }
+        }
+
+        protected function hydrateProperty( DataModelProperty $property, mixed $input ): mixed {
+
+            $attributeType = $property->getType();
 
             // non typehinted property
             if ( $attributeType === null ) {
-                return $value;
+                return $input;
             }
 
             // preserve nulls
-            if ( $value === null ) {
+            if ( $input === null ) {
                 return null;
             }
 
             // scalar properties
             if ( in_array( $attributeType, [ 'float' ] ) ) {
 
-                if ( !settype( $value, $attributeType ) ) {
+                if ( !settype( $input, $attributeType ) ) {
                     throw new \Exception( 'casting of property failed' );
                 }
 
-                return $value;
+                return $input;
             }
 
             if ( class_exists( $attributeType ) && in_array( PropertyObjectInterface::class, class_implements( $attributeType ) ) ) {
-                return $attributeType::hydrateFromString( $value );
+                return $attributeType::hydrateFromString( $input );
             }
 
-            return $value;
+            return $input;
         }
 
-        protected function dehydrateAttribute( DataModelAttribute $attribute ) {
+        protected function dehydrateProperty( DataModelProperty $property ) {
 
-            $attributeType = $attribute->getType();
+            $propertyType = $property->getType();
 
-            $value = $this->{$attribute->getGetter()}();
+            $value = $this->{$property->getGetter()}();
 
-            if ( $value !== null && class_exists( $attributeType ) && $value instanceof PropertyObjectInterface ) {
+            if ( $value !== null && class_exists( $propertyType ) && $value instanceof PropertyObjectInterface ) {
                 return $value->dehydrateToString();
             }
 
@@ -109,9 +132,9 @@
             return static::$_analyserObjectCache[static::class];
         }
 
-        public static function translateFieldName( string $fieldName ): DataModelAttribute {
+        public static function translateFieldName( string $fieldName ): DataModelProperty {
 
-            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $field ) {
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $field ) {
 
                 if ( $fieldName == $field->fetchDatabaseName() || $fieldName == $field->getName() ) {
                     return $field;
@@ -150,15 +173,15 @@
 
             $data = [];
 
-            foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
-                $data[$attribute->getName()] = $this->dehydrateAttribute( $attribute );
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
+                $data[$attribute->getName()] = $this->dehydrateProperty( $attribute );
             }
 
             return $data;
         }
 
         public function fetchColumns() {
-            return array_map( fn( DataModelAttribute $a ) => $a->getName(), static::createDataModelAnalyser()->fetchPropertyAttributes() );
+            return array_map( fn( DataModelProperty $a ) => $a->getName(), static::createDataModelAnalyser()->fetchProperties() );
         }
 
         public function unserialize( $serialized ) {
@@ -209,7 +232,7 @@
 
             $query = static::buildQuery();
 
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+            $query->select( ... array_map( fn( DataModelProperty $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchProperties() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
             return $query;
@@ -381,10 +404,12 @@
                 throw new DatabaseException( "saving datamodels to database not possible without pk defined" );
             }
 
-            if ( $this->_isPropertyFuzzy( static::getPrimaryKey(), $this->{static::getPrimaryKey()} ) ) {
-                $this->insertIntoDatabase();
+            $pk = (new Attribute\Naming\SnakeCase( static::getPrimaryKey() ) )->convertTo( new Attribute\Naming\CamelCase )->getString();
+
+            if ( $this->_isPropertyFuzzy( $pk ) ) {
+                $this->insertRecord();
             } else {
-                $this->saveToDatabase();
+                $this->updateRecord();
             }
 
             $this->_storePropertyStates();
@@ -396,26 +421,29 @@
 
             $result = [];
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
+            foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $property ) {
 
                 // skip pk
-                if ( static::getPrimaryKey() !== null && $attribute->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
+                if ( static::getPrimaryKey() !== null && $property->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
                     continue;
                 }
 
-                $data = $this->dehydrateAttribute( $attribute );
-
-                if ( !$includeNonFuzzy && !$this->_isPropertyFuzzy( $attribute->getName(), $data ) ) {
+                // skip non initialized
+                if ( !$this->isPropertyInitialized( $property ) ) {
                     continue;
                 }
 
-                $result[$attribute->fetchDatabaseName()] = $this->dehydrateAttribute( $attribute );
+                if ( !$includeNonFuzzy && !$this->_isPropertyFuzzy( $property->getName() ) ) {
+                    continue;
+                }
+
+                $result[$property->fetchDatabaseName()] = $this->dehydrateProperty( $property );
             }
 
             return $result;
         }
 
-        protected function insertIntoDatabase(): static {
+        protected function insertRecord(): static {
 
             $insertData = $this->prepareDataForStorage( true );
 
@@ -436,7 +464,7 @@
             return $this;
         }
 
-        protected function saveToDatabase() {
+        protected function updateRecord() {
 
             $pk = static::getPrimaryKey();
 
@@ -467,8 +495,16 @@
          */
         protected function _storePropertyStates() {
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchPropertyAttributes() as $attribute ) {
-                $this->_propertyHashes[$attribute->getName()] = \crc32( (string) $this->dehydrateAttribute( $attribute ) );
+            foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $attribute ) {
+
+                // not initialized
+                if ( !isset( $this->{$attribute->getName()} ) ) {
+
+                    $this->_propertyHashes[$attribute->getName()] = null;
+                    continue;
+                }
+
+                $this->_propertyHashes[$attribute->getName()] = \md5( (string) $this->dehydrateProperty( $attribute ) );
             }
         }
 
@@ -478,13 +514,16 @@
          * @param type $data
          * @return bool
          */
-        protected function _isPropertyFuzzy( $name, $data ) {
+        protected function _isPropertyFuzzy( string $name ): bool {
 
-            if ( $data instanceof PropertyObjectInterface ) {
-                $data = $data->dehydrateToString();
+            $property = (new DataModelAnalyser( $this ) )->fetchPropertyByName( $name );
+
+            // not initialized
+            if ( !$this->isPropertyInitialized( $property ) ) {
+                return $this->_propertyHashes[$property->getName()] === null;
             }
 
-            return !\array_key_exists( $name, $this->_propertyHashes ) || $this->_propertyHashes[$name] !== \crc32( (string) $data );
+            return $this->_propertyHashes[$name] !== \md5( (string) $this->dehydrateProperty( $property ) );
         }
 
         public function delete() {
