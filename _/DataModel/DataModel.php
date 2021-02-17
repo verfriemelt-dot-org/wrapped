@@ -126,7 +126,7 @@
         public static function createDataModelAnalyser(): DataModelAnalyser {
 
             if ( !isset( static::$_analyserObjectCache[static::class] ) ) {
-                static::$_analyserObjectCache[static::class] = new DataModelAnalyser( new static );
+                static::$_analyserObjectCache[static::class] = new DataModelAnalyser( static::class );
             }
 
             return static::$_analyserObjectCache[static::class];
@@ -421,7 +421,7 @@
 
             $result = [];
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $property ) {
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ) {
 
                 // skip pk
                 if ( static::getPrimaryKey() !== null && $property->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
@@ -495,7 +495,7 @@
          */
         protected function _storePropertyStates() {
 
-            foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $attribute ) {
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
 
                 // not initialized
                 if ( !isset( $this->{$attribute->getName()} ) ) {
@@ -516,7 +516,7 @@
          */
         protected function _isPropertyFuzzy( string $name ): bool {
 
-            $property = (new DataModelAnalyser( $this ) )->fetchPropertyByName( $name );
+            $property = static::createDataModelAnalyser()->fetchPropertyByName( $name );
 
             // not initialized
             if ( !$this->isPropertyInitialized( $property ) ) {

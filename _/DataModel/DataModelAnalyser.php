@@ -12,14 +12,11 @@
 
     class DataModelAnalyser {
 
-        private DataModel $model;
-
         private ReflectionClass $reflection;
 
         private ?array $properties = null;
 
-        public function __construct( DataModel $model ) {
-            $this->model      = $model;
+        public function __construct( DataModel|string $model ) {
             $this->reflection = new ReflectionClass( $model );
         }
 
