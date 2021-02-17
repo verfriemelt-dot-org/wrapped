@@ -49,8 +49,11 @@
         }
 
         public function fetchNamingConventionAttributes( $element ): ?\ReflectionAttribute {
-            $attributes = $element->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF );
-            return $attributes [0] ?? null;
+            return $attributes = $element->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF )[0] ?? null;
+        }
+
+        public function fetchNameOverride( $element ): ?\ReflectionAttribute {
+            return $attributes = $element->getAttributes( Attribute\Naming\Rename::class, \ReflectionAttribute::IS_INSTANCEOF )[0] ?? null;
         }
 
         protected function preparePropertyAttributes() {
@@ -91,6 +94,12 @@
                 $dma = new DataModelAttribute( $name, $convetion ? $convetion->newInstance() : null );
                 $dma->setGetter( $getter );
                 $dma->setSetter( $setter );
+
+                $renamedAttribute = $this->fetchNameOverride( $property );
+
+                if ( $renamedAttribute ) {
+                    $dma->setRenamed( $renamedAttribute->newInstance() );
+                }
 
                 if ( $property->getType() ) {
                     $dma->setType( $property->getType()->getName() );

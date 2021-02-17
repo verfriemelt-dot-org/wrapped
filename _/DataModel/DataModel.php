@@ -41,7 +41,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $attribute ) {
 
-                $conventionName = $deserialize ? $attribute->getName() : $attribute->getNamingConvention()->getString();
+                $conventionName = $deserialize ? $attribute->getName() : $attribute->fetchDatabaseName();
 
                 // skip attribute
                 if ( !array_key_exists( $conventionName, $data ) ) {
@@ -113,7 +113,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchPropertyAttributes() as $field ) {
 
-                if ( $fieldName == $field->getNamingConvention()->getString() || $fieldName == $field->getName() ) {
+                if ( $fieldName == $field->fetchDatabaseName() || $fieldName == $field->getName() ) {
                     return $field;
                 }
             }
@@ -126,7 +126,7 @@
             $keys = array_keys( $array );
 
             if ( $torwardsDatabase ) {
-                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->getNamingConvention()->getString(), $keys );
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->fetchDatabaseName(), $keys );
             } else {
                 $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, false )->getName(), $keys );
             }
@@ -209,7 +209,7 @@
 
             $query = static::buildQuery();
 
-            $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->getNamingConvention()->getString() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
+            $query->select( ... array_map( fn( DataModelAttribute $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchPropertyAttributes() ) );
             $query->from( static::getSchemaName(), static::getTableName() );
 
             return $query;
@@ -409,7 +409,7 @@
                     continue;
                 }
 
-                $result[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
+                $result[$attribute->fetchDatabaseName()] = $this->dehydrateAttribute( $attribute );
             }
 
             return $result;

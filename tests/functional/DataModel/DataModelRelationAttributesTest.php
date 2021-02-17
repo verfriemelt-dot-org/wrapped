@@ -74,7 +74,7 @@
 
     }
 
-    class DataModelResolverAttributeTest
+    class DataModelRelationAttributesTest
     extends TestCase {
 
         static $connection;

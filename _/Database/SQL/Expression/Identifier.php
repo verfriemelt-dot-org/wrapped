@@ -71,7 +71,7 @@
 
             switch ( count( $translations ) ) {
                 case 0: return $ident;
-                case 1: return $translations[0]->getNamingConvention()->getString();
+                case 1: return $translations[0]->fetchDatabaseName();
                 default:
                     throw new \Exception( "field ambiguous: {$ident}" );
             }

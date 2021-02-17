@@ -9,7 +9,7 @@
         public const DESTRUCTIVE = false;
 
         public function __construct( ?string $str = null ) {
-            if ( $str ) {
+            if ( $str !== null ) {
                 $this->setString( $str );
             }
         }

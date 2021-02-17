@@ -236,7 +236,7 @@
                     continue;
                 }
 
-                $result[$attribute->getNamingConvention()->getString()] = $this->dehydrateAttribute( $attribute );
+                $result[$attribute->fetchDatabaseName()] = $this->dehydrateAttribute( $attribute );
             }
 
             return $result;
