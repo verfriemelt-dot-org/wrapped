@@ -19,6 +19,8 @@
 
         protected $currentDatabase;
 
+        protected $currentUsername;
+
         protected $statements = [];
 
         protected $lastStatement;
@@ -101,6 +103,7 @@
 
             // unset config data
             $this->currentDatabase = $this->config["dbDatabase"];
+            $this->currentUsername = $this->config["dbUsername"];
             $this->config          = [];
         }
 
@@ -254,6 +257,10 @@
 
         public function getCurrentDatabase() {
             return $this->currentDatabase;
+        }
+
+        public function getCurrentUsername() {
+            return $this->currentUsername;
         }
 
         /**

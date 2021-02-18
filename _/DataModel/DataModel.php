@@ -484,7 +484,9 @@
                 $updateColumns
             );
 
-            $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
+            $pk = (new Attribute\Naming\SnakeCase( static::getPrimaryKey() ) )->convertTo( new Attribute\Naming\CamelCase )->getString();
+
+            $query->where( [ static::getPrimaryKey() => $this->{$pk} ] );
             $query->run();
 
             return $this;
