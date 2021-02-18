@@ -17,6 +17,7 @@
         public const SYNTAX = '%s( %s )';
 
         protected Identifier $name;
+        protected Identifier $schema;
 
         protected array $arguments;
 
@@ -32,6 +33,11 @@
             $this->arguments = $args;
         }
 
+        public function setSchema( Identifier $schema ) {
+            $this->schema = $schema;
+            return $this;
+        }
+
         public function stringify( DatabaseDriver $driver = null ): string {
 
             // some functions are keywords
@@ -45,7 +51,12 @@
             if ( in_array( $this->name->stringify(), $keywords ) ) {
                 $name = $this->name->stringify( null );
             } else {
+
                 $name = $this->name->stringify( $driver );
+
+                if ( isset( $this->schema ) ) {
+                    $name = $this->schema->stringify( $driver ) . '.' . $name;
+                }
             }
 
             return sprintf(
