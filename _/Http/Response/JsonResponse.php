@@ -52,7 +52,7 @@
 
                 parent::setContent( $this->content->toJson( $this->pretty ) );
             } else {
-                parent::setContent( json_encode( $this->content, $this->pretty ? 128 : null  ) );
+                parent::setContent( json_encode( $this->content, $this->pretty ? 128 : 0  ) );
             }
 
             return parent::send();
