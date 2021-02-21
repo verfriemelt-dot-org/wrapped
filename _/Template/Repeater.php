@@ -38,7 +38,7 @@
          * @return \Wrapped\_\Template\Repeater
          */
         public function set( $name, $value ) {
-            $this->currentDataLine["vars"][$name] = new Variable( $name, (string) $value );
+            $this->currentDataLine["vars"][$name] = new Variable( $name, $value );
             return $this;
         }
 

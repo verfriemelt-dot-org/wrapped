@@ -105,7 +105,7 @@
         public function isValidCallback() {
 
             if ( is_callable( $this->callback ) ||
-                class_implements( $this->callback, ControllerInterface::class ) ||
+                in_array( ControllerInterface::class, class_implements( $this->callback ) ) ||
                 $this->callback instanceof Response ) {
 
                 return true;

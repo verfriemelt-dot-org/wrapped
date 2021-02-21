@@ -38,7 +38,7 @@
          * sets set startingtime to the current time
          */
         public function restart() {
-            $this->start = microtime( 1 );
+            $this->start = microtime( true );
         }
 
         /**
@@ -46,7 +46,7 @@
          * @return int
          */
         public function end() {
-            return $this->diff = round( microtime( 1 ) * 1000 ) - round( $this->start * 1000 );
+            return $this->diff = round( microtime( true ) * 1000 ) - round( $this->start * 1000 );
         }
 
         /**

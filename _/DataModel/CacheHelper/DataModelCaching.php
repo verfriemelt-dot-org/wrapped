@@ -8,17 +8,17 @@
 
     trait DataModelCaching {
 
-        protected static function storeInCache( $instance, string $key ): bool {
+        protected static function storeInCache( $instance, string|int $key ): bool {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
             }
 
             $cache = CacheFactory::getCache();
-            return $cache->set( static::class . $key, serialize( $instance ), 600 );
+            return $cache->set( static::class . (string) $key, serialize( $instance ), 600 );
         }
 
-        protected static function retriveFromCache( string $key ) {
+        protected static function retriveFromCache( $key ) {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
@@ -49,7 +49,7 @@
             return $result;
         }
 
-        public static function get( $id ) {
+        public static function get( string|int $id ) {
 
 
             $instance = static::retriveFromCache( $id );

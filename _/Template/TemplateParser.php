@@ -99,7 +99,7 @@
                 throw new Exception( "object passed to template variable '{$name}'" );
             }
 
-            return $this->currentToken->escape ? htmlspecialchars( $output, ENT_QUOTES ) : $output;
+            return $this->currentToken->escape ? htmlspecialchars( (string) $output, ENT_QUOTES ) : $output;
         }
 
         private function parseIf() {

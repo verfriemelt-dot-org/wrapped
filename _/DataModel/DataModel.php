@@ -113,6 +113,11 @@
         protected function dehydrateProperty( DataModelProperty $property ) {
 
             $propertyType = $property->getType();
+            $value        = $this->{$property->getGetter()}();
+
+            if ( $propertyType === null ) {
+                return $value;
+            }
 
             $value = $this->{$property->getGetter()}();
 
@@ -166,7 +171,7 @@
         }
 
         public function toJson( $pretty = false ): string {
-            return json_encode( $this->toArray(), $pretty ? 128 : null );
+            return json_encode( $this->toArray(), $pretty ? 128 : 0 );
         }
 
         public function toArray(): array {
@@ -253,7 +258,7 @@
          * @return static
          * @throws DatabaseObjectNotFound
          */
-        public static function get( $id ) {
+        public static function get( string | int $id ) {
 
             $pk = static::getPrimaryKey();
 

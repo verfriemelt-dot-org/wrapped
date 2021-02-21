@@ -65,7 +65,7 @@
             $this->expression->add( new Identifier( ... [ $bindToTable, $column ] ) );
 
             // special case for in
-            if ( strtolower( $op ) == 'in' ) {
+            if ( $op !== null && strtolower( $op ) == 'in' ) {
                 return $this->isIn( $value );
             }
 
