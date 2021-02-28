@@ -20,7 +20,7 @@
                 return $this->session->get( $contextName );
             }
 
-            $token = md5( uniqid( rand(), true ) );
+            $token = md5( uniqid( (string) rand(), true ) );
             $this->session->set( $contextName, $token );
 
             return $token;
