@@ -9,10 +9,14 @@
 
     class CacheFactory {
 
-        private static CacheProviderInterface $cacheProvider;
+        private static ?CacheProviderInterface $cacheProvider;
 
         public static function registerCachingProvider( CacheProviderInterface $provider ) {
             static::$cacheProvider = $provider;
+        }
+
+        public static function removeCachingProvider(): void {
+            static::$cacheProvider = null;
         }
 
         public static function hasCache(): bool {
@@ -24,3 +28,4 @@
         }
 
     }
+    
