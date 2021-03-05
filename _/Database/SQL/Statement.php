@@ -16,6 +16,8 @@
 
         private array $parts = [];
 
+        private $sortingDisabled = false;
+
         public function __construct( ?Command $command = null, QueryPart ... $parts ) {
             if ( $command ) {
                 $this->setCommand( $command );
@@ -39,6 +41,11 @@
         }
 
         public function add( QueryPart $clause ) {
+
+            if ( $clause instanceof Clause\Union ) {
+                $this->sortingDisabled = true;
+            }
+
             $this->addChild( $clause );
             $this->parts[] = $clause;
             return $this;
@@ -46,7 +53,9 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
-            usort( $this->parts, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
+            if ( !$this->sortingDisabled ) {
+                usort( $this->parts, fn( $a, $b ) => $a->getWeight() <=> $b->getWeight() );
+            }
 
             return trim(
                 implode(

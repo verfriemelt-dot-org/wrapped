@@ -17,9 +17,11 @@
 
         use CommandWrapperTrait;
 
-        public const CLAUSE = "WITH %s";
+        public const CLAUSE = "WITH %s%s";
 
         public array $with = [];
+
+        private bool $recursive = false;
 
         public function getWeight(): int {
             return 5;
@@ -34,10 +36,16 @@
             return $this;
         }
 
+        public function recursive( bool $bool = true ): static {
+            $this->recursive = $bool;
+            return $this;
+        }
+
         public function stringify( DatabaseDriver $driver = null ): string {
 
             return sprintf(
                 static::CLAUSE,
+                $this->recursive ? 'RECURSIVE ' : '',
                 implode( ', ', array_map( fn( $o ) => "{$o['ident']->stringify( $driver )} AS ( {$o['stmt']->stringify( $driver )} )", $this->with ) ),
             );
         }

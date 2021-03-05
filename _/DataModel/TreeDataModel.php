@@ -109,7 +109,7 @@
          * be aware of funky features, if you're saving children after parents death!
          * @return boolean
          */
-        public function delete() {
+        public function delete(): static {
 
             $width = $this->right - $this->left + 1;
 
@@ -204,7 +204,7 @@
          * @param type $parent
          * @return $this
          */
-        public function under( TreeDataModel $parent, $atEnd = true ) {
+        public function under( TreeDataModel $parent, $atEnd = true ): static {
 
             $this->validateMove( $parent );
 
@@ -1025,10 +1025,6 @@
                     ->else( new Identifier( 'parentId' ) )
             );
 
-//            var_dump( $cte->stringify() );
-//            die();
-
-
             return [ $cte, $upd ];
         }
 
@@ -1108,7 +1104,7 @@
          * just for clearance while writing
          * @return $this
          */
-        public function move() {
+        public function move(): static {
             return $this;
         }
 
@@ -1118,7 +1114,7 @@
          * @return \static[]
          * @throws Exception
          */
-        public function fetchPath() {
+        public function fetchPath(): Collection {
 
             $id = $this->getId();
 
@@ -1215,29 +1211,7 @@
             return (new static() )->initData( $res->fetch( PDO::FETCH_ASSOC ) );
         }
 
-        /**
-         * this is only used for converting existing tables to tree data model
-         * we assume there is no sorting what so every, so everthing will be
-         * left x , right x+1
-         */
-        public static function _convertOldToTreeData() {
-
-            $count = 0;
-
-            foreach ( static::all( "id" ) as $item ) {
-
-                $item->setLeft( ++$count );
-                $item->setRight( ++$count );
-                $item->setDepth( 0 );
-                $item->save();
-            }
-        }
-
-        /**
-         *
-         * @return static[]
-         */
-        public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ) {
+        public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ): Collection {
 
             $logic = DbLogic::create()
                 ->where( "left", ">", $this->getLeft() )->addAnd()
@@ -1255,11 +1229,7 @@
             );
         }
 
-        /**
-         *
-         * @return static[]
-         */
-        public function fetchChildrenInclusive( $order = "left", $direction = "ASC", int $depth = null ) {
+        public function fetchChildrenInclusive( $order = "left", $direction = "ASC", int $depth = null ): Collection {
 
             $logic = DbLogic::create()
                 ->where( "left", ">=", $this->getLeft() )->addAnd()
@@ -1272,12 +1242,10 @@
                     ->where( "depth", "<=", $this->getDepth() + $depth );
             }
 
-            return static::find(
-                    $logic
-            );
+            return static::find( $logic );
         }
 
-        public function fetchDirectChildren( $order = "left", $direction = "ASC" ) {
+        public function fetchDirectChildren( $order = "left", $direction = "ASC" ): Collection {
 
             return static::find(
                     DbLogic::create()
@@ -1303,14 +1271,11 @@
          * @return int
          */
         public function fetchChildCount(): int {
-            return ($this->right - $this->left - 1) / 2;
+            return $this->fetchChildren()->count();
         }
 
-        /**
-         * fetchs the current parrent
-         * @return static
-         */
-        public function fetchParent() {
+        public function fetchParent(): ?static {
+
             if ( !$this->parentId ) {
                 return null;
             }

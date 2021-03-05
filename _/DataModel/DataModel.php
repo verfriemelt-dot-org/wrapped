@@ -30,7 +30,7 @@
             $this->_storePropertyStates();
         }
 
-        public static function getPrimaryKey(): ?string {
+        public static function getPrimaryKey(): string {
             return "id";
         }
 
@@ -41,7 +41,7 @@
          * [ "key" => "value" ]
          * @param type $data
          */
-        public function initData( $data, bool $deserialize = false ) {
+        public function initData( $data, bool $deserialize = false ): static {
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
 
@@ -110,7 +110,7 @@
             return $input;
         }
 
-        protected function dehydrateProperty( DataModelProperty $property ) {
+        protected function dehydrateProperty( DataModelProperty $property ): mixed {
 
             $propertyType = $property->getType();
             $value        = $this->{$property->getGetter()}();
@@ -237,10 +237,14 @@
 
             $query = static::buildQuery();
 
-            $query->select( ... array_map( fn( DataModelProperty $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchProperties() ) );
+            $query->select( ... static::fetchSelectColumns() );
             $query->from( static::getSchemaName(), static::getTableName() );
 
             return $query;
+        }
+
+        protected static function fetchSelectColumns(): array {
+            return array_map( fn( DataModelProperty $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchProperties() );
         }
 
         public static function buildCountQuery(): DataModelQueryBuilder {
@@ -258,7 +262,7 @@
          * @return static
          * @throws DatabaseObjectNotFound
          */
-        public static function get( string | int $id ) {
+        public static function get( string | int $id ): ?static {
 
             $pk = static::getPrimaryKey();
 
@@ -276,7 +280,7 @@
             return $result;
         }
 
-        public function reload() {
+        public function reload(): static {
 
             $pk = static::getPrimaryKey();
 
@@ -294,7 +298,7 @@
          * @param type $params an array like [ "id" => 1 ] or DbLogic instance
          * @return static[]
          */
-        public static function find( $params, $orderBy = null, $order = "asc" ) {
+        public static function find( $params, $orderBy = null, $order = "asc" ): Collection {
 
             if ( $params instanceof DbLogic ) {
                 $query = static::buildQueryFromDbLogic( $params );
@@ -318,7 +322,7 @@
          * @param type $order
          * @return static|null
          */
-        public static function findSingle( $params = [], $orderBy = null, $order = "asc" ) {
+        public static function findSingle( $params = [], $orderBy = null, $order = "asc" ): ?static {
 
             if ( $params instanceof DbLogic ) {
                 $query = static::buildQueryFromDbLogic( $params );
@@ -358,7 +362,7 @@
          * fetches all entries from the database
          * @return static[]
          */
-        public static function all( $orderBy = null, $order = "asc" ) {
+        public static function all( $orderBy = null, $order = "asc" ): Collection {
 
             $query = static::buildSelectQuery();
 
@@ -373,7 +377,7 @@
          * returns last Record in DB ( according to the PK )
          * @return static
          */
-        public static function last(): static {
+        public static function last(): ?static {
             return static::findSingle( [], static::getPrimaryKey(), 'desc' );
         }
 
@@ -383,7 +387,7 @@
          * @param type $offset
          * @return static[]
          */
-        public static function take( $count, $offset = null, $params = [] ) {
+        public static function take( $count, $offset = null, $params = [] ): Collection {
 
             $query = static::buildSelectQuery();
 
@@ -469,7 +473,7 @@
             return $this;
         }
 
-        protected function updateRecord() {
+        protected function updateRecord(): static {
 
             $pk = static::getPrimaryKey();
 
@@ -500,7 +504,7 @@
         /**
          * used to determine which colums should be updated or not
          */
-        protected function _storePropertyStates() {
+        protected function _storePropertyStates(): void {
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
 
@@ -533,7 +537,7 @@
             return $this->_propertyHashes[$name] !== \md5( (string) $this->dehydrateProperty( $property ) );
         }
 
-        public function delete() {
+        public function delete(): static {
 
             $pk = static::getPrimaryKey();
 
@@ -574,11 +578,11 @@
          * @param ParameterBag $params
          * @return \static returns the unsaved object instance
          */
-        public static function createFromParameterBag( ParameterBag $params ) {
+        public static function createFromParameterBag( ParameterBag $params ): static {
             return (new static() )->initData( $params->all() );
         }
 
-        public static function truncate() {
+        public static function truncate(): void {
             static::getDatabase()->truncate( static::getTableName() );
         }
 
@@ -586,7 +590,7 @@
          * returns short name of static
          * @return string
          */
-        protected static function _getStaticClassName() {
+        protected static function _getStaticClassName(): string {
             return static::createDataModelAnalyser()->getStaticName();
         }
 
