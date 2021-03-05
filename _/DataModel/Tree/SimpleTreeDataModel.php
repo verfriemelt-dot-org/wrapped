@@ -54,7 +54,14 @@
             $cte->with(
                 new Identifier( '_data' ),
                 $recursiveStatement
-                    ->add( new Where( new Expression( new Identifier( $parentProp->fetchDatabaseName() ), new Operator( '=' ), new Value( $this->{$primaryProp->getGetter()}() ) ) ) )
+                    ->add( new Where(
+                            new Expression(
+                                new Identifier( $parentProp->fetchDatabaseName() ),
+                                new Operator( '=' ),
+                                new Value( $this->{$primaryProp->getGetter()}() )
+                            )
+                        )
+                    )
                     ->add( new Union )
                     ->add( $lowerSelect )
                     ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
