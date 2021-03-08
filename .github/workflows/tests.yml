@@ -1,0 +1,28 @@
+name: codepcetion tests
+
+
+on: push
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+       
+    - name: Install dependencies
+      uses: php-actions/composer@v5
+      with:
+        php_version: 8.0
+        version: 2
+        
+    - name: info
+      run: php -i
+      
+    - name: info
+      run: tree -L 2
+
+        
+    - name: run tests
+      run: php vendor/bin/codecept run unit
