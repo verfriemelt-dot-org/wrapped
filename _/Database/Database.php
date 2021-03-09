@@ -2,13 +2,13 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database;
+    namespace verfriemelt\wrapped\_\Database;
 
     use \PDO;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\Driver\Mysql;
-    use \Wrapped\_\Exception\Database\DatabaseDriverUnknown;
-    use \Wrapped\_\Exception\Database\DatabaseException;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\Driver\Mysql;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseDriverUnknown;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
     class Database {
 

@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\Type;
+    namespace verfriemelt\wrapped\_\DataModel\Type;
 
-    use \Wrapped\_\DataModel\PropertyObjectInterface;
+    use \verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
     class Json
     implements PropertyObjectInterface {

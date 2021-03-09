@@ -2,31 +2,31 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
     use \PDO;
-    use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\SQL\Clause\CTE;
-    use \Wrapped\_\Database\SQL\Clause\From;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Command\Insert;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Command\Update;
-    use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\CaseWhen;
-    use \Wrapped\_\Database\SQL\Expression\Cast;
-    use \Wrapped\_\Database\SQL\Expression\Conjunction;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Statement;
-    use \Wrapped\_\DataModel\Collection;
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\DataModelAnalyser;
-    use \Wrapped\_\DataModel\TreeDataModel;
-    use \Wrapped\_\Exception\Database\DatabaseException;
+    use \verfriemelt\wrapped\_\Database\DbLogic;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\CTE;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\From;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Insert;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Update;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\CaseWhen;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Cast;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\SqlFunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\DataModel\Collection;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\DataModelAnalyser;
+    use \verfriemelt\wrapped\_\DataModel\TreeDataModel;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
     abstract class TreeDataModel
     extends DataModel {

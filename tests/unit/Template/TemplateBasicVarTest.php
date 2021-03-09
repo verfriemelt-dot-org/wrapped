@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Template\Template;
-    use \Wrapped\_\Template\Variable;
+    use \verfriemelt\wrapped\_\Template\Template;
+    use \verfriemelt\wrapped\_\Template\Variable;
 
     class TemplateBasicVarTest
     extends TestCase {

@@ -1,20 +1,20 @@
 <?php
 
-    namespace Wrapped\_\DataModel\Tree;
+    namespace verfriemelt\wrapped\_\DataModel\Tree;
 
     use \Exception;
-    use \Wrapped\_\Database\SQL\Clause\CTE;
-    use \Wrapped\_\Database\SQL\Clause\From;
-    use \Wrapped\_\Database\SQL\Clause\Join;
-    use \Wrapped\_\Database\SQL\Clause\Union;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Expression\Cast;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\DataModel\Collection;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\CTE;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\From;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Union;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Cast;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\DataModel\Collection;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     abstract class SimpleTreeDataModel
     extends DataModel

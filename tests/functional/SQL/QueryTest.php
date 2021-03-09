@@ -3,16 +3,16 @@
     namespace functional\SQL;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Expression\Cast;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Cast;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\SqlFunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
 
     class QueryTest
     extends TestCase {

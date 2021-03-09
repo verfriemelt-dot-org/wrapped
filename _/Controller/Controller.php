@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Controller;
+    namespace verfriemelt\wrapped\_\Controller;
 
-    use \Wrapped\_\Controller\ControllerInterface;
-    use \Wrapped\_\Exception\Router\RouterException;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Controller\ControllerInterface;
+    use \verfriemelt\wrapped\_\Exception\Router\RouterException;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
 
     abstract class Controller
     implements ControllerInterface {

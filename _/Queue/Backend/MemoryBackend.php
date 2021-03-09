@@ -2,11 +2,11 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Queue\Backend;
+    namespace verfriemelt\wrapped\_\Queue\Backend;
 
-    use \Wrapped\_\Queue\Interfaces\QueuePersistance;
-    use \Wrapped\_\Queue\Queue;
-    use \Wrapped\_\Queue\QueueItem;
+    use \verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
+    use \verfriemelt\wrapped\_\Queue\Queue;
+    use \verfriemelt\wrapped\_\Queue\QueueItem;
 
     class MemoryBackend
     implements QueuePersistance {

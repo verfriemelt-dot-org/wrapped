@@ -2,15 +2,15 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Router;
+    namespace verfriemelt\wrapped\_\Router;
 
     use \Iterator;
-    use \Wrapped\_\Exception\Router\NoRouteMatching;
-    use \Wrapped\_\Exception\Router\NoRoutesPresent;
-    use \Wrapped\_\Exception\Router\RouteGotFiltered;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Http\Response\Response;
-    use \Wrapped\_\Singleton;
+    use \verfriemelt\wrapped\_\Exception\Router\NoRouteMatching;
+    use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
+    use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Singleton;
 
     class Router
     implements Iterator, \Countable {
@@ -37,7 +37,7 @@
         /**
          *
          * @param Request $request
-         * @return \Wrapped\_\Router\Router
+         * @return \verfriemelt\wrapped\_\Router\Router
          */
         public function setRequest( Request $request ): Router {
 
@@ -119,7 +119,7 @@
          *
          * @return boolean|Route
          */
-        public function run( \Wrapped\_\Http\Request\Request $request = null ) {
+        public function run( \verfriemelt\wrapped\_\Http\Request\Request $request = null ) {
 
             if ( $request ) {
                 $this->setRequest( $request );

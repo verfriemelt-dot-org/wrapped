@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Input;
+    namespace verfriemelt\wrapped\_\Input;
 
-    use \Wrapped\_\Exception\Input\InputException;
-    use \Wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Exception\Input\InputException;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
 
     class FilterItem {
 

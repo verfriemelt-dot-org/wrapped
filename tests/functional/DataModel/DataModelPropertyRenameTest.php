@@ -4,10 +4,10 @@
 
     use \functional\DataModel\FindTest\RenameTester;
     use \functional\DataModel\FindTest\TypeTester;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\Attribute\Naming\Rename;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class RenameTester
     extends DataModel {

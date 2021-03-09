@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
     class BracketTest
     extends TestCase {

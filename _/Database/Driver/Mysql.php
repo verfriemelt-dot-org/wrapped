@@ -2,11 +2,11 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\Driver;
+    namespace verfriemelt\wrapped\_\Database\Driver;
 
     use \PDO;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\Driver\Mysql\Schema;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\Driver\Mysql\Schema;
 
     class Mysql
     extends DatabaseDriver {

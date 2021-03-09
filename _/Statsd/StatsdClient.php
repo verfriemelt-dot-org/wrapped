@@ -2,11 +2,11 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Statsd;
+    namespace verfriemelt\wrapped\_\Statsd;
 
     class StatsdClient {
 
-        use \Wrapped\_\Singleton;
+        use \verfriemelt\wrapped\_\Singleton;
 
         CONST COUNTER = "c";
 
@@ -31,7 +31,7 @@
         /**
          *
          * @param type $key
-         * @return \Wrapped\_\Statsd\StatsdClient
+         * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
          */
         public function incrementCounter( $key ) {
             $this->counter( $key, 1 );
@@ -42,7 +42,7 @@
          *
          * @param type $key
          * @param type $value
-         * @return \Wrapped\_\Statsd\StatsdClient
+         * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
          */
         public function gauge( $key, $value ) {
             $this->send( $key, $value, SELF::GAUGE );
@@ -52,7 +52,7 @@
         /**
          *
          * @param type $key
-         * @return \Wrapped\_\Statsd\StatsdClient
+         * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
          */
         public function decrementCounter( $key ) {
             $this->counter( $key, -1 );
@@ -66,7 +66,7 @@
         /**
          *
          * @param type $key
-         * @param \Wrapped\_\Statsd\callable $function
+         * @param \verfriemelt\wrapped\_\Statsd\callable $function
          */
         public function time( $key, callable $function ) {
             $timer = new StatsdTimer( $this, $key );
@@ -77,7 +77,7 @@
         /**
          *
          * @param type $key
-         * @return \Wrapped\_\Statsd\StatsdTimer
+         * @return \verfriemelt\wrapped\_\Statsd\StatsdTimer
          */
         public function createTimer( $key ) {
             return new StatsdTimer( $this, $key );
@@ -88,7 +88,7 @@
          * @param type $key
          * @param type $value
          * @param type $type
-         * @return \Wrapped\_\Statsd\StatsdClient
+         * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
          */
         public function send( $key, $value, $type, $rate = null ) {
 

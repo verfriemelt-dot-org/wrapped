@@ -2,17 +2,17 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Template;
+    namespace verfriemelt\wrapped\_\Template;
 
     use \Exception;
-    use \Wrapped\_\Template\Token\T_IfClose;
-    use \Wrapped\_\Template\Token\T_IfElse;
-    use \Wrapped\_\Template\Token\T_IfOpen;
-    use \Wrapped\_\Template\Token\T_RepeaterClose;
-    use \Wrapped\_\Template\Token\T_RepeaterOpen;
-    use \Wrapped\_\Template\Token\T_String;
-    use \Wrapped\_\Template\Token\T_Variable;
-    use \Wrapped\_\Template\Token\Token;
+    use \verfriemelt\wrapped\_\Template\Token\T_IfClose;
+    use \verfriemelt\wrapped\_\Template\Token\T_IfElse;
+    use \verfriemelt\wrapped\_\Template\Token\T_IfOpen;
+    use \verfriemelt\wrapped\_\Template\Token\T_RepeaterClose;
+    use \verfriemelt\wrapped\_\Template\Token\T_RepeaterOpen;
+    use \verfriemelt\wrapped\_\Template\Token\T_String;
+    use \verfriemelt\wrapped\_\Template\Token\T_Variable;
+    use \verfriemelt\wrapped\_\Template\Token\Token;
 
     class TemplateParser {
 

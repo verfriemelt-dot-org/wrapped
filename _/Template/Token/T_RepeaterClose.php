@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Template\Token;
+    namespace verfriemelt\wrapped\_\Template\Token;
 
     class T_RepeaterClose
     extends Token {

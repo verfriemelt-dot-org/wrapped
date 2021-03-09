@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Input;
+    namespace verfriemelt\wrapped\_\Input;
 
-    use \Wrapped\_\Session\Session;
+    use \verfriemelt\wrapped\_\Session\Session;
 
     class CSRF {
 

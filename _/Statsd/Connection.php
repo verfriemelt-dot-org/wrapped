@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Statsd;
+    namespace verfriemelt\wrapped\_\Statsd;
 
     interface Connection {
 

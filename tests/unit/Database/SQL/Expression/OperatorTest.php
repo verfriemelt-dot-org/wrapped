@@ -1,9 +1,9 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
     class OperatorTest
     extends TestCase {

@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\CacheHelper;
+    namespace verfriemelt\wrapped\_\DataModel\CacheHelper;
 
-    use \Wrapped\_\Cache\CacheFactory;
+    use \verfriemelt\wrapped\_\Cache\CacheFactory;
 
     trait DataModelCaching {
 

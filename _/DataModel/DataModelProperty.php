@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
-    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\Convention;
-    use \Wrapped\_\DataModel\Attribute\Naming\Rename;
-    use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Convention;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 
     class DataModelProperty {
 

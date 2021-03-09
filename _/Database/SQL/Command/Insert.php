@@ -2,15 +2,15 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Command;
+    namespace verfriemelt\wrapped\_\Database\SQL\Command;
 
     use \Exception;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Command\Command;
-    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\QueryPart;
-    use \Wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Command;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
 
     class Insert
     extends QueryPart

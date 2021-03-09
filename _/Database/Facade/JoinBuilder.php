@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\Facade;
+    namespace verfriemelt\wrapped\_\Database\Facade;
 
-    use \Wrapped\_\Database\SQL\Clause\Join;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 
     class JoinBuilder {
 

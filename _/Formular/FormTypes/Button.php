@@ -2,14 +2,14 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular\FormTypes;
+    namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
     class Button
     extends FormType {
 
         public $type = "button";
 
-        public function __construct( string $name, string $value = null, \Wrapped\_\Template\Template $template = null ) {
+        public function __construct( string $name, string $value = null, \verfriemelt\wrapped\_\Template\Template $template = null ) {
             parent::__construct( $name, $value, $template );
 
             $this->addCssClass( "btn btn-default" );

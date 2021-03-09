@@ -1,6 +1,6 @@
 <?php
 
-    use \Wrapped\Bootstrap;
+    use \verfriemelt\wrapped\Bootstrap;
 
 //die(__DIR__ . '/../_/');
 //    CODECEPTION\UTIL\AUTOLOAD::addNamespace( 'wrapped', __DIR__ . '/../_/' );

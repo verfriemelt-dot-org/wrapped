@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Cache;
+    namespace verfriemelt\wrapped\_\Cache;
 
-    use \Wrapped\_\Cache\Cache;
-    use \Wrapped\_\Cache\CacheProviderInterface;
+    use \verfriemelt\wrapped\_\Cache\Cache;
+    use \verfriemelt\wrapped\_\Cache\CacheProviderInterface;
 
     class CacheFactory {
 

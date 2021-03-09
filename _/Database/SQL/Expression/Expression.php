@@ -2,14 +2,14 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Expression;
+    namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
     use \Exception;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Alias;
-    use \Wrapped\_\Database\SQL\Aliasable;
-    use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \Wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Alias;
+    use \verfriemelt\wrapped\_\Database\SQL\Aliasable;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Expression
     extends QueryPart

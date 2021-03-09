@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL;
+    namespace verfriemelt\wrapped\_\Database\SQL;
 
     interface DataBinding {
 

@@ -57,7 +57,7 @@
 		public function test() {
 
             foreach($this->testCases as $cases) {
-                $this->tpl = new \Wrapped\_\Template\Template;
+                $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
                 $this->tpl->setRawTemplate($cases["tpldata"]);
 
                 foreach($cases["tests"] as $case) {
@@ -68,14 +68,14 @@
         }
 
         public function testNestedEmpty() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
 
             $this->assertEquals("",$this->tpl->run());
         }
 
         public function testNestedSetA() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
 
             $this->tpl->setIf("a");
@@ -84,7 +84,7 @@
         }
 
         public function testNestedSetB() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
 
             $this->tpl->setIf("b");
@@ -93,7 +93,7 @@
         }
 
         public function testNestedSetAB() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
 
             $this->tpl->setIf("a");

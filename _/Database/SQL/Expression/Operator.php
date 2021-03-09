@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Expression;
+    namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
     use \Exception;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \Wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Operator
     extends QueryPart

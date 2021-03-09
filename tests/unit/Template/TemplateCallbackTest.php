@@ -13,7 +13,7 @@
         private $tpl;
 
         public function testClousure() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate('{{ testingVar }}');
 
             $this->tpl->set("testingVar", function () {
@@ -25,7 +25,7 @@
 
         public function testShouldNotCallFunctions() {
 
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate('{{ testingVar }}');
 
             $this->tpl->set("testingVar", "system");

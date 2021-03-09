@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\Attribute\Naming;
+    namespace verfriemelt\wrapped\_\DataModel\Attribute\Naming;
     
     #[ \Attribute ]
     class CamelCase

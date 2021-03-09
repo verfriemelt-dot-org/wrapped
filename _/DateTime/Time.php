@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DateTime;
+    namespace verfriemelt\wrapped\_\DateTime;
 
     class Time
     extends DateTime {

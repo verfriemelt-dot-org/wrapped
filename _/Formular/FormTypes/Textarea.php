@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular\FormTypes;
+    namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
-    use \Wrapped\_\Formular\FormTypes\Text;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
 
     class Textarea
     extends Text {

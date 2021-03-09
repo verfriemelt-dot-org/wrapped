@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Http\Response;
+    namespace verfriemelt\wrapped\_\Http\Response;
 
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Router\Router;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Router\Router;
 
     class Redirect
     extends Response {
@@ -33,7 +33,7 @@
 
         /**
          * returns http 301
-         * @return \Wrapped\_\Response\Redirect
+         * @return \verfriemelt\wrapped\_\Response\Redirect
          */
         public function permanent(): Redirect {
             $this->setStatusCode( Http::MOVED_PERMANENTLY );
@@ -42,7 +42,7 @@
 
         /**
          *
-         * @return \Wrapped\_\Response\Redirect
+         * @return \verfriemelt\wrapped\_\Response\Redirect
          */
         public function temporarily(): Redirect {
             $this->setStatusCode( Http::TEMPORARY_REDIRECT );

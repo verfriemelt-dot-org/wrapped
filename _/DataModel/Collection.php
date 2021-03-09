@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
     use \ArrayAccess;
     use \Countable;
@@ -11,7 +11,7 @@
     use \JsonSerializable;
     use \OutOfBoundsException;
     use \SeekableIterator;
-    use \Wrapped\_\Database\Facade\QueryBuilder;
+    use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
     class Collection
     implements Iterator, ArrayAccess, Countable, SeekableIterator, JsonSerializable {

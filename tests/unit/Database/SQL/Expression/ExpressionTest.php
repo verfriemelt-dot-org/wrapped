@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
     class ExpressionTest
     extends TestCase {

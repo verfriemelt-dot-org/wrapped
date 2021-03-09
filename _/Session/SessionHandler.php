@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Session;
+    namespace verfriemelt\wrapped\_\Session;
 
     interface SessionHandler {
 

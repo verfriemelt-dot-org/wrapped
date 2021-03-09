@@ -6,12 +6,12 @@
     use \functional\DataModel\AttributeTest\LowerDummy;
     use \functional\DataModel\AttributeTest\SnakeCaseDummy;
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     #[ LowerCase ]
     class LowerDummy

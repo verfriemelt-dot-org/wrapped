@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Http\Response;
+    namespace verfriemelt\wrapped\_\Http\Response;
 
-    use \Wrapped\_\DataModel\Collection\CollectionResult;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\Collection\CollectionResult;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class JsonResponse
     extends Response {
@@ -24,7 +24,7 @@
 
             $this->alreadyEncoded = $alreadyEncoded;
 
-            if ( $content instanceof \Wrapped\_\DataModel\Collection ) {
+            if ( $content instanceof \verfriemelt\wrapped\_\DataModel\Collection ) {
                 $this->setContent( $content->toArray() );
             } else {
                 $this->setContent( $content );

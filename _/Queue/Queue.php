@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Queue;
+    namespace verfriemelt\wrapped\_\Queue;
 
-    use \Wrapped\_\Queue\Backend\MysqlBackend;
-    use \Wrapped\_\Queue\Interfaces\QueuePersistance;
+    use \verfriemelt\wrapped\_\Queue\Backend\MysqlBackend;
+    use \verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
 
     class Queue {
 

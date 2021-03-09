@@ -3,9 +3,9 @@
     namespace functional\DataModel\FindTest;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class TypeTester
     extends DataModel {

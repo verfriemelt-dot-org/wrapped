@@ -1,11 +1,11 @@
 <?php
 
-    use \Wrapped\_\Exception\Router\NoRoutesPresent;
-    use \Wrapped\_\Exception\Router\RouteGotFiltered;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Router\Route;
-    use \Wrapped\_\Router\RouteGroup;
-    use \Wrapped\_\Router\Router;
+    use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
+    use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Router\Route;
+    use \verfriemelt\wrapped\_\Router\RouteGroup;
+    use \verfriemelt\wrapped\_\Router\Router;
 
     class RouterTest
     extends \PHPUnit\Framework\TestCase {

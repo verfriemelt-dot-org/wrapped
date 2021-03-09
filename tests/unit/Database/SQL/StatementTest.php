@@ -2,13 +2,13 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Clause\From;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Command\Insert;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\From;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Insert;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
 
     class StatementTest
     extends TestCase {

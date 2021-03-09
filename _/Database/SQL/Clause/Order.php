@@ -2,15 +2,15 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Clause;
+    namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Clause\Clause;
-    use \Wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Clause;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Order
     extends QueryPart

@@ -2,10 +2,10 @@
 
     namespace www;
 
-    use \Wrapped\_\Cli\Console;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Router\Router;
-    use \Wrapped\Bootstrap;
+    use \verfriemelt\wrapped\_\Cli\Console;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Router\Router;
+    use \verfriemelt\wrapped\Bootstrap;
 
     define( "_", true );
 

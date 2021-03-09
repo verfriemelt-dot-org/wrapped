@@ -2,13 +2,13 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
     use \ReflectionClass;
     use \ReflectionException;
-    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\Convention;
-    use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Convention;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\PascalCase;
 
     class DataModelAnalyser {
 

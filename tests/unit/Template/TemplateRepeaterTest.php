@@ -7,7 +7,7 @@
 
         public function testBasicRepeater() {
 
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate( file_get_contents( __DIR__ . "/templateTests/repeater.tpl" ) );
 
             $r          = $this->tpl->createRepeater( "r" );
@@ -22,7 +22,7 @@
 
         public function testNestedRepeater() {
 
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->setRawTemplate( file_get_contents( __DIR__ . "/templateTests/nestedRepeater.tpl" ) );
 
             $k = $this->tpl->createRepeater( "k" );

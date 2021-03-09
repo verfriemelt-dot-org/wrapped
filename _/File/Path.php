@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\File;
+    namespace verfriemelt\wrapped\_\File;
 
     class Path {
 

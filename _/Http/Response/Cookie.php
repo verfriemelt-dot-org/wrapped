@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Http\Response;
+    namespace verfriemelt\wrapped\_\Http\Response;
 
     class Cookie {
 

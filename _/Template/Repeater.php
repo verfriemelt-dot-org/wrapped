@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Template;
+    namespace verfriemelt\wrapped\_\Template;
 
     class Repeater
     implements TemplateItem {
@@ -35,7 +35,7 @@
          *
          * @param type $name
          * @param type $value
-         * @return \Wrapped\_\Template\Repeater
+         * @return \verfriemelt\wrapped\_\Template\Repeater
          */
         public function set( $name, $value ) {
             $this->currentDataLine["vars"][$name] = new Variable( $name, $value );
@@ -65,7 +65,7 @@
          *
          * @param string $name
          * @param bool $bool
-         * @return \Wrapped\_\Template\Repeater
+         * @return \verfriemelt\wrapped\_\Template\Repeater
          */
         public function setIf( $name, $bool = true ) {
             $this->currentDataLine["if"][$name] = new Ifelse( $name, $bool );
@@ -76,7 +76,7 @@
          * creates new children or returns the current one
          * @param string $name
          * @param bool $bool
-         * @return \Wrapped\_\Template\Repeater
+         * @return \verfriemelt\wrapped\_\Template\Repeater
          */
         public function createChildRepeater( $name ) {
             if ( !isset( $this->currentDataLine["repeater"][$name] ) ) {

@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Statsd\Connection;
+    namespace verfriemelt\wrapped\_\Statsd\Connection;
 
     class UdpSocket
-    implements \Wrapped\_\Statsd\Connection {
+    implements \verfriemelt\wrapped\_\Statsd\Connection {
 
         private $host;
 

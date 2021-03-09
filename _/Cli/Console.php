@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Cli;
+    namespace verfriemelt\wrapped\_\Cli;
 
-    use \Wrapped\_\Http\ParameterBag;
+    use \verfriemelt\wrapped\_\Http\ParameterBag;
 
     class Console {
 
@@ -212,7 +212,7 @@
 
         /**
          * stores cursor position
-         * @return \Wrapped\_\Cli\Console
+         * @return \verfriemelt\wrapped\_\Cli\Console
          */
         public function push(): Console {
             $this->write( "\e[s" );
@@ -221,7 +221,7 @@
 
         /**
          * restores cursor position
-         * @return \Wrapped\_\Cli\Console
+         * @return \verfriemelt\wrapped\_\Cli\Console
          */
         public function pop(): Console {
             $this->write( "\e[u" );

@@ -1,11 +1,11 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\CamelCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\SnakeCase;
-    use \Wrapped\_\DataModel\Attribute\Naming\SpaceCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\PascalCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SpaceCase;
 
     class CasesTest
     extends TestCase {

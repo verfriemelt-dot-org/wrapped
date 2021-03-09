@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\Attribute;
+    namespace verfriemelt\wrapped\_\DataModel\Attribute;
 
     #[ \Attribute ]
     class Attribute {

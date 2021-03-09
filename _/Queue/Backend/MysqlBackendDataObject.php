@@ -2,11 +2,11 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Queue\Backend;
+    namespace verfriemelt\wrapped\_\Queue\Backend;
 
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\TablenameOverride;
-    use \Wrapped\_\Queue\QueueItem;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\TablenameOverride;
+    use \verfriemelt\wrapped\_\Queue\QueueItem;
 
     class MysqlBackendDataObject
     extends DataModel
@@ -14,7 +14,7 @@
 
         public $id;
 
-        #[ \Wrapped\_\DataModel\Attribute\Naming\LowerCase ]
+        #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
         public $uniqId;
 
         public $channel;
@@ -23,7 +23,7 @@
 
         public $data;
 
-        #[ \Wrapped\_\DataModel\Attribute\Naming\LowerCase ]
+        #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
         public $startDate;
 
         public $priority = 100;

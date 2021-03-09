@@ -1,14 +1,14 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class Example
     extends DataModel {
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $NAME;
 
@@ -37,11 +37,11 @@
     class Example2
     extends DataModel {
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $NAME;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $exampleId;
 

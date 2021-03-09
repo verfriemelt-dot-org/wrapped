@@ -1,21 +1,25 @@
 <?php
 
-    namespace Wrapped;
+    namespace verfriemelt\wrapped;
 
     use \ErrorException;
-    use \Wrapped\_\Cli\Console;
-    use \Wrapped\_\EnvironmentDetector;
+    use \verfriemelt\wrapped\_\Cli\Console;
+    use \verfriemelt\wrapped\_\EnvironmentDetector;
 
     class Bootstrap {
+
+        CONST NAMESPACE = "verfriemelt\\wrapped";
 
         static public function registerAutoloader() {
             spl_autoload_register( function ( $class ) {
 
-                if ( substr( $class, 0, 7 ) !== "Wrapped" ) {
+                if ( substr( $class, 0, strlen( self::NAMESPACE ) ) !== self::NAMESPACE ) {
                     return false;
                 }
 
-                $class        = substr( $class, 8 );
+
+
+                $class        = substr( $class, strlen( self::NAMESPACE ) );
                 $possiblePath = __DIR__ . "/" . str_replace( "\\", "/", $class ) . ".php";
 
                 if ( file_exists( $possiblePath ) ) {
@@ -38,8 +42,8 @@
                 }
 
                 $trace = $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL . print_r( $e, 1 );
-                $trace .= PHP_EOL . PHP_EOL ;
-                $trace .= "SERVER:" ;
+                $trace .= PHP_EOL . PHP_EOL;
+                $trace .= "SERVER:";
                 $trace .= PHP_EOL;
 
                 $trace .= print_r( $_SERVER, 1 );

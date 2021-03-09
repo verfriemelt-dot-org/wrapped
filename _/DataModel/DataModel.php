@@ -2,20 +2,20 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
     use \ReflectionClass;
     use \Serializable;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\Driver\Mysql;
-    use \Wrapped\_\DataModel\Attribute\Naming\PascalCase;
-    use \Wrapped\_\DataModel\Attribute\Relation\OneToManyRelation;
-    use \Wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
-    use \Wrapped\_\Exception\Database\DatabaseException;
-    use \Wrapped\_\Exception\Database\DatabaseObjectNotFound;
-    use \Wrapped\_\Http\ParameterBag;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\DbLogic;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\Driver\Mysql;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\PascalCase;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToManyRelation;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseObjectNotFound;
+    use \verfriemelt\wrapped\_\Http\ParameterBag;
     use function \json_decode;
     use function \json_encode;
 

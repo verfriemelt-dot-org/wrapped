@@ -1,9 +1,9 @@
 <?php
 
-    namespace Wrapped\_\DataModel\Tree;
+    namespace verfriemelt\wrapped\_\DataModel\Tree;
 
-    use \Wrapped\_\DataModel\Collection;
-    use \Wrapped\_\DataModel\Tree\TreeDataModelInterface;
+    use \verfriemelt\wrapped\_\DataModel\Collection;
+    use \verfriemelt\wrapped\_\DataModel\Tree\TreeDataModelInterface;
 
     interface TreeDataModelInterface {
 

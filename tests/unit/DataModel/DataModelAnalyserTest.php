@@ -3,8 +3,10 @@
     namespace extraNamespace;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\DataModelAnalyser;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\DataModelAnalyser;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
 
     class Example
     extends DataModel {
@@ -13,9 +15,9 @@
 
         public ?string $complexFieldName = null;
 
-        public ?\Wrapped\_\DateTime\DateTime $typed = null;
+        public ?DateTime $typed = null;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+        #[ SnakeCase ]
         public $complexFieldNameSnakeCase = null;
 
         public function getId(): ?int {
@@ -36,11 +38,11 @@
             return $this;
         }
 
-        public function getTyped(): ?\Wrapped\_\DateTime\DateTime {
+        public function getTyped(): ?DateTime {
             return $this->typed;
         }
 
-        public function setTyped( ?\Wrapped\_\DateTime\DateTime $typed ) {
+        public function setTyped( ?DateTime $typed ) {
             $this->typed = $typed;
             return $this;
         }
@@ -80,8 +82,7 @@
 
             $analyser = new DataModelAnalyser( new Example );
             $this->assertSame( 'typed', $analyser->fetchProperties()[2]->getNamingConvention()->getString() );
-            $this->assertSame( 'Wrapped\\_\\DateTime\\DateTime', $analyser->fetchProperties()[2]->getType() );
-
+            $this->assertSame( DateTime::class, $analyser->fetchProperties()[2]->getType() );
 
             $this->assertTrue( class_exists( $analyser->fetchProperties()[2]->getType() ) );
         }

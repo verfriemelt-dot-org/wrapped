@@ -2,14 +2,14 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel;
+    namespace verfriemelt\wrapped\_\DataModel;
 
-    use \Wrapped\_\Database\Facade\JoinBuilder;
-    use \Wrapped\_\Database\Facade\QueryBuilder;
-    use \Wrapped\_\Database\SQL\Clause\GroupBy;
-    use \Wrapped\_\Database\SQL\Clause\Join;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\Facade\JoinBuilder;
+    use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 
     class DataModelQueryBuilder
     extends QueryBuilder {

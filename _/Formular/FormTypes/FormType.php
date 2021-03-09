@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular\FormTypes;
+    namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
-    use \Wrapped\_\Input\FilterItem;
-    use \Wrapped\_\Template\Template;
+    use \verfriemelt\wrapped\_\Input\FilterItem;
+    use \verfriemelt\wrapped\_\Template\Template;
 
     abstract class FormType {
 

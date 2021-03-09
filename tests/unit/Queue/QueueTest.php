@@ -1,8 +1,8 @@
 <?php
 
-    use \Wrapped\_\Queue\Backend\MemoryBackend;
-    use \Wrapped\_\Queue\Queue;
-    use \Wrapped\_\Queue\QueueItem;
+    use \verfriemelt\wrapped\_\Queue\Backend\MemoryBackend;
+    use \verfriemelt\wrapped\_\Queue\Queue;
+    use \verfriemelt\wrapped\_\Queue\QueueItem;
 
     class QueueTest
     extends \PHPUnit\Framework\TestCase {

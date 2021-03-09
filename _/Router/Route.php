@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Router;
+    namespace verfriemelt\wrapped\_\Router;
 
-    use \Wrapped\_\Controller\ControllerInterface;
-    use \Wrapped\_\Exception\Router\IllegalCallbackSpecified;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Controller\ControllerInterface;
+    use \verfriemelt\wrapped\_\Exception\Router\IllegalCallbackSpecified;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
 
     class Route
     implements Routable {
@@ -66,7 +66,7 @@
         /**
          *
          * @param type $path
-         * @return \Wrapped\_\Route
+         * @return \verfriemelt\wrapped\_\Route
          */
         public function setPath( $path ) {
             $this->path = $path;
@@ -75,8 +75,8 @@
 
         /**
          *
-         * @param \Wrapped\_\callable $callback
-         * @return \Wrapped\_\Route
+         * @param \verfriemelt\wrapped\_\callable $callback
+         * @return \verfriemelt\wrapped\_\Route
          */
         public function call( $callback ) {
 
@@ -87,7 +87,7 @@
         /**
          * if this function returns true no callback is triggered
          * @param type $filter
-         * @return \Wrapped\_\Route
+         * @return \verfriemelt\wrapped\_\Route
          */
         public function setFilterCallback( callable $filter ) {
             $this->filter = $filter;

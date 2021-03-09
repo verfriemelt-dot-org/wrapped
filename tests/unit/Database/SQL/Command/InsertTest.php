@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Command\Insert;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Insert;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 
     class InsertTest
     extends TestCase {

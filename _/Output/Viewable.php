@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Output;
+    namespace verfriemelt\wrapped\_\Output;
 
     Interface Viewable {
 

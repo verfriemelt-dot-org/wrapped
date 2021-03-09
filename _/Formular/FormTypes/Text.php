@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular\FormTypes;
+    namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
-    use \Wrapped\_\Formular\FormTypes\FormType;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
 
     class Text
     extends FormType {

@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Router;
+    namespace verfriemelt\wrapped\_\Router;
 
     trait RouteIterator {
 

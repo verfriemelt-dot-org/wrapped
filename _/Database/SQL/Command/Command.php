@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Command;
+    namespace verfriemelt\wrapped\_\Database\SQL\Command;
 
     interface Command {
 

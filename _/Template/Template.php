@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Template;
+    namespace verfriemelt\wrapped\_\Template;
 
-    use \Wrapped\_\Output\Viewable;
+    use \verfriemelt\wrapped\_\Output\Viewable;
 
     class Template {
 

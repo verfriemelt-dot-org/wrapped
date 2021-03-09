@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\CacheHelper;
+    namespace verfriemelt\wrapped\_\DataModel\CacheHelper;
 
     trait MemoryCache {
 

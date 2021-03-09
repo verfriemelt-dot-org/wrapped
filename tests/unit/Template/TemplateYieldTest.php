@@ -6,7 +6,7 @@
         private $tpl;
 
         public function testLoadTemplateFile() {
-            $this->tpl = new \Wrapped\_\Template\Template;
+            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
             $this->tpl->parseFile( __DIR__ . "/templateTests/repeater.tpl" );
 
             $r          = $this->tpl->createRepeater( "r" );

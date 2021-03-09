@@ -4,10 +4,10 @@
 
     use \Exception;
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
     use function \Symfony\Component\String\b;
 
     class A

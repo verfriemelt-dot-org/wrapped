@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Expression;
+    namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Cast
     extends QueryPart

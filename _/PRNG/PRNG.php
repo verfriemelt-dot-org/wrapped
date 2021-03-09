@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\PRNG;
+    namespace verfriemelt\wrapped\_\PRNG;
 
     class PRNG {
 

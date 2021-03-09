@@ -2,25 +2,25 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular;
+    namespace verfriemelt\wrapped\_\Formular;
 
-    use \Wrapped\_\DateTime\DateTime;
-    use \Wrapped\_\Exception\Input\InputException;
-    use \Wrapped\_\Formular\FormTypes\Button;
-    use \Wrapped\_\Formular\FormTypes\Checkbox;
-    use \Wrapped\_\Formular\FormTypes\Date;
-    use \Wrapped\_\Formular\FormTypes\FormType;
-    use \Wrapped\_\Formular\FormTypes\Hidden;
-    use \Wrapped\_\Formular\FormTypes\Password;
-    use \Wrapped\_\Formular\FormTypes\Select;
-    use \Wrapped\_\Formular\FormTypes\Text;
-    use \Wrapped\_\Formular\FormTypes\Textarea;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Input\CSRF;
-    use \Wrapped\_\Input\Filter;
-    use \Wrapped\_\Output\Viewable;
-    use \Wrapped\_\Session\Session;
-    use \Wrapped\_\Template\Template;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
+    use \verfriemelt\wrapped\_\Exception\Input\InputException;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Input\CSRF;
+    use \verfriemelt\wrapped\_\Input\Filter;
+    use \verfriemelt\wrapped\_\Output\Viewable;
+    use \verfriemelt\wrapped\_\Session\Session;
+    use \verfriemelt\wrapped\_\Template\Template;
 
     class Formular
     implements Viewable {

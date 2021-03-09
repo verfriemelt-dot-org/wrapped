@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Cache;
+    namespace verfriemelt\wrapped\_\Cache;
 
     class MemoryCacheProvider
     implements CacheProviderInterface {

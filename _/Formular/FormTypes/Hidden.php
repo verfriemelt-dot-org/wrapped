@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Formular\FormTypes;
+    namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
     class Hidden
     extends FormType {

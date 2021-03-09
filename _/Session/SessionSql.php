@@ -2,17 +2,17 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Session;
+    namespace verfriemelt\wrapped\_\Session;
 
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Command\Delete;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Statement;
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\TablenameOverride;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Delete;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\TablenameOverride;
 
     class SessionSql
     extends DataModel

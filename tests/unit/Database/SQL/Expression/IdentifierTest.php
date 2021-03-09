@@ -3,22 +3,22 @@
     namespace IdentifierTest;
 
 use \PHPUnit\Framework\TestCase;
-use \Wrapped\_\Database\Driver\Postgres;
-use \Wrapped\_\Database\SQL\Expression\Identifier;
-use \Wrapped\_\DataModel\DataModel;
+use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class Example
     extends DataModel {
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $TEST;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $snakeCase;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
 
         public $StrAngECAse;
 
@@ -57,7 +57,7 @@ use \Wrapped\_\DataModel\DataModel;
 
         public ?int $id = null;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase]
 
         public ?int $bId = null;
 
@@ -86,7 +86,7 @@ use \Wrapped\_\DataModel\DataModel;
 
         public ?int $id = null;
 
-        #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+        #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase]
 
         public ?int $aId = null;
 

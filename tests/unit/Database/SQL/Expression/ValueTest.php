@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\DateTime\DateTime;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
 
     class ValueTest
     extends TestCase {

@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\Search;
+    namespace verfriemelt\wrapped\_\DataModel\Search;
 
-    use \Wrapped\_\Database\Facade\QueryBuilder;
-    use \Wrapped\_\DataModel\Collection;
+    use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
+    use \verfriemelt\wrapped\_\DataModel\Collection;
 
     Interface Searchable {
 

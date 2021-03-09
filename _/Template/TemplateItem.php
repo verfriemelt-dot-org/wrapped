@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Template;
+    namespace verfriemelt\wrapped\_\Template;
 
     interface TemplateItem {
 

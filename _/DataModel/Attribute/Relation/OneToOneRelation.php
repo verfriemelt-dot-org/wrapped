@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\DataModel\Attribute\Relation;
+    namespace verfriemelt\wrapped\_\DataModel\Attribute\Relation;
 
     #[ \Attribute ]
     class OneToOneRelation {

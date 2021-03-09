@@ -2,11 +2,11 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Controller;
+    namespace verfriemelt\wrapped\_\Controller;
 
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Http\Response\Http;
-    use \Wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Response\Http;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
 
     abstract class RestController
     implements ControllerInterface {

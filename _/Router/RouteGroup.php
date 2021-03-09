@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Router;
+    namespace verfriemelt\wrapped\_\Router;
 
     use \Iterator;
 
@@ -80,7 +80,7 @@
 
         /**
          *
-         * @param \Wrapped\_\Router\callable $filterFunc
+         * @param \verfriemelt\wrapped\_\Router\callable $filterFunc
          * @return RouteGroup
          */
         public function setFilterCallback( callable $filterFunc ) {

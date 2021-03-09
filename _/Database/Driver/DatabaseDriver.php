@@ -2,16 +2,16 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\Driver;
+    namespace verfriemelt\wrapped\_\Database\Driver;
 
     use \PDO;
     use \PDOException;
     use \PDOStatement;
-    use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\SQL\Join;
-    use \Wrapped\_\Database\SQL\QueryPart;
-    use \Wrapped\_\Database\SQL\Table;
-    use \Wrapped\_\Exception\Database\DatabaseException;
+    use \verfriemelt\wrapped\_\Database\DbLogic;
+    use \verfriemelt\wrapped\_\Database\SQL\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
+    use \verfriemelt\wrapped\_\Database\SQL\Table;
+    use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
     abstract class DatabaseDriver {
 

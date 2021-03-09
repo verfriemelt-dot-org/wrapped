@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Http\Request;
+    namespace verfriemelt\wrapped\_\Http\Request;
 
-    use \Wrapped\_\Http\ParameterBag;
+    use \verfriemelt\wrapped\_\Http\ParameterBag;
 
     class Request {
 

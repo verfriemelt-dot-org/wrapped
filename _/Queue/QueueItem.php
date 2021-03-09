@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Queue;
+    namespace verfriemelt\wrapped\_\Queue;
 
-    use \Wrapped\_\DateTime\DateTime;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
 
     class QueueItem {
 

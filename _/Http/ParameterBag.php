@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Http;
+    namespace verfriemelt\wrapped\_\Http;
 
     use \ArrayIterator;
     use \Countable;

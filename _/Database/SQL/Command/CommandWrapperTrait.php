@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\SQL\Command;
+    namespace verfriemelt\wrapped\_\Database\SQL\Command;
 
-    use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 
     trait CommandWrapperTrait {
 

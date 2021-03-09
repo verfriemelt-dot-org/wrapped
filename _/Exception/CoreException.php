@@ -2,7 +2,7 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Exception;
+    namespace verfriemelt\wrapped\_\Exception;
 
     class CoreException
     extends \Exception {

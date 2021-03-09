@@ -3,20 +3,20 @@
     namespace testcase\datamodeltest;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class Example
     extends DataModel {
 
     }
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\LowerCase]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
     class Example2
     extends DataModel {
 
     }
 
-    #[\Wrapped\_\DataModel\Attribute\Naming\SnakeCase]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase]
 
     class LongerExample
     extends DataModel {

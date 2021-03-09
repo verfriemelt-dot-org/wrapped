@@ -1,8 +1,8 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\DataModel\Collection;
-    use \Wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\Collection;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class CollectionDummy
     extends DataModel {

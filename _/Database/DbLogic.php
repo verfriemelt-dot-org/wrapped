@@ -2,23 +2,23 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database;
+    namespace verfriemelt\wrapped\_\Database;
 
     use \Exception;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Clause\GroupBy;
-    use \Wrapped\_\Database\SQL\Clause\Having;
-    use \Wrapped\_\Database\SQL\Clause\Limit;
-    use \Wrapped\_\Database\SQL\Clause\Offset;
-    use \Wrapped\_\Database\SQL\Clause\Order;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Expression\Bracket;
-    use \Wrapped\_\Database\SQL\Expression\Conjunction;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Having;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Limit;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Offset;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Order;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
     class DbLogic {
 

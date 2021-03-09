@@ -3,13 +3,13 @@
     namespace www;
 
     use \Exception;
-    use \Wrapped\_\Exception\Router\NoRouteMatching;
-    use \Wrapped\_\Exception\Router\NoRoutesPresent;
-    use \Wrapped\_\Exception\Router\RouteGotFiltered;
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Http\Response\Response;
-    use \Wrapped\_\Router\Router;
-    use \Wrapped\Bootstrap;
+    use \verfriemelt\wrapped\_\Exception\Router\NoRouteMatching;
+    use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
+    use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Router\Router;
+    use \verfriemelt\wrapped\Bootstrap;
 
 // define enviroment
     define( "_", true );

@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Exception\Database;
+    namespace verfriemelt\wrapped\_\Exception\Database;
 
     class DatabaseException
-    extends \Wrapped\_\Exception\CoreException {
+    extends \verfriemelt\wrapped\_\Exception\CoreException {
 
     }

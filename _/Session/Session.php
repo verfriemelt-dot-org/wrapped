@@ -2,10 +2,10 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Session;
+    namespace verfriemelt\wrapped\_\Session;
 
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Singleton;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Singleton;
 
     class Session
     implements SessionHandler {

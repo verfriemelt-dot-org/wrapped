@@ -2,9 +2,9 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Exception\Router;
+    namespace verfriemelt\wrapped\_\Exception\Router;
 
-    use \Wrapped\_\Http\Response\Response;
+    use \verfriemelt\wrapped\_\Http\Response\Response;
 
     class RouteGotFiltered
     extends RouterException {

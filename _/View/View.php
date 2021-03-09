@@ -2,12 +2,12 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\View;
+    namespace verfriemelt\wrapped\_\View;
 
     use \Exception;
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\Output\Viewable;
-    use \Wrapped\_\Template\Template;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\Output\Viewable;
+    use \verfriemelt\wrapped\_\Template\Template;
 
     abstract class View
     implements Viewable {

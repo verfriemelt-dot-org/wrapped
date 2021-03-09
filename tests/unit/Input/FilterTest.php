@@ -1,7 +1,7 @@
 <?php
 
-    use \Wrapped\_\Http\Request\Request;
-    use \Wrapped\_\Input\Filter;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Input\Filter;
 
     class FilterTest
     extends \PHPUnit\Framework\TestCase {

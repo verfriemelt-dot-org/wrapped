@@ -1,6 +1,6 @@
 <?php
 
-    use \Wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
 
     class RequestTest
     extends \PHPUnit\Framework\TestCase {

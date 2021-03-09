@@ -1,4 +1,7 @@
 {
+    "name": {
+        "verfriemelt/wrapped"
+    },
     "require-dev": {
         "codeception/codeception": "^4.1",
         "codeception/module-asserts": "^1.3"

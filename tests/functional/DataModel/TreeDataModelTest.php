@@ -3,9 +3,9 @@
     namespace functional;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\TreeDataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\TreeDataModel;
 
     class TreeDummy
     extends TreeDataModel {

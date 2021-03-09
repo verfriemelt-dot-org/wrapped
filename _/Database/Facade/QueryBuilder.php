@@ -2,33 +2,33 @@
 
     declare(strict_types = 1);
 
-    namespace Wrapped\_\Database\Facade;
+    namespace verfriemelt\wrapped\_\Database\Facade;
 
     use \Exception;
-    use \Wrapped\_\Database\DbLogic;
-    use \Wrapped\_\Database\Driver\DatabaseDriver;
-    use \Wrapped\_\Database\SQL\Clause\From;
-    use \Wrapped\_\Database\SQL\Clause\GroupBy;
-    use \Wrapped\_\Database\SQL\Clause\Having;
-    use \Wrapped\_\Database\SQL\Clause\Limit;
-    use \Wrapped\_\Database\SQL\Clause\Offset;
-    use \Wrapped\_\Database\SQL\Clause\Order;
-    use \Wrapped\_\Database\SQL\Clause\Returning;
-    use \Wrapped\_\Database\SQL\Clause\Where;
-    use \Wrapped\_\Database\SQL\Command\Delete;
-    use \Wrapped\_\Database\SQL\Command\Insert;
-    use \Wrapped\_\Database\SQL\Command\Select;
-    use \Wrapped\_\Database\SQL\Command\Update;
-    use \Wrapped\_\Database\SQL\Command\Values;
-    use \Wrapped\_\Database\SQL\Expression\Conjunction;
-    use \Wrapped\_\Database\SQL\Expression\Expression;
-    use \Wrapped\_\Database\SQL\Expression\Identifier;
-    use \Wrapped\_\Database\SQL\Expression\Operator;
-    use \Wrapped\_\Database\SQL\Expression\OperatorExpression;
-    use \Wrapped\_\Database\SQL\Expression\SqlFunction;
-    use \Wrapped\_\Database\SQL\Expression\Value;
-    use \Wrapped\_\Database\SQL\Statement;
-    use \Wrapped\_\DataModel\PropertyObjectInterface;
+    use \verfriemelt\wrapped\_\Database\DbLogic;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\From;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Having;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Limit;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Offset;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Order;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Returning;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Where;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Delete;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Insert;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Update;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Values;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\OperatorExpression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\SqlFunction;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+    use \verfriemelt\wrapped\_\Database\SQL\Statement;
+    use \verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
     class QueryBuilder {
 

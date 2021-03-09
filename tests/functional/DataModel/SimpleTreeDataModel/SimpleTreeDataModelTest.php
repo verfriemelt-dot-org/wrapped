@@ -3,10 +3,10 @@
     namespace functional\DataModel\SimpleTreeDataModel;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
-    use \Wrapped\_\DataModel\Tree\SimpleTreeDataModel;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
 
     #[ LowerCase ]
     class Tree

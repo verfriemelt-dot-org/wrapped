@@ -3,12 +3,12 @@
     namespace functional;
 
     use \PHPUnit\Framework\TestCase;
-    use \Wrapped\_\Database\Database;
-    use \Wrapped\_\Database\Driver\Postgres;
-    use \Wrapped\_\DataModel\DataModel;
-    use \Wrapped\_\DataModel\TablenameOverride;
-    use \Wrapped\_\DateTime\DateTime;
-    use \Wrapped\_\DataModel\Attribute\Naming\LowerCase;
+    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DataModel\TablenameOverride;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
+    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 
     class TypedDummy
     extends DataModel
