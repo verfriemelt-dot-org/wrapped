@@ -1,4 +1,4 @@
-name: codepcetion tests
+name: phpstan
 
 
 on: push
