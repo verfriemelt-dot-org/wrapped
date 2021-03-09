@@ -18,4 +18,4 @@ jobs:
         version: 2
         
     - name: run phpstan
-      run: php vendor/bin/phpstan.phar analyse --level 0 _
+      run: php vendor/bin/phpstan.phar analyse --level 1 --error-format=github _
