@@ -34,14 +34,14 @@
 
         public static function purgeOldSessions() {
 
-            $stmt = new Statement( new Delete( new Identifier( static::getTableName() ) ) );
+            $stmt = new Statement( new Delete( new Identifier( static::fetchTablename() ) ) );
             $stmt->add( new Where( (new Expression () )
                         ->add( new Identifier( 'timeout' ) )
                         ->add( new Operator( '<' ) )
                         ->add( new Value( time() ) )
             ) );
 
-            static::getDatabase()->run( $stmt );
+            static::fetchDatabase()->run( $stmt );
         }
 
         public static function fetchTablename(): string {

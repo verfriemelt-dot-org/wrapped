@@ -6,21 +6,23 @@
 
     abstract class Convention {
 
+        protected string $string;
+
         public const DESTRUCTIVE = false;
 
-        public function __construct( ?string $str = null ) {
+        final public function __construct( ?string $str = null ) {
             if ( $str !== null ) {
                 $this->setString( $str );
             }
         }
 
         public function setString( string $str ) {
-            $this->str = $str;
+            $this->string = $str;
             return $this;
         }
 
         public function getString(): string {
-            return $this->str;
+            return $this->string;
         }
 
         public function convertTo( $class ) {

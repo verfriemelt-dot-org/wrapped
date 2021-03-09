@@ -5,6 +5,7 @@
     namespace verfriemelt\wrapped\_\Database\Facade;
 
     use \verfriemelt\wrapped\_\Database\SQL\Clause\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;

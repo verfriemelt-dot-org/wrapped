@@ -7,7 +7,7 @@
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Singleton;
 
-    class Session
+    final class Session
     implements SessionHandler {
 
         use Singleton;

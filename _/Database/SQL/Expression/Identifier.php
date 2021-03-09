@@ -56,7 +56,7 @@
             $translations = array_map( function ( DataModel $context ) use ( $ident, $table ) {
                 try {
 
-                    if ( $table !== null && $context->getTableName() !== $table ) {
+                    if ( $table !== null && $context->fetchTablename() !== $table ) {
                         return null;
                     }
 
@@ -71,7 +71,7 @@
 
             switch ( count( $translations ) ) {
                 case 0: return $ident;
-                case 1: return $translations[0]->fetchDatabaseName();
+                case 1: return $translations[0]->fetchBackendName();
                 default:
                     throw new \Exception( "field ambiguous: {$ident}" );
             }

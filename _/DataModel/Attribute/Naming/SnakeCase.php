@@ -11,7 +11,7 @@
         protected string $str;
 
         public function fetchStringParts(): array {
-            return explode( '_', $this->str );
+            return explode( '_', $this->string );
         }
 
         public static function fromStringParts( string ... $parts ): Convention {

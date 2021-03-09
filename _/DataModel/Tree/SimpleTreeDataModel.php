@@ -56,7 +56,7 @@
                 $recursiveStatement
                     ->add( new Where(
                             new Expression(
-                                new Identifier( $parentProp->fetchDatabaseName() ),
+                                new Identifier( $parentProp->fetchBackendName() ),
                                 new Operator( '=' ),
                                 new Value( $this->{$primaryProp->getGetter()}() )
                             )
@@ -64,13 +64,13 @@
                     )
                     ->add( new Union )
                     ->add( $lowerSelect )
-                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new From( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                     ->add( new Join(
                             new Identifier( '_data' ),
                             new Expression(
-                                new Identifier( static::getSchemaName(), static::getTableName(), $parentProp->fetchDatabaseName() ),
+                                new Identifier( static::fetchSchemaname(), static::fetchTablename(), $parentProp->fetchBackendName() ),
                                 new Operator( "=" ),
-                                new Identifier( '_data', $primaryProp->fetchDatabaseName() ),
+                                new Identifier( '_data', $primaryProp->fetchBackendName() ),
                             )
                     ) )
             );
@@ -114,11 +114,11 @@
         }
 
         public function fetchPath(): Collection {
-
+            return new Collection;
         }
 
         public function isChildOf( TreeDataModelInterface $model ): bool {
-
+            return false;
         }
 
         public function move(): static {

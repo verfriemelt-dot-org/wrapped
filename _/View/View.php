@@ -14,12 +14,11 @@
 
         public string $tplPath;
 
-        /** @var Template */
-        public $tpl;
+        public Template $tpl;
 
         abstract function getTemplatePath(): string;
 
-        public function __construct() {
+        public function __construct( mixed ... $params ) {
 
             if ( empty( $this->tplPath ) ) {
                 throw new Exception( "unset Template Path in view " . static::class );
@@ -30,24 +29,13 @@
             );
         }
 
-        public function fetchTemplateSource(): string {
-            return file_get_contents( $this->getTemplatePath() . $this->tplPath );
-        }
-
-        /**
-         * @return static
-         */
-        public static function create( ... $params ) {
+        public static function create( ... $params ): static {
+            /** @phpstan-ignore-next-line */
             return (new static( ... $params ));
         }
 
-        /**
-         *
-         * @param mixed $params
-         * @return static
-         */
         public static function make( ... $params ): string {
-            return self::create( ... $params )->getContents();
+            return static::create( ... $params )->getContents();
         }
 
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {

@@ -121,7 +121,7 @@
          * @return static
          */
         public static function createFromGlobals() {
-            return new static(
+            return new self(
                 $_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER, file_get_contents( "php://input" )
             );
         }
@@ -133,7 +133,7 @@
         public static function getInstance() {
 
             if ( self::$instance === null ) {
-                self::$instance = static::createFromGlobals();
+                self::$instance = self::createFromGlobals();
             }
 
             return self::$instance;

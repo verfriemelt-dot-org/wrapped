@@ -4,23 +4,23 @@
 
     namespace verfriemelt\wrapped\_\Formular;
 
-    use \verfriemelt\wrapped\_\DateTime\DateTime;
-    use \verfriemelt\wrapped\_\Exception\Input\InputException;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
-    use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Input\CSRF;
-    use \verfriemelt\wrapped\_\Input\Filter;
-    use \verfriemelt\wrapped\_\Output\Viewable;
-    use \verfriemelt\wrapped\_\Session\Session;
-    use \verfriemelt\wrapped\_\Template\Template;
+use \verfriemelt\wrapped\_\DateTime\DateTime;
+use \verfriemelt\wrapped\_\Exception\Input\InputException;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
+use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
+use \verfriemelt\wrapped\_\Http\Request\Request;
+use \verfriemelt\wrapped\_\Input\CSRF;
+use \verfriemelt\wrapped\_\Input\Filter;
+use \verfriemelt\wrapped\_\Output\Viewable;
+use \verfriemelt\wrapped\_\Session\Session;
+use \verfriemelt\wrapped\_\Template\Template;
 
     class Formular
     implements Viewable {
@@ -55,6 +55,8 @@
         private $prefilledWithSubmitData = false;
 
         private $session;
+
+        private ?Template $tpl = null;
 
         private function generateCSRF() {
 
@@ -313,7 +315,7 @@
         public function markFailed( string $fieldName ): Formular {
 
             if ( !isset( $this->elements[$fieldName] ) ) {
-                throw new Exception( "illegal form element {$fieldName}" );
+                throw new \Exception( "illegal form element {$fieldName}" );
             }
 
             $this->elements[$fieldName]->addCssClass( "input-error" );

@@ -51,7 +51,7 @@
         }
 
         public function purge(): bool {
-            // nope
+            return false;
         }
 
         public function store( QueueItem $item ) {

@@ -114,8 +114,8 @@
             $width = $this->right - $this->left + 1;
 
             // table
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
+            $tableName      = static::fetchTablename();
+            $databaseHandle = static::fetchDatabase();
 
             $sql1 = "DELETE FROM {$tableName} WHERE {$databaseHandle->quoteIdentifier( 'left' )} between {$this->left} and {$this->right}";
             $databaseHandle->query( $sql1 );
@@ -135,7 +135,7 @@
         private function validateMove( TreeDataModel $moveTo ) {
 
             if ( !$moveTo instanceof $this ) {
-                throw new Exception( "illegal mix of items" );
+                throw new \Exception( "illegal mix of items" );
             }
 
             if ( $this->id && $this->id === $moveTo->getId() ) {
@@ -236,7 +236,7 @@
                     continue;
                 }
 
-                $result[$attribute->fetchDatabaseName()] = $this->dehydrateProperty( $attribute );
+                $result[$attribute->fetchBackendName()] = $this->dehydrateProperty( $attribute );
             }
 
             return $result;
@@ -248,7 +248,7 @@
          */
         protected function generateUpdateCommand( string $datasource = '_bounds' ): Insert {
 
-            $update = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
+            $update = new Update( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) );
 
             $update->add( new Identifier( 'left' ), new Identifier( '_left' ) );
             $update->add( new Identifier( 'right' ), new Identifier( '_right' ) );
@@ -259,7 +259,7 @@
                 $update->add( new Identifier( $prop ), new Value( $value ) );
             }
 
-            $upadte->add( new From( new Identifier( $datasource ) ) );
+            $update->add( new From( new Identifier( $datasource ) ) );
 
             return $update;
         }
@@ -346,7 +346,7 @@
                                 ->as( new Identifier( '_depth' ) )
                             )
                         ) )
-                        ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                        ->add( new From( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                         ->add( new Where( new Expression(
                                     new Identifier( 'id' ),
                                     new Operator( "=" ),
@@ -358,7 +358,7 @@
                 $cte->with(
                     new Identifier( '_widen_nodes_right' ),
                     (new Statement(
-                            (new Update( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                            (new Update( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
 
                             // left
                             ->add(
@@ -436,7 +436,7 @@
                                 (new Expression( new Value( null ), new Cast( 'int' ) ) )->addAlias( new Identifier( '_parent_id' ) ),
                             )
                         ) )
-                        ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                        ->add( new From( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                 );
             }
 
@@ -444,7 +444,7 @@
 
 
 
-            $insert = (new Insert( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+            $insert = (new Insert( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                 ->add( ... array_map( fn( $i ) => new Identifier( $i ), array_keys( $this->prepareDataForStorage( true ) ) ) )
                 ->add( new Identifier( 'left' ) )
                 ->add( new Identifier( 'right' ) )
@@ -479,7 +479,7 @@
                             ( new Identifier( 'depth' ) )->as( new Identifier( '_depth' ) )
                         )
                     ) )
-                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new From( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                     ->add( new Where( new Expression( new Identifier( static::getPrimaryKey() ), new Operator( '=' ), new Value( $this->{static::getPrimaryKey()} ) ) ) )
             );
 
@@ -581,7 +581,7 @@
                             ->as( new Identifier( '_to_pos' ) )
                         )
                     ) )
-                    ->add( new From( new Identifier( static::getSchemaName(), static::getTableName() ) ) )
+                    ->add( new From( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) ) )
                     ->add( new Where( new Expression( new Identifier( static::getPrimaryKey() ), new Operator( '=' ), new Value( $to->{static::getPrimaryKey()} ) ) ) )
             );
 
@@ -689,7 +689,7 @@
                 )
             );
 
-            $upd = new Update( new Identifier( static::getSchemaName(), static::getTableName() ) );
+            $upd = new Update( new Identifier( static::fetchSchemaname(), static::fetchTablename() ) );
             $upd->add(
                 new Identifier( 'left' ),
                 (new CaseWhen )
@@ -1118,8 +1118,8 @@
 
             $id = $this->getId();
 
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
+            $tableName      = static::fetchTablename();
+            $databaseHandle = static::fetchDatabase();
 
             $columns = [];
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $col ) {
@@ -1173,18 +1173,18 @@
          */
         public static function fetchByPath( $path, $field ) {
 
-            if ( !in_array( $field, static::fetchAnalyserObject()->fetchAllColumns() ) ) {
-                throw new Exception( "invalid field specified" );
+            if ( !in_array( $field, array_map( fn( DataModelProperty $p ) => $p->getName(), static::createDataModelAnalyser()->fetchProperties() ) ) ) {
+                throw new \Exception( "invalid field specified" );
             }
 
-            $tableName      = static::getTableName();
-            $databaseHandle = static::getDatabase();
+            $tableName      = static::fetchTablename();
+            $databaseHandle = static::fetchDatabase();
 
             $path = $databaseHandle->fetchConnectionHandle()->quote( $path );
 
             $columns = [];
-            foreach ( static::fetchAnalyserObject()->fetchAllColumns() as $col ) {
-                $columns[] = 'node.' . $col;
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $col ) {
+                $columns[] = 'node.' . $col->fetchBackendName();
             }
 
             $selectString = implode( ",", $columns );

@@ -22,6 +22,8 @@
 
         public $data;
 
+        private Queue $queue;
+
         public function __construct( $key, $channel = null ) {
             $this->key     = $key;
             $this->channel = $channel ?? "default";

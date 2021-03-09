@@ -7,13 +7,7 @@
     class CollectionDummy
     extends DataModel {
 
-        static int $counter = 0;
-
-        public int $id;
-
-        public function __construct() {
-            $this->setId( ++static::$counter );
-        }
+        public ?int $id = null;
 
         function getId(): ?int {
             return $this->id;
@@ -31,8 +25,6 @@
 
         public function setUp(): void {
             parent::setUp();
-
-            CollectionDummy::$counter = 0;
         }
 
         public function testCollectionInit() {

@@ -8,7 +8,7 @@
     use \PDOException;
     use \PDOStatement;
     use \verfriemelt\wrapped\_\Database\DbLogic;
-    use \verfriemelt\wrapped\_\Database\SQL\Join;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Join;
     use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
     use \verfriemelt\wrapped\_\Database\SQL\Table;
     use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
@@ -41,8 +41,14 @@
 
         public static $time = 0;
 
+        protected const PDO_NAME = 'undefined';
+
         /** @var PDO */
         public $connectionHandle;
+
+        protected string $connectionString;
+
+        private $lastresult;
 
         abstract function quoteIdentifier( string $ident ): string;
 
@@ -345,31 +351,6 @@
             $result->setFetchMode( PDO::FETCH_ASSOC );
 
             return $result;
-        }
-
-        public function join( $table ) {
-            $t = new Table( $table );
-            $j = new Join( $t, $this );
-
-            return $t;
-        }
-
-        public function executeJoin( Join $join ) {
-
-            $join->prepare();
-            $sql = $join->getStatement();
-
-            $this->prepare( $sql );
-
-            $bindings = $join->getDbLogic()->getBindings();
-            $this->bindLast( $bindings["params"], $bindings["vars"] );
-
-            $this->executeLast();
-
-            $stmt = $this->lastStatement;
-            $stmt->setFetchMode( PDO::FETCH_ASSOC );
-
-            return $stmt;
         }
 
         public function setAttribute( int $key, $value ) {

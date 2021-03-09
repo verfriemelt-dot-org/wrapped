@@ -56,7 +56,7 @@
         }
 
         static public function to( $path ) {
-            return new static( $path );
+            return new self( $path );
         }
 
         public function ignoreBasePath( $bool = true ) {
@@ -65,7 +65,7 @@
         }
 
         static public function reload() {
-            return (new static )->ignoreBasePath()->seeOther( Request::getInstance()->uri() );
+            return (new self )->ignoreBasePath()->seeOther( Request::getInstance()->uri() );
         }
 
     }

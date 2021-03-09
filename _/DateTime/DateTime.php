@@ -17,7 +17,7 @@
         }
 
         public static function hydrateFromString( $storedValue ) {
-            return $storedValue === null ? null : new static( $storedValue );
+            return $storedValue === null ? null : new self( $storedValue );
         }
 
         public function dehydrateToString(): string {

@@ -24,7 +24,7 @@
 
         private $loadMoreCallback;
 
-        public function __construct( DataModel ... $data ) {
+        final public function __construct( DataModel ... $data ) {
             $this->initialize( ... $data );
         }
 

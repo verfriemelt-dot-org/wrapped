@@ -23,7 +23,7 @@
          * @return \static
          */
         public static function create( $path ) {
-            return new static( $path );
+            return new self( $path );
         }
 
         public function __construct( $prefix ) {

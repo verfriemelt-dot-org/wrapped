@@ -14,6 +14,8 @@
 
         private $messageStack = [];
 
+        private $filterItems = [];
+
         public function __construct( $name = null ) {
             $this->name = $name;
         }
@@ -24,7 +26,7 @@
          */
         public function validate() {
 
-            foreach ( $this->items as $item ) {
+            foreach ( $this->filterItems as $item ) {
 
                 try {
                     !$item->validate();
@@ -47,7 +49,7 @@
          * @return Filter
          */
         public function addFilter( FilterItem $item ) {
-            $this->items[] = $item;
+            $this->filterItems[] = $item;
             return $this;
         }
 

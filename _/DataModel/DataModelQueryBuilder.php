@@ -22,7 +22,7 @@
 
         public function __construct( DataModel $prototype ) {
 
-            parent::__construct( $prototype->getDatabase() );
+            parent::__construct( $prototype->fetchDatabase() );
 
             $this->prototype = $prototype;
             $this->addContext( $prototype );
@@ -62,8 +62,8 @@
                     $this->stmt->add(
                         new GroupBy(
                             new Identifier(
-                                $this->prototype::getSchemaName(),
-                                $this->prototype::getTableName(),
+                                $this->prototype::fetchSchemaname(),
+                                $this->prototype::fetchTablename(),
                                 $this->prototype->getPrimaryKey(),
                             )
                         )
@@ -80,7 +80,7 @@
                 $callback = array_values( array_filter( array_map( fn( $c ) => $c::fetchPredefinedJoins( $dest::class ), $this->context ) ) )[0] ?? null;
             }
 
-            $join = $callback( new JoinBuilder( $dest::getSchemaName(), $dest::getTableName() ) );
+            $join = $callback( new JoinBuilder( $dest::fetchSchemaname(), $dest::fetchTablename() ) );
 
             $this->fetchStatement()->add(
                 $join->fetchJoinClause()

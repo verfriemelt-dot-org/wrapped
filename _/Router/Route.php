@@ -12,89 +12,64 @@
     class Route
     implements Routable {
 
-        private $path;
+        private string $path;
 
         private $callback;
 
         private $filter;
 
-        private $priority = 100;
+        private int $priority = 100;
 
-        /**
-         * create new Route for chaining
-         * @param type $path
-         * @return \static
-         */
-        public static function create( $path ) {
-            return new static( $path );
+        public static function create( string $path ): static {
+            return new self( $path );
         }
 
-        public function __construct( $path ) {
+        public function __construct( string $path ) {
             $this->setPath( $path );
         }
 
-        public function getPath() {
+        public function getPath(): string {
             return $this->path;
         }
 
-        public function getPriority() {
+        public function getPriority(): int {
             return $this->priority;
         }
 
-        /**
-         *
-         * @param type $prio
-         * @return Route
-         */
-        public function setPriority( $prio ) {
+        public function setPriority( int $prio ): static {
             $this->priority = $prio;
             return $this;
         }
 
-        public function getCallback() {
+        public function getCallback(): callable {
             return $this->callback;
         }
 
-        /**
-         * return filter for checking
-         * @return callable
-         */
-        public function getFilterCallback() {
+        public function getFilterCallback(): ?callable {
             return $this->filter;
         }
 
-        /**
-         *
-         * @param type $path
-         * @return \verfriemelt\wrapped\_\Route
-         */
         public function setPath( $path ) {
             $this->path = $path;
             return $this;
         }
 
-        /**
-         *
-         * @param \verfriemelt\wrapped\_\callable $callback
-         * @return \verfriemelt\wrapped\_\Route
-         */
-        public function call( $callback ) {
-
+        public function call( callable $callback ): static {
             $this->callback = $callback;
             return $this;
         }
 
         /**
          * if this function returns true no callback is triggered
-         * @param type $filter
-         * @return \verfriemelt\wrapped\_\Route
+         * @param callable $filter
+         * @return static
          */
-        public function setFilterCallback( callable $filter ) {
+        public function setFilterCallback( callable $filter ): static {
             $this->filter = $filter;
             return $this;
         }
 
-        public function checkFilter() {
+        public function checkFilter(): bool {
             if ( is_callable( $this->filter ) && call_user_func( $this->filter ) === true ) {
                 return false;
             }
@@ -102,7 +77,7 @@
             return true;
         }
 
-        public function isValidCallback() {
+        public function isValidCallback(): bool {
 
             if ( is_callable( $this->callback ) ||
                 in_array( ControllerInterface::class, class_implements( $this->callback ) ) ||

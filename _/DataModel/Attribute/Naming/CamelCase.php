@@ -11,7 +11,7 @@
         public string $str;
 
         public function fetchStringParts(): array {
-            return array_map( 'strtolower', preg_split( '/(?=[A-Z])/', $this->str ) );
+            return array_map( 'strtolower', preg_split( '/(?=[A-Z])/', $this->string ) );
         }
 
         public static function fromStringParts( string ... $parts ): Convention {

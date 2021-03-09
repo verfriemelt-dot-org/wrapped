@@ -6,7 +6,6 @@
 
     use \PDO;
     use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use \verfriemelt\wrapped\_\Database\Driver\Mysql\Schema;
 
     class Mysql
     extends DatabaseDriver {
@@ -20,24 +19,6 @@
         public function enableUnbufferedMode( $bool = true ) {
             $this->connectionHandle->setAttribute( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, !$bool );
             return $this;
-        }
-
-        /**
-         *
-         * @param type $name
-         * @return Schema
-         */
-        public function createSchema( $name ) {
-            return Schema::create( $name, $this );
-        }
-
-        /**
-         *
-         * @param type $name
-         * @return Schema
-         */
-        public function getSchema( $name ) {
-            return $this->createSchema( $name );
         }
 
     }

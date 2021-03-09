@@ -12,7 +12,7 @@
     use \verfriemelt\wrapped\_\Http\Response\Response;
     use \verfriemelt\wrapped\_\Singleton;
 
-    class Router
+    final class Router
     implements Iterator, \Countable {
 
         use RouteIterator;

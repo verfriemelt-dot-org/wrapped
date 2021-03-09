@@ -13,7 +13,7 @@
         public string $str;
 
         public function fetchStringParts(): array {
-            return [ $this->str ];
+            return [ $this->string ];
         }
 
         public static function fromStringParts( string ... $parts ): Convention {

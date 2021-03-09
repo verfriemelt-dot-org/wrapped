@@ -20,7 +20,7 @@
     use \verfriemelt\wrapped\_\Database\SQL\Expression\OperatorExpression;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
-    class DbLogic {
+    final class DbLogic {
 
         private ?Limit $limit = null;
 
@@ -33,6 +33,8 @@
         public ?Order $order = null;
 
         private ?Having $having = null;
+
+        private string $tableName;
 
         /**
          *

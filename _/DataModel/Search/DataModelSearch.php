@@ -76,7 +76,7 @@
 
                 for ( $fieldIndex = 0; $fieldIndex < count( $fields ); $fieldIndex++ ) {
 
-                    $bracket->add( new Identifier( $this->prototype->getTableName(), $fields[$fieldIndex] ) );
+                    $bracket->add( new Identifier( $this->prototype->fetchTablename(), $fields[$fieldIndex] ) );
                     $bracket->add( new Operator( $this->operator ) );
                     $bracket->add( new Value( "%{$pieces[$pieceIndex]}%" ) );
 
@@ -89,7 +89,7 @@
             }
 
             // identifier list
-            $fieldIdentifier = array_map( fn( $f ) => new Identifier( $this->prototype->getTableName(), $f ), $fields );
+            $fieldIdentifier = array_map( fn( $f ) => new Identifier( $this->prototype->fetchTablename(), $f ), $fields );
 
             // distance expressions list
             $fieldExpressions = array_map( fn( Identifier $i ) => new Expression( $i, new Operator( '<->' ), new Value( $searchString ) ), $fieldIdentifier );

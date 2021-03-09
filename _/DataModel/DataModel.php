@@ -26,7 +26,7 @@
 
         protected $_propertyHashes = [];
 
-        public function __construct() {
+        final public function __construct() {
             $this->_storePropertyStates();
         }
 
@@ -45,7 +45,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
 
-                $conventionName = $deserialize ? $attribute->getName() : $attribute->fetchDatabaseName();
+                $conventionName = $deserialize ? $attribute->getName() : $attribute->fetchBackendName();
 
                 // skip attribute
                 if ( !array_key_exists( $conventionName, $data ) ) {
@@ -58,6 +58,21 @@
             $this->_storePropertyStates();
 
             return $this;
+        }
+
+        public static function fetchDatabase(): DatabaseDriver {
+            return Database::getConnection();
+        }
+
+        public static function fetchTablename(): ?string {
+                        $name   = static::createDataModelAnalyser()->getBaseName();
+            $casing = (new PascalCase( $name ) )->convertTo( static::createDataModelAnalyser()->fetchTableNamingConvention() );
+
+            return $casing->getString();
+        }
+
+        public static function fetchSchemaname(): ?string {
+            return null;
         }
 
         protected function isPropertyInitialized( DataModelProperty $property ) {
@@ -141,7 +156,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $field ) {
 
-                if ( $fieldName == $field->fetchDatabaseName() || $fieldName == $field->getName() ) {
+                if ( $fieldName == $field->fetchBackendName() || $fieldName == $field->getName() ) {
                     return $field;
                 }
             }
@@ -154,7 +169,7 @@
             $keys = array_keys( $array );
 
             if ( $torwardsDatabase ) {
-                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->fetchDatabaseName(), $keys );
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->fetchBackendName(), $keys );
             } else {
                 $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, false )->getName(), $keys );
             }
@@ -186,44 +201,14 @@
         }
 
         public function fetchColumns() {
-            return array_map( fn( DataModelProperty $a ) => $a->getName(), static::createDataModelAnalyser()->fetchProperties() );
+            return array_map( fn( DataModelProperty $a ) => $a->fetchBackendName(), static::createDataModelAnalyser()->fetchProperties() );
         }
 
         public function unserialize( $serialized ) {
             $this->initData( (array) json_decode( $serialized ), true );
         }
 
-        /**
-         *
-         * @return Mysql
-         */
-        public static function getDatabase(): DatabaseDriver {
-            return in_array( DatabaseOverride::class, class_implements( static::class ) ) ? static::fetchDatabase() : Database::getConnection();
-        }
 
-        /**
-         *
-         * @return String
-         */
-        public static function getTableName(): string {
-
-            if ( in_array( TablenameOverride::class, class_implements( static::class ) ) ) {
-                return static::fetchTablename();
-            }
-
-            $name   = static::createDataModelAnalyser()->getBaseName();
-            $casing = (new PascalCase( $name ) )->convertTo( static::createDataModelAnalyser()->fetchTableNamingConvention() );
-
-            return $casing->getString();
-        }
-
-        /**
-         *
-         * @return ?String
-         */
-        public static function getSchemaName(): ?string {
-            return null;
-        }
 
         public static function fetchBy( string $field, $value ) {
             return static::findSingle( [ $field => $value ] );
@@ -238,19 +223,19 @@
             $query = static::buildQuery();
 
             $query->select( ... static::fetchSelectColumns() );
-            $query->from( static::getSchemaName(), static::getTableName() );
+            $query->from( static::fetchSchemaname(), static::fetchTablename() );
 
             return $query;
         }
 
         protected static function fetchSelectColumns(): array {
-            return array_map( fn( DataModelProperty $a ) => [ static::getTableName(), $a->fetchDatabaseName() ], static::createDataModelAnalyser()->fetchProperties() );
+            return array_map( fn( DataModelProperty $a ) => [ static::fetchTablename(), $a->fetchBackendName() ], static::createDataModelAnalyser()->fetchProperties() );
         }
 
         public static function buildCountQuery(): DataModelQueryBuilder {
 
             $query = static::buildQuery();
-            $query->count( static::getTableName() );
+            $query->count( static::fetchTablename() );
             $query->disableAutomaticGroupBy();
 
             return $query;
@@ -446,7 +431,7 @@
                     continue;
                 }
 
-                $result[$property->fetchDatabaseName()] = $this->dehydrateProperty( $property );
+                $result[$property->fetchBackendName()] = $this->dehydrateProperty( $property );
             }
 
             return $result;
@@ -458,7 +443,7 @@
 
             $query = static::buildQuery();
             $query->insert(
-                [ static::getSchemaName(), static::getTableName() ],
+                [ static::fetchSchemaname(), static::fetchTablename() ],
                 array_keys( $insertData )
             );
 
@@ -489,7 +474,7 @@
 
             $query = static::buildQuery();
             $query->update(
-                [ static::getSchemaName(), static::getTableName() ],
+                [ static::fetchSchemaname(), static::fetchTablename() ],
                 $updateColumns
             );
 
@@ -546,7 +531,7 @@
             }
 
             $query = static::buildQuery();
-            $query->delete( [ static::getSchemaName(), static::getTableName() ] );
+            $query->delete( [ static::fetchSchemaname(), static::fetchTablename() ] );
             $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
             $query->run();
 
@@ -556,7 +541,7 @@
         public static function count( string $what = "*", $params = null, $and = true ): int {
 
             $query = new DataModelQueryBuilder( new static );
-            $query->count( [ static::getSchemaName(), static::getTableName() ] );
+            $query->count( [ static::fetchSchemaname(), static::fetchTablename() ] );
 
             if ( $params instanceof DbLogic ) {
                 $query->translateDbLogic( $params );
@@ -583,7 +568,7 @@
         }
 
         public static function truncate(): void {
-            static::getDatabase()->truncate( static::getTableName() );
+            static::fetchDatabase()->truncate( static::fetchTablename() );
         }
 
         /**

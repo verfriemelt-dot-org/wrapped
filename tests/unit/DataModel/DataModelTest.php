@@ -27,13 +27,13 @@
     extends TestCase {
 
         public function testDatabaseNames() {
-            $this->assertSame( 'Example', Example::getTableName() );
-            $this->assertSame( null, Example::getSchemaName() );
+            $this->assertSame( 'Example', Example::fetchTablename() );
+            $this->assertSame( null, Example::fetchSchemaname() );
         }
 
         public function testCasingConvention() {
-            $this->assertSame( 'example2', Example2::getTableName() );
-            $this->assertSame( 'longer_example', LongerExample::getTableName(), 'snake case' );
+            $this->assertSame( 'example2', Example2::fetchTablename() );
+            $this->assertSame( 'longer_example', LongerExample::fetchTablename(), 'snake case' );
         }
 
     }

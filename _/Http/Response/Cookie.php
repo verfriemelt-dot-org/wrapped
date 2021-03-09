@@ -19,7 +19,7 @@
         }
 
         public static function create( $name, $value, $expires = 3600 * 24 ) {
-            return new static( $name, $value, $expires );
+            return new self( $name, $value, $expires );
         }
 
         public function getName() {

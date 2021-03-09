@@ -12,7 +12,7 @@
 
         public function fetchStringParts(): array {
 
-            return array_map( 'strtolower', preg_split( '/(?=[A-Z])/', lcfirst( $this->str ) ) );
+            return array_map( 'strtolower', preg_split( '/(?=[A-Z])/', lcfirst( $this->string ) ) );
         }
 
         public static function fromStringParts( string ... $parts ): Convention {

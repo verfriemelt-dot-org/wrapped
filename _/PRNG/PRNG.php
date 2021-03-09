@@ -4,6 +4,8 @@
 
     namespace verfriemelt\wrapped\_\PRNG;
 
+    use \Exception;
+
     class PRNG {
 
 //     Xn+1 = (aXn + c) mod m

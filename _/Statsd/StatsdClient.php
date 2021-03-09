@@ -4,7 +4,7 @@
 
     namespace verfriemelt\wrapped\_\Statsd;
 
-    class StatsdClient {
+    final class StatsdClient {
 
         use \verfriemelt\wrapped\_\Singleton;
 

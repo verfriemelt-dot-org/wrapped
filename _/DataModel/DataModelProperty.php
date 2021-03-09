@@ -37,7 +37,7 @@
             return $this;
         }
 
-        public function fetchDatabaseName(): string {
+        public function fetchBackendName(): string {
 
             if ( $this->isRenamed() ) {
                 return $this->renamed->name;
