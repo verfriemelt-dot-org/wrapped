@@ -17,12 +17,5 @@ jobs:
         php_version: 8.0
         version: 2
         
-    - name: info
-      run: php -i
-      
-    - name: info
-      run: tree -L 2
-
-        
-    - name: run tests
-      run: php vendor/bin/codecept run unit
+    - name: run phpstan
+      run: php vendor/bin/phpstan.phar analyse --level 0 _
