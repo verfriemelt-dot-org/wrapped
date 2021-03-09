@@ -8,7 +8,7 @@
 
     trait DataModelCaching {
 
-        protected static function storeInCache( $instance, string|int $key ): bool {
+        protected static function storeInCache( $instance, string | int $key ): bool {
 
             if ( !CacheFactory::hasCache() ) {
                 return false;
@@ -49,7 +49,7 @@
             return $result;
         }
 
-        public static function get( string|int $id ) {
+        public static function get( string | int $id ): ?static {
 
 
             $instance = static::retriveFromCache( $id );
@@ -94,7 +94,7 @@
             return static::get( $pk );
         }
 
-        public function delete() {
+        public function delete(): static {
             static::deleteFromCache( $this->{static::getPrimaryKey()} );
             parent::delete();
         }
