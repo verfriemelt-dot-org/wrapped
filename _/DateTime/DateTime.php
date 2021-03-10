@@ -17,7 +17,8 @@
         }
 
         public static function hydrateFromString( $storedValue ) {
-            return $storedValue === null ? null : new self( $storedValue );
+            /** @phpstan-ignore-next-line */
+            return $storedValue === null ? null : new static( $storedValue );
         }
 
         public function dehydrateToString(): string {
