@@ -64,8 +64,8 @@
             return Database::getConnection();
         }
 
-        public static function fetchTablename(): ?string {
-                        $name   = static::createDataModelAnalyser()->getBaseName();
+        public static function fetchTablename(): string {
+            $name   = static::createDataModelAnalyser()->getBaseName();
             $casing = (new PascalCase( $name ) )->convertTo( static::createDataModelAnalyser()->fetchTableNamingConvention() );
 
             return $casing->getString();
@@ -207,8 +207,6 @@
         public function unserialize( $serialized ) {
             $this->initData( (array) json_decode( $serialized ), true );
         }
-
-
 
         public static function fetchBy( string $field, $value ) {
             return static::findSingle( [ $field => $value ] );
