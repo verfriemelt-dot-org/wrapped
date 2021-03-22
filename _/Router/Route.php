@@ -54,7 +54,7 @@
             return $this;
         }
 
-        public function call( callable $callback ): static {
+        public function call( callable | Response | string $callback ): static {
             $this->callback = $callback;
             return $this;
         }
