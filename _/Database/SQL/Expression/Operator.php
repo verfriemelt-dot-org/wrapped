@@ -34,6 +34,7 @@
             '<->',
             '@>', '<@',
             'not',
+            'in',
             'is',
             'is not',
             'is distrinct from',

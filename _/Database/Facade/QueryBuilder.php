@@ -22,6 +22,7 @@
     use \verfriemelt\wrapped\_\Database\SQL\Command\Values;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\OperatorExpression;
@@ -82,6 +83,8 @@
             array_map( function ( $column ) {
                 if ( is_array( $column ) ) {
                     $this->select->add( new Identifier( ... $column ) );
+                } elseif ( $column instanceof ExpressionItem ) {
+                    $this->select->add( $column );
                 } else {
                     $this->select->add( new Identifier( $column ) );
                 }
@@ -186,11 +189,18 @@
                 }
 
                 // special handling for where parameters in the style of [ 'col', 'op', 'value' ];
+                // is_integer( $column ) checks if we have numeric keys
                 if ( is_integer( $column ) && count( $value ) === 3 ) {
 
                     $expression->add( new Identifier( $value[0] ) );
-                    $expression->add( new Operator( $value[1] ) );
-                    $expression->add( new Value( $value[2] ) );
+
+                    if ( is_array( $value[2] ) ) {
+                        $op = new OperatorExpression( 'in', ... array_map( fn( $value ) => new Value( $value ), $value[2] ) );
+                        $expression->add( $op );
+                    } else {
+                        $expression->add( new Operator( $value[1] ) );
+                        $expression->add( new Value( $value[2] ) );
+                    }
 
                     return;
                 }
@@ -199,7 +209,7 @@
 
                     $expression->add( new Identifier( $column ) );
 
-                    $op = new OperatorExpression( 'in', ... array_map( fn( string $value ) => new Value( $value ), $value ) );
+                    $op = new OperatorExpression( 'in', ... array_map( fn( $value ) => new Value( $value ), $value ) );
                     $expression->add( $op );
                 } else {
 
