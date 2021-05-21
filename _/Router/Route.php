@@ -41,7 +41,7 @@
             return $this;
         }
 
-        public function getCallback(): callable {
+        public function getCallback(): object|callable|string {
             return $this->callback;
         }
 

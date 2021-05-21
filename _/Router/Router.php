@@ -119,11 +119,7 @@
          *
          * @return boolean|Route
          */
-        public function run( \verfriemelt\wrapped\_\Http\Request\Request $request = null ) {
-
-            if ( $request ) {
-                $this->setRequest( $request );
-            }
+        public function run(  ) {
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );

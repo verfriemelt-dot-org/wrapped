@@ -5,6 +5,7 @@
     namespace verfriemelt\wrapped\_\Controller;
 
     use \verfriemelt\wrapped\_\Controller\ControllerInterface;
+    use \verfriemelt\wrapped\_\DI\ArgumentResolver;
     use \verfriemelt\wrapped\_\Exception\Router\RouterException;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
@@ -36,7 +37,10 @@
 
             $method = "handle_{$methodName}";
 
-            return $this->{$method}( $request );
+            $argumentResolver = (new \verfriemelt\wrapped\_\DI\Container)->get( ArgumentResolver::class );
+            $arguments = $argumentResolver->resolv( $this, $method );
+
+            return $this->{$method}( ... $arguments );
         }
 
     }
