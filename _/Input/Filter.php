@@ -5,10 +5,12 @@
     namespace verfriemelt\wrapped\_\Input;
 
     use \verfriemelt\wrapped\_\Exception\Input\InputException;
+    use \verfriemelt\wrapped\_\Http\ParameterBag;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
 
     class Filter {
 
-        private $name;
+        protected Request $request;
 
         private $failed = false;
 
@@ -16,8 +18,8 @@
 
         private $filterItems = [];
 
-        public function __construct( $name = null ) {
-            $this->name = $name;
+        public function __construct( Request $request ) {
+            $this->request = $request;
         }
 
         /**
@@ -53,52 +55,36 @@
             return $this;
         }
 
-        /**
-         *
-         * @param type $what
-         * @return FilterItem */
-        private function createFilterItem( $what = "query" ) {
+        private function createFilterItem( ParameterBag $bag ): FilterItem {
 
-            $item = new FilterItem( $what );
+            $item = new FilterItem( $bag );
             $this->addFilter( $item );
 
             return $item;
         }
 
-        /**
-         * @return FilterItem */
-        public function query() {
-            return $this->createFilterItem( "query" );
+        public function query(): FilterItem {
+            return $this->createFilterItem( $this->request->query() );
         }
 
-        /**
-         * @return FilterItem */
-        public function request() {
-            return $this->createFilterItem( "request" );
+        public function request(): FilterItem {
+            return $this->createFilterItem( $this->request->request() );
         }
 
-        /**
-         * @return FilterItem */
-        public function cookies() {
-            return $this->createFilterItem( "cookies" );
+        public function cookies(): FilterItem {
+            return $this->createFilterItem( $this->request->cookies() );
         }
 
-        /**
-         * @return FilterItem */
-        public function server() {
-            return $this->createFilterItem( "server" );
+        public function server(): FilterItem {
+            return $this->createFilterItem( $this->request->server() );
         }
 
-        /**
-         * @return FilterItem */
-        public function files() {
-            return $this->createFilterItem( "files" );
+        public function files(): FilterItem {
+            return $this->createFilterItem( $this->request->files() );
         }
 
-        /**
-         * @return FilterItem */
-        public function content() {
-            return $this->createFilterItem( "content" );
+        public function content(): FilterItem {
+            return $this->createFilterItem( $this->request->content() );
         }
 
     }

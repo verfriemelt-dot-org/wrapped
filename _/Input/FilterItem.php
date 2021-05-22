@@ -5,7 +5,8 @@
     namespace verfriemelt\wrapped\_\Input;
 
     use \verfriemelt\wrapped\_\Exception\Input\InputException;
-    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Http\ParameterBag;
+    use function \mb_strlen;
 
     class FilterItem {
 
@@ -25,8 +26,10 @@
 
         private $allowMultipleValuesSent = false;
 
-        public function __construct( $input ) {
-            $this->input = $input;
+        protected ParameterBag $parameter;
+
+        public function __construct( ParameterBag $params ) {
+            $this->parameter = $params;
         }
 
         /**
@@ -36,33 +39,15 @@
          */
         public function validate() {
 
-            switch ( $this->input ) {
-                case "query" : $dataSource = Request::getInstance()->query();
-                    break;
-                case "request" : $dataSource = Request::getInstance()->request();
-                    break;
-                case "files" : $dataSource = Request::getInstance()->files();
-                    break;
-                case "server" : $dataSource = Request::getInstance()->server();
-                    break;
-                case "content" : $dataSource = Request::getInstance()->content();
-                    break;
-                case "attributes" : $dataSource = Request::getInstance()->attributes();
-                    break;
-                case "cookie" : $dataSource = Request::getInstance()->cookie();
-                    break;
-                default: return false;
-            }
-
-            if ( !$dataSource->has( $this->valueName ) && $this->optional === true ) {
+            if ( !$this->parameter->has( $this->valueName ) && $this->optional === true ) {
                 return true;
             }
 
-            if ( !$dataSource->has( $this->valueName ) ) {
+            if ( !$this->parameter->has( $this->valueName ) ) {
                 throw new InputException( "input not present [{$this->valueName}]" );
             }
 
-            $input = $dataSource->get( $this->valueName );
+            $input = $this->parameter->get( $this->valueName );
 
             if ( is_array( $input ) ) {
 
