@@ -4,30 +4,18 @@
 
     namespace verfriemelt\wrapped\_\Http\Response;
 
-    use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Router\Router;
-
     class Redirect
     extends Response {
 
-        private $to;
-
-        private $ignoreBasePath = false;
+        private $destination;
 
         public function __construct( $path = null ) {
-            $this->to = $path;
+            $this->destination = $path;
             $this->temporarily();
         }
 
         public function send(): Response {
-
-            if ( $this->ignoreBasePath === false ) {
-                $path = Router::getInstance()->getBasePath() . $this->to;
-            } else {
-                $path = $this->to;
-            }
-
-            $this->addHeader( new HttpHeader( "Location", $path ) );
+            $this->addHeader( new HttpHeader( "Location", $this->destination ) );
             return parent::send();
         }
 
@@ -51,21 +39,17 @@
 
         public function seeOther( $to ): Redirect {
             $this->setStatusCode( Http::SEE_OTHER );
-            $this->to = $to;
+            $this->destination = $to;
             return $this;
         }
 
-        static public function to( $path ) {
+        public function setDestination( string $path ): Redirect {
+            $this->destination = $path;
+            return $this;
+        }
+
+        static public function to( $path ): Redirect {
             return new self( $path );
-        }
-
-        public function ignoreBasePath( $bool = true ) {
-            $this->ignoreBasePath = $bool;
-            return $this;
-        }
-
-        static public function reload() {
-            return (new self )->ignoreBasePath()->seeOther( Request::getInstance()->uri() );
         }
 
     }
