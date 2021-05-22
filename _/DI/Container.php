@@ -12,8 +12,15 @@
 
         private array $currentlyLoading = [];
 
+        private array $unsharerable = [];
+
         public function __construct() {
             $this->register( static::class, $this );
+        }
+
+        public function markServiceNonShareable( string $id ): static {
+            $this->unsharerable[$id] = true;
+            return $this;
         }
 
         public function register( string $id, object | callable $service ): static {
@@ -40,7 +47,7 @@
 
         public function build( string $class ): object {
 
-            if ( in_array( $class, $this->currentlyLoading  ) ) {
+            if ( in_array( $class, $this->currentlyLoading ) ) {
                 throw new Exception( sprintf( 'circulare references' ) );
             }
 
@@ -54,6 +61,12 @@
         }
 
         public function get( string $id ): object {
+
+            if ( isset( $this->unsharerable[$id] ) ) {
+
+                return $this->make( $id ) ??
+                    throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
+            }
 
             return
                 $this->services[$id] ??
