@@ -6,6 +6,7 @@
 
     use \Exception;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DI\Container;
     use \verfriemelt\wrapped\_\Output\Viewable;
     use \verfriemelt\wrapped\_\Template\Template;
 
@@ -15,6 +16,8 @@
         public string $tplPath;
 
         public Template $tpl;
+
+        protected static Container $container;
 
         abstract function getTemplatePath(): string;
 
@@ -36,6 +39,10 @@
 
         public static function make( ... $params ): string {
             return static::create( ... $params )->getContents();
+        }
+
+        public static function setContainer( Container $container ) {
+            static::$container = $container;
         }
 
         public function writeDataModelProperties( $prefix, DataModel $object, $context = null ) {

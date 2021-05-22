@@ -38,7 +38,7 @@
             throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
         }
 
-        protected function build( string $class ): object {
+        public function build( string $class ): object {
 
             if ( in_array( $class, $this->currentlyLoading  ) ) {
                 throw new Exception( sprintf( 'circulare references' ) );

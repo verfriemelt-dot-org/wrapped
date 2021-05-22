@@ -11,9 +11,21 @@
         /**
          * @var ParameterBag
          */
-        private $request, $query, $attributes, $cookies, $server, $files, $content, $header;
+        private ParameterBag $request;
 
-        protected static $instance;
+        private ParameterBag $query;
+
+        private ParameterBag $attributes;
+
+        private ParameterBag $cookies;
+
+        private ParameterBag $server;
+
+        private ParameterBag $files;
+
+        private ParameterBag $content;
+
+        private ParameterBag $header;
 
         public function __construct(
             array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], string $content = null
@@ -124,23 +136,6 @@
             return new self(
                 $_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER, file_get_contents( "php://input" )
             );
-        }
-
-        /**
-         *
-         * @return static
-         */
-        public static function getInstance() {
-
-            if ( self::$instance === null ) {
-                self::$instance = self::createFromGlobals();
-            }
-
-            return self::$instance;
-        }
-
-        public static function overrideInstance( Request $request ) {
-            return static::$instance = $request;
         }
 
         /**
