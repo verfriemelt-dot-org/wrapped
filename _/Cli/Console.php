@@ -63,7 +63,7 @@
         protected $argv;
 
         public static function getInstance(): Console {
-            return new self( isset( $_SERVER["argv"] ) ? $_SERVER["argv"] : [] );
+            return new self();
         }
 
         public function __construct() {

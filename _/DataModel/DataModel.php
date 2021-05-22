@@ -169,9 +169,9 @@
             $keys = array_keys( $array );
 
             if ( $torwardsDatabase ) {
-                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, true )->fetchBackendName(), $keys );
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field )->fetchBackendName(), $keys );
             } else {
-                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field, false )->getName(), $keys );
+                $keysTranslated = array_map( fn( string $field ) => static::translateFieldName( $field )->getName(), $keys );
             }
 
             return array_combine( $keysTranslated, array_values( $array ) );

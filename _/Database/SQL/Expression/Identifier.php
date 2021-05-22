@@ -79,6 +79,8 @@
 
         public function stringify( DatabaseDriver $driver = null ): string {
 
+            $parts = [];
+
             switch ( count( $this->parts ) ) {
                 case 3:
 

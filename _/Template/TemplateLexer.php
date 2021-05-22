@@ -125,6 +125,10 @@
                 }
             }
 
+            if ( !isset( $token ) ) {
+                throw new Exception( 'failed to parse token' );
+            }
+
             $this->appendToChain( $token );
 
             $this->currentPos   = $closingCurlyPos + 2;

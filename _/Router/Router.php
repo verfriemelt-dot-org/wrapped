@@ -30,10 +30,6 @@
 
         private $rawRouteHits = [];
 
-        public function __construct( Request $request ) {
-            $this->setRequest( $request );
-        }
-
         /**
          *
          * @param Request $request
@@ -119,7 +115,9 @@
          *
          * @return boolean|Route
          */
-        public function run() {
+        public function handleRequest( Request $request ) {
+
+            $this->setRequest( $request );
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );
@@ -214,10 +212,6 @@
             if ( $this->basePath !== null ) {
                 $this->uri = substr( $this->uri, strlen( $this->basePath ) );
             }
-        }
-
-        public static function destroy() {
-            static::$handle = null;
         }
 
         /**

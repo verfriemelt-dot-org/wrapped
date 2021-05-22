@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace verfriemelt\wrapped\_\DI;
 
     use \Closure;
@@ -9,14 +11,13 @@
     use \ReflectionMethod;
     use \ReflectionNamedType;
     use \ReflectionParameter;
-    use \Reflector;
 
     class ArgumentMetadataFactory {
 
         public function createArgumentMetadata( object | string $obj, string $method = null ): array {
 
             $reflection = null;
-            $arguments = [];
+            $arguments  = [];
 
             if ( $obj instanceof Closure ) {
                 $reflection = new ReflectionFunction( $obj );

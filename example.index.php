@@ -30,7 +30,7 @@
 //    $router->addRoutes( ... include_once __DIR__ . "/_/routes.php" );
 
     try {
-        $route    = $router->run();
+        $route    = $router->handleRequest();
         $response = $route->runCallback( $request );
 
         if ( $response instanceof Response ) {

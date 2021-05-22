@@ -123,21 +123,21 @@
                 if ( isset( $row["vars"] ) ) {
                     foreach ( $row["vars"] as $item ) {
                         //replace simple variables
-                        $item->run( $mangledData );
+                        $item->handleRequest( $mangledData );
                     }
                 }
 
                 // run objects (subrepeater, subifs)
                 if ( isset( $row["repeater"] ) ) {
                     foreach ( $row["repeater"] as $obj ) {
-                        $obj->run( $mangledData );
+                        $obj->handleRequest( $mangledData );
                     }
                 }
 
                 // run objects (subrepeater, subifs)
                 if ( isset( $row["if"] ) ) {
                     foreach ( $row["if"] as $obj ) {
-                        $obj->run( $mangledData );
+                        $obj->handleRequest( $mangledData );
                     }
                 }
 

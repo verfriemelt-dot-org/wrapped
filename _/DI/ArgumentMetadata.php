@@ -1,5 +1,7 @@
 <?php
 
+    declare(strict_types = 1);
+
     namespace verfriemelt\wrapped\_\DI;
 
     use \Exception;
@@ -40,7 +42,7 @@
         public function getDefaultValue(): mixed {
 
             if ( !$this->hasDefaultValue ) {
-                throw new Exception( sprinft( 'Argument »%s« has no default value', $this->name ) );
+                throw new Exception( sprintf( 'Argument »%s« has no default value', $this->name ) );
             }
 
             return $this->defaultValue;

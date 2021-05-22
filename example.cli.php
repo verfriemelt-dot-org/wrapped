@@ -36,5 +36,5 @@
     $router = Router::getInstance( $request );
 //    $router->addRoutes( ... include_once __DIR__ . "/_/cliRoutes.php" );
 
-    $route = $router->run();
+    $route = $router->handleRequest();
     $route->runCallback( $request );

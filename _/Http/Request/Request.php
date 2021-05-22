@@ -232,8 +232,4 @@
             );
         }
 
-        public static function destroy() {
-            static::$instance = null;
-        }
-
     }

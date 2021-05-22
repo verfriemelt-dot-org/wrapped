@@ -10,41 +10,33 @@
     class RouterTest
     extends \PHPUnit\Framework\TestCase {
 
-        public function tearDown(): void {
-            Router::destroy();
-            Request::destroy();
-        }
-
         public function testCanBeInstantiated() {
-            $this->assertTrue(
-                Router::getInstance() instanceof Router
-            );
+            new Router( new Request() );
         }
 
         public function testAddingRoutes() {
-            Router::getInstance()->addRoutes(
+
+            $router = (new Router( new Request ) )->addRoutes(
                 Route::create( "/" )
             );
 
-            $this->assertSame( 1, Router::getInstance()->count() );
+            $this->assertSame( 1, $router->count() );
         }
 
         public function testRouterMatchingSingleRoute() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
-
-            $router = Router::getInstance( $request )->addRoutes(
+            $router  = (new Router() )->addRoutes(
                 Route::create( "/test" )
             );
 
-            $this->assertTrue( $router->run() instanceof Route );
-            $router;
+            $this->assertTrue( $router->handleRequest( $request ) instanceof Route );
         }
 
         public function testRouterEmpty() {
 
             $this->expectException( NoRoutesPresent::class );
-            Router::getInstance()->run();
+            (new Router() )->handleRequest( new Request() );
         }
 
         public function testRouteFiltered() {
@@ -52,32 +44,32 @@
             $this->expectException( RouteGotFiltered::class );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
-            $router  = Router::getInstance( $request )->addRoutes(
+            $router  = (new Router() )->addRoutes(
                 Route::create( "/test" )->setFilterCallback( function () {
                     return true;
                 } )
             );
 
-            $router->run();
+            $router->handleRequest( $request );
         }
 
         public function testRouteGroup() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin/test" ] );
-            $router  = Router::getInstance( $request )->addRoutes(
+            $router  = (new Router() )->addRoutes(
                 RouteGroup::create( "/admin" )
                     ->add( Route::create( "/test" ) )
                     ->add( Route::create( "/test1" ) )
             );
 
-            $this->assertTrue( $router->run() instanceof Route );
+            $this->assertTrue( $router->handleRequest( $request ) instanceof Route );
         }
 
         public function testRouteVsRouteGroupWeight() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
-            $router = Router::getInstance( $request );
+            $router = new Router();
             $router->addRoutes( Route::create( "/admin" )->call( function () {
                     return "a";
                 } ) );
@@ -91,14 +83,14 @@
                         } ) )
             );
 
-            $this->assertEquals( "a", $router->run()->runCallback( $request ) );
+            $this->assertEquals( "a", $router->handleRequest( $request )->runCallback( $request ) );
         }
 
         public function testRouteGroupFirstButNoMatchingChildren() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
-            $router = Router::getInstance( $request );
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( "/admin" )
                     ->add( Route::create( "/test" )->call( function () {
@@ -112,14 +104,14 @@
                     return "a";
                 } ) );
 
-            $this->assertEquals( "a", $router->run()->runCallback( $request ) );
+            $this->assertEquals( "a", $router->handleRequest( $request )->runCallback( $request ) );
         }
 
         public function testNestedRouteGroups() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/test/nice" ] );
 
-            $router = Router::getInstance( $request );
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( "/api" )->add(
                     RouteGroup::create( '/test' )->add(
@@ -133,19 +125,19 @@
                 )
             );
 
-            $this->assertEquals( "win", $router->run()->runCallback( $request ) );
+            $this->assertEquals( "win", $router->handleRequest( $request )->runCallback( $request ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/asd" ] );
             $router->setRequest( $request );
 
-            $this->assertEquals( "default", $router->run()->runCallback( $request ) );
+            $this->assertEquals( "default", $router->handleRequest( $request )->runCallback( $request ) );
         }
 
         public function testMatchingGroupsWithNoChilds() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/win" ] );
 
-            $router = Router::getInstance( $request );
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( "/api" ),
                 Route::create( ".*" )->call( function () {
@@ -153,20 +145,20 @@
                 } )
             );
 
-            $this->assertEquals( "win", $router->run()->runCallback( $request ) );
+            $this->assertEquals( "win", $router->handleRequest( $request )->runCallback( $request ) );
         }
 
         public function testCapturingRouteData() {
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/list/geocaches" ] );
 
-            $router = Router::getInstance( $request );
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( "/(?<key>list)" )->add( Route::create( "/(?<key2>geocaches)" )->call( function () {
                         return "win";
                     } ) )
             );
 
-            $router->run();
+            $router->handleRequest( $request );
 
             $this->assertTrue( $request->attributes()->has( "key" ) );
             $this->assertTrue( $request->attributes()->has( "key2" ) );
@@ -176,22 +168,23 @@
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test/a" ] );
 
-            $router = Router::getInstance();
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( '(?:/[a-z]{4})?' )->add( Route::create( "/a" )->call( function () {
                         return true;
                     } ) )
             );
-            $this->assertTrue( $router->run( $request )->runCallback( $request ) );
+            $this->assertTrue( $router->handleRequest( $request )->runCallback( $request ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/a" ] );
-            $this->assertTrue( $router->run( $request )->runCallback( $request ) );
+            $this->assertTrue( $router->handleRequest( $request )->runCallback( $request ) );
         }
 
         public function testWut() {
 
-            $router = new Router();
+            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
 
+            $router = new Router();
             $router->addRoutes(
                 RouteGroup::create( '^(?:/([a-z]{2})(?=/))?' )->add(
                     RouteGroup::create( "(?:/detail)?" )
@@ -200,19 +193,19 @@
             );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
-            $result = $router->run( $request );
+            $result  = $router->handleRequest( $request );
 
-            $this->assertTrue ( $result->runCallback( $request ) );
+            $this->assertTrue( $result->runCallback( $request ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/geocacher/1" ] );
-            $result = $router->run( $request );
+            $result  = $router->handleRequest( $request );
 
-            $this->assertTrue ( $result->runCallback( $request ) );
+            $this->assertTrue( $result->runCallback( $request ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/detail/geocacher/1" ] );
-            $result = $router->run( $request );
+            $result  = $router->handleRequest( $request );
 
-            $this->assertTrue ( $result->runCallback( $request ) );
+            $this->assertTrue( $result->runCallback( $request ) );
         }
 
     }
