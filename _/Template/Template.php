@@ -4,8 +4,6 @@
 
     namespace verfriemelt\wrapped\_\Template;
 
-    use \verfriemelt\wrapped\_\Output\Viewable;
-
     class Template {
 
         private $if = [];
