@@ -8,6 +8,10 @@
 
         private array $services = [];
 
+        public function __construct() {
+            $this->register( static::class, $this );
+        }
+
         public function register( string $id, object | callable $service ): static {
             $this->services[$id] = $service;
             return $this;
@@ -34,6 +38,7 @@
         }
 
         public function get( string $id ): object {
+
             return
                 $this->services[$id] ??
                 $this->make( $id ) ??

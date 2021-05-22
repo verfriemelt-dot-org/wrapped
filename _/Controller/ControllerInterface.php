@@ -8,6 +8,5 @@
     use \verfriemelt\wrapped\_\Http\Response\Response;
 
     interface ControllerInterface {
-
         public function handleRequest( Request $request ): Response;
     }

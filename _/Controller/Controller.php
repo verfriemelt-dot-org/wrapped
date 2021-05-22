@@ -6,12 +6,26 @@
 
     use \verfriemelt\wrapped\_\Controller\ControllerInterface;
     use \verfriemelt\wrapped\_\DI\ArgumentResolver;
+    use \verfriemelt\wrapped\_\DI\Container;
     use \verfriemelt\wrapped\_\Exception\Router\RouterException;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
 
     abstract class Controller
     implements ControllerInterface {
+
+        protected Container $container;
+
+        /**
+         * sets the DI Container
+         *
+         * @param Container $container
+         * @return static
+         */
+        public function setContainer( Container $container ): static {
+            $this->container = $container;
+            return $this;
+        }
 
         public function handleRequest( Request $request ): Response {
 
@@ -37,8 +51,8 @@
 
             $method = "handle_{$methodName}";
 
-            $argumentResolver = (new \verfriemelt\wrapped\_\DI\Container)->get( ArgumentResolver::class );
-            $arguments = $argumentResolver->resolv( $this, $method );
+            $argumentResolver = $this->container->get( ArgumentResolver::class );
+            $arguments        = $argumentResolver->resolv( $this, $method );
 
             return $this->{$method}( ... $arguments );
         }

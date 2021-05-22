@@ -4,19 +4,19 @@
 
     namespace verfriemelt\wrapped\_\Router;
 
+    use \Countable;
     use \Iterator;
     use \verfriemelt\wrapped\_\Exception\Router\NoRouteMatching;
     use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
     use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
-    use \verfriemelt\wrapped\_\Singleton;
+    use function \mb_strlen;
 
     final class Router
-    implements Iterator, \Countable {
+    implements Iterator, Countable {
 
         use RouteIterator;
-        use Singleton;
 
         private Request $request;
 
@@ -30,14 +30,14 @@
 
         private $rawRouteHits = [];
 
-        public function __construct( Request $request = null ) {
-            $this->setRequest( $request ?: Request::getInstance()  );
+        public function __construct( Request $request ) {
+            $this->setRequest( $request );
         }
 
         /**
          *
          * @param Request $request
-         * @return \verfriemelt\wrapped\_\Router\Router
+         * @return Router
          */
         public function setRequest( Request $request ): Router {
 
@@ -119,7 +119,7 @@
          *
          * @return boolean|Route
          */
-        public function run(  ) {
+        public function run() {
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );
