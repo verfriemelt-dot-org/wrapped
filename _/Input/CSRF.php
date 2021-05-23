@@ -10,8 +10,8 @@
 
         private $session = null;
 
-        public function __construct( Session $session = null ) {
-            $this->session = $session ?? Session::getInstance();
+        public function __construct( Session $session ) {
+            $this->session = $session;
         }
 
         public function generateToken( string $contextName ): string {

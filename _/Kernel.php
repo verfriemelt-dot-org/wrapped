@@ -74,49 +74,34 @@
 
         public function handle(): ?Response {
 
-            try {
+            $route    = $this->router->handleRequest( $this->request );
+            $callback = $route->getCallback();
 
-                $route    = $this->router->handleRequest( $this->request );
-                $callback = $route->getCallback();
-
-                if ( !$route->checkFilter() ) {
-                    throw new RouteGotFiltered();
-                }
-
-                if ( $callback instanceof Response ) {
-                    $response = $callback;
-                } elseif ( $callback instanceof Closure ) {
-
-                    $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
-                    $arguments = $resolver->resolv( $callback );
-                    $response  = $callback( ...$arguments );
-                } else {
-
-                    $resolver = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
-
-                    $constructorArgument = $resolver->resolv( $callback );
-                    $methodArguments     = $resolver->resolv( $callback, 'handleRequest' );
-
-                    $response = (new $callback( ... $constructorArgument ) )
-                        ->setContainer( $this->container )
-                        ->prepare()
-                        ->handleRequest( ...$methodArguments );
-                }
-
-                return $response;
-            } catch ( NoRouteMatching $e ) {
-                $res = $this->container->get( PageNotFoundController::class )->handle_404( $request );
-            } catch ( NoRoutesPresent $e ) {
-                $res = new Response();
-                $res->setStatusCode( 404 );
-                $res->setContent( "404 - no routes" );
-            } catch ( RouteGotFiltered $e ) {
-                $res = new Redirect( "/login/auth" );
-                $res->setStatusCode( 307 );
-                $res->setContent( "forbidden" );
+            if ( !$route->checkFilter() ) {
+                throw new RouteGotFiltered();
             }
 
-            return $res;
+            if ( $callback instanceof Response ) {
+                $response = $callback;
+            } elseif ( $callback instanceof Closure ) {
+
+                $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+                $arguments = $resolver->resolv( $callback );
+                $response  = $callback( ...$arguments );
+            } else {
+
+                $resolver = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+
+                $constructorArgument = $resolver->resolv( $callback );
+                $methodArguments     = $resolver->resolv( $callback, 'handleRequest' );
+
+                $response = (new $callback( ... $constructorArgument ) )
+                    ->setContainer( $this->container )
+                    ->prepare()
+                    ->handleRequest( ...$methodArguments );
+            }
+
+            return $response;
         }
 
     }
