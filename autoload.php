@@ -2,4 +2,4 @@
 
   require __dir__ . '/Bootstrap.php';
 
-  Wrapped\Bootstrap::registerAutoloader();
+  verfriemelt\wrapped\Bootstrap::registerAutoloader();

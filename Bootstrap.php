@@ -17,8 +17,6 @@
                     return false;
                 }
 
-
-
                 $class        = substr( $class, strlen( self::NAMESPACE ) );
                 $possiblePath = __DIR__ . "/" . str_replace( "\\", "/", $class ) . ".php";
 
