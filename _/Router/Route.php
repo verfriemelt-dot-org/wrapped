@@ -4,9 +4,6 @@
 
     namespace verfriemelt\wrapped\_\Router;
 
-    use \verfriemelt\wrapped\_\Controller\ControllerInterface;
-    use \verfriemelt\wrapped\_\Exception\Router\IllegalCallbackSpecified;
-    use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
 
     class Route
@@ -16,16 +13,18 @@
 
         private $callback;
 
-        private $filter;
+        private array $filters = [];
 
         private int $priority = 100;
 
-        public static function create( string $path ): static {
-            return new self( $path );
-        }
+        protected array $attributes = [];
 
         public function __construct( string $path ) {
             $this->setPath( $path );
+        }
+
+        public static function create( string $path ): static {
+            return new self( $path );
         }
 
         public function getPath(): string {
@@ -41,15 +40,15 @@
             return $this;
         }
 
-        public function getCallback(): object|callable|string {
+        public function getCallback(): object | callable | string {
             return $this->callback;
         }
 
-        public function getFilterCallback(): ?callable {
-            return $this->filter;
+        public function getFilters(): array {
+            return $this->filters;
         }
 
-        public function setPath( $path ) {
+        public function setPath( $path ): static {
             $this->path = $path;
             return $this;
         }
@@ -64,55 +63,17 @@
          * @param callable $filter
          * @return static
          */
-        public function setFilterCallback( callable $filter ): static {
-            $this->filter = $filter;
+        public function addFilter( callable $filter ): static {
+            $this->filters[] = $filter;
             return $this;
         }
 
-        public function checkFilter(): bool {
-            if ( is_callable( $this->filter ) && call_user_func( $this->filter ) === true ) {
-                return false;
-            }
-
-            return true;
+        public function setAttributes( array $attributes ): static {
+            $this->attributes = $attributes;
+            return $this;
         }
 
-        public function isValidCallback(): bool {
-
-            if ( is_callable( $this->callback ) ||
-                in_array( ControllerInterface::class, class_implements( $this->callback ) ) ||
-                $this->callback instanceof Response ) {
-
-                return true;
-            }
-
-            throw new IllegalCallbackSpecified(
-                    "invalid callback \"{$this->callback}\""
-            );
+        public function getAttributes():array {
+            return $this->attributes;
         }
-
-        /**
-         *
-         * @return Response|boolean
-         */
-        public function runCallback( Request $request ) {
-
-            $this->isValidCallback();
-
-            if ( !$this->checkFilter() ) {
-                return false;
-            }
-
-            // if plain reponse as callback, just return the reponse
-            if ( $this->callback instanceof Response ) {
-                return $this->callback;
-            }
-
-            if ( is_callable( $this->callback ) ) {
-                return call_user_func( $this->callback, $request );
-            }
-
-            return (new $this->callback() )->handleRequest( $request );
-        }
-
     }

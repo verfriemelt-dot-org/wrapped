@@ -10,17 +10,17 @@
          * should return set path for the route;
          * could be an reguluar expression eq /admin/site/(?<id>[0-9])
          */
-        public function getPath();
+        public function getPath(): string;
 
         /**
          * defaults to 10; priorioty while 1 beeing more importatnt
          */
-        public function getPriority();
+        public function getPriority(): int;
 
         /**
-         * returns the filter function for the route.
+         * returns the filter functions for the route.
          * if that function returns true, the requests get filtered and
          * the callback wont be executed
          */
-        public function getFilterCallback();
+        public function getFilters();
     }

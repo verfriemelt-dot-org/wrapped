@@ -11,31 +11,21 @@
 
         use RouteIterator;
 
-        private $prefix;
+        private $path;
 
         private $priority = 100;
 
-        private $filterCallback;
+        private array $filters = [];
 
-        /**
-         * create new RouteGroup for chaining
-         * @param type $path
-         * @return \static
-         */
-        public static function create( $path ) {
+        public static function create( string $path ): static {
             return new self( $path );
         }
 
-        public function __construct( $prefix ) {
-            $this->prefix = $prefix;
+        public function __construct( string $path ) {
+            $this->path = $path;
         }
 
-        /**
-         *
-         * @param Route $route
-         * @return RouteGroup
-         */
-        public function add( Routable ... $routes ) {
+        public function add( Routable ... $routes ): static {
 
             foreach ( $routes as $route ) {
                 $this->routes[] = $route;
@@ -44,47 +34,30 @@
             return $this;
         }
 
-        /**
-         *
-         * @return Route[]
-         */
-        public function getRoutes() {
+        /** @return Route[] */
+        public function getRoutes(): array {
             return $this->routes;
         }
 
-        public function getPrefix() {
-            return $this->prefix;
+        public function getPath(): string {
+            return $this->path;
         }
 
-        public function getPath() {
-            return $this->getPrefix();
-        }
-
-        public function getPriority() {
+        public function getPriority(): int {
             return $this->priority;
         }
 
-        /**
-         *
-         * @param type $prefix
-         * @return RouteGroup
-         */
-        public function setPrefix( $prefix ) {
-            $this->prefix = $prefix;
+        public function setPath( $prefix ): static {
+            $this->path = $prefix;
             return $this;
         }
 
-        public function getFilterCallback() {
-            return $this->filterCallback;
+        public function getFilters(): array {
+            return $this->filters;
         }
 
-        /**
-         *
-         * @param \verfriemelt\wrapped\_\Router\callable $filterFunc
-         * @return RouteGroup
-         */
-        public function setFilterCallback( callable $filterFunc ) {
-            $this->filterCallback = $filterFunc;
+        public function addFilter( callable $filterFunc ): static {
+            $this->filters[] = $filterFunc;
             return $this;
         }
 

@@ -11,7 +11,6 @@
     use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
-    use function \mb_strlen;
 
     final class Router
     implements Iterator, Countable {
@@ -20,33 +19,7 @@
 
         private Request $request;
 
-        private ?string $basePath = null;
-
-        private $uri;
-
-        private $routeAttributeData = [];
-
         private $globalFilter = [];
-
-        private $rawRouteHits = [];
-
-        /**
-         *
-         * @param Request $request
-         * @return Router
-         */
-        public function setRequest( Request $request ): Router {
-
-            $this->request = $request;
-
-            if ( $this->request->pathInfo() !== null ) {
-                $this->uri = $this->request->pathInfo();
-            } else {
-                $this->uri = $this->request->uri();
-            }
-
-            return $this;
-        }
 
         /**
          * used for adding multiple routes
@@ -72,24 +45,6 @@
             return $this;
         }
 
-        /**
-         * to strip subpath like "/www/"
-         * @param type $path
-         * @return $this
-         */
-        public function setBasePath( $path ) {
-            $this->basePath = $path;
-            return $this;
-        }
-
-        /**
-         * returns current basePath
-         * @return string
-         */
-        public function getBasePath() {
-            return $this->basePath;
-        }
-
         private function isFiltered( $filterFunction ): bool {
 
             if ( !is_callable( $filterFunction ) ) {
@@ -111,87 +66,63 @@
             throw $filterException;
         }
 
+        public function flattenRoutes( $routes, $prefix = '', $filters = [] ) {
+
+            $flattened = [];
+
+            foreach ( $routes as $routeable ) {
+
+                $routeable->setPath( $prefix . $routeable->getPath() );
+
+                array_map( fn( $c ) => $routeable->addFilter( $c ), $filters );
+
+                if ( $routeable instanceof Route ) {
+                    $flattened[] = $routeable;
+                    continue;
+                }
+
+                // routegroup
+                $flattened = [
+                    ... $flattened,
+                    ... $this->flattenRoutes(
+                        $routeable->getRoutes(),
+                        $routeable->getPath(),
+                        [ ... $filters, ... $routeable->getFilters() ]
+                    )
+                ];
+            }
+
+            return $flattened;
+        }
+
         /**
          *
          * @return boolean|Route
          */
-        public function handleRequest( Request $request ) {
-
-            $this->setRequest( $request );
+        public function handleRequest( string $uri ) {
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );
             }
 
-            if ( !empty( $this->globalFilter ) ) {
-
-                foreach ( $this->globalFilter as $filter ) {
-                    $this->isFiltered( $filter );
-                }
-            }
-
-            $this->stripBasePathFromRequest();
             $this->sortRoutes( $this->routes );
+            $this->routes = $this->flattenRoutes( $this->routes );
 
-            $route = $this->findMatchingRoute( $this->uri, $this->routes );
-
-            // nothing matching
-            if ( $route === false ) {
-                throw new NoRouteMatching( "Router has no matching routes for {$this->uri}" );
-            }
-
-            // setup attributes
-            foreach ( $this->rawRouteHits as $hits ) {
-                $this->routeAttributeData = array_merge( $this->routeAttributeData, $hits );
-            }
-
-            $this->request->setAttributes( $this->routeAttributeData );
-
-            return $route;
+            return $this->findMatchingRoute( $uri );
         }
 
-        public function findMatchingRoute( $uri, $routes ) {
+        protected function findMatchingRoute( $uri ): Route {
 
-            foreach ( $routes as $routeable ) {
+            foreach ( $this->routes as $route ) {
 
-                if ( preg_match( "~^{$routeable->getPath()}~", $uri, $routeHits ) ) {
+                if ( preg_match( "~^{$route->getPath()}~", $uri, $routeHits ) ) {
 
-                    // check for filter on routes and routeGroups
-                    $this->isFiltered( $routeable->getFilterCallback() );
-
-                    // this route is matching and were done
-                    if ( $routeable instanceof Route ) {
-                        // we store capturegroups in the attributes object of the request
-                        $this->rawRouteHits[] = array_slice( $routeHits, 1 );
-
-                        return $routeable;
-                    }
-
-                    // routegroup
-                    // remove the current matching routepart
-                    $routeUri = substr( $uri, mb_strlen( $routeHits[0] ) );
-
-                    $routeGroupRoutes = $routeable->getRoutes();
-                    $this->sortRoutes( $routeGroupRoutes );
-
-                    // add attributse data from matching requests
-                    $this->rawRouteHits[] = array_slice( $routeHits, 1 );
-
-                    $result = $this->findMatchingRoute( $routeUri, $routeGroupRoutes );
-
-                    if ( $result !== false ) {
-
-                        // route, were done!
-                        return $result;
-                    } else {
-
-                        // remove unmatched hits
-                        array_pop( $this->rawRouteHits );
-                    }
+                    $route->setAttributes( array_slice( $routeHits, 1 ) );
+                    return $route;
                 }
             }
 
-            return false;
+            throw new NoRouteMatching( "Router has no matching routes for {$uri}" );
         }
 
         /**
@@ -201,17 +132,6 @@
             usort( $routes, function ( Routable $a, Routable $b ) {
                 return $a->getPriority() <=> $b->getPriority();
             } );
-        }
-
-        /**
-         * removes base path set in router and strips /index.php/admin routing
-         * so that we get only /admin or / in case of just hitting /index.php
-         */
-        private function stripBasePathFromRequest() {
-
-            if ( $this->basePath !== null ) {
-                $this->uri = substr( $this->uri, strlen( $this->basePath ) );
-            }
         }
 
         /**

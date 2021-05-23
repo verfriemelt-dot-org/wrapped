@@ -45,7 +45,7 @@
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
             $router  = (new Router() )->addRoutes(
-                Route::create( "/test" )->setFilterCallback( function () {
+                Route::create( "/test" )->addFilter( function () {
                     return true;
                 } )
             );

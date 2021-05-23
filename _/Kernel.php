@@ -66,20 +66,41 @@
             return $this;
         }
 
-        public function loadRoutes( string $path ): static {
+        public function loadRoutes( $routes ): static {
 
-            $this->router->addRoutes( ... require_once $path );
+            $this->router->addRoutes( ... $routes );
             return $this;
         }
 
         public function handle(): ?Response {
 
-            $route    = $this->router->handleRequest( $this->request );
-            $callback = $route->getCallback();
+            $uri   = $this->request->pathInfo() !== null ? $this->request->pathInfo() : $this->request->uri();
+            $route = $this->router->handleRequest( $uri );
 
-            if ( !$route->checkFilter() ) {
-                throw new RouteGotFiltered();
+            foreach ( $route->getAttributes() as $key => $value ) {
+                $this->request->attributes()->override( $key, $value );
             }
+
+            // router filter
+            foreach ( $route->getFilters() as $filter ) {
+
+                $callbackArguments = $this->container->get( ArgumentResolver::class )->resolv( $filter );
+
+                $result = $filter( ... $callbackArguments );
+
+                if ( $result !== false ) {
+
+                    $exception = new RouteGotFiltered();
+
+                    if ( $result instanceof Response ) {
+                        $exception->setResponse( $result );
+                    }
+
+                    throw $exception;
+                }
+            }
+
+            $callback = $route->getCallback();
 
             if ( $callback instanceof Response ) {
                 $response = $callback;
