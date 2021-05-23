@@ -27,6 +27,10 @@
             return $this;
         }
 
+        public function prepare(): static {
+            return $this;
+        }
+
         public function handleRequest( Request $request ): Response {
 
             // used to filter out named regexp hits

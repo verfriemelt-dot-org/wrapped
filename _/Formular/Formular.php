@@ -4,23 +4,23 @@
 
     namespace verfriemelt\wrapped\_\Formular;
 
-use \verfriemelt\wrapped\_\DateTime\DateTime;
-use \verfriemelt\wrapped\_\Exception\Input\InputException;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
-use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
-use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
-use \verfriemelt\wrapped\_\Http\Request\Request;
-use \verfriemelt\wrapped\_\Input\CSRF;
-use \verfriemelt\wrapped\_\Input\Filter;
-use \verfriemelt\wrapped\_\Output\Viewable;
-use \verfriemelt\wrapped\_\Session\Session;
-use \verfriemelt\wrapped\_\Template\Template;
+    use \verfriemelt\wrapped\_\DateTime\DateTime;
+    use \verfriemelt\wrapped\_\Exception\Input\InputException;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
+    use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
+    use \verfriemelt\wrapped\_\Http\Request\Request;
+    use \verfriemelt\wrapped\_\Input\CSRF;
+    use \verfriemelt\wrapped\_\Input\Filter;
+    use \verfriemelt\wrapped\_\Output\Viewable;
+    use \verfriemelt\wrapped\_\Session\Session;
+    use \verfriemelt\wrapped\_\Template\Template;
 
     class Formular
     implements Viewable {
@@ -54,9 +54,11 @@ use \verfriemelt\wrapped\_\Template\Template;
 
         private $prefilledWithSubmitData = false;
 
-        private $session;
+        private Session $session;
 
-        private ?Template $tpl = null;
+        private Template $tpl;
+
+        protected Request $request;
 
         private function generateCSRF() {
 
@@ -64,13 +66,13 @@ use \verfriemelt\wrapped\_\Template\Template;
             return $csrf->generateToken( $this->csrfTokenName );
         }
 
-        public function __construct( string $name, Filter $filter = null, Template $template = null, Session $session = null ) {
+        public function __construct( string $name, Request $request, Filter $filter = null, Session $session, Template $template = null ) {
 
             $this->formname      = $name;
-            $this->filter        = $filter ?? new Filter( "Form-" . $this->formname );
+            $this->filter        = $filter;
             $this->csrfTokenName = "csrf-" . md5( $this->formname );
 
-            $this->session = $session ?? Session::getInstance();
+            $this->session = $session;
 
             $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
             $this->addHidden( self::FORM_FIELD_NAME, $this->formname );
@@ -82,7 +84,8 @@ use \verfriemelt\wrapped\_\Template\Template;
                 $this->tpl = $template;
             }
 
-            $this->action = Request::getInstance()->uri();
+            $this->request = $request;
+            $this->action  = $request->uri();
         }
 
         public function setCssClass( $cssClass ): Formular {
@@ -224,7 +227,7 @@ use \verfriemelt\wrapped\_\Template\Template;
          * @return bool
          */
         public function isPosted(): bool {
-            return Request::getInstance()->request()->get( self::FORM_FIELD_NAME ) === $this->formname;
+            return $this->request->request()->get( self::FORM_FIELD_NAME ) === $this->formname;
         }
 
         /**
@@ -235,8 +238,8 @@ use \verfriemelt\wrapped\_\Template\Template;
         public function get( string $name ) {
 
             $input = ($this->method === SELF::METHOD_POST ) ?
-                Request::getInstance()->request() :
-                Request::getInstance()->query();
+                $this->request->request() :
+                $this->request->query();
 
             if ( !isset( $this->elements[$name] ) ) {
                 return null;
@@ -277,8 +280,7 @@ use \verfriemelt\wrapped\_\Template\Template;
             $validated = false;
 
             if (
-                $this->method == SELF::METHOD_POST && Request::getInstance()->requestMethod() == "POST" && $this->get( self::FORM_FIELD_NAME ) === $this->formname ||
-                $this->method == SELF::METHOD_GET ) {
+                $this->method == SELF::METHOD_POST && $this->request->requestMethod() == "POST" && $this->get( self::FORM_FIELD_NAME ) === $this->formname || $this->method == SELF::METHOD_GET ) {
 
                 $failed = false;
 

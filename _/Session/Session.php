@@ -5,12 +5,9 @@
     namespace verfriemelt\wrapped\_\Session;
 
     use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Singleton;
 
     final class Session
     implements SessionHandler {
-
-        use Singleton;
 
         CONST SESSION_COOKIE_NAME = "_";
 
@@ -24,7 +21,11 @@
 
         private $currentData = [];
 
-        private function __construct( SessionDataObject $sessionStorage = null, Request $request = null ) {
+        protected Request $request;
+
+        public function __construct( Request $request, SessionDataObject $sessionStorage = nul ) {
+
+            $this->request = $request;
 
             if ( $sessionStorage === null || !in_array( SessionDataObject::class, class_implements( $sessionStorage ) ) ) {
                 $this->storageObj = SessionSql::class;
@@ -33,8 +34,6 @@
             }
 
             $this->storageObj::purgeOldSessions();
-
-            $request = $request ?? Request::getInstance();
 
             if ( $request->cookies()->has( self::SESSION_COOKIE_NAME ) ) {
                 $this->resume( $request->cookies()->get( self::SESSION_COOKIE_NAME ) );
@@ -130,7 +129,7 @@
             $this->dataObj = new $this->storageObj;
 
             $this->dataObj->setSessionId( $this->sessionId );
-            $this->dataObj->setIp( Request::getInstance()->remoteIp() );
+            $this->dataObj->setIp( $this->request->remoteIp() );
             $this->dataObj->setTimeout( time() + self::SESSION_TIMEOUT );
         }
 
