@@ -101,8 +101,28 @@
             $this->assertSame( 3, $obj1->fetchChildCount() );
             $this->assertSame( 0, $obj2->fetchChildCount() );
             $this->assertSame( 1, $obj3->fetchChildCount() );
+        }
 
+        public function testFetchParent() {
 
+            $obj1 = new Tree();
+            $obj1->save();
+
+            $obj2 = new Tree();
+            $obj2->under( $obj1 );
+            $obj2->save();
+
+            $obj3 = new Tree();
+            $obj3->under( $obj1 );
+            $obj3->save();
+
+            $obj4 = new Tree();
+            $obj4->under( $obj3 );
+            $obj4->save();
+
+            $this->assertSame( $obj3->getId(), $obj4->fetchParent()->getId() );
+            $this->assertSame( $obj1->getId(), $obj4->fetchParent()->fetchParent()->getId() );
+            $this->assertNull( $obj4->fetchParent()->fetchParent()->fetchParent() );
         }
 
     }

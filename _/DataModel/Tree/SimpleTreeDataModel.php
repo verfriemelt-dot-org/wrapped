@@ -24,6 +24,10 @@
             return 'parentId';
         }
 
+        public static function getRereferencedParentProperty(): string {
+            return static::getPrimaryKey();
+        }
+
         public function fetchChildCount(): int {
             return $this->fetchChildren()->count();
         }
@@ -31,7 +35,7 @@
         public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ): Collection {
 
             $parentProp  = static::createDataModelAnalyser()->fetchPropertyByName( static::getParentProperty() );
-            $primaryProp = static::createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() );
+            $primaryProp = static::createDataModelAnalyser()->fetchPropertyByName( static::getRereferencedParentProperty() );
 
             $cte = new CTE();
             $cte->recursive();
@@ -104,13 +108,14 @@
         public function fetchParent(): ?static {
 
             $parentProp = static::createDataModelAnalyser()->fetchPropertyByName( static::getParentProperty() );
+            $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName( static::getRereferencedParentProperty() );
             $parent     = $this->{$parentProp->getGetter()}();
 
             if ( $parent === null ) {
                 return null;
             }
 
-            return static::get( $parent );
+            return static::fetchBy( $referencedProperty->getName(), $parent );
         }
 
         public function fetchPath(): Collection {
@@ -132,7 +137,9 @@
             }
 
             $parentProp = static::createDataModelAnalyser()->fetchPropertyByName( static::getParentProperty() );
-            $this->{$parentProp->getSetter()}( $parent->getId() );
+            $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName( static::getRereferencedParentProperty() );
+
+            $this->{$parentProp->getSetter()}( $parent->{$referencedProperty->getGetter()}() );
 
             return $this;
         }
