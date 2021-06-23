@@ -56,6 +56,8 @@
 
         protected $forceColor = false;
 
+        protected \Closure $outputFunction;
+
         /**
          *
          * @var ParameterBag
@@ -68,10 +70,19 @@
 
         public function __construct() {
 
+            $this->outputFunction = function ( string $content ) {
+                fwrite( $this->selectedStream, $content );
+            };
+
             $this->selectedStream = &$this->stdout;
             $this->argv           = new ParameterBag( $_SERVER["argv"] ?? [] );
 
             $this->inTerminal = isset( $_SERVER['TERM'] );
+        }
+
+        public function setOutputFunction( \Closure $fn ): static {
+            $this->outputFunction = $fn;
+            return $this;
         }
 
         public static function isCli(): bool {
@@ -110,11 +121,11 @@
             }
 
             if ( $this->linePrefixFunc !== null && $this->hadLineOutput !== true ) {
-                fwrite( $this->selectedStream, ($this->linePrefixFunc)() );
+                ($this->outputFunction)( ($this->linePrefixFunc)() );
                 $this->hadLineOutput = true;
             }
 
-            fwrite( $this->selectedStream, (string) $text );
+            ($this->outputFunction)( (string) $text );
 
             if ( $color !== null ) {
                 $this->setForegroundColor( static::STYLE_NONE );
