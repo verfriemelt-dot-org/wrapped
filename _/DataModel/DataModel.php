@@ -396,7 +396,7 @@
                 throw new DatabaseException( "saving datamodels to database not possible without pk defined" );
             }
 
-            $pk = (new Attribute\Naming\SnakeCase( static::getPrimaryKey() ) )->convertTo( new Attribute\Naming\CamelCase )->getString();
+            $pk = static::createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() )->getName();
 
             if ( $this->_isPropertyFuzzy( $pk ) ) {
                 $this->insertRecord();
@@ -449,7 +449,8 @@
             $query->returning( static::getPrimaryKey() );
 
             // store autoincrement
-            $this->{static::getPrimaryKey()} = $query->fetch()[static::getPrimaryKey()];
+            $pk = $this->createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() );
+            $this->{$pk->getName()} = $query->fetch()[$pk->fetchBackendName()];
 
             $this->_storePropertyStates();
 
