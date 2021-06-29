@@ -84,6 +84,11 @@
             return $this->connectionString;
         }
 
+        public function fetchConnectionString(): string {
+            return $this->connectionString;
+        }
+
+
         public function disconnet() {
             $this->connectionHandle = null;
         }
