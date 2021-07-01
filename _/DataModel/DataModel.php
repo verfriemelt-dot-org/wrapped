@@ -271,7 +271,11 @@
                 throw new DatabaseException( "::reload is not possible without PK" );
             }
 
-            $this->initData( self::get( $this->{static::getPrimaryKey()} )->toArray(), true );
+            $query = static::buildSelectQuery();
+            $query->where([ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ]);
+            $query->limit( 1 );
+
+            $this->initData( $query->fetch(), true );
 
             return $this;
         }
