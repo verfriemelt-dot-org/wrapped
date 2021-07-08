@@ -54,8 +54,15 @@
 
         public function loadSetup( string $path ): static {
 
-            foreach ( include_once $path as $func ) {
-                $func( $this->request, $this->container );
+            foreach ( include_once $path as $callback ) {
+
+
+                $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+                $arguments = $resolver->resolv( $callback );
+                
+                // run setup
+                $callback( ...$arguments );
+
             }
 
             return $this;
