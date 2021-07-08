@@ -20,7 +20,7 @@
                 throw new \InvalidArgumentException( "Illegal Detector" );
             }
 
-            self::$detector[$envName] = $func;
+            $this->detector[$envName] = $func;
         }
 
         /**
@@ -29,8 +29,8 @@
          * @return boolean
          */
         public function is( $envName ) {
-            if ( isset( self::$detector[$envName] ) ) {
-                $func = self::$detector[$envName];
+            if ( isset( $this->detector[$envName] ) ) {
+                $func = $this->detector[$envName];
 
                 return $func();
             }
@@ -44,7 +44,7 @@
          * @return boolean
          */
         public function isNot( $envName ) {
-            return !self::is( $envName );
+            return !$this->is( $envName );
         }
 
         /**
@@ -53,7 +53,7 @@
          */
         public function dumpDetectorsResults() {
             $detectors = [];
-            foreach ( self::$detector as $name => $func ) {
+            foreach ( $this->detector as $name => $func ) {
                 $detectors[$name] = $func();
             }
 
