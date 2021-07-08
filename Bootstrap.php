@@ -4,13 +4,13 @@
 
     use \ErrorException;
     use \verfriemelt\wrapped\_\Cli\Console;
-    use \verfriemelt\wrapped\_\EnvironmentDetector;
 
     class Bootstrap {
 
         CONST NAMESPACE = "verfriemelt\\wrapped";
 
         static public function registerAutoloader() {
+
             spl_autoload_register( function ( $class ) {
 
                 if ( substr( $class, 0, strlen( self::NAMESPACE ) ) !== self::NAMESPACE ) {
@@ -30,10 +30,6 @@
 
             // lazy ass exception handling
             set_exception_handler( function ( $e ) {
-
-                // bail out when on live
-                if ( EnvironmentDetector::is( "live" ) )
-                    die( "ein fehler. bad news!" );
 
                 if ( !Console::isCli() ) {
                     header( "Content-type: text/plain" );

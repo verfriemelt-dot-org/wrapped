@@ -6,7 +6,7 @@
 
     class EnvironmentDetector {
 
-        private static $detector = [];
+        private $detector = [];
 
         /**
          *
@@ -14,7 +14,7 @@
          * @param callable $func
          * @throws \InvalidArgumentException
          */
-        public static function registerDetector( $envName, callable $func ) {
+        public function registerDetector( $envName, callable $func ) {
 
             if ( !is_callable( $func ) ) {
                 throw new \InvalidArgumentException( "Illegal Detector" );
@@ -28,7 +28,7 @@
          * @param string $envName
          * @return boolean
          */
-        public static function is( $envName ) {
+        public function is( $envName ) {
             if ( isset( self::$detector[$envName] ) ) {
                 $func = self::$detector[$envName];
 
@@ -43,7 +43,7 @@
          * @param string $envName
          * @return boolean
          */
-        public static function isNot( $envName ) {
+        public function isNot( $envName ) {
             return !self::is( $envName );
         }
 
@@ -51,7 +51,7 @@
          * for debug only
          * @return mixed
          */
-        public static function dumpDetectorsResults() {
+        public function dumpDetectorsResults() {
             $detectors = [];
             foreach ( self::$detector as $name => $func ) {
                 $detectors[$name] = $func();

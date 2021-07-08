@@ -113,13 +113,10 @@
 
                 $resolver = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
 
-                $constructorArgument = $resolver->resolv( $callback );
-                $methodArguments     = $resolver->resolv( $callback, 'handleRequest' );
-
-                $response = (new $callback( ... $constructorArgument ) )
+                $response = (new $callback( ... $resolver->resolv( $callback ) ) )
                     ->setContainer( $this->container )
-                    ->prepare()
-                    ->handleRequest( ...$methodArguments );
+                    ->prepare( ...$resolver->resolv( $callback, 'prepare' ) )
+                    ->handleRequest( ...$resolver->resolv( $callback, 'handleRequest' ) );
             }
 
             return $response;
