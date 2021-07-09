@@ -77,8 +77,8 @@
                     $cookie->getName(),
                     $cookie->getValue(),
                     $cookie->getExpiresTime(),
-                    $cookie->getPath(),
-                    $cookie->getDomain()
+                    $cookie->getPath() ?? '/',
+                    $cookie->getDomain() ?? ''
                 );
             }
 
