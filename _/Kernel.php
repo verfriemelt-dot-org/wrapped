@@ -59,7 +59,7 @@
 
                 $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
                 $arguments = $resolver->resolv( $callback );
-                
+
                 // run setup
                 $callback( ...$arguments );
 
@@ -81,8 +81,7 @@
 
         public function handle(): ?Response {
 
-            $uri   = $this->request->pathInfo() !== null ? $this->request->pathInfo() : $this->request->uri();
-            $route = $this->router->handleRequest( $uri );
+            $route = $this->router->handleRequest( $this->request->uri() );
 
             foreach ( $route->getAttributes() as $key => $value ) {
                 $this->request->attributes()->override( $key, $value );
