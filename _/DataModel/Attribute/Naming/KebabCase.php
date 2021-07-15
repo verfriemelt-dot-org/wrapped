@@ -5,15 +5,15 @@
     namespace verfriemelt\wrapped\_\DataModel\Attribute\Naming;
 
     #[ \Attribute ]
-    class SnakeCase
+    class KebabCase
     extends Convention {
 
         public function fetchStringParts(): array {
-            return explode( '_', $this->string );
+            return explode( '-', $this->string );
         }
 
         public static function fromStringParts( string ... $parts ): Convention {
-            return new static( strtolower( implode( '_', $parts ) ) );
+            return new static( strtolower( implode( '-', $parts ) ) );
         }
 
     }

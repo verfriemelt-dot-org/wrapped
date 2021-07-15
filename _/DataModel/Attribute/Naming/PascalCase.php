@@ -8,8 +8,6 @@
     class PascalCase
     extends Convention {
 
-        public string $str;
-
         public function fetchStringParts(): array {
 
             return array_map( 'strtolower', preg_split( '/(?=[A-Z])/', lcfirst( $this->string ) ) );

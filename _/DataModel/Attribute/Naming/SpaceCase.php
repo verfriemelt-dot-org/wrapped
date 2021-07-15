@@ -8,8 +8,6 @@
     class SpaceCase
     extends Convention {
 
-        protected string $str;
-
         public function fetchStringParts(): array {
             return explode( ' ', $this->string );
         }

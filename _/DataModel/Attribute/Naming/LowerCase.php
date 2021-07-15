@@ -10,8 +10,6 @@
 
         public CONST DESTRUCTIVE = true;
 
-        public string $str;
-
         public function fetchStringParts(): array {
             return [ $this->string ];
         }
