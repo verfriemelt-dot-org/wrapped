@@ -140,6 +140,7 @@
 
         public function cr(): Console {
             $this->write( "\r" );
+            $this->hadLineOutput = false;
             return $this;
         }
 
