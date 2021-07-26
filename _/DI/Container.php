@@ -8,70 +8,71 @@
 
     class Container {
 
+        /** @var verfriemelt\wrapped\_\DI\ServiceConfiguration[] */
         private array $services = [];
 
-        private array $currentlyLoading = [];
+        private array $instances = [];
 
-        private array $unsharerable = [];
+        private array $currentlyLoading = [];
 
         public function __construct() {
             $this->register( static::class, $this );
         }
 
-        public function markServiceNonShareable( string $id ): static {
-            $this->unsharerable[$id] = true;
-            return $this;
-        }
+        public function register( string $id, object $service = null ): ServiceConfiguration {
 
-        public function register( string $id, object | callable $service ): static {
-            $this->services[$id] = $service;
-            return $this;
+            $this->services[$id] = (new ServiceConfiguration( $id ) );
+
+            if ( $service !== null ) {
+                $this->instances[$id] = $service;
+                $this->services[$id]->class( get_class( $service ) );
+            }
+
+            return $this->services[$id];
         }
 
         public function has( string $id ): bool {
-
-            return $this->services[$id] ??
-                $this->make( $id );
+            return isset( $this->services[$id] ) || $this->generateDefaultService( $id );
         }
 
-        public function make( string $id ) {
-
-            if ( class_exists( $id ) ) {
-                $instance = $this->build( $id );
-                $this->register( $id, $instance );
-                return $instance;
-            }
-
-            throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
+        public function generateDefaultService( string $id ): bool {
+            $this->register( $id, null );
+            return true;
         }
 
-        public function build( string $class ): object {
+        private function build( string $id ): object {
 
-            if ( in_array( $class, $this->currentlyLoading ) ) {
+            if ( in_array( $id, $this->currentlyLoading ) ) {
                 throw new Exception( sprintf( 'circulare references' ) );
             }
 
-            $this->currentlyLoading[] = $class;
+            $this->currentlyLoading[] = $id;
 
-            $arguments = (new ArgumentResolver( $this, new ArgumentMetadataFactory ) )->resolv( $class );
+            $builder  = new ServiceBuilder( $this->services[$id], $this );
+            $instance = $builder->build();
 
             array_pop( $this->currentlyLoading );
 
-            return new $class( ... $arguments );
+            return $instance;
         }
 
         public function get( string $id ): object {
 
-            if ( isset( $this->unsharerable[$id] ) ) {
-
-                return $this->make( $id ) ??
-                    throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
+            if ( !$this->has( $id ) ) {
+                throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
             }
 
-            return
-                $this->services[$id] ??
-                $this->make( $id ) ??
-                throw new Exception( sprintf( 'unkown service: »%s«', $id ) );
+            $configuration = $this->services[$id];
+
+            if ( !$configuration->isShareable() ) {
+                return $this->build( $id );
+            }
+
+            if ( !isset( $this->instances[$id] ) ) {
+                $this->instances[$id] = $this->build( $id );
+            }
+
+            return $this->instances[$id];
         }
 
     }

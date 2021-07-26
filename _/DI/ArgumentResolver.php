@@ -6,19 +6,16 @@
 
     class ArgumentResolver {
 
-        private $reflection;
-
         protected Container $container;
 
         protected ArgumentMetadataFactory $factory;
 
         public function __construct( Container $container, ArgumentMetadataFactory $factory ) {
-
             $this->factory   = $factory;
             $this->container = $container;
         }
 
-        public function resolv( object|string $obj, string $method = null ): array {
+        public function resolv( object | string $obj, string $method = null ): array {
 
             $args = [];
 
@@ -28,10 +25,14 @@
                     continue;
                 }
 
-                $args[] = $this->container->get( $parameter->getType() );
+                $args[] = $this->buildParameter( $parameter );
             }
 
             return $args;
+        }
+
+        protected function buildParameter( ArgumentMetadata $parameter ) {
+            return $this->container->get( $parameter->getType() );
         }
 
     }
