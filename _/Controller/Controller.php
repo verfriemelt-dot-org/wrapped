@@ -47,7 +47,7 @@
 
             $int_only_references = array_diff( $attributes_on_ints, $attributes_on_strings );
 
-            $methodName = current( $int_only_references ) ?: 'index'; // $request->attributes()->get( 0, "index" );
+            $methodName = current( array_filter( $int_only_references ) ) ?: 'index'; // $request->attributes()->get( 0, "index" );
 
             if ( !method_exists( $this, "handle_{$methodName}" ) || !is_callable( [ $this, "handle_{$methodName}" ] ) ) {
                 throw new RouterException( "Method handle_{$methodName} is not callable on " . static::class );

@@ -115,7 +115,7 @@
 
             foreach ( $this->routes as $route ) {
 
-                if ( preg_match( "~^{$route->getPath()}~", $uri, $routeHits ) ) {
+                if ( preg_match( "~^{$route->getPath()}~", $uri, $routeHits, PREG_UNMATCHED_AS_NULL ) ) {
 
                     $route->setAttributes( array_slice( $routeHits, 1 ) );
                     return $route;
