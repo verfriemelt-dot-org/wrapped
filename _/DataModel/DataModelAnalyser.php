@@ -24,7 +24,7 @@
          *
          * @return DataModelProperty[]
          */
-        public function fetchProperties(): array {
+        public function fetchProperties() {
 
             if ( $this->properties === null ) {
                 $this->prepareProperties();
