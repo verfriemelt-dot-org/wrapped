@@ -13,11 +13,6 @@
             $this->container = $container;
         }
 
-        public function builder( \Closure $callback ): static {
-            $this->callback = $callback;
-            return $this;
-        }
-
         public function build() {
 
             $class = $this->service->getClass();
