@@ -23,7 +23,7 @@
 
         protected Request $request;
 
-        public function __construct( Request $request, SessionDataObject $sessionStorage = nul ) {
+        public function __construct( Request $request, SessionDataObject $sessionStorage = null ) {
 
             $this->request = $request;
 
