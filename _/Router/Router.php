@@ -95,11 +95,11 @@
             return $flattened;
         }
 
-        /**
-         *
-         * @return boolean|Route
-         */
-        public function handleRequest( string $uri ) {
+        public function handleRequest( string| Request $uri ): Route {
+
+            if ( $uri instanceof Request ) {
+                $uri = $uri->uri();
+            }
 
             if ( empty( $this->routes ) ) {
                 throw new NoRoutesPresent( "Router is empty" );

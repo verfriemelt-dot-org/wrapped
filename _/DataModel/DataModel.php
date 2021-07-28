@@ -43,16 +43,18 @@
          */
         public function initData( $data, bool $deserialize = false ): static {
 
-            foreach ( static::createDataModelAnalyser()->fetchProperties() as $attribute ) {
+            $analyser = static::createDataModelAnalyser();
 
-                $conventionName = $deserialize ? $attribute->getName() : $attribute->fetchBackendName();
+            foreach ( $data as $key => &$value ) {
 
-                // skip attribute
-                if ( !array_key_exists( $conventionName, $data ) ) {
+                $property = $analyser->fetchPropertyByName( $key );
+
+                // property not found, we ignore this
+                if ( !$property ) {
                     continue;
                 }
 
-                $this->{$attribute->getSetter()}( $this->hydrateProperty( $attribute, $data[$conventionName] ) );
+                $this->{$property->getSetter()}( $this->hydrateProperty( $property, $value ) );
             }
 
             $this->_storePropertyStates();

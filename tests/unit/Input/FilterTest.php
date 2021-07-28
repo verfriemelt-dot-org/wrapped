@@ -6,7 +6,9 @@
     class FilterTest
     extends \PHPUnit\Framework\TestCase {
 
-        public function setUp():void {
+        protected Request $request;
+
+        public function setUp(): void {
 
             $_SERVER = array(
                 'REDIRECT_HTTPS'        => 'on',
@@ -67,103 +69,101 @@
                 "test2" => [ 3, 7 ]
             ];
 
-            Request::overrideInstance(
-                new Request( $_GET, $_POST, [], $_COOKIE, [], $_SERVER, "" )
-            );
+            $this->request = new Request( $_GET, $_POST, [], $_COOKIE, [], $_SERVER, "" );
         }
 
         public function testFilterCreation() {
-            $this->assertTrue( new Filter() instanceof Filter );
+            $this->assertTrue( new Filter( $this->request ) instanceof Filter );
         }
 
         public function testFilterLength() {
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->minLength( 5 );
             $this->assertFalse( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->maxLength( 2 );
             $this->assertFalse( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->minLength( 2 );
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->maxLength( 6 );
             $this->assertTrue( $filter->validate() );
         }
 
         public function testOptionalFilters() {
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->maxLength( 6 )->optional();
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "bar" )->maxLength( 2 )->optional();
             $this->assertFalse( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "notExisting" )->maxLength( 2 )->optional();
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "notExisting" )->maxLength( 2 );
             $this->assertFalse( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->this( "notExisting" )->required();
             $this->assertFalse( $filter->validate() );
-        }
+            }
 
-        public function testCookiesFilter() {
+            public function testCookiesFilter() {
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->cookies()->this( "bar" )->optional();
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->cookies()->this( "testCookie" )->optional();
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->cookies()->this( "testCookie" )->required();
             $this->assertTrue( $filter->validate() );
         }
 
         public function testMultipleFiltersAtOnce() {
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->has( "bar" )->minLength( 3 )->maxLength( 3 )->allowedChars( "inwaè" );
             $this->assertTrue( $filter->validate() );
         }
 
         public function testUTFStuff() {
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->has( "utf" )->minLength( 3 )->maxLength( 3 )->allowedChars( "èµ€" );
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->query()->has( "utf" )->minLength( 3 )->maxLength( 3 )->allowedChars( "è" );
             $this->assertFalse( $filter->validate() );
         }
 
         public function testSetPredefinedValues() {
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->request()->has( "test" )->allowedValues( [ "a", "b", "c" ] );
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->request()->has( "test" )->allowedValues( [ "null", "c" ] );
             $this->assertFalse( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->request()->has( "test2" )->multiple()->allowedValues( [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ] );
             $this->assertTrue( $filter->validate() );
 
-            $filter = new Filter();
+            $filter = new Filter( $this->request );
             $filter->request()->has( "test2" )->multiple()->allowedValues( [ 1, 2, 4, 5, 6, 7, 8, 9 ] );
             $this->assertFalse( $filter->validate() );
         }

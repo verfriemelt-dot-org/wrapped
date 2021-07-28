@@ -33,19 +33,19 @@
             return $this->properties ?? [];
         }
 
-        public function fetchPropertyByName( string $name ): DataModelProperty {
+        public function fetchPropertyByName( string $name ): ?DataModelProperty {
 
             if ( $this->properties === null ) {
                 $this->prepareProperties();
             }
 
             foreach ( $this->properties as $prop ) {
-                if ( $prop->getName() == $name ) {
+                if ( $prop->isNamed( $name ) ) {
                     return $prop;
                 }
             }
 
-            throw new \Exception( "prop »{$name}« not found " );
+            return null;
         }
 
         public function getBaseName(): string {
@@ -69,8 +69,6 @@
         }
 
         protected function prepareProperties() {
-
-            $hasDataModelAttribute = false;
 
             foreach ( $this->reflection->getProperties() as $property ) {
 

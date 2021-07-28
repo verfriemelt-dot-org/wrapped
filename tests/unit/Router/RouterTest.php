@@ -83,7 +83,7 @@
                         } ) )
             );
 
-            $this->assertEquals( "a", $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertEquals( "a", $router->handleRequest( $request )->getCallback()() );
         }
 
         public function testRouteGroupFirstButNoMatchingChildren() {
@@ -104,7 +104,7 @@
                     return "a";
                 } ) );
 
-            $this->assertEquals( "a", $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertEquals( "a", $router->handleRequest( $request )->getCallback()() );
         }
 
         public function testNestedRouteGroups() {
@@ -125,12 +125,11 @@
                 )
             );
 
-            $this->assertEquals( "win", $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertEquals( "win", $router->handleRequest( $request )->getCallback()() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/asd" ] );
-            $router->setRequest( $request );
 
-            $this->assertEquals( "default", $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertEquals( "default", $router->handleRequest( $request )->getCallback()() );
         }
 
         public function testMatchingGroupsWithNoChilds() {
@@ -145,7 +144,7 @@
                 } )
             );
 
-            $this->assertEquals( "win", $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertEquals( "win", $router->handleRequest( $request )->getCallback()() );
         }
 
         public function testCapturingRouteData() {
@@ -158,7 +157,8 @@
                     } ) )
             );
 
-            $router->handleRequest( $request );
+            $route = $router->handleRequest( $request );
+            $request->setAttributes( $route->getAttributes() );
 
             $this->assertTrue( $request->attributes()->has( "key" ) );
             $this->assertTrue( $request->attributes()->has( "key2" ) );
@@ -174,10 +174,10 @@
                         return true;
                     } ) )
             );
-            $this->assertTrue( $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertTrue( $router->handleRequest( $request )->getCallback()() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/a" ] );
-            $this->assertTrue( $router->handleRequest( $request )->runCallback( $request ) );
+            $this->assertTrue( $router->handleRequest( $request )->getCallback()() );
         }
 
         public function testWut() {
@@ -195,17 +195,17 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->runCallback( $request ) );
+            $this->assertTrue( $result->getCallback()() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->runCallback( $request ) );
+            $this->assertTrue( $result->getCallback()() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/detail/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->runCallback( $request ) );
+            $this->assertTrue( $result->getCallback()() );
         }
 
     }

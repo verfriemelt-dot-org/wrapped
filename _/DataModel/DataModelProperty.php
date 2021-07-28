@@ -78,4 +78,8 @@
             return $this->name;
         }
 
+        public function isNamed( string $name ): bool {
+            return $this->name === $name || $this->case->getString() === $name;
+        }
+
     }
