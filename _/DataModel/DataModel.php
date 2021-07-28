@@ -47,8 +47,8 @@
 
             foreach ( $data as $key => &$value ) {
 
-                $property = $analyser->fetchPropertyByName( $key );
-
+                $property = $analyser->fetchPropertyByName( (string) $key );
+                
                 // property not found, we ignore this
                 if ( !$property ) {
                     continue;
