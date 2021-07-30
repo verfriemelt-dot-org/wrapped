@@ -101,21 +101,21 @@
 
                 $convetion = $this->fetchNamingConventionAttributes( $property );
 
-                $dma = new DataModelProperty( $name, $convetion ? $convetion->newInstance() : null );
-                $dma->setGetter( $getter );
-                $dma->setSetter( $setter );
+                $dmp = new DataModelProperty( $name, $convetion?->newInstance() );
+                $dmp->setGetter( $getter );
+                $dmp->setSetter( $setter );
 
                 $renamedAttribute = $this->fetchNameOverride( $property );
 
                 if ( $renamedAttribute ) {
-                    $dma->setRenamed( $renamedAttribute->newInstance() );
+                    $dmp->setRenamed( $renamedAttribute->newInstance() );
                 }
 
                 if ( $property->getType() ) {
-                    $dma->setType( $property->getType()->getName() );
+                    $dmp->setType( $property->getType()->getName() );
                 }
 
-                $this->properties[] = $dma;
+                $this->properties[] = $dmp;
             }
         }
 

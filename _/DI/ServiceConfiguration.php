@@ -3,7 +3,7 @@
     namespace verfriemelt\wrapped\_\DI;
 
     use \Closure;
-    use \TheSeer\Tokenizer\Exception;
+    use \Exception;
 
     class ServiceConfiguration {
 
@@ -17,7 +17,7 @@
 
         public function __construct( string $id ) {
             $this->id    = $id;
-            $this->class = $id;
+            $this->setClass( $id );
         }
 
         public function share( bool $bool = true ): static {
@@ -29,18 +29,24 @@
             return $this->shareable;
         }
 
-        public function class( string $class ): static {
+        public function setClass( string $class ): static {
 
             if ( !class_exists( $class ) ) {
-                throw new Exception( sprintf( 'unkown service: »%s«', $class ) );
+                throw new Exception( sprintf( 'unkown class: »%s«', $class ) );
             }
 
             $this->class = $class;
             return $this;
         }
 
-        public function getClass() {
+        public function getClass(): string {
             return $this->class;
+        }
+
+        public function getInterfaces(): array {
+
+            return class_implements( $this->class);
+
         }
 
         public function parameter( string $class, Closure $resolver ): static {
