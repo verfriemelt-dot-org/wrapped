@@ -192,7 +192,7 @@
                 // is_integer( $column ) checks if we have numeric keys
                 if ( is_integer( $column ) && count( $value ) === 3 ) {
 
-                    $expression->add( new Identifier( $value[0] ) );
+                    $expression->add( new Identifier( ... explode( '.', $value[0] ) ) );
 
                     if ( is_array( $value[2] ) ) {
                         $op = new OperatorExpression( 'in', ... array_map( fn( $value ) => new Value( $value ), $value[2] ) );
@@ -205,15 +205,13 @@
                     return;
                 }
 
-                if ( is_array( $value ) ) {
+                $expression->add( new Identifier( ... explode( '.', $column ) ) );
 
-                    $expression->add( new Identifier( $column ) );
+                if ( is_array( $value ) ) {
 
                     $op = new OperatorExpression( 'in', ... array_map( fn( $value ) => new Value( $value ), $value ) );
                     $expression->add( $op );
                 } else {
-
-                    $expression->add( new Identifier( $column ) );
 
                     if ( $value instanceof PropertyObjectInterface ) {
                         $value = $value->dehydrateToString();

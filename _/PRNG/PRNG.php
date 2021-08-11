@@ -15,31 +15,32 @@
 //    c, 0 ≤ c < m - increment
 //    x0, 0 ≤ x0 < m - the seed or start value
 
-        static protected int $modulus = 2 ** 31 - 1;
+        protected int $modulus = 2 ** 31 - 1;
 
-        static protected int $multiplier = 48271;
+        protected int $multiplier = 48271;
 
-        static protected int $increment = 0;
+        protected int $increment = 0;
 
-        static protected int $seed = 1103515245;
+        protected int $seed;
 
-        static protected int $last = 1103515245;
+        protected float $last;
 
-        public static function setSeed( int $seed ): void {
+        public function __construct( int $seed = 1103515245 ) {
 
             if ( $seed < 0 ) {
                 throw new Exception( 'seed must be greater than zero' );
             }
 
-            static::$seed = $seed;
+            $this->seed = $seed;
+            $this->last = $seed;
         }
 
-        public static function getSeed(): int {
-            return static::$seed;
+        public function getSeed(): int {
+            return $this->seed;
         }
 
-        public static function next(): int {
-            return static::$last = ( static::$multiplier * static::$last + self::$increment ) % static::$modulus;
+        public function next(): float {
+            return $this->last = ( $this->multiplier * $this->last + $this->increment ) % $this->modulus ;
         }
 
     }
