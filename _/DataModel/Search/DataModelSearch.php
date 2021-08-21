@@ -23,12 +23,18 @@
 
         private DataModel $prototype;
 
+        private ?array $fields = null;
+
         private $operator = 'ilike';
 
         public function __construct( Searchable $prototype ) {
             $this->prototype = $prototype;
         }
 
+        public function setSearchFields( array $fields ): static {
+            $this->fields = $fields;
+            return $this;
+        }
         /**
          * escape all like specific elements, like _ and % as well as backslashes
          * @param string $searchString
@@ -53,7 +59,7 @@
             $query = $query ?: $this->prototype::buildSelectQuery();
 
             $pieces = $this->split( $this->escapeLike( $searchString ) );
-            $fields = $this->prototype::getSearchFields();
+            $fields = $this->fields ?? $this->prototype::getSearchFields();
 
             if ( count( $pieces ) === 0 ) {
                 return $query;
