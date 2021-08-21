@@ -74,18 +74,21 @@
             return $this;
         }
 
-        /**
-         *
-         * @param type $name
-         * @return Repeater
-         */
-        public function createRepeater( $name ) {
+        public function createRepeater( string $name ): Repeater {
 
             if ( !isset( $this->repeater[$name] ) ) {
                 $this->repeater[$name] = new Repeater( $name );
             }
 
             return $this->repeater[$name];
+        }
+
+        public function mapToRepeater( string $name, string $variable, $data ): Repeater {
+
+            $r = $this->createRepeater( $name );
+            array_map( fn( $i ) => $r->set( $variable, $i )->save(), $data );
+
+            return $r;
         }
 
         /**
