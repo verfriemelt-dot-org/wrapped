@@ -12,8 +12,7 @@
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
 
-    final class Router
-    implements Iterator, Countable {
+    final class Router {
 
         use RouteIterator;
 
@@ -142,10 +141,6 @@
         public function addGlobalFilter( callable $filter ) {
             $this->globalFilter[] = $filter;
             return $this;
-        }
-
-        public function count(): int {
-            return count( $this->routes );
         }
 
     }
