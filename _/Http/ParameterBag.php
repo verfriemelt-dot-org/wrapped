@@ -7,17 +7,20 @@
     use \ArrayIterator;
     use \Countable;
     use \IteratorAggregate;
+    use \Traversable;
 
     class ParameterBag
     implements Countable, IteratorAggregate {
 
-        private $parameters = [], $raw        = null;
+        private $parameters = [];
+
+        private $raw = null;
 
         public function __construct( array $parameters ) {
             $this->parameters = $parameters;
         }
 
-        public function count() {
+        public function count(): int {
             return count( $this->parameters );
         }
 
@@ -25,7 +28,7 @@
          *
          * @return ArrayIterator
          */
-        public function getIterator() {
+        public function getIterator(): Traversable {
             return new ArrayIterator( $this->parameters );
         }
 
