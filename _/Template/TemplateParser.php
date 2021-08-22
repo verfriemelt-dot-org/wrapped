@@ -99,6 +99,10 @@
                 throw new Exception( "object passed to template variable '{$name}'" );
             }
 
+            if ( $variable instanceof Link ) {
+                return $output;
+            }
+
             return $this->currentToken->escape ? htmlspecialchars( (string) $output, ENT_QUOTES ) : $output;
         }
 
