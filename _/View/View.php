@@ -17,17 +17,27 @@
 
         public Template $tpl;
 
+        protected ?string $inlineTemplate = null;
+
         protected static Container $container;
 
         abstract function getTemplatePath(): string;
 
         public function __construct( mixed ... $params ) {
+            $this->tpl = $this->getTemplateInstance();
+        }
+
+        protected function getTemplateInstance(): Template {
+
+            if ( isset( $this->inlineTemplate ) ) {
+                return (new Template())->setRawTemplate( $this->inlineTemplate );
+            }
 
             if ( empty( $this->tplPath ) ) {
                 throw new Exception( "unset Template Path in view " . static::class );
             }
 
-            $this->tpl = ( new Template )->parseFile(
+            return ( new Template )->parseFile(
                 $this->getTemplatePath() . $this->tplPath
             );
         }
