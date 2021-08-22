@@ -1,6 +1,8 @@
 <?php
 
-    namespace \verfriemelt\wrapped\_\View\BuiltIns;
+    declare(strict_types = 1);
+
+    namespace verfriemelt\wrapped\_\View\BuiltIns;
 
     use \verfriemelt\wrapped\_\View\View;
 
@@ -28,6 +30,10 @@
 
             $this->tpl->set( 'name', $this->name );
             $this->tpl->set( 'destination', $this->destination );
+        }
+
+        public function getTemplatePath(): string {
+            return '';
         }
 
     }

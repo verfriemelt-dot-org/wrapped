@@ -95,12 +95,12 @@
                 $output = $variable->readValue();
             }
 
-            if ( is_object( $output ) ) {
-                throw new Exception( "object passed to template variable '{$name}'" );
+            if ( $variable->getValue() instanceof \verfriemelt\wrapped\_\View\BuiltIns\Link ) {
+                return $output;
             }
 
-            if ( $variable instanceof Link ) {
-                return $output;
+            if ( is_object( $output ) ) {
+                throw new Exception( "object passed to template variable '{$name}'" );
             }
 
             return $this->currentToken->escape ? htmlspecialchars( (string) $output, ENT_QUOTES ) : $output;

@@ -17,21 +17,21 @@
         public function __construct( string $name = null, $value = null ) {
 
             $this->name = $name;
+            $this->value = $value;
 
-            if ( $value instanceof Viewable ) {
-                $this->value = $value->getContents();
-            } else {
-                $this->value = $value;
-            }
         }
 
         public function readValue() {
 
-            if ( !$this->value instanceof Closure ) {
-                return $this->value;
+            if ( $this->value instanceof Closure ) {
+                return call_user_func( $this->value );
             }
 
-            return call_user_func( $this->value );
+            if ( $this->value instanceof Viewable ) {
+                return $this->value->getContents();
+            }
+
+            return $this->value;
         }
 
         public function readFormattedValue( $formatter ) {
