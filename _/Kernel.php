@@ -62,7 +62,6 @@
 
                 // run setup
                 $callback( ...$arguments );
-
             }
 
             return $this;
@@ -108,21 +107,28 @@
 
             $callback = $route->getCallback();
 
-            if ( $callback instanceof Response ) {
-                $response = $callback;
-            } elseif ( $callback instanceof Closure ) {
+            // handle exceptions for 404 and redirect
+            try {
 
-                $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
-                $arguments = $resolver->resolv( $callback );
-                $response  = $callback( ...$arguments );
-            } else {
+                if ( $callback instanceof Response ) {
+                    $response = $callback;
+                } elseif ( $callback instanceof Closure ) {
 
-                $resolver = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+                    $resolver  = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+                    $arguments = $resolver->resolv( $callback );
+                    $response  = $callback( ...$arguments );
+                } else {
 
-                $response = (new $callback( ... $resolver->resolv( $callback ) ) )
-                    ->setContainer( $this->container )
-                    ->prepare( ...$resolver->resolv( $callback, 'prepare' ) )
-                    ->handleRequest( ...$resolver->resolv( $callback, 'handleRequest' ) );
+                    $resolver = new ArgumentResolver( $this->container, new ArgumentMetadataFactory );
+
+                    $response = (new $callback( ... $resolver->resolv( $callback ) ) )
+                        ->setContainer( $this->container )
+                        ->prepare( ...$resolver->resolv( $callback, 'prepare' ) )
+                        ->handleRequest( ...$resolver->resolv( $callback, 'handleRequest' ) );
+                }
+
+            } catch ( \verfriemelt\wrapped\_\Router\RedirectException $e ) {
+                return $e->getRedirect();
             }
 
             return $response;
