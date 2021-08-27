@@ -197,7 +197,11 @@
                     if ( is_array( $value[2] ) ) {
                         $op = new OperatorExpression( 'in', ... array_map( fn( $value ) => new Value( $value ), $value[2] ) );
                         $expression->add( $op );
-                    } else {
+                    } elseif ( in_array( $value[2], [ false, true, null ], true ) ) {
+                        // cast to operator directly IS TRUE, IS FALSE, IS NULL
+                        $expression->add( new Operator( 'is ' . (new Value( $value[2] ) )->stringify() ) );
+                    }
+                    else {
                         $expression->add( new Operator( $value[1] ) );
                         $expression->add( new Value( $value[2] ) );
                     }
