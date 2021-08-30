@@ -48,7 +48,7 @@
             foreach ( $data as $key => &$value ) {
 
                 $property = $analyser->fetchPropertyByName( (string) $key );
-                
+
                 // property not found, we ignore this
                 if ( !$property ) {
                     continue;
@@ -525,6 +525,17 @@
             }
 
             return $this->_propertyHashes[$name] !== \md5( (string) $this->dehydrateProperty( $property ) );
+        }
+
+        public function isDirty(): bool {
+
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ){
+                if ( $this->_isPropertyFuzzy( $property->getName() ) ) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public function delete(): static {
