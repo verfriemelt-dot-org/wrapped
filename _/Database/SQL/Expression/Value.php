@@ -59,6 +59,8 @@
                     break;
 
                 case 'integer':
+                case 'float':
+                case 'double':
                     $value = $this->value;
                     break;
 
