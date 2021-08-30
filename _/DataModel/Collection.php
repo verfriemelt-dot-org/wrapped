@@ -74,48 +74,27 @@
             return $this->count() === 0;
         }
 
-        /**
-         * iterator implementation
-         * @return mixed
-         */
-        public function current() {
+        public function current():mixed {
             return $this->valid() ? $this->offsetGet( $this->pointer ) : false;
         }
 
-        /**
-         * iterator implementation
-         */
         public function key(): int {
             return $this->pointer;
         }
 
-        /**
-         * iterator implementation
-         */
         public function next(): void {
             $this->pointer++;
         }
 
-        /**
-         * iterator implementation
-         */
         public function rewind(): void {
             $this->pointer = 0;
         }
 
-        /**
-         * iterator implementation
-         * @return bool
-         */
         public function valid(): bool {
             return $this->pointer < $this->length;
         }
 
-        /**
-         * returns the last element
-         * @return mixed
-         */
-        public function last() {
+        public function last():mixed {
 
             if ( $this->count() == 0 ) {
                 return null;
@@ -124,7 +103,7 @@
             return $this->offsetGet( $this->count() - 1 );
         }
 
-        public function first() {
+        public function first():mixed {
 
             if ( $this->count() == 0 ) {
                 return null;
@@ -159,11 +138,7 @@
             return isset( $this->data[$offset] );
         }
 
-        /**
-         * array access implementation
-         * @return mixed
-         */
-        public function offsetGet( $offset ) {
+        public function offsetGet( mixed $offset ):mixed {
 
             // validate offset
             $this->offsetExists( $offset );
@@ -175,7 +150,7 @@
          * array access implementation
          * disabled
          */
-        public function offsetSet( $offset, $value ) {
+        public function offsetSet( mixed $offset, mixed $value ): void {
             throw new Exception( "write only collections" );
         }
 
@@ -183,11 +158,11 @@
          * array access implementation
          * disabled
          */
-        public function offsetUnset( $offset ) {
+        public function offsetUnset( mixed $offset ): void {
             throw new Exception( "write only collections" );
         }
 
-        public function seek( $position ) {
+        public function seek( int $position ): void {
 
             if ( $position >= $this->length ) {
                 throw new OutOfBoundsException();
@@ -254,7 +229,7 @@
             return $this->data;
         }
 
-        public function jsonSerialize() {
+        public function jsonSerialize():mixed  {
             return $this->toArray();
         }
 

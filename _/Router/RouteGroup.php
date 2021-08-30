@@ -7,7 +7,7 @@
     use \Iterator;
 
     class RouteGroup
-    implements Iterator, Routable {
+    implements Routable {
 
         use RouteIterator;
 

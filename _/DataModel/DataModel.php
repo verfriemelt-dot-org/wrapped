@@ -19,8 +19,7 @@
     use function \json_decode;
     use function \json_encode;
 
-    abstract class DataModel
-    implements Serializable {
+    abstract class DataModel {
 
         static protected $_analyserObjectCache = [];
 
@@ -179,14 +178,6 @@
             return array_combine( $keysTranslated, array_values( $array ) );
         }
 
-        /**
-         * implementation for Serializable
-         * @return string
-         */
-        public function serialize(): string {
-            return $this->toJson();
-        }
-
         public function toJson( $pretty = false ): string {
             return json_encode( $this->toArray(), $pretty ? 128 : 0 );
         }
@@ -206,8 +197,8 @@
             return array_map( fn( DataModelProperty $a ) => $a->fetchBackendName(), static::createDataModelAnalyser()->fetchProperties() );
         }
 
-        public function unserialize( $serialized ) {
-            $this->initData( (array) json_decode( $serialized ), true );
+        public function fromJson( string $json ): static {
+            return $this->initData( (array) json_decode( $json ), true );
         }
 
         public static function fetchBy( string $field, $value ) {
