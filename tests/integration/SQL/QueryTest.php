@@ -1,6 +1,6 @@
 <?php
 
-    namespace functional\SQL;
+    namespace integration\SQL;
 
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;

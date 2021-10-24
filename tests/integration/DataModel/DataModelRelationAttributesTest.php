@@ -1,14 +1,13 @@
 <?php
 
-    namespace functional;
+    namespace integration;
 
+    use \DatabaseTestCase;
     use \Exception;
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
-    use \verfriemelt\wrapped\_\DI\ArgumentMetadata;
     use function \Symfony\Component\String\b;
 
     class A
@@ -76,28 +75,20 @@
     }
 
     class DataModelRelationAttributesTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function setUp(): void {
 
             switch ( static::$connection::class ) {
-                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+                case Postgres::class:
                     static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
                     static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
                     break;
-                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                case SQLite::class:
                     static::$connection->query( 'create table "A" ( id integer primary key, b_id int );' );
                     static::$connection->query( 'create table "B" ( id integer primary key, a_id int );' );
                     break;
             }
-
-
         }
 
         public function tearDown(): void {

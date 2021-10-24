@@ -1,9 +1,9 @@
 <?php
 
-    namespace functional\DataModel\FindTest;
+    namespace integration\DataModel\FindTest;
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
+    use \DatabaseTestCase;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
 
@@ -79,13 +79,7 @@
     }
 
     class DataModelFindTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function tearDown(): void {
             static::$connection->query( "drop table if exists \"TypeTester\" " );
@@ -94,15 +88,14 @@
         public function setUp(): void {
             $this->tearDown();
 
-           switch ( static::$connection::class ) {
-                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+            switch ( static::$connection::class ) {
+                case Postgres::class:
                     static::$connection->query( "create table \"TypeTester\" ( id serial, a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) " );
                     break;
-                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                case SQLite::class:
                     static::$connection->query( "create table \"TypeTester\" ( id integer primary key , a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) " );
                     break;
             }
-
         }
 
         public function createInstance() {

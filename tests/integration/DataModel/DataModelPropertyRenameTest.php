@@ -1,10 +1,9 @@
 <?php
 
-    namespace functional\DataModel\FindTest;
+    namespace integration\DataModel\FindTest;
 
-    use \functional\DataModel\FindTest\RenameTester;
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
+    use \DatabaseTestCase;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
@@ -38,13 +37,7 @@
     }
 
     class DataModelPropertyRenameTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function tearDown(): void {
             static::$connection->query( "drop table if exists \"RenameTester\" " );
@@ -54,10 +47,10 @@
             $this->tearDown();
 
             switch ( static::$connection::class ) {
-                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+                case Postgres::class:
                     static::$connection->query( "create table \"RenameTester\" ( id serial, \"rAnDoMCAsIng\" text ) " );
                     break;
-                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                case SQLite::class:
                     static::$connection->query( "create table \"RenameTester\" ( id integer primary key, \"rAnDoMCAsIng\" text ) " );
                     break;
             }

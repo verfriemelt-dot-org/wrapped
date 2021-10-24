@@ -1,9 +1,8 @@
 <?php
 
-    namespace functional\DataModel\SimpleTreeDataModel;
+    namespace integration\DataModel\SimpleTreeDataModel;
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
+    use \DatabaseTestCase;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
     use \verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
@@ -35,18 +34,12 @@
     }
 
     class SimpleTreeDataModelTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function setUp(): void {
 
             if ( static::$connection instanceof SQLite ) {
-                $this->markTestSkipped('sqlite not supported');
+                $this->markTestSkipped( 'sqlite not supported' );
                 return;
             }
 
@@ -63,11 +56,6 @@
             $obj->save();
 
             return $obj;
-        }
-
-        public function testSave() {
-
-            $this->saveInstance( Tree::class, 'test' );
         }
 
         public function testNestedSave() {

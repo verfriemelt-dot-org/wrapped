@@ -1,9 +1,8 @@
 <?php
 
-    namespace functional;
+    namespace integration;
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
+    use \DatabaseTestCase;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\TreeDataModel;
 
@@ -35,22 +34,14 @@
     }
 
     class TreeDataModelTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function setUp(): void {
 
-
             if ( static::$connection instanceof SQLite ) {
-                $this->markTestSkipped('sqlite not supported');
+                $this->markTestSkipped( 'sqlite not supported' );
                 return;
             }
-
 
             $this->tearDown();
             static::$connection->query( 'drop table if exists "TreeDummy";' );
@@ -59,10 +50,6 @@
 
         public function tearDown(): void {
 //            static::$connection->query( 'drop table if exists "TreeDummy";' );
-        }
-
-        public function test() {
-            new TreeDummy;
         }
 
         public function testSaveUnder() {

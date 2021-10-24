@@ -1,13 +1,8 @@
 <?php
 
-    namespace functional\DataModel\AttributeTest;
+    namespace integration\DataModel\AttributeTest;
 
-    use \functional\DataModel\AttributeTest\CamelCaseDummy;
-    use \functional\DataModel\AttributeTest\LowerDummy;
-    use \functional\DataModel\AttributeTest\SnakeCaseDummy;
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
+    use \DatabaseTestCase;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
@@ -61,13 +56,7 @@
     }
 
     class DataModelAttributeTest
-    extends TestCase {
-
-        static $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
+    extends DatabaseTestCase {
 
         public function tearDown(): void {
             static::$connection->query( 'drop table if exists dummy;' );
