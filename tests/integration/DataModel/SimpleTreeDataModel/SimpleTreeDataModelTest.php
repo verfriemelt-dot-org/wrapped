@@ -4,7 +4,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
     use \verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
 
@@ -40,11 +40,16 @@
         static $connection;
 
         public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
+            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
         }
 
         public function setUp(): void {
-            static::$connection->query( "set log_statement = 'all'" );
+
+            if ( static::$connection instanceof SQLite ) {
+                $this->markTestSkipped('sqlite not supported');
+                return;
+            }
+
             static::$connection->query( 'create table tree ( id serial primary key, parent_id int );' );
         }
 

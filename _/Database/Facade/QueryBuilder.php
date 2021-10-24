@@ -100,9 +100,9 @@
             $what = [ ... ( is_array( $table ) ? $table : [ $table ]), $what ];
 
             if ( $distinct ) {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ) );
+                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ))->as( new Identifier('count') ) );
             } else {
-                $this->select->add( new SqlFunction( new Identifier( 'count' ), new Identifier( ... $what ) ) );
+                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Identifier( ... $what ) ))->as( new Identifier('count') ) );
             }
 
             $this->stmt = new Statement( $this->select );

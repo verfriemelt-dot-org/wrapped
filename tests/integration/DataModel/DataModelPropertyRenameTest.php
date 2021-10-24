@@ -3,9 +3,9 @@
     namespace functional\DataModel\FindTest;
 
     use \functional\DataModel\FindTest\RenameTester;
-    use \functional\DataModel\FindTest\TypeTester;
+    use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
 
@@ -38,12 +38,12 @@
     }
 
     class DataModelPropertyRenameTest
-    extends \PHPUnit\Framework\TestCase {
+    extends TestCase {
 
         static $connection;
 
         public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
+            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
         }
 
         public function tearDown(): void {
@@ -51,10 +51,16 @@
         }
 
         public function setUp(): void {
-            static::$connection->query( "set log_statement = 'all'" );
-
             $this->tearDown();
-            static::$connection->query( "create table \"RenameTester\" ( id serial, \"rAnDoMCAsIng\" text ) " );
+
+            switch ( static::$connection::class ) {
+                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+                    static::$connection->query( "create table \"RenameTester\" ( id serial, \"rAnDoMCAsIng\" text ) " );
+                    break;
+                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                    static::$connection->query( "create table \"RenameTester\" ( id integer primary key, \"rAnDoMCAsIng\" text ) " );
+                    break;
+            }
         }
 
         public function createInstance(): RenameTester {
@@ -63,10 +69,6 @@
 
             // restore
             return RenameTester::get( 1 );
-        }
-
-        public function test() {
-            $this->createInstance();
         }
 
         public function testUpdate() {

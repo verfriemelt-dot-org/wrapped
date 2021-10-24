@@ -58,7 +58,7 @@
 
     }
 
-    class FunctionDataModelAttributeTest
+    class DataModelAnalyserTest
     extends TestCase {
 
         public function testNames() {

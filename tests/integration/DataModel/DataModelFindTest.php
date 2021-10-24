@@ -4,7 +4,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     class TypeTester
@@ -78,13 +78,13 @@
 
     }
 
-    class DataModelTest
+    class DataModelFindTest
     extends TestCase {
 
         static $connection;
 
         public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
+            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
         }
 
         public function tearDown(): void {
@@ -92,10 +92,17 @@
         }
 
         public function setUp(): void {
-            static::$connection->query( "set log_statement = 'all'" );
-
             $this->tearDown();
-            static::$connection->query( "create table \"TypeTester\" ( id serial, a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) " );
+
+           switch ( static::$connection::class ) {
+                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+                    static::$connection->query( "create table \"TypeTester\" ( id serial, a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) " );
+                    break;
+                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                    static::$connection->query( "create table \"TypeTester\" ( id integer primary key , a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) " );
+                    break;
+            }
+
         }
 
         public function createInstance() {
@@ -107,15 +114,10 @@
             TypeTester::get( 1 );
         }
 
-        public function test() {
-            $this->createInstance();
-        }
-
         public function testFind() {
 
             // non existing
             $this->assertNull( TypeTester::findSingle( [ "id" => 1 ] ) );
-
 
             $this->createInstance();
 

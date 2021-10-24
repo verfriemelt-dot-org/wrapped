@@ -110,7 +110,7 @@
             }
 
             // scalar properties
-            if ( in_array( $attributeType, [ 'float' ] ) ) {
+            if ( in_array( $attributeType, [ 'float', 'int', 'bool' ] ) ) {
 
                 if ( !settype( $input, $attributeType ) ) {
                     throw new \Exception( 'casting of property failed' );
@@ -447,7 +447,10 @@
 
             // store autoincrement
             $pk = $this->createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() );
-            $this->{$pk->getName()} = $query->fetch()[$pk->fetchBackendName()];
+            $this->{$pk->getName()} = $this->hydrateProperty( $pk, $query->fetch()[$pk->fetchBackendName()] );
+
+
+
 
             $this->_storePropertyStates();
 
@@ -548,7 +551,7 @@
         public static function count( string $what = "*", $params = null, $and = true ): int {
 
             $query = new DataModelQueryBuilder( new static );
-            $query->count( [ static::fetchSchemaname(), static::fetchTablename() ] );
+            $query->count( [ static::fetchSchemaname(), static::fetchTablename() ], $what );
 
             if ( $params instanceof DbLogic ) {
                 $query->translateDbLogic( $params );

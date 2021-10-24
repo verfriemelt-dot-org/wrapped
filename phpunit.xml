@@ -6,8 +6,9 @@
          executionOrder="depends,defects"
          colors="true"
          failOnWarning="true"
-         verbose="true"
          defaultTestSuite="unit"
+         failOnSkipped="false"
+         verbose="false"
 >
     <testsuites>
         <testsuite name="unit">

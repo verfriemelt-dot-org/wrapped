@@ -5,9 +5,10 @@
     use \Exception;
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
+    use \verfriemelt\wrapped\_\DI\ArgumentMetadata;
     use function \Symfony\Component\String\b;
 
     class A
@@ -80,13 +81,23 @@
         static $connection;
 
         public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
+            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
         }
 
         public function setUp(): void {
-            static::$connection->query( "set log_statement = 'all'" );
-            static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
-            static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
+
+            switch ( static::$connection::class ) {
+                case \verfriemelt\wrapped\_\Database\Driver\Postgres::class:
+                    static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );
+                    static::$connection->query( 'create table "B" ( id serial primary key, a_id int );' );
+                    break;
+                case \verfriemelt\wrapped\_\Database\Driver\SQLite::class:
+                    static::$connection->query( 'create table "A" ( id integer primary key, b_id int );' );
+                    static::$connection->query( 'create table "B" ( id integer primary key, a_id int );' );
+                    break;
+            }
+
+
         }
 
         public function tearDown(): void {
@@ -99,10 +110,6 @@
             (new a() )->setBId( 1 )->save();
 
             b::get( 1 )->setAId( 1 )->save();
-        }
-
-        public function testInit() {
-            $this->buildObjects();
         }
 
         public function testNotPrepped() {

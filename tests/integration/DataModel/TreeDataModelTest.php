@@ -4,7 +4,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\TreeDataModel;
 
     class TreeDummy
@@ -40,11 +40,18 @@
         static $connection;
 
         public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', Postgres::class, "docker", "docker", "localhost", "docker", 5432 );
+            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
         }
 
         public function setUp(): void {
-            static::$connection->query( "set log_statement = 'all'" );
+
+
+            if ( static::$connection instanceof SQLite ) {
+                $this->markTestSkipped('sqlite not supported');
+                return;
+            }
+
+
             $this->tearDown();
             static::$connection->query( 'drop table if exists "TreeDummy";' );
             static::$connection->query( 'create table "TreeDummy" ( id serial primary key, name text, "left" int, "right" int, parent_id int, depth int );' );
@@ -89,7 +96,6 @@
             $child2->under( $parent );
             $child2->setName( '2nd child' );
             $child2->save();
-
 
             $parent->reload();
             $child->reload();
@@ -512,7 +518,6 @@
                 "d" => [],
             ] );
 
-
             $move = TreeDummy::findSingle( [ 'name' => 'd' ] );
 
             // at end
@@ -555,7 +560,6 @@
             $instance->setName( "i2" );
             $instance->after( TreeDummy::findSingle( [ 'name' => 'a' ] ) );
             $instance->save();
-
 
             $this->validateStruct( $struct = [
                 "a"  => [],

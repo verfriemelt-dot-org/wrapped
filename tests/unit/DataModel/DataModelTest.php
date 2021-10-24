@@ -23,7 +23,7 @@
 
     }
 
-    class FunctionDataModelAttributeTest
+    class DataModelTest
     extends TestCase {
 
         public function testDatabaseNames() {
