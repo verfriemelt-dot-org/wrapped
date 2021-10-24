@@ -1,6 +1,6 @@
 # ಠ_ಠ
 
 
-[![codepcetion](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/codeception.yml/badge.svg)](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/codeception.yml)
+[![linting](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/linting.yml/badge.svg)](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/linting.yml)
 
-[![phpstan](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/phpstan.yml/badge.svg)](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/phpstan.yml)
+[![phpunit](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/actions.yml/badge.svg)](https://github.com/verfriemelt-dot-org/wrapped/actions/workflows/actions.yml)
