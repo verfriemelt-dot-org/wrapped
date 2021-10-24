@@ -101,13 +101,7 @@
             return $this;
         }
 
-        /**
-         * set a variable to replace in the template
-         * @param type $name name of variable
-         * @param type $value value
-         * @return static
-         */
-        public function set( $name, $value ) {
+        public function set( string $name, mixed $value ): static {
             $this->vars[$name] = new Variable( $name, $value );
             return $this;
         }

@@ -214,7 +214,7 @@
             return new static( ... $copy );
         }
 
-        public function find( callable $function ): ?DataModel {
+        public function find( callable $function ): mixed {
 
             foreach ( $this as $element ) {
                 if ( $function( $element ) ) {

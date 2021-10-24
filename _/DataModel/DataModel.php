@@ -265,7 +265,7 @@
             }
 
             $query = static::buildSelectQuery();
-            $query->where([ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ]);
+            $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
             $query->limit( 1 );
 
             $this->initData( $query->fetch(), true );
@@ -273,12 +273,7 @@
             return $this;
         }
 
-        /**
-         *
-         * @param type $params an array like [ "id" => 1 ] or DbLogic instance
-         * @return static[]
-         */
-        public static function find( $params, $orderBy = null, $order = "asc" ): Collection {
+        public static function find( array | DbLogic $params, $orderBy = null, $order = "asc" ): Collection {
 
             if ( $params instanceof DbLogic ) {
                 $query = static::buildQueryFromDbLogic( $params );
@@ -449,7 +444,7 @@
             $pk = $this->createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() );
 
             if ( $pk === null ) {
-                throw new \RuntimeException('pk not set');
+                throw new \RuntimeException( 'pk not set' );
             }
 
             $this->{$pk->getName()} = $this->hydrateProperty( $pk, $query->fetch()[$pk->fetchBackendName()] );
@@ -524,7 +519,7 @@
 
         public function isDirty(): bool {
 
-            foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ){
+            foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ) {
                 if ( $this->_isPropertyFuzzy( $property->getName() ) ) {
                     return true;
                 }
