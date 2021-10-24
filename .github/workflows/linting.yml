@@ -1,7 +1,6 @@
 name: linting
 on: push
 jobs:
-  unit:
   phpstan:
     runs-on: ubuntu-latest
 
