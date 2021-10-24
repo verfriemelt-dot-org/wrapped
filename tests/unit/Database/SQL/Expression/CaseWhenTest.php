@@ -7,10 +7,6 @@
     class CaseWhenTest
     extends TestCase {
 
-        public function testInit() {
-            new CaseWhen();
-        }
-
         public function testEmpty() {
             $this->expectExceptionObject( new Exception( 'empty' ) );
             $when = new CaseWhen();

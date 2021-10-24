@@ -10,19 +10,6 @@
     class RouterTest
     extends \PHPUnit\Framework\TestCase {
 
-        public function testCanBeInstantiated() {
-            new Router( new Request() );
-        }
-
-        public function testAddingRoutes() {
-
-            $router = (new Router( new Request ) )->addRoutes(
-                Route::create( "/" )
-            );
-
-            $this->assertSame( 1, $router->count() );
-        }
-
         public function testRouterMatchingSingleRoute() {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
@@ -37,20 +24,6 @@
 
             $this->expectException( NoRoutesPresent::class );
             (new Router() )->handleRequest( new Request() );
-        }
-
-        public function testRouteFiltered() {
-
-            $this->expectException( RouteGotFiltered::class );
-
-            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
-            $router  = (new Router() )->addRoutes(
-                Route::create( "/test" )->addFilter( function () {
-                    return true;
-                } )
-            );
-
-            $router->handleRequest( $request );
         }
 
         public function testRouteGroup() {

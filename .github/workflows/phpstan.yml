@@ -10,12 +10,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-       
+
     - name: Install dependencies
       uses: php-actions/composer@v5
       with:
         php_version: 8.0
         version: 2
-        
+
     - name: run phpstan
-      run: php vendor/bin/phpstan.phar analyse --level 0 --error-format=github _
+      run: php vendor/bin/phpstan --error-format=github

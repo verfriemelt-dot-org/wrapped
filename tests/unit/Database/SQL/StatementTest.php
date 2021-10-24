@@ -13,10 +13,6 @@
     class StatementTest
     extends TestCase {
 
-        public function testInit() {
-            new Statement( new Select() );
-        }
-
         public function testMinimalSelect() {
             $statement = new Statement( (new Select() )->add( new Value( true ) ) );
             $this->assertSame( 'SELECT true', $statement->stringify() );

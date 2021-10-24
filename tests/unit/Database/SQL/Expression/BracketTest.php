@@ -7,10 +7,6 @@
     class BracketTest
     extends TestCase {
 
-        public function testInit() {
-            new Bracket;
-        }
-
         public function testWrapping() {
 
             $bracket = new Bracket;

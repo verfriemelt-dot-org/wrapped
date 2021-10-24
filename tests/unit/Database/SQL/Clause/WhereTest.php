@@ -7,10 +7,6 @@
     class WhereTest
     extends TestCase {
 
-        public function testInit() {
-            new Where( new Value( true ) );
-        }
-
         public function testSimple() {
 
             $where = new Where( new Value( true ) );

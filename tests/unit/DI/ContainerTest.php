@@ -19,10 +19,6 @@
     class ContainerTest
     extends TestCase {
 
-        public function testCanCreateNewContainer() {
-            new Container;
-        }
-
         public function testGetClass() {
 
             $container = new Container;

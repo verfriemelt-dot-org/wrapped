@@ -10,10 +10,6 @@
     class UpdateTest
     extends TestCase {
 
-        public function testInit() {
-            $update = new Update( new Identifier( 'table' ) );
-        }
-
         public function testEmptyStatement() {
             $update = new Update( new Identifier( 'table' ) );
 

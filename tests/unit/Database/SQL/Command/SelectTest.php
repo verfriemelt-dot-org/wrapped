@@ -9,10 +9,6 @@
     class SelectTest
     extends TestCase {
 
-        public function testInit() {
-            $select = new Select();
-        }
-
         public function testTrue() {
             $select = new Select();
             $select->add( new Value( true ) );

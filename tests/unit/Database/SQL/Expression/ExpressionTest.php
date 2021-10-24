@@ -7,10 +7,6 @@
     class ExpressionTest
     extends TestCase {
 
-        public function testInit() {
-            new Expression();
-        }
-
         public function testNesting() {
 
             $exp = new Expression();

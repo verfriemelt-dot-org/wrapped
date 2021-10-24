@@ -8,12 +8,6 @@
     class OperatorTest
     extends TestCase {
 
-        public function testInit() {
-
-            new Operator( '=' );
-            new OperatorExpression( 'in', (new Value( 1 ) ) );
-        }
-
         public function testSimpleOperator() {
 
             $op = new Operator( '=' );

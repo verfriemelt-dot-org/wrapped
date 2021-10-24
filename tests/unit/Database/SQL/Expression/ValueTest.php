@@ -7,10 +7,6 @@
     class ValueTest
     extends TestCase {
 
-        public function testInit() {
-            new Value( null );
-        }
-
         public function testWrapping() {
 
             $time = new DateTime;

@@ -10,10 +10,6 @@
     class ValuesTest
     extends TestCase {
 
-        public function testInit() {
-            $select = new Values( );
-        }
-
         public function testTrue() {
             $select = new Values();
             $select->add( new Value( true ) );

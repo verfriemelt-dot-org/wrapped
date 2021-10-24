@@ -7,10 +7,6 @@
     class InsertTest
     extends TestCase {
 
-        public function testInit() {
-            new Insert( new Identifier( 'table' ) );
-        }
-
         public function testOne() {
             $insert = new Insert( new Identifier( 'table' ) );
             $insert->add( new Identifier( 'column_b' ) );
