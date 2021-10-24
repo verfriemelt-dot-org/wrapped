@@ -447,11 +447,12 @@
 
             // store autoincrement
             $pk = $this->createDataModelAnalyser()->fetchPropertyByName( static::getPrimaryKey() );
+
+            if ( $pk === null ) {
+                throw new \RuntimeException('pk not set');
+            }
+
             $this->{$pk->getName()} = $this->hydrateProperty( $pk, $query->fetch()[$pk->fetchBackendName()] );
-
-
-
-
             $this->_storePropertyStates();
 
             return $this;

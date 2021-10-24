@@ -9,7 +9,7 @@
 
         const PDO_NAME = 'sqlite::memory:';
 
-        protected function getConnectionString() {
+        protected function getConnectionString(): string {
             return self::PDO_NAME;
         }
 
