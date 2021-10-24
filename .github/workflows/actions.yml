@@ -33,7 +33,7 @@ jobs:
     - name: run tests
       run: php vendor/bin/phpunit
 
-  functional-postgresql:
+  int-psql:
     runs-on: ubuntu-latest
 
     services:
@@ -67,7 +67,7 @@ jobs:
       env:
         database_driver: postgresql
 
-  functional-sqlite:
+  int-sqlite:
     runs-on: ubuntu-latest
 
     steps:
@@ -85,3 +85,4 @@ jobs:
       run: php vendor/bin/phpunit --testsuite functional
       env:
         database_driver: sqlite
+

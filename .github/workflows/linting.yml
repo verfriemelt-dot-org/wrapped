@@ -1,9 +1,8 @@
-name: phpstan
-
-
+name: linting
 on: push
 jobs:
-  check:
+  unit:
+  phpstan:
     runs-on: ubuntu-latest
 
     steps:
