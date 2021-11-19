@@ -33,8 +33,8 @@
 
         /**
          *
-         * @param type $name
-         * @param type $value
+         * @param string $name
+         * @param mixed $value
          * @return \verfriemelt\wrapped\_\Template\Repeater
          */
         public function set( $name, $value ) {
