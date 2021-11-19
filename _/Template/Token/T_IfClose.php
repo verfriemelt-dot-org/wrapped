@@ -7,7 +7,7 @@
     class T_IfClose
     extends Token {
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_IfClose';
         }
 

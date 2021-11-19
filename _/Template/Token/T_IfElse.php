@@ -7,7 +7,7 @@
     class T_IfElse
     extends Token {
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_IfElse';
         }
 

@@ -9,9 +9,9 @@
 
         public $formatCallback;
 
-        public $escape = true;
+        public bool $escape = true;
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_Variable';
         }
 

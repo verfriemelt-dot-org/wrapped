@@ -7,12 +7,7 @@
     class T_String
     extends Token {
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_String';
         }
-
-        public function matches( $void ) {
-            return true;
-        }
-
     }

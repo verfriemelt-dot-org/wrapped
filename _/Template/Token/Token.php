@@ -6,95 +6,65 @@
 
     abstract class Token {
 
-        public $currentContent = '';
+        public string $currentContent = '';
 
-        public $currentLength = 0;
+        public int $currentLength = 0;
 
-        public $priority = 10;
+        public int $priority = 10;
 
-        public $maxLength = 0;
+        public int $maxLength = 0;
 
-        /** @var Token */
-        public $nextToken = null;
+        public ?Token $nextToken = null;
 
-        public $prevToken = null;
+        public ?Token $prevToken = null;
 
-        private $line;
+        private int $line;
 
-        private $linePos;
+        private int $linePos;
 
-        private $pos;
+        private int $pos;
 
-        abstract public function getTokenName();
+        abstract public function getTokenName(): string;
 
-        /**
-         *
-         * @param Token $prev
-         * @return $this
-         */
-        public function setPrevToken( Token $prev ) {
+        public function setPrevToken( Token $prev ): static {
             $this->prevToken            = $prev;
             $this->prevToken->nextToken = $this;
             return $this;
         }
 
-        /**
-         *
-         * @param Token $next
-         * @return $this
-         */
-        public function setNextToken( Token $next = null ) {
+        public function setNextToken( Token $next = null ): static {
             $this->nextToken            = $next;
             $this->nextToken->prevToken = $this;
             return $this;
         }
 
-        /**
-         *
-         * @return string
-         */
         public function getContent(): string {
             return $this->currentContent;
         }
 
-        public function getLine() {
+        public function getLine(): int {
             return $this->line;
         }
 
-        public function getLinePos() {
+        public function getLinePos(): int {
             return $this->linePos;
         }
 
-        public function getPos() {
+        public function getPos(): int {
             return $this->pos;
         }
 
-        /**
-         *
-         * @param type $line
-         * @return $this
-         */
-        public function setLine( $line ) {
+        public function setLine( int $line ): static {
             $this->line = $line;
             return $this;
         }
 
-        /**
-         *
-         * @param type $linePos
-         * @return $this
-         */
-        public function setLinePos( $linePos ) {
+        public function setLinePos( int $linePos ):static {
             $this->linePos = $linePos;
             return $this;
         }
 
-        /**
-         *
-         * @param type $pos
-         * @return $this
-         */
-        public function setPos( $pos ) {
+        public function setPos( int $pos ):static {
             $this->pos = $pos;
             return $this;
         }

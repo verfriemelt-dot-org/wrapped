@@ -7,9 +7,9 @@
     class T_IfOpen
     extends Token {
 
-        public $negated = false;
+        public bool $negated = false;
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_IfOpen';
         }
 

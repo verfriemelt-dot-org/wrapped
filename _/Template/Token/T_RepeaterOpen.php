@@ -7,7 +7,7 @@
     class T_RepeaterOpen
     extends Token {
 
-        public function getTokenName() {
+        public function getTokenName(): string {
             return 'T_RepeaterOpen';
         }
 
