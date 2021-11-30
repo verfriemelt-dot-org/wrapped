@@ -301,32 +301,30 @@
          */
         public function translateDbLogic( DbLogic $logic ): static {
 
-            if ( $logic->getLimit() ) {
+            if ( null !== $logic->getLimit() ) {
                 $this->limit = $logic->getLimit();
                 $this->stmt->add( $this->limit );
             }
 
-            if ( $logic->getOffset() ) {
+            if ( null !==$logic->getOffset() ) {
                 $this->offset = $logic->getOffset();
                 $this->stmt->add( $this->offset );
             }
 
-            if ( $logic->getWhere() ) {
-                $this->where = $logic->getWhere();
-                $this->stmt->add( $this->where );
-            }
+            $this->where = $logic->getWhere();
+            $this->stmt->add( $this->where );
 
-            if ( $logic->getOrder() ) {
+            if ( null !== $logic->getOrder() ) {
                 $this->order = $logic->getOrder();
                 $this->stmt->add( $this->order );
             }
 
-            if ( $logic->getGroupBy() ) {
+            if ( null !==$logic->getGroupBy() ) {
                 $this->groupBy = $logic->getGroupBy();
                 $this->stmt->add( $this->groupBy );
             }
 
-            if ( $logic->getHaving() ) {
+            if ( null !==$logic->getHaving() ) {
                 $this->having = $logic->getHaving();
                 $this->stmt->add( $this->having );
             }

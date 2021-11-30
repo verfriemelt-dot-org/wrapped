@@ -36,12 +36,8 @@
 
         private string $tableName;
 
-        /**
-         *
-         * @return \static
-         */
-        public static function create() {
-            return new static();
+        public static function create(): self {
+            return new self();
         }
 
         public function __construct( $raw = null ) {
@@ -62,7 +58,7 @@
             throw new Exception( 'merging not supported' );
         }
 
-        public function where( $column, $op = null, $value = null, $bindToTable = null ) {
+        public function where( $column, $op = null, $value = null, $bindToTable = null ): self {
 
             $this->expression->add( new Identifier( ... [ $bindToTable, $column ] ) );
 
@@ -82,116 +78,81 @@
             return $this;
         }
 
-        public function isNull() {
+        public function isNull(): self {
             $this->expression->add( new Operator( 'is null' ) );
 
             return $this;
         }
 
-        public function isNotNull() {
+        public function isNotNull() : self{
             $this->expression->add( new Operator( 'is not null' ) );
 
             return $this;
         }
 
-        public function isTrue() {
+        public function isTrue(): self {
             $this->expression->add( new Operator( 'is true' ) );
 
             return $this;
         }
 
-        public function isFalse() {
+        public function isFalse(): self {
             $this->expression->add( new Operator( 'is false' ) );
 
             return $this;
         }
 
-        public function isIn( array $param ) {
+        public function isIn( array $param ): self {
             $this->expression->add( new OperatorExpression( "in", ... array_map( fn( $p ) => new Value( $p ), $param ) ) );
 
             return $this;
         }
 
-        public function isNotIn( array $param ) {
+        public function isNotIn( array $param ): self {
             $this->expression->add( new OperatorExpression( "not in", ... $param ) );
 
             return $this;
         }
 
-        /**
-         *
-         * @param type $column
-         * @return DbLogic
-         */
-        public function column( $column ) {
+        public function column( string $column ): self {
             $this->expression->add( new Identifier( $column ) );
             return $this;
         }
 
-        /**
-         *
-         * @param type $operator
-         * @return DbLogic
-         */
-        public function op( $operator ) {
+
+        public function op( string $operator ): self {
             $this->expression->add( new Operator( $operator ) );
             return $this;
         }
 
-        /**
-         *
-         * @param type $value
-         * @return DbLogic
-         */
-        public function value( $value ) {
+        public function value( mixed $value ): self {
             $this->expression->add( new Value( $value ) );
             return $this;
         }
 
-        /**
-         *
-         * @return DbLogic
-         */
-        public function openBracket() {
+        public function openBracket(): self {
             throw new \Exception( 'not supported' );
-            $this->expression->add( new Bracket( "(" ) );
-            return $this;
+//            $this->expression->add( new Bracket( "(" ) );
+//            return $this;
         }
 
-        /**
-         *
-         * @return DbLogic
-         */
-        public function closeBracket() {
+        public function closeBracket(): self {
             throw new \Exception( 'not supported' );
-            $this->expression->add( new Bracket( ")" ) );
-            return $this;
+//            $this->expression->add( new Bracket( ")" ) );
+//            return $this;
         }
 
-        /**
-         *
-         * @return DbLogic
-         */
-        public function addOr() {
+        public function addOr(): self {
             $this->expression->add( new Conjunction( "or" ) );
             return $this;
         }
 
-        /**
-         *
-         * @return DbLogic
-         */
-        public function addAnd() {
+        public function addAnd(): self {
             $this->expression->add( new Conjunction( "and" ) );
             return $this;
         }
 
-        /**
-         *
-         * @param type $raw
-         * @return DbLogic
-         */
-        public function raw( $raw ) {
+        public function raw( string $raw ): self {
             throw new \Exception( 'not supported' );
             $this->expression->add( new Raw( $raw ) );
             return $this;
@@ -221,43 +182,31 @@
             return $out;
         }
 
-        public function limit( $limit ) {
+        public function limit( string|int $limit ): self {
 
             $this->limit = new Limit( new Value( $limit ) );
             return $this;
         }
 
-        public function offset( $offset ) {
+        public function offset( string|int $offset ): self {
             $this->offset = new Offset( new Value( $offset ) );
             return $this;
         }
 
-        /**
-         *
-         * @param type $by
-         * @param type $type
-         * @return static
-         */
-        public function groupBy( ... $by ) {
+        public function groupBy( string ... $by ): self {
 
             $this->groupBy = new GroupBy( new Identifier( ... $by ) );
 
             return $this;
         }
 
-        public function having( Having $having ) {
+        public function having( Having $having ): self {
 
             $this->having = $having;
             return $this;
         }
 
-        /**
-         *
-         * @param type $by
-         * @param type $type
-         * @return static
-         */
-        public function order( $column, $direction = "ASC", $overrideTable = null, $skipQuote = false ) {
+        public function order( string $column, string $direction = "ASC", string $overrideTable = null, bool $skipQuote = false ): self {
 
             if ( !$this->order ) {
                 $this->order = new Order();
@@ -275,27 +224,27 @@
             return $this->order;
         }
 
-        public function getLimit() {
+        public function getLimit(): ?Limit {
             return $this->limit;
         }
 
-        public function getWhere() {
+        public function getWhere(): Where {
             return new Where( $this->expression );
         }
 
-        public function getExpression() {
+        public function getExpression(): Expression {
             return $this->expression;
         }
 
-        public function getGroupBy() {
+        public function getGroupBy(): ?GroupBy {
             return $this->groupBy;
         }
 
-        public function getOffset() {
+        public function getOffset(): ?Offset {
             return $this->offset;
         }
 
-        public function getHaving() {
+        public function getHaving(): ?Having {
             return $this->having;
         }
 
@@ -308,7 +257,7 @@
                 $this->expression->fetchLast() === null || $this->expression->fetchLast() instanceof Conjunction;
         }
 
-        public function isEmpty() {
+        public function isEmpty(): bool {
             return $this->expression->fetchLast() === null;
         }
 
@@ -316,7 +265,7 @@
             throw new Exception( 'molly the sheep says no' );
         }
 
-        public function fetchBindings() {
+        public function fetchBindings(): array {
             return array_merge(
                 $this->expression->fetchBindings(),
                 $this->limit?->fetchBindings() ?: [],
