@@ -273,7 +273,7 @@
             return $this;
         }
 
-        public static function find( array | DbLogic $params, $orderBy = null, $order = "asc" ): Collection {
+        public static function find( array | DbLogic $params, string $orderBy = null, string $order = "asc" ): Collection {
 
             if ( $params instanceof DbLogic ) {
                 $query = static::buildQueryFromDbLogic( $params );
@@ -290,14 +290,7 @@
             return Collection::buildFromQuery( new static, $query );
         }
 
-        /**
-         *
-         * @param type $params
-         * @param type $orderBy
-         * @param type $order
-         * @return static|null
-         */
-        public static function findSingle( $params = [], $orderBy = null, $order = "asc" ): ?static {
+        public static function findSingle( array|Dblogic $params = [], string $orderBy = null, string $order = "asc" ): ?static {
 
             if ( $params instanceof DbLogic ) {
                 $query = static::buildQueryFromDbLogic( $params );
