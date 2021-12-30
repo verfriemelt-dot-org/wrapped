@@ -210,20 +210,11 @@
             return $this->lastStatement;
         }
 
-        /**
-         * executes last prepared statement
-         * @return bool
-         */
-        public function executeLast() {
+        public function executeLast(): bool {
             return $this->execute( $this->lastStatement );
         }
 
-        /**
-         * prepares statement
-         * @param type $statement
-         * @return Mysql
-         */
-        public function prepare( $statement ) {
+        public function prepare( string $statement ): static {
 
             if ( self::$debug ) {
                 self::$debugLastParams    = [];
@@ -317,12 +308,7 @@
             return $tableNames;
         }
 
-        /**
-         * executes raw querie
-         * @param type $sql
-         * @return PDOStatement
-         */
-        public function query( $sql ) {
+        public function query( string $sql ): PDOStatement {
             $this->prepare( $sql );
             $this->executeLast();
             return $this->lastStatement;
@@ -332,12 +318,7 @@
             $this->connectionHandle->query( $sql );
         }
 
-        /**
-         * executes raw querie
-         * @param type $sql
-         * @return PDOStatement
-         */
-        public function queryWithDbLogic( $sql, DbLogic $dbLogic, $precompiled = false ) {
+        public function queryWithDbLogic( string $sql, DbLogic $dbLogic, $precompiled = false ): PDOStatement {
 
             // uh is this hacky
             if ( !$precompiled ) {

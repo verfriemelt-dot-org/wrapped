@@ -69,7 +69,7 @@
          * this functions prepares the template, so that we can move the heavy
          * lifting out of the constructor
          */
-        abstract protected function prepare();
+        abstract protected function prepare(): void;
 
         public function getContents() {
             $this->prepare();

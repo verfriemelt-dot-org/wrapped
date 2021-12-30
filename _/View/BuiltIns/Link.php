@@ -26,7 +26,7 @@
             $this->destination = $destination;
         }
 
-        protected function prepare() {
+        protected function prepare(): void {
 
             $this->tpl->set( 'name', $this->name );
             $this->tpl->set( 'destination', $this->destination );
