@@ -11,6 +11,10 @@ parameters:
 
   paths:
     - _
+    - tests
+
+  excludePaths:
+    - tests/integration/*
 
   checkMissingIterableValueType: false
   reportUnmatchedIgnoredErrors: false

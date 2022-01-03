@@ -7,7 +7,7 @@
     class ValueTest
     extends TestCase {
 
-        public function testWrapping() {
+        public function testWrapping(): void {
 
             $time = new DateTime;
 
@@ -25,7 +25,7 @@
             ];
 
             foreach ( $tests as $exp => $input ) {
-                $this->assertSame( (string) $exp, (new Value( $input ) )->stringify() );
+                static::assertSame( (string) $exp, (new Value( $input ) )->stringify() );
             }
         }
 

@@ -16,41 +16,28 @@
 
     class TemplateLexer {
 
-        private $input = "";
+        private string $input = "";
 
-        private $inputLength = 0;
+        private int $inputLength = 0;
 
-        /**
-         *
-         * @var \verfriemelt\wrapped\_\Template\Token
-         */
-        private $tokenChain;
+        private Token $tokenChain;
 
-        /**
-         *
-         * @var \verfriemelt\wrapped\_\Template\Token
-         */
-        private $currentToken;
+        private Token $currentToken;
 
-        private $currentPos = 0;
+        private int $currentPos = 0;
 
-        private $currentState = 1;
+        private int $currentState = 1;
 
         // 0 = finished
         // 1 = Open CurlySuchen
         // 2 = CurlyOpenFound -> IF, ELSE, Repeater, Variable -> Closing
 
-        public function setTokenChain( Token $chain ) {
+        public function setTokenChain( Token $chain ): static {
             $this->tokenChain = $chain;
             return $this;
         }
 
-        /**
-         *
-         * @param type $input
-         * @return TemplateLexer
-         */
-        public function lex( $input ) {
+        public function lex( string $input ): static {
             $this->input       = $input;
             $this->inputLength = strlen( $this->input );
 
@@ -63,12 +50,12 @@
             return $this;
         }
 
-        public function workon() {
+        public function workon(): static {
 
             while ( $this->currentPos < $this->inputLength ) {
                 switch ( $this->currentState ) {
                     case 0 :
-                        return true;
+                        break;
                     case 1 : $this->findOpenCurly();
                         break;
                     case 2 : $this->findCurlyContent();
@@ -79,7 +66,7 @@
             return $this;
         }
 
-        private function findCurlyContent() {
+        private function findCurlyContent(): void {
 
             $closingCurlyPos = strpos( $this->input, "}}", $this->currentPos );
 
@@ -94,7 +81,7 @@
             if ( empty( trim( $contentBetweenCurlyBraces ) ) ) {
                 $this->currentState = 1;
                 $this->currentPos   = $closingCurlyPos + 2;
-                return false;
+                return;
             }
 
             if ( preg_match( "~^ ?(?<negate>!)?(?<close>/)?(?<type>if|else)=['\"](?<name>[a-zA-Z0-9-_]+)['\"] ?$~", $contentBetweenCurlyBraces, $pregHit ) ) {
@@ -137,7 +124,7 @@
             return;
         }
 
-        private function findOpenCurly() {
+        private function findOpenCurly(): void {
 
             $pos = strpos( $this->input, "{{", $this->currentPos );
 
@@ -161,9 +148,9 @@
             $this->appendToChain( $token );
         }
 
-        private function appendToChain( \verfriemelt\wrapped\_\Template\Token\Token $token ) {
+        private function appendToChain( Token $token ): void {
 
-            if ( $this->tokenChain === null ) {
+            if ( !isset( $this->tokenChain ) ) {
                 $this->tokenChain = $token;
             } else {
                 $this->currentToken->nextToken = $token;
@@ -172,7 +159,7 @@
             $this->currentToken = $token;
         }
 
-        public function printChainInline( $currentToken = null ) {
+        public function printChainInline( Token $currentToken = null ): void {
 
             $currentToken = $currentToken ?: $this->tokenChain;
 
@@ -183,7 +170,7 @@
             }
         }
 
-        public function printChain( $currentToken = null ) {
+        public function printChain( Token $currentToken = null ): void {
 
             $currentToken = $currentToken ?: $this->tokenChain;
 
@@ -194,11 +181,7 @@
             }
         }
 
-        /**
-         *
-         * @return Token
-         */
-        public function getChain() {
+        public function getChain(): Token {
             return $this->tokenChain;
         }
 

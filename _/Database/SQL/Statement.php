@@ -4,8 +4,12 @@
 
     namespace verfriemelt\wrapped\_\Database\SQL;
 
+    use \RuntimeException;
     use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\ForUpdate;
+    use \verfriemelt\wrapped\_\Database\SQL\Clause\Union;
     use \verfriemelt\wrapped\_\Database\SQL\Command\Command;
+    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 
     class Statement
@@ -42,8 +46,13 @@
 
         public function add( QueryPart $clause ) {
 
-            if ( $clause instanceof Clause\Union ) {
+            if ( $clause instanceof Union ) {
                 $this->sortingDisabled = true;
+            }
+
+            if ( $clause instanceof ForUpdate && !($this->command instanceof Select) ) {
+                $instance = ($this->command)::class;
+                throw new RuntimeException( "FOR UPDATE clause requires a SELECT statement, {$instance} given"  );
             }
 
             $this->addChild( $clause );

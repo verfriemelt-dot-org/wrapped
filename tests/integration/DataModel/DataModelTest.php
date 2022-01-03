@@ -68,7 +68,7 @@
 
             $obj = $this->saveInstance();
 
-            $this->assertSame( 1, $obj->getId() );
+            static::assertSame( 1, $obj->getId() );
         }
 
         public function testObjectGet() {
@@ -76,7 +76,7 @@
             $this->saveInstance();
             $newObj = Dummy::get( 1 );
 
-            $this->assertSame( 'test', $newObj->getName() );
+            static::assertSame( 'test', $newObj->getName() );
         }
 
         public function testObjectFetch() {
@@ -87,7 +87,7 @@
 
             $newObj = Dummy::findSingle( [ 'id' => 1, 'name' => 'test1' ] );
 
-            $this->assertSame( 'test1', $newObj->getName() );
+            static::assertSame( 'test1', $newObj->getName() );
         }
 
         public function testObjectFetchWithArray() {
@@ -98,7 +98,7 @@
 
             $newObj = Dummy::findSingle( [ 'id' => [ 1, 2, 3 ], 'name' => 'test2' ] );
 
-            $this->assertSame( 'test2', $newObj->getName() );
+            static::assertSame( 'test2', $newObj->getName() );
         }
 
         public function testObjectFetchSorted() {
@@ -107,8 +107,8 @@
             $this->saveInstance( 'test' );
             $this->saveInstance( 'test' );
 
-            $this->assertSame( 3, Dummy::findSingle( [ 'name' => 'test' ], 'id', 'desc' )->getId() );
-            $this->assertSame( 1, Dummy::findSingle( [ 'name' => 'test' ], 'id' )->getId() );
+            static::assertSame( 3, Dummy::findSingle( [ 'name' => 'test' ], 'id', 'desc' )->getId() );
+            static::assertSame( 1, Dummy::findSingle( [ 'name' => 'test' ], 'id' )->getId() );
         }
 
         public function testObjectUpdate() {
@@ -119,8 +119,8 @@
 
             $newObj = Dummy::get( 1 )->setName( 'updated' )->save();
 
-            $this->assertSame( 'test', Dummy::get( 2 )->getName(), 'should not update other objects' );
-            $this->assertSame( 'updated', Dummy::get( 1 )->getName(), 'should have updated itself' );
+            static::assertSame( 'test', Dummy::get( 2 )->getName(), 'should not update other objects' );
+            static::assertSame( 'updated', Dummy::get( 1 )->getName(), 'should have updated itself' );
         }
 
         public function testObjectDelete() {
@@ -131,7 +131,7 @@
 
             Dummy::get( 1 )->delete();
 
-            $this->assertSame( 2, Dummy::count( 'id' ), 'only two should remain' );
+            static::assertSame( 2, Dummy::count( 'id' ), 'only two should remain' );
         }
 
         public function testObjectReload() {
@@ -144,7 +144,7 @@
 
             $obj->reload();
 
-            $this->assertSame( 'epic', $obj->getName() );
+            static::assertSame( 'epic', $obj->getName() );
         }
 
         public function testObjectAll() {
@@ -153,7 +153,7 @@
             $this->saveInstance( 'test' );
             $this->saveInstance( 'test' );
 
-            $this->assertSame( 3, count( Dummy::all() ) );
+            static::assertSame( 3, count( Dummy::all() ) );
         }
 
     }

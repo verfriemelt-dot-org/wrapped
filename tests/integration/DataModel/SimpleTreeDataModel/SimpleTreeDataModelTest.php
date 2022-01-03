@@ -67,8 +67,8 @@
             $obj2->under( $obj1 );
             $obj2->save();
 
-            $this->assertSame( $obj1->getId(), $obj2->getParentId() );
-            $this->assertSame( $obj1->getId(), $obj2->fetchParent()->getId() );
+            static::assertSame( $obj1->getId(), $obj2->getParentId() );
+            static::assertSame( $obj1->getId(), $obj2->fetchParent()->getId() );
         }
 
         public function testChildren() {
@@ -88,12 +88,12 @@
             $obj4->under( $obj3 );
             $obj4->save();
 
-            $this->assertSame( 2, $obj1->fetchDirectChildren()->count() );
-            $this->assertSame( 3, $obj1->fetchChildren()->count() );
+            static::assertSame( 2, $obj1->fetchDirectChildren()->count() );
+            static::assertSame( 3, $obj1->fetchChildren()->count() );
 
-            $this->assertSame( 3, $obj1->fetchChildCount() );
-            $this->assertSame( 0, $obj2->fetchChildCount() );
-            $this->assertSame( 1, $obj3->fetchChildCount() );
+            static::assertSame( 3, $obj1->fetchChildCount() );
+            static::assertSame( 0, $obj2->fetchChildCount() );
+            static::assertSame( 1, $obj3->fetchChildCount() );
         }
 
         public function testFetchParent() {
@@ -113,9 +113,9 @@
             $obj4->under( $obj3 );
             $obj4->save();
 
-            $this->assertSame( $obj3->getId(), $obj4->fetchParent()->getId() );
-            $this->assertSame( $obj1->getId(), $obj4->fetchParent()->fetchParent()->getId() );
-            $this->assertNull( $obj4->fetchParent()->fetchParent()->fetchParent() );
+            static::assertSame( $obj3->getId(), $obj4->fetchParent()->getId() );
+            static::assertSame( $obj1->getId(), $obj4->fetchParent()->fetchParent()->getId() );
+            static::assertNull( $obj4->fetchParent()->fetchParent()->fetchParent() );
         }
 
     }

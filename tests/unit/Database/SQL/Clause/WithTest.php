@@ -10,19 +10,19 @@
     class WithTest
     extends TestCase {
 
-        public function testMinimal() {
+        public function testMinimal(): void {
 
             $cte = new CTE;
             $cte->with( new Identifier( 'test' ), new Statement( new Select( new Value( true ) ) ) );
-            $this->assertSame( 'WITH test AS ( SELECT true )', $cte->stringify() );
+            static::assertSame( 'WITH test AS ( SELECT true )', $cte->stringify() );
         }
 
-        public function testMultiple() {
+        public function testMultiple(): void {
 
             $cte = new CTE;
             $cte->with( new Identifier( 'test' ), new Statement( new Select( new Value( true ) ) ) );
             $cte->with( new Identifier( 'test2' ), new Statement( new Select( new Value( null ) ) ) );
-            $this->assertSame( 'WITH test AS ( SELECT true ), test2 AS ( SELECT NULL )', $cte->stringify() );
+            static::assertSame( 'WITH test AS ( SELECT true ), test2 AS ( SELECT NULL )', $cte->stringify() );
         }
 
     }

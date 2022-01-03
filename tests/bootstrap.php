@@ -2,6 +2,7 @@
 
     use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Database\Database;
+    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
     use \verfriemelt\wrapped\_\Database\Driver\Postgres;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\Http\ParameterBag;
@@ -20,6 +21,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
         case 'sqlite':
             Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
             break;
+
         case 'postgresql':
             Database::createNewConnection(
                 'default',
@@ -39,7 +41,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     abstract class DatabaseTestCase
     extends TestCase {
 
-        static $connection;
+        static DatabaseDriver $connection;
 
         public static function setUpBeforeClass(): void {
             static::$connection = Database::getConnection();

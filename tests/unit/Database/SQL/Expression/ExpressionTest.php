@@ -7,7 +7,7 @@
     class ExpressionTest
     extends TestCase {
 
-        public function testNesting() {
+        public function testNesting(): void {
 
             $exp = new Expression();
             $exp->add(
@@ -15,11 +15,10 @@
                     ->add( new Value( true ) )
             );
 
-
-            $this->assertSame( 'true', $exp->stringify() );
+            static::assertSame( 'true', $exp->stringify() );
         }
 
-        public function testEmpty() {
+        public function testEmpty(): void {
 
             $exp = new Expression();
 

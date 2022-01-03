@@ -13,7 +13,7 @@
             return $this->id;
         }
 
-        public function setId( int $offset ) {
+        public function setId( int $offset ): static {
             $this->id = $offset;
             return $this;
         }
@@ -27,23 +27,23 @@
             parent::setUp();
         }
 
-        public function testCollectionInit() {
+        public function testCollectionInit(): void {
             $collection = new Collection( );
-            $this->assertSame( 0, $collection->count() );
-            $this->assertTrue( $collection->isEmpty() );
+            static::assertSame( 0, $collection->count() );
+            static::assertTrue( $collection->isEmpty() );
         }
 
-        public function testCollectionLength() {
+        public function testCollectionLength(): void {
 
             $collection = new Collection( ... [
                 new CollectionDummy,
                 new CollectionDummy
                 ] );
 
-            $this->assertSame( 2, $collection->count() );
+            static::assertSame( 2, $collection->count() );
         }
 
-        public function testCallback() {
+        public function testCallback(): void {
 
             $callback = function ( $offset ): DataModel {
 
@@ -58,19 +58,19 @@
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
 
-            $this->assertSame( 10, $collection->count() );
+            static::assertSame( 10, $collection->count() );
 
             $counter = 0;
 
             foreach ( $collection as $instance ) {
-                $this->assertTrue( $instance instanceof CollectionDummy );
+                static::assertTrue( $instance instanceof CollectionDummy );
                 $counter++;
             }
 
-            $this->assertSame( 10, $counter );
+            static::assertSame( 10, $counter );
         }
 
-        public function testMap() {
+        public function testMap(): void {
 
             $callback = function ( $offset ): DataModel {
 
@@ -85,15 +85,15 @@
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
 
-            $this->assertSame( 10, $collection->count() );
+            static::assertSame( 10, $collection->count() );
 
             $result = $collection->map( fn( CollectionDummy $d ) => $d->getId() );
 
             // iterate all
-            $this->assertSame( 10, count( $result ) );
+            static::assertSame( 10, count( $result ) );
         }
 
-        public function testArrayAccess() {
+        public function testArrayAccess(): void {
 
             $callback = function ( $offset ): DataModel {
                 return (new CollectionDummy() )->setId( $offset + 1 );
@@ -105,34 +105,34 @@
             $collection->setLoadingCallback( $callback );
 
             // 5th element in array should have id of 5
-            $this->assertSame( 5, $collection[4]->getId() );
+            static::assertSame( 5, $collection[4]->getId() );
 
-            $this->expectExceptionObject( new \Exception( 'illegal offset' ) );
+            $this->expectExceptionObject( new Exception( 'illegal offset' ) );
+
+            /** @phpstan-ignore-next-line */
             $collection[11];
         }
 
-        public function testStartEndGetter() {
+        public function testStartEndGetter(): void {
 
             $collection = new Collection( );
 
-            $this->assertNull( $collection->last() );
-            $this->assertNull( $collection->first() );
-
+            static::assertNull( $collection->last() );
+            static::assertNull( $collection->first() );
 
             $callback = function ( $offset ): DataModel {
                 return (new CollectionDummy() )->setId( $offset + 1 );
             };
 
-
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
 
             // last element
-            $this->assertSame( 10, $collection->last()->getId() );
-            $this->assertSame( 1, $collection->first()->getId() );
+            static::assertSame( 10, $collection->last()?->getId() );
+            static::assertSame( 1, $collection->first()?->getId() );
         }
 
-        public function testSeek() {
+        public function testSeek(): void {
             $callback = function ( $offset ): DataModel {
                 return (new CollectionDummy() )->setId( $offset + 1 );
             };
@@ -143,13 +143,13 @@
 
             $collection->seek( 4 );
             // 5th element in array should have id of 5
-            $this->assertSame( 5, $collection->current()->getId() );
+            static::assertSame( 5, $collection->current()->getId() );
 
-            $this->expectExceptionObject( new \OutOfBoundsException() );
+            $this->expectExceptionObject( new OutOfBoundsException() );
             $collection->seek( 11 );
         }
 
-        public function testIllegalOffget() {
+        public function testIllegalOffget(): void {
 
             $callback = function ( $offset ): DataModel {
                 return (new CollectionDummy() )->setId( $offset + 1 );
@@ -159,24 +159,26 @@
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
 
-            $this->expectExceptionObject( new \Exception( 'illegal offset' ) );
+            $this->expectExceptionObject( new Exception( 'illegal offset' ) );
+
             // trigger exception
+            /** @phpstan-ignore-next-line */
             $collection[-1];
         }
 
-        public function testIllegalOffset() {
+        public function testIllegalOffset(): void {
 
             $collection = new Collection;
 
-            $this->expectExceptionObject( new \Exception( 'write only' ) );
+            $this->expectExceptionObject( new Exception( 'write only' ) );
             $collection[1] = new CollectionDummy;
         }
 
-        public function testIllegalOffunset() {
+        public function testIllegalOffunset(): void {
 
             $collection = new Collection;
 
-            $this->expectExceptionObject( new \Exception( 'write only' ) );
+            $this->expectExceptionObject( new Exception( 'write only' ) );
             unset( $collection[1] );
         }
 

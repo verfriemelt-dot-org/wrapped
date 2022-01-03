@@ -63,7 +63,7 @@ jobs:
         version: 2
 
     - name: run tests
-      run: php vendor/bin/phpunit --testsuite functional
+      run: php vendor/bin/phpunit tests/integration
       env:
         database_driver: postgresql
 
@@ -82,7 +82,7 @@ jobs:
         version: 2
 
     - name: run tests
-      run: php vendor/bin/phpunit --testsuite functional
+      run: php vendor/bin/phpunit tests/integration
       env:
         database_driver: sqlite
 

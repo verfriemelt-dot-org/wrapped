@@ -25,7 +25,7 @@
             return 15;
         }
 
-        public function add( ExpressionItem $item ) {
+        public function add( QueryPart $item ) {
 
             // wrap in brackets if need be
             $exp = $this->wrap( $item );

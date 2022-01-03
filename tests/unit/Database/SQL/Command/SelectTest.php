@@ -9,14 +9,14 @@
     class SelectTest
     extends TestCase {
 
-        public function testTrue() {
+        public function testTrue(): void {
             $select = new Select();
             $select->add( new Value( true ) );
 
-            $this->assertSame( 'SELECT true', $select->stringify() );
+            static::assertSame( 'SELECT true', $select->stringify() );
         }
 
-        public function testOnePlusOne() {
+        public function testOnePlusOne(): void {
             $select = new Select();
             $select->add(
                 (new Expression() )
@@ -25,7 +25,7 @@
                     ->add( (new Value( 3 ) ) )
             );
 
-            $this->assertSame( 'SELECT 1 + 3', $select->stringify() );
+            static::assertSame( 'SELECT 1 + 3', $select->stringify() );
         }
 
     }

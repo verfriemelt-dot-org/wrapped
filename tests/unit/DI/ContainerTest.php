@@ -19,36 +19,37 @@
     class ContainerTest
     extends TestCase {
 
-        public function testGetClass() {
+        public function testGetClass(): void {
 
             $container = new Container;
-            $instance  = $container->get( a::class );
-
-            $this->assertInstanceOf( a::class, $instance );
-            $this->assertInstanceOf( b::class, $instance->b );
+            static::assertInstanceOf( a::class, $container->get( a::class ) );
         }
 
-        public function testShouldReuseInstancesPerDefault() {
+        public function testShouldReuseInstancesPerDefault(): void {
 
             $container = new Container();
 
             $b = new b( 'number 2' );
             $container->register( $b::class, $b );
 
-            $this->assertSame( $container->get( a::class )->b->instance, $b->instance, 'instance must be reused' );
+            $result = $container->get( a::class );
+            static::assertInstanceOf( a::class, $result );
+            static::assertSame( $result->b->instance, $b->instance, 'instance must be reused' );
         }
 
-        public function testDoNotReuseOnWhenConfigured() {
+        public function testDoNotReuseOnWhenConfigured(): void {
 
             $container = new Container();
 
             $b = new b( 'number 2' );
             $container->register( $b::class, $b )->share( false );
 
-            $this->assertNotSame( $container->get( a::class )->b->instance, $b->instance, 'instance must not be reused' );
+            $result = $container->get( a::class );
+            static::assertInstanceOf( a::class, $result );
+            static::assertNotSame( $result->b->instance, $b->instance, 'instance must not be reused' );
         }
 
-        public function testShouldThrowExceptionOnCircularDepedencies() {
+        public function testShouldThrowExceptionOnCircularDepedencies(): void {
 
             $this->expectExceptionMessage( 'circular' );
             $container = new Container;
@@ -56,12 +57,12 @@
             $container->get( circleA::class );
         }
 
-        public function testGetInstanceFromInterfaceWhenRegistered() {
+        public function testGetInstanceFromInterfaceWhenRegistered(): void {
 
             $container = new Container;
             $container->register( a_i::class );
 
-            $this->assertTrue ( $container->get( i::class ) instanceof a_i ) ;
+            static::assertTrue( $container->get( i::class ) instanceof a_i );
         }
 
     }

@@ -10,14 +10,14 @@
     class ValuesTest
     extends TestCase {
 
-        public function testTrue() {
+        public function testTrue(): void {
             $select = new Values();
             $select->add( new Value( true ) );
 
-            $this->assertSame( 'VALUES ( true )', $select->stringify() );
+            static::assertSame( 'VALUES ( true )', $select->stringify() );
         }
 
-        public function testOnePlusOne() {
+        public function testOnePlusOne(): void {
             $select = new Values();
             $select->add(
                 (new Expression() )
@@ -26,7 +26,7 @@
                     ->add( (new Value( 3 ) ) )
             );
 
-            $this->assertSame( 'VALUES ( 1 + 3 )', $select->stringify() );
+            static::assertSame( 'VALUES ( 1 + 3 )', $select->stringify() );
         }
 
     }

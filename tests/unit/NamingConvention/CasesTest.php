@@ -10,47 +10,47 @@
     class CasesTest
     extends TestCase {
 
-        public function testSpaceCase() {
+        public function testSpaceCase(): void {
 
             $case = new SpaceCase( 'test case experiment' );
-            $this->assertSame( [ 'test', 'case', 'experiment' ], $case->fetchStringParts() );
+            static::assertSame( [ 'test', 'case', 'experiment' ], $case->fetchStringParts() );
 
             $camelcase = $case->convertTo( CamelCase::class );
 
-            $this->assertSame( 'testCaseExperiment', $camelcase->getString() );
+            static::assertSame( 'testCaseExperiment', $camelcase->getString() );
         }
 
-        public function testLowerCase() {
+        public function testLowerCase(): void {
 
             $case = LowerCase::fromStringParts( ... [ 'space', 'seperated', 'text' ] );
-            $this->assertSame( 'spaceseperatedtext', $case->getString() );
+            static::assertSame( 'spaceseperatedtext', $case->getString() );
 
             $case = new SpaceCase( 'space seperated text' );
             $lc   = $case->convertTo( LowerCase::class );
 
-            $this->assertSame( 'spaceseperatedtext', $lc->getString() );
+            static::assertSame( 'spaceseperatedtext', $lc->getString() );
         }
 
-        public function testCamelCase() {
+        public function testCamelCase(): void {
 
             $case = new CamelCase( 'thisIsSparta' );
 
-            $this->assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
-            $this->assertSame( 'thisIsSparta', CamelCase::fromStringParts( ... [ 'this', 'is', 'sparta' ] )->getString() );
+            static::assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
+            static::assertSame( 'thisIsSparta', CamelCase::fromStringParts( ... [ 'this', 'is', 'sparta' ] )->getString() );
         }
 
-        public function testPascalCase() {
+        public function testPascalCase(): void {
 
             $case = new PascalCase( 'thisIsSparta' );
 
-            $this->assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
-            $this->assertSame( 'ThisIsSparta', PascalCase::fromStringParts( ... [ 'this', 'is', 'sparta' ] )->getString() );
+            static::assertSame( [ 'this', 'is', 'sparta' ], $case->fetchStringParts() );
+            static::assertSame( 'ThisIsSparta', PascalCase::fromStringParts( ... [ 'this', 'is', 'sparta' ] )->getString() );
         }
 
-        public function testConversion() {
+        public function testConversion(): void {
 
             $case = (new CamelCase( 'complexFieldNameSnakeCase' ) )->convertTo( new SnakeCase );
-            $this->assertSame( 'complex_field_name_snake_case', $case->getString() );
+            static::assertSame( 'complex_field_name_snake_case', $case->getString() );
         }
 
     }

@@ -1,104 +1,109 @@
 <?php
 
-	class TemplateIfElseTest extends \PHPUnit\Framework\TestCase {
+    use \PHPUnit\Framework\TestCase;
+    use \verfriemelt\wrapped\_\Template\Template;
 
-        private $tpl;
+    class TemplateIfElseTest
+    extends TestCase {
 
-        private $testCases = [
+        private Template $tpl;
+
+        private array $testCases = [
             [
-                "name" => "standard if else",
+                "name"    => "standard if else",
                 "tpldata" => '{{ if=\'test\' }}true{{ else=\'test\' }}false{{ /if=\'test\'}}',
-                "tests" => [
-                    [ "set" => true,  "expected" => "true" ],
+                "tests"   => [
+                    [ "set" => true, "expected" => "true" ],
                     [ "set" => false, "expected" => "false" ]
                 ]
             ],
             [
-                "name" => "negated standard if else",
+                "name"    => "negated standard if else",
                 "tpldata" => '{{ !if=\'test\' }}true{{ else=\'test\' }}false{{ /if=\'test\'}}',
-                "tests" => [
+                "tests"   => [
                     [ "set" => false, "expected" => "true" ],
                     [ "set" => true, "expected" => "false" ]
                 ]
             ],
             [
-                "name" => "standard if null",
+                "name"    => "standard if null",
                 "tpldata" => '{{ if=\'test\' }}true{{ /if=\'test\' }}',
-                "tests" => [
+                "tests"   => [
                     [ "set" => true, "expected" => "true" ],
                     [ "set" => false, "expected" => "" ]
                 ]
             ],
             [
-                "name" => "negated standard if null",
+                "name"    => "negated standard if null",
                 "tpldata" => '{{ !if=\'test\' }}true{{ /if=\'test\' }}',
-                "tests" => [
+                "tests"   => [
                     [ "set" => true, "expected" => "" ],
                     [ "set" => false, "expected" => "true" ]
                 ]
             ],
             [
-                "name" => "negated and standard if null",
+                "name"    => "negated and standard if null",
                 "tpldata" => '{{ if=\'test\' }}true{{ /if=\'test\' }}{{ !if=\'test\' }}true{{ /if=\'test\' }}',
-                "tests" => [
+                "tests"   => [
                     [ "set" => true, "expected" => "true" ],
                 ]
             ],
             [
-                "name" => "negated and standard if null",
+                "name"    => "negated and standard if null",
                 "tpldata" => '{{ if=\'test\' }}false{{ else=\'test\'}}true{{ /if=\'test\' }}{{ !if=\'test\' }}true{{ /if=\'test\' }}',
-                "tests" => [
+                "tests"   => [
                     [ "set" => false, "expected" => "truetrue" ],
                     [ "set" => true, "expected" => "false" ],
                 ]
             ]
         ];
 
-		public function test() {
+        public function test(): void {
 
-            foreach($this->testCases as $cases) {
-                $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-                $this->tpl->setRawTemplate($cases["tpldata"]);
+            foreach ( $this->testCases as $cases ) {
+                $this->tpl = new Template;
+                $this->tpl->setRawTemplate( $cases["tpldata"] );
 
-                foreach($cases["tests"] as $case) {
-                    $this->tpl->setIf("test",$case["set"]);
-                    $this->assertEquals($case["expected"],$this->tpl->run(),$cases["name"]);
+                foreach ( $cases["tests"] as $case ) {
+                    $this->tpl->setIf( "test", $case["set"] );
+                    static::assertSame( $case["expected"], $this->tpl->run(), $cases["name"] );
                 }
             }
         }
 
-        public function testNestedEmpty() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
+        public function testNestedEmpty(): void {
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/ifelseNested.tpl" ) );
 
-            $this->assertEquals("",$this->tpl->run());
+            static::assertSame( "", $this->tpl->run() );
         }
 
-        public function testNestedSetA() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
+        public function testNestedSetA(): void {
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/ifelseNested.tpl" ) );
 
-            $this->tpl->setIf("a");
+            $this->tpl->setIf( "a" );
 
-            $this->assertEquals("aa",$this->tpl->run());
+            static::assertSame( "aa", $this->tpl->run() );
         }
 
-        public function testNestedSetB() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
+        public function testNestedSetB(): void {
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/ifelseNested.tpl" ) );
 
-            $this->tpl->setIf("b");
+            $this->tpl->setIf( "b" );
 
-            $this->assertEmpty($this->tpl->run());
+            static::assertEmpty( $this->tpl->run() );
         }
 
-        public function testNestedSetAB() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate(file_get_contents(__DIR__ . "/templateTests/ifelseNested.tpl"));
+        public function testNestedSetAB(): void {
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/ifelseNested.tpl" ) );
 
-            $this->tpl->setIf("a");
-            $this->tpl->setIf("b");
+            $this->tpl->setIf( "a" );
+            $this->tpl->setIf( "b" );
 
-            $this->assertEquals("aba",$this->tpl->run());
+            static::assertSame( "aba", $this->tpl->run() );
         }
-	}
+
+    }

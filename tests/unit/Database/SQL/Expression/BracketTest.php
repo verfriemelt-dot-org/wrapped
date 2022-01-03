@@ -7,14 +7,14 @@
     class BracketTest
     extends TestCase {
 
-        public function testWrapping() {
+        public function testWrapping(): void {
 
             $bracket = new Bracket;
             $bracket->add(
                 new Value( true )
             );
 
-            $this->assertSame( '( true )', $bracket->stringify() );
+            static::assertSame( '( true )', $bracket->stringify() );
         }
 
     }

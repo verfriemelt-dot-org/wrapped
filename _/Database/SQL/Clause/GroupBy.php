@@ -21,9 +21,9 @@
 
         private $expressions = [];
 
-        public function __construct( ExpressionItem $by = null ) {
+        public function __construct( QueryPart $by = null ) {
 
-            if ( $by ) {
+            if ( $by !== null ) {
                 $this->add( $by );
             }
         }
@@ -32,7 +32,7 @@
             return 50;
         }
 
-        public function add( ExpressionItem $source ) {
+        public function add( QueryPart $source ) {
 
             $wrap = (new Expression() )
                 ->add( $this->wrap( $source ) );
@@ -49,7 +49,7 @@
                 static::CLAUSE,
                 implode(
                     ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->expressions )
                 )
             );
         }

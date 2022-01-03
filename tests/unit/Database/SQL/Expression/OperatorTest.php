@@ -8,20 +8,20 @@
     class OperatorTest
     extends TestCase {
 
-        public function testSimpleOperator() {
+        public function testSimpleOperator(): void {
 
             $op = new Operator( '=' );
-            $this->assertSame( '=', $op->stringify() );
+            static::assertSame( '=', $op->stringify() );
         }
 
-        public function testOperatorExpression() {
+        public function testOperatorExpression(): void {
             $op = new OperatorExpression( 'in',
                 (new Value( 1 ) ),
                 (new Value( 2 ) ),
                 (new Value( 3 ) ),
             );
 
-            $this->assertSame( 'IN ( 1, 2, 3 )', $op->stringify() );
+            static::assertSame( 'IN ( 1, 2, 3 )', $op->stringify() );
         }
 
     }

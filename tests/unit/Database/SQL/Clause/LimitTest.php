@@ -7,12 +7,12 @@
     class LimitTest
     extends TestCase {
 
-        public function testSimple() {
+        public function testSimple(): void {
 
             $limit = new Limit(
                 (new Value( 1 ) )
             );
-            $this->assertSame( 'LIMIT 1', $limit->stringify() );
+            static::assertSame( 'LIMIT 1', $limit->stringify() );
         }
 
     }

@@ -8,12 +8,11 @@
     class AliasableTest
     extends TestCase {
 
-        public function testPrimitive() {
+        public function testPrimitive(): void {
             $primitive = new Value( true );
             $primitive->addAlias( new Identifier( 'testing' ) );
 
-            $this->assertSame( 'true AS testing', $primitive->stringify() );
+            static::assertSame( 'true AS testing', $primitive->stringify() );
         }
 
     }
-    

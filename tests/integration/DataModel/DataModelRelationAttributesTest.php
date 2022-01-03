@@ -115,8 +115,8 @@
 
             $this->buildObjects();
 
-            $this->assertSame( 1, b::get( 1 )->getAId() );
-            $this->assertSame( 1, b::get( 1 )->aObject()->getId() );
+            static::assertSame( 1, b::get( 1 )->getAId() );
+            static::assertSame( 1, b::get( 1 )->aObject()->getId() );
         }
 
 //        public function testWrongMarked() {

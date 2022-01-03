@@ -20,14 +20,14 @@
 
         protected array $expressions = [];
 
-        public function __construct( ExpressionItem ... $args ) {
+        public function __construct( QueryPart ... $args ) {
             foreach ( $args as $arg ) {
                 $this->add( $arg );
             }
         }
 
         //Identifier | Primitives | Operator
-        public function add( ExpressionItem ... $expressions ) {
+        public function add( QueryPart ... $expressions ) {
 
             foreach ( $expressions as $expression ) {
                 $this->addChild( $expression );
@@ -45,7 +45,7 @@
 
             return implode(
                     " ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->expressions )
                 ) . $this->stringifyAlias( $driver );
         }
 

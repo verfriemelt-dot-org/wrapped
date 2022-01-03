@@ -7,9 +7,9 @@
     class DeleteTest
     extends TestCase {
 
-        public function testSimple() {
+        public function testSimple(): void {
             $delete = new Delete( new Identifier( 'table' ) );
-            $this->assertSame( 'DELETE FROM table', $delete->stringify() );
+            static::assertSame( 'DELETE FROM table', $delete->stringify() );
         }
 
     }

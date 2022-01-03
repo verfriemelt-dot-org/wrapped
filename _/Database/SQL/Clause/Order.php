@@ -26,7 +26,7 @@
             return 55;
         }
 
-        public function add( ExpressionItem $source, string $direction = 'ASC' ) {
+        public function add( QueryPart $source, string $direction = 'ASC' ) {
 
             $wrap = (new Expression() )
                 ->add( $this->wrap( $source ) )

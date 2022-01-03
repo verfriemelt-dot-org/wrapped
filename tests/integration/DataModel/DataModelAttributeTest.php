@@ -78,15 +78,15 @@
             static::$connection->query( 'create table lowerdummy ( id serial primary key, complexfieldname text );' );
             $this->saveInstance( LowerDummy::class, 'test' );
 
-            $this->assertNotNull( LowerDummy::findSingle( [ 'complexfieldname' => 'test' ] ) );
-            $this->assertNotNull( LowerDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
+            static::assertNotNull( LowerDummy::findSingle( [ 'complexfieldname' => 'test' ] ) );
+            static::assertNotNull( LowerDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
         }
 
         public function testCamelCase() {
             static::$connection->query( 'create table "camelCaseDummy" ( id serial primary key, "complexFieldName" text );' );
             $this->saveInstance( CamelCaseDummy::class, 'test' );
 
-            $this->assertNotNull( CamelCaseDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
+            static::assertNotNull( CamelCaseDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
         }
 
         public function testSnakeCase() {
@@ -94,10 +94,10 @@
             static::$connection->query( 'create table snake_case_dummy ( id serial primary key, complex_field_name text );' );
             $this->saveInstance( SnakeCaseDummy::class, 'test' );
 
-            $this->assertNotNull( SnakeCaseDummy::findSingle( [ 'complex_field_name' => 'test' ] ) );
-            $this->assertNotNull( SnakeCaseDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
+            static::assertNotNull( SnakeCaseDummy::findSingle( [ 'complex_field_name' => 'test' ] ) );
+            static::assertNotNull( SnakeCaseDummy::findSingle( [ 'complexFieldName' => 'test' ] ) );
 
-            $this->assertSame( 'test', SnakeCaseDummy::findSingle( [ 'complex_field_name' => 'test' ] )->getComplexFieldName() );
+            static::assertSame( 'test', SnakeCaseDummy::findSingle( [ 'complex_field_name' => 'test' ] )->getComplexFieldName() );
         }
 
     }

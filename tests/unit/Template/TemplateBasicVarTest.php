@@ -7,18 +7,18 @@
     class TemplateBasicVarTest
     extends TestCase {
 
-        private $tpl;
+        private Template $tpl;
 
-        public function testsingleVar() {
+        public function testsingleVar(): void {
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1 }}' );
 
             $this->tpl->set( "var1", "test" );
 
-            $this->assertEquals( $this->tpl->run(), "test" );
+            static::assertSame( $this->tpl->run(), "test" );
         }
 
-        public function testsingleVarWithFormat() {
+        public function testsingleVarWithFormat(): void {
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1|test}}' );
 
@@ -28,70 +28,70 @@
                 return "formatted";
             } );
 
-            $this->assertEquals( $this->tpl->run(), "formatted" );
+            static::assertSame( $this->tpl->run(), "formatted" );
 
             $this->tpl->setRawTemplate( '{{ var1 }}' );
-            $this->assertEquals( $this->tpl->run(), "test" );
+            static::assertSame( $this->tpl->run(), "test" );
         }
 
-        public function testsameVarTwice() {
+        public function testsameVarTwice(): void {
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1 }} {{ var1 }}' );
 
             $this->tpl->set( "var1", "test" );
 
-            $this->assertEquals( $this->tpl->run(), "test test" );
+            static::assertSame( $this->tpl->run(), "test test" );
         }
 
-        public function testTwoVars() {
+        public function testTwoVars(): void {
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1 }} {{ var2 }}' );
 
             $this->tpl->set( "var1", "test1" );
             $this->tpl->set( "var2", "test2" );
 
-            $this->assertEquals( $this->tpl->run(), "test1 test2" );
+            static::assertSame( $this->tpl->run(), "test1 test2" );
         }
 
-        public function testTwoVarsWithSetArray() {
+        public function testTwoVarsWithSetArray(): void {
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1 }} {{ var2 }}' );
 
             $this->tpl->setArray( [ "var1" => "test1", "var2" => "test2" ] );
 
-            $this->assertEquals( $this->tpl->run(), "test1 test2" );
+            static::assertSame( $this->tpl->run(), "test1 test2" );
         }
 
-        public function testSetArrayShouldOnlyWorkWithArrays() {
+        public function testSetArrayShouldOnlyWorkWithArrays(): void {
             $this->tpl = new Template;
-            $this->assertEquals( $this->tpl->setArray( false ), false );
+            static::assertSame( $this->tpl->setArray( false ), false );
         }
 
-        public function testOutputShouldBeEscaped() {
+        public function testOutputShouldBeEscaped(): void {
 
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ var1 }}' );
 
             $this->tpl->set( "var1", "< > & ' \"" );
 
-            $this->assertEquals( $this->tpl->run(), "&lt; &gt; &amp; &#039; &quot;" );
+            static::assertSame( $this->tpl->run(), "&lt; &gt; &amp; &#039; &quot;" );
         }
 
-        public function testOutputCanBeUnescaped() {
+        public function testOutputCanBeUnescaped(): void {
 
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( '{{ !var1 }}' );
 
             $this->tpl->set( "var1", "< > & ' \"" );
 
-            $this->assertEquals( $this->tpl->run(), "< > & ' \"" );
+            static::assertSame( $this->tpl->run(), "< > & ' \"" );
         }
 
-        public function testEmptyVariables() {
+        public function testEmptyVariables(): void {
 
             $this->tpl = new Template;
             $this->tpl->setRawTemplate( "{{ }}" );
-            $this->assertEmpty( $this->tpl->run() );
+            static::assertEmpty( $this->tpl->run() );
         }
 
     }

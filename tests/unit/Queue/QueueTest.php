@@ -1,18 +1,14 @@
 <?php
 
+    use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Queue\Backend\MemoryBackend;
     use \verfriemelt\wrapped\_\Queue\Queue;
     use \verfriemelt\wrapped\_\Queue\QueueItem;
 
     class QueueTest
-    extends \PHPUnit\Framework\TestCase {
+    extends TestCase {
 
-        public function testCreateInstance() {
-            $queue = new Queue( new MemoryBackend );
-            $this->assertTrue( $queue instanceof Queue );
-        }
-
-        public function testAddingQueueItem() {
+        public function testAddingQueueItem(): void {
 
             $queue = new Queue( new MemoryBackend );
             $queue->add( new QueueItem( "testing" ) );
@@ -21,18 +17,18 @@
             $result = $queue->fetchByKey( "testing" );
 
             foreach ( $result as $queueItem ) {
-                $this->assertTrue( $queueItem instanceof QueueItem );
+                static::assertTrue( $queueItem instanceof QueueItem );
             }
         }
 
-        public function testEmptyQueue() {
+        public function testEmptyQueue(): void {
 
             $queue = new Queue( new MemoryBackend );
 
-            $this->assertEquals( [], $queue->fetchByKey( "testing" ) );
+            static::assertSame( [], $queue->fetchByKey( "testing" ) );
         }
 
-        public function testQueueSepartion() {
+        public function testQueueSepartion(): void {
 
             $queue = new Queue( new MemoryBackend );
             $queue->add( new QueueItem( "testing" ) );
@@ -41,28 +37,28 @@
             $queue->add( new QueueItem( "testing", "email" ) );
             $queue->add( new QueueItem( "b", "email" ) );
 
-            $this->assertEquals( 2, count( $queue->fetchByKey( "testing" ) ) );
-            $this->assertEquals( 1, count( $queue->fetchByKey( "b" ) ) );
-            $this->assertEquals( 1, count( $queue->fetchByKey( "testing", "email" ) ) );
-            $this->assertEquals( 1, count( $queue->fetchByKey( "b", "email" ) ) );
+            static::assertSame( 2, count( $queue->fetchByKey( "testing" ) ) );
+            static::assertSame( 1, count( $queue->fetchByKey( "b" ) ) );
+            static::assertSame( 1, count( $queue->fetchByKey( "testing", "email" ) ) );
+            static::assertSame( 1, count( $queue->fetchByKey( "b", "email" ) ) );
         }
 
-        public function testDeleteItemFromQueue() {
+        public function testDeleteItemFromQueue(): void {
 
             $backend = new MemoryBackend;
             $queue   = new Queue( $backend );
             $queue->add( new QueueItem( "b" ) );
 
-            $this->assertEquals( 1, count( $queue->fetchByKey( "b" ) ) );
+            static::assertSame( 1, count( $queue->fetchByKey( "b" ) ) );
 
             foreach ( $queue->fetchByKey( "b" ) as $item ) {
                 $item->delete();
             }
 
-            $this->assertEquals( [], $queue->fetchByKey( "b" ) );
+            static::assertSame( [], $queue->fetchByKey( "b" ) );
         }
 
-        public function testAlterQueueItem() {
+        public function testAlterQueueItem(): void {
 
 
             $backend = new MemoryBackend;
@@ -74,10 +70,10 @@
                 $item->setData( 5 );
             }
 
-            $this->assertEquals( 5, $queue->fetchByKey( "b" )[0]->getData() );
+            static::assertSame( 5, $queue->fetchByKey( "b" )[0]->getData() );
         }
 
-        public function testThatLockedQueueItemsWillNotBeRetrived() {
+        public function testThatLockedQueueItemsWillNotBeRetrived(): void {
 
             $backend = new MemoryBackend;
             $queue   = new Queue( $backend );
@@ -91,10 +87,10 @@
             $queue->add( $c );
 
             $a->lock();
-            $this->assertEquals( 2, count( $queue->fetchChannel() ) );
+            static::assertSame( 2, count( $queue->fetchChannel() ) );
 
             $a->unlock();
-            $this->assertEquals( 3, count( $queue->fetchChannel() ) );
+            static::assertSame( 3, count( $queue->fetchChannel() ) );
         }
 
     }

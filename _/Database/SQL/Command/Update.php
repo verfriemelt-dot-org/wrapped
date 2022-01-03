@@ -30,7 +30,7 @@
             return 10;
         }
 
-        public function add( Identifier $column, ExpressionItem $expression ) {
+        public function add( Identifier $column, QueryPart $expression ) {
 
             $wrappedExpression = $this->wrap( $expression );
             $this->addChild( $wrappedExpression );

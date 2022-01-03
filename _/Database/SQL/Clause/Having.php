@@ -18,13 +18,13 @@
 
         public const CLAUSE = "HAVING %s";
 
-        private ExpressionItem $expression;
+        private QueryPart $expression;
 
         public function getWeight(): int {
             return 52;
         }
 
-        public function __construct( ExpressionItem $expression ) {
+        public function __construct( QueryPart $expression ) {
 
             $wrap = $this->wrap( $expression );
 

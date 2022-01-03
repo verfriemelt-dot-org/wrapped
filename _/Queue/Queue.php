@@ -11,7 +11,7 @@
 
         const DEFAULT_CHANNEL = "default";
 
-        private $storage = null;
+        private QueuePersistance $storage;
 
         public function __construct( QueuePersistance $storage = null ) {
             $this->storage = $storage ?? new MysqlBackend;
@@ -42,28 +42,11 @@
             return true;
         }
 
-        public function fetchByUniqueId( $uniqueId ) {
-            return $this->storage->fetchByUniqueId( $uniqueId );
-        }
-
-        /**
-         *
-         * @param type $key
-         * @param type $channel
-         * @param int $limit
-         * @return QueueItem[]
-         */
-        public function fetchByKey( $key, $channel = self::DEFAULT_CHANNEL, int $limit = null ) {
+        public function fetchByKey( string $key, string $channel = self::DEFAULT_CHANNEL, int $limit = null ): array {
             return $this->storage->fetchByKey( $key, $channel, $limit );
         }
 
-        /**
-         *
-         * @param type $channel
-         * @param int $limit
-         * @return QueueItem[]
-         */
-        public function fetchChannel( $channel = self::DEFAULT_CHANNEL, int $limit = null ) {
+        public function fetchChannel( string $channel = self::DEFAULT_CHANNEL, int $limit = null ): array {
             return $this->storage->fetchChannel( $channel, $limit );
         }
 

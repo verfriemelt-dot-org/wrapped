@@ -65,19 +65,19 @@
 
             $parent->reload();
 
-            $this->assertSame( 1, $parent->getId(), 'id' );
-            $this->assertSame( 1, $parent->getLeft(), 'parent left' );
-            $this->assertSame( 4, $parent->getRight(), 'right' );
-            $this->assertSame( 0, $parent->getDepth(), 'depth' );
-            $this->assertSame( 'parent', $parent->getName(), 'name' );
-            $this->assertSame( null, $parent->getParentId(), 'parent' );
+            static::assertSame( 1, $parent->getId(), 'id' );
+            static::assertSame( 1, $parent->getLeft(), 'parent left' );
+            static::assertSame( 4, $parent->getRight(), 'right' );
+            static::assertSame( 0, $parent->getDepth(), 'depth' );
+            static::assertSame( 'parent', $parent->getName(), 'name' );
+            static::assertSame( null, $parent->getParentId(), 'parent' );
 
-            $this->assertSame( 2, $child->getId(), 'id' );
-            $this->assertSame( 2, $child->getLeft(), 'left' );
-            $this->assertSame( 3, $child->getRight(), 'right' );
-            $this->assertSame( 1, $child->getDepth(), 'depth' );
-            $this->assertSame( 'child', $child->getName(), 'name' );
-            $this->assertSame( 1, $child->getParentId(), 'parent' );
+            static::assertSame( 2, $child->getId(), 'id' );
+            static::assertSame( 2, $child->getLeft(), 'left' );
+            static::assertSame( 3, $child->getRight(), 'right' );
+            static::assertSame( 1, $child->getDepth(), 'depth' );
+            static::assertSame( 'child', $child->getName(), 'name' );
+            static::assertSame( 1, $child->getParentId(), 'parent' );
 
             $child2 = new TreeDummy;
             $child2->under( $parent );
@@ -89,14 +89,14 @@
 
 //            codecept_debug( $parent );
 
-            $this->assertSame( 1, $parent->getLeft(), 'left' );
-            $this->assertSame( 6, $parent->getRight(), 'right' );
+            static::assertSame( 1, $parent->getLeft(), 'left' );
+            static::assertSame( 6, $parent->getRight(), 'right' );
 
-            $this->assertSame( 2, $child->getLeft(), 'left' );
-            $this->assertSame( 3, $child->getRight(), 'right' );
+            static::assertSame( 2, $child->getLeft(), 'left' );
+            static::assertSame( 3, $child->getRight(), 'right' );
 
-            $this->assertSame( 4, $child2->getLeft(), 'left' );
-            $this->assertSame( 5, $child2->getRight(), 'right' );
+            static::assertSame( 4, $child2->getLeft(), 'left' );
+            static::assertSame( 5, $child2->getRight(), 'right' );
 
             $child3 = new TreeDummy;
             $child3->under( $child2 );
@@ -107,17 +107,17 @@
             $child->reload();
             $child2->reload();
 
-            $this->assertSame( 1, $parent->getLeft(), 'left' );
-            $this->assertSame( 8, $parent->getRight(), 'right' );
+            static::assertSame( 1, $parent->getLeft(), 'left' );
+            static::assertSame( 8, $parent->getRight(), 'right' );
 
-            $this->assertSame( 2, $child->getLeft(), 'left' );
-            $this->assertSame( 3, $child->getRight(), 'right' );
+            static::assertSame( 2, $child->getLeft(), 'left' );
+            static::assertSame( 3, $child->getRight(), 'right' );
 
-            $this->assertSame( 4, $child2->getLeft(), 'left' );
-            $this->assertSame( 7, $child2->getRight(), 'right' );
+            static::assertSame( 4, $child2->getLeft(), 'left' );
+            static::assertSame( 7, $child2->getRight(), 'right' );
 
-            $this->assertSame( 5, $child3->getLeft(), 'left' );
-            $this->assertSame( 6, $child3->getRight(), 'right' );
+            static::assertSame( 5, $child3->getLeft(), 'left' );
+            static::assertSame( 6, $child3->getRight(), 'right' );
         }
 
         public function testUpdate() {
@@ -165,14 +165,14 @@
 
                 $instance = TreeDummy::findSingle( [ 'name' => $e ] );
 
-                $this->assertSame( $depth, $instance->getDepth(), $e . ' depth' );
-                $this->assertSame( $parentId, $instance->getParentId(), $e . ' parentid' );
+                static::assertSame( $depth, $instance->getDepth(), $e . ' depth' );
+                static::assertSame( $parentId, $instance->getParentId(), $e . ' parentid' );
 
-                $this->assertSame( ++$count, $instance->getLeft(), $e . ' left' );
+                static::assertSame( ++$count, $instance->getLeft(), $e . ' left' );
 
                 $this->validateStruct( $s, $count, $depth + 1, $instance->getId() );
 
-                $this->assertSame( ++$count, $instance->getRight(), $e . ' right' );
+                static::assertSame( ++$count, $instance->getRight(), $e . ' right' );
             }
         }
 

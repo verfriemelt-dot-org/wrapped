@@ -1,14 +1,17 @@
 <?php
 
+    use \PHPUnit\Framework\TestCase;
+    use \verfriemelt\wrapped\_\Template\Template;
+
     class TemplateRepeaterTest
-    extends \PHPUnit\Framework\TestCase {
+    extends TestCase {
 
-        public $tpl;
+        public Template $tpl;
 
-        public function testBasicRepeater() {
+        public function testBasicRepeater(): void {
 
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate( file_get_contents( __DIR__ . "/templateTests/repeater.tpl" ) );
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/repeater.tpl" ) );
 
             $r          = $this->tpl->createRepeater( "r" );
             $testString = "";
@@ -17,16 +20,15 @@
                 $r->set( "i", $i )->save();
             }
 
-            $this->assertEquals( $testString, $this->tpl->run() );
+            static::assertSame( $testString, $this->tpl->run() );
         }
 
-        public function testNestedRepeater() {
+        public function testNestedRepeater(): void {
 
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate( file_get_contents( __DIR__ . "/templateTests/nestedRepeater.tpl" ) );
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/nestedRepeater.tpl" ) );
 
             $k = $this->tpl->createRepeater( "k" );
-
 
             $testString = "";
 
@@ -35,14 +37,14 @@
                 $r = $k->createChildRepeater( "r" );
 
                 for ( $ri = 0; $ri < 3; ++$ri ) {
-                    $testString .= $ki .".". $ri;
+                    $testString .= $ki . "." . $ri;
                     $r->set( "i", $ri )->save();
                 }
 
                 $k->set( "j", $ki )->save();
             }
 
-            $this->assertEquals( $testString, $this->tpl->run() );
+            static::assertSame( $testString, $this->tpl->run() );
         }
 
     }

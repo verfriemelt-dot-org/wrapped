@@ -7,7 +7,7 @@
     use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
     use \verfriemelt\wrapped\_\Database\SQL\Clause\Clause;
     use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
     use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Where
@@ -18,17 +18,25 @@
 
         public const CLAUSE = "WHERE %s";
 
-        public ExpressionItem $expression;
+        public Expression $expression;
 
         public function getWeight(): int {
             return 40;
         }
 
-        public function __construct( ExpressionItem $expression ) {
+        public function __construct( QueryPart $args ) {
 
-            $wrap = $this->wrap( $expression );
+            if ( !($args instanceof Expression ) ) {
+                $exp = new Expression( $args );
+            } else {
+                $exp = $args;
+            }
+
+            $wrap = $this->wrap( $exp );
 
             $this->addChild( $wrap );
+
+            /** @phpstan-ignore-next-line */
             $this->expression = $wrap;
         }
 

@@ -8,7 +8,6 @@
     use \verfriemelt\wrapped\_\Database\SQL\Command\Command;
     use \verfriemelt\wrapped\_\Database\SQL\Command\CommandExpression;
     use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Returning
@@ -25,7 +24,7 @@
             return 100;
         }
 
-        public function add( ExpressionItem $item ) {
+        public function add( QueryPart $item ) {
 
             $expression = $this->wrap( $item );
 
@@ -41,7 +40,7 @@
                 static::CLAUSE,
                 implode(
                     ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->expressions )
                 )
             );
         }

@@ -7,10 +7,10 @@
     class OffsetTest
     extends TestCase {
 
-        public function testSimple() {
+        public function testSimple(): void {
 
             $offset = new Offset( (new Value( 1 ) ) );
-            $this->assertSame( 'OFFSET 1', $offset->stringify() );
+            static::assertSame( 'OFFSET 1', $offset->stringify() );
         }
 
     }

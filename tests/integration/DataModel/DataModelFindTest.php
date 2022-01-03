@@ -110,16 +110,16 @@
         public function testFind() {
 
             // non existing
-            $this->assertNull( TypeTester::findSingle( [ "id" => 1 ] ) );
+            static::assertNull( TypeTester::findSingle( [ "id" => 1 ] ) );
 
             $this->createInstance();
 
             // existing
-            $this->assertNotNull( TypeTester::findSingle( [ "id" => 1 ] ) );
-            $this->assertNotNull( TypeTester::findSingle( [ "aFloat" => 1.337 ] ) );
-            $this->assertNotNull( TypeTester::findSingle( [ "aString" => 'test' ] ) );
-            $this->assertNotNull( TypeTester::findSingle( [ "aBool" => true ] ) );
-            $this->assertNotNull( TypeTester::findSingle( [ "aNull" => null ] ) );
+            static::assertNotNull( TypeTester::findSingle( [ "id" => 1 ] ) );
+            static::assertNotNull( TypeTester::findSingle( [ "aFloat" => 1.337 ] ) );
+            static::assertNotNull( TypeTester::findSingle( [ "aString" => 'test' ] ) );
+            static::assertNotNull( TypeTester::findSingle( [ "aBool" => true ] ) );
+            static::assertNotNull( TypeTester::findSingle( [ "aNull" => null ] ) );
         }
 
     }

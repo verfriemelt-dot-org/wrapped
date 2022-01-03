@@ -90,7 +90,7 @@
             return $value . $this->stringifyAlias( $driver );
         }
 
-        public function fetchBindings() {
+        public function fetchBindings(): array {
             return [ $this->bind => $this->value ];
         }
 

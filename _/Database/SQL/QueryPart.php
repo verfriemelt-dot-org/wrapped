@@ -5,6 +5,7 @@
     namespace verfriemelt\wrapped\_\Database\SQL;
 
     use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \verfriemelt\wrapped\_\DataModel\DataModel;
 
     abstract class QueryPart {
@@ -17,7 +18,7 @@
          */
         protected array $context = [];
 
-        abstract function stringify( DatabaseDriver $driver = null ): string;
+        abstract public function stringify( DatabaseDriver $driver = null ): string;
 
         public function addDataModelContext( DataModel $context ) {
 
@@ -34,25 +35,25 @@
             return $this;
         }
 
-        protected function addChild( QueryPart $child ) {
+        protected function addChild( QueryPart $child ): static {
 
             $this->children[] = $child;
 
             // add context to children;
-            array_map( fn( $context ) => $child->addDataModelContext( $context ), $this->context );
+            array_map( fn( DataModel $context ) => $child->addDataModelContext( $context ), $this->context );
 
             return $this;
         }
 
-        public function getChildren() {
+        public function getChildren(): array {
             return $this->children;
         }
 
-        public function fetchBindings() {
+        public function fetchBindings(): array {
             return array_merge( [], ... array_map( fn( $child ) => $child->fetchBindings(), $this->children ) );
         }
 
-        public function fetchAllChildren() {
+        public function fetchAllChildren(): array {
             return array_merge( [ $this ], ... array_map( fn( $child ) => $child->fetchAllChildren(), $this->children ) );
         }
 

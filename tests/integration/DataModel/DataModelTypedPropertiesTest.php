@@ -102,7 +102,7 @@
 
             // read
             $data = TypedDummy::get( 1 );
-            $this->assertTrue( is_object( $data->getPubtime() ) );
+            static::assertTrue( is_object( $data->getPubtime() ) );
         }
 
         public function testSaveWithNull() {
@@ -111,7 +111,7 @@
 
             // read
             $data = TypedDummy::get( 1 );
-            $this->assertTrue( $data->getPubtime() === null );
+            static::assertTrue( $data->getPubtime() === null );
         }
 
         public function testReloadWithTime() {
@@ -120,26 +120,26 @@
 
             $secondInstance = TypedDummy::last();
 
-            $this->assertEquals( $test->getId(), $secondInstance->getId() );
+            static::assertSame( $test->getId(), $secondInstance->getId() );
 
-            $this->assertNull( $test->getLastFoundDate() );
-            $this->assertNull( $secondInstance->getLastFoundDate() );
+            static::assertNull( $test->getLastFoundDate() );
+            static::assertNull( $secondInstance->getLastFoundDate() );
 
             $test->setLastFoundDate( new DateTime( '2012-07-08 11:14:15.889342' ) );
             $test->save();
 
             // read updated value
-            $this->assertNotNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated with datetime' );
-            $this->assertEquals( $secondInstance->getLastFoundDate()->toSqlFormat(), '2012-07-08 11:14:15.889342' );
+            static::assertNotNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated with datetime' );
+            static::assertSame( $secondInstance->getLastFoundDate()->toSqlFormat(), '2012-07-08 11:14:15.889342' );
 
             $test->setLastFoundDate( null );
             $test->save();
 
             $test->reload();
-            $this->assertNull( $test->getLastFoundDate(), 'original is null' );
+            static::assertNull( $test->getLastFoundDate(), 'original is null' );
 
             // read updated value
-            $this->assertNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated to null again' );
+            static::assertNull( $secondInstance->reload()->getLastFoundDate(), 'should be updated to null again' );
         }
 
     }

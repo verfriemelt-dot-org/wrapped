@@ -18,7 +18,7 @@
         public ?DateTime $typed = null;
 
         #[ SnakeCase ]
-        public $complexFieldNameSnakeCase = null;
+        public ?string $complexFieldNameSnakeCase = null;
 
         public function getId(): ?int {
             return $this->id;
@@ -28,12 +28,12 @@
             return $this->complexFieldName;
         }
 
-        public function setId( ?int $id ) {
+        public function setId( ?int $id ): static {
             $this->id = $id;
             return $this;
         }
 
-        public function setComplexFieldName( ?string $complexFieldName ) {
+        public function setComplexFieldName( ?string $complexFieldName ): static {
             $this->complexFieldName = $complexFieldName;
             return $this;
         }
@@ -42,7 +42,7 @@
             return $this->typed;
         }
 
-        public function setTyped( ?DateTime $typed ) {
+        public function setTyped( ?DateTime $typed ): static {
             $this->typed = $typed;
             return $this;
         }
@@ -51,7 +51,7 @@
             return $this->complexFieldNameSnakeCase;
         }
 
-        public function setComplexFieldNameSnakeCase( ?string $complexFieldNameSnakeCase ) {
+        public function setComplexFieldNameSnakeCase( ?string $complexFieldNameSnakeCase ): static {
             $this->complexFieldNameSnakeCase = $complexFieldNameSnakeCase;
             return $this;
         }
@@ -61,36 +61,36 @@
     class DataModelAnalyserTest
     extends TestCase {
 
-        public function testNames() {
+        public function testNames(): void {
             $analyser = new DataModelAnalyser( new Example );
 
-            $this->assertSame( 'Example', $analyser->getBaseName() );
-            $this->assertSame( 'extraNamespace\\Example', $analyser->getStaticName() );
+            static::assertSame( 'Example', $analyser->getBaseName() );
+            static::assertSame( 'extraNamespace\\Example', $analyser->getStaticName() );
         }
 
-        public function testAttributes() {
+        public function testAttributes(): void {
             $analyser = new DataModelAnalyser( new Example );
 
-            $this->assertSame( 4, count( $analyser->fetchProperties() ), 'four valid attributes' );
+            static::assertSame( 4, count( $analyser->fetchProperties() ), 'four valid attributes' );
 
             // default naming convention snake case
-            $this->assertSame( 'id', $analyser->fetchProperties()[0]->getNamingConvention()->getString() );
-            $this->assertSame( 'complex_field_name', $analyser->fetchProperties()[1]->getNamingConvention()->getString() );
+            static::assertSame( 'id', $analyser->fetchProperties()[0]->getNamingConvention()->getString() );
+            static::assertSame( 'complex_field_name', $analyser->fetchProperties()[1]->getNamingConvention()->getString() );
         }
 
-        public function testTypedAttributes() {
+        public function testTypedAttributes(): void {
 
             $analyser = new DataModelAnalyser( new Example );
-            $this->assertSame( 'typed', $analyser->fetchProperties()[2]->getNamingConvention()->getString() );
-            $this->assertSame( DateTime::class, $analyser->fetchProperties()[2]->getType() );
+            static::assertSame( 'typed', $analyser->fetchProperties()[2]->getNamingConvention()->getString() );
+            static::assertSame( DateTime::class, $analyser->fetchProperties()[2]->getType() );
 
-            $this->assertTrue( class_exists( $analyser->fetchProperties()[2]->getType() ) );
+            static::assertTrue( class_exists( $analyser->fetchProperties()[2]->getType() ) );
         }
 
-        public function testSnakeCaseConvention() {
+        public function testSnakeCaseConvention(): void {
 
             $analyser = new DataModelAnalyser( new Example );
-            $this->assertSame( 'complex_field_name_snake_case', $analyser->fetchProperties()[3]->getNamingConvention()->getString() );
+            static::assertSame( 'complex_field_name_snake_case', $analyser->fetchProperties()[3]->getNamingConvention()->getString() );
         }
 
     }

@@ -18,13 +18,13 @@
 
         public const CLAUSE = "FROM %s";
 
-        private ExpressionItem $source;
+        private QueryPart $source;
 
         public function getWeight(): int {
             return 20;
         }
 
-        public function __construct( ExpressionItem $source ) {
+        public function __construct( QueryPart $source ) {
 
             $this->source = $this->wrap( $source );
             $this->addChild( $this->source );

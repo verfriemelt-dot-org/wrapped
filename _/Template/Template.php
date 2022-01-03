@@ -4,6 +4,8 @@
 
     namespace verfriemelt\wrapped\_\Template;
 
+    use \RuntimeException;
+
     class Template {
 
         private $if = [];
@@ -47,25 +49,20 @@
             }
         }
 
-        /**
-         *
-         * @param type $input
-         * @return Template
-         */
-        public function setRawTemplate( $input ) {
+        public function setRawTemplate( string $input ): static {
             $this->tokenChain = (new TemplateLexer() )->lex( $input )->getChain();
             return $this;
         }
 
-        /**
-         * loadfile
-         * @return Template
-         */
-        public function parseFile( $path ) {
+        public function parseFile( string $path ): static {
 
             if ( !isset( self::$chainCache[$path] ) ) {
 
                 $fileContent = file_get_contents( $path );
+
+                if ( $fileContent === false ) {
+                    throw new RuntimeException( "cannot load template at {$path}" );
+                }
 
                 self::$chainCache[$path] = (new TemplateLexer() )->lex( $fileContent )->getChain();
             }

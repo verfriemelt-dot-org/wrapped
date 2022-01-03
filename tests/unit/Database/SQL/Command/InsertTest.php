@@ -7,23 +7,19 @@
     class InsertTest
     extends TestCase {
 
-        public function testOne() {
+        public function testOne(): void {
             $insert = new Insert( new Identifier( 'table' ) );
             $insert->add( new Identifier( 'column_b' ) );
 
-            $this->assertSame( 'INSERT INTO table ( column_b )', $insert->stringify() );
+            static::assertSame( 'INSERT INTO table ( column_b )', $insert->stringify() );
         }
 
-        public function testMore() {
+        public function testMore(): void {
             $insert = new Insert( new Identifier( 'table' ) );
             $insert->add( new Identifier( 'column_a' ) );
             $insert->add( new Identifier( 'column_b' ) );
 
-            $this->assertSame( 'INSERT INTO table ( column_a, column_b )', $insert->stringify() );
-        }
-
-        public function tsetNone() {
-            $insert = new Insert( new Identifier( 'table' ) );
+            static::assertSame( 'INSERT INTO table ( column_a, column_b )', $insert->stringify() );
         }
 
     }

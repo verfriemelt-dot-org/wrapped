@@ -1,44 +1,22 @@
 <?php
 
+    use \PHPUnit\Framework\TestCase;
     use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
-    use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Router\Route;
     use \verfriemelt\wrapped\_\Router\RouteGroup;
     use \verfriemelt\wrapped\_\Router\Router;
 
     class RouterTest
-    extends \PHPUnit\Framework\TestCase {
+    extends TestCase {
 
-        public function testRouterMatchingSingleRoute() {
-
-            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test" ] );
-            $router  = (new Router() )->addRoutes(
-                Route::create( "/test" )
-            );
-
-            $this->assertTrue( $router->handleRequest( $request ) instanceof Route );
-        }
-
-        public function testRouterEmpty() {
+        public function testRouterEmpty(): void {
 
             $this->expectException( NoRoutesPresent::class );
             (new Router() )->handleRequest( new Request() );
         }
 
-        public function testRouteGroup() {
-
-            $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin/test" ] );
-            $router  = (new Router() )->addRoutes(
-                RouteGroup::create( "/admin" )
-                    ->add( Route::create( "/test" ) )
-                    ->add( Route::create( "/test1" ) )
-            );
-
-            $this->assertTrue( $router->handleRequest( $request ) instanceof Route );
-        }
-
-        public function testRouteVsRouteGroupWeight() {
+        public function testRouteVsRouteGroupWeight(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
@@ -56,10 +34,12 @@
                         } ) )
             );
 
-            $this->assertEquals( "a", $router->handleRequest( $request )->getCallback()() );
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( "a", $result() );
         }
 
-        public function testRouteGroupFirstButNoMatchingChildren() {
+        public function testRouteGroupFirstButNoMatchingChildren(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/admin" ] );
 
@@ -77,10 +57,12 @@
                     return "a";
                 } ) );
 
-            $this->assertEquals( "a", $router->handleRequest( $request )->getCallback()() );
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( "a", $result() );
         }
 
-        public function testNestedRouteGroups() {
+        public function testNestedRouteGroups(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/test/nice" ] );
 
@@ -98,14 +80,18 @@
                 )
             );
 
-            $this->assertEquals( "win", $router->handleRequest( $request )->getCallback()() );
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( "win", $result() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/asd" ] );
 
-            $this->assertEquals( "default", $router->handleRequest( $request )->getCallback()() );
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( "default", $result() );
         }
 
-        public function testMatchingGroupsWithNoChilds() {
+        public function testMatchingGroupsWithNoChilds(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/api/win" ] );
 
@@ -117,10 +103,12 @@
                 } )
             );
 
-            $this->assertEquals( "win", $router->handleRequest( $request )->getCallback()() );
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( "win", $result() );
         }
 
-        public function testCapturingRouteData() {
+        public function testCapturingRouteData(): void {
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/list/geocaches" ] );
 
             $router = new Router();
@@ -133,11 +121,11 @@
             $route = $router->handleRequest( $request );
             $request->setAttributes( $route->getAttributes() );
 
-            $this->assertTrue( $request->attributes()->has( "key" ) );
-            $this->assertTrue( $request->attributes()->has( "key2" ) );
+            static::assertTrue( $request->attributes()->has( "key" ) );
+            static::assertTrue( $request->attributes()->has( "key2" ) );
         }
 
-        public function testOptionalRouteGroup() {
+        public function testOptionalRouteGroup(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/test/a" ] );
 
@@ -147,13 +135,17 @@
                         return true;
                     } ) )
             );
-            $this->assertTrue( $router->handleRequest( $request )->getCallback()() );
+
+            $result = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
+            static::assertSame( true, $result() );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/a" ] );
-            $this->assertTrue( $router->handleRequest( $request )->getCallback()() );
+            $result  = $router->handleRequest( $request )->getCallback();
+            static::assertTrue( is_callable( $result ) );
         }
 
-        public function testWut() {
+        public function testWut(): void {
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
 
@@ -168,17 +160,17 @@
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/detail/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->getCallback()() );
+            static::assertTrue( is_callable( $result->getCallback() ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/th/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->getCallback()() );
+            static::assertTrue( is_callable( $result->getCallback() ) );
 
             $request = new Request( [], [], [], [], [], [ "REQUEST_URI" => "/detail/geocacher/1" ] );
             $result  = $router->handleRequest( $request );
 
-            $this->assertTrue( $result->getCallback()() );
+            static::assertTrue( is_callable( $result->getCallback() ) );
         }
 
     }

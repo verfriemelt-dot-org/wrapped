@@ -7,10 +7,10 @@
     class WhereTest
     extends TestCase {
 
-        public function testSimple() {
+        public function testSimple(): void {
 
             $where = new Where( new Value( true ) );
-            $this->assertSame( 'WHERE true', $where->stringify() );
+            static::assertSame( 'WHERE true', $where->stringify() );
         }
 
     }

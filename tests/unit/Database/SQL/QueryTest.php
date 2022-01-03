@@ -2,13 +2,14 @@
 <?php
 
     use \PHPUnit\Framework\TestCase;
+    use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
     class QueryTest
     extends TestCase {
 
-        public function testWhereWithValueFromArray() {
+        public function testWhereWithValueFromArray(): void {
 
-            $query = new \verfriemelt\wrapped\_\Database\Facade\QueryBuilder();
+            $query = new QueryBuilder();
 
             $query->select( 'column' );
             $query->from( "table" );
@@ -16,12 +17,12 @@
                 "column" => 1
             ] );
 
-            $this->assertStringContainsString( 'SELECT column FROM table WHERE column = ', $query->fetchStatement()->stringify() );
+            static::assertStringContainsString( 'SELECT column FROM table WHERE column = ', $query->fetchStatement()->stringify() );
         }
 
-        public function testWhereWithNullFromArray() {
+        public function testWhereWithNullFromArray(): void {
 
-            $query = new \verfriemelt\wrapped\_\Database\Facade\QueryBuilder();
+            $query = new QueryBuilder();
 
             $query->select( 'column' );
             $query->from( "table" );
@@ -29,7 +30,7 @@
                 "column" => null
             ] );
 
-            $this->assertStringContainsString( 'SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify() );
+            static::assertStringContainsString( 'SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify() );
         }
 
     }

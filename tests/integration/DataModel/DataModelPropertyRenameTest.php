@@ -69,8 +69,8 @@
             $instance = $this->createInstance();
             $instance->setRandomCasing( 'test' )->save();
 
-            $this->assertNotNull( RenameTester::findSingle( [ 'randomCasing' => 'test' ] ) );
-            $this->assertNotNull( RenameTester::findSingle( [ 'rAnDoMCAsIng' => 'test' ] ) );
+            static::assertNotNull( RenameTester::findSingle( [ 'randomCasing' => 'test' ] ) );
+            static::assertNotNull( RenameTester::findSingle( [ 'rAnDoMCAsIng' => 'test' ] ) );
         }
 
     }

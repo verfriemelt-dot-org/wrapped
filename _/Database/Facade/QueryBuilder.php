@@ -83,7 +83,7 @@
             array_map( function ( $column ) {
                 if ( is_array( $column ) ) {
                     $this->select->add( new Identifier( ... $column ) );
-                } elseif ( $column instanceof ExpressionItem ) {
+                } elseif ( $column instanceof \verfriemelt\wrapped\_\Database\SQL\QueryPart ) {
                     $this->select->add( $column );
                 } else {
                     $this->select->add( new Identifier( $column ) );

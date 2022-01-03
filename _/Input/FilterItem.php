@@ -37,7 +37,7 @@
          * @return boolean
          * @throws InputException
          */
-        public function validate() {
+        public function validate(): bool {
 
             if ( !$this->parameter->has( $this->valueName ) && $this->optional === true ) {
                 return true;
@@ -65,7 +65,7 @@
             return true;
         }
 
-        private function checkValues( $input ) {
+        private function checkValues( mixed $input ): void {
             // filter sent arrays like &msg[]=foobar
             if ( !is_string( $input ) && !is_integer( $input ) ) {
                 throw new InputException( "input type is wrong [{$this->valueName}]" );
@@ -99,78 +99,58 @@
 
         /**
          * sets the name of the datafield in the request, eg. $_GET["varname"]
-         * @param type $valueName
-         * @return FilterItem
+         * @param string $valueName
+         * @return static
          */
-        public function this( $valueName ) {
+        public function this( string $valueName ): static {
             $this->valueName = $valueName;
             return $this;
         }
 
         /**
          * requires a variable name to be in the request
-         * @param type $valueName
-         * @return FilterItem
+         * @param string $valueName
+         * @return static
          */
-        public function has( $valueName ) {
+        public function has( string $valueName ): static {
             return $this->this( $valueName );
         }
 
         /**
          *
-         * @param type $bool
+         * @param bool $bool
          * @return static
          */
-        public function required( $bool = true ) {
+        public function required( bool $bool = true ): static {
             return $this->optional( !$bool );
         }
 
         /**
          * allow values sent as array &foo[]=bar&foo[]=foobar
-         * @param type $bool
+         * @param bool $bool
          * @return static
          */
-        public function multiple( $bool = true ) {
+        public function multiple( bool $bool = true ): static {
             $this->allowMultipleValuesSent = $bool;
             return $this;
         }
 
-        /**
-         *
-         * @param type $bool
-         * @return FilterItem
-         */
-        public function optional( $bool = true ) {
+        public function optional( bool $bool = true ): static {
             $this->optional = $bool;
             return $this;
         }
 
-        /**
-         *
-         * @param type $int
-         * @return FilterItem
-         */
-        public function minLength( $int = 1 ) {
+        public function minLength( int $int = 1 ): static {
             $this->minLength = $int;
             return $this;
         }
 
-        /**
-         *
-         * @param type $int
-         * @return FilterItem
-         */
-        public function maxLength( $int = 1 ) {
+        public function maxLength( int $int = 1 ): static {
             $this->maxLength = $int;
             return $this;
         }
 
-        /**
-         *
-         * @param type $chars
-         * @return FilterItem
-         */
-        public function allowedChars( $chars = "abcdefghijklmnopqrstuvwxyz" ) {
+        public function allowedChars( string $chars = "abcdefghijklmnopqrstuvwxyz" ): static {
             $this->allowedChars = $chars;
             return $this;
         }

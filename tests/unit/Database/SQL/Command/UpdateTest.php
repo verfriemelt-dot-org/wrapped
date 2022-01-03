@@ -10,23 +10,23 @@
     class UpdateTest
     extends TestCase {
 
-        public function testEmptyStatement() {
+        public function testEmptyStatement(): void {
             $update = new Update( new Identifier( 'table' ) );
 
             $this->expectExceptionObject( new Exception( 'empty' ) );
             $update->stringify();
         }
 
-        public function testSimple() {
+        public function testSimple(): void {
             $update = new Update( new Identifier( 'table' ) );
             $update->add( new Identifier( 'test' ), (new Value( 1 ) ) );
 
             $expected = 'UPDATE table SET test = 1';
 
-            $this->assertSame( $expected, $update->stringify() );
+            static::assertSame( $expected, $update->stringify() );
         }
 
-        public function testComplex() {
+        public function testComplex(): void {
 
             $update = new Update( new Identifier( 'table' ) );
             $update->add( new Identifier( 'test' ), (new Value( 1 ) ) );
@@ -40,7 +40,7 @@
 
             $expected = 'UPDATE table SET test = 1, complex = complex + 1';
 
-            $this->assertSame( $expected, $update->stringify() );
+            static::assertSame( $expected, $update->stringify() );
         }
 
     }

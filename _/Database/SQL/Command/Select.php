@@ -8,7 +8,6 @@
     use \verfriemelt\wrapped\_\Database\SQL\Command\Command;
     use \verfriemelt\wrapped\_\Database\SQL\Command\CommandExpression;
     use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
     use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
     class Select
@@ -21,7 +20,7 @@
 
         private array $expressions = [];
 
-        public function __construct( ExpressionItem ... $items ) {
+        public function __construct( QueryPart ... $items ) {
             array_map( fn( $i ) => $this->add( $i ), $items );
         }
 
@@ -29,7 +28,7 @@
             return 10;
         }
 
-        public function add( ExpressionItem ... $item ) {
+        public function add( QueryPart ... $item ) {
 
             foreach ( $item as $i ) {
 
@@ -48,7 +47,7 @@
                 static::COMMAND,
                 implode(
                     ", ",
-                    array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->expressions )
+                    array_map( fn( QueryPart $i ) => $i->stringify( $driver ), $this->expressions )
                 )
             );
         }

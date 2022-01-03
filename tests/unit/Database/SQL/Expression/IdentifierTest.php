@@ -11,37 +11,37 @@
     extends DataModel {
 
         #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
-        public $TEST;
+        public mixed $TEST;
 
         #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
-        public $snakeCase;
+        public mixed $snakeCase;
 
         #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
-        public $StrAngECAse;
+        public mixed $StrAngECAse;
 
-        public function getSnakeCase() {
+        public function getSnakeCase(): mixed {
             return $this->snakeCase;
         }
 
-        public function setSnakeCase( $snakeCase ) {
+        public function setSnakeCase( mixed $snakeCase ): static {
             $this->snakeCase = $snakeCase;
             return $this;
         }
 
-        public function getTEST() {
+        public function getTEST(): mixed {
             return $this->TEST;
         }
 
-        public function setTEST( $TEST ) {
+        public function setTEST( mixed $TEST ): static {
             $this->TEST = $TEST;
             return $this;
         }
 
-        public function getStrAngECAse() {
+        public function getStrAngECAse(): mixed {
             return $this->StrAngECAse;
         }
 
-        public function setStrAngECAse( $StrAngECAse ) {
+        public function setStrAngECAse( mixed $StrAngECAse ): static {
             $this->StrAngECAse = $StrAngECAse;
             return $this;
         }
@@ -64,12 +64,12 @@
             return $this->bId;
         }
 
-        public function setId( ?int $id ) {
+        public function setId( ?int $id ): static {
             $this->id = $id;
             return $this;
         }
 
-        public function setBId( ?int $bId ) {
+        public function setBId( ?int $bId ): static {
             $this->bId = $bId;
             return $this;
         }
@@ -92,12 +92,12 @@
             return $this->aId;
         }
 
-        public function setId( ?int $id ) {
+        public function setId( ?int $id ): static {
             $this->id = $id;
             return $this;
         }
 
-        public function setAId( ?int $aId ) {
+        public function setAId( ?int $aId ): static {
             $this->aId = $aId;
             return $this;
         }
@@ -107,62 +107,62 @@
     class IdentifierTest
     extends TestCase {
 
-        public function testInit() {
+        public function testInit(): void {
             $ident = new Identifier( 'test' );
-            $this->assertSame( 'test', $ident->stringify() );
+            static::assertSame( 'test', $ident->stringify() );
         }
 
-        public function testTable() {
+        public function testTable(): void {
             $ident = new Identifier( 'table', 'column' );
-            $this->assertSame( 'table.column', $ident->stringify() );
+            static::assertSame( 'table.column', $ident->stringify() );
         }
 
-        public function testSchema() {
+        public function testSchema(): void {
             $ident = new Identifier( 'schema', 'table', 'column' );
-            $this->assertSame( 'schema.table.column', $ident->stringify() );
+            static::assertSame( 'schema.table.column', $ident->stringify() );
         }
 
-        public function testQuotedIdent() {
+        public function testQuotedIdent(): void {
 
             $driver = new Postgres( 'test', 'test', 'test', 'test', 'test' );
 
             $ident = new Identifier( 'column' );
 
-            $this->assertSame( '"column"', $ident->stringify( $driver ) );
+            static::assertSame( '"column"', $ident->stringify( $driver ) );
         }
 
-        public function testTranslatedIdentifier() {
+        public function testTranslatedIdentifier(): void {
 
             $ident = new Identifier( 'TEST' );
             $ident->addDataModelContext( new Example() );
 
-            $this->assertSame( "test", $ident->stringify() );
+            static::assertSame( "test", $ident->stringify() );
 
             $ident = new Identifier( 'test' );
             $ident->addDataModelContext( new Example() );
-            $this->assertSame( "test", $ident->stringify() );
+            static::assertSame( "test", $ident->stringify() );
 
             $ident = new Identifier( 'snakecase' );
             $ident->addDataModelContext( new Example() );
-            $this->assertSame( "snakecase", $ident->stringify() );
+            static::assertSame( "snakecase", $ident->stringify() );
 
             $ident = new Identifier( 'snakeCase' );
             $ident->addDataModelContext( new Example() );
-            $this->assertSame( "snakecase", $ident->stringify() );
+            static::assertSame( "snakecase", $ident->stringify() );
 
             $ident = new Identifier( 'StrAngECAse' );
             $ident->addDataModelContext( new Example() );
-            $this->assertSame( "strangecase", $ident->stringify() );
+            static::assertSame( "strangecase", $ident->stringify() );
         }
 
-        public function testTranslateMultipleContext() {
+        public function testTranslateMultipleContext(): void {
 
 
             $ident = new Identifier( 'bId' );
             $ident->addDataModelContext( new A );
             $ident->addDataModelContext( new B );
 
-            $this->assertSame( 'b_id', $ident->stringify() );
+            static::assertSame( 'b_id', $ident->stringify() );
         }
 
     }

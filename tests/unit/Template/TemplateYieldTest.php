@@ -1,12 +1,15 @@
 <?php
 
+    use \PHPUnit\Framework\TestCase;
+    use \verfriemelt\wrapped\_\Template\Template;
+
     class TemplateYieldTest
-    extends \PHPUnit\Framework\TestCase {
+    extends TestCase {
 
-        private $tpl;
+        private Template $tpl;
 
-        public function testLoadTemplateFile() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
+        public function testLoadTemplateFile(): void {
+            $this->tpl = new Template;
             $this->tpl->parseFile( __DIR__ . "/templateTests/repeater.tpl" );
 
             $r          = $this->tpl->createRepeater( "r" );
@@ -22,7 +25,7 @@
                 $output .= $tmp;
             }
 
-            $this->assertEquals( $output, "012345678" );
+            static::assertSame( $output, "012345678" );
         }
 
     }

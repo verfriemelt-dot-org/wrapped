@@ -9,24 +9,24 @@
     class FromTest
     extends TestCase {
 
-        public function testSimple() {
+        public function testSimple(): void {
             $from = new From( new Identifier( 'table' ) );
-            $this->assertSame( 'FROM table', $from->stringify() );
+            static::assertSame( 'FROM table', $from->stringify() );
         }
 
-        public function testSimpleAlias() {
+        public function testSimpleAlias(): void {
             $from = new From(
                 (new Identifier( 'table' ) )
                     ->addAlias( new Identifier( 'tb' ) )
             );
-            $this->assertSame( 'FROM table AS tb', $from->stringify() );
+            static::assertSame( 'FROM table AS tb', $from->stringify() );
         }
 
-        public function testFromExpression() {
+        public function testFromExpression(): void {
             $from = new From(
                 (new Select( ) )->add( new Value( true ) )
             );
-            $this->assertSame( 'FROM ( SELECT true )', $from->stringify() );
+            static::assertSame( 'FROM ( SELECT true )', $from->stringify() );
         }
 
     }

@@ -1,36 +1,40 @@
 <?php
 
+    use \PHPUnit\Framework\TestCase;
+    use \verfriemelt\wrapped\_\Template\Template;
+
     class foo {
 
-        public function bar() {
+        public function bar(): string {
             return "epic";
         }
 
     }
 
-    class TemplateCallbackTest extends \PHPUnit\Framework\TestCase {
+    class TemplateCallbackTest
+    extends TestCase {
 
-        private $tpl;
+        private Template $tpl;
 
-        public function testClousure() {
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate('{{ testingVar }}');
+        public function testClousure(): void {
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( '{{ testingVar }}' );
 
-            $this->tpl->set("testingVar", function () {
+            $this->tpl->set( "testingVar", function () {
                 return "epic";
-            });
+            } );
 
-            $this->assertEquals($this->tpl->run(), "epic");
+            static::assertSame( $this->tpl->run(), "epic" );
         }
 
-        public function testShouldNotCallFunctions() {
+        public function testShouldNotCallFunctions(): void {
 
-            $this->tpl = new \verfriemelt\wrapped\_\Template\Template;
-            $this->tpl->setRawTemplate('{{ testingVar }}');
+            $this->tpl = new Template;
+            $this->tpl->setRawTemplate( '{{ testingVar }}' );
 
-            $this->tpl->set("testingVar", "system");
+            $this->tpl->set( "testingVar", "system" );
 
-            $this->assertEquals($this->tpl->run(), "system");
+            static::assertSame( $this->tpl->run(), "system" );
         }
 
     }
