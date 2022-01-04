@@ -79,16 +79,15 @@ jobs:
 
   int-sqlite:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Setup PHP 8.1
       uses: shivammathur/setup-php@v2
       with:
         php-version: latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
 
     - name: Install dependencies
       uses: php-actions/composer@v5
