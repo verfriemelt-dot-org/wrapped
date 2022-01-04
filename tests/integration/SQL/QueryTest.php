@@ -21,7 +21,7 @@
             $stmt = new Statement();
             $stmt->setCommand( new Select( (new Expression( new Value( 1 ) ) )->as( new Identifier( 'test' ) ) ) );
 
-            static::assertSame( 1, static::$connection->run( $stmt )->fetch()['test'] );
+            static::assertSame( "1", static::$connection->run( $stmt )->fetch()['test'] );
         }
 
     }
