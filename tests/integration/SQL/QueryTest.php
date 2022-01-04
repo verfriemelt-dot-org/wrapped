@@ -2,9 +2,8 @@
 
     namespace integration\SQL;
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Database;
-    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use \DatabaseTestCase;
+    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
     use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
@@ -13,15 +12,19 @@
     use \verfriemelt\wrapped\_\Database\SQL\Statement;
 
     class QueryTest
-    extends \DatabaseTestCase {
-
+    extends DatabaseTestCase {
 
         public function test(): void {
 
             $stmt = new Statement();
             $stmt->setCommand( new Select( (new Expression( new Value( 1 ) ) )->as( new Identifier( 'test' ) ) ) );
 
-            static::assertSame( "1", static::$connection->run( $stmt )->fetch()['test'] );
+            $expected = match ( (static::$connection)::class ) {
+                SQLite::class => 1,
+                Postgres::class => "1",
+            };
+
+            static::assertSame( $expected, static::$connection->run( $stmt )->fetch()['test'] );
         }
 
     }

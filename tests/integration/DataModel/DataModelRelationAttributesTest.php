@@ -79,6 +79,10 @@
 
         public function setUp(): void {
 
+            if ( static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35 ) {
+                static::markTestSkipped( 'returning not supported' );
+            }
+
             switch ( static::$connection::class ) {
                 case Postgres::class:
                     static::$connection->query( 'create table "A" ( id serial primary key, b_id int );' );

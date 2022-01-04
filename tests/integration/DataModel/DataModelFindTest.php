@@ -86,6 +86,11 @@
         }
 
         public function setUp(): void {
+
+            if ( static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35 ) {
+                static::markTestSkipped( 'returning not supported' );
+            }
+
             $this->tearDown();
 
             switch ( static::$connection::class ) {

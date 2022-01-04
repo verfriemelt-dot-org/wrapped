@@ -58,6 +58,15 @@
     class DataModelAttributeTest
     extends DatabaseTestCase {
 
+        public function setUp(): void {
+
+            if ( static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35 ) {
+                static::markTestSkipped( 'returning not supported' );
+            }
+
+            parent::setUp();
+        }
+
         public function tearDown(): void {
             static::$connection->query( 'drop table if exists dummy;' );
             static::$connection->query( 'drop table if exists lowerdummy ;' );

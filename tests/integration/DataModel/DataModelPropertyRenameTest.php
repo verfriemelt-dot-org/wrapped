@@ -46,6 +46,10 @@
         public function setUp(): void {
             $this->tearDown();
 
+            if ( static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35 ) {
+                static::markTestSkipped( 'returning not supported' );
+            }
+
             switch ( static::$connection::class ) {
                 case Postgres::class:
                     static::$connection->query( "create table \"RenameTester\" ( id serial, \"rAnDoMCAsIng\" text ) " );
