@@ -2,7 +2,7 @@ name: testing
 on: push
 jobs:
   unit:
-    runs-on: ubuntu-latest
+    runs-on: debian
 
     services:
       postgres:
@@ -34,7 +34,7 @@ jobs:
       run: php vendor/bin/phpunit
 
   int-psql:
-    runs-on: ubuntu-latest
+    runs-on: debian
 
     services:
       postgres:
@@ -74,11 +74,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    - name: upgrade sqlite3
-      run: |
-        sudo apt-get update
-        sudo apt-get install sqlite3
 
     - name: Install dependencies
       uses: php-actions/composer@v5
