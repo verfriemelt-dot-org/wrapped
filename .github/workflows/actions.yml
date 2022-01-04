@@ -1,4 +1,4 @@
-name: phpunit
+name: testing
 on: push
 jobs:
   unit:
@@ -59,7 +59,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v5
       with:
-        php_version: 8.0
+        php_version: 8.1
         version: 2
 
     - name: run tests
@@ -78,7 +78,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v5
       with:
-        php_version: 8.0
+        php_version: 8.1
         version: 2
 
     - name: run tests
