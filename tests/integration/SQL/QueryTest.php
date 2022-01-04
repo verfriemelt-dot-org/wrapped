@@ -13,13 +13,8 @@
     use \verfriemelt\wrapped\_\Database\SQL\Statement;
 
     class QueryTest
-    extends TestCase {
+    extends \DatabaseTestCase {
 
-        static DatabaseDriver $connection;
-
-        public static function setUpBeforeClass(): void {
-            static::$connection = Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-        }
 
         public function test(): void {
 
