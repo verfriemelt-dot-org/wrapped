@@ -22,13 +22,13 @@
         public function connect(): void {
             parent::connect();
 
-            $result = $this->query('SELECT sqlite_version()')->fetch();
+            $result = $this->query('SELECT sqlite_version()')->fetchColumn(1);
 
-            if ( !is_array($result) ) {
+            if ( !is_string($result) ) {
                 throw new \RuntimeException('cannot fetch version');
             }
 
-            $this->databaseVersion = $result["sqlite_version"];
+            $this->databaseVersion = $result;
         }
 
         public function getVersion(): float {
