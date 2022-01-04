@@ -68,7 +68,7 @@ jobs:
         database_driver: postgresql
 
   int-sqlite:
-    runs-on: ubuntu-21.11
+    runs-on: debian
 
     steps:
     - uses: actions/checkout@v2
