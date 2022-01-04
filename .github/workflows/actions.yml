@@ -84,6 +84,14 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: upgrade sqlite3
+       run: |
+        wget http://mirrors.kernel.org/ubuntu/pool/main/s/sqlite3/sqlite3_3.35.5-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/s/sqlite3/libsqlite3-0_3.35.5-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.34-0ubuntu3_amd64.deb
+        dpkg -i *.deb
+
+
     - name: Setup PHP 8.1
       uses: shivammathur/setup-php@v2
       with:
