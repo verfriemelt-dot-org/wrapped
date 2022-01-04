@@ -22,7 +22,7 @@
         public function connect(): void {
             parent::connect();
 
-            $result = $this->query('SELECT sqlite_version()')->fetchColumn(1);
+            $result = $this->query('SELECT sqlite_version()')->fetchColumn();
 
             if ( !is_string($result) ) {
                 throw new \RuntimeException('cannot fetch version');
