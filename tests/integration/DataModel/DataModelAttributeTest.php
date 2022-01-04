@@ -3,6 +3,7 @@
     namespace integration\DataModel\AttributeTest;
 
     use \DatabaseTestCase;
+    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
     use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;

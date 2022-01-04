@@ -20,8 +20,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
     switch ( $env->get( 'database_driver' ) ) {
         case 'sqlite':
             Database::createNewConnection( 'default', SQLite::class, "", "", "", "", 0 );
-
-            var_dump(Database::getConnection()->query('SELECT sqlite_version()')->fetch());
             break;
 
         case 'postgresql':
