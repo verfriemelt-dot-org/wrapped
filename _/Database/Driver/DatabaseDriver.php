@@ -93,7 +93,7 @@
             $this->connectionHandle = null;
         }
 
-        public function connect() {
+        public function connect(): void {
 
             try {
                 $this->connectionHandle = new PDO(
