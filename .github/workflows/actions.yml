@@ -76,9 +76,9 @@ jobs:
         fetch-depth: 0
 
     - name: upgrade sqlite3
-            run: |
-              sudo apt-get update
-              sudo apt-get install sqlite3
+      run: |
+        sudo apt-get update
+        sudo apt-get install sqlite3
 
     - name: Install dependencies
       uses: php-actions/composer@v5
