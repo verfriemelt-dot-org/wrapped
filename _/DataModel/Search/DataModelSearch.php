@@ -35,7 +35,7 @@
             $this->fields = $fields;
             return $this;
         }
-        
+
         /**
          * escape all like specific elements, like _ and % as well as backslashes
          * @param string $searchString
@@ -99,7 +99,7 @@
             $fieldIdentifier = array_map( fn( $f ) => new Identifier( $this->prototype->fetchTablename(), $f ), $fields );
 
             // distance expressions list
-            $fieldExpressions = array_map( fn( Identifier $i ) => new Expression( $i, new Operator( '<->' ), new Value( $searchString ) ), $fieldIdentifier );
+            $fieldExpressions = array_map( fn( Identifier $i ) => new Expression( $i, new Operator( '<->' ), new Value( preg_quote($searchString) ) ), $fieldIdentifier );
 
             $query->order = new Order();
             $query->order->add( new Expression( new SqlFunction( new Identifier( 'least' ), ... $fieldExpressions ) ), 'asc' );
