@@ -25,7 +25,7 @@
 
         private ?array $fields = null;
 
-        private $operator = 'ilike';
+        private $operator = '~*';
 
         public function __construct( Searchable $prototype ) {
             $this->prototype = $prototype;
@@ -35,6 +35,7 @@
             $this->fields = $fields;
             return $this;
         }
+        
         /**
          * escape all like specific elements, like _ and % as well as backslashes
          * @param string $searchString
@@ -58,7 +59,7 @@
 
             $query = $query ?: $this->prototype::buildSelectQuery();
 
-            $pieces = $this->split( $this->escapeLike( $searchString ) );
+            $pieces = $this->split( preg_quote( $searchString ) );
             $fields = $this->fields ?? $this->prototype::getSearchFields();
 
             if ( count( $pieces ) === 0 ) {
@@ -84,7 +85,7 @@
 
                     $bracket->add( new Identifier( $this->prototype->fetchTablename(), $fields[$fieldIndex] ) );
                     $bracket->add( new Operator( $this->operator ) );
-                    $bracket->add( new Value( "%{$pieces[$pieceIndex]}%" ) );
+                    $bracket->add( new Value( "{$pieces[$pieceIndex]}" ) );
 
                     if ( $fieldIndex + 1 < count( $fields ) ) {
                         $bracket->add( new Conjunction( 'or' ) );
