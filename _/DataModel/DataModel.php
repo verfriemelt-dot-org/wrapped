@@ -614,7 +614,6 @@
                     // query part
                     $query    = isset( $args[0] ) ? $args[0] : [];
                     $query [] = [ $resolv->rightColumn, "=", $this->{ $resolv->leftColumn } ];
-//                    var_dump( $query );
 
                     $model    = $resolv->rightClass;
                     $instance = new ($propertyType->getName())( ... $model::find( $query ) );
