@@ -1092,12 +1092,13 @@
             ] );
 
             $query->addContext( $this );
+            $result = $query->fetch();
 
-//            var_dump( $query->stringify() );
-//            die();
+            if ( $result === null ) {
+                throw new DatabaseException('no data returned');
+            }
 
-
-            return $this->initData( $query->fetch() );
+            return $this->initData( $result );
         }
 
         /**
@@ -1202,13 +1203,13 @@
                         HAVING path = {$path}
                         ORDER BY node.{$databaseHandle->quoteIdentifier( 'left' )}, parent.{$databaseHandle->quoteIdentifier( 'left' )}";
 
-            $res = $databaseHandle->query( $query );
+            $result = $databaseHandle->query( $query )->fetch( PDO::FETCH_ASSOC );
 
-            if ( $res->rowCount() == 0 ) {
+            if ( !is_array($result )) {
                 return false;
             }
 
-            return (new static() )->initData( $res->fetch( PDO::FETCH_ASSOC ) );
+            return (new static() )->initData( $result );
         }
 
         public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ): Collection {

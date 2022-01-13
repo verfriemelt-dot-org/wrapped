@@ -57,9 +57,15 @@
 
         public function buildQuery( string $searchString, QueryBuilder $query = null ): DataModelQueryBuilder {
 
+            if ( in_array($this->operator, ['~', '~*'], true) ) {
+                $searchString = preg_quote($searchString);
+            } elseif ( in_array($this->operator, ['~~', '~~*', 'LIKE', 'ILIKE', 'like', 'ilike'], true) ) {
+                $searchString = $this->escapeLike($searchString);
+            }
+
             $query = $query ?: $this->prototype::buildSelectQuery();
 
-            $pieces = $this->split( preg_quote( $searchString ) );
+            $pieces = $this->split( $searchString );
             $fields = $this->fields ?? $this->prototype::getSearchFields();
 
             if ( count( $pieces ) === 0 ) {
