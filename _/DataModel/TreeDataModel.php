@@ -143,8 +143,7 @@
             }
 
             if (
-                $moveTo->getLeft() > $this->left &&
-                $moveTo->getRight() < $this->right
+                $moveTo->getLeft() > $this->left && $moveTo->getRight() < $this->right
             ) {
                 throw new DatabaseException( "cannot move model under itself" );
             }
@@ -395,7 +394,7 @@
                                     new Identifier( 'right' ),
                                     new Operator( "+" ),
                                     new Value( 2 )
-                            ) ) )
+                                ) ) )
                         ) )
                         ->add(
                             new Where(
@@ -411,7 +410,7 @@
                                             new From( new Identifier( "_move" ) )
                                         )
                                     ) )
-                        ) )
+                            ) )
                 );
             } else {
 
@@ -1089,13 +1088,13 @@
             $query->returning( ... [
                 static::getPrimaryKey(),
                 ... $specialColumns
-            ] );
+                ] );
 
             $query->addContext( $this );
             $result = $query->fetch();
 
             if ( $result === null ) {
-                throw new DatabaseException('no data returned');
+                throw new DatabaseException( 'no data returned' );
             }
 
             return $this->initData( $result );
@@ -1205,7 +1204,7 @@
 
             $result = $databaseHandle->query( $query )->fetch( PDO::FETCH_ASSOC );
 
-            if ( !is_array($result )) {
+            if ( !is_array( $result ) ) {
                 return false;
             }
 
@@ -1263,8 +1262,7 @@
         public function isChildOf( TreeDataModel $model ): bool {
 
             return
-                $this->getRight() < $model->getRight() &&
-                $this->getLeft() > $model->getLeft();
+                $this->getRight() < $model->getRight() && $this->getLeft() > $model->getLeft();
         }
 
         /**
