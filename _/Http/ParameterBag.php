@@ -14,7 +14,7 @@
 
         private $parameters = [];
 
-        private $raw = null;
+        private ?string $raw = null;
 
         public function __construct( array $parameters ) {
             $this->parameters = $parameters;
@@ -95,23 +95,17 @@
             return $return;
         }
 
-        /**
-         * overrides key in the given bag
-         * @param type $key
-         * @param type $value
-         * @return ParameterBag
-         */
-        public function override( $key, $value ) {
+        public function override( string $key, string $value ): static {
             $this->parameters[$key] = $value;
             return $this;
         }
 
-        public function setRawData( $content ): ParameterBag {
+        public function setRawData( string $content ): static {
             $this->raw = $content;
             return $this;
         }
 
-        public function getRawData() {
+        public function getRawData(): ?string {
             return $this->raw;
         }
 
