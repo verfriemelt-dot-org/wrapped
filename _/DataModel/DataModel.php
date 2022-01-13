@@ -38,9 +38,8 @@
          * this stores the hashvalues of the properties, to determine which columns
          * should be updated
          * [ "key" => "value" ]
-         * @param type $data
          */
-        public function initData( $data, bool $deserialize = false ): static {
+        public function initData( array $data, bool $deserialize = false ): static {
 
             $analyser = static::createDataModelAnalyser();
 
@@ -268,7 +267,13 @@
             $query->where( [ static::getPrimaryKey() => $this->{static::getPrimaryKey()} ] );
             $query->limit( 1 );
 
-            $this->initData( $query->fetch(), true );
+            $data = $query->fetch();
+
+            if ( $data === null ) {
+                throw new DatabaseException("object was deleted");
+            }
+
+            $this->initData( $data, true );
 
             return $this;
         }
