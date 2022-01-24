@@ -148,10 +148,8 @@
 
         protected function bindLast( $param, $var ) {
 
-            if ( self::$debug ) {
-                self::$debugLastParams["param"][] = $param;
-                self::$debugLastParams["var"][]   = $var;
-            }
+            self::$debugLastParams["param"][] = $param;
+            self::$debugLastParams["var"][]   = $var;
 
             $this->bind( $this->lastStatement, $param, $var );
             return $this;
@@ -170,24 +168,12 @@
             try {
                 $this->lastresult = $statement->execute();
             } catch ( PDOException $e ) {
-                throw new DatabaseException( $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" );
+                throw new DatabaseException( $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" . print_r( self::$debugLastParams, true ) );
             }
 
             $time = microtime( true ) - $start;
 
             if ( static::$debug ) {
-
-//                $trace = debug_backtrace();
-//                $log = [];
-//
-//                foreach( $trace as $entry ) {
-//
-//                    if ( !isset($entry["file"])) {
-//                        continue;
-//                    }
-//
-//                    $log[] = $entry["file"] . ":" . $entry["line"];
-//                }
 
                 static::$debugHistory[] = [
                     "con"       => $this->connectionName,
@@ -216,10 +202,8 @@
 
         public function prepare( string $statement ): static {
 
-            if ( self::$debug ) {
-                self::$debugLastParams    = [];
-                self::$debugLastStatement = $statement;
-            }
+            self::$debugLastParams    = [];
+            self::$debugLastStatement = $statement;
 
             $this->lastStatement = $this->connectionHandle->prepare( $statement );
 
@@ -312,10 +296,6 @@
             $this->prepare( $sql );
             $this->executeLast();
             return $this->lastStatement;
-        }
-
-        public function queryUnbound( $sql ) {
-            $this->connectionHandle->query( $sql );
         }
 
         public function queryWithDbLogic( string $sql, DbLogic $dbLogic, $precompiled = false ): PDOStatement {
