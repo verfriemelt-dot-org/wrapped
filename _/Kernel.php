@@ -83,7 +83,7 @@
             $route = $this->router->handleRequest( $this->request->uri() );
 
             foreach ( $route->getAttributes() as $key => $value ) {
-                $this->request->attributes()->override( $key, $value ?? '' );
+                $this->request->attributes()->override( $key, $value );
             }
 
             // router filter
