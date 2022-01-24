@@ -95,7 +95,7 @@
             return $return;
         }
 
-        public function override( string $key, string $value ): static {
+        public function override( string $key, string $value = null ): static {
             $this->parameters[$key] = $value;
             return $this;
         }
