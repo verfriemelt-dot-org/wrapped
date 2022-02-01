@@ -8,7 +8,7 @@
          failOnWarning="true"
          defaultTestSuite="unit"
          failOnSkipped="false"
-         verbose="false"
+         verbose="true"
 >
     <testsuites>
         <testsuite name="unit">
