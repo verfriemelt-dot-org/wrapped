@@ -97,7 +97,11 @@
 
             $this->select = new Select();
 
-            $what = [ ... ( is_array( $table ) ? $table : [ $table ]), $what ];
+            if ( $what !== '*' ) {
+                $what = [ ... ( is_array( $table ) ? $table : [ $table ]), $what ];
+            } else {
+                $what = [ $what ];
+            }
 
             if ( $distinct ) {
                 $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ))->as( new Identifier('count') ) );
