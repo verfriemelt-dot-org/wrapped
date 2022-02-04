@@ -76,7 +76,7 @@
             return $this->stmt;
         }
 
-        public function select( ... $cols ) {
+        public function select( ... $cols ): static {
             $this->select = new Select();
             $this->stmt->setCommand( $this->select );
 
@@ -93,7 +93,7 @@
             return $this;
         }
 
-        public function count( $table, $what = '*', bool $distinct = false ) {
+        public function count( $table, $what = '*', bool $distinct = false ): static {
 
             $this->select = new Select();
 
@@ -104,9 +104,9 @@
             }
 
             if ( $distinct ) {
-                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ))->as( new Identifier('count') ) );
+                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Expression( new Operator( 'distinct' ), new Identifier( ... $what ) ) ) )->as( new Identifier( 'count' ) ) );
             } else {
-                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Identifier( ... $what ) ))->as( new Identifier('count') ) );
+                $this->select->add( (new SqlFunction( new Identifier( 'count' ), new Identifier( ... $what ) ) )->as( new Identifier( 'count' ) ) );
             }
 
             $this->stmt = new Statement( $this->select );
@@ -116,7 +116,7 @@
             return $this;
         }
 
-        public function delete( $table ) {
+        public function delete( $table ): static {
 
             $this->delete = new Delete( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->delete );
@@ -124,7 +124,7 @@
             return $this;
         }
 
-        public function update( $table, array $cols ) {
+        public function update( $table, array $cols ): static {
 
             $this->update = new Update( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->update );
@@ -134,7 +134,7 @@
             return $this;
         }
 
-        public function insert( $table, $cols ) {
+        public function insert( $table, $cols ): static {
 
             $this->insert = new Insert( new Identifier( ... $this->boxIdent( $table ) ) );
             $this->stmt->setCommand( $this->insert );
@@ -144,7 +144,7 @@
             return $this;
         }
 
-        public function returning( string ... $cols ) {
+        public function returning( string ... $cols ): static {
 
             $this->returning = new Returning();
             $this->stmt->add( $this->returning );
@@ -154,7 +154,7 @@
             return $this;
         }
 
-        public function values( $data ) {
+        public function values( $data ): static {
 
             $this->values = new Values();
             $this->stmt->add( $this->values );
@@ -162,7 +162,7 @@
             return $this;
         }
 
-        public function from( ?string ... $from ) {
+        public function from( ?string ... $from ): static {
             $this->from = new From( new Identifier( ... $from ) );
             $this->stmt->add( $this->from );
             return $this;
@@ -180,7 +180,7 @@
             return $this->where->expression;
         }
 
-        public function where( array $where ) {
+        public function where( array $where ): static {
 
             $expression = $this->getWhereExpression();
 
@@ -204,8 +204,7 @@
                     } elseif ( in_array( $value[2], [ false, true, null ], true ) ) {
                         // cast to operator directly IS TRUE, IS FALSE, IS NULL
                         $expression->add( new Operator( 'is ' . (new Value( $value[2] ) )->stringify() ) );
-                    }
-                    else {
+                    } else {
                         $expression->add( new Operator( $value[1] ) );
                         $expression->add( new Value( $value[2] ) );
                     }
@@ -238,7 +237,7 @@
             return $this;
         }
 
-        public function order( array $order ) {
+        public function order( array $order ): static {
 
             $this->order = new Order();
             $this->stmt->add( $this->order );
@@ -253,14 +252,14 @@
             return $this;
         }
 
-        public function groupBy( array $f ) {
+        public function groupBy( array $f ): static {
 
             $this->groupBy = new GroupBy( new Identifier( ... $f ) );
             $this->stmt->add( $this->groupBy );
             return $this;
         }
 
-        public function limit( int $limit ) {
+        public function limit( int $limit ): static {
 
             $this->limit = new Limit( new Value( $limit ) );
             $this->stmt->add( $this->limit );
@@ -268,7 +267,11 @@
             return $this;
         }
 
-        public function offset( int $offset ) {
+        public function offset( int $offset ): static {
+
+            if ( $offset === 0 ) {
+                return $this;
+            }
 
             $this->offset = new Offset( new Value( $offset ) );
             $this->stmt->add( $this->offset );
@@ -310,7 +313,7 @@
                 $this->stmt->add( $this->limit );
             }
 
-            if ( null !==$logic->getOffset() ) {
+            if ( null !== $logic->getOffset() ) {
                 $this->offset = $logic->getOffset();
                 $this->stmt->add( $this->offset );
             }
@@ -323,12 +326,12 @@
                 $this->stmt->add( $this->order );
             }
 
-            if ( null !==$logic->getGroupBy() ) {
+            if ( null !== $logic->getGroupBy() ) {
                 $this->groupBy = $logic->getGroupBy();
                 $this->stmt->add( $this->groupBy );
             }
 
-            if ( null !==$logic->getHaving() ) {
+            if ( null !== $logic->getHaving() ) {
                 $this->having = $logic->getHaving();
                 $this->stmt->add( $this->having );
             }

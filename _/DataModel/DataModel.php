@@ -354,13 +354,7 @@
             return static::findSingle( [], static::getPrimaryKey(), 'desc' );
         }
 
-        /**
-         *
-         * @param type $count
-         * @param type $offset
-         * @return static[]
-         */
-        public static function take( $count, $offset = null, $params = [] ): Collection {
+        public static function take( int $count, int $offset = 0, array|DbLogic $params = [] ): Collection {
 
             $query = static::buildSelectQuery();
 
