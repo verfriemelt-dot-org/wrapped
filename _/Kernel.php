@@ -2,17 +2,15 @@
 
     namespace verfriemelt\wrapped\_;
 
-    use \_\Controller\PageNotFoundController;
     use \Closure;
-    use \Exception;
+    use \Throwable;
     use \verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
     use \verfriemelt\wrapped\_\DI\ArgumentResolver;
     use \verfriemelt\wrapped\_\DI\Container;
-    use \verfriemelt\wrapped\_\Exception\Router\NoRouteMatching;
-    use \verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
+    use \verfriemelt\wrapped\_\Events\EventDispatcher;
+    use \verfriemelt\wrapped\_\Events\ExceptionEvent;
     use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
     use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Http\Response\Redirect;
     use \verfriemelt\wrapped\_\Http\Response\Response;
     use \verfriemelt\wrapped\_\Router\Router;
 
@@ -24,6 +22,8 @@
 
         protected Container $container;
 
+        protected EventDispatcher $eventDispatcher;
+
         public function __construct() {
 
             $this->request = Request::createFromGlobals();
@@ -31,7 +31,8 @@
             $this->container = new Container();
             $this->container->register( $this->request::class, $this->request );
 
-            $this->router = $this->container->get( Router::class );
+            $this->router          = $this->container->get( Router::class );
+            $this->eventDispatcher = $this->container->get( EventDispatcher::class );
         }
 
         public function getContainer(): Container {
@@ -126,12 +127,22 @@
                         ->prepare( ...$resolver->resolv( $callback, 'prepare' ) )
                         ->handleRequest( ...$resolver->resolv( $callback, 'handleRequest' ) );
                 }
-
-            } catch ( \verfriemelt\wrapped\_\Router\RedirectException $e ) {
-                return $e->getRedirect();
+            } catch ( Throwable $e ) {
+                $response = $this->dispatchException( $e );
             }
 
             return $response;
+        }
+
+        protected function dispatchException( Throwable $exception ): Response {
+
+            $exceptionEvent = $this->eventDispatcher->dispatch( new ExceptionEvent( $exception, $this->request ) );
+
+            if ( $exceptionEvent->hasResponse() ) {
+                return $exceptionEvent->getResponse();
+            }
+
+            throw $exceptionEvent->getThrowable();
         }
 
     }

@@ -6,21 +6,34 @@
 
     use \Closure;
 
+    /**
+     * @template T of object
+     */
     class ServiceArgumentResolver
     extends ArgumentResolver {
 
+        /**
+         * @var ServiceConfiguration<T>
+         */
         protected ServiceConfiguration $service;
 
+        /**
+         *
+         * @param Container $container
+         * @param ArgumentMetadataFactory $factory
+         * @param ServiceConfiguration<T> $service
+         */
         public function __construct( Container $container, ArgumentMetadataFactory $factory, ServiceConfiguration $service ) {
             parent::__construct( $container, $factory );
 
             $this->service = $service;
         }
 
+
         protected function buildParameter( ArgumentMetadata $parameter ) {
 
-            if ( $this->service->hasParameter( $parameter->getType() ) ) {
-                $param = $this->service->getParemter( $parameter->getType() );
+            if ( $parameter->hasType() && $this->service->hasParameter( $parameter->getType() ) ) {
+                $param = $this->service->getParemeter( $parameter->getType() );
 
                 if ( $param instanceof Closure ) {
 

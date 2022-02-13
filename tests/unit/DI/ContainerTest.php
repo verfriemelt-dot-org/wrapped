@@ -22,6 +22,8 @@
         public function testGetClass(): void {
 
             $container = new Container;
+
+            /** @phpstan-ignore-next-line */
             static::assertInstanceOf( a::class, $container->get( a::class ) );
         }
 
@@ -33,7 +35,6 @@
             $container->register( $b::class, $b );
 
             $result = $container->get( a::class );
-            static::assertInstanceOf( a::class, $result );
             static::assertSame( $result->b->instance, $b->instance, 'instance must be reused' );
         }
 
@@ -45,7 +46,6 @@
             $container->register( $b::class, $b )->share( false );
 
             $result = $container->get( a::class );
-            static::assertInstanceOf( a::class, $result );
             static::assertNotSame( $result->b->instance, $b->instance, 'instance must not be reused' );
         }
 

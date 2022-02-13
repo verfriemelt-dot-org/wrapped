@@ -10,12 +10,23 @@
 
         private string $name;
 
+        /**
+         *
+         * @var class-string|null
+         */
         private ?string $type = null;
 
         private bool $hasDefaultValue;
 
         private mixed $defaultValue;
 
+        /**
+         *
+         * @param string $name
+         * @param class-string|null $type
+         * @param bool $hasDefaultValue
+         * @param mixed $defaultValue
+         */
         public function __construct( string $name, ?string $type, bool $hasDefaultValue = false, mixed $defaultValue = null ) {
 
             $this->name            = $name;
@@ -31,8 +42,21 @@
             return $this->name;
         }
 
-        public function getType(): ?string {
+        /**
+         *
+         * @return class-string
+         */
+        public function getType(): string {
+
+            if ( $this->type === null ) {
+                throw new \RuntimeException( 'nope' );
+            }
+
             return $this->type;
+        }
+
+        public function hasType(): bool {
+            return $this->type !== null;
         }
 
         public function hasDefaultValue(): bool {

@@ -46,12 +46,19 @@
             return $arguments;
         }
 
+        /**
+         *
+         * @param ReflectionParameter $parameter
+         * @param ReflectionFunctionAbstract $function
+         * @return class-string|null
+         */
         private function getType( ReflectionParameter $parameter, ReflectionFunctionAbstract $function ): ?string {
 
             if ( !$type = $parameter->getType() ) {
                 return null;
             }
 
+            /** @var class-string $name */
             $name = $type instanceof ReflectionNamedType ? $type->getName() : (string) $type;
             return $name;
         }
