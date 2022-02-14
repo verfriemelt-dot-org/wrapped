@@ -12,6 +12,7 @@
     use \verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
     use \verfriemelt\wrapped\_\Http\Request\Request;
     use \verfriemelt\wrapped\_\Http\Response\Response;
+    use verfriemelt\wrapped\_\Kernel\KernelResponse;
     use \verfriemelt\wrapped\_\Router\Router;
 
     class Kernel {
@@ -127,11 +128,18 @@
                         ->prepare( ...$resolver->resolv( $callback, 'prepare' ) )
                         ->handleRequest( ...$resolver->resolv( $callback, 'handleRequest' ) );
                 }
+
+                $this->triggerKernelResponse( $response ?? new Response() );
+
             } catch ( Throwable $e ) {
                 $response = $this->dispatchException( $e );
             }
 
             return $response;
+        }
+
+        protected function triggerKernelResponse( Response $response ): void {
+            $this->eventDispatcher->dispatch((new KernelResponse( $this->request ))->setResponse($response));
         }
 
         protected function dispatchException( Throwable $exception ): Response {
