@@ -26,10 +26,7 @@
          */
         public function __construct( string $id ) {
             $this->id = $id;
-
-            if ( class_exists( $id ) ) {
-                $this->setClass( $id );
-            }
+            $this->setClass( $id );
         }
 
         public function share( bool $bool = true ): static {

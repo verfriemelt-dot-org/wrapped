@@ -281,11 +281,6 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:resolv\\(\\)\\.$#"
-			count: 1
-			path: _/Controller/CliController.php
-
-		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/Controller/CliController.php
@@ -296,11 +291,6 @@ parameters:
 			path: _/Controller/CliController.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:resolv\\(\\)\\.$#"
-			count: 1
-			path: _/Controller/Controller.php
-
-		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/Controller/Controller.php
@@ -309,11 +299,6 @@ parameters:
 			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\Controller\\)\\.$#"
 			count: 1
 			path: _/Controller/Controller.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:resolv\\(\\)\\.$#"
-			count: 1
-			path: _/Controller/RestController.php
 
 		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
@@ -356,57 +341,7 @@ parameters:
 			path: _/DI/ArgumentResolver.php
 
 		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/DI/ArgumentResolver.php
-
-		-
-			message: "#^Access to an offset on an unknown class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Access to offset 0 on an unknown class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Array \\(array\\<verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\>\\) does not accept array\\|verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Array \\(array\\<verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\>\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Call to method isShareable\\(\\) on an unknown class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Parameter \\#1 \\$config of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:build\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration, verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\|verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration given\\.$#"
-			count: 2
-			path: _/DI/Container.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration given\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$interfaces has unknown class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration as its type\\.$#"
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$services has unknown class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration as its type\\.$#"
 			count: 1
 			path: _/DI/Container.php
 
@@ -414,36 +349,6 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceArgumentResolver\\:\\:buildParameter\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$class of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:getParemter\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/DI/ServiceArgumentResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$class of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:hasParameter\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/DI/ServiceArgumentResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/DI/ServiceArgumentResolver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceBuilder\\:\\:build\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DI/ServiceBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:getInterfaces\\(\\) should return array but returns array\\<string, string\\>\\|false\\.$#"
-			count: 1
-			path: _/DI/ServiceConfiguration.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:getParemter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DI/ServiceConfiguration.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$id is never read, only written\\.$#"
@@ -636,22 +541,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Default value of the parameter \\#1 \\$params \\(array\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Default value of the parameter \\#3 \\$order \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Dynamic call to static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:createDataModelAnalyser\\(\\)\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Iterating over an object of an unknown class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -701,22 +591,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:find\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:find\\(\\) has parameter \\$orderBy with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:isPropertyInitialized\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:take\\(\\) has parameter \\$params with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -777,41 +652,11 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @return with type array\\<static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\> is incompatible with native type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\.$#"
-			count: 2
+			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
 			message: "#^PHPDoc tag @return with type static is not subtype of native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array given\\.$#"
-			count: 2
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$limit of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:limit\\(\\) expects int, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$offset of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:offset\\(\\) expects int, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$params of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$params of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array\\<string, mixed\\> given\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -826,32 +671,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Parameter \\#1 \\$where of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:where\\(\\) expects array, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Parameter \\#2 \\$haystack of function in_array expects array, array\\<string, string\\>\\|false given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#2 \\$orderBy of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\|null, string given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#3 \\$order of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, string given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$count of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:take\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -862,26 +682,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:_isPropertyFuzzy\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$offset of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:take\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$order of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$orderBy of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$params of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -903,11 +703,6 @@ parameters:
 		-
 			message: "#^Strict comparison using \\=\\=\\= between string and null will always evaluate to false\\.$#"
 			count: 5
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Variable \\$params in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
@@ -1061,16 +856,6 @@ parameters:
 			path: _/DataModel/PropertyObjectInterface.php
 
 		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:add\\(\\)\\.$#"
-			count: 2
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:fetchLast\\(\\)\\.$#"
-			count: 2
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
 			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:getSearchFields\\(\\)\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
@@ -1208,11 +993,6 @@ parameters:
 		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
 			count: 2
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Call to method where\\(\\) on an unknown class static\\.$#"
-			count: 3
 			path: _/DataModel/TreeDataModel.php
 
 		-
@@ -1391,21 +1171,6 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, mixed given\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\$sql of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:query\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type, string given\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of method PDO\\:\\:quote\\(\\) expects string, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type given\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -1491,11 +1256,6 @@ parameters:
 			path: _/DataModel/View/MaterializedViewDataModel.php
 
 		-
-			message: "#^Parameter \\#1 \\$sql of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:query\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type, string given\\.$#"
-			count: 1
-			path: _/DataModel/View/MaterializedViewDataModel.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:connect\\(\\)\\.$#"
 			count: 1
 			path: _/Database/Database.php
@@ -1566,132 +1326,7 @@ parameters:
 			path: _/Database/DbLogic.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:create\\(\\) has invalid return type static\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:create\\(\\) should return static but returns static\\(verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\)\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:fetchBindings\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getExpression\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getGroupBy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getHaving\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getLimit\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getOffset\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:getWhere\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:having\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isEmpty\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isFalse\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isIn\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isNotIn\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isNotNull\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isNull\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isTrue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:limit\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:limit\\(\\) has parameter \\$limit with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:merge\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:offset\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:offset\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:order\\(\\) has parameter \\$column with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:order\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:order\\(\\) has parameter \\$overrideTable with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:order\\(\\) has parameter \\$skipQuote with no type specified\\.$#"
 			count: 1
 			path: _/Database/DbLogic.php
 
@@ -1702,11 +1337,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:setTableName\\(\\) has parameter \\$table with no type specified\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:where\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/DbLogic.php
 
@@ -1736,46 +1366,6 @@ parameters:
 			path: _/Database/DbLogic.php
 
 		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$by$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$type$#"
-			count: 2
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\#1 \\$op of class verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Operator constructor expects string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type given\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\$by of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:groupBy\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\$column of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:column\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\$operator of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:op\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\$raw of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:raw\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:value\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:\\$tableName is never read, only written\\.$#"
 			count: 1
 			path: _/Database/DbLogic.php
@@ -1787,7 +1377,7 @@ parameters:
 
 		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 3
+			count: 1
 			path: _/Database/DbLogic.php
 
 		-
@@ -1846,11 +1436,6 @@ parameters:
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:connect\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:disconnet\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
@@ -1872,21 +1457,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:getCurrentUsername\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:prepare\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\Mysql but returns \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\)\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:queryUnbound\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:queryUnbound\\(\\) has parameter \\$sql with no type specified\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -1946,32 +1516,12 @@ parameters:
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Parameter \\#1 \\$query of method PDO\\:\\:prepare\\(\\) expects string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type given\\.$#"
+			message: "#^Parameter \\#1 \\$state of method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Database\\\\DatabaseException\\:\\:setSqlState\\(\\) expects string, mixed given\\.$#"
 			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\#1 \\$sql of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:query\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type, string given\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\#1 \\$statement of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:prepare\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type, string given\\.$#"
-			count: 2
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
 			message: "#^Parameter \\$param of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$sql of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:query\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$sql of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:queryWithDbLogic\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -1982,11 +1532,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\$statement of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:execute\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$statement of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:prepare\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -2106,11 +1651,6 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has parameter \\$table with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
@@ -2121,32 +1661,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:delete\\(\\) has parameter \\$table with no type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:from\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:getWhereExpression\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Expression but returns verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\.$#"
-			count: 2
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:groupBy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -2161,32 +1676,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:limit\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:offset\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:order\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:returning\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:run\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:select\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -2196,17 +1686,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$table with no type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:values\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -2216,17 +1696,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:where\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Only booleans are allowed in a negated boolean, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\|null given\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Order\\|null given\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -2241,37 +1711,7 @@ parameters:
 			path: _/Database/SQL/Aliasable.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\CTE\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/CTE.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/From.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\From\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/From.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/GroupBy.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\GroupBy\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/GroupBy.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\GroupBy\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/GroupBy.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\|null given\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/GroupBy.php
 
@@ -2282,22 +1722,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Having.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Having\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Having.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
 			count: 2
-			path: _/Database/SQL/Clause/Join.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Join\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
 			path: _/Database/SQL/Clause/Join.php
 
 		-
@@ -2336,19 +1761,9 @@ parameters:
 			path: _/Database/SQL/Clause/Order.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Order\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Order.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Order\\:\\:\\$expressions has no type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/Order.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Returning.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Returning\\:\\:add\\(\\) has no return type specified\\.$#"
@@ -2356,24 +1771,9 @@ parameters:
 			path: _/Database/SQL/Clause/Returning.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Returning\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Returning.php
-
-		-
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Returning\\:\\:CLAUSE through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/Returning.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Where.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Where\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Clause/Where.php
 
 		-
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Delete\\:\\:COMMAND through static\\:\\:\\.$#"
@@ -2401,17 +1801,7 @@ parameters:
 			path: _/Database/SQL/Command/Insert.php
 
 		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Command/Select.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Select\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Command/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Select\\:\\:wrap\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Select.php
 
@@ -2422,11 +1812,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Command/Update.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\:\\:wrap\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Update.php
 
@@ -2442,11 +1827,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Command/Values.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:wrap\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Values.php
 
@@ -2496,11 +1876,6 @@ parameters:
 			path: _/Database/SQL/Expression/Conjunction.php
 
 		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Expression.php
-
-		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Expression.php
@@ -2511,17 +1886,7 @@ parameters:
 			path: _/Database/SQL/Expression/Expression.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Expression\\:\\:wrap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Expression.php
-
-		-
 			message: "#^Only booleans are allowed in a ternary operator condition, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\|null given\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Expression.php
-
-		-
-			message: "#^Parameter \\#1 \\$child of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:addChild\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem given\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Expression.php
 
@@ -2596,11 +1961,6 @@ parameters:
 			path: _/Database/SQL/Expression/SqlFunction.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Value\\:\\:fetchBindings\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Value.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Value\\:\\:getBinding\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Value.php
@@ -2626,27 +1986,7 @@ parameters:
 			path: _/Database/SQL/QueryPart.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:addChild\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/QueryPart.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:addDataModelContext\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/QueryPart.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:fetchAllChildren\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/QueryPart.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:fetchBindings\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/QueryPart.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:getChildren\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/QueryPart.php
 
@@ -2832,11 +2172,6 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in a negated boolean, verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\|null given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\#1 \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:optional\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type, true given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/FormType.php
 
@@ -3336,11 +2671,6 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:getRawData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) has parameter \\$key with no type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
@@ -3386,27 +2716,7 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:setRawData\\(\\) has parameter \\$content with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:override\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Http\\\\type\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:override\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Http\\\\type\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:\\$parameters has no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:\\$raw has no type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
@@ -3841,36 +3151,6 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Default value of the parameter \\#1 \\$bool \\(true\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:multiple\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$bool \\(true\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:optional\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$bool \\(true\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:required\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$chars \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:allowedChars\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$int \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:maxLength\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$int \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:minLength\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:addAllowedValue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
@@ -3881,68 +3161,8 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:checkValues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:checkValues\\(\\) has parameter \\$input with no type specified\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:required\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\#1 \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:optional\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type, bool given\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, int\\|string given\\.$#"
 			count: 3
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:multiple\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:optional\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:required\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$chars of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:allowedChars\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$int of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:maxLength\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$int of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:minLength\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$valueName of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:has\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Parameter \\$valueName of method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:this\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Input\\\\type\\.$#"
-			count: 1
 			path: _/Input/FilterItem.php
 
 		-
@@ -3991,11 +3211,6 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:resolv\\(\\)\\.$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
 			count: 1
 			path: _/Kernel.php
@@ -4006,18 +3221,8 @@ parameters:
 			path: _/Kernel.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:override\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Http\\\\type, \\(int\\|string\\) given\\.$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
 			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects object\\|string, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 3
-			path: _/Kernel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:\\$router \\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\) does not accept object\\.$#"
-			count: 1
 			path: _/Kernel.php
 
 		-
@@ -4058,11 +3263,6 @@ parameters:
 		-
 			message: "#^Only booleans are allowed in a ternary operator condition, verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MysqlBackendDataObject\\|null given\\.$#"
 			count: 1
-			path: _/Queue/Backend/MysqlBackend.php
-
-		-
-			message: "#^Parameter \\#1 \\$params of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array\\<string, mixed\\> given\\.$#"
-			count: 4
 			path: _/Queue/Backend/MysqlBackend.php
 
 		-
@@ -4246,52 +3446,12 @@ parameters:
 			path: _/Queue/Interfaces/QueuePersistance.php
 
 		-
-			message: "#^Default value of the parameter \\#1 \\$channel \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchChannel\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
 			message: "#^Default value of the parameter \\#2 \\$channel \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:add\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
 			count: 1
 			path: _/Queue/Queue.php
 
 		-
-			message: "#^Default value of the parameter \\#2 \\$channel \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByKey\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByUniqueId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByUniqueId\\(\\) has parameter \\$uniqueId with no type specified\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
 			message: "#^Parameter \\$channel of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:add\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Parameter \\$channel of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByKey\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Parameter \\$channel of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchChannel\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByKey\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
-			count: 1
-			path: _/Queue/Queue.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:\\$storage has no type specified\\.$#"
 			count: 1
 			path: _/Queue/Queue.php
 
@@ -4856,11 +4016,6 @@ parameters:
 			path: _/Session/SessionSql.php
 
 		-
-			message: "#^Parameter \\#1 \\$params of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type, array\\<string, mixed\\> given\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$data has no type specified\\.$#"
 			count: 1
 			path: _/Session/SessionSql.php
@@ -5236,11 +4391,6 @@ parameters:
 			path: _/Template/Template.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parseFile\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: _/Template/Template.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:run\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Template/Template.php
@@ -5262,16 +4412,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:yieldRun\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/Template.php
-
-		-
-			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:lex\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Template\\\\type, string\\|false given\\.$#"
-			count: 1
-			path: _/Template/Template.php
-
-		-
-			message: "#^Parameter \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:setRawTemplate\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Template\\\\type\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
@@ -5316,72 +4456,12 @@ parameters:
 			path: _/Template/TemplateLexer.php
 
 		-
-			message: "#^Access to property \\$nextToken on an unknown class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\.$#"
-			count: 2
-			path: _/Template/TemplateLexer.php
-
-		-
 			message: "#^Call to Exception\\:\\:__construct\\(\\) on a separate line has no effect\\.$#"
 			count: 1
 			path: _/Template/TemplateLexer.php
 
 		-
-			message: "#^Comparison operation \"\\>\" between 0 and 0 is always false\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:appendToChain\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:findCurlyContent\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:findOpenCurly\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:getChain\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token but returns verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:printChain\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:printChain\\(\\) has parameter \\$currentToken with no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:printChainInline\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:printChainInline\\(\\) has parameter \\$currentToken with no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:setTokenChain\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:workon\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Template/TemplateLexer.php
 
@@ -5392,61 +4472,6 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function strlen expects string, verfriemelt\\\\wrapped\\\\_\\\\Template\\\\type given\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Parameter \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:lex\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Template\\\\type\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$currentPos has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$currentState has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$currentToken \\(verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$currentToken has unknown class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token as its type\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$input has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$inputLength has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$tokenChain \\(verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\T_String\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$tokenChain \\(verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\.$#"
-			count: 2
-			path: _/Template/TemplateLexer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:\\$tokenChain has unknown class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token as its type\\.$#"
 			count: 1
 			path: _/Template/TemplateLexer.php
 
@@ -5661,11 +4686,6 @@ parameters:
 			path: _/Template/Variable.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\BuiltIns\\\\Link\\:\\:prepare\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/View/BuiltIns/Link.php
-
-		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
 			path: _/View/View.php
@@ -5691,11 +4711,6 @@ parameters:
 			path: _/View/View.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:prepare\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/View/View.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:setContainer\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/View/View.php
@@ -5717,11 +4732,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:yieldContents\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/View/View.php
-
-		-
-			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:setRawTemplate\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Template\\\\type, string given\\.$#"
 			count: 1
 			path: _/View/View.php
 

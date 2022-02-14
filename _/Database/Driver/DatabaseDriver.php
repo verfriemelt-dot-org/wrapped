@@ -109,7 +109,7 @@
                     throw new DatabaseException( "PDO Mysql Driver not available" );
                 }
 
-                throw new DatabaseException( "PDO Exception {$e->getMessage()}" );
+                throw new DatabaseException( "PDO Exception {$e->getMessage()}", $e->errorInfo[0] );
             }
 
             // unset config data
@@ -168,7 +168,9 @@
             try {
                 $this->lastresult = $statement->execute();
             } catch ( PDOException $e ) {
-                throw new DatabaseException( $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" . print_r( self::$debugLastParams, true ) );
+
+                $message = $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" . print_r( self::$debugLastParams, true );
+                throw (new DatabaseException( $message ))->setSqlState($e->getCode());
             }
 
             $time = microtime( true ) - $start;

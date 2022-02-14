@@ -7,4 +7,10 @@
     class DatabaseException
     extends \verfriemelt\wrapped\_\Exception\CoreException {
 
+        public string $sqlState;
+
+        public function setSqlState( string $state ): static {
+            $this->sqlState = $state;
+            return $this;
+        }
     }
