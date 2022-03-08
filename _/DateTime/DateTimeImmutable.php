@@ -1,18 +1,17 @@
 <?php
 
-    declare(strict_types = 1);
+    declare( strict_types = 1 );
 
     namespace verfriemelt\wrapped\_\DateTime;
 
+    use \verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
-    use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
-
-    final class Date
-        extends \DateTime
-        implements PropertyObjectInterface
+    final class DateTimeImmutable
+    extends \DateTimeImmutable
+    implements PropertyObjectInterface
     {
 
-        const SQL_FORMAT = "Y-m-d";
+        const SQL_FORMAT = "Y-m-d H:i:s.u";
 
         public function toSqlFormat(): string
         {
@@ -36,5 +35,5 @@
         {
             return $this->toSqlFormat();
         }
-    }
 
+    }

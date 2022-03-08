@@ -100,6 +100,10 @@
          */
         public function get( string $id ): object {
 
+            if ( $id === '' ) {
+                throw new ContainerException('illegal class');
+            }
+
             if ( interface_exists( $id ) ) {
                 $configuration = $this->getInterface( $id );
             } else {

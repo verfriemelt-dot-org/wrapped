@@ -8,9 +8,9 @@
 
         /**
          * creates property from stored value
-         * @param type $storedValue
+         * @param ?string $storedValue
          */
-        public static function hydrateFromString( $storedValue );
+        public static function hydrateFromString( ?string $storedValue ): ?static;
 
         /**
          * returns the object as string

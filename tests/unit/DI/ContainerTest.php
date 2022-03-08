@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\DI\Container;
+    use PHPUnit\Framework\TestCase;
+    use verfriemelt\wrapped\_\DI\Container;
+    use verfriemelt\wrapped\_\DI\ContainerException;
 
     class a { public function __construct( public b $b ) {} }
     class b { public function __construct( public string $instance = 'number 1' ) {} }
@@ -65,4 +66,19 @@
             static::assertTrue( $container->get( i::class ) instanceof a_i );
         }
 
+        public function testRegisterInterfaceWithInstance(): void {
+
+            $container = new Container;
+            $container->register( i::class, new b_i );
+
+            static::assertTrue( $container->get( i::class ) instanceof b_i );
+        }
+
+        public function testEmptyRequest(): void {
+
+            $this->expectExceptionObject(new ContainerException('illegal'));
+
+            /** @phpstan-ignore-next-line */
+            (new Container())->get('');
+        }
     }

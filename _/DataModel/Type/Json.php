@@ -6,7 +6,7 @@
 
     use \verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
-    class Json
+    final class Json
     implements PropertyObjectInterface {
 
         public $data;
@@ -19,8 +19,13 @@
             return json_encode( $this->data );
         }
 
-        public static function hydrateFromString( $storedValue ) {
-            return $storedValue === null ? null : new self( $storedValue );
+        public static function hydrateFromString( ?string $storedValue ): ?static {
+
+            if ( $storedValue === null ) {
+                return null;
+            }
+
+            return new self( $storedValue );
         }
 
         public function dehydrateToString(): string {
