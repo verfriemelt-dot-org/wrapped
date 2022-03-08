@@ -43,6 +43,11 @@
         }
 
         public static function create( ... $params ): static {
+
+            if ( count($params) === 0 ) {
+                return static::$container->get( static::class );
+            }
+
             /** @phpstan-ignore-next-line */
             return (new static( ... $params ));
         }
