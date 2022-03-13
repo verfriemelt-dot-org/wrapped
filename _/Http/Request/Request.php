@@ -5,6 +5,8 @@
     namespace verfriemelt\wrapped\_\Http\Request;
 
     use \verfriemelt\wrapped\_\Http\ParameterBag;
+    use function strstr;
+    use function substr;
 
     class Request {
 
@@ -151,6 +153,13 @@
          * @return string
          */
         public function uri() {
+
+            $uri = $this->server->get( "REQUEST_URI" );
+
+            if ( false !== strstr( $this->server->get("SERVER_SOFTWARE", ''), 'nginx' ) ) {
+                return explode( "?", $uri, 2)[0];
+            }
+
             return $this->server->get( "REQUEST_URI" );
         }
 
