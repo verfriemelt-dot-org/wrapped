@@ -421,42 +421,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:current\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:initialize\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetExists\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetGet\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetGet\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetSet\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetSet\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetUnset\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -506,7 +471,17 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
+			message: "#^Part \\$offset \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 2
+			path: _/DataModel/Collection.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:\\$loadMoreCallback has no type specified\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Return type \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:count\\(\\) should be covariant with return type \\(int\\<0, max\\>\\) of method Countable\\:\\:count\\(\\)$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -844,16 +819,6 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DatabaseOverride\\:\\:fetchDatabase\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/DatabaseOverride.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\PropertyObjectInterface\\:\\:hydrateFromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/PropertyObjectInterface.php
-
-		-
-			message: "#^Parameter \\$storedValue of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\PropertyObjectInterface\\:\\:hydrateFromString\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/PropertyObjectInterface.php
 
 		-
 			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:getSearchFields\\(\\)\\.$#"
@@ -1226,22 +1191,7 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:hydrateFromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Type/Json.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:toSqlFormat\\(\\) should return string but returns string\\|false\\.$#"
-			count: 1
-			path: _/DataModel/Type/Json.php
-
-		-
-			message: "#^Parameter \\#1 \\$data of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json constructor expects string, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type given\\.$#"
-			count: 1
-			path: _/DataModel/Type/Json.php
-
-		-
-			message: "#^Parameter \\$storedValue of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:hydrateFromString\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
 			count: 1
 			path: _/DataModel/Type/Json.php
 
@@ -1381,11 +1331,6 @@ parameters:
 			path: _/Database/DbLogic.php
 
 		-
-			message: "#^Argument of an invalid type array\\|false supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$database with no type specified\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
@@ -1512,11 +1457,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$param of method PDOStatement\\:\\:bindValue\\(\\) expects int\\|string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type given\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\#1 \\$state of method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Database\\\\DatabaseException\\:\\:setSqlState\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -2011,16 +1951,6 @@ parameters:
 			path: _/Database/SQL/Statement.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DateTime\\\\DateTime\\:\\:hydrateFromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DateTime/DateTime.php
-
-		-
-			message: "#^Parameter \\$storedValue of method verfriemelt\\\\wrapped\\\\_\\\\DateTime\\\\DateTime\\:\\:hydrateFromString\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DateTime/DateTime.php
-
-		-
 			message: "#^Call to function is_callable\\(\\) with callable\\(\\)\\: mixed will always evaluate to true\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
@@ -2052,6 +1982,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\File\\\\Path\\:\\:getCallerPath\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\File\\\\type but returns string\\.$#"
+			count: 1
+			path: _/File/Path.php
+
+		-
+			message: "#^Offset 'file' does not exist on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: string, args\\?\\: array, object\\?\\: object\\}\\.$#"
 			count: 1
 			path: _/File/Path.php
 
@@ -2926,42 +2861,7 @@ parameters:
 			path: _/Http/Response/Cookie.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:__construct\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:getName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:getValue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:replace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:replace\\(\\) has parameter \\$bool with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:replaces\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:setName\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Http/Response/HttpHeader.php
 
@@ -2971,27 +2871,7 @@ parameters:
 			path: _/Http/Response/HttpHeader.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:setValue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:setValue\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:\\$name has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:\\$replaces has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/HttpHeader.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader\\:\\:\\$value has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/HttpHeader.php
 
@@ -3096,11 +2976,6 @@ parameters:
 			path: _/Http/Response/Response.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$headers has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$statusCode has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/Response.php
@@ -3146,7 +3021,7 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Cannot access offset int on int\\|string\\.$#"
+			message: "#^Cannot access offset int\\<0, max\\> on int\\|string\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
 
@@ -3667,6 +3542,11 @@ parameters:
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter has no type specified\\.$#"
+			count: 1
+			path: _/Router/Router.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter is never read, only written\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -4739,4 +4619,9 @@ parameters:
 			message: "#^Variable method call on verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\.$#"
 			count: 1
 			path: _/View/View.php
+
+		-
+			message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
+			count: 2
+			path: tests/unit/DataModel/CollectionTest.php
 
