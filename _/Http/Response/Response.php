@@ -16,7 +16,10 @@
 
         private $version = "1.1";
 
-        private $headers = [];
+        /**
+         * @var HttpHeader[]
+         */
+        private array $headers = [];
 
         private $statusText;
 

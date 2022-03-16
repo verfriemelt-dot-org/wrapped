@@ -1,45 +1,53 @@
 <?php
 
-    declare(strict_types = 1);
+    declare( strict_types = 1 );
 
     namespace verfriemelt\wrapped\_\Http\Response;
 
-    class HttpHeader {
+    class HttpHeader
+    {
 
-        private $name;
+        private string $name;
 
-        private $value;
+        private string $value;
 
-        private $replaces = true;
+        private bool $replaces = true;
 
-        public function __construct( $name, $value ) {
-            $this->name  = $name;
+        public function __construct( string $name, string $value )
+        {
+            $this->name = $name;
             $this->value = $value;
         }
 
-        public function replace( $bool = true ) {
+        public function replace( $bool = true ): static
+        {
             $this->replaces = $bool;
             return $this;
         }
 
-        public function replaces() {
+        public function replaces(): bool
+        {
             return $this->replaces;
         }
 
-        public function getName() {
+        public function getName(): string
+        {
             return $this->name;
         }
 
-        public function getValue() {
+        public function getValue(): string
+        {
             return $this->value;
         }
 
-        public function setName( $name ) {
+        public function setName( $name ): static
+        {
             $this->name = $name;
             return $this;
         }
 
-        public function setValue( $value ) {
+        public function setValue( $value ): static
+        {
             $this->value = $value;
             return $this;
         }
