@@ -7,6 +7,8 @@
     class T_IfClose
     extends Token {
 
+        public bool $negated = false;
+
         public function getTokenName(): string {
             return 'T_IfClose';
         }
