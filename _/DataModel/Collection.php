@@ -206,7 +206,7 @@
             return array_reduce( $this->data, $function, $initial );
         }
 
-        public function sort( callable $function ) {
+        public function sort( callable $function ): static {
 
             $copy = $this->data;
             usort( $copy, $function );

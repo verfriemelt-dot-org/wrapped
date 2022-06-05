@@ -32,11 +32,11 @@
 
         /**
          *
-         * @param type $name
+         * @param string $name
          * @return Mysql
          * @throws DatabaseException
          */
-        public static function getConnection( $name = "default" ): DatabaseDriver {
+        public static function getConnection( string $name = "default" ): DatabaseDriver {
             if ( isset( self::$connections[$name] ) ) {
                 return self::$connections[$name];
             }

@@ -2,8 +2,8 @@
 
     namespace verfriemelt\wrapped;
 
-    use \ErrorException;
-    use \verfriemelt\wrapped\_\Cli\Console;
+    use ErrorException;
+    use verfriemelt\wrapped\_\Cli\Console;
 
     class Bootstrap {
 
@@ -32,7 +32,7 @@
             set_exception_handler( function ( $e ) {
 
                 if ( !Console::isCli() ) {
-                    header( "Content-type: text/plain" );
+//                    header( "Content-type: text/plain" );
                 }
 
                 $trace = $e->getTraceAsString() . PHP_EOL . PHP_EOL . PHP_EOL . print_r( $e, 1 );
