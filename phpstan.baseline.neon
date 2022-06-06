@@ -326,6 +326,11 @@ parameters:
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DI/ArgumentMetadataFactory.php
+
+		-
 			message: "#^Only booleans are allowed in a negated boolean, ReflectionType\\|null given\\.$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php
@@ -341,7 +346,22 @@ parameters:
 			path: _/DI/ArgumentResolver.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DI/ArgumentResolver.php
+
+		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
+			count: 1
+			path: _/DI/Container.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$currentlyLoading type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DI/Container.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$instances type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/Container.php
 
@@ -361,6 +381,11 @@ parameters:
 			path: _/DI/ServiceConfiguration.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\CamelCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/CamelCase.php
+
+		-
 			message: "#^Parameter \\#2 \\$array of function array_map expects array, array\\<int, string\\>\\|false given\\.$#"
 			count: 1
 			path: _/DataModel/Attribute/Naming/CamelCase.php
@@ -376,14 +401,44 @@ parameters:
 			path: _/DataModel/Attribute/Naming/Convention.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Convention\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/Convention.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Convention\\:\\:setString\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/Attribute/Naming/Convention.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\KebabCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/KebabCase.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\LowerCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/LowerCase.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\PascalCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/PascalCase.php
+
+		-
 			message: "#^Parameter \\#2 \\$array of function array_map expects array, array\\<int, string\\>\\|false given\\.$#"
 			count: 1
 			path: _/DataModel/Attribute/Naming/PascalCase.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\SnakeCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/SnakeCase.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\SpaceCase\\:\\:fetchStringParts\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Attribute/Naming/SpaceCase.php
 
 		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
@@ -426,6 +481,11 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:map\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:reduce\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
@@ -442,11 +502,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLoadingCallback\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:sort\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -473,6 +528,11 @@ parameters:
 		-
 			message: "#^Part \\$offset \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
 			count: 2
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
+			count: 1
 			path: _/DataModel/Collection.php
 
 		-
@@ -566,7 +626,42 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchSelectColumns\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:find\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:findSingle\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:isPropertyInitialized\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:prepareDataForStorage\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:take\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -581,7 +676,17 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:translateFieldNameArray\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:translateFieldNameArray\\(\\) has parameter \\$torwardsDatabase with no type specified\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:translateFieldNameArray\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -696,6 +801,11 @@ parameters:
 			path: _/DataModel/DataModelAnalyser.php
 
 		-
+			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
+			count: 2
+			path: _/DataModel/DataModelAnalyser.php
+
+		-
 			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
@@ -746,7 +856,7 @@ parameters:
 			path: _/DataModel/DataModelAnalyser.php
 
 		-
-			message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\|verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, string\\|verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel given\\.$#"
+			message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string\\|verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel given\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
 
@@ -757,6 +867,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$case of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty constructor expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Convention\\|null, object\\|null given\\.$#"
+			count: 1
+			path: _/DataModel/DataModelAnalyser.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelAnalyser\\:\\:\\$properties type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
 
@@ -836,6 +951,21 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:setSearchFields\\(\\) has parameter \\$fields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:split\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$operator has no type specified\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
@@ -849,6 +979,11 @@ parameters:
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\:\\:getSearchFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/Searchable.php
 
 		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Command\\:\\:add\\(\\)\\.$#"
@@ -1022,6 +1157,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:generateUpdateCommand\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Insert but returns verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\.$#"
+			count: 1
+			path: _/DataModel/TreeDataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:prepareDataForStorage\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -1211,11 +1351,6 @@ parameters:
 			path: _/Database/Database.php
 
 		-
-			message: "#^Default value of the parameter \\#1 \\$name \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:getConnection\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/Database.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:createNewConnection\\(\\) has parameter \\$autoConnect with no type specified\\.$#"
 			count: 1
 			path: _/Database/Database.php
@@ -1261,17 +1396,27 @@ parameters:
 			path: _/Database/Database.php
 
 		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:getConnection\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\type\\.$#"
-			count: 1
-			path: _/Database/Database.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:\\$connections has no type specified\\.$#"
 			count: 1
 			path: _/Database/Database.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:__construct\\(\\) has parameter \\$raw with no type specified\\.$#"
+			count: 1
+			path: _/Database/DbLogic.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:fetchBindings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/DbLogic.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isIn\\(\\) has parameter \\$param with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/DbLogic.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isNotIn\\(\\) has parameter \\$param with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/DbLogic.php
 
@@ -1586,7 +1731,17 @@ parameters:
 			path: _/Database/Facade/JoinBuilder.php
 
 		-
+			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) has parameter \\$ident with no type specified\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1606,12 +1761,32 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:fetch\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:fetchAll\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:groupBy\\(\\) has parameter \\$f with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has parameter \\$cols with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has parameter \\$table with no type specified\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:order\\(\\) has parameter \\$order with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1626,12 +1801,22 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$cols with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$table with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:values\\(\\) has parameter \\$data with no type specified\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:where\\(\\) has parameter \\$where with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1649,6 +1834,11 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Aliasable\\:\\:addAlias\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Aliasable.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\CTE\\:\\:\\$with type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Clause/CTE.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\GroupBy\\:\\:add\\(\\) has no return type specified\\.$#"
@@ -1711,6 +1901,11 @@ parameters:
 			path: _/Database/SQL/Clause/Returning.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Returning\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Clause/Returning.php
+
+		-
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Returning\\:\\:CLAUSE through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/Returning.php
@@ -1719,6 +1914,16 @@ parameters:
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Delete\\:\\:COMMAND through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Delete.php
+
+		-
+			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
+			count: 1
+			path: _/Database/SQL/Command/Insert.php
+
+		-
+			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array\\<int\\|string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\>$#"
+			count: 1
+			path: _/Database/SQL/Command/Insert.php
 
 		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
@@ -1736,6 +1941,11 @@ parameters:
 			path: _/Database/SQL/Command/Insert.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Insert\\:\\:\\$columns type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Command/Insert.php
+
+		-
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Insert\\:\\:COMMAND through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Insert.php
@@ -1746,12 +1956,22 @@ parameters:
 			path: _/Database/SQL/Command/Select.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Select\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Command/Select.php
+
+		-
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Select\\:\\:COMMAND through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Select.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\:\\:add\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Database/SQL/Command/Update.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\:\\:\\$columns type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Update.php
 
@@ -1767,6 +1987,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:add\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Database/SQL/Command/Values.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Values.php
 
@@ -1806,6 +2031,11 @@ parameters:
 			path: _/Database/SQL/Expression/CaseWhen.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\CaseWhen\\:\\:\\$when type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/CaseWhen.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Cast\\:\\:\\$type has no type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Cast.php
@@ -1827,6 +2057,11 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in a ternary operator condition, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\|null given\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/Expression.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Expression\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Expression.php
 
@@ -1876,6 +2111,11 @@ parameters:
 			path: _/Database/SQL/Expression/OperatorExpression.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\OperatorExpression\\:\\:\\$arguments type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/OperatorExpression.php
+
+		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/SqlFunction.php
@@ -1899,6 +2139,16 @@ parameters:
 			message: "#^Parameter \\#1 \\$child of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:addChild\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem given\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/SqlFunction.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\SqlFunction\\:\\:\\$arguments type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/SqlFunction.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Value\\:\\:fetchBindings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/Value.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Value\\:\\:getBinding\\(\\) has no return type specified\\.$#"
@@ -1931,6 +2181,26 @@ parameters:
 			path: _/Database/SQL/QueryPart.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:fetchAllChildren\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/QueryPart.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:fetchBindings\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/QueryPart.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:getChildren\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/QueryPart.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:\\$children type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Database/SQL/QueryPart.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Statement\\:\\:add\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Statement.php
@@ -1942,6 +2212,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$child of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart\\:\\:addChild\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\QueryPart, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Command given\\.$#"
+			count: 1
+			path: _/Database/SQL/Statement.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Statement\\:\\:\\$parts type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Statement.php
 
@@ -1986,7 +2261,7 @@ parameters:
 			path: _/File/Path.php
 
 		-
-			message: "#^Offset 'file' does not exist on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: string, args\\?\\: array, object\\?\\: object\\}\\.$#"
+			message: "#^Offset 'file' does not exist on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: '\\-\\>'\\|'\\:\\:', args\\?\\: array, object\\?\\: object\\}\\.$#"
 			count: 1
 			path: _/File/Path.php
 
@@ -2576,12 +2851,22 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/ParameterBag.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:all\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:except\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Http/ParameterBag.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:except\\(\\) has parameter \\$filter with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
@@ -2656,6 +2941,36 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$cookies with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$request with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$server with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:ajax\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
@@ -2672,6 +2987,36 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$cookies with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$query with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$request with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has parameter \\$server with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2702,6 +3047,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:setAttributes\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -3036,6 +3386,11 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:allowedValues\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Input/FilterItem.php
+
+		-
 			message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, int\\|string given\\.$#"
 			count: 3
 			path: _/Input/FilterItem.php
@@ -3106,6 +3461,16 @@ parameters:
 			path: _/Output/Viewable.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Backend/MemoryBackend.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:fetchChannel\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Backend/MemoryBackend.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:store\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Queue/Backend/MemoryBackend.php
@@ -3116,12 +3481,22 @@ parameters:
 			path: _/Queue/Backend/MemoryBackend.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MysqlBackend\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Backend/MysqlBackend.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MysqlBackend\\:\\:fetchByUniqueId\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Queue/Backend/MysqlBackend.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MysqlBackend\\:\\:fetchByUniqueId\\(\\) has parameter \\$uniqueId with no type specified\\.$#"
+			count: 1
+			path: _/Queue/Backend/MysqlBackend.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MysqlBackend\\:\\:fetchChannel\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Queue/Backend/MysqlBackend.php
 
@@ -3316,12 +3691,32 @@ parameters:
 			path: _/Queue/Backend/MysqlBackendDataObject.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Interfaces\\\\QueuePersistance\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Interfaces/QueuePersistance.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Interfaces\\\\QueuePersistance\\:\\:fetchChannel\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Interfaces/QueuePersistance.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Interfaces\\\\QueuePersistance\\:\\:store\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Queue/Interfaces/QueuePersistance.php
 
 		-
 			message: "#^Default value of the parameter \\#2 \\$channel \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:add\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\type\\.$#"
+			count: 1
+			path: _/Queue/Queue.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Queue/Queue.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Queue\\:\\:fetchChannel\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Queue/Queue.php
 
@@ -3401,7 +3796,27 @@ parameters:
 			path: _/Router/Route.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:setPath\\(\\) has parameter \\$path with no type specified\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/Route.php
 
@@ -3411,7 +3826,17 @@ parameters:
 			path: _/Router/Route.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\.$#"
+			count: 1
+			path: _/Router/RouteGroup.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/RouteGroup.php
 
@@ -3432,6 +3857,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:setPath\\(\\) has parameter \\$prefix with no type specified\\.$#"
+			count: 1
+			path: _/Router/RouteGroup.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/RouteGroup.php
 
@@ -4241,6 +4671,11 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:setArray\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Template/Repeater.php
+
+		-
 			message: "#^PHPDoc tag @param references unknown parameter\\: \\$bool$#"
 			count: 1
 			path: _/Template/Repeater.php
@@ -4329,11 +4764,6 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateItem\\:\\:run\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: _/Template/TemplateItem.php
-
-		-
-			message: "#^Access to an undefined property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\T_IfClose\\|verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\T_IfElse\\|verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\T_IfOpen\\:\\:\\$negated\\.$#"
-			count: 1
-			path: _/Template/TemplateLexer.php
 
 		-
 			message: "#^Call to Exception\\:\\:__construct\\(\\) on a separate line has no effect\\.$#"
@@ -4624,4 +5054,9 @@ parameters:
 			message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
 			count: 2
 			path: tests/unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Property TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/unit/Template/TemplateIfElseTest.php
 
