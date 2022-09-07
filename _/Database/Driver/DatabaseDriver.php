@@ -105,11 +105,11 @@
             } catch ( PDOException $e ) {
                 $msg = $e->getMessage();
 
-                if ( $msg == "could not find driver" ) {
+                if ( $msg === "could not find driver" ) {
                     throw new DatabaseException( "PDO Mysql Driver not available" );
                 }
 
-                throw new DatabaseException( "PDO Exception {$e->getMessage()}", $e->errorInfo[0] );
+                throw new DatabaseException( "PDO Exception {$e->getMessage()}", $e->errorInfo[0] ?? 0 );
             }
 
             // unset config data

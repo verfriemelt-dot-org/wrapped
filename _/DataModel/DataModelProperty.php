@@ -17,14 +17,21 @@
 
         private string $getter;
 
+        private bool $isNullable;
+
         private Convention $case;
 
         private ?string $type = null;
 
         private Rename $renamed;
 
-        public function __construct( string $name, ?Convention $case = null ) {
+        public function __construct(
+            string $name,
+            bool $isNullable,
+            ?Convention $case = null
+        ) {
             $this->name = $name;
+            $this->isNullable = $isNullable;
             $this->case = (new CamelCase( $name ) )->convertTo( $case ?? SnakeCase::class );
         }
 
@@ -80,6 +87,10 @@
 
         public function isNamed( string $name ): bool {
             return $this->name === $name || $this->case->getString() === $name;
+        }
+
+        public function isNullable(): bool {
+            return $this->isNullable;
         }
 
     }

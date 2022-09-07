@@ -4,6 +4,8 @@
 
     namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
+    use verfriemelt\wrapped\_\Template\Repeater;
+
     class Select
     extends FormType {
 
@@ -40,13 +42,13 @@
             return new SelectItem( $name, $value );
         }
 
-        private function writeOption( $r, $o ) {
-            $r->set( "name", $o->name );
-            $r->set( "value", $o->value );
-            $r->setIf( "selected", $this->getValue() == $o->value );
-            $r->setIf( "option" );
+        private function writeOption( Repeater $repeater, SelectItem $option ) {
+            $repeater->set( "name", $option->name );
+            $repeater->set( "value", $option->value );
+            $repeater->setIf( "selected", $this->getValue() === $option->value );
+            $repeater->setIf( "option" );
 
-            $r->save();
+            $repeater->save();
         }
 
         public function fetchHtml(): string {
@@ -84,34 +86,6 @@
 
     }
 
-    class SelectItem {
 
-        public $name, $value;
 
-        public function __construct( $name, $value ) {
-            $this->name  = $name;
-            $this->value = $value;
-        }
 
-    }
-
-    class SelectGroup {
-
-        public $name;
-
-        private $children = [];
-
-        public function __construct( $name ) {
-            $this->name = $name;
-        }
-
-        public function addChild( SelectItem $item ) {
-            $this->children[] = $item;
-            return $this;
-        }
-
-        public function fetchChildren() {
-            return $this->children;
-        }
-
-    }

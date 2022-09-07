@@ -84,7 +84,7 @@
 
             foreach ( $request->query() as $key => $item ) {
                 static::assertTrue( isset( $_GET[$key] ) );
-                static::assertTrue( $_GET[$key] == $item );
+                static::assertSame( $_GET[$key], $item );
             }
 
             static::assertSame( "default value", $request->query()->get( "nope", "default value" ), "getting defaults" );

@@ -6,8 +6,9 @@
 
     use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
     use \verfriemelt\wrapped\_\DataModel\Collection;
+    use verfriemelt\wrapped\_\DataModel\DataModel;
 
-    Interface Searchable {
+    interface Searchable {
 
         static public function search( string $searchString, QueryBuilder $query = null ): Collection;
 

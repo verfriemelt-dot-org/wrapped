@@ -1,354 +1,385 @@
 <?php
 
-    declare(strict_types = 1);
+declare( strict_types = 1 );
 
-    namespace verfriemelt\wrapped\_\Formular;
+namespace verfriemelt\wrapped\_\Formular;
 
-    use \verfriemelt\wrapped\_\DateTime\DateTime;
-    use \verfriemelt\wrapped\_\Exception\Input\InputException;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
-    use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
-    use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Input\CSRF;
-    use \verfriemelt\wrapped\_\Input\Filter;
-    use \verfriemelt\wrapped\_\Output\Viewable;
-    use \verfriemelt\wrapped\_\Session\Session;
-    use \verfriemelt\wrapped\_\Template\Template;
+use \verfriemelt\wrapped\_\DateTime\DateTime;
+use \verfriemelt\wrapped\_\Exception\Input\InputException;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Button;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Date;
+use \verfriemelt\wrapped\_\Formular\FormTypes\FormType;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Password;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Select;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Text;
+use \verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
+use \verfriemelt\wrapped\_\Http\Request\Request;
+use \verfriemelt\wrapped\_\Input\CSRF;
+use \verfriemelt\wrapped\_\Input\Filter;
+use \verfriemelt\wrapped\_\Output\Viewable;
+use \verfriemelt\wrapped\_\Session\Session;
+use \verfriemelt\wrapped\_\Template\Template;
 
-    class Formular
-    implements Viewable {
+class Formular
+    implements Viewable
+{
 
-        const METHOD_POST = "POST";
+    const METHOD_POST = "POST";
 
-        const METHOD_GET = "GET";
+    const METHOD_GET = "GET";
 
-        CONST CSRF_FIELD_NAME = "_csrf";
+    const CSRF_FIELD_NAME = "_csrf";
 
-        CONST FORM_FIELD_NAME = "_form";
+    const FORM_FIELD_NAME = "_form";
 
-        /** @var Filter */
-        private $filter;
+    /** @var Filter */
+    private $filter;
 
-        private $elements = [];
+    private $elements = [];
 
-        private $method = SELF::METHOD_POST;
+    private $method = SELF::METHOD_POST;
 
-        private $cssClass = "";
+    private $cssClass = "";
 
-        private $cssId = "";
+    private $cssId = "";
 
-        private $action;
+    private $action;
 
-        private $formname;
+    private $formname;
 
-        private $csrfTokenName;
+    private $csrfTokenName;
 
-        private $storeValuesOnFail = false;
+    private $storeValuesOnFail = false;
 
-        private $prefilledWithSubmitData = false;
+    private $prefilledWithSubmitData = false;
 
-        private Session $session;
+    private Session $session;
 
-        private Template $tpl;
+    private Template $tpl;
 
-        protected Request $request;
+    protected Request $request;
 
-        private function generateCSRF() {
+    private function generateCSRF()
+    {
 
-            $csrf = new CSRF( $this->session );
-            return $csrf->generateToken( $this->csrfTokenName );
+        $csrf = new CSRF( $this->session );
+        return $csrf->generateToken( $this->csrfTokenName );
+    }
+
+    public function __construct( string $name, Request $request, Filter $filter = null, Session $session, Template $template = null )
+    {
+
+        $this->formname = $name;
+        $this->filter = $filter;
+        $this->csrfTokenName = "csrf-" . md5( $this->formname );
+
+        $this->session = $session;
+
+        $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
+        $this->addHidden( self::FORM_FIELD_NAME, $this->formname );
+
+        if ( !$template ) {
+            $this->tpl = new Template();
+            $this->tpl->parseFile( __DIR__ . "/Template/Formular.tpl.php" );
+        } else {
+            $this->tpl = $template;
         }
 
-        public function __construct( string $name, Request $request, Filter $filter = null, Session $session, Template $template = null ) {
+        $this->request = $request;
+        $this->action = $request->uri();
+    }
 
-            $this->formname      = $name;
-            $this->filter        = $filter;
-            $this->csrfTokenName = "csrf-" . md5( $this->formname );
+    public function setCssClass( $cssClass ): Formular
+    {
+        $this->cssClass = $cssClass;
+        return $this;
+    }
 
-            $this->session = $session;
+    public function setCssId( $id ): Formular
+    {
+        $this->cssId = $id;
+        return $this;
+    }
 
-            $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
-            $this->addHidden( self::FORM_FIELD_NAME, $this->formname );
+    public function action( $path ): Formular
+    {
+        $this->action = $path;
+        return $this;
+    }
 
-            if ( !$template ) {
-                $this->tpl = new Template();
-                $this->tpl->parseFile( __DIR__ . "/Template/Formular.tpl.php" );
-            } else {
-                $this->tpl = $template;
-            }
+    public function addText( $name, $value = null ): Text
+    {
 
-            $this->request = $request;
-            $this->action  = $request->uri();
-        }
+        $input = new Text( $name );
+        $input->setValue( $value );
+        $input->setFilterItem( $this->filter->request()->has( $name ) );
 
-        public function setCssClass( $cssClass ): Formular {
-            $this->cssClass = $cssClass;
-            return $this;
-        }
+        $this->elements[ $name ] = $input;
 
-        public function setCssId( $id ): Formular {
-            $this->cssId = $id;
-            return $this;
-        }
+        return $input;
+    }
 
-        public function action( $path ): Formular {
-            $this->action = $path;
-            return $this;
-        }
+    public function addDate( $name, DateTime $value = null ): Date
+    {
 
-        public function addText( $name, $value = null ): Text {
+        $input = new Date( $name );
 
-            $input = new Text( $name );
+        if ( $value ) {
             $input->setValue( $value );
-            $input->setFilterItem( $this->filter->request()->has( $name ) );
-
-            $this->elements[$name] = $input;
-
-            return $input;
         }
 
-        public function addDate( $name, DateTime $value = null ): Date {
+        $input->setFilterItem( $this->filter->request()->has( $name ) );
 
-            $input = new Date( $name );
+        $this->elements[ $name ] = $input;
 
-            if ( $value ) {
-                $input->setValue( $value );
+        return $input;
+    }
+
+    public function addPassword( $name, $value = null )
+    {
+        $input = new Password( $name );
+        $input->setValue( $value );
+        $input->setFilterItem( $this->filter->request()->has( $name ) );
+
+        $this->elements[ $name ] = $input;
+
+        return $input;
+    }
+
+    public function addHidden( $name, $value = null ): Hidden
+    {
+
+        $filter = $this->filter->request()->has( $name );
+
+        if ( $value !== null ) {
+            $filter->allowedValues( [ $value ] );
+        }
+
+        $input = new Hidden( $name );
+        $input->setValue( $value );
+        $input->setFilterItem( $filter );
+
+        $this->elements[ $name ] = $input;
+
+        return $input;
+    }
+
+    public function addButton( $name, $value = null )
+    {
+
+        $button = new Button( $name );
+        $button->setValue( $value );
+        $this->elements[ $name ] = $button;
+
+        $button->setFilterItem( $this->filter->request()->has( $name ) );
+
+        return $button;
+    }
+
+    public function addCheckbox( $name, $value = null )
+    {
+
+        $checkbox = new Checkbox( $name, $value );
+        $this->elements[ $name ] = $checkbox;
+
+        $checkbox->setFilterItem( $this->filter->request()->has( $name ) );
+
+        return $checkbox;
+    }
+
+    public function addSelect( $name, $value = null )
+    {
+
+        $select = new Select( $name, $value );
+        $select->setFilterItem( $this->filter->request()->has( $name ) );
+
+        $this->elements[ $name ] = $select;
+
+        return $select;
+    }
+
+    public function addTextarea( $name, $value = null )
+    {
+
+        $input = new Textarea( $name );
+        $input->setValue( $value );
+        $input->setFilterItem( $this->filter->request()->has( $name ) );
+
+        $this->elements[ $name ] = $input;
+
+        return $input;
+    }
+
+    public function addSubmit( $value )
+    {
+        return $this->addButton( "submit", $value )->type( "submit" )->setOptional();
+    }
+
+    public function storeValuesOnFail( $bool = true ): Formular
+    {
+        $this->storeValuesOnFail = $bool;
+        return $this;
+    }
+
+    /**
+     * switches between post and get method
+     *
+     * @param type $method
+     * @return Formular
+     */
+    public function setMethod( $method ): Formular
+    {
+
+        if ( !in_array( $method, [ SELF::METHOD_GET, SELF::METHOD_POST ] ) ) {
+            return false;
+        }
+
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     *
+     * @return bool
+     */
+    public function isPosted(): bool
+    {
+        return $this->request->request()->get( self::FORM_FIELD_NAME ) === $this->formname;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return mixed sended form values
+     */
+    public function get( string $name )
+    {
+
+        $input = ( $this->method === SELF::METHOD_POST ) ?
+            $this->request->request() :
+            $this->request->query();
+
+        if ( !isset( $this->elements[ $name ] ) ) {
+            return null;
+        }
+
+        return $this->elements[ $name ]->parseValue( $input->get( $name, null ) );
+    }
+
+    private function preFillFormWithSendData()
+    {
+
+        foreach ( $this->elements as $element ) {
+
+            // skip csrf token, otherwise the form will silently fail
+            if ( in_array( $this->elements, [ self::CSRF_FIELD_NAME, self::FORM_FIELD_NAME ] ) ) {
+                continue;
             }
 
-            $input->setFilterItem( $this->filter->request()->has( $name ) );
-
-            $this->elements[$name] = $input;
-
-            return $input;
-        }
-
-        public function addPassword( $name, $value = null ) {
-            $input = new Password( $name );
-            $input->setValue( $value );
-            $input->setFilterItem( $this->filter->request()->has( $name ) );
-
-            $this->elements[$name] = $input;
-
-            return $input;
-        }
-
-        public function addHidden( $name, $value = null ): Hidden {
-
-            $filter = $this->filter->request()->has( $name );
-
-            if ( $value !== null ) {
-                $filter->allowedValues( [ $value ] );
+            if ( $element instanceof Password ) {
+                continue;
             }
 
-            $input = new Hidden( $name );
-            $input->setValue( $value );
-            $input->setFilterItem( $filter );
+            $data = $this->get( $element->name );
 
-            $this->elements[$name] = $input;
-
-            return $input;
-        }
-
-        public function addButton( $name, $value = null ) {
-
-            $button                = new Button( $name );
-            $button->setValue( $value );
-            $this->elements[$name] = $button;
-
-            $button->setFilterItem( $this->filter->request()->has( $name ) );
-
-            return $button;
-        }
-
-        public function addCheckbox( $name, $value = null ) {
-
-            $checkbox              = new Checkbox( $name, $value );
-            $this->elements[$name] = $checkbox;
-
-            $checkbox->setFilterItem( $this->filter->request()->has( $name ) );
-
-            return $checkbox;
-        }
-
-        public function addSelect( $name, $value = null ) {
-
-            $select = new Select( $name, $value );
-            $select->setFilterItem( $this->filter->request()->has( $name ) );
-
-            $this->elements[$name] = $select;
-
-            return $select;
-        }
-
-        public function addTextarea( $name, $value = null ) {
-
-            $input = new Textarea( $name );
-            $input->setValue( $value );
-            $input->setFilterItem( $this->filter->request()->has( $name ) );
-
-            $this->elements[$name] = $input;
-
-            return $input;
-        }
-
-        public function addSubmit( $value ) {
-            return $this->addButton( "submit", $value )->type( "submit" )->setOptional();
-        }
-
-        public function storeValuesOnFail( $bool = true ): Formular {
-            $this->storeValuesOnFail = $bool;
-            return $this;
-        }
-
-        /**
-         * switches between post and get method
-         * @param type $method
-         * @return Formular
-         */
-        public function setMethod( $method ): Formular {
-
-            if ( !in_array( $method, [ SELF::METHOD_GET, SELF::METHOD_POST ] ) ) {
-                return false;
+            if ( is_string( $data ) || is_bool( $data ) ) {
+                $element->setValue( $this->get( $element->name ) );
             }
-
-            $this->method = $method;
-            return $this;
         }
 
-        /**
-         *
-         * @return bool
-         */
-        public function isPosted(): bool {
-            return $this->request->request()->get( self::FORM_FIELD_NAME ) === $this->formname;
-        }
+        return $this;
+    }
 
-        /**
-         *
-         * @param string $name
-         * @return mixed sended form values
-         */
-        public function get( string $name ) {
+    /**
+     * checks if form has been sent and all filter criteria are met
+     *
+     * @return bool
+     */
+    public function hasValidated(): bool
+    {
 
-            $input = ($this->method === SELF::METHOD_POST ) ?
-                $this->request->request() :
-                $this->request->query();
+        $validated = false;
 
-            if ( !isset( $this->elements[$name] ) ) {
-                return null;
-            }
+        if (
+            (
+                $this->method === SELF::METHOD_POST &&
+                $this->request->requestMethod() === "POST" &&
+                $this->get( self::FORM_FIELD_NAME ) === $this->formname
+            ) || $this->method === SELF::METHOD_GET ) {
 
-            return $this->elements[$name]->parseValue( $input->get( $name, null ) );
-        }
-
-        private function preFillFormWithSendData() {
+            $failed = false;
 
             foreach ( $this->elements as $element ) {
 
-                // skip csrf token, otherwise the form will silently fail
-                if ( in_array( $this->elements, [ self::CSRF_FIELD_NAME, self::FORM_FIELD_NAME ] ) ) {
-                    continue;
-                }
-
-                if ( $element instanceof Password ) {
-                    continue;
-                }
-
-                $data = $this->get( $element->name );
-
-                if ( is_string( $data ) || is_bool( $data ) ) {
-                    $element->setValue( $this->get( $element->name ) );
+                try {
+                    $element->getFilterItem()->validate();
+                } catch ( InputException $e ) {
+                    $failed = true;
+                    $element->addCssClass( "input-error" );
                 }
             }
 
-            return $this;
-        }
-
-        /**
-         * checks if form has been sent and all filter criteria are met
-         * @return bool
-         */
-        public function hasValidated(): bool {
-
-            $validated = false;
-
-            if (
-                $this->method == SELF::METHOD_POST && $this->request->requestMethod() == "POST" && $this->get( self::FORM_FIELD_NAME ) === $this->formname || $this->method == SELF::METHOD_GET ) {
-
-                $failed = false;
-
-                foreach ( $this->elements as $element ) {
-
-                    try {
-                        $element->getFilterItem()->validate();
-                    } catch ( InputException $e ) {
-                        $failed = true;
-                        $element->addCssClass( "input-error" );
-                    }
-                }
-
-                if ( $this->storeValuesOnFail && $failed ) {
-
-                    $this->prefilledWithSubmitData = true;
-                    $this->preFillFormWithSendData();
-                }
-
-                $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
-
-                $validated = !$failed;
-            }
-
-            return $validated;
-        }
-
-        /**
-         * manually mark field as errorprone
-         * @param string $fieldName
-         * @return Formular
-         * @throws Exception
-         */
-        public function markFailed( string $fieldName ): Formular {
-
-            if ( !isset( $this->elements[$fieldName] ) ) {
-                throw new \Exception( "illegal form element {$fieldName}" );
-            }
-
-            $this->elements[$fieldName]->addCssClass( "input-error" );
-
-            if ( !$this->prefilledWithSubmitData ) {
+            if ( $this->storeValuesOnFail && $failed ) {
 
                 $this->prefilledWithSubmitData = true;
                 $this->preFillFormWithSendData();
             }
 
-            return $this;
+            $this->addHidden( self::CSRF_FIELD_NAME, $this->generateCSRF() );
+
+            $validated = !$failed;
         }
 
-        public function getContents(): string {
-
-            $r = $this->tpl->createRepeater( "elements" );
-            $this->tpl->set( "method", $this->method );
-            $this->tpl->set( "action", $this->action );
-            $this->tpl->set( "cssClass", $this->cssClass );
-            $this->tpl->set( "cssId", $this->cssId );
-
-            foreach ( $this->elements as $element ) {
-                $r->set( "element", $element->fetchHtml() );
-                $r->save();
-            }
-
-            return $this->tpl->run();
-        }
-
-        public function fetchElement( string $name ): ?FormType {
-            return $this->elements[$name] ?? null;
-        }
-
+        return $validated;
     }
+
+    /**
+     * manually mark field as errorprone
+     *
+     * @param string $fieldName
+     * @return Formular
+     * @throws Exception
+     */
+    public function markFailed( string $fieldName ): Formular
+    {
+
+        if ( !isset( $this->elements[ $fieldName ] ) ) {
+            throw new \Exception( "illegal form element {$fieldName}" );
+        }
+
+        $this->elements[ $fieldName ]->addCssClass( "input-error" );
+
+        if ( !$this->prefilledWithSubmitData ) {
+
+            $this->prefilledWithSubmitData = true;
+            $this->preFillFormWithSendData();
+        }
+
+        return $this;
+    }
+
+    public function getContents(): string
+    {
+
+        $r = $this->tpl->createRepeater( "elements" );
+        $this->tpl->set( "method", $this->method );
+        $this->tpl->set( "action", $this->action );
+        $this->tpl->set( "cssClass", $this->cssClass );
+        $this->tpl->set( "cssId", $this->cssId );
+
+        foreach ( $this->elements as $element ) {
+            $r->set( "element", $element->fetchHtml() );
+            $r->save();
+        }
+
+        return $this->tpl->run();
+    }
+
+    public function fetchElement( string $name ): ?FormType
+    {
+        return $this->elements[ $name ] ?? null;
+    }
+
+}

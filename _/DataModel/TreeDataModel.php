@@ -221,7 +221,7 @@
             foreach ( (new DataModelAnalyser( $this ) )->fetchProperties() as $attribute ) {
 
                 // skip pk
-                if ( static::getPrimaryKey() !== null && $attribute->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
+                if ( static::getPrimaryKey() !== null && $attribute->getName() === static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
                     continue;
                 }
 
@@ -1109,10 +1109,9 @@
         }
 
         /**
-         *
          * returns all the instances leading to this node, starting with its root node
-         * @return \static[]
-         * @throws Exception
+         *
+         * @return Collection<static>
          */
         public function fetchPath(): Collection {
 
@@ -1168,10 +1167,9 @@
          *
          * @param type $path eg. /1/1.2/1.2.1
          * @param type $field eg. name
-         * @return boolean
          * @throws Exception
          */
-        public static function fetchByPath( $path, $field ) {
+        public static function fetchByPath( $path, $field ): ?static {
 
             if ( !in_array( $field, array_map( fn( DataModelProperty $p ) => $p->getName(), static::createDataModelAnalyser()->fetchProperties() ) ) ) {
                 throw new \Exception( "invalid field specified" );
@@ -1205,13 +1203,16 @@
             $result = $databaseHandle->query( $query )->fetch( PDO::FETCH_ASSOC );
 
             if ( !is_array( $result ) ) {
-                return false;
+                return null;
             }
 
             return (new static() )->initData( $result );
         }
 
-        public function fetchChildren( $order = "left", $direction = "ASC", int $depth = null ): Collection {
+        /**
+         * @return Collection<static>
+         */
+        public function fetchChildren( string $order = "left", string $direction = "ASC", int $depth = null ): Collection {
 
             $logic = DbLogic::create()
                 ->where( "left", ">", $this->getLeft() )->addAnd()
@@ -1229,7 +1230,10 @@
             );
         }
 
-        public function fetchChildrenInclusive( $order = "left", $direction = "ASC", int $depth = null ): Collection {
+        /**
+         * @return Collection<static>
+         */
+        public function fetchChildrenInclusive(string $order = "left",string  $direction = "ASC", int $depth = null ): Collection {
 
             $logic = DbLogic::create()
                 ->where( "left", ">=", $this->getLeft() )->addAnd()
@@ -1245,7 +1249,10 @@
             return static::find( $logic );
         }
 
-        public function fetchDirectChildren( $order = "left", $direction = "ASC" ): Collection {
+        /**
+         * @return Collection<static>
+         */
+        public function fetchDirectChildren(string $order = "left", string $direction = "ASC" ): Collection {
 
             return static::find(
                     DbLogic::create()

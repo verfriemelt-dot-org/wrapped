@@ -5,6 +5,7 @@
     namespace verfriemelt\wrapped\_\Database\Facade;
 
     use \Exception;
+    use PDOStatement;
     use \verfriemelt\wrapped\_\Database\DbLogic;
     use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
     use \verfriemelt\wrapped\_\Database\SQL\Clause\From;
@@ -287,7 +288,7 @@
             return $this->run()->fetch() ?: null;
         }
 
-        public function run() {
+        public function run(): PDOStatement {
 
             if ( !$this->db ) {
                 throw new Exception( 'cannot run query without a databaseconnection' );

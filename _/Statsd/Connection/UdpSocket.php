@@ -36,7 +36,7 @@
 
         public function send( $message ) {
 
-            if ( $message == '' ) {
+            if ( $message === '' ) {
                 return;
             }
 

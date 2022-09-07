@@ -99,7 +99,7 @@
                 return (new CollectionDummy() )->setId( $offset + 1 );
             };
 
-            $collection = new Collection( );
+            $collection = new Collection( new CollectionDummy);
 
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
@@ -115,7 +115,10 @@
 
         public function testStartEndGetter(): void {
 
-            $collection = new Collection( );
+            /**
+             * @var Collection<CollectionDummy> $collection
+             */
+            $collection = new Collection();
 
             static::assertNull( $collection->last() );
             static::assertNull( $collection->first() );
@@ -137,13 +140,13 @@
                 return (new CollectionDummy() )->setId( $offset + 1 );
             };
 
-            $collection = new Collection( );
+            $collection = new Collection( new CollectionDummy() );
             $collection->setLength( 10 );
             $collection->setLoadingCallback( $callback );
 
             $collection->seek( 4 );
             // 5th element in array should have id of 5
-            static::assertSame( 5, $collection->current()->getId() );
+            static::assertSame( 5, $collection->current()?->getId() );
 
             $this->expectExceptionObject( new OutOfBoundsException() );
             $collection->seek( 11 );
@@ -168,7 +171,7 @@
 
         public function testIllegalOffset(): void {
 
-            $collection = new Collection;
+            $collection = new Collection(new CollectionDummy);
 
             $this->expectExceptionObject( new Exception( 'write only' ) );
             $collection[1] = new CollectionDummy;
@@ -176,7 +179,7 @@
 
         public function testIllegalOffunset(): void {
 
-            $collection = new Collection;
+            $collection = new Collection(new CollectionDummy);
 
             $this->expectExceptionObject( new Exception( 'write only' ) );
             unset( $collection[1] );

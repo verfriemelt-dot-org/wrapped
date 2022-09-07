@@ -4,6 +4,7 @@
 
     namespace verfriemelt\wrapped\_\DataModel;
 
+    use PDOStatement;
     use \verfriemelt\wrapped\_\Database\Facade\JoinBuilder;
     use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
     use \verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
@@ -11,15 +12,24 @@
     use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
     use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 
+    /**
+     * @template T of DataModel
+     */
     class DataModelQueryBuilder
     extends QueryBuilder {
 
+        /**
+         * @var T
+         */
         protected DataModel $prototype;
 
         protected $context = [];
 
         protected bool $disableAutomaticGroupBy = false;
 
+        /**
+         * @param T $prototype
+         */
         public function __construct( DataModel $prototype ) {
 
             parent::__construct( $prototype->fetchDatabase() );
@@ -49,7 +59,7 @@
             return $this;
         }
 
-        public function run() {
+        public function run(): PDOStatement {
 
             foreach ( $this->context as $context ) {
                 $this->stmt->addDataModelContext( $context );
@@ -74,7 +84,12 @@
             return parent::run();
         }
 
-        public function with( DataModel $dest, callable $callback = null ): DataModelQueryBuilder {
+        /**
+         * @param DataModel $dest
+         * @param callable|null $callback
+         * @return self<T>
+         */
+        public function with( DataModel $dest, callable $callback = null ): self {
 
             if ( !$callback ) {
                 $callback = array_values( array_filter( array_map( fn( $c ) => $c::fetchPredefinedJoins( $dest::class ), $this->context ) ) )[0] ?? null;
@@ -91,9 +106,13 @@
             return $this;
         }
 
+        /**
+         * @param Collection<T>|null $overrideInstance
+         * @return Collection<T>
+         */
         public function get( ?Collection $overrideInstance = null ): Collection {
 
-            if ( $overrideInstance ) {
+            if ( $overrideInstance !== null ) {
                 return $overrideInstance::buildFromQuery( $this->prototype, $this );
             }
 

@@ -21,6 +21,9 @@
 
     class DataModelSearch {
 
+        /**
+         * @var DataModel<T>
+         */
         private DataModel $prototype;
 
         private ?array $fields = null;

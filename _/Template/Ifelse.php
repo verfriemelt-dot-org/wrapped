@@ -24,7 +24,7 @@
             // this could be multiple occurences, hence, we have to cycle though!
             for ( $i = 0, $count = count( $snipped["ifcontent"] ); $i < $count; ++$i ) {
 
-                $bool = (isset( $snipped["negate"][$i] ) && $snipped["negate"][$i] == "!") ? !$this->bool : $this->bool;
+                $bool = (isset( $snipped["negate"][$i] ) && $snipped["negate"][$i] === "!") ? !$this->bool : $this->bool;
 
                 if ( $bool ) {
                     $buf = $snipped["ifcontent"][$i];

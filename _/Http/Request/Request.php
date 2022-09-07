@@ -189,7 +189,7 @@
         }
 
         public function ajax() {
-            return strtolower( $this->server->get( "HTTP_X_REQUESTED_WITH" ) ?? '') == "xmlhttprequest" || $this->query->has( "ajax" );
+            return strtolower( $this->server->get( "HTTP_X_REQUESTED_WITH" ) ?? '') === "xmlhttprequest" || $this->query->has( "ajax" );
         }
 
         public function requestMethod() {

@@ -441,6 +441,16 @@ parameters:
 			path: _/DataModel/Attribute/Naming/SpaceCase.php
 
 		-
+			message: "#^Trait verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\CacheHelper\\\\DataModelCaching is used zero times and is not analysed\\.$#"
+			count: 1
+			path: _/DataModel/CacheHelper/DataModelCaching.php
+
+		-
+			message: "#^Trait verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\CacheHelper\\\\MemoryCache is used zero times and is not analysed\\.$#"
+			count: 1
+			path: _/DataModel/CacheHelper/MemoryCache.php
+
+		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/DataModel/Collection.php
@@ -456,12 +466,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:buildFromPdoResult\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:buildFromPdoResult\\(\\) has parameter \\$result with no type specified\\.$#"
+			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -471,22 +476,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:call\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:initialize\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:map\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:reduce\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:call\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -496,38 +486,48 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLength\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLength\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLoadingCallback\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLoadingCallback\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:toArray\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array, mixed given\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^PHPDoc tag @param for parameter \\$callable with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type is not subtype of native type callable\\.$#"
+			message: "#^Parameter \\#1 \\$offset \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetExists\\(\\) should be contravariant with parameter \\$offset \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetExists\\(\\)$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$args$#"
+			message: "#^Parameter \\#1 \\$offset \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetGet\\(\\) should be contravariant with parameter \\$offset \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetGet\\(\\)$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Parameter \\$callable of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:map\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
+			message: "#^Parameter \\#1 \\$offset \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetSet\\(\\) should be contravariant with parameter \\$offset \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetSet\\(\\)$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Part \\$offset \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
-			count: 2
+			message: "#^Parameter \\#1 \\$offset \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetUnset\\(\\) should be contravariant with parameter \\$offset \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetUnset\\(\\)$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Parameter \\#1 \\$prototype of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\:\\:buildFromPdoResult\\(\\) expects T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel given\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Parameter \\#2 \\$value \\(\\(T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\|null\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetSet\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetSet\\(\\)$#"
+			count: 1
 			path: _/DataModel/Collection.php
 
 		-
@@ -622,11 +622,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchColumns\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchSelectColumns\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -731,11 +726,6 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^PHPDoc tag @return with type array\\<static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\> is incompatible with native type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^PHPDoc tag @return with type static is not subtype of native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
@@ -801,11 +791,6 @@ parameters:
 			path: _/DataModel/DataModelAnalyser.php
 
 		-
-			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
-			count: 2
-			path: _/DataModel/DataModelAnalyser.php
-
-		-
 			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
@@ -826,22 +811,7 @@ parameters:
 			path: _/DataModel/DataModelAnalyser.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelAnalyser\\:\\:fetchNamingConventionAttributes\\(\\) return type with generic class ReflectionAttribute does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/DataModelAnalyser.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelAnalyser\\:\\:fetchTableNamingConvention\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Convention but returns object\\.$#"
-			count: 1
-			path: _/DataModel/DataModelAnalyser.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelAnalyser\\:\\:prepareProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModelAnalyser.php
-
-		-
-			message: "#^Only booleans are allowed in a ternary operator condition, ReflectionAttribute\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
 
@@ -862,11 +832,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$renamed of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty\\:\\:setRenamed\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Rename, object given\\.$#"
-			count: 1
-			path: _/DataModel/DataModelAnalyser.php
-
-		-
-			message: "#^Parameter \\#2 \\$case of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty constructor expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Attribute\\\\Naming\\\\Convention\\|null, object\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
 
@@ -911,17 +876,7 @@ parameters:
 			path: _/DataModel/DataModelQueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:run\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModelQueryBuilder.php
-
-		-
 			message: "#^Only booleans are allowed in a negated boolean, \\(callable\\)\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/DataModelQueryBuilder.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/DataModelQueryBuilder.php
 
@@ -936,7 +891,7 @@ parameters:
 			path: _/DataModel/DatabaseOverride.php
 
 		-
-			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:getSearchFields\\(\\)\\.$#"
+			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\:\\:getSearchFields\\(\\)\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -946,8 +901,18 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder but returns verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\.$#"
 			count: 2
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:search\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
@@ -957,6 +922,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:split\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^PHPDoc tag @var for property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype contains generic type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\> but class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel is not generic\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -971,7 +941,12 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype \\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype \\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype has unknown class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T as its type\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -982,6 +957,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\:\\:getSearchFields\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/Search/Searchable.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\:\\:search\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Search/Searchable.php
 
@@ -1021,12 +1001,22 @@ parameters:
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/SimpleTreeDataModel.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$direction with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$order with no type specified\\.$#"
+			count: 1
+			path: _/DataModel/Tree/SimpleTreeDataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
@@ -1041,7 +1031,17 @@ parameters:
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Parameter \\#1 \\.\\.\\.\\$data of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection constructor expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, array\\<int, mixed\\> given\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchDirectChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/SimpleTreeDataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchPath\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/SimpleTreeDataModel.php
+
+		-
+			message: "#^Parameter \\#1 \\.\\.\\.\\$data of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection constructor expects T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, array\\<int, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\|null\\> given\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
@@ -1061,6 +1061,11 @@ parameters:
 			path: _/DataModel/Tree/TreeDataModelInterface.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/TreeDataModelInterface.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$direction with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/Tree/TreeDataModelInterface.php
@@ -1071,12 +1076,27 @@ parameters:
 			path: _/DataModel/Tree/TreeDataModelInterface.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildrenInclusive\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/TreeDataModelInterface.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/Tree/TreeDataModelInterface.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) has parameter \\$order with no type specified\\.$#"
+			count: 1
+			path: _/DataModel/Tree/TreeDataModelInterface.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Tree/TreeDataModelInterface.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchPath\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
 			count: 1
 			path: _/DataModel/Tree/TreeDataModelInterface.php
 
@@ -1112,46 +1132,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:cteMove\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchByPath\\(\\) should return bool but returns static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\)\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchChildren\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchDirectChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchDirectChildren\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchPath\\(\\) has invalid return type static\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -1246,11 +1226,6 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^PHPDoc tag @return with type array\\<static\\> is incompatible with native type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^PHPDoc tag @return with type bool is incompatible with native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\)\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -1262,7 +1237,7 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @throws with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Exception is not subtype of Throwable$#"
-			count: 5
+			count: 4
 			path: _/DataModel/TreeDataModel.php
 
 		-
@@ -1731,11 +1706,6 @@ parameters:
 			path: _/Database/Facade/JoinBuilder.php
 
 		-
-			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) has parameter \\$ident with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
@@ -1766,6 +1736,11 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:fetch\\(\\) should return array\\|null but returns mixed\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:fetchAll\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
@@ -1787,11 +1762,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:order\\(\\) has parameter \\$order with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:run\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1914,16 +1884,6 @@ parameters:
 			message: "#^Unsafe access to private constant verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Delete\\:\\:COMMAND through static\\:\\:\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Delete.php
-
-		-
-			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array$#"
-			count: 1
-			path: _/Database/SQL/Command/Insert.php
-
-		-
-			message: "#^Array unpacking cannot be used on an array with potential string keys\\: array\\<int\\|string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\>$#"
-			count: 1
-			path: _/Database/SQL/Command/Insert.php
 
 		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\ExpressionItem\\:\\:stringify\\(\\)\\.$#"
@@ -2521,41 +2481,6 @@ parameters:
 			path: _/Formular/FormTypes/Select.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:writeOption\\(\\) has parameter \\$o with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:writeOption\\(\\) has parameter \\$r with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectGroup\\:\\:__construct\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectGroup\\:\\:addChild\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectGroup\\:\\:fetchChildren\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectItem\\:\\:__construct\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectItem\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
 			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
@@ -2567,26 +2492,6 @@ parameters:
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:\\$options has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectGroup\\:\\:\\$children has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectGroup\\:\\:\\$name has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectItem\\:\\:\\$name has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\SelectItem\\:\\:\\$value has no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
 
@@ -2839,11 +2744,6 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$storeValuesOnFail has no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
-
-		-
-			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
 
 		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
@@ -5049,11 +4949,6 @@ parameters:
 			message: "#^Variable method call on verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\.$#"
 			count: 1
 			path: _/View/View.php
-
-		-
-			message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-			count: 2
-			path: tests/unit/DataModel/CollectionTest.php
 
 		-
 			message: "#^Property TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"

@@ -61,11 +61,11 @@
         }
 
         public function is( $key, $value ) {
-            return $this->get( $key ) == $value;
+            return $this->get( $key ) === $value;
         }
 
         public function isNot( $key, $value ) {
-            return $this->get( $key ) != $value;
+            return $this->get( $key ) !== $value;
         }
 
         public function all() {
@@ -87,7 +87,7 @@
             $return = [];
 
             foreach ( $this->all() as $key => $value ) {
-                if ( !in_array( $key, $filter ) ) {
+                if ( !in_array( $key, $filter, true ) ) {
                     $return[$key] = $value;
                 }
             }

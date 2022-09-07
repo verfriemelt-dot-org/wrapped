@@ -5,6 +5,7 @@
     namespace verfriemelt\wrapped\_\Cli;
 
     use \verfriemelt\wrapped\_\Http\ParameterBag;
+    use function is_array;
 
     class Console {
 
@@ -75,7 +76,13 @@
             };
 
             $this->selectedStream = &$this->stdout;
-            $this->argv           = new ParameterBag( $_SERVER["argv"] ?? [] );
+
+            $argv = [];
+            if ( isset( $_SERVER['argv']) && is_array($_SERVER['argv'])) {
+                $argv = $_SERVER['argv'];
+            }
+
+            $this->argv           = new ParameterBag( $argv );
 
             $this->inTerminal = isset( $_SERVER['TERM'] );
         }

@@ -57,9 +57,13 @@
         }
 
         public function fetchTableNamingConvention(): Convention {
-            return $this->fetchNamingConventionAttributes( $this->reflection ) ? $this->fetchNamingConventionAttributes( $this->reflection )->newInstance() : new PascalCase();
+            return $this->fetchNamingConventionAttributes( $this->reflection )?->newInstance() ?? new PascalCase();
         }
 
+        /**
+         * @param $element
+         * @return \ReflectionAttribute<Convention>|null
+         */
         public function fetchNamingConventionAttributes( $element ): ?\ReflectionAttribute {
             return $attributes = $element->getAttributes( Convention::class, \ReflectionAttribute::IS_INSTANCEOF )[0] ?? null;
         }
@@ -75,7 +79,7 @@
                 $name = $property->getName();
 
                 // ignore underscore attributes
-                if ( $name[0] == "_" ) {
+                if ( substr($name,0,1) === "_" ) {
                     continue;
                 }
 
@@ -101,7 +105,12 @@
 
                 $convetion = $this->fetchNamingConventionAttributes( $property );
 
-                $dmp = new DataModelProperty( $name, $convetion?->newInstance() );
+                $dmp = new DataModelProperty(
+                    $name,
+                    $property->getType()?->allowsNull() ?? true,
+                    $convetion?->newInstance()
+                );
+
                 $dmp->setGetter( $getter );
                 $dmp->setSetter( $setter );
 

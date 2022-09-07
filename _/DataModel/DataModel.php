@@ -4,6 +4,7 @@
 
     namespace verfriemelt\wrapped\_\DataModel;
 
+    use http\Exception\RuntimeException;
     use \ReflectionClass;
     use \Serializable;
     use \verfriemelt\wrapped\_\Database\Database;
@@ -18,6 +19,7 @@
     use \verfriemelt\wrapped\_\Http\ParameterBag;
     use function \json_decode;
     use function \json_encode;
+    use function property_exists;
 
     abstract class DataModel {
 
@@ -49,6 +51,10 @@
 
                 // property not found, we ignore this
                 if ( !$property ) {
+                    continue;
+                }
+
+                if ( $value === null && !$property->isNullable() ) {
                     continue;
                 }
 
@@ -156,7 +162,7 @@
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $field ) {
 
-                if ( $fieldName == $field->fetchBackendName() || $fieldName == $field->getName() ) {
+                if ( $fieldName === $field->fetchBackendName() || $fieldName === $field->getName() ) {
                     return $field;
                 }
             }
@@ -204,10 +210,16 @@
             return static::findSingle( [ $field => $value ] );
         }
 
+        /**
+         * @return DataModelQueryBuilder<static>
+         */
         protected static function buildQuery(): DataModelQueryBuilder {
             return new DataModelQueryBuilder( new static );
         }
 
+        /**
+         * @return DataModelQueryBuilder<static>
+         */
         public static function buildSelectQuery(): DataModelQueryBuilder {
 
             $query = static::buildQuery();
@@ -218,10 +230,16 @@
             return $query;
         }
 
+        /**
+         * @return array<int,array{string,string}>
+         */
         protected static function fetchSelectColumns(): array {
             return array_map( fn( DataModelProperty $a ) => [ static::fetchTablename(), $a->fetchBackendName() ], static::createDataModelAnalyser()->fetchProperties() );
         }
 
+        /**
+         * @return DataModelQueryBuilder<static>
+         */
         public static function buildCountQuery(): DataModelQueryBuilder {
 
             $query = static::buildQuery();
@@ -278,6 +296,9 @@
             return $this;
         }
 
+        /**
+         * @return Collection<static>
+         */
         public static function find( array | DbLogic $params, string $orderBy = null, string $order = "asc" ): Collection {
 
             if ( $params instanceof DbLogic ) {
@@ -323,6 +344,9 @@
             return null;
         }
 
+        /**
+         * @return DataModelQueryBuilder<static>
+         */
         protected static function buildQueryFromDbLogic( DbLogic $logic ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
@@ -332,8 +356,7 @@
         }
 
         /**
-         * fetches all entries from the database
-         * @return static[]
+         * @return Collection<static>
          */
         public static function all( $orderBy = null, $order = "asc" ): Collection {
 
@@ -354,6 +377,9 @@
             return static::findSingle( [], static::getPrimaryKey(), 'desc' );
         }
 
+        /**
+         * @return Collection<static>
+         */
         public static function take( int $count, int $offset = 0, array|DbLogic $params = [] ): Collection {
 
             $query = static::buildSelectQuery();
@@ -400,7 +426,7 @@
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ) {
 
                 // skip pk
-                if ( static::getPrimaryKey() !== null && $property->getName() == static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
+                if ( static::getPrimaryKey() !== null && $property->getName() === static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
                     continue;
                 }
 
@@ -511,6 +537,10 @@
 
         public function isDirty(): bool {
 
+//            if ( !$this->isPersisted() ) {
+//                return true;
+//            }
+
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ) {
                 if ( $this->_isPropertyFuzzy( $property->getName() ) ) {
                     return true;
@@ -577,6 +607,9 @@
             return static::createDataModelAnalyser()->getStaticName();
         }
 
+        /**
+         * @return DataModel|Collection<static>|null
+         */
         public function __call( string $propertyName, $args ): DataModel | Collection | null {
 
             // creates reflecteion
@@ -627,12 +660,28 @@
             return null;
         }
 
+        /**
+         * @return DataModelQueryBuilder<static>
+         */
         public static function with( DataModel $dest, callable $callback = null ): DataModelQueryBuilder {
 
             $query = static::buildSelectQuery();
             $query->with( $dest, $callback );
 
             return $query;
+        }
+
+        /**
+         * this is somewhat of an lazy assumption
+         */
+        public function isPersisted(): bool {
+
+            if ( !property_exists( $this, static::getPrimaryKey() )) {
+                throw new \RuntimeException('PK property does not exist');
+            }
+
+            /** @phpstan-ignore-next-line */
+            return isset($this->{static::getPrimaryKey()});
         }
 
     }
