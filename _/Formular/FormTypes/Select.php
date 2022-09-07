@@ -9,11 +9,17 @@
     class Select
     extends FormType {
 
+        /**
+         * @var array<int,SelectGroup|SelectItem>
+         */
         private $options = [];
 
-        private $optGroups = [];
+        /**
+         * @var array<string, SelectGroup>
+         */
+        private array $optGroups = [];
 
-        public function addOption( $name, $value, $optGroupName = null ) {
+        public function addOption( string $name, string $value, string $optGroupName = null ): self {
 
             if ( $optGroupName !== null ) {
 
@@ -33,7 +39,7 @@
             return $this;
         }
 
-        private function buildOption( $name, $value ) {
+        private function buildOption( string $name, string $value ): SelectItem {
 
             if ( $this->filterItem ) {
                 $this->filterItem->addAllowedValue( $value );
