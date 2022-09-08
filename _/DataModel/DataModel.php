@@ -425,13 +425,13 @@
 
             foreach ( static::createDataModelAnalyser()->fetchProperties() as $property ) {
 
-                // skip pk
-                if ( static::getPrimaryKey() !== null && $property->getName() === static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
+                // skip non initialized
+                if ( !$this->isPropertyInitialized( $property ) ) {
                     continue;
                 }
 
-                // skip non initialized
-                if ( !$this->isPropertyInitialized( $property ) ) {
+                // skip pk
+                if ( static::getPrimaryKey() !== null && $property->getName() === static::getPrimaryKey() && $this->{static::getPrimaryKey()} === null ) {
                     continue;
                 }
 
