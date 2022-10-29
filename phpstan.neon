@@ -15,10 +15,8 @@ parameters:
   excludePaths:
     - tests/integration/*
 
-  checkMissingIterableValueType: false
   reportUnmatchedIgnoredErrors: false
   treatPhpDocTypesAsCertain: false
-  polluteScopeWithAlwaysIterableForeach: true
 
   parallel:
     processTimeout: 30.0
