@@ -1,18 +1,19 @@
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Template\Template;
+declare(strict_types=1);
 
-    class TemplateTest
-    extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\Template;
 
-        private Template $tpl;
+class TemplateTest extends TestCase
+{
+    private Template $tpl;
 
-        public function testLoadTemplateFile(): void {
-            $this->tpl = new Template;
-            $this->tpl->parseFile( __DIR__ . "/templateTests/testfile.tpl" );
+    public function testLoadTemplateFile(): void
+    {
+        $this->tpl = new Template();
+        $this->tpl->parseFile(__DIR__ . '/templateTests/testfile.tpl');
 
-            static::assertSame( $this->tpl->run(), "" );
-        }
-
+        static::assertSame($this->tpl->run(), '');
     }
+}

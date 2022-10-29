@@ -1,14 +1,11 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Router;
 
-    use \Iterator;
-
-    class RouteGroup
-    implements Routable {
-
+    class RouteGroup implements Routable
+    {
         use RouteIterator;
 
         private $path;
@@ -17,17 +14,19 @@
 
         private array $filters = [];
 
-        public static function create( string $path ): static {
-            return new self( $path );
+        public static function create(string $path): static
+        {
+            return new self($path);
         }
 
-        public function __construct( string $path ) {
+        public function __construct(string $path)
+        {
             $this->path = $path;
         }
 
-        public function add( Routable ... $routes ): static {
-
-            foreach ( $routes as $route ) {
+        public function add(Routable ...$routes): static
+        {
+            foreach ($routes as $route) {
                 $this->routes[] = $route;
             }
 
@@ -35,30 +34,35 @@
         }
 
         /** @return Route[] */
-        public function getRoutes(): array {
+        public function getRoutes(): array
+        {
             return $this->routes;
         }
 
-        public function getPath(): string {
+        public function getPath(): string
+        {
             return $this->path;
         }
 
-        public function getPriority(): int {
+        public function getPriority(): int
+        {
             return $this->priority;
         }
 
-        public function setPath( $prefix ): static {
+        public function setPath($prefix): static
+        {
             $this->path = $prefix;
             return $this;
         }
 
-        public function getFilters(): array {
+        public function getFilters(): array
+        {
             return $this->filters;
         }
 
-        public function addFilter( callable $filterFunc ): static {
+        public function addFilter(callable $filterFunc): static
+        {
             $this->filters[] = $filterFunc;
             return $this;
         }
-
     }

@@ -1,12 +1,11 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\Kernel;
+declare(strict_types=1);
 
-    use \verfriemelt\wrapped\_\Events\ExceptionEvent;
+namespace verfriemelt\wrapped\_\Kernel;
 
-    class KernelExceptionEvent
-    extends ExceptionEvent {
+use verfriemelt\wrapped\_\Events\ExceptionEvent;
 
-        
-
-    }
+class KernelExceptionEvent extends ExceptionEvent
+{
+}

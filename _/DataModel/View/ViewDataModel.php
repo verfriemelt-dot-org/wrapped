@@ -1,22 +1,25 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\DataModel\View;
+declare(strict_types=1);
 
-    use \verfriemelt\wrapped\_\DataModel\DataModel;
+namespace verfriemelt\wrapped\_\DataModel\View;
 
-    class ViewDataModel
-    extends DataModel {
+use verfriemelt\wrapped\_\DataModel\DataModel;
 
-        public static function truncate(): void {
-            throw new \Exception( 'delete not allowed' );
-        }
-
-        public function delete(): static {
-            throw new \Exception( 'delete not allowed' );
-        }
-
-        public function save(): static {
-            throw new \Exception( 'update not allowed' );
-        }
-
+class ViewDataModel extends DataModel
+{
+    public static function truncate(): void
+    {
+        throw new \Exception('delete not allowed');
     }
+
+    public function delete(): static
+    {
+        throw new \Exception('delete not allowed');
+    }
+
+    public function save(): static
+    {
+        throw new \Exception('update not allowed');
+    }
+}

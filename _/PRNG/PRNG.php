@@ -1,13 +1,13 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\PRNG;
+namespace verfriemelt\wrapped\_\PRNG;
 
-    use \Exception;
+    use Exception;
 
-    class PRNG {
-
+    class PRNG
+    {
 //     Xn+1 = (aXn + c) mod m
 //    where X is the sequence of pseudo-random values
 //    m, 0 < m - modulus
@@ -25,22 +25,23 @@
 
         protected float $last;
 
-        public function __construct( int $seed = 1103515245 ) {
-
-            if ( $seed < 0 ) {
-                throw new Exception( 'seed must be greater than zero' );
+        public function __construct(int $seed = 1103515245)
+        {
+            if ($seed < 0) {
+                throw new Exception('seed must be greater than zero');
             }
 
             $this->seed = $seed;
             $this->last = $seed;
         }
 
-        public function getSeed(): int {
+        public function getSeed(): int
+        {
             return $this->seed;
         }
 
-        public function next(): float {
-            return $this->last = ( $this->multiplier * $this->last + $this->increment ) % $this->modulus ;
+        public function next(): float
+        {
+            return $this->last = ($this->multiplier * $this->last + $this->increment) % $this->modulus;
         }
-
     }

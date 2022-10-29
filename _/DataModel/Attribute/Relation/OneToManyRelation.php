@@ -1,22 +1,22 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\DataModel\Attribute\Relation;
+namespace verfriemelt\wrapped\_\DataModel\Attribute\Relation;
 
     #[ \Attribute ]
-    class OneToManyRelation {
-
+    class OneToManyRelation
+    {
         public string $leftColumn;
 
         public string $rightColumn;
 
         public string $rightClass;
 
-        public function __construct( string $leftColumn, string $rightColumn, string $rightClass ) {
-            $this->leftColumn  = $leftColumn;
+        public function __construct(string $leftColumn, string $rightColumn, string $rightClass)
+        {
+            $this->leftColumn = $leftColumn;
             $this->rightColumn = $rightColumn;
-            $this->rightClass  = $rightClass;
+            $this->rightClass = $rightClass;
         }
-
     }

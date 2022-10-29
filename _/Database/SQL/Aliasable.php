@@ -1,10 +1,10 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\SQL;
+namespace verfriemelt\wrapped\_\Database\SQL;
 
-    interface Aliasable {
-
-        public function addAlias( Expression\Identifier $ident );
+    interface Aliasable
+    {
+        public function addAlias(Expression\Identifier $ident);
     }

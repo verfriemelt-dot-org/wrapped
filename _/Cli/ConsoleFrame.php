@@ -1,10 +1,11 @@
-<?php declare( strict_types = 1 );
+<?php
+
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Cli;
 
 class ConsoleFrame
 {
-
     private Console $cli;
 
     /**
@@ -21,16 +22,15 @@ class ConsoleFrame
 
     private int $scrollPos = 0;
 
-    public function __construct( Console $cli )
+    public function __construct(Console $cli)
     {
-
         $this->cli = $cli;
 
         $this->height = $cli->getHeight();
         $this->width = $cli->getWidth();
     }
 
-    public function setPosition( int $x, int  $y ): static
+    public function setPosition(int $x, int $y): static
     {
         $this->pos = [
             'x' => $x,
@@ -40,10 +40,10 @@ class ConsoleFrame
         return $this;
     }
 
-    public function setScrollPos( int $pos ): static
+    public function setScrollPos(int $pos): static
     {
-        if ( $pos < 0 ) {
-            $this->scrollPos = count( $this->buffer ) - $pos;
+        if ($pos < 0) {
+            $this->scrollPos = count($this->buffer) - $pos;
         }
 
         $this->scrollPos = $pos;
@@ -55,7 +55,7 @@ class ConsoleFrame
         return $this->scrollPos;
     }
 
-    public function setDimension( int $width,int $height ): static
+    public function setDimension(int $width, int $height): static
     {
         $this->width = $width;
         $this->height = $height;
@@ -67,8 +67,8 @@ class ConsoleFrame
     // to stay within borders
     private function getRenderWidth(): int
     {
-        if ( $this->cli->getWidth() - $this->pos[ 'x' ] <= $this->width ) {
-            return $this->cli->getWidth() - $this->pos[ 'x' ];
+        if ($this->cli->getWidth() - $this->pos['x'] <= $this->width) {
+            return $this->cli->getWidth() - $this->pos['x'];
         }
 
         return $this->width;
@@ -76,8 +76,8 @@ class ConsoleFrame
 
     private function getRenderHeight(): int
     {
-        if ( $this->cli->getHeight() < $this->pos[ 'y' ] + $this->height ) {
-            return $this->cli->getHeight() - $this->pos[ 'y' ];
+        if ($this->cli->getHeight() < $this->pos['y'] + $this->height) {
+            return $this->cli->getHeight() - $this->pos['y'];
         }
 
         return $this->height;
@@ -89,16 +89,15 @@ class ConsoleFrame
         $width = $this->getRenderWidth();
         $height = $this->getRenderHeight();
 
-        for ( $h = 0; $h <= $this->height && $h < $height; $h++ ) {
-
-            $this->cli->jump( $this->pos[ 'x' ], $this->pos[ 'y' ] + $h );
-            $this->cli->write( str_repeat( " ", $width ) );
+        for ($h = 0; $h <= $this->height && $h < $height; ++$h) {
+            $this->cli->jump($this->pos['x'], $this->pos['y'] + $h);
+            $this->cli->write(str_repeat(' ', $width));
         }
     }
 
-    public function addToBuffer( string $line, int $style = 0 ): static
+    public function addToBuffer(string $line, int $style = 0): static
     {
-        $this->buffer[] = [ $line, $style ];
+        $this->buffer[] = [$line, $style];
         return $this;
     }
 
@@ -119,7 +118,7 @@ class ConsoleFrame
     /**
      * @param array<array{string,int}> $buffer
      */
-    public function setBuffer( array $buffer ): static
+    public function setBuffer(array $buffer): static
     {
         $this->buffer = $buffer;
         return $this;
@@ -133,25 +132,24 @@ class ConsoleFrame
         $width = $this->getRenderWidth();
         $height = $this->getRenderHeight();
 
-        foreach ( array_slice( $this->buffer, $this->scrollPos, $height ) as [ $line, $style ] ) {
-
-            $this->cli->jump( $this->pos[ 'x' ], $this->pos[ 'y' ] + $offset );
+        foreach (array_slice($this->buffer, $this->scrollPos, $height) as [ $line, $style ]) {
+            $this->cli->jump($this->pos['x'], $this->pos['y'] + $offset);
 //                $this->cli->write( mb_substr( $line, 0,  $this->getRenderWidth() ), $style );
 
-            $line = str_replace( [ "\n", "\r", "\t", "\0" ], [ '', '', '', '' ], $line );
+            $line = str_replace(["\n", "\r", "\t", "\0"], ['', '', '', ''], $line);
 
             $this->cli->write(
 //                    str_pad( $this->getRenderHeight() . ":". $offset  ,6 ).
 //                    str_pad(
-                substr( $line, 0, $width )
+                substr($line, 0, $width)
 //                        $this->getRenderWidth(),
 //                        $this->instance
 //                    ),
-                , $style
+                ,
+                $style
             );
 
-            $offset++;
+            ++$offset;
         }
     }
-
 }

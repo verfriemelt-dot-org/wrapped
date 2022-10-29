@@ -1,16 +1,16 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\DataModel\Attribute\Naming;
+namespace verfriemelt\wrapped\_\DataModel\Attribute\Naming;
 
     #[ \Attribute ]
-    class Rename {
-
+    class Rename
+    {
         public string $name;
 
-        public function __construct( string $name ) {
+        public function __construct(string $name)
+        {
             $this->name = $name;
         }
-
     }

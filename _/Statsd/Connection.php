@@ -1,10 +1,10 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Statsd;
+namespace verfriemelt\wrapped\_\Statsd;
 
-    interface Connection {
-
-        public function send( $message );
+    interface Connection
+    {
+        public function send($message);
     }

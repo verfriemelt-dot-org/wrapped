@@ -1,25 +1,24 @@
 <?php
 
-    declare( strict_types = 1 );
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Http\Response;
+namespace verfriemelt\wrapped\_\Http\Response;
 
     class HttpHeader
     {
-
         private string $name;
 
         private string $value;
 
         private bool $replaces = true;
 
-        public function __construct( string $name, string $value )
+        public function __construct(string $name, string $value)
         {
             $this->name = $name;
             $this->value = $value;
         }
 
-        public function replace( $bool = true ): static
+        public function replace($bool = true): static
         {
             $this->replaces = $bool;
             return $this;
@@ -40,16 +39,15 @@
             return $this->value;
         }
 
-        public function setName( $name ): static
+        public function setName($name): static
         {
             $this->name = $name;
             return $this;
         }
 
-        public function setValue( $value ): static
+        public function setValue($value): static
         {
             $this->value = $value;
             return $this;
         }
-
     }

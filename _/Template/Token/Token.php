@@ -1,11 +1,11 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Template\Token;
+namespace verfriemelt\wrapped\_\Template\Token;
 
-    abstract class Token {
-
+    abstract class Token
+    {
         public string $currentContent = '';
 
         public int $currentLength = 0;
@@ -26,47 +26,55 @@
 
         abstract public function getTokenName(): string;
 
-        public function setPrevToken( Token $prev ): static {
-            $this->prevToken            = $prev;
+        public function setPrevToken(Token $prev): static
+        {
+            $this->prevToken = $prev;
             $this->prevToken->nextToken = $this;
             return $this;
         }
 
-        public function setNextToken( Token $next = null ): static {
-            $this->nextToken            = $next;
+        public function setNextToken(Token $next = null): static
+        {
+            $this->nextToken = $next;
             $this->nextToken->prevToken = $this;
             return $this;
         }
 
-        public function getContent(): string {
+        public function getContent(): string
+        {
             return $this->currentContent;
         }
 
-        public function getLine(): int {
+        public function getLine(): int
+        {
             return $this->line;
         }
 
-        public function getLinePos(): int {
+        public function getLinePos(): int
+        {
             return $this->linePos;
         }
 
-        public function getPos(): int {
+        public function getPos(): int
+        {
             return $this->pos;
         }
 
-        public function setLine( int $line ): static {
+        public function setLine(int $line): static
+        {
             $this->line = $line;
             return $this;
         }
 
-        public function setLinePos( int $linePos ):static {
+        public function setLinePos(int $linePos): static
+        {
             $this->linePos = $linePos;
             return $this;
         }
 
-        public function setPos( int $pos ):static {
+        public function setPos(int $pos): static
+        {
             $this->pos = $pos;
             return $this;
         }
-
     }

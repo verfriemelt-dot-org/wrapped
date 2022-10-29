@@ -1,3 +1,9 @@
-<?php namespace verfriemelt\wrapped\_\Events;
+<?php
 
-    interface EventInterface {}
+declare(strict_types=1);
+
+namespace verfriemelt\wrapped\_\Events;
+
+interface EventInterface
+{
+}

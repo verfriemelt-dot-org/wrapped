@@ -1,44 +1,50 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\Events;
+declare(strict_types=1);
 
-    use \Throwable;
-    use \verfriemelt\wrapped\_\Http\Request\Request;
-    use \verfriemelt\wrapped\_\Http\Response\Response;
+namespace verfriemelt\wrapped\_\Events;
 
-    class ExceptionEvent
-    implements EventInterface {
+use Throwable;
+use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Response\Response;
 
-        protected Throwable $throwable;
+class ExceptionEvent implements EventInterface
+{
+    protected Throwable $throwable;
 
-        protected Request $request;
+    protected Request $request;
 
-        protected Response $response;
+    protected Response $response;
 
-        public function __construct( Throwable $throwable, Request $request ) {
-            $this->request   = $request;
-            $this->throwable = $throwable;
-        }
-
-        public function setResponse( Response $response ): static {
-            $this->response = $response;
-            return $this;
-        }
-
-        public function getThrowable(): Throwable {
-            return $this->throwable;
-        }
-
-        public function getRequest(): Request {
-            return $this->request;
-        }
-
-        public function hasResponse(): bool {
-            return isset( $this->response );
-        }
-
-        public function getResponse(): Response {
-            return $this->response;
-        }
-
+    public function __construct(Throwable $throwable, Request $request)
+    {
+        $this->request = $request;
+        $this->throwable = $throwable;
     }
+
+    public function setResponse(Response $response): static
+    {
+        $this->response = $response;
+        return $this;
+    }
+
+    public function getThrowable(): Throwable
+    {
+        return $this->throwable;
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    public function hasResponse(): bool
+    {
+        return isset($this->response);
+    }
+
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+}

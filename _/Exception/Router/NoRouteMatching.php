@@ -1,10 +1,9 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Exception\Router;
+namespace verfriemelt\wrapped\_\Exception\Router;
 
-    class NoRouteMatching
-    extends RouterException {
-
+    class NoRouteMatching extends RouterException
+    {
     }

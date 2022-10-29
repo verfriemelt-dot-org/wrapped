@@ -1,10 +1,9 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Exception\Router;
+namespace verfriemelt\wrapped\_\Exception\Router;
 
-    class IllegalCallbackSpecified
-    extends RouterException {
-
+    class IllegalCallbackSpecified extends RouterException
+    {
     }

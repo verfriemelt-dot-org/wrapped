@@ -1,22 +1,19 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\SQL\Expression;
+namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
-    use \Exception;
-    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use \verfriemelt\wrapped\_\Database\SQL\Alias;
-    use \verfriemelt\wrapped\_\Database\SQL\Aliasable;
-    use \verfriemelt\wrapped\_\Database\SQL\DataBinding;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
-    use \verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
+    use Exception;
+    use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use verfriemelt\wrapped\_\Database\SQL\Alias;
+    use verfriemelt\wrapped\_\Database\SQL\Aliasable;
+    use verfriemelt\wrapped\_\Database\SQL\DataBinding;
+    use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+    use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
-    class Value
-    extends QueryPart
-    implements ExpressionItem, Aliasable, DataBinding {
-
+    class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
+    {
         use Alias;
 
         protected $value;
@@ -27,9 +24,9 @@
 
         protected string $bind = ':bind';
 
-        public function __construct( mixed $value ) {
-
-            if ( is_object( $value ) && $value instanceof PropertyObjectInterface ) {
+        public function __construct(mixed $value)
+        {
+            if (is_object($value) && $value instanceof PropertyObjectInterface) {
                 $this->value = $value->dehydrateToString();
             } else {
                 $this->value = $value;
@@ -38,24 +35,23 @@
             $this->bind .= (string) ++static::$counter;
         }
 
-        public function getBinding() {
+        public function getBinding()
+        {
             return $this->value;
         }
 
-        public function stringify( DatabaseDriver $driver = null ): string {
-
-            if ( $driver ) {
-                return $this->bind . $this->stringifyAlias( $driver );
+        public function stringify(DatabaseDriver $driver = null): string
+        {
+            if ($driver) {
+                return $this->bind . $this->stringifyAlias($driver);
             }
 
-            $type = is_object( $this->value ) ? ($this->value)::class : gettype( $this->value );
+            $type = is_object($this->value) ? ($this->value)::class : gettype($this->value);
 
-            switch ( $type ) {
-
-
+            switch ($type) {
                 case 'array':
-                    $values = array_map( fn( $e ) => (new Value( $e ) )->stringify(), $this->value );
-                    $value  = "{" . implode( ',', $values ) . "}";
+                    $values = array_map(fn ($e) => (new Value($e) )->stringify(), $this->value);
+                    $value = '{' . implode(',', $values) . '}';
                     break;
 
                 case 'integer':
@@ -69,13 +65,12 @@
                     break;
 
                 case 'string':
-
-                    if ( $this->value === '' ) {
+                    if ($this->value === '') {
                         $value = '';
                         break;
                     }
 
-                    $value = str_replace( "'", "''", $this->value );
+                    $value = str_replace("'", "''", $this->value);
                     $value = "'{$value}'";
 
                     break;
@@ -84,14 +79,14 @@
                     $value = 'NULL';
                     break;
 
-                default: throw new Exception( "unsupported type: " . gettype( $this->value ) );
+                default: throw new Exception('unsupported type: ' . gettype($this->value));
             }
 
-            return $value . $this->stringifyAlias( $driver );
+            return $value . $this->stringifyAlias($driver);
         }
 
-        public function fetchBindings(): array {
-            return [ $this->bind => $this->value ];
+        public function fetchBindings(): array
+        {
+            return [$this->bind => $this->value];
         }
-
     }

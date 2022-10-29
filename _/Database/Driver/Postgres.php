@@ -1,16 +1,15 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\Driver;
+namespace verfriemelt\wrapped\_\Database\Driver;
 
-    class Postgres
-    extends DatabaseDriver {
+    class Postgres extends DatabaseDriver
+    {
+        public const PDO_NAME = 'pgsql';
 
-        const PDO_NAME = 'pgsql';
-
-        public function quoteIdentifier( string $ident ): string {
-            return sprintf( '"%s"', $ident );
+        public function quoteIdentifier(string $ident): string
+        {
+            return sprintf('"%s"', $ident);
         }
-
     }

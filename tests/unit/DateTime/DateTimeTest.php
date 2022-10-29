@@ -1,29 +1,28 @@
-<?php declare( strict_types = 1 );
+<?php
 
-    namespace tests\unit\DateTime;
+declare(strict_types=1);
 
-    use PHPUnit\Framework\TestCase;
-    use verfriemelt\wrapped\_\DateTime\DateTime;
-    use verfriemelt\wrapped\_\DateTime\DateTimeImmutable;
+namespace tests\unit\DateTime;
 
-    class DateTimeTest
-        extends TestCase
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\DateTime\DateTime;
+use verfriemelt\wrapped\_\DateTime\DateTimeImmutable;
+
+class DateTimeTest extends TestCase
+{
+    public function testReturnsNewDateTimeAfterModification(): void
     {
+        $a = new DateTime();
+        $b = $a->modify('+1 day');
 
-        public function testReturnsNewDateTimeAfterModification(): void
-        {
-
-            $a = new DateTime();
-            $b = $a->modify( '+1 day' );
-
-            static::assertTrue( $b === $a );
-        }
-
-        public function testDateTimeImmuteable(): void
-        {
-            $a = new DateTimeImmutable();
-            $b = $a->modify( '+1 day' );
-
-            static::assertTrue( $b !== $a );
-        }
+        static::assertTrue($b === $a);
     }
+
+    public function testDateTimeImmuteable(): void
+    {
+        $a = new DateTimeImmutable();
+        $b = $a->modify('+1 day');
+
+        static::assertTrue($b !== $a);
+    }
+}

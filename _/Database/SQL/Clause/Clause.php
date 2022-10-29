@@ -1,10 +1,10 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\SQL\Clause;
+namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 
-    interface Clause {
-
+    interface Clause
+    {
         public function getWeight(): int;
     }

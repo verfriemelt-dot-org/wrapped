@@ -1,35 +1,35 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_;
+namespace verfriemelt\wrapped\_;
 
-    class EnvironmentDetector {
-
+    class EnvironmentDetector
+    {
         private $detector = [];
 
         /**
-         *
          * @param string $envName
-         * @param callable $func
+         *
          * @throws \InvalidArgumentException
          */
-        public function registerDetector( $envName, callable $func ) {
-
-            if ( !is_callable( $func ) ) {
-                throw new \InvalidArgumentException( "Illegal Detector" );
+        public function registerDetector($envName, callable $func)
+        {
+            if (!is_callable($func)) {
+                throw new \InvalidArgumentException('Illegal Detector');
             }
 
             $this->detector[$envName] = $func;
         }
 
         /**
-         *
          * @param string $envName
-         * @return boolean
+         *
+         * @return bool
          */
-        public function is( $envName ) {
-            if ( isset( $this->detector[$envName] ) ) {
+        public function is($envName)
+        {
+            if (isset($this->detector[$envName])) {
                 $func = $this->detector[$envName];
 
                 return $func();
@@ -39,25 +39,27 @@
         }
 
         /**
-         *
          * @param string $envName
-         * @return boolean
+         *
+         * @return bool
          */
-        public function isNot( $envName ) {
-            return !$this->is( $envName );
+        public function isNot($envName)
+        {
+            return !$this->is($envName);
         }
 
         /**
          * for debug only
+         *
          * @return mixed
          */
-        public function dumpDetectorsResults() {
+        public function dumpDetectorsResults()
+        {
             $detectors = [];
-            foreach ( $this->detector as $name => $func ) {
+            foreach ($this->detector as $name => $func) {
                 $detectors[$name] = $func();
             }
 
             return $detectors;
         }
-
     }

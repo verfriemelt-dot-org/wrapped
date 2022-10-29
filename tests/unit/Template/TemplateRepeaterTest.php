@@ -1,50 +1,49 @@
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Template\Template;
+declare(strict_types=1);
 
-    class TemplateRepeaterTest
-    extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\Template;
 
-        public Template $tpl;
+class TemplateRepeaterTest extends TestCase
+{
+    public Template $tpl;
 
-        public function testBasicRepeater(): void {
+    public function testBasicRepeater(): void
+    {
+        $this->tpl = new Template();
+        $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/repeater.tpl'));
 
-            $this->tpl = new Template;
-            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/repeater.tpl" ) );
-
-            $r          = $this->tpl->createRepeater( "r" );
-            $testString = "";
-            for ( $i = 0; $i < 9; ++$i ) {
-                $testString .= $i;
-                $r->set( "i", $i )->save();
-            }
-
-            static::assertSame( $testString, $this->tpl->run() );
+        $r = $this->tpl->createRepeater('r');
+        $testString = '';
+        for ($i = 0; $i < 9; ++$i) {
+            $testString .= $i;
+            $r->set('i', $i)->save();
         }
 
-        public function testNestedRepeater(): void {
-
-            $this->tpl = new Template;
-            $this->tpl->setRawTemplate( (string) file_get_contents( __DIR__ . "/templateTests/nestedRepeater.tpl" ) );
-
-            $k = $this->tpl->createRepeater( "k" );
-
-            $testString = "";
-
-            for ( $ki = 0; $ki < 3; ++$ki ) {
-
-                $r = $k->createChildRepeater( "r" );
-
-                for ( $ri = 0; $ri < 3; ++$ri ) {
-                    $testString .= $ki . "." . $ri;
-                    $r->set( "i", $ri )->save();
-                }
-
-                $k->set( "j", $ki )->save();
-            }
-
-            static::assertSame( $testString, $this->tpl->run() );
-        }
-
+        static::assertSame($testString, $this->tpl->run());
     }
+
+    public function testNestedRepeater(): void
+    {
+        $this->tpl = new Template();
+        $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/nestedRepeater.tpl'));
+
+        $k = $this->tpl->createRepeater('k');
+
+        $testString = '';
+
+        for ($ki = 0; $ki < 3; ++$ki) {
+            $r = $k->createChildRepeater('r');
+
+            for ($ri = 0; $ri < 3; ++$ri) {
+                $testString .= $ki . '.' . $ri;
+                $r->set('i', $ri)->save();
+            }
+
+            $k->set('j', $ki)->save();
+        }
+
+        static::assertSame($testString, $this->tpl->run());
+    }
+}

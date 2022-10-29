@@ -1,22 +1,25 @@
-<?php namespace tests\unit\Event;
+<?php
 
+declare(strict_types=1);
 
-    use PHPUnit\Framework\TestCase;
-    use verfriemelt\wrapped\_\Events\EventDispatcher;
-    use verfriemelt\wrapped\_\Events\EventInterface;
-    use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
+namespace tests\unit\Event;
 
-    class EventDispatchterTest extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Events\EventDispatcher;
+use verfriemelt\wrapped\_\Events\EventInterface;
+use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
 
-        public function testSubscriberBeeingCalled(): void {
+class EventDispatchterTest extends TestCase
+{
+    public function testSubscriberBeeingCalled(): void
+    {
+        $mockSubscriber = $this->createMock(EventSubscriberInterface::class);
+        $mockSubscriber->expects(static::once())->method('on');
 
-            $mockSubscriber = $this->createMock(EventSubscriberInterface::class);
-            $mockSubscriber->expects(static::once())->method('on');
+        $mockEvent = $this->createMock(EventInterface::class);
 
-            $mockEvent = $this->createMock( EventInterface::class );
-
-            $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber( $mockSubscriber );
-            $dispatcher->dispatch($mockEvent);
-        }
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber($mockSubscriber);
+        $dispatcher->dispatch($mockEvent);
     }
+}

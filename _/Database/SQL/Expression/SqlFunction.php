@@ -1,17 +1,15 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\SQL\Expression;
+namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
-    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use \verfriemelt\wrapped\_\Database\SQL\Alias;
-    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
+    use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use verfriemelt\wrapped\_\Database\SQL\Alias;
+    use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
-    class SqlFunction
-    extends QueryPart
-    implements ExpressionItem {
-
+    class SqlFunction extends QueryPart implements ExpressionItem
+    {
         use Alias;
 
         public const SYNTAX = '%s( %s )';
@@ -21,25 +19,26 @@
 
         protected array $arguments;
 
-        public function __construct( Identifier $name, ExpressionItem ... $args ) {
+        public function __construct(Identifier $name, ExpressionItem ...$args)
+        {
+            $this->addChild($name);
 
-            $this->addChild( $name );
-
-            foreach ( $args as $arg ) {
-                $this->addChild( $arg );
+            foreach ($args as $arg) {
+                $this->addChild($arg);
             }
 
-            $this->name      = $name;
+            $this->name = $name;
             $this->arguments = $args;
         }
 
-        public function setSchema( Identifier $schema ) {
+        public function setSchema(Identifier $schema)
+        {
             $this->schema = $schema;
             return $this;
         }
 
-        public function stringify( DatabaseDriver $driver = null ): string {
-
+        public function stringify(DatabaseDriver $driver = null): string
+        {
             // some functions are keywords
             $keywords = [
                 'coalesce',
@@ -48,23 +47,21 @@
                 'nullif',
             ];
 
-            if ( in_array( $this->name->stringify(), $keywords ) ) {
-                $name = $this->name->stringify( null );
+            if (in_array($this->name->stringify(), $keywords)) {
+                $name = $this->name->stringify(null);
             } else {
+                $name = $this->name->stringify($driver);
 
-                $name = $this->name->stringify( $driver );
-
-                if ( isset( $this->schema ) ) {
-                    $name = $this->schema->stringify( $driver ) . '.' . $name;
+                if (isset($this->schema)) {
+                    $name = $this->schema->stringify($driver) . '.' . $name;
                 }
             }
 
             return sprintf(
-                    static::SYNTAX,
-                    $name,
-                    implode( ', ', array_map( fn( ExpressionItem $i ) => $i->stringify( $driver ), $this->arguments ) )
-                )
-                . $this->stringifyAlias( $driver );
+                static::SYNTAX,
+                $name,
+                implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
+            )
+                . $this->stringifyAlias($driver);
         }
-
     }

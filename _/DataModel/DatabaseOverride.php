@@ -1,10 +1,10 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\DataModel;
+namespace verfriemelt\wrapped\_\DataModel;
 
-    interface DatabaseOverride {
-
-        static function fetchDatabase();
+    interface DatabaseOverride
+    {
+        public static function fetchDatabase();
     }

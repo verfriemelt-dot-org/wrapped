@@ -1,20 +1,20 @@
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+declare(strict_types=1);
 
-    class BracketTest
-    extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
-        public function testWrapping(): void {
+class BracketTest extends TestCase
+{
+    public function testWrapping(): void
+    {
+        $bracket = new Bracket();
+        $bracket->add(
+            new Value(true)
+        );
 
-            $bracket = new Bracket;
-            $bracket->add(
-                new Value( true )
-            );
-
-            static::assertSame( '( true )', $bracket->stringify() );
-        }
-
+        static::assertSame('( true )', $bracket->stringify());
     }
+}

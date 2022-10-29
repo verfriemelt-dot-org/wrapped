@@ -12,3 +12,5 @@ phpstan-baseline: ## update baseline for phpstan
 phpunit: ## run phpunit
 	vendor/bin/phpunit
 
+cs: ## Run php-cs-fixer
+	php vendor/bin/php-cs-fixer fix

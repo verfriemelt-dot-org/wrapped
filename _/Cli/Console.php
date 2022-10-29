@@ -1,29 +1,31 @@
-<?php declare( strict_types = 1 );
+<?php
+
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Cli;
 
 use Closure;
 use verfriemelt\wrapped\_\Http\ParameterBag;
 
-class Console {
+class Console
+{
+    public const STYLE_NONE = 0;
+    public const STYLE_BLACK = 30;
+    public const STYLE_RED = 31;
+    public const STYLE_GREEN = 32;
+    public const STYLE_YELLOW = 33;
+    public const STYLE_BLUE = 34;
+    public const STYLE_PURPLE = 35;
+    public const STYLE_CYAN = 36;
+    public const STYLE_WHITE = 37;
 
-    const STYLE_NONE      = 0;
-    const STYLE_BLACK     = 30;
-    const STYLE_RED       = 31;
-    const STYLE_GREEN     = 32;
-    const STYLE_YELLOW    = 33;
-    const STYLE_BLUE      = 34;
-    const STYLE_PURPLE    = 35;
-    const STYLE_CYAN      = 36;
-    const STYLE_WHITE     = 37;
+    public const STYLE_REGULAR = 0;
+    public const STYLE_BOLD = 1;
+    public const STYLE_UNDERLINE = 4;
 
-    const STYLE_REGULAR   = 0;
-    const STYLE_BOLD      = 1;
-    const STYLE_UNDERLINE = 4;
-
-    protected int $currentFgColor   = SELF::STYLE_NONE;
-    protected int $currentBgColor   = SELF::STYLE_NONE;
-    protected int $currentFontStyle = SELF::STYLE_REGULAR;
+    protected int $currentFgColor = self::STYLE_NONE;
+    protected int $currentBgColor = self::STYLE_NONE;
+    protected int $currentFontStyle = self::STYLE_REGULAR;
 
     /**
      * @var resource
@@ -33,16 +35,16 @@ class Console {
     /**
      * @var resource
      */
-    protected $stdout           = STDOUT;
+    protected $stdout = STDOUT;
 
     /**
      * @var resource
      */
-    protected $stderr           = STDERR;
+    protected $stderr = STDERR;
     protected Closure $linePrefixFunc;
-    protected bool $hadLineOutput    = false;
-    protected bool $inTerminal       = false;
-    protected bool $forceColor       = false;
+    protected bool $hadLineOutput = false;
+    protected bool $inTerminal = false;
+    protected bool $forceColor = false;
 
     /**
      * @var array{int, int}
@@ -51,166 +53,186 @@ class Console {
 
     protected ParameterBag $argv;
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         return new self();
     }
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->selectedStream = &$this->stdout;
 
-        if ( !is_array($_SERVER["argv"])) {
+        if (!is_array($_SERVER['argv'])) {
             throw new \RuntimeException('cannot read argv');
         }
 
-        $this->argv           = new ParameterBag( $_SERVER["argv"]);
+        $this->argv = new ParameterBag($_SERVER['argv']);
 
-        $this->inTerminal = isset( $_SERVER['TERM'] );
+        $this->inTerminal = isset($_SERVER['TERM']);
     }
 
-    public static function isCli(): bool {
-        return php_sapi_name() === "cli";
+    public static function isCli(): bool
+    {
+        return php_sapi_name() === 'cli';
     }
 
-    public function getArgv(): ParameterBag {
+    public function getArgv(): ParameterBag
+    {
         return $this->argv;
     }
 
-    public function getArgvAsString(): string {
-
+    public function getArgvAsString(): string
+    {
         // omit first element
-        return implode( " ", $this->argv->except( [ 0 ] ) );
+        return implode(' ', $this->argv->except([0]));
     }
 
-    public function setPrefixCallback( Closure $func ): static {
+    public function setPrefixCallback(Closure $func): static
+    {
         $this->linePrefixFunc = $func;
         return $this;
     }
 
-    public function toSTDOUT(): static {
+    public function toSTDOUT(): static
+    {
         $this->selectedStream = &$this->stdout;
         return $this;
     }
 
-    public function toSTDERR(): static {
+    public function toSTDERR(): static
+    {
         $this->selectedStream = &$this->stderr;
         return $this;
     }
 
-    public function write( string $text, int $color = null ): static {
-
-        if ( $color !== null ) {
-            $this->setForegroundColor( $color );
+    public function write(string $text, int $color = null): static
+    {
+        if ($color !== null) {
+            $this->setForegroundColor($color);
         }
 
-        if ( $this->currentFontStyle !== 0 || $this->currentBgColor !== 0  || $this->currentFgColor  !== 0 ) {
-
+        if ($this->currentFontStyle !== 0 || $this->currentBgColor !== 0 || $this->currentFgColor !== 0) {
             // set current color
-            fwrite( $this->selectedStream, "\033[{$this->currentFgColor}m" );
+            fwrite($this->selectedStream, "\033[{$this->currentFgColor}m");
         }
 
-        if ( isset($this->linePrefixFunc) && $this->hadLineOutput !== true ) {
-            fwrite( $this->selectedStream, ($this->linePrefixFunc)() );
+        if (isset($this->linePrefixFunc) && $this->hadLineOutput !== true) {
+            fwrite($this->selectedStream, ($this->linePrefixFunc)());
             $this->hadLineOutput = true;
         }
 
-        fwrite( $this->selectedStream, $text );
+        fwrite($this->selectedStream, $text);
 
         // clear color output again
-        if ( $this->currentFontStyle !== 0|| $this->currentBgColor !== 0 || $this->currentFgColor !== 0 ) {
-            fwrite( $this->selectedStream, "\033[0m" );
+        if ($this->currentFontStyle !== 0 || $this->currentBgColor !== 0 || $this->currentFgColor !== 0) {
+            fwrite($this->selectedStream, "\033[0m");
         }
 
-        if ( $color !== null ) {
-            $this->setForegroundColor( static::STYLE_NONE );
+        if ($color !== null) {
+            $this->setForegroundColor(static::STYLE_NONE);
         }
 
         return $this;
     }
 
-    public function writeLn( $text, $color = null ): static {
-        return $this->write( $text, $color )->eol();
+    public function writeLn($text, $color = null): static
+    {
+        return $this->write($text, $color)->eol();
     }
 
-    public function cr(): static {
-        fwrite( $this->selectedStream, "\r" );
+    public function cr(): static
+    {
+        fwrite($this->selectedStream, "\r");
         return $this;
     }
 
-    public function eol(): static {
-        $this->write( PHP_EOL );
+    public function eol(): static
+    {
+        $this->write(PHP_EOL);
         $this->hadLineOutput = false;
         return $this;
     }
 
-    public function writePadded( $text, $padding = 4, $paddingChar = " ", $color = null ): static {
-        $this->write( str_repeat( $paddingChar, $padding ) );
-        $this->write( $text, $color );
+    public function writePadded($text, $padding = 4, $paddingChar = ' ', $color = null): static
+    {
+        $this->write(str_repeat($paddingChar, $padding));
+        $this->write($text, $color);
 
         return $this;
     }
 
     // this is blocking
-    public function read() {
-        return fgets( STDIN );
+    public function read()
+    {
+        return fgets(STDIN);
     }
 
-    public function setFontFeature( int $style ): static {
+    public function setFontFeature(int $style): static
+    {
         $this->currentFontStyle = $style;
         return $this;
     }
 
-    public function setBackgroundColor( int $color ): static {
+    public function setBackgroundColor(int $color): static
+    {
         $this->currentBgColor = $color + 10;
         return $this;
     }
 
-    public function setForegroundColor( int $color ): static {
+    public function setForegroundColor(int $color): static
+    {
         $this->currentFgColor = $color;
         return $this;
     }
 
-    public function cls(): static {
-        fwrite( $this->selectedStream, "\033[2J" );
+    public function cls(): static
+    {
+        fwrite($this->selectedStream, "\033[2J");
         return $this;
     }
 
-    public function up( int $amount = 1 ): static {
-        fwrite( $this->selectedStream, "\033[{$amount}A" );
+    public function up(int $amount = 1): static
+    {
+        fwrite($this->selectedStream, "\033[{$amount}A");
         return $this;
     }
 
-    public function down( int $amount = 1 ): static {
-        fwrite( $this->selectedStream, "\033[{$amount}B" );
+    public function down(int $amount = 1): static
+    {
+        fwrite($this->selectedStream, "\033[{$amount}B");
         return $this;
     }
 
-    public function right( int $amount = 1 ): static {
-        fwrite( $this->selectedStream, "\033[{$amount}C" );
+    public function right(int $amount = 1): static
+    {
+        fwrite($this->selectedStream, "\033[{$amount}C");
         return $this;
     }
 
-    public function left( int $amount = 1 ): static {
-        fwrite( $this->selectedStream, "\033[{$amount}D" );
+    public function left(int $amount = 1): static
+    {
+        fwrite($this->selectedStream, "\033[{$amount}D");
         return $this;
     }
 
     /**
      * Hides the cursor
      */
-    public function hide(): static {
-        fwrite( $this->selectedStream, "\033[?25l" );
+    public function hide(): static
+    {
+        fwrite($this->selectedStream, "\033[?25l");
         return $this;
     }
 
     /**
      * Enable/Disable Auto-Wrap
      */
-    public function wrap( bool $wrap = true ): static {
-        if ( $wrap ) {
-            fwrite( $this->selectedStream, "\033[?7h" );
+    public function wrap(bool $wrap = true): static
+    {
+        if ($wrap) {
+            fwrite($this->selectedStream, "\033[?7h");
         } else {
-            fwrite( $this->selectedStream, "\033[?7l" );
+            fwrite($this->selectedStream, "\033[?7l");
         }
 
         return $this;
@@ -219,74 +241,80 @@ class Console {
     /**
      * Shows the cursor
      */
-    public function show(): static {
-        fwrite( $this->selectedStream, "\033[?25h\033[?0c" );
+    public function show(): static
+    {
+        fwrite($this->selectedStream, "\033[?25h\033[?0c");
         return $this;
     }
 
     /**
      * stores cursor position
      */
-    public function push(): static {
-        fwrite( $this->selectedStream, "\033[s" );
+    public function push(): static
+    {
+        fwrite($this->selectedStream, "\033[s");
         return $this;
     }
 
     /**
      * restores cursor position
      */
-    public function pop(): static {
-        fwrite( $this->selectedStream, "\033[u" );
+    public function pop(): static
+    {
+        fwrite($this->selectedStream, "\033[u");
         return $this;
     }
 
-    public function jump( int $x = 0, int $y = 0 ): static {
-        fwrite( $this->selectedStream, "\033[{$y};{$x}H" );
+    public function jump(int $x = 0, int $y = 0): static
+    {
+        fwrite($this->selectedStream, "\033[{$y};{$x}H");
         return $this;
     }
 
     /**
      * reset all style features
      */
-    public function __destruct() {
-        if ( $this->currentFgColor !== self::STYLE_NONE || $this->currentBgColor !== self::STYLE_NONE ) {
-            fwrite( $this->selectedStream, "\033[0m" );
+    public function __destruct()
+    {
+        if ($this->currentFgColor !== self::STYLE_NONE || $this->currentBgColor !== self::STYLE_NONE) {
+            fwrite($this->selectedStream, "\033[0m");
         }
     }
 
-    public function getWidth(): int {
-
-        if ( !isset($this->dimensions)) {
+    public function getWidth(): int
+    {
+        if (!isset($this->dimensions)) {
             $this->updateDimensions();
         }
 
         return $this->dimensions[0] ?? throw new \RuntimeException('cant detect terminal width');
     }
 
-    public function getHeight(): int {
-
-        if ( isset($this->dimensions) ) {
+    public function getHeight(): int
+    {
+        if (isset($this->dimensions)) {
             $this->updateDimensions();
         }
 
         return $this->dimensions[1] ?? throw new \RuntimeException('cant detect terminal height');
     }
 
-    public function updateDimensions(): static {
-
-        $this->dimensions[0] = (int) shell_exec( 'tput cols' );
-        $this->dimensions[1] = (int) shell_exec( 'tput lines' );
+    public function updateDimensions(): static
+    {
+        $this->dimensions[0] = (int) shell_exec('tput cols');
+        $this->dimensions[1] = (int) shell_exec('tput lines');
 
         return $this;
     }
 
-    public function forceColorOutput( bool $bool = true ): static {
+    public function forceColorOutput(bool $bool = true): static
+    {
         $this->forceColor = $bool;
         return $this;
     }
 
-    public function supportsColor(): bool {
-        return ((int) shell_exec( 'tput colors' )) > 1;
+    public function supportsColor(): bool
+    {
+        return ((int) shell_exec('tput colors')) > 1;
     }
-
 }

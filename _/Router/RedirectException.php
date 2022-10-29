@@ -1,22 +1,23 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\Router;
+declare(strict_types=1);
 
-    use \RuntimeException;
-    use \verfriemelt\wrapped\_\Http\Response\Redirect;
+namespace verfriemelt\wrapped\_\Router;
 
-    class RedirectException
-    extends RuntimeException {
+use RuntimeException;
+use verfriemelt\wrapped\_\Http\Response\Redirect;
 
-        protected Redirect $redirect;
+class RedirectException extends RuntimeException
+{
+    protected Redirect $redirect;
 
-        public function __construct( Redirect $redirect ) {
-
-            $this->redirect = $redirect;
-        }
-
-        public function getRedirect(): Redirect {
-            return $this->redirect;
-        }
-
+    public function __construct(Redirect $redirect)
+    {
+        $this->redirect = $redirect;
     }
+
+    public function getRedirect(): Redirect
+    {
+        return $this->redirect;
+    }
+}

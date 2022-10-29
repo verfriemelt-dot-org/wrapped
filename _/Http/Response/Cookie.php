@@ -1,70 +1,81 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Http\Response;
+namespace verfriemelt\wrapped\_\Http\Response;
 
-    class Cookie {
+    class Cookie
+    {
+        private $name;
+        private $value;
+        private $path;
+        private $domain;
+        private $expiresTime;
 
-        private $name,
-            $value,
-            $path,
-            $domain,
-            $expiresTime;
-
-        public function __construct( $name, $value, $expires = 3600 * 24 ) {
-            $this->name        = $name;
-            $this->value       = $value;
+        public function __construct($name, $value, $expires = 3600 * 24)
+        {
+            $this->name = $name;
+            $this->value = $value;
             $this->expiresTime = time() + $expires;
         }
 
-        public static function create( $name, $value, $expires = 3600 * 24 ) {
-            return new self( $name, $value, $expires );
+        public static function create($name, $value, $expires = 3600 * 24)
+        {
+            return new self($name, $value, $expires);
         }
 
-        public function getName() {
+        public function getName()
+        {
             return $this->name;
         }
 
-        public function getValue() {
+        public function getValue()
+        {
             return $this->value;
         }
 
-        public function getPath() {
+        public function getPath()
+        {
             return $this->path;
         }
 
-        public function getDomain() {
+        public function getDomain()
+        {
             return $this->domain;
         }
 
-        public function setName( $name ) {
+        public function setName($name)
+        {
             $this->name = $name;
             return $this;
         }
 
-        public function setValue( $value ) {
+        public function setValue($value)
+        {
             $this->value = $value;
             return $this;
         }
 
-        public function setPath( $path ) {
+        public function setPath($path)
+        {
             $this->path = $path;
             return $this;
         }
 
-        public function setDomain( $domain ) {
+        public function setDomain($domain)
+        {
             $this->domain = $domain;
             return $this;
         }
 
-        public function getExpiresTime() {
+        public function getExpiresTime()
+        {
             return $this->expiresTime;
         }
 
-        public function setExpiresTime( $expiresTime ) {
+        public function setExpiresTime($expiresTime)
+        {
             $this->expiresTime = $expiresTime;
             return $this;
         }
-
     }

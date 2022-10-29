@@ -1,41 +1,37 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database\SQL\Clause;
+namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 
-    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use \verfriemelt\wrapped\_\Database\SQL\Clause\Clause;
-    use \verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
-    use \verfriemelt\wrapped\_\Database\SQL\QueryPart;
+    use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
+    use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
-    class From
-    extends QueryPart
-    implements Clause {
-
+    class From extends QueryPart implements Clause
+    {
         use CommandWrapperTrait;
 
-        public const CLAUSE = "FROM %s";
+        public const CLAUSE = 'FROM %s';
 
         private QueryPart $source;
 
-        public function getWeight(): int {
+        public function getWeight(): int
+        {
             return 20;
         }
 
-        public function __construct( QueryPart $source ) {
-
-            $this->source = $this->wrap( $source );
-            $this->addChild( $this->source );
+        public function __construct(QueryPart $source)
+        {
+            $this->source = $this->wrap($source);
+            $this->addChild($this->source);
         }
 
-        public function stringify( DatabaseDriver $driver = null ): string {
-
+        public function stringify(DatabaseDriver $driver = null): string
+        {
             return sprintf(
                 static::CLAUSE,
-                $this->source->stringify( $driver )
+                $this->source->stringify($driver)
             );
         }
-
     }

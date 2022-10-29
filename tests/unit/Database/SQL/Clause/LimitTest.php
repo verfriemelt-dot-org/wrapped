@@ -1,18 +1,18 @@
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\SQL\Clause\Limit;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+declare(strict_types=1);
 
-    class LimitTest
-    extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Database\SQL\Clause\Limit;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
-        public function testSimple(): void {
-
-            $limit = new Limit(
-                (new Value( 1 ) )
-            );
-            static::assertSame( 'LIMIT 1', $limit->stringify() );
-        }
-
+class LimitTest extends TestCase
+{
+    public function testSimple(): void
+    {
+        $limit = new Limit(
+            new Value(1)
+        );
+        static::assertSame('LIMIT 1', $limit->stringify());
     }
+}

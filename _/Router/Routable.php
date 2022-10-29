@@ -1,11 +1,11 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Router;
 
-    interface Routable {
-
+    interface Routable
+    {
         /**
          * should return set path for the route;
          * could be an reguluar expression eq /admin/site/(?<id>[0-9])

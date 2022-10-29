@@ -1,31 +1,35 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\Events;
+declare(strict_types=1);
 
-    class EventDispatcher {
+namespace verfriemelt\wrapped\_\Events;
 
-        /**
-         * @var EventSubscriberInterface[]
-         */
-        protected array $subscriber = [];
+class EventDispatcher
+{
+    /**
+     * @var EventSubscriberInterface[]
+     */
+    protected array $subscriber = [];
 
-        public function addSubscriber( EventSubscriberInterface $subscriber ): static {
-            $this->subscriber[] = $subscriber;
-            return $this;
-        }
-
-        /**
-         * @template T of EventInterface
-         * @param T $event
-         * @return T
-         */
-        public function dispatch( EventInterface $event ): EventInterface {
-
-            foreach( $this->subscriber as $sub ) {
-                $sub->on($event);
-            }
-
-            return $event;
-        }
-
+    public function addSubscriber(EventSubscriberInterface $subscriber): static
+    {
+        $this->subscriber[] = $subscriber;
+        return $this;
     }
+
+    /**
+     * @template T of EventInterface
+     *
+     * @param T $event
+     *
+     * @return T
+     */
+    public function dispatch(EventInterface $event): EventInterface
+    {
+        foreach ($this->subscriber as $sub) {
+            $sub->on($event);
+        }
+
+        return $event;
+    }
+}

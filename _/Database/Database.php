@@ -1,29 +1,35 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Database;
+namespace verfriemelt\wrapped\_\Database;
 
-    use \PDO;
-    use \verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use \verfriemelt\wrapped\_\Database\Driver\Mysql;
-    use \verfriemelt\wrapped\_\Exception\Database\DatabaseDriverUnknown;
-    use \verfriemelt\wrapped\_\Exception\Database\DatabaseException;
+    use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+    use verfriemelt\wrapped\_\Database\Driver\Mysql;
+    use verfriemelt\wrapped\_\Exception\Database\DatabaseDriverUnknown;
+    use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
-    class Database {
-
+    class Database
+    {
         private static $connections = [];
 
         public static function createNewConnection(
-            $name, $driver, $username, $password, $host, $database, $port, $autoConnect = true ): DatabaseDriver {
-
-            if ( !class_exists( $driver ) ) {
-                throw new DatabaseDriverUnknown( "unknown driver {$driver}" );
+            $name,
+            $driver,
+            $username,
+            $password,
+            $host,
+            $database,
+            $port,
+            $autoConnect = true
+        ): DatabaseDriver {
+            if (!class_exists($driver)) {
+                throw new DatabaseDriverUnknown("unknown driver {$driver}");
             }
 
-            self::$connections[$name] = new $driver( $name, $username, $password, $host, $database, $port );
+            self::$connections[$name] = new $driver($name, $username, $password, $host, $database, $port);
 
-            if ( $autoConnect ) {
+            if ($autoConnect) {
                 self::$connections[$name]->connect();
             }
 
@@ -31,17 +37,16 @@
         }
 
         /**
-         *
-         * @param string $name
          * @return Mysql
+         *
          * @throws DatabaseException
          */
-        public static function getConnection( string $name = "default" ): DatabaseDriver {
-            if ( isset( self::$connections[$name] ) ) {
+        public static function getConnection(string $name = 'default'): DatabaseDriver
+        {
+            if (isset(self::$connections[$name])) {
                 return self::$connections[$name];
             }
 
-            throw new DatabaseException( "No connection by that name, sorry" );
+            throw new DatabaseException('No connection by that name, sorry');
         }
-
     }

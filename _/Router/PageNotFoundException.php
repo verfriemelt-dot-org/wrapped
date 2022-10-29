@@ -1,10 +1,11 @@
 <?php
 
-    namespace verfriemelt\wrapped\_\Router;
+declare(strict_types=1);
 
-    use \RuntimeException;
+namespace verfriemelt\wrapped\_\Router;
 
-    class PageNotFoundException
-    extends RuntimeException {
-        
-    }
+use RuntimeException;
+
+class PageNotFoundException extends RuntimeException
+{
+}

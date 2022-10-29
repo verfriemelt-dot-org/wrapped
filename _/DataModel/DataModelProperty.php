@@ -1,16 +1,16 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\DataModel;
+namespace verfriemelt\wrapped\_\DataModel;
 
-    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
-    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Convention;
-    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
-    use \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
+    use verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
+    use verfriemelt\wrapped\_\DataModel\Attribute\Naming\Convention;
+    use verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
+    use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 
-    class DataModelProperty {
-
+    class DataModelProperty
+    {
         private string $name;
 
         private string $setter;
@@ -32,65 +32,76 @@
         ) {
             $this->name = $name;
             $this->isNullable = $isNullable;
-            $this->case = (new CamelCase( $name ) )->convertTo( $case ?? SnakeCase::class );
+            $this->case = (new CamelCase($name) )->convertTo($case ?? SnakeCase::class);
         }
 
-        public function isRenamed(): bool {
-            return isset( $this->renamed );
+        public function isRenamed(): bool
+        {
+            return isset($this->renamed);
         }
 
-        public function setRenamed( Rename $renamed ) {
+        public function setRenamed(Rename $renamed)
+        {
             $this->renamed = $renamed;
             return $this;
         }
 
-        public function fetchBackendName(): string {
-
-            if ( $this->isRenamed() ) {
+        public function fetchBackendName(): string
+        {
+            if ($this->isRenamed()) {
                 return $this->renamed->name;
             }
 
             return $this->getNamingConvention()->getString();
         }
 
-        function getSetter(): string {
+        public function getSetter(): string
+        {
             return $this->setter;
         }
 
-        function getGetter(): string {
+        public function getGetter(): string
+        {
             return $this->getter;
         }
 
-        function setSetter( string $setter ): void {
+        public function setSetter(string $setter): void
+        {
             $this->setter = $setter;
         }
 
-        function setGetter( string $getter ): void {
+        public function setGetter(string $getter): void
+        {
             $this->getter = $getter;
         }
 
-        function getType(): ?string {
+        public function getType(): ?string
+        {
             return $this->type;
         }
 
-        function setType( ?string $type ): void {
+        public function setType(?string $type): void
+        {
             $this->type = $type;
         }
 
-        public function getNamingConvention(): Convention {
+        public function getNamingConvention(): Convention
+        {
             return $this->case;
         }
 
-        public function getName(): string {
+        public function getName(): string
+        {
             return $this->name;
         }
 
-        public function isNamed( string $name ): bool {
+        public function isNamed(string $name): bool
+        {
             return $this->name === $name || $this->case->getString() === $name;
         }
 
-        public function isNullable(): bool {
+        public function isNullable(): bool
+        {
             return $this->isNullable;
         }
-
     }

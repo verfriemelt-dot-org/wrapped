@@ -1,29 +1,29 @@
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+declare(strict_types=1);
 
-    class ExpressionTest
-    extends TestCase {
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
-        public function testNesting(): void {
+class ExpressionTest extends TestCase
+{
+    public function testNesting(): void
+    {
+        $exp = new Expression();
+        $exp->add(
+            (new Expression() )
+                ->add(new Value(true))
+        );
 
-            $exp = new Expression();
-            $exp->add(
-                (new Expression() )
-                    ->add( new Value( true ) )
-            );
-
-            static::assertSame( 'true', $exp->stringify() );
-        }
-
-        public function testEmpty(): void {
-
-            $exp = new Expression();
-
-            $this->expectExceptionObject( new Exception( 'empty' ) );
-            $exp->stringify();
-        }
-
+        static::assertSame('true', $exp->stringify());
     }
+
+    public function testEmpty(): void
+    {
+        $exp = new Expression();
+
+        $this->expectExceptionObject(new Exception('empty'));
+        $exp->stringify();
+    }
+}

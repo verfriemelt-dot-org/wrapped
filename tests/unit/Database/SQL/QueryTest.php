@@ -1,36 +1,34 @@
 
 <?php
 
-    use \PHPUnit\Framework\TestCase;
-    use \verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
+    use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
-    class QueryTest
-    extends TestCase {
+class QueryTest extends TestCase
+{
+    public function testWhereWithValueFromArray(): void
+    {
+        $query = new QueryBuilder();
 
-        public function testWhereWithValueFromArray(): void {
+        $query->select('column');
+        $query->from('table');
+        $query->where([
+            'column' => 1,
+        ]);
 
-            $query = new QueryBuilder();
-
-            $query->select( 'column' );
-            $query->from( "table" );
-            $query->where( [
-                "column" => 1
-            ] );
-
-            static::assertStringContainsString( 'SELECT column FROM table WHERE column = ', $query->fetchStatement()->stringify() );
-        }
-
-        public function testWhereWithNullFromArray(): void {
-
-            $query = new QueryBuilder();
-
-            $query->select( 'column' );
-            $query->from( "table" );
-            $query->where( [
-                "column" => null
-            ] );
-
-            static::assertStringContainsString( 'SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify() );
-        }
-
+        static::assertStringContainsString('SELECT column FROM table WHERE column = ', $query->fetchStatement()->stringify());
     }
+
+    public function testWhereWithNullFromArray(): void
+    {
+        $query = new QueryBuilder();
+
+        $query->select('column');
+        $query->from('table');
+        $query->where([
+            'column' => null,
+        ]);
+
+        static::assertStringContainsString('SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify());
+    }
+}

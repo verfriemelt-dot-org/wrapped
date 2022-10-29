@@ -1,30 +1,30 @@
 <?php
 
-    namespace integration\SQL;
+declare(strict_types=1);
 
-    use \DatabaseTestCase;
-    use \verfriemelt\wrapped\_\Database\Driver\Postgres;
-    use \verfriemelt\wrapped\_\Database\Driver\SQLite;
-    use \verfriemelt\wrapped\_\Database\SQL\Command\Select;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
-    use \verfriemelt\wrapped\_\Database\SQL\Expression\Value;
-    use \verfriemelt\wrapped\_\Database\SQL\Statement;
+namespace integration\SQL;
 
-    class QueryTest
-    extends DatabaseTestCase {
+use DatabaseTestCase;
+use verfriemelt\wrapped\_\Database\Driver\Postgres;
+use verfriemelt\wrapped\_\Database\Driver\SQLite;
+use verfriemelt\wrapped\_\Database\SQL\Command\Select;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
+use verfriemelt\wrapped\_\Database\SQL\Statement;
 
-        public function test(): void {
+class QueryTest extends DatabaseTestCase
+{
+    public function test(): void
+    {
+        $stmt = new Statement();
+        $stmt->setCommand(new Select((new Expression(new Value(1)) )->as(new Identifier('test'))));
 
-            $stmt = new Statement();
-            $stmt->setCommand( new Select( (new Expression( new Value( 1 ) ) )->as( new Identifier( 'test' ) ) ) );
+        $expected = match ((static::$connection)::class) {
+            SQLite::class => 1,
+            Postgres::class => '1',
+        };
 
-            $expected = match ( (static::$connection)::class ) {
-                SQLite::class => 1,
-                Postgres::class => "1",
-            };
-
-            static::assertSame( $expected, static::$connection->run( $stmt )->fetch()['test'] );
-        }
-
+        static::assertSame($expected, static::$connection->run($stmt)->fetch()['test']);
     }
+}

@@ -1,19 +1,19 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\DataModel\Attribute\Relation;
+namespace verfriemelt\wrapped\_\DataModel\Attribute\Relation;
 
     #[ \Attribute ]
-    class OneToOneRelation {
-
+    class OneToOneRelation
+    {
         public string $leftColumn;
 
         public string $rightColumn;
 
-        public function __construct( string $leftColumn, string $rightColumn ) {
-            $this->leftColumn  = $leftColumn;
+        public function __construct(string $leftColumn, string $rightColumn)
+        {
+            $this->leftColumn = $leftColumn;
             $this->rightColumn = $rightColumn;
         }
-
     }

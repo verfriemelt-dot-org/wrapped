@@ -3,7 +3,8 @@
     "description": "for educational purposes only",
     "license": "MIT",
     "require": {
-        "php" : "^8.1"
+        "php" : "^8.1",
+        "friendsofphp/php-cs-fixer": "^3.12"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.8.5",

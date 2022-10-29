@@ -1,10 +1,10 @@
 <?php
 
-    declare(strict_types = 1);
+    declare(strict_types=1);
 
-    namespace verfriemelt\wrapped\_\Output;
+namespace verfriemelt\wrapped\_\Output;
 
-    Interface Viewable {
-
+    interface Viewable
+    {
         public function getContents();
     }
