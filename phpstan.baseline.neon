@@ -146,32 +146,7 @@ parameters:
 			path: _/Cache/MemoryCacheProvider.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:forceColorOutput\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:forceColorOutput\\(\\) has parameter \\$bool with no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:read\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:setOutputStyling\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:write\\(\\) has parameter \\$color with no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:write\\(\\) has parameter \\$text with no type specified\\.$#"
 			count: 1
 			path: _/Cli/Console.php
 
@@ -206,79 +181,9 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
-			message: "#^Only booleans are allowed in an elseif condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, string\\|false given\\.$#"
-			count: 2
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$colorSupported has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$currentBgColor has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$currentFgColor has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$currentFontStyle has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$dimensions has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$forceColor has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$hadLineOutput has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$inTerminal has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$linePrefixFunc has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$selectedStream has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$stderr has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$stdout has no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
+			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 4
+			path: _/Controller/CliController.php
 
 		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
@@ -289,6 +194,11 @@ parameters:
 			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\CliController\\)\\.$#"
 			count: 1
 			path: _/Controller/CliController.php
+
+		-
+			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 4
+			path: _/Controller/Controller.php
 
 		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
@@ -531,17 +441,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:\\$loadMoreCallback has no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Return type \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:count\\(\\) should be covariant with return type \\(int\\<0, max\\>\\) of method Countable\\:\\:count\\(\\)$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -2441,57 +2341,12 @@ parameters:
 			path: _/Formular/FormTypes/Select.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:addOption\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:addOption\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:addOption\\(\\) has parameter \\$optGroupName with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:addOption\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:buildOption\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:buildOption\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:buildOption\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:writeOption\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
 
 		-
 			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:\\$optGroups has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:\\$options has no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
 
@@ -2756,32 +2611,7 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:all\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:except\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:except\\(\\) has parameter \\$filter with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:first\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) has parameter \\$default with no type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
@@ -2791,52 +2621,12 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) has parameter \\$key with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:hasNot\\(\\) has parameter \\$param with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:is\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:is\\(\\) has parameter \\$key with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:is\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:isNot\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:isNot\\(\\) has parameter \\$key with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:isNot\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:last\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:\\$parameters has no type specified\\.$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
@@ -2962,11 +2752,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:userAgent\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag constructor expects array, \\(float\\|int\\) given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 

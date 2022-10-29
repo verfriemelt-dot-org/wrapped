@@ -11,6 +11,9 @@ namespace verfriemelt\wrapped\_\Http;
 
     class ParameterBag implements Countable, IteratorAggregate
     {
+        /**
+         * @var mixed[]
+         */
         private $parameters = [];
 
         private ?string $raw = null;
@@ -33,27 +36,17 @@ namespace verfriemelt\wrapped\_\Http;
             return new ArrayIterator($this->parameters);
         }
 
-        public function hasNot($param): bool
+        public function hasNot(string $param): bool
         {
             return !$this->has($param);
         }
 
-        public function has($key): bool
+        public function has(string $key): bool
         {
-            if (!is_array($key)) {
-                return isset($this->parameters[$key]);
-            }
-
-            foreach ($key as $name) {
-                if (!isset($this->parameters[$name])) {
-                    return false;
-                }
-            }
-
-            return true;
+            return isset($this->parameters[$key]);
         }
 
-        public function get(string $key, $default = null)
+        public function get(string $key, string|int $default = null)
         {
             if (!$this->has($key)) {
                 return $default;
@@ -62,34 +55,42 @@ namespace verfriemelt\wrapped\_\Http;
             return $this->parameters[$key];
         }
 
-        public function is($key, $value)
+        public function is(string $key, string|int $value)
         {
             return $this->get($key) === $value;
         }
 
-        public function isNot($key, $value)
+        public function isNot(string $key, string|int $value)
         {
             return $this->get($key) !== $value;
         }
 
-        public function all()
+        /**
+         * @return mixed[]
+         */
+        public function all(): array
         {
             return $this->parameters;
         }
 
-        public function first()
+        public function first(): mixed
         {
             reset($this->parameters);
             return current($this->parameters);
         }
 
-        public function last()
+        public function last(): mixed
         {
             end($this->parameters);
             return current($this->parameters);
         }
 
-        public function except(array $filter = [])
+        /**
+         * @param mixed[] $filter
+         *
+         * @return mixed[]
+         */
+        public function except(array $filter = []): array
         {
             $return = [];
 
@@ -102,7 +103,7 @@ namespace verfriemelt\wrapped\_\Http;
             return $return;
         }
 
-        public function override(string $key, string $value = null): static
+        public function override(string|int $key, mixed $value = null): static
         {
             $this->parameters[$key] = $value;
             return $this;
