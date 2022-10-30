@@ -58,7 +58,7 @@ class ArgvParser
             throw new RuntimeException('argv expected to be an list with at least 1 element');
         }
 
-        /* @var string[] $argv */
+        /* @phpstan-ignore-next-line */
         $this->argv = $argv;
     }
 
