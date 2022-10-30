@@ -6,6 +6,9 @@ namespace verfriemelt\wrapped\tests\unit\Console\Argument;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use verfriemelt\wrapped\_\Cli\Argument\Argument;
+use verfriemelt\wrapped\_\Cli\Argument\ArgumentMissingException;
 use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 
 class ArgvParserTest extends TestCase
@@ -13,13 +16,13 @@ class ArgvParserTest extends TestCase
     public function testEmpty(): void
     {
         static::expectException(\RuntimeException::class);
-        new ArgvParser([]);
+        (new ArgvParser([]))->parse();
     }
 
     public function testAssocArray(): void
     {
         static::expectException(\RuntimeException::class);
-        new ArgvParser(['foo' => 'bar']);
+        (new ArgvParser(['foo' => 'bar']))->parse();
     }
 
     public function testgetSciptName(): void
@@ -29,10 +32,15 @@ class ArgvParserTest extends TestCase
     }
 
     /**
-     * @return Generator<string, array{input: string[], expected: string[], definition?: string[]}>
+     * @return Generator<string, array{input: string[], expected: Throwable|string[], args?: Argument[]}>
      */
     protected function arguments(): Generator
     {
+        yield 'no input' => [
+            'input' => [],
+            'expected' => new \RuntimeException(),
+        ];
+
         yield 'empty' => [
             'input' => ['script.php'],
             'expected' => [],
@@ -57,27 +65,50 @@ class ArgvParserTest extends TestCase
             'input' => ['script.php', '-a', 'a', '--logn', 'b'],
             'expected' => ['a', 'b'],
         ];
+
+        yield 'described argument' => [
+            'input' => ['script', 'a'],
+            'expected' => ['a'],
+            'args' => [new Argument('test')],
+        ];
+
+        yield 'missing argument' => [
+            'input' => ['script'],
+            'expected' => new ArgumentMissingException(),
+            'args' => [new Argument('test')],
+        ];
     }
 
     /**
      * @dataProvider arguments
      *
-     * @param string[] $input
-     * @param string[] $expected
-     * @param string[] $definitions
+     * @param string[]           $input
+     * @param Throwable|string[] $expected
+     * @param Argument[]         $arguments
      */
-    public function testGetArguements(array $input, array $expected, array $definitions = []): void
+    public function testGetArguements(array $input, array|Throwable $expected, array $arguments = []): void
     {
+        if ($expected instanceof Throwable) {
+            static::expectException($expected::class);
+        }
+
         $argument = new ArgvParser($input);
-        static::assertSame($expected, $argument->getArguments());
+        $argument->addArguments(...$arguments);
+        $argument->parse();
+
+        if (!$expected instanceof Throwable) {
+            static::assertSame($expected, $argument->getRawArguments());
+        }
     }
 
     public function testGetShortOptions(): void
     {
         $argument = new ArgvParser(['script.php', '-a']);
+        $argument->parse();
         static::assertSame(['-a'], $argument->getShortOptions());
 
         $argument = new ArgvParser(['script.php']);
+        $argument->parse();
         static::assertSame([], $argument->getShortOptions());
     }
 }

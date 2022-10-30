@@ -15,7 +15,7 @@ class ArgvParser
     /**
      * @var string[]
      */
-    private array $args = [];
+    private array $rawArguments = [];
 
     /**
      * @var string[]
@@ -26,6 +26,18 @@ class ArgvParser
      * @var string[]
      */
     private array $long = [];
+
+    private int $argumentCount = 0;
+
+    /**
+     * @var Argument[]
+     */
+    private array $arguments = [];
+
+    /**
+     * @var Option[]
+     */
+    private array $options = [];
 
     private int $pos = 1;
 
@@ -38,28 +50,67 @@ class ArgvParser
         if (count($this->argv) === 0 || !array_is_list($argv)) {
             throw new RuntimeException('argv expected to be an list with at least 1 element');
         }
-
-        $this->parse();
     }
 
-    private function parse(): void
+    public function addOptions(Option ...$options): self
+    {
+        foreach ($options as $option) {
+            $this->options[] = $option;
+        }
+
+        return $this;
+    }
+
+    public function addArguments(Argument ...$argument): self
+    {
+        foreach ($argument as $arg) {
+            $this->arguments[] = $arg;
+        }
+
+        return $this;
+    }
+
+    public function parse(): self
     {
         $args = $this->argv;
 
         while ($input = $this->consume()) {
             if (!str_starts_with($input, '-')) {
-                $this->args[] = $input;
+                $this->parseArgument($input);
                 continue;
             }
 
             if (str_starts_with($input, '--')) {
                 $this->long[] = $input;
+                continue;
             }
 
             if (str_starts_with($input, '-')) {
                 $this->short[] = $input;
             }
         }
+
+        // check for missing args
+        foreach ($this->arguments as $arg) {
+            if ($arg->optional === false && $arg->isInitialized() === false) {
+                throw new ArgumentMissingException("missing Argument {$arg->name}");
+            }
+        }
+
+        return $this;
+    }
+
+    private function parseArgument(string $input): void
+    {
+        $argument = $this->arguments[$this->argumentCount++] ?? null;
+        $this->rawArguments[] = $input;
+
+        // anonymous argument
+        if ($argument === null) {
+            return;
+        }
+
+        $argument->setValue($input);
     }
 
     private function consume(): ?string
@@ -75,9 +126,37 @@ class ArgvParser
     /**
      * @return string[]
      */
-    public function getArguments(): array
+    public function getRawArguments(): array
     {
-        return $this->args;
+        return $this->rawArguments;
+    }
+
+    public function getOption(string $name): Option
+    {
+        $option = null;
+
+        foreach ($this->options as $opt) {
+            if ($opt->name === $name) {
+                $option = $opt;
+                break;
+            }
+        }
+
+        if ($option === null) {
+            throw new \RuntimeException("unknown option {$name}");
+        }
+
+        return $option;
+    }
+
+    public function hasOption(string $name): bool
+    {
+        try {
+            $this->getOption($name);
+            return true;
+        } catch (\RuntimeException $ex) {
+            return false;
+        }
     }
 
     /**
