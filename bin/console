@@ -1,10 +1,35 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
+use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 use verfriemelt\wrapped\_\Cli\Console;
 
 require 'vendor/autoload.php';
 
-$console = new Console();
-$console->write('hi')->eol();
+if (!Console::isCli()) {
+    throw new \RuntimeException('nope');
+}
+
+
+$parser = new ArgvParser();
+$parser->addArguments(new verfriemelt\wrapped\_\Cli\Argument\Argument('command', true));
+$parser->parse();
+
+if ( !$parser->hasArgument('command') ) {
+    $console = new Console();
+    $console->write('no arg')->eol();
+    exit(0);
+}
+
+$argument = $parser->getArgument('command');
+
+if ($argument->getValue() === 'help') {
+    $console = new Console();
+    $console->write('there is no help')->eol();
+
+    $parser->addArguments(new verfriemelt\wrapped\_\Cli\Argument\Argument('sub'));
+    $parser->parse();
+}
+
+
 

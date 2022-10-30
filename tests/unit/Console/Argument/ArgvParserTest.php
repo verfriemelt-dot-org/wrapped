@@ -102,6 +102,18 @@ class ArgvParserTest extends TestCase
             'expected' => new ArgumentDuplicated(),
             'args' => [new Argument('test'), new Argument('test')],
         ];
+
+        yield 'optional argument first' => [
+            'input' => ['script', 'a', 'b'],
+            'expected' => ['a', 'b'],
+            'args' => [new Argument('test', true), new Argument('test2')],
+        ];
+
+        yield 'optional argument first, missing second required' => [
+            'input' => ['script', 'a'],
+            'expected' => new ArgumentMissingException(),
+            'args' => [new Argument('test', true), new Argument('test2')],
+        ];
     }
 
     /**
@@ -135,5 +147,18 @@ class ArgvParserTest extends TestCase
         $argument = new ArgvParser(['script.php']);
         $argument->parse();
         static::assertSame([], $argument->getShortOptions());
+    }
+
+    public function testParserWorksTwice(): void
+    {
+        $parser = new ArgvParser(['script.php', 'a', 'b']);
+        $parser->addArguments(new Argument('test-1'));
+        $parser->parse();
+
+        $parser->addArguments(new Argument('test-2'));
+        $parser->parse();
+
+        static::assertSame('a', $parser->getArgument('test-1')->getValue());
+        static::assertSame('b', $parser->getArgument('test-2')->getValue());
     }
 }

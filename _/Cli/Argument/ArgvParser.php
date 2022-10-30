@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Cli\Argument;
 
 use function array_is_list;
+use function is_array;
 
 use RuntimeException;
 
@@ -27,7 +28,7 @@ class ArgvParser
      */
     private array $long = [];
 
-    private int $argumentCount = 0;
+    private int $argumentCounter = 0;
 
     /**
      * @var Argument[]
@@ -42,14 +43,23 @@ class ArgvParser
     private int $pos = 1;
 
     /**
-     * @param string[] $argv $_SERVER['argv']
+     * @var string[]
      */
-    public function __construct(
-        readonly public array $argv
-    ) {
-        if (count($this->argv) === 0 || !array_is_list($argv)) {
+    protected array $argv = [];
+
+    /**
+     * @param string[]|null $argv $_SERVER['argv']
+     */
+    public function __construct(array $argv = null)
+    {
+        $argv ??= $_SERVER['argv'] ?? [];
+
+        if (!is_array($argv) || !array_is_list($argv) || count($argv) === 0) {
             throw new RuntimeException('argv expected to be an list with at least 1 element');
         }
+
+        /* @var string[] $argv */
+        $this->argv = $argv;
     }
 
     public function addOptions(Option ...$options): self
@@ -63,15 +73,12 @@ class ArgvParser
 
     public function addArguments(Argument ...$argument): self
     {
-        $seenNames = [];
-
         foreach ($argument as $arg) {
-            if (in_array($arg->name, $seenNames, true)) {
+            if (in_array($arg->name, array_map(fn (Argument $a): string => $a->name, $this->arguments), true)) {
                 throw new ArgumentDuplicated("argument {$arg->name} already present");
             }
 
             $this->arguments[] = $arg;
-            $seenNames[] = $arg->name;
         }
 
         return $this;
@@ -79,22 +86,14 @@ class ArgvParser
 
     public function parse(): self
     {
-        $args = $this->argv;
+        $this->argumentCounter = 0;
+        $this->pos = 1;
 
         while ($input = $this->consume()) {
-            if (!str_starts_with($input, '-')) {
-                $this->parseArgument($input);
-                continue;
-            }
-
-            if (str_starts_with($input, '--')) {
-                $this->long[] = $input;
-                continue;
-            }
-
-            if (str_starts_with($input, '-')) {
-                $this->short[] = $input;
-            }
+            match (true) {
+                str_starts_with($input, '-') => $this->parseOption($input),
+                default => $this->parseArgument($input),
+            };
         }
 
         // check for missing args
@@ -107,9 +106,18 @@ class ArgvParser
         return $this;
     }
 
+    private function parseOption(string $input): void
+    {
+        if (str_starts_with('--', $input)) {
+            $this->long[] = $input;
+        } else {
+            $this->short[] = $input;
+        }
+    }
+
     private function parseArgument(string $input): void
     {
-        $argument = $this->arguments[$this->argumentCount++] ?? null;
+        $argument = $this->arguments[$this->argumentCounter++] ?? null;
         $this->rawArguments[] = $input;
 
         // anonymous argument
@@ -160,6 +168,34 @@ class ArgvParser
     {
         try {
             $this->getOption($name);
+            return true;
+        } catch (\RuntimeException $ex) {
+            return false;
+        }
+    }
+
+    public function getArgument(string $name): Argument
+    {
+        $argument = null;
+
+        foreach ($this->arguments as $arg) {
+            if ($arg->name === $name) {
+                $argument = $arg;
+                break;
+            }
+        }
+
+        if ($argument === null) {
+            throw new \RuntimeException("unknown argument {$name}");
+        }
+
+        return $argument;
+    }
+
+    public function hasArgument(string $name): bool
+    {
+        try {
+            $this->getArgument($name);
             return true;
         } catch (\RuntimeException $ex) {
             return false;
