@@ -63,8 +63,15 @@ class ArgvParser
 
     public function addArguments(Argument ...$argument): self
     {
+        $seenNames = [];
+
         foreach ($argument as $arg) {
+            if (in_array($arg->name, $seenNames, true)) {
+                throw new ArgumentDuplicated("argument {$arg->name} already present");
+            }
+
             $this->arguments[] = $arg;
+            $seenNames[] = $arg->name;
         }
 
         return $this;

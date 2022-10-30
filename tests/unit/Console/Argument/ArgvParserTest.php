@@ -8,6 +8,7 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Argument\Argument;
+use verfriemelt\wrapped\_\Cli\Argument\ArgumentDuplicated;
 use verfriemelt\wrapped\_\Cli\Argument\ArgumentMissingException;
 use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 
@@ -76,6 +77,30 @@ class ArgvParserTest extends TestCase
             'input' => ['script'],
             'expected' => new ArgumentMissingException(),
             'args' => [new Argument('test')],
+        ];
+
+        yield 'sencond argument missing after' => [
+            'input' => ['script', 'a'],
+            'expected' => new ArgumentMissingException(),
+            'args' => [new Argument('test'), new Argument('test2')],
+        ];
+
+        yield 'missing optional argument' => [
+            'input' => ['script'],
+            'expected' => [],
+            'args' => [new Argument('test', true)],
+        ];
+
+        yield 'mixed arguments missing' => [
+            'input' => ['script', 'a'],
+            'expected' => ['a'],
+            'args' => [new Argument('test'), new Argument('test2', true)],
+        ];
+
+        yield 'argument already present' => [
+            'input' => ['script', 'a', 'b'],
+            'expected' => new ArgumentDuplicated(),
+            'args' => [new Argument('test'), new Argument('test')],
         ];
     }
 
