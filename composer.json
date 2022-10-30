@@ -22,7 +22,5 @@
             "verfriemelt\\wrapped\\": ""
         }
     },
-    {
-        "bin": ["bin/console"]
-    }
+    "bin": ["bin/console"]
 }
