@@ -30,4 +30,9 @@ class Argument
     {
         return $this->value;
     }
+
+    public function isPresent(): bool
+    {
+        return $this->isInitialized();
+    }
 }
