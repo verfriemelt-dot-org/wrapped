@@ -8,7 +8,7 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Argument\Argument;
-use verfriemelt\wrapped\_\Cli\Argument\ArgumentDuplicated;
+use verfriemelt\wrapped\_\Cli\Argument\ArgumentDuplicatedException;
 use verfriemelt\wrapped\_\Cli\Argument\ArgumentMissingException;
 use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 
@@ -99,7 +99,7 @@ class ArgvParserTest extends TestCase
 
         yield 'argument already present' => [
             'input' => ['script', 'a', 'b'],
-            'expected' => new ArgumentDuplicated(),
+            'expected' => new ArgumentDuplicatedException(),
             'args' => [new Argument('test'), new Argument('test')],
         ];
 

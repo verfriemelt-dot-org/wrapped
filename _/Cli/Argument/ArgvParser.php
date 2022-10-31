@@ -9,7 +9,9 @@ use function is_array;
 
 use RuntimeException;
 
+use function str_split;
 use function str_starts_with;
+use function substr;
 
 class ArgvParser
 {
@@ -65,6 +67,10 @@ class ArgvParser
     public function addOptions(Option ...$options): self
     {
         foreach ($options as $option) {
+            if (in_array($option->name, array_map(fn (Option $o): string => $o->name, $this->options), true)) {
+                throw new OptionDuplicatedException("option «{$option->name}» already present");
+            }
+
             $this->options[] = $option;
         }
 
@@ -75,7 +81,7 @@ class ArgvParser
     {
         foreach ($argument as $arg) {
             if (in_array($arg->name, array_map(fn (Argument $a): string => $a->name, $this->arguments), true)) {
-                throw new ArgumentDuplicated("argument {$arg->name} already present");
+                throw new ArgumentDuplicatedException("argument «{$arg->name}» already present");
             }
 
             $this->arguments[] = $arg;
@@ -106,13 +112,42 @@ class ArgvParser
         return $this;
     }
 
-    private function parseOption(string $input): void
+    private function parseOption(string $input): ?Option
     {
-        if (str_starts_with('--', $input)) {
+        $longFormat = str_starts_with('--', $input);
+
+        if ($longFormat) {
             $this->long[] = $input;
         } else {
+            $combinedOpts = str_split(substr($input, 1));
+
+            if (count($combinedOpts) > 1) {
+                for ($i = 0; $i < count($combinedOpts); ++$i) {
+                    $option = $this->parseOption("-{$combinedOpts[$i]}");
+                    if ($option?->isValueRequired() === true && $i < count($combinedOpts) - 1) {
+                        throw new \RuntimeException('only last combined option can require a value');
+                    }
+                }
+
+                return $option ?? null;
+            }
+
             $this->short[] = $input;
         }
+
+        foreach ($this->options as $option) {
+            if ($longFormat && $option->name === substr($input, 2) || !$longFormat && $option->short === substr($input, 1)) {
+                $option->markPresent();
+
+                if ($option->isValueRequired()) {
+                    $option->setValue($this->consume() ?? throw new OptionMissingValueException("missing value for option {$option->name}"));
+                }
+
+                return $option;
+            }
+        }
+
+        return null;
     }
 
     private function parseArgument(string $input): void
