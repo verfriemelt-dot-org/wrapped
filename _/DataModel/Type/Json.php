@@ -1,41 +1,42 @@
 <?php
 
-    declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace verfriemelt\wrapped\_\DataModel\Type;
 
-    use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
+use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
-    final class Json implements PropertyObjectInterface
+class Json
+    implements PropertyObjectInterface
+{
+    public $data;
+
+    final public function __construct( string $data )
     {
-        public $data;
-
-        public function __construct(string $data)
-        {
-            $this->data = json_decode($data);
-        }
-
-        public function toSqlFormat(): string
-        {
-            return json_encode($this->data);
-        }
-
-        public static function hydrateFromString(?string $storedValue): ?static
-        {
-            if ($storedValue === null) {
-                return null;
-            }
-
-            return new self($storedValue);
-        }
-
-        public function dehydrateToString(): string
-        {
-            return $this->toSqlFormat();
-        }
-
-        public function toString(): string
-        {
-            return $this->toSqlFormat();
-        }
+        $this->data = json_decode( $data );
     }
+
+    public function toSqlFormat(): string
+    {
+        return json_encode( $this->data );
+    }
+
+    public static function hydrateFromString( ?string $storedValue ): ?static
+    {
+        if ( $storedValue === null ) {
+            return null;
+        }
+
+        return new static( $storedValue );
+    }
+
+    public function dehydrateToString(): string
+    {
+        return $this->toSqlFormat();
+    }
+
+    public function toString(): string
+    {
+        return $this->toSqlFormat();
+    }
+}
