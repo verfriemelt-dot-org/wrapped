@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\tests\unit\Console;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Cli\KeyInput;
 
 class KeyInputTest extends TestCase
 {
-    protected function keys(): Generator
+    public static function keys(): Generator
     {
         yield 'simple key' => [
             'key' => 'a',
@@ -33,9 +34,7 @@ class KeyInputTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider keys
-     */
+    #[DataProvider('keys')]
     public function testKeyWasRead(string $key, string $input): void
     {
         $keyInput = new KeyInput();

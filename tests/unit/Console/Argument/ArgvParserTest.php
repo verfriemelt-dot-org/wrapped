@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\tests\unit\Console\Argument;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
@@ -36,7 +37,7 @@ class ArgvParserTest extends TestCase
     /**
      * @return Generator<string, array{input: string[], expected: Throwable|string[], args?: Argument[]}>
      */
-    protected function arguments(): Generator
+    public static function arguments(): Generator
     {
         yield 'no input' => [
             'input' => [],
@@ -117,13 +118,7 @@ class ArgvParserTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider arguments
-     *
-     * @param string[]           $input
-     * @param Throwable|string[] $expected
-     * @param Argument[]         $arguments
-     */
+    #[DataProvider('arguments')]
     public function testGetArguements(array $input, array|Throwable $expected, array $arguments = []): void
     {
         if ($expected instanceof Throwable) {

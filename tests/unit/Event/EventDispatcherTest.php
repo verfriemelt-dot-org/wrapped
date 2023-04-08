@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\EventInterface;
 use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
 
-class EventDispatchterTest extends TestCase
+class EventDispatcherTest extends TestCase
 {
     public function testSubscriberBeeingCalled(): void
     {

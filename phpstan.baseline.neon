@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Out of 894 possible param types, only 68 %% actually have it\\. Add more param types to get over 76 %%$#"
-			count: 1
-			path: N/A
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\Cache\\:\\:get\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\type\\.$#"
 			count: 1
 			path: _/Cache/Cache.php
@@ -4859,6 +4854,21 @@ parameters:
 			message: "#^Variable method call on verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\.$#"
 			count: 1
 			path: _/View/View.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/unit/Console/Argument/ArgvParserTest.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/unit/Console/Argument/ArgvParserTest.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/unit/Console/Argument/ArgvParserTest.php
 
 		-
 			message: "#^Property TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"
