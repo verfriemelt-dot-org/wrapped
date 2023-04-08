@@ -35,7 +35,7 @@ class UpdateTest extends TestCase
         $update->add(new Identifier('test'), new Value(1));
         $update->add(
             new Identifier('complex'),
-            (new Expression() )
+            (new Expression())
                 ->add(new Identifier('complex'))
                 ->add(new Operator('+'))
                 ->add(new Value(1))

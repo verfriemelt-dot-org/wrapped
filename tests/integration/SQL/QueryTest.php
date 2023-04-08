@@ -18,7 +18,7 @@ class QueryTest extends DatabaseTestCase
     public function test(): void
     {
         $stmt = new Statement();
-        $stmt->setCommand(new Select((new Expression(new Value(1)) )->as(new Identifier('test'))));
+        $stmt->setCommand(new Select((new Expression(new Value(1)))->as(new Identifier('test'))));
 
         $expected = match ((static::$connection)::class) {
             SQLite::class => 1,

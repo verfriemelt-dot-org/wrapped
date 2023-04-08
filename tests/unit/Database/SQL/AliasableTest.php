@@ -1,7 +1,8 @@
-
 <?php
 
-    use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 

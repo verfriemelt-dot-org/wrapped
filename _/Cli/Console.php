@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Cli;
 
 use Closure;
+use RuntimeException;
 use verfriemelt\wrapped\_\Http\ParameterBag;
 
 class Console
@@ -63,7 +64,7 @@ class Console
         $this->selectedStream = &$this->stdout;
 
         if (!is_array($_SERVER['argv'])) {
-            throw new \RuntimeException('cannot read argv');
+            throw new RuntimeException('cannot read argv');
         }
 
         $this->argv = new ParameterBag($_SERVER['argv']);
@@ -287,7 +288,7 @@ class Console
             $this->updateDimensions();
         }
 
-        return $this->dimensions[0] ?? throw new \RuntimeException('cant detect terminal width');
+        return $this->dimensions[0] ?? throw new RuntimeException('cant detect terminal width');
     }
 
     public function getHeight(): int
@@ -296,7 +297,7 @@ class Console
             $this->updateDimensions();
         }
 
-        return $this->dimensions[1] ?? throw new \RuntimeException('cant detect terminal height');
+        return $this->dimensions[1] ?? throw new RuntimeException('cant detect terminal height');
     }
 
     public function updateDimensions(): static

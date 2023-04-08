@@ -48,7 +48,9 @@ class TreeDataModelTest extends DatabaseTestCase
 
         $this->tearDown();
         static::$connection->query('drop table if exists "TreeDummy";');
-        static::$connection->query('create table "TreeDummy" ( id serial primary key, name text, "left" int, "right" int, parent_id int, depth int );');
+        static::$connection->query(
+            'create table "TreeDummy" ( id serial primary key, name text, "left" int, "right" int, parent_id int, depth int );'
+        );
     }
 
     public function tearDown(): void
@@ -148,7 +150,7 @@ class TreeDataModelTest extends DatabaseTestCase
     public function createStructure($struct, $parent = null)
     {
         foreach ($struct as $e => $s) {
-            $i = (new TreeDummy() )->setName($e);
+            $i = (new TreeDummy())->setName($e);
 
             if ($parent) {
                 $i->under($parent);
@@ -337,7 +339,7 @@ class TreeDataModelTest extends DatabaseTestCase
             ],
         ]);
 
-        $d = (new TreeDummy() )->setName('d')->save();
+        $d = (new TreeDummy())->setName('d')->save();
 
         $d->move()->under($c)->save();
         $this->validateStruct([
@@ -538,24 +540,28 @@ class TreeDataModelTest extends DatabaseTestCase
         $instance->setName('i');
         $instance->save();
 
-        $this->validateStruct($struct = [
-            'a' => [],
-            'b' => [],
-            'c' => [],
-            'i' => [],
-        ]);
+        $this->validateStruct(
+            $struct = [
+                'a' => [],
+                'b' => [],
+                'c' => [],
+                'i' => [],
+            ]
+        );
 
         $instance = new TreeDummy();
         $instance->setName('i2');
         $instance->after(TreeDummy::findSingle(['name' => 'a']));
         $instance->save();
 
-        $this->validateStruct($struct = [
-            'a' => [],
-            'i2' => [],
-            'b' => [],
-            'c' => [],
-            'i' => [],
-        ]);
+        $this->validateStruct(
+            $struct = [
+                'a' => [],
+                'i2' => [],
+                'b' => [],
+                'c' => [],
+                'i' => [],
+            ]
+        );
     }
 }

@@ -5,13 +5,12 @@ declare(strict_types=1);
 $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__ . '/_'])
     ->in([__DIR__ . '/tests'])
-
 ;
 
 $config = new PhpCsFixer\Config();
 $config->setRules([
     '@Symfony' => true,
-    '@PHP81Migration' => true,
+    '@PER' => true,
 
     'php_unit_test_case_static_method_calls' => true,
     'declare_strict_types' => true,
@@ -20,14 +19,21 @@ $config->setRules([
     // overwrite some symfony defaults
     'blank_line_before_statement' => false,
     'self_accessor' => false,
-    'phpdoc_annotation_without_dot' => true,
-    'phpdoc_summary' => false,
-    'single_line_throw' => false,
-    'concat_space' => ['spacing' => 'one'],
 
     // away you go
     'yoda_style' => false,
 
+    // multiline dotting
+    'phpdoc_annotation_without_dot' => true,
+    'phpdoc_summary' => false,
+    'phpdoc_to_comment' => false,
+
+    // we have long params list on throw
+    'single_line_throw' => false,
+
+    // wtf, we need space
+    'concat_space' => ['spacing' => 'one'],
+    'global_namespace_import' => ['import_classes' => true, 'import_constants' => false, 'import_functions' => false],
 ]);
 $config->setFinder($finder);
 $config->setRiskyAllowed(true);

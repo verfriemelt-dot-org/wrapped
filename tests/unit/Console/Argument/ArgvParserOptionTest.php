@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\tests\unit\Console\Argument;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 use verfriemelt\wrapped\_\Cli\Argument\Option;
 use verfriemelt\wrapped\_\Cli\Argument\OptionMissingValueException;
@@ -85,7 +86,7 @@ class ArgvParserOptionTest extends TestCase
 
     public function testCombinedWithValueWrongOrder(): void
     {
-        static::expectException(\RuntimeException::class);
+        static::expectException(RuntimeException::class);
 
         $argument = new ArgvParser(['script.php', '-ba', 'test']);
         $argument->addOptions(new Option('test1', short: 'a'));

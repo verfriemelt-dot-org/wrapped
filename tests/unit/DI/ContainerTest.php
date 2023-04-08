@@ -12,6 +12,7 @@ class a
     {
     }
 }
+
 class b
 {
     public function __construct(public string $instance = 'number 1')
@@ -32,12 +33,14 @@ class circleA
     {
     }
 }
+
 class circleB
 {
     public function __construct(public circleC $circle)
     {
     }
 }
+
 class circleC
 {
     public function __construct(public circleA $circle)
@@ -48,9 +51,11 @@ class circleC
 interface i
 {
 }
+
 class a_i implements i
 {
 }
+
 class b_i implements i
 {
 }

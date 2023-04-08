@@ -6,9 +6,6 @@ namespace integration;
 
 use DatabaseTestCase;
 use Exception;
-
-use function Symfony\Component\String\b;
-
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
@@ -51,10 +48,10 @@ class B extends DataModel
 
     public ?int $aId = null;
 
-    #[ OneToOneRelation('aId', 'id') ]
+    #[OneToOneRelation('aId', 'id')]
     protected ?a $aObject = null;
 
-    #[ OneToOneRelation('aId', 'did') ]
+    #[OneToOneRelation('aId', 'did')]
     protected ?a $aWrongMarked = null;
 
     protected ?a $aObjectNotMarked = null;
@@ -110,8 +107,8 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
 
     public function buildObjects()
     {
-        (new b() )->save();
-        (new a() )->setBId(1)->save();
+        (new b())->save();
+        (new a())->setBId(1)->save();
 
         b::get(1)->setAId(1)->save();
     }

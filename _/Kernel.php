@@ -14,6 +14,7 @@ use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
+use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Router;
 
@@ -119,7 +120,7 @@ abstract class Kernel implements KernelInterface
             } else {
                 $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
-                $response = (new $callback(...$resolver->resolv($callback)) )
+                $response = (new $callback(...$resolver->resolv($callback)))
                     ->setContainer($this->container)
                     ->prepare(...$resolver->resolv($callback, 'prepare'))
                     ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));

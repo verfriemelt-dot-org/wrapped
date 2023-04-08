@@ -11,6 +11,7 @@ use Iterator;
 use JsonSerializable;
 use OutOfBoundsException;
 use PDOStatement;
+use RuntimeException;
 use SeekableIterator;
 use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
@@ -60,7 +61,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
         $instances = [];
 
         while ($data = $result->fetch()) {
-            $instances[] = ( new $prototype() )->initData($data);
+            $instances[] = (new $prototype())->initData($data);
         }
 
         return $collection->initialize(...$instances);
@@ -75,7 +76,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     public function setLength(int $lenght): self
     {
         if ($lenght < 0) {
-            throw new \RuntimeException('length must by >= 0');
+            throw new RuntimeException('length must by >= 0');
         }
 
         $this->length = $lenght;

@@ -1,13 +1,13 @@
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Controller;
 
-    use verfriemelt\wrapped\_\Http\Request\Request;
-    use verfriemelt\wrapped\_\Http\Response\Response;
+use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Response\Response;
 
-    interface ControllerInterface
-    {
-        public function handleRequest(Request $request): Response;
-    }
+interface ControllerInterface
+{
+    public function handleRequest(Request $request): Response;
+}

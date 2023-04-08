@@ -6,9 +6,6 @@ namespace verfriemelt\wrapped\tests\unit\Console;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-
-use function rewind;
-
 use verfriemelt\wrapped\_\Cli\KeyInput;
 
 class KeyInputTest extends TestCase
@@ -47,7 +44,7 @@ class KeyInputTest extends TestCase
         static::assertNotFalse($stream);
 
         fwrite($stream, $input);
-        rewind($stream);
+        \rewind($stream);
 
         $keyWasRead = false;
 

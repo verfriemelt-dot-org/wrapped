@@ -12,7 +12,7 @@ class ExpressionTest extends TestCase
     {
         $exp = new Expression();
         $exp->add(
-            (new Expression() )
+            (new Expression())
                 ->add(new Value(true))
         );
 

@@ -14,7 +14,7 @@ class RouterTest extends TestCase
     public function testRouterEmpty(): void
     {
         $this->expectException(NoRoutesPresent::class);
-        (new Router() )->handleRequest(new Request());
+        (new Router())->handleRequest(new Request());
     }
 
     public function testRouteVsRouteGroupWeight(): void
@@ -22,17 +22,23 @@ class RouterTest extends TestCase
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/admin']);
 
         $router = new Router();
-        $router->addRoutes(Route::create('/admin')->call(function () {
-            return 'a';
-        }));
+        $router->addRoutes(
+            Route::create('/admin')->call(function () {
+                return 'a';
+            })
+        );
         $router->addRoutes(
             RouteGroup::create('/admin')
-                ->add(Route::create('/test')->call(function () {
-                    return 'b';
-                }))
-                ->add(Route::create('/test1')->call(function () {
-                    return 'b';
-                }))
+                ->add(
+                    Route::create('/test')->call(function () {
+                        return 'b';
+                    })
+                )
+                ->add(
+                    Route::create('/test1')->call(function () {
+                        return 'b';
+                    })
+                )
         );
 
         $result = $router->handleRequest($request)->getCallback();
@@ -47,16 +53,22 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->addRoutes(
             RouteGroup::create('/admin')
-                ->add(Route::create('/test')->call(function () {
-                    return 'b';
-                }))
-                ->add(Route::create('/test1')->call(function () {
-                    return 'b';
-                }))
+                ->add(
+                    Route::create('/test')->call(function () {
+                        return 'b';
+                    })
+                )
+                ->add(
+                    Route::create('/test1')->call(function () {
+                        return 'b';
+                    })
+                )
         );
-        $router->addRoutes(Route::create('/admin')->call(function () {
-            return 'a';
-        }));
+        $router->addRoutes(
+            Route::create('/admin')->call(function () {
+                return 'a';
+            })
+        );
 
         $result = $router->handleRequest($request)->getCallback();
         static::assertTrue(is_callable($result));
@@ -115,9 +127,11 @@ class RouterTest extends TestCase
 
         $router = new Router();
         $router->addRoutes(
-            RouteGroup::create('/(?<key>list)')->add(Route::create('/(?<key2>geocaches)')->call(function () {
-                return 'win';
-            }))
+            RouteGroup::create('/(?<key>list)')->add(
+                Route::create('/(?<key2>geocaches)')->call(function () {
+                    return 'win';
+                })
+            )
         );
 
         $route = $router->handleRequest($request);
@@ -133,9 +147,11 @@ class RouterTest extends TestCase
 
         $router = new Router();
         $router->addRoutes(
-            RouteGroup::create('(?:/[a-z]{4})?')->add(Route::create('/a')->call(function () {
-                return true;
-            }))
+            RouteGroup::create('(?:/[a-z]{4})?')->add(
+                Route::create('/a')->call(function () {
+                    return true;
+                })
+            )
         );
 
         $result = $router->handleRequest($request)->getCallback();

@@ -11,12 +11,12 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 
-#[ LowerCase ]
+#[LowerCase]
 class LowerDummy extends DataModel
 {
     public ?int $id = null;
 
-    #[ LowerCase ]
+    #[LowerCase]
     public ?string $complexFieldName = null;
 
     public function getId(): ?int
@@ -42,17 +42,17 @@ class LowerDummy extends DataModel
     }
 }
 
-#[ CamelCase ]
+#[CamelCase]
 class CamelCaseDummy extends LowerDummy
 {
-    #[ CamelCase ]
+    #[CamelCase]
     public ?string $complexFieldName = null;
 }
 
-#[ SnakeCase ]
+#[SnakeCase]
 class SnakeCaseDummy extends LowerDummy
 {
-    #[ SnakeCase ]
+    #[SnakeCase]
     public ?string $complexFieldName = null;
 }
 

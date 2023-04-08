@@ -18,7 +18,7 @@ class Example extends DataModel
 
     public ?DateTime $typed = null;
 
-    #[ SnakeCase ]
+    #[SnakeCase]
     public ?string $complexFieldNameSnakeCase = null;
 
     public function getId(): ?int
@@ -99,6 +99,9 @@ class DataModelAnalyserTest extends TestCase
     public function testSnakeCaseConvention(): void
     {
         $analyser = new DataModelAnalyser(new Example());
-        static::assertSame('complex_field_name_snake_case', $analyser->fetchProperties()[3]->getNamingConvention()->getString());
+        static::assertSame(
+            'complex_field_name_snake_case',
+            $analyser->fetchProperties()[3]->getNamingConvention()->getString()
+        );
     }
 }

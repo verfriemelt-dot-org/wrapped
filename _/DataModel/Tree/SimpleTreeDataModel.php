@@ -48,7 +48,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
             (new Expression(
                 new Value(1),
                 new Cast('int')
-            ) )->as(
+            ))->as(
                 new Identifier('_depth')
             )
         );
@@ -78,18 +78,26 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
                 ->add(new Union())
                 ->add($lowerSelect)
                 ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename())))
-                ->add(new Join(
-                    new Identifier('_data'),
-                    new Expression(
-                        new Identifier(static::fetchSchemaname(), static::fetchTablename(), $parentProp->fetchBackendName()),
-                        new Operator('='),
-                        new Identifier('_data', $primaryProp->fetchBackendName()),
+                ->add(
+                    new Join(
+                        new Identifier('_data'),
+                        new Expression(
+                            new Identifier(
+                                static::fetchSchemaname(),
+                                static::fetchTablename(),
+                                $parentProp->fetchBackendName()
+                            ),
+                            new Operator('='),
+                            new Identifier('_data', $primaryProp->fetchBackendName()),
+                        )
                     )
-                ))
+                )
         );
 
         if ($depth !== null) {
-            $recursiveStatement->add(new Where(new Expression(new Identifier('_depth'), new Operator('<'), new Value($depth))));
+            $recursiveStatement->add(
+                new Where(new Expression(new Identifier('_depth'), new Operator('<'), new Value($depth)))
+            );
         }
 
         $query = static::buildQuery();
@@ -108,7 +116,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return new Collection([
             $this,
             ...$this->fetchChildren($order, $direction, $depth),
-            ]);
+        ]);
     }
 
     public function fetchDirectChildren($order = 'left', $direction = 'ASC'): Collection
@@ -119,7 +127,9 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
     public function fetchParent(): ?static
     {
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
-        $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(static::getRereferencedParentProperty());
+        $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(
+            static::getRereferencedParentProperty()
+        );
         $parent = $this->{$parentProp->getGetter()}();
 
         if ($parent === null) {
@@ -151,7 +161,9 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         }
 
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
-        $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(static::getRereferencedParentProperty());
+        $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(
+            static::getRereferencedParentProperty()
+        );
 
         $this->{$parentProp->getSetter()}($parent->{$referencedProperty->getGetter()}());
 

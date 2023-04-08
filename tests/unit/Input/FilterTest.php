@@ -115,20 +115,20 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         static::assertFalse($filter->validate());
     }
 
-        public function testCookiesFilter(): void
-        {
-            $filter = new Filter($this->request);
-            $filter->cookies()->this('bar')->optional();
-            static::assertTrue($filter->validate());
+    public function testCookiesFilter(): void
+    {
+        $filter = new Filter($this->request);
+        $filter->cookies()->this('bar')->optional();
+        static::assertTrue($filter->validate());
 
-            $filter = new Filter($this->request);
-            $filter->cookies()->this('testCookie')->optional();
-            static::assertTrue($filter->validate());
+        $filter = new Filter($this->request);
+        $filter->cookies()->this('testCookie')->optional();
+        static::assertTrue($filter->validate());
 
-            $filter = new Filter($this->request);
-            $filter->cookies()->this('testCookie')->required();
-            static::assertTrue($filter->validate());
-        }
+        $filter = new Filter($this->request);
+        $filter->cookies()->this('testCookie')->required();
+        static::assertTrue($filter->validate());
+    }
 
     public function testMultipleFiltersAtOnce(): void
     {

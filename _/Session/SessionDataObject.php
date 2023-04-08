@@ -1,28 +1,28 @@
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Session;
 
-    interface SessionDataObject
-    {
-        public static function getBySessionId($id);
+interface SessionDataObject
+{
+    public static function getBySessionId($id);
 
-        public static function purgeOldSessions();
+    public static function purgeOldSessions();
 
-        public function getData();
+    public function getData();
 
-        public function getTimeout();
+    public function getTimeout();
 
-        public function getIp();
+    public function getIp();
 
-        public function getSessionId();
+    public function getSessionId();
 
-        public function setData($data);
+    public function setData($data);
 
-        public function setTimeout($timeout);
+    public function setTimeout($timeout);
 
-        public function setIp($ip);
+    public function setIp($ip);
 
-        public function setSessionId($sessionId);
-    }
+    public function setSessionId($sessionId);
+}

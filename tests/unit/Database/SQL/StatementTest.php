@@ -1,7 +1,8 @@
-
 <?php
 
-    use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\SQL\Clause\ForUpdate;
 use verfriemelt\wrapped\_\Database\SQL\Clause\From;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Where;
@@ -16,17 +17,17 @@ class StatementTest extends TestCase
 {
     public function testMinimalSelect(): void
     {
-        $statement = new Statement((new Select() )->add(new Value(true)));
+        $statement = new Statement((new Select())->add(new Value(true)));
         static::assertSame('SELECT true', $statement->stringify());
     }
 
     public function testNestedSelect(): void
     {
         $statement = new Statement(
-            (new Select() )
+            (new Select())
                 ->add(
-                    (new Select() )
-                    ->add(new Value(true))
+                    (new Select())
+                        ->add(new Value(true))
                 )
         );
         static::assertSame('SELECT ( SELECT true )', $statement->stringify());
@@ -35,7 +36,7 @@ class StatementTest extends TestCase
     public function testSimpleQuery(): void
     {
         $statement = new Statement(
-            (new Select() )
+            (new Select())
                 ->add(
                     new Identifier('column_a')
                 )
@@ -49,23 +50,23 @@ class StatementTest extends TestCase
     public function testInsert(): void
     {
         $statement = new Statement(
-            (new Insert(new Identifier('test')) )
+            (new Insert(new Identifier('test')))
                 ->add(
                     new Identifier('column_a')
                 )
         );
-        $statement->add((new Select() )->add(new Value(true)));
+        $statement->add((new Select())->add(new Value(true)));
         static::assertSame('INSERT INTO test ( column_a ) SELECT true', $statement->stringify());
     }
 
     public function testDataBindings(): void
     {
         $statement = new Statement(
-            (new Select() )
+            (new Select())
                 ->add(
-                    (new Select() )
-                    ->add(new Value(15))
-                    ->add(new Value(1))
+                    (new Select())
+                        ->add(new Value(15))
+                        ->add(new Value(1))
                 )
         );
 
@@ -75,11 +76,11 @@ class StatementTest extends TestCase
     public function testDataBindingsClause(): void
     {
         $statement = new Statement(
-            (new Select() )
+            (new Select())
                 ->add(
-                    (new Select() )
-                    ->add(new Value(15))
-                    ->add(new Value(1))
+                    (new Select())
+                        ->add(new Value(15))
+                        ->add(new Value(1))
                 )
         );
         $statement->add(new Where(new Value(666)));

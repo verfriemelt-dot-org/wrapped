@@ -11,13 +11,13 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 
 class Example extends DataModel
 {
-    #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
     public mixed $TEST;
 
-    #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
     public mixed $snakeCase;
 
-    #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase ]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase]
     public mixed $StrAngECAse;
 
     public function getSnakeCase(): mixed
@@ -58,7 +58,7 @@ class A extends DataModel
 {
     public ?int $id = null;
 
-    #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase ]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     public ?int $bId = null;
 
     public function getId(): ?int
@@ -88,7 +88,7 @@ class B extends DataModel
 {
     public ?int $id = null;
 
-    #[ \verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase ]
+    #[\verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase]
     public ?int $aId = null;
 
     public function getId(): ?int

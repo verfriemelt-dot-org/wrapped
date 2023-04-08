@@ -8,8 +8,8 @@
             name="{{ name }}"
             value="check"
             {{ if='placeholder' }} placeholder='{{ placeholder }}' {{ /if='placeholder' }}
-            {{ if='checked' }} checked="checked" {{ /if='checked'}}
-            >
+        {{ if='checked' }} checked="checked" {{ /if='checked'}}
+        >
         <span>
             {{ if='displayLabel' }}
             {{ label }}

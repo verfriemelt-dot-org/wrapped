@@ -22,7 +22,7 @@ class ValuesTest extends TestCase
     {
         $select = new Values();
         $select->add(
-            (new Expression() )
+            (new Expression())
                 ->add(new Value(1))
                 ->add(new Operator('+'))
                 ->add(new Value(3))

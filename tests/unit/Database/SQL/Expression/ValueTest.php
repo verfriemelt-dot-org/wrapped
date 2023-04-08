@@ -26,7 +26,7 @@ class ValueTest extends TestCase
         ];
 
         foreach ($tests as $exp => $input) {
-            static::assertSame((string) $exp, (new Value($input) )->stringify());
+            static::assertSame((string) $exp, (new Value($input))->stringify());
         }
     }
 }

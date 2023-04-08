@@ -1,7 +1,8 @@
-
 <?php
 
-    use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
 class QueryTest extends TestCase
@@ -16,7 +17,10 @@ class QueryTest extends TestCase
             'column' => 1,
         ]);
 
-        static::assertStringContainsString('SELECT column FROM table WHERE column = ', $query->fetchStatement()->stringify());
+        static::assertStringContainsString(
+            'SELECT column FROM table WHERE column = ',
+            $query->fetchStatement()->stringify()
+        );
     }
 
     public function testWhereWithNullFromArray(): void
@@ -29,6 +33,9 @@ class QueryTest extends TestCase
             'column' => null,
         ]);
 
-        static::assertStringContainsString('SELECT column FROM table WHERE column IS NULL', $query->fetchStatement()->stringify());
+        static::assertStringContainsString(
+            'SELECT column FROM table WHERE column IS NULL',
+            $query->fetchStatement()->stringify()
+        );
     }
 }

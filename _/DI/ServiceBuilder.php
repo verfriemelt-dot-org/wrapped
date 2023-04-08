@@ -32,7 +32,7 @@ class ServiceBuilder
     {
         $class = $this->service->getClass();
 
-        $arguments = (new ServiceArgumentResolver($this->container, new ArgumentMetadataFactory(), $this->service) )
+        $arguments = (new ServiceArgumentResolver($this->container, new ArgumentMetadataFactory(), $this->service))
             ->resolv($class);
 
         return new $class(...$arguments);

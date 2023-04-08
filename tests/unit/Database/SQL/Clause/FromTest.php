@@ -19,7 +19,7 @@ class FromTest extends TestCase
     public function testSimpleAlias(): void
     {
         $from = new From(
-            (new Identifier('table') )
+            (new Identifier('table'))
                 ->addAlias(new Identifier('tb'))
         );
         static::assertSame('FROM table AS tb', $from->stringify());
@@ -28,7 +28,7 @@ class FromTest extends TestCase
     public function testFromExpression(): void
     {
         $from = new From(
-            (new Select() )->add(new Value(true))
+            (new Select())->add(new Value(true))
         );
         static::assertSame('FROM ( SELECT true )', $from->stringify());
     }

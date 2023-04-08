@@ -1,71 +1,74 @@
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 
-    use Exception;
-    use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-    use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Exception;
+use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
-    class Operator extends QueryPart implements ExpressionItem
+class Operator extends QueryPart implements ExpressionItem
+{
+    public const OPTERATORS = [
+        '=',
+        '!=',
+        '+',
+        '-',
+        '*',
+        '/',
+        '%',
+        '~',
+        '<',
+        '>',
+        '>=',
+        '<=',
+        '~*',
+        '!~*',
+        '!~',
+        '~~',
+        'like',
+        '~~*',
+        'ilike',
+        '<->',
+        '@>',
+        '<@',
+        'not',
+        'in',
+        'is',
+        'is not',
+        'is distrinct from',
+        'asc',
+        'desc',
+        'asc nulls last',
+        'desc nulls last',
+        'asc nulls first',
+        'desc nulls first',
+        'distinct',
+        'is true',
+        'is false',
+        'is null',
+        'is not true',
+        'is not false',
+        'is not null',
+        'is distinct from true',
+        'is distinct from false',
+        'is distinct from null',
+    ];
+
+    protected string $operator;
+
+    public function __construct(string $op)
     {
-        public const OPTERATORS = [
-            '=',
-            '!=',
-            '+',
-            '-',
-            '*',
-            '/',
-            '%',
-            '~',
-            '<',
-            '>',
-            '>=',
-            '<=',
-            '~*',
-            '!~*',
-            '!~',
-            '~~', 'like',
-            '~~*', 'ilike',
-            '<->',
-            '@>', '<@',
-            'not',
-            'in',
-            'is',
-            'is not',
-            'is distrinct from',
-            'asc',
-            'desc',
-            'asc nulls last',
-            'desc nulls last',
-            'asc nulls first',
-            'desc nulls first',
-            'distinct',
-            'is true',
-            'is false',
-            'is null',
-            'is not true',
-            'is not false',
-            'is not null',
-            'is distinct from true',
-            'is distinct from false',
-            'is distinct from null',
-        ];
-
-        protected string $operator;
-
-        public function __construct(string $op)
-        {
-            if (!in_array(strtolower($op), static::OPTERATORS)) {
-                throw new Exception("illegal operator: »{$op}«");
-            }
-
-            $this->operator = $op;
+        if (!in_array(strtolower($op), static::OPTERATORS)) {
+            throw new Exception("illegal operator: »{$op}«");
         }
 
-        public function stringify(DatabaseDriver $driver = null): string
-        {
-            return strtoupper($this->operator);
-        }
+        $this->operator = $op;
     }
+
+    public function stringify(DatabaseDriver $driver = null): string
+    {
+        return strtoupper($this->operator);
+    }
+}

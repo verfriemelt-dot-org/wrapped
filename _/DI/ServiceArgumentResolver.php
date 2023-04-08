@@ -1,43 +1,45 @@
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
-    use Closure;
+use Closure;
+
+/**
+ * @template T of object
+ */
+class ServiceArgumentResolver extends ArgumentResolver
+{
+    /**
+     * @var ServiceConfiguration<T>
+     */
+    protected ServiceConfiguration $service;
 
     /**
-     * @template T of object
+     * @param ServiceConfiguration<T> $service
      */
-    class ServiceArgumentResolver extends ArgumentResolver
+    public function __construct(Container $container, ArgumentMetadataFactory $factory, ServiceConfiguration $service)
     {
-        /**
-         * @var ServiceConfiguration<T>
-         */
-        protected ServiceConfiguration $service;
+        parent::__construct($container, $factory);
 
-        /**
-         * @param ServiceConfiguration<T> $service
-         */
-        public function __construct(Container $container, ArgumentMetadataFactory $factory, ServiceConfiguration $service)
-        {
-            parent::__construct($container, $factory);
+        $this->service = $service;
+    }
 
-            $this->service = $service;
-        }
+    protected function buildParameter(ArgumentMetadata $parameter)
+    {
+        if ($parameter->hasType() && $this->service->hasParameter($parameter->getType())) {
+            $param = $this->service->getParemeter($parameter->getType());
 
-        protected function buildParameter(ArgumentMetadata $parameter)
-        {
-            if ($parameter->hasType() && $this->service->hasParameter($parameter->getType())) {
-                $param = $this->service->getParemeter($parameter->getType());
-
-                if ($param instanceof Closure) {
-                    return $param(...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()) )->resolv($param));
-                }
-
-                return $param;
+            if ($param instanceof Closure) {
+                return $param(
+                    ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($param)
+                );
             }
 
-            return $this->container->get($parameter->getType());
+            return $param;
         }
+
+        return $this->container->get($parameter->getType());
     }
+}

@@ -14,7 +14,7 @@ class RenameTester extends DataModel
 {
     public ?int $id = null;
 
-    #[ Rename('rAnDoMCAsIng') ]
+    #[Rename('rAnDoMCAsIng')]
     public ?string $randomCasing = null;
 
     public function getId(): ?int
@@ -60,14 +60,16 @@ class DataModelPropertyRenameTest extends DatabaseTestCase
                 static::$connection->query('create table "RenameTester" ( id serial, "rAnDoMCAsIng" text ) ');
                 break;
             case SQLite::class:
-                static::$connection->query('create table "RenameTester" ( id integer primary key, "rAnDoMCAsIng" text ) ');
+                static::$connection->query(
+                    'create table "RenameTester" ( id integer primary key, "rAnDoMCAsIng" text ) '
+                );
                 break;
         }
     }
 
     public function createInstance(): RenameTester
     {
-        (new RenameTester() )->save();
+        (new RenameTester())->save();
 
         // restore
         return RenameTester::get(1);

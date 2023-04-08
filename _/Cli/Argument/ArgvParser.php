@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Cli\Argument;
 
-use function array_is_list;
-use function is_array;
-
 use RuntimeException;
-
-use function str_split;
-use function str_starts_with;
-use function substr;
 
 class ArgvParser
 {
@@ -56,7 +49,7 @@ class ArgvParser
     {
         $argv ??= $_SERVER['argv'] ?? [];
 
-        if (!is_array($argv) || !array_is_list($argv) || count($argv) === 0) {
+        if (!\is_array($argv) || !\array_is_list($argv) || count($argv) === 0) {
             throw new RuntimeException('argv expected to be an list with at least 1 element');
         }
 
@@ -97,7 +90,7 @@ class ArgvParser
 
         while ($input = $this->consume()) {
             match (true) {
-                str_starts_with($input, '-') => $this->parseOption($input),
+                \str_starts_with($input, '-') => $this->parseOption($input),
                 default => $this->parseArgument($input),
             };
         }
@@ -114,18 +107,18 @@ class ArgvParser
 
     private function parseOption(string $input): ?Option
     {
-        $longFormat = str_starts_with('--', $input);
+        $longFormat = \str_starts_with('--', $input);
 
         if ($longFormat) {
             $this->long[] = $input;
         } else {
-            $combinedOpts = str_split(substr($input, 1));
+            $combinedOpts = \str_split(\substr($input, 1));
 
             if (count($combinedOpts) > 1) {
                 for ($i = 0; $i < count($combinedOpts); ++$i) {
                     $option = $this->parseOption("-{$combinedOpts[$i]}");
                     if ($option?->isValueRequired() === true && $i < count($combinedOpts) - 1) {
-                        throw new \RuntimeException('only last combined option can require a value');
+                        throw new RuntimeException('only last combined option can require a value');
                     }
                 }
 
@@ -136,11 +129,18 @@ class ArgvParser
         }
 
         foreach ($this->options as $option) {
-            if ($longFormat && $option->name === substr($input, 2) || !$longFormat && $option->short === substr($input, 1)) {
+            if ($longFormat && $option->name === \substr($input, 2) || !$longFormat && $option->short === \substr(
+                $input,
+                1
+            )) {
                 $option->markPresent();
 
                 if ($option->isValueRequired()) {
-                    $option->setValue($this->consume() ?? throw new OptionMissingValueException("missing value for option {$option->name}"));
+                    $option->setValue(
+                        $this->consume() ?? throw new OptionMissingValueException(
+                            "missing value for option {$option->name}"
+                        )
+                    );
                 }
 
                 return $option;
@@ -193,7 +193,7 @@ class ArgvParser
         }
 
         if ($option === null) {
-            throw new \RuntimeException("unknown option {$name}");
+            throw new RuntimeException("unknown option {$name}");
         }
 
         return $option;
@@ -204,7 +204,7 @@ class ArgvParser
         try {
             $this->getOption($name);
             return true;
-        } catch (\RuntimeException $ex) {
+        } catch (RuntimeException $ex) {
             return false;
         }
     }
@@ -221,7 +221,7 @@ class ArgvParser
         }
 
         if ($argument === null) {
-            throw new \RuntimeException("unknown argument {$name}");
+            throw new RuntimeException("unknown argument {$name}");
         }
 
         return $argument;
@@ -232,7 +232,7 @@ class ArgvParser
         try {
             $this->getArgument($name);
             return true;
-        } catch (\RuntimeException $ex) {
+        } catch (RuntimeException $ex) {
             return false;
         }
     }

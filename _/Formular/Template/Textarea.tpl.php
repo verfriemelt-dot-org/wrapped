@@ -9,5 +9,5 @@
         class="form-control form-control-{{ name }}"
         name="{{ name }}"
         {{ if='placeholder' }} placeholder='{{ placeholder }}' {{ /if='placeholder' }}
-        >{{ value }}</textarea>
+    >{{ value }}</textarea>
 </div>

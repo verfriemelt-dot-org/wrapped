@@ -13,12 +13,12 @@ class Example extends DataModel
 {
 }
 
-#[ LowerCase ]
+#[LowerCase]
 class Example2 extends DataModel
 {
 }
 
-#[ SnakeCase ]
+#[SnakeCase]
 class LongerExample extends DataModel
 {
 }

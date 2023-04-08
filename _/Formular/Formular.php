@@ -65,8 +65,13 @@ class Formular implements Viewable
         return $csrf->generateToken($this->csrfTokenName);
     }
 
-    public function __construct(string $name, Request $request, Filter $filter = null, Session $session, Template $template = null)
-    {
+    public function __construct(
+        string $name,
+        Request $request,
+        Filter $filter = null,
+        Session $session,
+        Template $template = null
+    ) {
         $this->formname = $name;
         $this->filter = $filter;
         $this->csrfTokenName = 'csrf-' . md5($this->formname);

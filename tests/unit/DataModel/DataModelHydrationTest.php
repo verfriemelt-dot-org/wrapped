@@ -38,7 +38,7 @@ class DataModelHydrationTest extends TestCase
 
     public function testPersistedObject(): void
     {
-        static::assertFalse(( new NonNullableIdModel() )->isPersisted());
+        static::assertFalse((new NonNullableIdModel())->isPersisted());
     }
 
     public function testDirtyObject(): void

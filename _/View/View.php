@@ -1,92 +1,92 @@
 <?php
 
-    declare(strict_types=1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\View;
 
-    use Exception;
-    use verfriemelt\wrapped\_\DataModel\DataModel;
-    use verfriemelt\wrapped\_\DI\Container;
-    use verfriemelt\wrapped\_\Output\Viewable;
-    use verfriemelt\wrapped\_\Template\Template;
+use Exception;
+use verfriemelt\wrapped\_\DataModel\DataModel;
+use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Output\Viewable;
+use verfriemelt\wrapped\_\Template\Template;
 
-    abstract class View implements Viewable
+abstract class View implements Viewable
+{
+    public string $tplPath;
+
+    public Template $tpl;
+
+    protected ?string $inlineTemplate = null;
+
+    protected static Container $container;
+
+    abstract public function getTemplatePath(): string;
+
+    public function __construct(mixed ...$params)
     {
-        public string $tplPath;
+        $this->tpl = $this->getTemplateInstance();
+    }
 
-        public Template $tpl;
-
-        protected ?string $inlineTemplate = null;
-
-        protected static Container $container;
-
-        abstract public function getTemplatePath(): string;
-
-        public function __construct(mixed ...$params)
-        {
-            $this->tpl = $this->getTemplateInstance();
+    protected function getTemplateInstance(): Template
+    {
+        if (isset($this->inlineTemplate)) {
+            return (new Template())->setRawTemplate($this->inlineTemplate);
         }
 
-        protected function getTemplateInstance(): Template
-        {
-            if (isset($this->inlineTemplate)) {
-                return (new Template())->setRawTemplate($this->inlineTemplate);
-            }
-
-            if (empty($this->tplPath)) {
-                throw new Exception('unset Template Path in view ' . static::class);
-            }
-
-            return ( new Template() )->parseFile(
-                $this->getTemplatePath() . $this->tplPath
-            );
+        if (empty($this->tplPath)) {
+            throw new Exception('unset Template Path in view ' . static::class);
         }
 
-        public static function create(...$params): static
-        {
-            if (count($params) === 0) {
-                return static::$container->get(static::class);
-            }
+        return (new Template())->parseFile(
+            $this->getTemplatePath() . $this->tplPath
+        );
+    }
 
-            /* @phpstan-ignore-next-line */
-            return new static(...$params);
+    public static function create(...$params): static
+    {
+        if (count($params) === 0) {
+            return static::$container->get(static::class);
         }
 
-        public static function make(...$params): string
-        {
-            return static::create(...$params)->getContents();
-        }
+        /* @phpstan-ignore-next-line */
+        return new static(...$params);
+    }
 
-        public static function setContainer(Container $container)
-        {
-            static::$container = $container;
-        }
+    public static function make(...$params): string
+    {
+        return static::create(...$params)->getContents();
+    }
 
-        public function writeDataModelProperties($prefix, DataModel $object, $context = null)
-        {
-            $properties = $object::createDataModelAnalyser()->fetchProperties();
-            $context ??= $this->tpl;
+    public static function setContainer(Container $container)
+    {
+        static::$container = $container;
+    }
 
-            foreach ($properties as $prop) {
-                $context->set($prefix . ucfirst($prop->getName()), $object->{$prop->getGetter()}());
-            }
-        }
+    public function writeDataModelProperties($prefix, DataModel $object, $context = null)
+    {
+        $properties = $object::createDataModelAnalyser()->fetchProperties();
+        $context ??= $this->tpl;
 
-        /**
-         * this functions prepares the template, so that we can move the heavy
-         * lifting out of the constructor
-         */
-        abstract protected function prepare(): void;
-
-        public function getContents()
-        {
-            $this->prepare();
-            return $this->tpl->run();
-        }
-
-        public function yieldContents()
-        {
-            $this->prepare();
-            yield $this->tpl->yieldRun();
+        foreach ($properties as $prop) {
+            $context->set($prefix . ucfirst($prop->getName()), $object->{$prop->getGetter()}());
         }
     }
+
+    /**
+     * this functions prepares the template, so that we can move the heavy
+     * lifting out of the constructor
+     */
+    abstract protected function prepare(): void;
+
+    public function getContents()
+    {
+        $this->prepare();
+        return $this->tpl->run();
+    }
+
+    public function yieldContents()
+    {
+        $this->prepare();
+        yield $this->tpl->yieldRun();
+    }
+}

@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\tests\unit\Console\Argument;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Argument\Argument;
 use verfriemelt\wrapped\_\Cli\Argument\ArgumentDuplicatedException;
@@ -16,13 +17,13 @@ class ArgvParserTest extends TestCase
 {
     public function testEmpty(): void
     {
-        static::expectException(\RuntimeException::class);
+        static::expectException(RuntimeException::class);
         (new ArgvParser([]))->parse();
     }
 
     public function testAssocArray(): void
     {
-        static::expectException(\RuntimeException::class);
+        static::expectException(RuntimeException::class);
         (new ArgvParser(['foo' => 'bar']))->parse();
     }
 
@@ -39,7 +40,7 @@ class ArgvParserTest extends TestCase
     {
         yield 'no input' => [
             'input' => [],
-            'expected' => new \RuntimeException(),
+            'expected' => new RuntimeException(),
         ];
 
         yield 'empty' => [

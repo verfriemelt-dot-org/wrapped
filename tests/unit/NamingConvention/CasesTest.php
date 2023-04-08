@@ -50,7 +50,7 @@ class CasesTest extends TestCase
 
     public function testConversion(): void
     {
-        $case = (new CamelCase('complexFieldNameSnakeCase') )->convertTo(new SnakeCase());
+        $case = (new CamelCase('complexFieldNameSnakeCase'))->convertTo(new SnakeCase());
         static::assertSame('complex_field_name_snake_case', $case->getString());
     }
 }

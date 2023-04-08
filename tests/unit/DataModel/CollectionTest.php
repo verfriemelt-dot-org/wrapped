@@ -41,7 +41,7 @@ class CollectionTest extends TestCase
         $collection = new Collection(...[
             new CollectionDummy(),
             new CollectionDummy(),
-            ]);
+        ]);
 
         static::assertSame(2, $collection->count());
     }
@@ -97,7 +97,7 @@ class CollectionTest extends TestCase
     public function testArrayAccess(): void
     {
         $callback = function ($offset): DataModel {
-            return (new CollectionDummy() )->setId($offset + 1);
+            return (new CollectionDummy())->setId($offset + 1);
         };
 
         $collection = new Collection(new CollectionDummy());
@@ -125,7 +125,7 @@ class CollectionTest extends TestCase
         static::assertNull($collection->first());
 
         $callback = function ($offset): DataModel {
-            return (new CollectionDummy() )->setId($offset + 1);
+            return (new CollectionDummy())->setId($offset + 1);
         };
 
         $collection->setLength(10);
@@ -139,7 +139,7 @@ class CollectionTest extends TestCase
     public function testSeek(): void
     {
         $callback = function ($offset): DataModel {
-            return (new CollectionDummy() )->setId($offset + 1);
+            return (new CollectionDummy())->setId($offset + 1);
         };
 
         $collection = new Collection(new CollectionDummy());
@@ -157,7 +157,7 @@ class CollectionTest extends TestCase
     public function testIllegalOffget(): void
     {
         $callback = function ($offset): DataModel {
-            return (new CollectionDummy() )->setId($offset + 1);
+            return (new CollectionDummy())->setId($offset + 1);
         };
 
         $collection = new Collection();

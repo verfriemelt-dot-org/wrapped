@@ -12,7 +12,6 @@ use verfriemelt\wrapped\_\Database\SQL\Clause\Limit;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Offset;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Order;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Where;
-use verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Conjunction;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
@@ -143,14 +142,14 @@ final class DbLogic
 
     public function openBracket(): self
     {
-        throw new \Exception('not supported');
+        throw new Exception('not supported');
 //            $this->expression->add( new Bracket( "(" ) );
 //            return $this;
     }
 
     public function closeBracket(): self
     {
-        throw new \Exception('not supported');
+        throw new Exception('not supported');
 //            $this->expression->add( new Bracket( ")" ) );
 //            return $this;
     }
@@ -169,14 +168,14 @@ final class DbLogic
 
     public function raw(string $raw): self
     {
-        throw new \Exception('not supported');
+        throw new Exception('not supported');
         $this->expression->add(new Raw($raw));
         return $this;
     }
 
     public function compile(DatabaseDriver $driver): string
     {
-        $out = ' ' . ( new Where($this->expression) )->stringify($driver);
+        $out = ' ' . (new Where($this->expression))->stringify($driver);
 
         if (isset($this->groupBy)) {
             $out .= " {$this->groupBy->stringify($driver)}";
@@ -222,8 +221,12 @@ final class DbLogic
         return $this;
     }
 
-    public function order(string $column, string $direction = 'ASC', string $overrideTable = null, bool $skipQuote = false): self
-    {
+    public function order(
+        string $column,
+        string $direction = 'ASC',
+        string $overrideTable = null,
+        bool $skipQuote = false
+    ): self {
         if (!$this->order) {
             $this->order = new Order();
         }

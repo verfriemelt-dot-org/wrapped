@@ -1,8 +1,6 @@
 help: ## Shows this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_\-\.]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: phpstan phpstan-baseline phpunit 
-
 phpstan: ## run phpstan
 	vendor/bin/phpstan -vvv
 
@@ -13,4 +11,4 @@ phpunit: ## run phpunit
 	vendor/bin/phpunit
 
 cs: ## Run php-cs-fixer
-	php vendor/bin/php-cs-fixer fix
+	php vendor/bin/php-cs-fixer fix -v

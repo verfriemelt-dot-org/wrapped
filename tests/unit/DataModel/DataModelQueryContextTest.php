@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 
 class Example extends DataModel
 {
-    #[ LowerCase ]
+    #[LowerCase]
     public mixed $NAME;
 
     public mixed $id;
@@ -40,10 +40,10 @@ class Example extends DataModel
 
 class Example2 extends DataModel
 {
-    #[ LowerCase ]
+    #[LowerCase]
     public mixed $NAME;
 
-    #[ LowerCase ]
+    #[LowerCase]
     public mixed $exampleId;
 
     public mixed $id;
