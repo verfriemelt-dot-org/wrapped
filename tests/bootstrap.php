@@ -25,6 +25,7 @@ $dotenv->load(
 );
 
 match ($_ENV['DATABASE_DRIVER'] ?? null) {
+    'none' => null,
     'sqlite' => Database::createNewConnection('default', SQLite::class, '', '', '', '', 0),
     'postgres' => Database::createNewConnection(
         'default',
