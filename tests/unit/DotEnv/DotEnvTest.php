@@ -42,13 +42,14 @@ class DotEnvTest extends TestCase
 
     public function testPreventExistingEnvOverloading(): void
     {
-        $_ENV['TEST_DB_PORT'] = 1;
+        putenv('EXISTING_ENV=1');
 
         $dotenv = new DotEnv();
         $dotenv->load(
-            \TEST_ROOT . '/Fixtures/DotEnv/valid_overloading.ini',
+            \TEST_ROOT . '/Fixtures/DotEnv/existing_overloading.ini',
         );
 
-        static::assertSame(1, $_ENV['TEST_DB_PORT'], 'existing env should not be overwritten');
+        static::assertSame('1', getenv('EXISTING_ENV'), 'existing env should not be overwritten');
+        static::assertSame('1', $_ENV['EXISTING_ENV'], 'copy over values to $_ENV');
     }
 }

@@ -7,8 +7,6 @@ use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
 
-use function Swoole\Coroutine\Http\get;
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 define('TEST_ROOT', __DIR__);

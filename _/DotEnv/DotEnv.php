@@ -1,14 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DotEnv;
 
 use http\Exception\RuntimeException;
-
-use function implode;
-use function putenv;
-use function var_dump;
 
 final class DotEnv
 {
@@ -53,22 +49,23 @@ final class DotEnv
         }
 
         foreach ($env as $key => $value) {
-
             if (getenv($key) === false) {
                 $handledVars[] = $key;
-                $_ENV[ $key ] = $value;
-                putenv("{$key}={$value}");
+                $_ENV[$key] = $value;
+                \putenv("{$key}={$value}");
 
                 continue;
             }
 
             if (\in_array($key, $handledVars, true)) {
-                $_ENV[ $key ] = $value;
-                putenv("{$key}={$value}");
+                $_ENV[$key] = $value;
+                \putenv("{$key}={$value}");
             }
+
+            $_ENV[$key] = getenv($key);
         }
 
-        $_ENV[ static::STORAGE_KEY ] = implode(',', $handledVars);
-        putenv(sprintf("%s=%s", static::STORAGE_KEY, implode(',', $handledVars)));
+        $_ENV[static::STORAGE_KEY] = \implode(',', $handledVars);
+        \putenv(sprintf('%s=%s', static::STORAGE_KEY, \implode(',', $handledVars)));
     }
 }
