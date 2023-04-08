@@ -55,5 +55,5 @@ jobs:
     - name: composer install
       run: composer install
 
-    - name: run csfixer
+    - name: run rector
       run: vendor/bin/rector --dry-run
