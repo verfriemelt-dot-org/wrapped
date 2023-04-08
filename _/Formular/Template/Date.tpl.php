@@ -10,8 +10,8 @@
         class="form-control form-control-{{ name }}"
         name="{{ name }}"
         {{ if='readonly' }} readonly='readonly' {{ /if='readonly' }}
-    {{ if='disabled' }} disabled='disabled' {{ /if='disabled' }}
-    {{ if='placeholder' }} placeholder='{{ placeholder }}' {{ /if='placeholder' }}
-    value="{{ value }}"
+        {{ if='disabled' }} disabled='disabled' {{ /if='disabled' }}
+        {{ if='placeholder' }} placeholder='{{ placeholder }}' {{ /if='placeholder' }}
+        value="{{ value }}"
     >
 </div>
