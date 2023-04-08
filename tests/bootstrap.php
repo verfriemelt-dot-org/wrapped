@@ -26,9 +26,6 @@ $dotenv->load(
     )
 );
 
-var_dump($_ENV, getenv());
-die();
-
 match ($_ENV['DATABASE_DRIVER'] ?? null) {
     'none' => null,
     'sqlite' => Database::createNewConnection('default', SQLite::class, '', '', '', '', 0),

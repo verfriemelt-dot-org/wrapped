@@ -1,10 +1,14 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace verfriemelt\wrapped\_\DotEnv;
 
 use http\Exception\RuntimeException;
+
+use function implode;
+use function putenv;
+use function var_dump;
 
 final class DotEnv
 {
@@ -40,25 +44,31 @@ final class DotEnv
     /** @param array<string,string> $env */
     private function putenv(array $env): void
     {
-        if (!isset($_ENV[static::STORAGE_KEY]) || $_ENV[static::STORAGE_KEY] === '' || !\is_string($_ENV[static::STORAGE_KEY])) {
+        $getenv = getenv(static::STORAGE_KEY);
+
+        if ($getenv === false) {
             $handledVars = [];
         } else {
-            $handledVars = \explode(',', $_ENV[static::STORAGE_KEY]);
+            $handledVars = \explode(',', $getenv);
         }
 
         foreach ($env as $key => $value) {
-            if (!isset($_ENV[$key])) {
+
+            if (getenv($key) === false) {
                 $handledVars[] = $key;
-                $_ENV[$key] = $value;
+                $_ENV[ $key ] = $value;
+                putenv("{$key}={$value}");
 
                 continue;
             }
 
             if (\in_array($key, $handledVars, true)) {
-                $_ENV[$key] = $value;
+                $_ENV[ $key ] = $value;
+                putenv("{$key}={$value}");
             }
         }
 
-        $_ENV[static::STORAGE_KEY] = implode(',', $handledVars);
+        $_ENV[ static::STORAGE_KEY ] = implode(',', $handledVars);
+        putenv(sprintf("%s=%s", static::STORAGE_KEY, implode(',', $handledVars)));
     }
 }
