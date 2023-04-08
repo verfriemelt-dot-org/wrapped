@@ -2,6 +2,8 @@ name: testing
 on: push
 jobs:
   unit:
+    runs-on: ubuntu-latest
+    
     steps:
     - uses: actions/checkout@v3
       with:
