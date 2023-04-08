@@ -8,6 +8,7 @@
         colors="true"
         failOnWarning="true"
         defaultTestSuite="unit"
+        backupGlobals="true"
 >
     <testsuites>
         <testsuite name="unit">

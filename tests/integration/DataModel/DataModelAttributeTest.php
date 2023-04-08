@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace integration\DataModel\AttributeTest;
+namespace verfriemelt\wrapped\tests\integration\DataModel\AttributeTest;
 
-use DatabaseTestCase;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
 
 #[LowerCase]
 class LowerDummy extends DataModel

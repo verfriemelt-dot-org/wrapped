@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace integration\DataModel\FindTest;
+namespace verfriemelt\wrapped\tests\integration\DataModel\FindTest;
 
-use DatabaseTestCase;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
 
 class RenameTester extends DataModel
 {

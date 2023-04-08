@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace integration\DataModel\SimpleTreeDataModel;
+namespace verfriemelt\wrapped\tests\integration\DataModel\SimpleTreeDataModel;
 
-use DatabaseTestCase;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
+use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
 
 #[LowerCase]
 class Tree extends SimpleTreeDataModel

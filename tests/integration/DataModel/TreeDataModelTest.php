@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace integration;
+namespace verfriemelt\wrapped\tests\integration;
 
-use DatabaseTestCase;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\TreeDataModel;
 

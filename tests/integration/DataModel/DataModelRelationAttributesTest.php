@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace integration;
+namespace verfriemelt\wrapped\tests\integration;
 
-use DatabaseTestCase;
 use Exception;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
