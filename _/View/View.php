@@ -78,7 +78,7 @@ abstract class View implements Viewable
      */
     abstract protected function prepare(): void;
 
-    public function getContents()
+    public function getContents(): string
     {
         $this->prepare();
         return $this->tpl->run();

@@ -6,5 +6,5 @@ namespace verfriemelt\wrapped\_\Output;
 
 interface Viewable
 {
-    public function getContents();
+    public function getContents(): string;
 }
