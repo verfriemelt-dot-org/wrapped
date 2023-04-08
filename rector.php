@@ -31,11 +31,6 @@ return static function (RectorConfig $rectorConfig): void {
         CountOnNullRector::class,
 
         ClassPropertyAssignToConstructorPromotionRector::class,
-        RestoreDefaultNullToNullableTypePropertyRector::class => [
-            __DIR__ . '/src/Domain/Entity/*',
-        ],
-
-        'src/TRIAS/Dto'
     ]);
 };
 
