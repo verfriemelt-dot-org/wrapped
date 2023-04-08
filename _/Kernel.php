@@ -17,7 +17,7 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Router;
 
-class Kernel
+abstract class Kernel implements KernelInterface
 {
     protected Router $router;
 
