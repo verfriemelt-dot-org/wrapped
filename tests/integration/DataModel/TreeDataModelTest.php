@@ -55,7 +55,7 @@ class TreeDataModelTest extends DatabaseTestCase
 
     public function tearDown(): void
     {
-//            static::$connection->query( 'drop table if exists "TreeDummy";' );
+        //            static::$connection->query( 'drop table if exists "TreeDummy";' );
     }
 
     public function testSaveUnder()
@@ -93,7 +93,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $parent->reload();
         $child->reload();
 
-//            codecept_debug( $parent );
+        //            codecept_debug( $parent );
 
         static::assertSame(1, $parent->getLeft(), 'left');
         static::assertSame(6, $parent->getRight(), 'right');
