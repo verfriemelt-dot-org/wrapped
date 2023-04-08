@@ -20,20 +20,17 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.1
+    - name: Setup PHP 8.2
       uses: shivammathur/setup-php@v2
       with:
-        php-version: latest
+        php-version: 8.2
 
-    - name: Install dependencies
-      uses: php-actions/composer@v5
-      with:
-        php_version: 8.1
-        version: 2
+    - name: composer install
+      run: composer install
 
     - name: run tests
       run: php vendor/bin/phpunit
@@ -57,20 +54,17 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.1
+    - name: Setup PHP 8.2
       uses: shivammathur/setup-php@v2
       with:
-        php-version: latest
+        php-version: 8.2
 
-    - name: Install dependencies
-      uses: php-actions/composer@v5
-      with:
-        php_version: 8.1
-        version: 2
+    - name: composer install
+      run: composer install
 
     - name: run tests
       run: php vendor/bin/phpunit tests/integration
@@ -80,20 +74,17 @@ jobs:
   int-sqlite:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.1
+    - name: Setup PHP 8.2
       uses: shivammathur/setup-php@v2
       with:
-        php-version: latest
+        php-version: 8.2
 
-    - name: Install dependencies
-      uses: php-actions/composer@v5
-      with:
-        php_version: 8.1
-        version: 2
+    - name: composer install
+      run: composer install
 
     - name: run tests
       run: php vendor/bin/phpunit tests/integration
