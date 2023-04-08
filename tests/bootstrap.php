@@ -7,6 +7,8 @@ use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
 
+use function Swoole\Coroutine\Http\get;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 define('TEST_ROOT', __DIR__);
@@ -23,6 +25,9 @@ $dotenv->load(
         file_exists(...)
     )
 );
+
+var_dump($_ENV, getenv());
+die();
 
 match ($_ENV['DATABASE_DRIVER'] ?? null) {
     'none' => null,
