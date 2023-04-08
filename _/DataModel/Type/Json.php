@@ -12,12 +12,12 @@ class Json implements PropertyObjectInterface
 
     final public function __construct(string $data)
     {
-        $this->data = json_decode($data);
+        $this->data = json_decode($data, null, 512, JSON_THROW_ON_ERROR);
     }
 
     public function toSqlFormat(): string
     {
-        return json_encode($this->data);
+        return json_encode($this->data, JSON_THROW_ON_ERROR);
     }
 
     public static function hydrateFromString(?string $storedValue): ?static

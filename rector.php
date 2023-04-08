@@ -24,9 +24,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         AddDefaultValueForUndefinedVariableRector::class,
 
-        // this will alter our application
-        JsonThrowOnErrorRector::class,
-
         // this is a type error on recent versions
         CountOnNullRector::class,
 

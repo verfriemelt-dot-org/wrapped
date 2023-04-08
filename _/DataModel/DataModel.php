@@ -214,7 +214,7 @@ abstract class DataModel
 
     public function fromJson(string $json): static
     {
-        return $this->initData((array) \json_decode($json), true);
+        return $this->initData((array) \json_decode($json, null, 512, JSON_THROW_ON_ERROR), true);
     }
 
     public static function fetchBy(string $field, $value)
