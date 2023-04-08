@@ -27,9 +27,7 @@ class TemplateBasicVarTest extends TestCase
 
         $this->tpl->set('var1', 'test');
 
-        Variable::registerFormat('test', function ($input) {
-            return 'formatted';
-        });
+        Variable::registerFormat('test', fn ($input) => 'formatted');
 
         static::assertSame($this->tpl->run(), 'formatted');
 

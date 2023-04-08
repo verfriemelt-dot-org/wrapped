@@ -16,7 +16,7 @@ class TypedDummy extends DataModel implements TablenameOverride
 {
     public ?int $id = null;
 
-    public ?string $name;
+    public ?string $name = null;
 
     public ?DateTime $pubtime = null;
 

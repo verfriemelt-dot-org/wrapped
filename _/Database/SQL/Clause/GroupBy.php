@@ -13,9 +13,9 @@ class GroupBy extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'GROUP BY %s';
+    final public const CLAUSE = 'GROUP BY %s';
 
-    private $expressions = [];
+    private array $expressions = [];
 
     public function __construct(QueryPart $by = null)
     {

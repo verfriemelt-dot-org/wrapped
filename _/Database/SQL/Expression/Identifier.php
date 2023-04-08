@@ -28,7 +28,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         }
 
         foreach ($parts as $part) {
-            if (strlen($part) === 0) {
+            if (strlen((string) $part) === 0) {
                 throw new Exception('illegal identifier');
             }
         }
@@ -58,7 +58,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
                 }
 
                 return $context::translateFieldName($ident);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return null;
             }
         }, $this->context);
@@ -66,14 +66,11 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         // filter null values;
         $translations = array_values(array_filter($translations));
 
-        switch (count($translations)) {
-            case 0:
-                return $ident;
-            case 1:
-                return $translations[0]->fetchBackendName();
-            default:
-                throw new Exception("field ambiguous: {$ident}");
-        }
+        return match (count($translations)) {
+            0 => $ident,
+            1 => $translations[0]->fetchBackendName(),
+            default => throw new Exception("field ambiguous: {$ident}"),
+        };
     }
 
     public function stringify(DatabaseDriver $driver = null): string

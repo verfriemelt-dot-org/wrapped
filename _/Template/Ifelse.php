@@ -19,7 +19,7 @@ class Ifelse implements TemplateItem
     public function run(&$data)
     {
         $preg = "~{{ ?(?<negate>[\!])?if=['\"]{$this->name}['\"] ?}}(?<ifcontent>.*)?(?<elseblock>{{ ?else=['\"]{$this->name}['\"] ?}}(?<elsecontent>.*)?)?{{ ?/if=['\"]{$this->name}['\"] ?}}~sU";
-        preg_match_all($preg, $data, $snipped);
+        preg_match_all($preg, (string) $data, $snipped);
 
         // this could be multiple occurences, hence, we have to cycle though!
         for ($i = 0, $count = count($snipped['ifcontent']); $i < $count; ++$i) {
@@ -36,9 +36,9 @@ class Ifelse implements TemplateItem
             }
 
             // find occurence, and replace only that one!
-            $position = strpos($data, $snipped[0][$i]);
+            $position = strpos((string) $data, (string) $snipped[0][$i]);
             if ($position !== false) {
-                $data = substr_replace($data, $buf, $position, strlen($snipped[0][$i]));
+                $data = substr_replace((string) $data, (string) $buf, $position, strlen((string) $snipped[0][$i]));
             }
         }
     }

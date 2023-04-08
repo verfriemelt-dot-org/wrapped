@@ -13,11 +13,11 @@ class Join extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'JOIN %s ON %s';
+    final public const CLAUSE = 'JOIN %s ON %s';
 
-    private ExpressionItem $source;
+    private readonly ExpressionItem $source;
 
-    private ExpressionItem $on;
+    private readonly ExpressionItem $on;
 
     public function getWeight(): int
     {

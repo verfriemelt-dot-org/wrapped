@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Cache;
 
 class Cache
 {
-    private $provider;
+    private readonly \verfriemelt\wrapped\_\Cache\CacheProviderInterface $provider;
 
     public function __construct(CacheProviderInterface $provider)
     {

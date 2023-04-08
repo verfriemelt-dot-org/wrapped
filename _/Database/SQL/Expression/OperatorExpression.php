@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
 class OperatorExpression extends QueryPart implements ExpressionItem
 {
-    public const OPTERATORS = [
+    final public const OPTERATORS = [
         'exists' => [
             'minArgs' => 1,
             'maxArgs' => 1,
@@ -56,19 +56,15 @@ class OperatorExpression extends QueryPart implements ExpressionItem
 
     public function stringify(DatabaseDriver $driver = null): string
     {
-        // somewhat hacky for IN operator
-
-        switch ($this->operator) {
-            case 'in':
-                return sprintf(
-                    static::OPTERATORS[$this->operator]['string'],
-                    implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
-                );
-        }
-
-        return sprintf(
-            static::OPTERATORS[$this->operator]['string'],
-            ...array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)
-        );
+        return match ($this->operator) {
+            'in' => sprintf(
+                static::OPTERATORS[$this->operator]['string'],
+                implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
+            ),
+            default => sprintf(
+                static::OPTERATORS[$this->operator]['string'],
+                ...array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)
+            ),
+        };
     }
 }

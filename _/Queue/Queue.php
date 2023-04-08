@@ -9,9 +9,9 @@ use verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
 
 class Queue
 {
-    public const DEFAULT_CHANNEL = 'default';
+    final public const DEFAULT_CHANNEL = 'default';
 
-    private QueuePersistance $storage;
+    private readonly QueuePersistance $storage;
 
     public function __construct(QueuePersistance $storage = null)
     {

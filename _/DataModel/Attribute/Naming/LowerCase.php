@@ -9,7 +9,7 @@ use Attribute;
 #[Attribute]
 class LowerCase extends Convention
 {
-    public const DESTRUCTIVE = true;
+    final public const DESTRUCTIVE = true;
 
     public function fetchStringParts(): array
     {

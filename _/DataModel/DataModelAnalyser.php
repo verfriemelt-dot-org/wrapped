@@ -13,7 +13,7 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\PascalCase;
 
 class DataModelAnalyser
 {
-    private ReflectionClass $reflection;
+    private readonly ReflectionClass $reflection;
 
     private ?array $properties = null;
 
@@ -89,7 +89,7 @@ class DataModelAnalyser
             $name = $property->getName();
 
             // ignore underscore attributes
-            if (substr($name, 0, 1) === '_') {
+            if (str_starts_with($name, '_')) {
                 continue;
             }
 
@@ -107,7 +107,7 @@ class DataModelAnalyser
             try {
                 $getter = $this->reflection->getMethod($getterName)->getName();
                 $setter = $this->reflection->getMethod($setterName)->getName();
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException) {
                 // both setters and getters must be present to be a valid property
                 continue;
             }

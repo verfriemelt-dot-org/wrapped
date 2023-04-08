@@ -15,9 +15,9 @@ class Order extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'ORDER BY %s';
+    final public const CLAUSE = 'ORDER BY %s';
 
-    private $expressions = [];
+    private array $expressions = [];
 
     public function getWeight(): int
     {

@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
 class Conjunction extends QueryPart implements ExpressionItem
 {
-    public const OPTERATORS = [
+    final public const OPTERATORS = [
         'and',
         'or',
     ];

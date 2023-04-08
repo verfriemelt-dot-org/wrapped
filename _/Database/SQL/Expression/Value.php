@@ -46,7 +46,7 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
             return $this->bind . $this->stringifyAlias($driver);
         }
 
-        $type = is_object($this->value) ? ($this->value)::class : gettype($this->value);
+        $type = get_debug_type($this->value);
 
         switch ($type) {
             case 'array':
@@ -54,13 +54,13 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
                 $value = '{' . implode(',', $values) . '}';
                 break;
 
-            case 'integer':
+            case 'int':
             case 'float':
             case 'double':
                 $value = $this->value;
                 break;
 
-            case 'boolean':
+            case 'bool':
                 $value = $this->value ? 'true' : 'false';
                 break;
 
@@ -70,17 +70,17 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
                     break;
                 }
 
-                $value = str_replace("'", "''", $this->value);
+                $value = str_replace("'", "''", (string) $this->value);
                 $value = "'{$value}'";
 
                 break;
 
-            case 'NULL':
+            case 'null':
                 $value = 'NULL';
                 break;
 
             default:
-                throw new Exception('unsupported type: ' . gettype($this->value));
+                throw new Exception('unsupported type: ' . $type);
         }
 
         return $value . $this->stringifyAlias($driver);

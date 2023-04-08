@@ -13,7 +13,7 @@ class ForUpdate extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'FOR UPDATE %s';
+    final public const CLAUSE = 'FOR UPDATE %s';
 
     public ExpressionItem $expression;
 

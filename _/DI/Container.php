@@ -39,7 +39,7 @@ class Container
 
         if ($instance !== null) {
             $this->instances[$id] = $instance;
-            $service->setClass(get_class($instance));
+            $service->setClass($instance::class);
         }
 
         foreach ($service->getInterfaces() as $interface) {

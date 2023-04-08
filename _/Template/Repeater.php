@@ -10,9 +10,9 @@ class Repeater implements TemplateItem
 
     public $data = [];
 
-    private $currentDataLine = null;
+    private ?array $currentDataLine = null;
 
-    private $foundRepeater = [];
+    private array $foundRepeater = [];
 
     public function __construct($name)
     {
@@ -33,11 +33,10 @@ class Repeater implements TemplateItem
 
     /**
      * @param string $name
-     * @param mixed  $value
      *
      * @return \verfriemelt\wrapped\_\Template\Repeater
      */
-    public function set($name, $value)
+    public function set($name, mixed $value)
     {
         $this->currentDataLine['vars'][$name] = new Variable($name, $value);
         return $this;
@@ -105,7 +104,7 @@ class Repeater implements TemplateItem
             $replacedDataWithinRepeaterString = $this->replaceDataWithinRepeater($repeater);
 
             // save changes
-            $html = str_replace($repeater[0], $replacedDataWithinRepeaterString, $html);
+            $html = str_replace($repeater[0], $replacedDataWithinRepeaterString, (string) $html);
         }
     }
 
@@ -118,7 +117,7 @@ class Repeater implements TemplateItem
         // grep repeater
         preg_match_all(
             "~{{ ?repeater=['\"]$this->name['\"] ?}}(.*){{ ?/repeater=['\"]$this->name['\"] ?}}~sU",
-            $html,
+            (string) $html,
             $this->foundRepeater,
             PREG_SET_ORDER
         );

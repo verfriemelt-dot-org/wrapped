@@ -12,7 +12,7 @@ class Delete extends QueryPart implements Command
 {
     private const COMMAND = 'DELETE FROM %s';
 
-    private Identifier $table;
+    private readonly Identifier $table;
 
     public function __construct(Identifier $table)
     {

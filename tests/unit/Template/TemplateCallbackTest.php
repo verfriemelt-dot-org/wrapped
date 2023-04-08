@@ -22,9 +22,7 @@ class TemplateCallbackTest extends TestCase
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ testingVar }}');
 
-        $this->tpl->set('testingVar', function () {
-            return 'epic';
-        });
+        $this->tpl->set('testingVar', fn () => 'epic');
 
         static::assertSame($this->tpl->run(), 'epic');
     }

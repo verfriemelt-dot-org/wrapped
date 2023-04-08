@@ -12,9 +12,9 @@ class ServiceBuilder
     /**
      * @var ServiceConfiguration<T>
      */
-    private ServiceConfiguration $service;
+    private readonly ServiceConfiguration $service;
 
-    private Container $container;
+    private readonly Container $container;
 
     /**
      * @param ServiceConfiguration<T> $service

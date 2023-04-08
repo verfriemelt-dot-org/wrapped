@@ -23,11 +23,11 @@ class DataModelSearch
     /**
      * @var DataModel<T>
      */
-    private DataModel $prototype;
+    private readonly DataModel $prototype;
 
     private ?array $fields = null;
 
-    private $operator = '~*';
+    private string $operator = '~*';
 
     public function __construct(Searchable $prototype)
     {
@@ -55,7 +55,7 @@ class DataModelSearch
         // [ 'search term with sapces', 'and', 'spaces' ]
         preg_match_all('~(?:\"(.+)\"|(\S+))~', $input, $pieces, \PREG_PATTERN_ORDER);
 
-        return array_values(array_filter(array_merge($pieces[1], $pieces[2])));
+        return array_values(array_filter([...$pieces[1], ...$pieces[2]]));
     }
 
     public function buildQuery(string $searchString, QueryBuilder $query = null): DataModelQueryBuilder

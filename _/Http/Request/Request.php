@@ -68,7 +68,7 @@ class Request
         $header = [];
 
         foreach ($_SERVER as $key => $value) {
-            if (\substr($key, 0, 5) !== 'HTTP_') {
+            if (!str_starts_with($key, 'HTTP_')) {
                 continue;
             }
 
@@ -169,8 +169,8 @@ class Request
     {
         $uri = $this->server->get('REQUEST_URI');
 
-        if (false !== \strstr($this->server->get('SERVER_SOFTWARE', ''), 'nginx')) {
-            return explode('?', $uri, 2)[0];
+        if (str_contains((string) $this->server->get('SERVER_SOFTWARE', ''), 'nginx')) {
+            return explode('?', (string) $uri, 2)[0];
         }
 
         return $this->server->get('REQUEST_URI');

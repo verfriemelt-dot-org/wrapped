@@ -13,7 +13,7 @@ class Update extends QueryPart implements Command
 {
     use CommandWrapperTrait;
 
-    private Identifier $table;
+    private readonly Identifier $table;
 
     private array $columns = [];
 

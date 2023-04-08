@@ -16,13 +16,13 @@ use verfriemelt\wrapped\_\Template\Token\Token;
 
 class TemplateParser
 {
-    private $chain;
+    private ?\verfriemelt\wrapped\_\Template\Token\Token $chain = null;
 
     private $data = [];
 
     private $currentToken;
 
-    private $repeaterDataSourcePath = [];
+    private array $repeaterDataSourcePath = [];
 
     public function setChain(Token $token)
     {
@@ -80,7 +80,7 @@ class TemplateParser
 
     private function parseVar()
     {
-        $name = trim($this->currentToken->currentContent);
+        $name = trim((string) $this->currentToken->currentContent);
         $outputCallbackPresent = isset($this->currentToken->formatCallback);
 
         $dataSource = $this->searchForData('vars', $name);

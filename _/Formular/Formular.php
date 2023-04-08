@@ -24,20 +24,19 @@ use verfriemelt\wrapped\_\Template\Template;
 
 class Formular implements Viewable
 {
-    public const METHOD_POST = 'POST';
+    final public const METHOD_POST = 'POST';
 
-    public const METHOD_GET = 'GET';
+    final public const METHOD_GET = 'GET';
 
-    public const CSRF_FIELD_NAME = '_csrf';
+    final public const CSRF_FIELD_NAME = '_csrf';
 
-    public const FORM_FIELD_NAME = '_form';
+    final public const FORM_FIELD_NAME = '_form';
 
-    /** @var Filter */
-    private $filter;
+    private ?\verfriemelt\wrapped\_\Input\Filter $filter = null;
 
-    private $elements = [];
+    private array $elements = [];
 
-    private $method = self::METHOD_POST;
+    private string $method = self::METHOD_POST;
 
     private $cssClass = '';
 
@@ -45,15 +44,15 @@ class Formular implements Viewable
 
     private $action;
 
-    private $formname;
+    private readonly string $formname;
 
-    private $csrfTokenName;
+    private readonly string $csrfTokenName;
 
     private $storeValuesOnFail = false;
 
-    private $prefilledWithSubmitData = false;
+    private bool $prefilledWithSubmitData = false;
 
-    private Session $session;
+    private readonly Session $session;
 
     private Template $tpl;
 
@@ -68,8 +67,8 @@ class Formular implements Viewable
     public function __construct(
         string $name,
         Request $request,
-        Filter $filter = null,
         Session $session,
+        Filter $filter = null,
         Template $template = null
     ) {
         $this->formname = $name;
@@ -293,7 +292,7 @@ class Formular implements Viewable
             foreach ($this->elements as $element) {
                 try {
                     $element->getFilterItem()->validate();
-                } catch (InputException $e) {
+                } catch (InputException) {
                     $failed = true;
                     $element->addCssClass('input-error');
                 }

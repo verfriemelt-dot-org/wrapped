@@ -9,11 +9,11 @@ use verfriemelt\wrapped\_\Http\ParameterBag;
 
 class FilterItem
 {
-    private $input = 'query';
+    private string $input = 'query';
 
-    private $valueName = null;
+    private ?string $valueName = null;
 
-    private $optional = false;
+    private bool $optional = false;
 
     private $minLength = false;
 
@@ -21,9 +21,9 @@ class FilterItem
 
     private $allowedChars = false;
 
-    private $allowedValues = null;
+    private ?array $allowedValues = null;
 
-    private $allowMultipleValuesSent = false;
+    private bool $allowMultipleValuesSent = false;
 
     protected ParameterBag $parameter;
 
@@ -80,7 +80,7 @@ class FilterItem
         // validate content
         if ($this->allowedChars !== false) {
             for ($i = 0; $i < \mb_strlen($input, 'UTF-8'); ++$i) {
-                if (strstr($this->allowedChars, $input[$i]) === false) {
+                if (!str_contains((string) $this->allowedChars, $input[$i])) {
                     throw new InputException("not allowed chars within [{$this->valueName}]");
                 }
             }

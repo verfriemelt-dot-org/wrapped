@@ -96,7 +96,7 @@ abstract class DataModel
             if (is_null($this->{$propName})) {
                 return true;
             }
-        } catch (Error $e) {
+        } catch (Error) {
             return false;
         }
     }
@@ -483,7 +483,7 @@ abstract class DataModel
         $query->returning(static::getPrimaryKey());
 
         // store autoincrement
-        $pk = $this->createDataModelAnalyser()->fetchPropertyByName(static::getPrimaryKey());
+        $pk = static::createDataModelAnalyser()->fetchPropertyByName(static::getPrimaryKey());
 
         if ($pk === null) {
             throw new RuntimeException('pk not set');
@@ -561,9 +561,9 @@ abstract class DataModel
 
     public function isDirty(): bool
     {
-//            if ( !$this->isPersisted() ) {
-//                return true;
-//            }
+        //            if ( !$this->isPersisted() ) {
+        //                return true;
+        //            }
 
         foreach (static::createDataModelAnalyser()->fetchProperties() as $property) {
             if ($this->_isPropertyFuzzy($property->getName())) {

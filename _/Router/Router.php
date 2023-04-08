@@ -14,9 +14,9 @@ final class Router
 {
     use RouteIterator;
 
-    private Request $request;
+    private readonly Request $request;
 
-    private $globalFilter = [];
+    private array $globalFilter = [];
 
     /**
      * used for adding multiple routes
@@ -116,7 +116,7 @@ final class Router
     protected function findMatchingRoute($uri): Route
     {
         foreach ($this->routes as $route) {
-            if (preg_match("~^{$route->getPath()}~", $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
+            if (preg_match("~^{$route->getPath()}~", (string) $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
                 $route->setAttributes(array_slice($routeHits, 1));
                 return $route;
             }
@@ -130,9 +130,7 @@ final class Router
      */
     private function sortRoutes(&$routes)
     {
-        usort($routes, function (Routable $a, Routable $b) {
-            return $a->getPriority() <=> $b->getPriority();
-        });
+        usort($routes, fn (Routable $a, Routable $b) => $a->getPriority() <=> $b->getPriority());
     }
 
     /**

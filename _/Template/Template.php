@@ -8,15 +8,15 @@ use RuntimeException;
 
 class Template
 {
-    private $if = [];
+    private array $if = [];
 
-    private $vars = [];
+    private array $vars = [];
 
-    private $repeater = [];
+    private array $repeater = [];
 
     private $tokenChain;
 
-    private static $chainCache = [];
+    private static array $chainCache = [];
 
     public function run()
     {

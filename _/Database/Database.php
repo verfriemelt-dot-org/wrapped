@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
 class Database
 {
-    private static $connections = [];
+    private static array $connections = [];
 
     public static function createNewConnection(
         $name,

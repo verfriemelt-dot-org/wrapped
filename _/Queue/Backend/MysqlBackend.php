@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Queue\QueueItem;
 
 class MysqlBackend implements QueuePersistance
 {
-    private MysqlBackendDataObject $storage;
+    private readonly MysqlBackendDataObject $storage;
 
     public function __construct(MysqlBackendDataObject $storage = null)
     {

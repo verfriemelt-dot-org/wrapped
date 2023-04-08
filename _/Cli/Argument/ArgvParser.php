@@ -204,7 +204,7 @@ class ArgvParser
         try {
             $this->getOption($name);
             return true;
-        } catch (RuntimeException $ex) {
+        } catch (RuntimeException) {
             return false;
         }
     }
@@ -232,7 +232,7 @@ class ArgvParser
         try {
             $this->getArgument($name);
             return true;
-        } catch (RuntimeException $ex) {
+        } catch (RuntimeException) {
             return false;
         }
     }

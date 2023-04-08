@@ -14,7 +14,7 @@ class CTE extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'WITH %s%s';
+    final public const CLAUSE = 'WITH %s%s';
 
     public array $with = [];
 

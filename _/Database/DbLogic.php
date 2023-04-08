@@ -27,7 +27,7 @@ final class DbLogic
 
     private ?GroupBy $groupBy = null;
 
-    private Expression $expression;
+    private readonly Expression $expression;
 
     public ?Order $order = null;
 
@@ -55,7 +55,7 @@ final class DbLogic
         return $this;
     }
 
-    public function merge(DbLogic $logic)
+    public function merge(DbLogic $logic): never
     {
         throw new Exception('merging not supported');
     }
@@ -65,7 +65,7 @@ final class DbLogic
         $this->expression->add(new Identifier(...[$bindToTable, $column]));
 
         // special case for in
-        if ($op !== null && strtolower($op) === 'in') {
+        if ($op !== null && strtolower((string) $op) === 'in') {
             return $this->isIn($value);
         }
 
@@ -140,18 +140,18 @@ final class DbLogic
         return $this;
     }
 
-    public function openBracket(): self
+    public function openBracket(): never
     {
         throw new Exception('not supported');
-//            $this->expression->add( new Bracket( "(" ) );
-//            return $this;
+        //            $this->expression->add( new Bracket( "(" ) );
+        //            return $this;
     }
 
-    public function closeBracket(): self
+    public function closeBracket(): never
     {
         throw new Exception('not supported');
-//            $this->expression->add( new Bracket( ")" ) );
-//            return $this;
+        //            $this->expression->add( new Bracket( ")" ) );
+        //            return $this;
     }
 
     public function addOr(): self

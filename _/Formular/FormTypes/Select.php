@@ -11,7 +11,7 @@ class Select extends FormType
     /**
      * @var array<int,SelectGroup|SelectItem>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * @var array<string, SelectGroup>

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 class EnvironmentDetector
 {
-    private $detector = [];
+    private array $detector = [];
 
     /**
      * @param string $envName

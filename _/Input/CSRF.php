@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Session\Session;
 
 class CSRF
 {
-    private $session = null;
+    private ?\verfriemelt\wrapped\_\Session\Session $session = null;
 
     public function __construct(Session $session)
     {
@@ -21,7 +21,7 @@ class CSRF
             return $this->session->get($contextName);
         }
 
-        $token = md5(uniqid((string) rand(), true));
+        $token = md5(uniqid((string) random_int(0, mt_getrandmax()), true));
         $this->session->set($contextName, $token);
 
         return $token;

@@ -23,21 +23,15 @@ class RouterTest extends TestCase
 
         $router = new Router();
         $router->addRoutes(
-            Route::create('/admin')->call(function () {
-                return 'a';
-            })
+            Route::create('/admin')->call(fn () => 'a')
         );
         $router->addRoutes(
             RouteGroup::create('/admin')
                 ->add(
-                    Route::create('/test')->call(function () {
-                        return 'b';
-                    })
+                    Route::create('/test')->call(fn () => 'b')
                 )
                 ->add(
-                    Route::create('/test1')->call(function () {
-                        return 'b';
-                    })
+                    Route::create('/test1')->call(fn () => 'b')
                 )
         );
 
@@ -54,20 +48,14 @@ class RouterTest extends TestCase
         $router->addRoutes(
             RouteGroup::create('/admin')
                 ->add(
-                    Route::create('/test')->call(function () {
-                        return 'b';
-                    })
+                    Route::create('/test')->call(fn () => 'b')
                 )
                 ->add(
-                    Route::create('/test1')->call(function () {
-                        return 'b';
-                    })
+                    Route::create('/test1')->call(fn () => 'b')
                 )
         );
         $router->addRoutes(
-            Route::create('/admin')->call(function () {
-                return 'a';
-            })
+            Route::create('/admin')->call(fn () => 'a')
         );
 
         $result = $router->handleRequest($request)->getCallback();
@@ -83,13 +71,9 @@ class RouterTest extends TestCase
         $router->addRoutes(
             RouteGroup::create('/api')->add(
                 RouteGroup::create('/test')->add(
-                    Route::create('/nice')->call(function () {
-                        return 'win';
-                    })
+                    Route::create('/nice')->call(fn () => 'win')
                 ),
-                Route::create('.*')->call(function () {
-                    return 'default';
-                })
+                Route::create('.*')->call(fn () => 'default')
             )
         );
 
@@ -111,9 +95,7 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->addRoutes(
             RouteGroup::create('/api'),
-            Route::create('.*')->call(function () {
-                return 'win';
-            })
+            Route::create('.*')->call(fn () => 'win')
         );
 
         $result = $router->handleRequest($request)->getCallback();
@@ -128,9 +110,7 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->addRoutes(
             RouteGroup::create('/(?<key>list)')->add(
-                Route::create('/(?<key2>geocaches)')->call(function () {
-                    return 'win';
-                })
+                Route::create('/(?<key2>geocaches)')->call(fn () => 'win')
             )
         );
 
@@ -148,9 +128,7 @@ class RouterTest extends TestCase
         $router = new Router();
         $router->addRoutes(
             RouteGroup::create('(?:/[a-z]{4})?')->add(
-                Route::create('/a')->call(function () {
-                    return true;
-                })
+                Route::create('/a')->call(fn () => true)
             )
         );
 

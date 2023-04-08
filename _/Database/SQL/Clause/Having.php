@@ -12,9 +12,9 @@ class Having extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'HAVING %s';
+    final public const CLAUSE = 'HAVING %s';
 
-    private QueryPart $expression;
+    private readonly QueryPart $expression;
 
     public function getWeight(): int
     {

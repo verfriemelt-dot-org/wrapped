@@ -9,8 +9,8 @@ class Option
     private string $value;
     private bool $isPresent = false;
 
-    public const REQUIRED = 0b1;
-    public const EXPECTS_VALUE = 0b10;
+    final public const REQUIRED = 0b1;
+    final public const EXPECTS_VALUE = 0b10;
 
     public function __construct(
         public readonly string $name,

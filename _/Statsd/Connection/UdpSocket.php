@@ -14,7 +14,7 @@ class UdpSocket implements \verfriemelt\wrapped\_\Statsd\Connection
 
     private $socket;
 
-    private $isConnected = false;
+    private bool $isConnected = false;
 
     public function __construct($host = '127.0.0.1', $port = 8125)
     {
@@ -51,8 +51,8 @@ class UdpSocket implements \verfriemelt\wrapped\_\Statsd\Connection
         }
 
         try {
-            fwrite($this->socket, $message);
-        } catch (Exception $e) {
+            fwrite($this->socket, (string) $message);
+        } catch (Exception) {
             return false;
         }
 

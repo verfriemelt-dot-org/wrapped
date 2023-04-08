@@ -9,20 +9,19 @@ use RuntimeException;
 
 class ArgumentMetadata
 {
-    private string $name;
+    private readonly string $name;
 
     /**
      * @var class-string|null
      */
     private ?string $type = null;
 
-    private bool $hasDefaultValue;
+    private readonly bool $hasDefaultValue;
 
     private mixed $defaultValue;
 
     /**
      * @param class-string|null $type
-     * @param mixed             $defaultValue
      */
     public function __construct(string $name, ?string $type, bool $hasDefaultValue = false, mixed $defaultValue = null)
     {

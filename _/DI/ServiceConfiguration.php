@@ -14,14 +14,14 @@ class ServiceConfiguration
 {
     private bool $shareable = true;
 
-    private string $id;
+    private readonly string $id;
 
     /**
      * @var class-string<T>
      */
     private string $class;
 
-    private $resolver = [];
+    private array $resolver = [];
 
     /**
      * @param class-string<T> $id

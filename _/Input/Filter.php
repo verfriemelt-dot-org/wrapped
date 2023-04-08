@@ -12,11 +12,11 @@ class Filter
 {
     protected Request $request;
 
-    private $failed = false;
+    private bool $failed = false;
 
-    private $messageStack = [];
+    private array $messageStack = [];
 
-    private $filterItems = [];
+    private array $filterItems = [];
 
     public function __construct(Request $request)
     {

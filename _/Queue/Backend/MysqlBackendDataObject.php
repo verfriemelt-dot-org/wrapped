@@ -60,7 +60,7 @@ class MysqlBackendDataObject extends DataModel implements TablenameOverride
 
     public function read(): QueueItem
     {
-        return unserialize(base64_decode($this->data));
+        return unserialize(base64_decode((string) $this->data));
     }
 
     public function getId()

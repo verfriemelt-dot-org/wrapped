@@ -6,11 +6,11 @@ namespace verfriemelt\wrapped\_\Statsd;
 
 class StatsdTimer
 {
-    private $statsdInstace = null;
+    private ?\verfriemelt\wrapped\_\Statsd\StatsdClient $statsdInstace = null;
 
     private $start = 0;
 
-    private $diff = null;
+    private ?float $diff = null;
 
     private $name = '';
 

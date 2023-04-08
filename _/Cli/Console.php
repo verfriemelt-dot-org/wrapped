@@ -10,19 +10,19 @@ use verfriemelt\wrapped\_\Http\ParameterBag;
 
 class Console
 {
-    public const STYLE_NONE = 0;
-    public const STYLE_BLACK = 30;
-    public const STYLE_RED = 31;
-    public const STYLE_GREEN = 32;
-    public const STYLE_YELLOW = 33;
-    public const STYLE_BLUE = 34;
-    public const STYLE_PURPLE = 35;
-    public const STYLE_CYAN = 36;
-    public const STYLE_WHITE = 37;
+    final public const STYLE_NONE = 0;
+    final public const STYLE_BLACK = 30;
+    final public const STYLE_RED = 31;
+    final public const STYLE_GREEN = 32;
+    final public const STYLE_YELLOW = 33;
+    final public const STYLE_BLUE = 34;
+    final public const STYLE_PURPLE = 35;
+    final public const STYLE_CYAN = 36;
+    final public const STYLE_WHITE = 37;
 
-    public const STYLE_REGULAR = 0;
-    public const STYLE_BOLD = 1;
-    public const STYLE_UNDERLINE = 4;
+    final public const STYLE_REGULAR = 0;
+    final public const STYLE_BOLD = 1;
+    final public const STYLE_UNDERLINE = 4;
 
     protected int $currentFgColor = self::STYLE_NONE;
     protected int $currentBgColor = self::STYLE_NONE;
@@ -118,7 +118,7 @@ class Console
         }
 
         if (isset($this->linePrefixFunc) && $this->hadLineOutput !== true) {
-            fwrite($this->selectedStream, ($this->linePrefixFunc)());
+            fwrite($this->selectedStream, (string) ($this->linePrefixFunc)());
             $this->hadLineOutput = true;
         }
 
@@ -156,7 +156,7 @@ class Console
 
     public function writePadded($text, $padding = 4, $paddingChar = ' ', $color = null): static
     {
-        $this->write(str_repeat($paddingChar, $padding));
+        $this->write(str_repeat((string) $paddingChar, $padding));
         $this->write($text, $color);
 
         return $this;

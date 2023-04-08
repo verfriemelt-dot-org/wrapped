@@ -46,8 +46,8 @@ class RequestTest extends \PHPUnit\Framework\TestCase
             'PATH_INFO' => '/dumpFiles',
             'PATH_TRANSLATED' => 'redirect:/index.php/dumpFiles',
             'PHP_SELF' => '/index.php/dumpFiles',
-            'REQUEST_TIME_FLOAT' => 1406104894.0079999,
-            'REQUEST_TIME' => 1406104894,
+            'REQUEST_TIME_FLOAT' => 1_406_104_894.0079999,
+            'REQUEST_TIME' => 1_406_104_894,
             'HTTP_REFERER' => 'google.de',
         ];
 

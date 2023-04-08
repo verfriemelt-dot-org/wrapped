@@ -13,7 +13,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
 {
     use Alias;
 
-    public const SYNTAX = 'CASE %s END';
+    final public const SYNTAX = 'CASE %s END';
 
     protected Identifier $name;
 
@@ -60,9 +60,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
         $when = implode(
             ' ',
             array_map(
-                function ($part) use ($driver) {
-                    return "WHEN {$part['when']->stringify($driver)} THEN {$part['then']->stringify($driver)}";
-                },
+                fn ($part) => "WHEN {$part['when']->stringify($driver)} THEN {$part['then']->stringify($driver)}",
                 $this->when
             )
         );

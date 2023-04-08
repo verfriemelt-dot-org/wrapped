@@ -11,15 +11,15 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 
 class DataModelProperty
 {
-    private string $name;
+    private readonly string $name;
 
     private string $setter;
 
     private string $getter;
 
-    private bool $isNullable;
+    private readonly bool $isNullable;
 
-    private Convention $case;
+    private readonly Convention $case;
 
     private ?string $type = null;
 

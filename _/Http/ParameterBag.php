@@ -14,7 +14,7 @@ class ParameterBag implements Countable, IteratorAggregate
     /**
      * @var mixed[]
      */
-    private $parameters = [];
+    private array $parameters = [];
 
     private ?string $raw = null;
 

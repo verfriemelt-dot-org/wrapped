@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Database\Driver;
 
 class Postgres extends DatabaseDriver
 {
-    public const PDO_NAME = 'pgsql';
+    final public const PDO_NAME = 'pgsql';
 
     public function quoteIdentifier(string $ident): string
     {

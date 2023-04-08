@@ -8,7 +8,7 @@ use PDO;
 
 class Mysql extends DatabaseDriver
 {
-    public const PDO_NAME = 'mysql';
+    final public const PDO_NAME = 'mysql';
 
     public function quoteIdentifier(string $ident): string
     {

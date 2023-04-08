@@ -13,7 +13,7 @@ class Where extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'WHERE %s';
+    final public const CLAUSE = 'WHERE %s';
 
     public Expression $expression;
 

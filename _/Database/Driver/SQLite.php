@@ -8,7 +8,7 @@ use RuntimeException;
 
 class SQLite extends DatabaseDriver
 {
-    public const PDO_NAME = 'sqlite::memory:';
+    final public const PDO_NAME = 'sqlite::memory:';
 
     private string $databaseVersion;
 

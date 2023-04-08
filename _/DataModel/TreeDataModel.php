@@ -36,13 +36,13 @@ abstract class TreeDataModel extends DataModel
 
     public ?int $parentId = null;
 
-    public const INSERT_AFTER = 'after';
+    final public const INSERT_AFTER = 'after';
 
-    public const INSERT_BEFORE = 'before';
+    final public const INSERT_BEFORE = 'before';
 
-    public const INSERT_UNDER_LEFT = 'under_left';
+    final public const INSERT_UNDER_LEFT = 'under_left';
 
-    public const INSERT_UNDER_RIGHT = 'under_right';
+    final public const INSERT_UNDER_RIGHT = 'under_right';
 
     private string $insertMode = self::INSERT_UNDER_LEFT;
 
@@ -160,8 +160,6 @@ abstract class TreeDataModel extends DataModel
      * inserts the new created instance after the given model
      * inherits parent and depth
      *
-     * @param static $after
-     *
      * @return bool|static
      *
      * @throws Exception
@@ -244,7 +242,7 @@ abstract class TreeDataModel extends DataModel
 
             $data = $this->{$attribute->getGetter()}();
 
-            if (!$includeNonFuzzy && !$this->_isPropertyFuzzy($attribute->getName(), $data)) {
+            if (!$includeNonFuzzy && !$this->_isPropertyFuzzy($attribute->getName())) {
                 continue;
             }
 
@@ -1087,7 +1085,7 @@ abstract class TreeDataModel extends DataModel
      */
     public function save(): static
     {
-        if ($this->_isPropertyFuzzy(static::getPrimaryKey(), $this->{static::getPrimaryKey()})) {
+        if ($this->_isPropertyFuzzy(static::getPrimaryKey())) {
             $this->insertRecord();
         } else {
             $this->updateRecord();
@@ -1107,7 +1105,7 @@ abstract class TreeDataModel extends DataModel
         if (!$isMovement) {
             parent::updateRecord();
         } else {
-            [$cte, $upd] = $this->cteMove($this->insertPosition, $this->insertMode);
+            [$cte, $upd] = $this->cteMove($this->insertPosition);
 
             $query = static::buildQuery();
             $query->stmt->add($cte);

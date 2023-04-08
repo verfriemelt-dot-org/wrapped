@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Cli;
 
 class ConsoleFrame
 {
-    private Console $cli;
+    private readonly Console $cli;
 
     /**
      * @var array{x:int,y:int}
@@ -134,13 +134,13 @@ class ConsoleFrame
 
         foreach (array_slice($this->buffer, $this->scrollPos, $height) as [ $line, $style ]) {
             $this->cli->jump($this->pos['x'], $this->pos['y'] + $offset);
-//                $this->cli->write( mb_substr( $line, 0,  $this->getRenderWidth() ), $style );
+            //                $this->cli->write( mb_substr( $line, 0,  $this->getRenderWidth() ), $style );
 
             $line = str_replace(["\n", "\r", "\t", "\0"], ['', '', '', ''], $line);
 
             $this->cli->write(
-//                    str_pad( $this->getRenderHeight() . ":". $offset  ,6 ).
-//                    str_pad(
+                //                    str_pad( $this->getRenderHeight() . ":". $offset  ,6 ).
+                //                    str_pad(
                 substr($line, 0, $width)
 //                        $this->getRenderWidth(),
 //                        $this->instance

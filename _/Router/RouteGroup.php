@@ -10,7 +10,7 @@ class RouteGroup implements Routable
 
     private $path;
 
-    private $priority = 100;
+    private int $priority = 100;
 
     private array $filters = [];
 

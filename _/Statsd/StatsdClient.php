@@ -14,7 +14,7 @@ final class StatsdClient
 
     public const GAUGE = 'g';
 
-    private $connection;
+    private ?\verfriemelt\wrapped\_\Statsd\Connection $connection = null;
 
     private $namespace = '';
 

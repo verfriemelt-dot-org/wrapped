@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
 class Union extends QueryPart implements Clause
 {
-    public const CLAUSE = 'UNION ALL';
+    final public const CLAUSE = 'UNION ALL';
 
     public function getWeight(): int
     {

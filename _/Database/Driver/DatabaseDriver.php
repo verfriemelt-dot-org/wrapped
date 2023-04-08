@@ -46,7 +46,7 @@ abstract class DatabaseDriver
 
     protected string $connectionString;
 
-    private $lastresult;
+    private ?bool $lastresult = null;
 
     abstract public function quoteIdentifier(string $ident): string;
 

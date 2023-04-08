@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
 class Limit extends QueryPart implements Clause
 {
-    public const CLAUSE = 'LIMIT %s';
+    final public const CLAUSE = 'LIMIT %s';
 
     protected ExpressionItem $limit;
 

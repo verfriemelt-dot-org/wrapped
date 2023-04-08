@@ -13,7 +13,7 @@ class Variable implements TemplateItem
     public $value;
     public $formatCallback;
 
-    private static $formats = [];
+    private static array $formats = [];
 
     public function __construct(string $name = null, $value = null)
     {
@@ -53,7 +53,7 @@ class Variable implements TemplateItem
     {
         preg_match_all(
             '~{{( ?(?<value>' . $this->name . ')(?:\|(?<format>[a-zA-Z0-9]+))? ?)}}~',
-            $source,
+            (string) $source,
             $hits,
             PREG_SET_ORDER
         );
@@ -66,7 +66,7 @@ class Variable implements TemplateItem
                 $value = $this->readValue();
             }
 
-            $source = str_replace($row[0], $value, $source);
+            $source = str_replace($row[0], $value, (string) $source);
         }
     }
 

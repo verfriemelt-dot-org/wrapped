@@ -19,7 +19,7 @@ class Insert extends QueryPart implements Command, CommandExpression
 
     private ?Statement $query = null;
 
-    private Identifier $into;
+    private readonly Identifier $into;
 
     public function __construct(Identifier $ident)
     {

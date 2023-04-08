@@ -210,7 +210,7 @@ class QueryBuilder
             // special handling for where parameters in the style of [ 'col', 'op', 'value' ];
             // is_integer( $column ) checks if we have numeric keys
             if (is_integer($column) && count($value) === 3) {
-                $expression->add(new Identifier(...explode('.', $value[0])));
+                $expression->add(new Identifier(...explode('.', (string) $value[0])));
 
                 if (is_array($value[2])) {
                     $op = new OperatorExpression('in', ...array_map(fn ($value) => new Value($value), $value[2]));

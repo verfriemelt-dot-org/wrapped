@@ -12,9 +12,9 @@ class From extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    public const CLAUSE = 'FROM %s';
+    final public const CLAUSE = 'FROM %s';
 
-    private QueryPart $source;
+    private readonly QueryPart $source;
 
     public function getWeight(): int
     {

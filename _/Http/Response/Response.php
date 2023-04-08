@@ -8,20 +8,20 @@ use verfriemelt\wrapped\_\Cli\Console;
 
 class Response
 {
-    private $statusCode = Http::OK;
+    private int $statusCode = Http::OK;
 
     private $content = '';
 
-    private $cookies = [];
+    private array $cookies = [];
 
-    private $version = '1.1';
+    private string $version = '1.1';
 
     /**
      * @var HttpHeader[]
      */
     private array $headers = [];
 
-    private $statusText;
+    private ?string $statusText = null;
 
     private $contentCallback;
 
@@ -90,10 +90,8 @@ class Response
         foreach ($this->cookies as $cookie) {
             setcookie(
                 $cookie->getName(),
-                $cookie->getValue(),
-                $cookie->getExpiresTime(),
-                $cookie->getPath() ?? '/',
-                $cookie->getDomain() ?? ''
+                (string) $cookie->getValue(),
+                ['expires' => $cookie->getExpiresTime(), 'path' => $cookie->getPath() ?? '/', 'domain' => $cookie->getDomain() ?? '']
             );
         }
 

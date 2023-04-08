@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 
 class Offset extends QueryPart implements Clause
 {
-    public const CLAUSE = 'OFFSET %s';
+    final public const CLAUSE = 'OFFSET %s';
 
     protected ExpressionItem $offset;
 

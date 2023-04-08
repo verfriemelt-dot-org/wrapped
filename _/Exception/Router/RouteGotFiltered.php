@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 
 class RouteGotFiltered extends RouterException
 {
-    private $response;
+    private ?\verfriemelt\wrapped\_\Http\Response\Response $response = null;
 
     public function setResponse(Response $resposne)
     {

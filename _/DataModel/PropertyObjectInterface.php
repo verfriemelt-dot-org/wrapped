@@ -8,8 +8,6 @@ interface PropertyObjectInterface
 {
     /**
      * creates property from stored value
-     *
-     * @param ?string $storedValue
      */
     public static function hydrateFromString(?string $storedValue): ?static;
 

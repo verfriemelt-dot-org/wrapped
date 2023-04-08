@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Queue\QueueItem;
 
 class MemoryBackend implements QueuePersistance
 {
-    private $storage = [];
+    private array $storage = [];
 
     public function store(QueueItem $item)
     {

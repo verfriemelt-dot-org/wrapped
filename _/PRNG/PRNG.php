@@ -8,12 +8,12 @@ use Exception;
 
 class PRNG
 {
-//     Xn+1 = (aXn + c) mod m
-//    where X is the sequence of pseudo-random values
-//    m, 0 < m - modulus
-//    a, 0 < a < m - multiplier
-//    c, 0 ≤ c < m - increment
-//    x0, 0 ≤ x0 < m - the seed or start value
+    //     Xn+1 = (aXn + c) mod m
+    //    where X is the sequence of pseudo-random values
+    //    m, 0 < m - modulus
+    //    a, 0 < a < m - multiplier
+    //    c, 0 ≤ c < m - increment
+    //    x0, 0 ≤ x0 < m - the seed or start value
 
     protected int $modulus = 2 ** 31 - 1;
 
@@ -25,7 +25,7 @@ class PRNG
 
     protected float $last;
 
-    public function __construct(int $seed = 1103515245)
+    public function __construct(int $seed = 1_103_515_245)
     {
         if ($seed < 0) {
             throw new Exception('seed must be greater than zero');

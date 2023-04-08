@@ -28,7 +28,7 @@ class QueueItem
     {
         $this->key = $key;
         $this->channel = $channel ?? 'default';
-        $this->uniqId = md5(uniqid((string) rand()) . uniqid());
+        $this->uniqId = md5(uniqid((string) random_int(0, mt_getrandmax())) . uniqid());
     }
 
     public function setQueue(Queue $queue): QueueItem

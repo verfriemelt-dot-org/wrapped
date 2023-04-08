@@ -54,7 +54,7 @@ class ArgumentMetadataFactory
         }
 
         /** @var class-string $name */
-        $name = $type instanceof ReflectionNamedType ? $type->getName() : (string) $type;
+        $name = $type instanceof ReflectionNamedType ? $type->getName() : $type->getName();
         return $name;
     }
 }

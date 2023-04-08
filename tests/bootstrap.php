@@ -17,26 +17,19 @@ if (!$env->has('database_driver')) {
     return;
 }
 
-switch ($env->get('database_driver')) {
-    case 'sqlite':
-        Database::createNewConnection('default', SQLite::class, '', '', '', '', 0);
-        break;
-
-    case 'postgresql':
-        Database::createNewConnection(
-            'default',
-            Postgres::class,
-            $env->get('db_user', 'docker'),
-            $env->get('db_pass', 'docker'),
-            $env->get('db_host', 'localhost'),
-            $env->get('db_name', 'docker'),
-            (int) $env->get('db_port', 5432)
-        );
-        break;
-
-    default:
-        exit('driver not supported');
-}
+match ($env->get('database_driver')) {
+    'sqlite' => Database::createNewConnection('default', SQLite::class, '', '', '', '', 0),
+    'postgresql' => Database::createNewConnection(
+        'default',
+        Postgres::class,
+        $env->get('db_user', 'docker'),
+        $env->get('db_pass', 'docker'),
+        $env->get('db_host', 'localhost'),
+        $env->get('db_name', 'docker'),
+        (int) $env->get('db_port', 5432)
+    ),
+    default => exit('driver not supported'),
+};
 
 abstract class DatabaseTestCase extends TestCase
 {

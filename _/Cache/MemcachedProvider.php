@@ -8,7 +8,7 @@ use Memcached;
 
 class MemcachedProvider implements CacheProviderInterface
 {
-    private Memcached $memcached;
+    private readonly Memcached $memcached;
 
     private static string $prefix = '';
 

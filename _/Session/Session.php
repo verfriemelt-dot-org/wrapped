@@ -14,13 +14,13 @@ final class Session implements SessionHandler
 
     private $dataObj = null;
 
-    private $sessionId = null;
+    private ?string $sessionId = null;
 
-    private $storageObj = null;
+    private string|\verfriemelt\wrapped\_\Session\SessionDataObject|null $storageObj = null;
 
     private $currentData = [];
 
-    private Request $request;
+    private readonly Request $request;
 
     public function __construct(Request $request, SessionDataObject $sessionStorage = null)
     {
@@ -64,7 +64,7 @@ final class Session implements SessionHandler
         setcookie(
             self::SESSION_COOKIE_NAME,
             '',
-            time() - self::SESSION_TIMEOUT * 10
+            ['expires' => time() - self::SESSION_TIMEOUT * 10]
         );
     }
 
@@ -102,7 +102,7 @@ final class Session implements SessionHandler
         }
 
         $this->sessionId = $sessionId;
-        $this->currentData = unserialize(base64_decode($this->dataObj->getData()));
+        $this->currentData = unserialize(base64_decode((string) $this->dataObj->getData()));
 
         return $this;
     }
@@ -125,13 +125,12 @@ final class Session implements SessionHandler
 
     private function start()
     {
-        $this->sessionId = sha1(microtime(true) . rand());
+        $this->sessionId = sha1(microtime(true) . random_int(0, mt_getrandmax()));
 
         setcookie(
             self::SESSION_COOKIE_NAME,
             $this->sessionId,
-            time() + self::SESSION_TIMEOUT,
-            '/'
+            ['expires' => time() + self::SESSION_TIMEOUT, 'path' => '/']
         );
 
         $this->dataObj = new $this->storageObj();

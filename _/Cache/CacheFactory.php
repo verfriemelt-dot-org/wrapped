@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Cache;
 
 class CacheFactory
 {
-    private static ?CacheProviderInterface $cacheProvider;
+    private static ?CacheProviderInterface $cacheProvider = null;
 
     public static function registerCachingProvider(CacheProviderInterface $provider)
     {
