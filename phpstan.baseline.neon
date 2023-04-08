@@ -16,11 +16,6 @@ parameters:
 			path: _/Cache/Cache.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\Cache\\:\\:\\$provider has no type specified\\.$#"
-			count: 1
-			path: _/Cache/Cache.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\CacheFactory\\:\\:registerCachingProvider\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Cache/CacheFactory.php
@@ -226,6 +221,11 @@ parameters:
 			path: _/Controller/RestController.php
 
 		-
+			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: _/DI/ArgumentMetadataFactory.php
+
+		-
 			message: "#^Cannot call method getName\\(\\) on ReflectionMethod\\|null\\.$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php
@@ -281,12 +281,17 @@ parameters:
 			path: _/DI/ServiceArgumentResolver.php
 
 		-
+			message: "#^PHPDoc tag @var with type array\\<class\\-string\\> is not subtype of native type array\\<string, class\\-string\\>\\|false\\.$#"
+			count: 1
+			path: _/DI/ServiceConfiguration.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
 			path: _/DI/ServiceConfiguration.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$resolver has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$resolver type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/ServiceConfiguration.php
 
@@ -476,11 +481,6 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Dynamic call to static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:createDataModelAnalyser\\(\\)\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:__call\\(\\) has parameter \\$args with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
@@ -586,12 +586,12 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Offset 'count' does not exist on array\\|null\\.$#"
+			message: "#^Offset 'count' might not exist on array\\|null\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Offset string does not exist on array\\|null\\.$#"
+			message: "#^Offset string might not exist on array\\|null\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -637,11 +637,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$property of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:isPropertyInitialized\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of function in_array expects array, array\\<string, string\\>\\|false given\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -836,11 +831,6 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$operator has no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype \\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
@@ -1016,22 +1006,12 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:_isPropertyFuzzy\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 2
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:cteInsert\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:cteMove\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:cteMove\\(\\) invoked with 2 parameters, 1 required\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -1197,7 +1177,7 @@ parameters:
 
 		-
 			message: "#^Variable property access on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\)\\.$#"
-			count: 3
+			count: 2
 			path: _/DataModel/TreeDataModel.php
 
 		-
@@ -1271,7 +1251,7 @@ parameters:
 			path: _/Database/Database.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:\\$connections has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Database\\:\\:\\$connections type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Database.php
 
@@ -1292,11 +1272,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:isNotIn\\(\\) has parameter \\$param with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Database/DbLogic.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\DbLogic\\:\\:merge\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Database/DbLogic.php
 
@@ -1561,11 +1536,6 @@ parameters:
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$lastresult has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$lastresult is never read, only written\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
@@ -1716,7 +1686,7 @@ parameters:
 			path: _/Database/SQL/Clause/GroupBy.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\GroupBy\\:\\:\\$expressions has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\GroupBy\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/GroupBy.php
 
@@ -1761,7 +1731,7 @@ parameters:
 			path: _/Database/SQL/Clause/Order.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Order\\:\\:\\$expressions has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\Order\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Clause/Order.php
 
@@ -2081,11 +2051,6 @@ parameters:
 			path: _/Database/SQL/Statement.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Statement\\:\\:\\$sortingDisabled has no type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Statement.php
-
-		-
 			message: "#^Call to function is_callable\\(\\) with callable\\(\\)\\: mixed will always evaluate to true\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
@@ -2096,17 +2061,17 @@ parameters:
 			path: _/EnvironmentDetector.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:\\$detector has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:\\$detector type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:setResponse\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:getReponse\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\|null\\.$#"
 			count: 1
 			path: _/Exception/Router/RouteGotFiltered.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:\\$response has no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:setResponse\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Exception/Router/RouteGotFiltered.php
 
@@ -2121,7 +2086,7 @@ parameters:
 			path: _/File/Path.php
 
 		-
-			message: "#^Offset 'file' does not exist on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: '\\-\\>'\\|'\\:\\:', args\\?\\: array, object\\?\\: object\\}\\.$#"
+			message: "#^Offset 'file' might not exist on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: '\\-\\>'\\|'\\:\\:', args\\?\\: array, object\\?\\: object\\}\\.$#"
 			count: 1
 			path: _/File/Path.php
 
@@ -2336,11 +2301,6 @@ parameters:
 			path: _/Formular/FormTypes/Password.php
 
 		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:writeOption\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
@@ -2381,8 +2341,23 @@ parameters:
 			path: _/Formular/FormTypes/Textarea.php
 
 		-
+			message: "#^Access to an uninitialized readonly property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$csrfTokenName\\.$#"
+			count: 1
+			path: _/Formular/Formular.php
+
+		-
+			message: "#^Access to an uninitialized readonly property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$session\\.$#"
+			count: 1
+			path: _/Formular/Formular.php
+
+		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
 			count: 2
+			path: _/Formular/Formular.php
+
+		-
+			message: "#^Cannot call method request\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\|null\\.$#"
+			count: 8
 			path: _/Formular/Formular.php
 
 		-
@@ -2556,11 +2531,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$csrfTokenName has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$cssClass has no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2571,27 +2541,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$filter \\(verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\|null\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$formname has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$method has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$prefilledWithSubmitData has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$method \\(string\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\type\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
@@ -3006,27 +2961,27 @@ parameters:
 			path: _/Http/Response/Response.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$cookies has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$cookies type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Http/Response/Response.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$statusCode has no type specified\\.$#"
+			message: "#^Cannot call method delete\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
 			count: 1
-			path: _/Http/Response/Response.php
+			path: _/Input/CSRF.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$statusText has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
+			message: "#^Cannot call method get\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
+			count: 2
+			path: _/Input/CSRF.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$version has no type specified\\.$#"
+			message: "#^Cannot call method has\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
 			count: 1
-			path: _/Http/Response/Response.php
+			path: _/Input/CSRF.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\CSRF\\:\\:\\$session has no type specified\\.$#"
+			message: "#^Cannot call method set\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
 			count: 1
 			path: _/Input/CSRF.php
 
@@ -3036,17 +2991,12 @@ parameters:
 			path: _/Input/Filter.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\:\\:\\$failed has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\:\\:\\$filterItems type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Input/Filter.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\:\\:\\$filterItems has no type specified\\.$#"
-			count: 1
-			path: _/Input/Filter.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\:\\:\\$messageStack has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\:\\:\\$messageStack type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Input/Filter.php
 
@@ -3076,13 +3026,18 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, int\\|string given\\.$#"
-			count: 3
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$allowMultipleValuesSent has no type specified\\.$#"
-			count: 1
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) expects string, string\\|null given\\.$#"
+			count: 2
+			path: _/Input/FilterItem.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function mb_strlen expects string, int\\|string given\\.$#"
+			count: 3
 			path: _/Input/FilterItem.php
 
 		-
@@ -3091,12 +3046,7 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$allowedValues has no type specified\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$input has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$allowedValues type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
 
@@ -3112,16 +3062,6 @@ parameters:
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$minLength has no type specified\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$optional has no type specified\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$valueName has no type specified\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
 
@@ -3161,7 +3101,7 @@ parameters:
 			path: _/Queue/Backend/MemoryBackend.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:\\$storage has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:\\$storage type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Queue/Backend/MemoryBackend.php
 
@@ -3556,12 +3496,12 @@ parameters:
 			path: _/Router/RouteGroup.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:\\$priority has no type specified\\.$#"
+			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:setAttributes\\(\\)\\.$#"
 			count: 1
-			path: _/Router/RouteGroup.php
+			path: _/Router/Router.php
 
 		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:setAttributes\\(\\)\\.$#"
+			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router has an uninitialized readonly property \\$request\\. Assign it in the constructor\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -3656,12 +3596,12 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter is never read, only written\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter is never read, only written\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -3671,27 +3611,17 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:setIp\\(\\)\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:setSessionId\\(\\)\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:setTimeout\\(\\)\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
 			message: "#^Call to function base64_decode\\(\\) requires parameter \\#2 to be set\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
 		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
+			message: "#^Cannot call static method getBySessionId\\(\\) on string\\|verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\|null\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
@@ -3741,11 +3671,6 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Parameter \\#2 \\$haystack of function in_array expects array, array\\<string, string\\>\\|false given\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
 			message: "#^Parameter \\$default of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
 			count: 1
 			path: _/Session/Session.php
@@ -3776,12 +3701,7 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$sessionId has no type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$storageObj has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$sessionId \\(string\\|null\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
@@ -4086,11 +4006,6 @@ parameters:
 			path: _/Statsd/Connection/UdpSocket.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$isConnected has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$port has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/Connection/UdpSocket.php
@@ -4146,8 +4061,18 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
+			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\|null given\\.$#"
+			count: 1
+			path: _/Statsd/StatsdClient.php
+
+		-
 			message: "#^PHPDoc tag @param for parameter \\$function with type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\callable is not subtype of native type callable\\.$#"
 			count: 1
+			path: _/Statsd/StatsdClient.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, string\\|verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type given\\.$#"
+			count: 2
 			path: _/Statsd/StatsdClient.php
 
 		-
@@ -4216,11 +4141,6 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:\\$connection has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:\\$handle has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
@@ -4231,12 +4151,22 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
+			message: "#^Cannot call method send\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\|null\\.$#"
+			count: 1
+			path: _/Statsd/StatsdTimer.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:__construct\\(\\) has parameter \\$key with no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:end\\(\\) should return int but returns float\\.$#"
+			count: 1
+			path: _/Statsd/StatsdTimer.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:getTime\\(\\) should return int but returns float\\|null\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
 
@@ -4251,22 +4181,12 @@ parameters:
 			path: _/Statsd/StatsdTimer.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:\\$diff has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdTimer.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:\\$name has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:\\$start has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdTimer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:\\$statsdInstace has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
 
@@ -4366,7 +4286,7 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Repeater.php
 
@@ -4376,7 +4296,7 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$foundRepeater has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$foundRepeater type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Repeater.php
 
@@ -4416,17 +4336,17 @@ parameters:
 			path: _/Template/Template.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$chainCache has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$chainCache type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$if has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$if type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$repeater has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$repeater type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
@@ -4436,7 +4356,7 @@ parameters:
 			path: _/Template/Template.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$vars has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$vars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
@@ -4474,6 +4394,11 @@ parameters:
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 2
 			path: _/Template/TemplateLexer.php
+
+		-
+			message: "#^Cannot access property \\$nextToken on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
+			count: 2
+			path: _/Template/TemplateParser.php
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
@@ -4551,11 +4476,6 @@ parameters:
 			path: _/Template/TemplateParser.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$chain has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateParser.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$currentToken has no type specified\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
@@ -4566,7 +4486,7 @@ parameters:
 			path: _/Template/TemplateParser.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$repeaterDataSourcePath has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$repeaterDataSourcePath type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
 
@@ -4661,7 +4581,7 @@ parameters:
 			path: _/Template/Variable.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable\\:\\:\\$formats has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable\\:\\:\\$formats type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Variable.php
 
