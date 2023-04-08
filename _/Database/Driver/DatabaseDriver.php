@@ -111,7 +111,7 @@ abstract class DatabaseDriver
                 throw new DatabaseException('PDO Mysql Driver not available');
             }
 
-            throw new DatabaseException("PDO Exception {$e->getMessage()}", $e->errorInfo[0] ?? 0);
+            throw new DatabaseException("PDO Exception {$e->getMessage()}");
         }
 
         // unset config data
