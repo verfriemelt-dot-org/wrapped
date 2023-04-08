@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Out of 894 possible param types, only 68 %% actually have it\\. Add more param types to get over 76 %%$#"
+			count: 1
+			path: N/A
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\Cache\\:\\:get\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\type\\.$#"
 			count: 1
 			path: _/Cache/Cache.php
@@ -141,7 +146,17 @@ parameters:
 			path: _/Cache/MemoryCacheProvider.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Argument\\\\ArgvParser\\:\\:parseOption\\(\\)\" is 20, keep it under 8$#"
+			count: 1
+			path: _/Cli/Argument/ArgvParser.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:read\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Cli/Console.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:setPrefixCallback\\(\\) has parameter \\$func with no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Cli/Console.php
 
@@ -174,6 +189,41 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:writePadded\\(\\) has parameter \\$text with no type specified\\.$#"
 			count: 1
 			path: _/Cli/Console.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$linePrefixFunc type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Cli/Console.php
+
+		-
+			message: "#^Class cognitive complexity is 55, keep it under 50$#"
+			count: 1
+			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:consume\\(\\)\" is 54, keep it under 8$#"
+			count: 1
+			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:readMode\\(\\) has parameter \\$callback with no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:registerKey\\(\\) has parameter \\$callbacks with no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:\\$readModeCallback type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:\\$registeredKeys type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Cli/KeyInput.php
 
 		-
 			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
@@ -279,6 +329,11 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceArgumentResolver\\:\\:buildParameter\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:parameter\\(\\) has parameter \\$resolver with no signature specified for Closure\\.$#"
+			count: 1
+			path: _/DI/ServiceConfiguration.php
 
 		-
 			message: "#^PHPDoc tag @var with type array\\<class\\-string\\> is not subtype of native type array\\<string, class\\-string\\>\\|false\\.$#"
@@ -391,7 +446,32 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:call\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:call\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:filter\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:find\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:map\\(\\) has parameter \\$callable with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:reduce\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -406,7 +486,17 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLoadingCallback\\(\\) has parameter \\$func with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:setLoadingCallback\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:sort\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -476,6 +566,11 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
+			message: "#^Class cognitive complexity is 75, keep it under 50$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 2
 			path: _/DataModel/DataModel.php
@@ -522,6 +617,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchColumns\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchPredefinedJoins\\(\\) return type has no signature specified for callable\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -582,6 +682,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:translateFieldNameArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:with\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -771,6 +876,11 @@ parameters:
 			path: _/DataModel/DataModelQueryBuilder.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:with\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: _/DataModel/DataModelQueryBuilder.php
+
+		-
 			message: "#^Only booleans are allowed in a negated boolean, \\(callable\\)\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/DataModelQueryBuilder.php
@@ -787,6 +897,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\:\\:getSearchFields\\(\\)\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\)\" is 13, keep it under 8$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -1576,6 +1691,11 @@ parameters:
 			path: _/Database/Facade/JoinBuilder.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:where\\(\\)\" is 16, keep it under 8$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) has parameter \\$ident with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
@@ -2061,6 +2181,11 @@ parameters:
 			path: _/EnvironmentDetector.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:registerDetector\\(\\) has parameter \\$func with no signature specified for callable\\.$#"
+			count: 1
+			path: _/EnvironmentDetector.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:\\$detector type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
@@ -2358,6 +2483,11 @@ parameters:
 		-
 			message: "#^Cannot call method request\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Input\\\\Filter\\|null\\.$#"
 			count: 8
+			path: _/Formular/Formular.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:hasValidated\\(\\)\" is 10, keep it under 8$#"
+			count: 1
 			path: _/Formular/Formular.php
 
 		-
@@ -2951,6 +3081,11 @@ parameters:
 			path: _/Http/Response/Response.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:setContentCallback\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Response/Response.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$content has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/Response.php
@@ -3011,6 +3146,11 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:checkValues\\(\\)\" is 15, keep it under 8$#"
+			count: 1
+			path: _/Input/FilterItem.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:addAllowedValue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
@@ -3067,6 +3207,16 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
+			count: 1
+			path: _/Kernel.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:handle\\(\\)\" is 11, keep it under 8$#"
+			count: 1
+			path: _/Kernel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:containerConfiguration\\(\\) has parameter \\$config with no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Kernel.php
 
@@ -3416,12 +3566,27 @@ parameters:
 			path: _/Router/Routable.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:call\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\.$#"
 			count: 1
 			path: _/Router/Route.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getCallback\\(\\) return type has no signature specified for callable\\.$#"
 			count: 1
 			path: _/Router/Route.php
 
@@ -3454,6 +3619,11 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:addFilter\\(\\) has parameter \\$filterFunc with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Router/RouteGroup.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\.$#"
@@ -3507,6 +3677,11 @@ parameters:
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: _/Router/Router.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:addGlobalFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -4061,6 +4236,11 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Statsd/StatsdClient.php
+
+		-
 			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\|null given\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
@@ -4191,6 +4371,11 @@ parameters:
 			path: _/Statsd/StatsdTimer.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Ifelse\\:\\:run\\(\\)\" is 12, keep it under 8$#"
+			count: 1
+			path: _/Template/Ifelse.php
+
+		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
 			path: _/Template/Ifelse.php
@@ -4224,6 +4409,11 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Ifelse\\:\\:\\$name has no type specified\\.$#"
 			count: 1
 			path: _/Template/Ifelse.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:replaceDataWithinRepeater\\(\\)\" is 14, keep it under 8$#"
+			count: 1
+			path: _/Template/Repeater.php
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
@@ -4376,6 +4566,11 @@ parameters:
 			path: _/Template/TemplateLexer.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateLexer\\:\\:findCurlyContent\\(\\)\" is 17, keep it under 8$#"
+			count: 1
+			path: _/Template/TemplateLexer.php
+
+		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
 			path: _/Template/TemplateLexer.php
@@ -4398,6 +4593,16 @@ parameters:
 		-
 			message: "#^Cannot access property \\$nextToken on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
 			count: 2
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:parseIf\\(\\)\" is 15, keep it under 8$#"
+			count: 1
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:parseRepeater\\(\\)\" is 14, keep it under 8$#"
+			count: 1
 			path: _/Template/TemplateParser.php
 
 		-
