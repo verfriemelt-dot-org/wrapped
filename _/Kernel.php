@@ -103,6 +103,7 @@ abstract class Kernel implements KernelInterface
                 $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
                 $arguments = $resolver->resolv($callback);
                 $response = $callback(...$arguments);
+                $response ??= new Response();
             } else {
                 $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
