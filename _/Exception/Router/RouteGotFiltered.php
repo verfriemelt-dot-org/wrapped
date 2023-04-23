@@ -8,17 +8,17 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 
 class RouteGotFiltered extends RouterException
 {
-    private ?\verfriemelt\wrapped\_\Http\Response\Response $response = null;
+    private ?Response $response = null;
 
     public function setResponse(Response $resposne)
     {
         $this->response = $resposne;
     }
 
-    /** @phpstan-assert-if-true !null $this->response */
-    public function hasReponse(): bool
+    /** @phpstan-assert-if-true !null $this->getResponse() */
+    public function hasResponse(): bool
     {
-        return $this->response instanceof Response;
+        return $this->response !== null;
     }
 
     public function getResponse(): ?Response

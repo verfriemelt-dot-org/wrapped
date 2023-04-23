@@ -67,7 +67,7 @@ abstract class Kernel implements KernelInterface
         return $this;
     }
 
-    public function handle(Request $request): ?Response
+    public function handle(Request $request): Response
     {
         $this->container->register($request::class, $request);
         $route = $this->router->handleRequest($request->uri());
