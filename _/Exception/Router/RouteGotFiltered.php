@@ -15,12 +15,13 @@ class RouteGotFiltered extends RouterException
         $this->response = $resposne;
     }
 
+    /** @phpstan-assert-if-true !null $this->response */
     public function hasReponse(): bool
     {
         return $this->response instanceof Response;
     }
 
-    public function getReponse(): Response
+    public function getResponse(): ?Response
     {
         return $this->response;
     }

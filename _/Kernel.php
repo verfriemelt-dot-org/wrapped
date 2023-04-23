@@ -16,13 +16,12 @@ use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
+use verfriemelt\wrapped\_\Router\Routable;
 use verfriemelt\wrapped\_\Router\Router;
 
 abstract class Kernel implements KernelInterface
 {
     protected Router $router;
-
-    protected Request $request;
 
     protected Container $container;
 
@@ -30,11 +29,7 @@ abstract class Kernel implements KernelInterface
 
     public function __construct()
     {
-        $this->request = Request::createFromGlobals();
-
         $this->container = new Container();
-        $this->container->register($this->request::class, $this->request);
-
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
     }
@@ -42,19 +37,6 @@ abstract class Kernel implements KernelInterface
     public function getContainer(): Container
     {
         return $this->container;
-    }
-
-    public function addAutoloadPath(string $path): static
-    {
-        spl_autoload_register(function ($class) use ($path) {
-            $possiblePath = $path . '/' . str_replace('\\', '/', $class) . '.php';
-
-            if (file_exists($possiblePath)) {
-                return require_once $possiblePath;
-            }
-        });
-
-        return $this;
     }
 
     public function loadSetup(string $path): static
@@ -76,18 +58,22 @@ abstract class Kernel implements KernelInterface
         return $this;
     }
 
-    public function loadRoutes($routes): static
+    /**
+     * @param Routable[] $routes
+     */
+    public function loadRoutes(array $routes): static
     {
         $this->router->addRoutes(...$routes);
         return $this;
     }
 
-    public function handle(): ?Response
+    public function handle(Request $request): ?Response
     {
-        $route = $this->router->handleRequest($this->request->uri());
+        $this->container->register($request::class, $request);
+        $route = $this->router->handleRequest($request->uri());
 
         foreach ($route->getAttributes() as $key => $value) {
-            $this->request->attributes()->override($key, $value);
+            $request->attributes()->override($key, $value);
         }
 
         // router filter
@@ -126,22 +112,22 @@ abstract class Kernel implements KernelInterface
                     ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));
             }
 
-            $this->triggerKernelResponse($response ?? new Response());
+            $this->triggerKernelResponse($request, $response ?? new Response());
         } catch (Throwable $e) {
-            $response = $this->dispatchException($e);
+            $response = $this->dispatchException($request, $e);
         }
 
         return $response;
     }
 
-    protected function triggerKernelResponse(Response $response): void
+    protected function triggerKernelResponse(Request $request, Response $response): void
     {
-        $this->eventDispatcher->dispatch((new KernelResponse($this->request))->setResponse($response));
+        $this->eventDispatcher->dispatch((new KernelResponse($request))->setResponse($response));
     }
 
-    protected function dispatchException(Throwable $exception): Response
+    protected function dispatchException(Request $request, Throwable $exception): Response
     {
-        $exceptionEvent = $this->eventDispatcher->dispatch(new ExceptionEvent($exception, $this->request));
+        $exceptionEvent = $this->eventDispatcher->dispatch(new ExceptionEvent($exception, $request));
 
         if ($exceptionEvent->hasResponse()) {
             return $exceptionEvent->getResponse();

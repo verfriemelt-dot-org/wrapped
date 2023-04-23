@@ -39,7 +39,7 @@ final class Router
      *
      * @return $this
      */
-    public function add(Routable ...$routes)
+    public function add(Routable ...$routes): self
     {
         foreach ($routes as $route) {
             $this->routes[] = $route;

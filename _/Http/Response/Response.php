@@ -37,6 +37,11 @@ class Response
         return $this;
     }
 
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
     public function setStatusText(string $statusText): Response
     {
         $this->statusText = $statusText;
