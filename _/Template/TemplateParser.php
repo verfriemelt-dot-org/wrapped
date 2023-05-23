@@ -16,11 +16,11 @@ use verfriemelt\wrapped\_\Template\Token\Token;
 
 class TemplateParser
 {
-    private ?\verfriemelt\wrapped\_\Template\Token\Token $chain = null;
+    private ?Token $chain = null;
 
-    private $data = [];
+    private array $data = [];
 
-    private $currentToken;
+    private ?Token $currentToken = null;
 
     private array $repeaterDataSourcePath = [];
 

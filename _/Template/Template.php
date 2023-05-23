@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template;
 
 use RuntimeException;
+use verfriemelt\wrapped\_\Template\Token\Token;
 
 class Template
 {
@@ -14,7 +15,7 @@ class Template
 
     private array $repeater = [];
 
-    private $tokenChain;
+    private Token $tokenChain;
 
     private static array $chainCache = [];
 

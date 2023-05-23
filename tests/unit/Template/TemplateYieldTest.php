@@ -15,9 +15,7 @@ class TemplateYieldTest extends TestCase
         $this->tpl->parseFile(__DIR__ . '/templateTests/repeater.tpl');
 
         $r = $this->tpl->createRepeater('r');
-        $testString = '';
         for ($i = 0; $i < 9; ++$i) {
-            $testString .= $i;
             $r->set('i', $i)->save();
         }
 

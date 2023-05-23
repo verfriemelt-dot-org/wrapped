@@ -4526,11 +4526,6 @@ parameters:
 			path: _/Template/Template.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$tokenChain has no type specified\\.$#"
-			count: 1
-			path: _/Template/Template.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$vars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
@@ -4576,8 +4571,33 @@ parameters:
 			path: _/Template/TemplateLexer.php
 
 		-
+			message: "#^Access to an undefined property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\:\\:\\$formatCallback\\.$#"
+			count: 1
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cannot access property \\$currentContent on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
+			count: 3
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cannot access property \\$escape on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
+			count: 1
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cannot access property \\$formatCallback on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
+			count: 1
+			path: _/Template/TemplateParser.php
+
+		-
+			message: "#^Cannot access property \\$negated on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
+			count: 1
+			path: _/Template/TemplateParser.php
+
+		-
 			message: "#^Cannot access property \\$nextToken on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
-			count: 2
+			count: 6
 			path: _/Template/TemplateParser.php
 
 		-
@@ -4666,12 +4686,7 @@ parameters:
 			path: _/Template/TemplateParser.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$currentToken has no type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateParser.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$data has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
 
@@ -4679,11 +4694,6 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$repeaterDataSourcePath type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\T_Variable\\:\\:\\$formatCallback has no type specified\\.$#"
-			count: 1
-			path: _/Template/Token/T_Variable.php
 
 		-
 			message: "#^Cannot access property \\$prevToken on verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Token\\\\Token\\|null\\.$#"
@@ -4789,6 +4799,21 @@ parameters:
 			message: "#^Unsafe access to private property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable\\:\\:\\$formats through static\\:\\:\\.$#"
 			count: 3
 			path: _/Template/Variable.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\v2\\\\Token\\\\TokenInterface\\:\\:getChildren\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Template/v2/Token/TokenInterface.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\v2\\\\Tokenizer\\:\\:getCurrentToken\\(\\) is unused\\.$#"
+			count: 1
+			path: _/Template/v2/Tokenizer.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\v2\\\\Tokenizer\\:\\:matchBranch\\(\\) is unused\\.$#"
+			count: 1
+			path: _/Template/v2/Tokenizer.php
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"

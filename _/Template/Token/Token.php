@@ -8,8 +8,6 @@ abstract class Token
 {
     public string $currentContent = '';
 
-    public int $currentLength = 0;
-
     public int $priority = 10;
 
     public int $maxLength = 0;

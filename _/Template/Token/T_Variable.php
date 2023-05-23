@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Template\Token;
 
 class T_Variable extends Token
 {
-    public $formatCallback;
+    public string $formatCallback;
 
     public bool $escape = true;
 
