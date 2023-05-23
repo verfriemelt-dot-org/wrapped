@@ -545,7 +545,6 @@ abstract class DataModel
      * checks whether
      *
      * @param type $name
-     * @param type $data
      */
     protected function _isPropertyFuzzy(string $name): bool
     {

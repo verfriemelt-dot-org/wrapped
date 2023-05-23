@@ -28,7 +28,7 @@ class DataModelProperty
     public function __construct(
         string $name,
         bool $isNullable,
-        ?Convention $case = null
+        Convention $case = null
     ) {
         $this->name = $name;
         $this->isNullable = $isNullable;

@@ -9,7 +9,6 @@ interface SessionHandler
     /**
      * @param type $name
      * @param type $value
-     * @param type $persistent
      */
     public function set($name, $value);
 

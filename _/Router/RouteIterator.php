@@ -11,17 +11,11 @@ trait RouteIterator
      */
     public $routes = [];
 
-    /**
-     * @return mixed
-     */
     public function current()
     {
         return current($this->routes);
     }
 
-    /**
-     * @return mixed
-     */
     public function key()
     {
         return key($this->routes);

@@ -23,7 +23,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
 
     protected ?ExpressionItem $else = null;
 
-    public function __construct(?ExpressionItem $exp = null)
+    public function __construct(ExpressionItem $exp = null)
     {
         if ($exp !== null) {
             $this->addChild($exp);

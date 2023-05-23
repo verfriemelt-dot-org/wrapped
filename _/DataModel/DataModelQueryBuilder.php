@@ -111,7 +111,7 @@ class DataModelQueryBuilder extends QueryBuilder
      *
      * @return Collection<T>
      */
-    public function get(?Collection $overrideInstance = null): Collection
+    public function get(Collection $overrideInstance = null): Collection
     {
         if ($overrideInstance !== null) {
             return $overrideInstance::buildFromQuery($this->prototype, $this);

@@ -721,11 +721,6 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$data$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^PHPDoc tag @return with type static is not subtype of native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
@@ -1211,11 +1206,6 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$cte$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^PHPDoc tag @return with type bool is incompatible with native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\)\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -1294,11 +1284,6 @@ parameters:
 			message: "#^Variable property access on verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:toSqlFormat\\(\\) should return string but returns string\\|false\\.$#"
-			count: 1
-			path: _/DataModel/Type/Json.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data has no type specified\\.$#"
@@ -2171,6 +2156,11 @@ parameters:
 			path: _/EnvironmentDetector.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:dumpDetectorsResults\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/EnvironmentDetector.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:registerDetector\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
@@ -2184,11 +2174,6 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\EnvironmentDetector\\:\\:\\$detector type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/EnvironmentDetector.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:getReponse\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\|null\\.$#"
-			count: 1
-			path: _/Exception/Router/RouteGotFiltered.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:setResponse\\(\\) has no return type specified\\.$#"
@@ -3216,19 +3201,9 @@ parameters:
 			path: _/Kernel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:loadRoutes\\(\\) has parameter \\$routes with no type specified\\.$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
 			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects object\\|string, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 3
 			path: _/Kernel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable\\:\\:getContents\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Output/Viewable.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3626,12 +3601,22 @@ parameters:
 			path: _/Router/RouteGroup.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:current\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Router/RouteGroup.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Router/RouteGroup.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:getRoutes\\(\\) should return array\\<verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\> but returns array\\<verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\>\\.$#"
+			count: 1
+			path: _/Router/RouteGroup.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:key\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Router/RouteGroup.php
 
@@ -3681,6 +3666,11 @@ parameters:
 			path: _/Router/Router.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:current\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Router/Router.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) has parameter \\$uri with no type specified\\.$#"
 			count: 1
 			path: _/Router/Router.php
@@ -3717,6 +3707,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:isFiltered\\(\\) is unused\\.$#"
+			count: 1
+			path: _/Router/Router.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:key\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -3861,6 +3856,11 @@ parameters:
 			path: _/Session/Session.php
 
 		-
+			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:set\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$currentData has no type specified\\.$#"
 			count: 1
 			path: _/Session/Session.php
@@ -3977,11 +3977,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:set\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$persistent$#"
 			count: 1
 			path: _/Session/SessionHandler.php
 
@@ -4466,11 +4461,6 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
-			message: "#^PHPDoc tag @param references unknown parameter\\: \\$bool$#"
-			count: 1
-			path: _/Template/Repeater.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Repeater.php
@@ -4816,11 +4806,6 @@ parameters:
 			path: _/View/View.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:getContents\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/View/View.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:make\\(\\) has parameter \\$params with no type specified\\.$#"
 			count: 1
 			path: _/View/View.php
@@ -4856,6 +4841,11 @@ parameters:
 			path: _/View/View.php
 
 		-
+			message: "#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: tests/bootstrap.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/unit/Console/Argument/ArgvParserTest.php
@@ -4869,6 +4859,11 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/unit/Console/Argument/ArgvParserTest.php
+
+		-
+			message: "#^Cannot call method getId\\(\\) on null\\.$#"
+			count: 2
+			path: tests/unit/DataModel/CollectionTest.php
 
 		-
 			message: "#^Property TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"

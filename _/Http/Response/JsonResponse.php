@@ -10,7 +10,7 @@ class JsonResponse extends Response
 {
     private $pretty = false;
 
-    private $content = null;
+    private $content;
 
     private $alreadyEncoded = false;
 

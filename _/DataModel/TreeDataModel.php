@@ -48,7 +48,7 @@ abstract class TreeDataModel extends DataModel
 
     private ?TreeDataModel $insertPosition = null;
 
-    protected static $_transactionInitiatorId = null;
+    protected static $_transactionInitiatorId;
 
     final public static function getPrimaryKey(): string
     {
@@ -294,8 +294,6 @@ abstract class TreeDataModel extends DataModel
      *  insert into tree ( lft, rgt, parentId, depth )
      *  select lft + 1, lft + 2, id, depth + 1
      *  from _parent;
-     *
-     * @param CTE $cte
      */
     public function cteInsert()
     {

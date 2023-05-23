@@ -52,8 +52,6 @@ class EnvironmentDetector
 
     /**
      * for debug only
-     *
-     * @return mixed
      */
     public function dumpDetectorsResults()
     {

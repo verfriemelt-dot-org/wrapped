@@ -283,9 +283,9 @@ class Formular implements Viewable
 
         if (
             (
-                $this->method === self::METHOD_POST &&
-                $this->request->requestMethod() === 'POST' &&
-                $this->get(self::FORM_FIELD_NAME) === $this->formname
+                $this->method === self::METHOD_POST
+                && $this->request->requestMethod() === 'POST'
+                && $this->get(self::FORM_FIELD_NAME) === $this->formname
             ) || $this->method === self::METHOD_GET) {
             $failed = false;
 

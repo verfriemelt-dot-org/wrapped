@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Template\Template;
 class FormularTemplateTest extends TestCase
 {
     /**
-     * @return iterable<string,array{string, null|callable(Template): void}>
+     * @return iterable<string,array{string, callable(Template): void|null}>
      */
     public static function templates(): iterable
     {

@@ -12,7 +12,7 @@ abstract class Convention
 
     public const DESTRUCTIVE = false;
 
-    final public function __construct(?string $str = null)
+    final public function __construct(string $str = null)
     {
         if ($str !== null) {
             $this->setString($str);

@@ -12,7 +12,7 @@ final class Session implements SessionHandler
 
     public const SESSION_TIMEOUT = 60 * 60 * 24 * 365;
 
-    private $dataObj = null;
+    private $dataObj;
 
     private ?string $sessionId = null;
 
@@ -109,7 +109,6 @@ final class Session implements SessionHandler
 
     /**
      * @param string $name
-     * @param mixed  $value
      *
      * @return Session
      */

@@ -29,9 +29,9 @@ abstract class DatabaseDriver
 
     public static $debugHistory = [];
 
-    public static $debugLastStatement = null;
+    public static $debugLastStatement;
 
-    public static $debugLastParams = null;
+    public static $debugLastParams;
 
     public static $debugQuerieCount = 0;
 

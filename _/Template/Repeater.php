@@ -82,7 +82,6 @@ class Repeater implements TemplateItem
      * creates new children or returns the current one
      *
      * @param string $name
-     * @param bool   $bool
      *
      * @return \verfriemelt\wrapped\_\Template\Repeater
      */
