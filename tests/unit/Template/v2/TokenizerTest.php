@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
 use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\Token\Token;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
 use verfriemelt\wrapped\_\Template\v2\Tokenizer;
@@ -101,5 +102,16 @@ class TokenizerTest extends TestCase
         static::assertInstanceOf(VariableToken::class, $token[1]);
         static::assertSame('foo', $token[0]->content);
         static::assertSame('var1', $token[1]->query);
+    }
+
+    public function testIllegalVariableName(): void {
+        static::expectException(TokenizerException::class);
+        (new Tokenizer('{{ foo=bar }}'));
+    }
+
+    public function testConsumeConditional(): void {
+        $token = (new Tokenizer('{{ if=foo }}bar{{ /if }}'))->getToken()->getChildren();
+
+        print_r($token);
     }
 }
