@@ -7,50 +7,52 @@ namespace verfriemelt\wrapped\_\Database\Driver;
 use PDO;
 use PDOException;
 use PDOStatement;
+use Symfony\Component\String\Exception\RuntimeException;
 use verfriemelt\wrapped\_\Database\DbLogic;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
 abstract class DatabaseDriver
 {
-    public $connectionName;
+    public string $connectionName;
 
-    protected $currentDatabase;
+    protected string $currentDatabase;
 
-    protected $currentUsername;
+    protected string $currentUsername;
 
-    protected $statements = [];
+    /** @var PDOStatement[] */
+    protected array $statements = [];
 
-    protected $lastStatement;
+    protected PDOStatement $lastStatement;
 
-    protected $config = [];
+    /** @var array<string,string|int> */
+    protected array $config = [];
 
-    public static $debug = false;
+    public static bool $debug = false;
 
-    public static $debugHistory = [];
+    public static array $debugHistory = [];
 
-    public static $debugLastStatement;
+    public static string $debugLastStatement;
 
-    public static $debugLastParams;
+    public static array $debugLastParams = [];
 
-    public static $debugQuerieCount = 0;
+    public static int $debugQuerieCount = 0;
 
-    public static $counter = 0;
+    public static int $counter = 0;
 
-    public static $time = 0;
+    public static float $time = 0;
+
+    private int $nestedTransactionCounter = 0;
 
     protected const PDO_NAME = 'undefined';
 
-    /** @var PDO */
-    public $connectionHandle;
+    public PDO $connectionHandle;
 
     protected string $connectionString;
 
-    private ?bool $lastresult = null;
-
     abstract public function quoteIdentifier(string $ident): string;
 
-    public function __construct($name, $user, $password, $host, $database, $port = null)
+    public function __construct(string $name, string $user, string $password, string $host, string $database, int $port = null)
     {
         $this->connectionName = $name;
 
@@ -62,15 +64,12 @@ abstract class DatabaseDriver
         $this->config['dbPort'] = $port;
     }
 
-    /**
-     * returns PDO handle
-     */
     public function fetchConnectionHandle(): PDO
     {
         return $this->connectionHandle;
     }
 
-    protected function getConnectionString()
+    protected function getConnectionString(): string
     {
         $this->connectionString = static::PDO_NAME . ":host={$this->config['dbHost']};";
 
@@ -120,16 +119,7 @@ abstract class DatabaseDriver
         $this->config = [];
     }
 
-    /**
-     * bind values to the pdo statement
-     *
-     * @param type $statement
-     * @param type $param
-     * @param type $var
-     *
-     * @return Mysql
-     */
-    public function bind(PDOStatement $statement, $param, $var)
+    public function bind(PDOStatement $statement, $param, $var): static
     {
         $type = PDO::PARAM_STR;
 
@@ -150,7 +140,7 @@ abstract class DatabaseDriver
         return $this;
     }
 
-    protected function bindLast($param, $var)
+    protected function bindLast($param, $var): static
     {
         self::$debugLastParams['param'][] = $param;
         self::$debugLastParams['var'][] = $var;
@@ -159,19 +149,12 @@ abstract class DatabaseDriver
         return $this;
     }
 
-    /**
-     * @param type $statement
-     *
-     * @return bool
-     *
-     * @throws Exception
-     */
-    public function execute(PDOStatement $statement)
+    public function execute(PDOStatement $statement): true
     {
         $start = microtime(true);
 
         try {
-            $this->lastresult = $statement->execute();
+            $statement->execute();
         } catch (PDOException $e) {
             $message = $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" . print_r(
                 self::$debugLastParams,
@@ -197,10 +180,7 @@ abstract class DatabaseDriver
         return true;
     }
 
-    /**
-     * @return PDOStatement
-     */
-    public function getLastResult()
+    public function getLastResult(): PDOStatement
     {
         return $this->lastStatement;
     }
@@ -215,12 +195,14 @@ abstract class DatabaseDriver
         self::$debugLastParams = [];
         self::$debugLastStatement = $statement;
 
-        $this->lastStatement = $this->connectionHandle->prepare($statement);
+        $this->lastStatement = $this->connectionHandle->prepare($statement) ?: throw new \RuntimeException(
+            'preparing the statement failed'
+        );
 
         return $this;
     }
 
-    public function run(QueryPart $query)
+    public function run(QueryPart $query): PDOStatement
     {
         $this->prepare($query->stringify($this));
 
@@ -236,73 +218,75 @@ abstract class DatabaseDriver
         return $result;
     }
 
-    public function quote($data)
+    public function quote(string $data): string
     {
-        return $this->connectionHandle->quote($data);
+        return $this->connectionHandle->quote($data) ?: throw new \RuntimeException('quoting failed');
     }
 
-    public function truncate($tableName)
+    public function truncate(string $tableName): int
     {
         $statement = "TRUNCATE {$tableName} RESTART IDENTITY CASCADE";
         $this->prepare($statement);
         $this->executeLast();
 
-        $result = $this->lastStatement->rowCount();
-
-        return $result;
+        return $this->lastStatement->rowCount();
     }
 
-    public function getCurrentDatabase()
+    public function getCurrentDatabase(): string
     {
         return $this->currentDatabase;
     }
 
-    public function getCurrentUsername()
+    public function getCurrentUsername(): string
     {
         return $this->currentUsername;
     }
 
-    /**
-     * @return bool
-     */
-    public function startTransaction()
+    public function startTransaction(): bool
     {
-        return $this->connectionHandle->beginTransaction();
+        if ($this->nestedTransactionCounter === 0) {
+            ++$this->nestedTransactionCounter;
+            $this->connectionHandle->beginTransaction() ?: throw new RuntimeException('transaction failed');
+        } else {
+            $this->query("SAVEPOINT wrapped{$this->nestedTransactionCounter}");
+            ++$this->nestedTransactionCounter;
+        }
+
+        return true;
     }
 
-    /**
-     * @return bool
-     */
-    public function inTransaction()
+    public function inTransaction(): bool
     {
         return $this->connectionHandle->inTransaction();
     }
 
-    /**
-     * @return bool
-     */
-    public function rollbackTransaction()
+    public function rollbackTransaction(): bool
     {
-        return $this->connectionHandle->rollBack();
-    }
-
-    /**
-     * @return bool
-     */
-    public function commitTransaction()
-    {
-        return $this->connectionHandle->commit();
-    }
-
-    public function fetchTableNames()
-    {
-        $tableNames = [];
-
-        foreach ($this->query('SHOW TABLES')->fetchAll() as $tableName) {
-            $tableNames[] = $tableName[0];
+        if ($this->nestedTransactionCounter === 1) {
+            --$this->nestedTransactionCounter;
+            return $this->connectionHandle->rollBack();
+        } elseif ($this->nestedTransactionCounter > 1) {
+            --$this->nestedTransactionCounter;
+            $this->query("ROLLBACK TO wrapped{$this->nestedTransactionCounter}");
+            return true;
         }
 
-        return $tableNames;
+        throw new \RuntimeException('no active transaction to rolback');
+    }
+
+    public function commitTransaction(): bool
+    {
+        if ($this->nestedTransactionCounter === 0) {
+            throw new \RuntimeException('no active transaction to commmit');
+        }
+
+        if ($this->nestedTransactionCounter > 1) {
+            --$this->nestedTransactionCounter;
+            return true;
+        }
+
+        $this->nestedTransactionCounter = 0;
+        return $this->connectionHandle->commit();
     }
 
     public function query(string $sql): PDOStatement
@@ -312,7 +296,7 @@ abstract class DatabaseDriver
         return $this->lastStatement;
     }
 
-    public function queryWithDbLogic(string $sql, DbLogic $dbLogic, $precompiled = false): PDOStatement
+    public function queryWithDbLogic(string $sql, DbLogic $dbLogic, bool $precompiled = false): PDOStatement
     {
         // uh is this hacky
         if (!$precompiled) {
@@ -333,7 +317,7 @@ abstract class DatabaseDriver
         return $result;
     }
 
-    public function setAttribute(int $key, $value)
+    public function setAttribute(int $key, mixed $value): static
     {
         $this->connectionHandle->setAttribute($key, $value);
         return $this;

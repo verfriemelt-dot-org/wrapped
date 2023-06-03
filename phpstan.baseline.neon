@@ -1421,42 +1421,12 @@ parameters:
 			path: _/Database/DbLogic.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$database with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has parameter \\$param with no type specified\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$host with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$password with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$port with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:__construct\\(\\) has parameter \\$user with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\Mysql but returns \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\)\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bindLast\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has parameter \\$var with no type specified\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -1476,102 +1446,17 @@ parameters:
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:fetchTableNames\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#2 \\$username of class PDO constructor expects string\\|null, int\\|string given\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:getConnectionString\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#3 \\$password of class PDO constructor expects string\\|null, int\\|string given\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:getCurrentDatabase\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:getCurrentUsername\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:queryWithDbLogic\\(\\) has parameter \\$precompiled with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:quote\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:quote\\(\\) has parameter \\$data with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:run\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:setAttribute\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:setAttribute\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:truncate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:truncate\\(\\) has parameter \\$tableName with no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$statement with type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type is not subtype of native type PDOStatement\\.$#"
-			count: 2
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^PHPDoc tag @throws with type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\Exception is not subtype of Throwable$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\#1 \\$param of method PDOStatement\\:\\:bindValue\\(\\) expects int\\|string, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type given\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$param of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$statement of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$statement of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:execute\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Parameter \\$var of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:bind\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\type\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$config has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$config \\(array\\<string, int\\|string\\>\\) does not accept array\\<string, int\\|string\\|null\\>\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -1581,68 +1466,28 @@ parameters:
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$connectionName has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$currentDatabase \\(string\\) does not accept int\\|string\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$counter has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$currentUsername \\(string\\) does not accept int\\|string\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$currentDatabase has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugHistory type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$currentUsername has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugLastParams type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debug has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugHistory has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugLastParams has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugLastStatement has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$debugQuerieCount has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$lastStatement has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$lastresult is never read, only written\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$statements has no type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:\\$time has no type specified\\.$#"
-			count: 1
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
+			count: 3
 			path: _/Database/Driver/DatabaseDriver.php
 
 		-

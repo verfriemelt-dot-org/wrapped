@@ -20,4 +20,16 @@ class Mysql extends DatabaseDriver
         $this->connectionHandle->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, !$bool);
         return $this;
     }
+
+    /** @return array<string> */
+    public function fetchTableNames(): array
+    {
+        $tableNames = [];
+
+        foreach ($this->query('SHOW TABLES')->fetchAll() as $tableName) {
+            $tableNames[] = $tableName[0];
+        }
+
+        return $tableNames;
+    }
 }
