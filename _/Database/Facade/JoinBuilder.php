@@ -12,9 +12,9 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 
 final class JoinBuilder
 {
-    private Identifier $joinedTable;
+    private readonly Identifier $joinedTable;
 
-    private Expression $on;
+    private readonly Expression $on;
 
     public function __construct(?string ...$source)
     {

@@ -68,7 +68,7 @@ class DataModelSearch
      */
     public function buildQuery(string $searchString, DataModelQueryBuilder $query = null): DataModelQueryBuilder
     {
-        $query = $query ?? $this->prototype::buildSelectQuery();
+        $query ??= $this->prototype::buildSelectQuery();
 
         if (in_array($this->operator, ['~', '~*'], true)) {
             $searchString = preg_quote($searchString);

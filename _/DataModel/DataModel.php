@@ -218,7 +218,7 @@ abstract class DataModel
 
     public function fromJson(string $json): static
     {
-        return $this->initData((array) \json_decode($json, null, 512, JSON_THROW_ON_ERROR), true);
+        return $this->initData((array) \json_decode($json, null, 512, JSON_THROW_ON_ERROR));
     }
 
     public static function fetchBy(string $field, $value): ?static
@@ -311,7 +311,7 @@ abstract class DataModel
             throw new DatabaseException('object was deleted');
         }
 
-        $this->initData($data, true);
+        $this->initData($data);
 
         return $this;
     }
