@@ -8,9 +8,9 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 
 class CollectionDummy extends DataModel
 {
-    public ?int $id = null;
+    public int $id = 0;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -24,11 +24,6 @@ class CollectionDummy extends DataModel
 
 class CollectionTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_collection_init(): void
     {
         $collection = new Collection();
@@ -88,7 +83,7 @@ class CollectionTest extends TestCase
 
         static::assertSame(10, $collection->count());
 
-        $result = $collection->map(fn (CollectionDummy $d) => $d->getId());
+        $result = $collection->map(fn (CollectionDummy $d): int => $d->getId());
 
         // iterate all
         static::assertSame(10, count($result));

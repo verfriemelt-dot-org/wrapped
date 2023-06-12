@@ -118,6 +118,11 @@ class ArgvParserTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<string>           $input
+     * @param array<string>|Throwable $expected
+     * @param array<Argument>         $arguments
+     */
     #[DataProvider('arguments')]
     public function test_get_arguements(array $input, array|Throwable $expected, array $arguments = []): void
     {

@@ -421,22 +421,12 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection implements generic interface SeekableIterator but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
 		-
 			message: "#^Loose comparison via \"\\=\\=\" is not allowed\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:buildFromQuery\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -457,11 +447,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:find\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:map\\(\\) has parameter \\$callable with no signature specified for callable\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -517,11 +502,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$offset \\(int\\) of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\:\\:offsetUnset\\(\\) should be contravariant with parameter \\$offset \\(mixed\\) of method ArrayAccess\\<mixed,mixed\\>\\:\\:offsetUnset\\(\\)$#"
-			count: 1
-			path: _/DataModel/Collection.php
-
-		-
-			message: "#^Parameter \\#1 \\$prototype of static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\:\\:buildFromPdoResult\\(\\) expects T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel given\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -592,11 +572,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:count\\(\\) has parameter \\$params with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:createFromParameterBag\\(\\) has invalid return type static\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -711,47 +686,12 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^PHPDoc tag @param for parameter \\$id with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type is incompatible with native type int\\|string\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$name with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type is incompatible with native type string\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^PHPDoc tag @return with type static is not subtype of native type static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Parameter \\#1 \\$property of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:dehydrateProperty\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
 			message: "#^Parameter \\#1 \\$property of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:isPropertyInitialized\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelProperty\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:_isPropertyFuzzy\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:\\$_analyserObjectCache has no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:\\$_propertyHashes has no type specified\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -986,57 +926,22 @@ parameters:
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildren\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\> but returns verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<static\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\)\\>\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildren\\(\\) has parameter \\$order with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\> but returns verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchPath\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\> but returns verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchChildrenInclusive\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchDirectChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchDirectChildren\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchDirectChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel\\:\\:fetchPath\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			message: "#^Parameter \\#1 \\.\\.\\.\\$data of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection constructor expects T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, array\\<int, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\|null\\> given\\.$#"
+			message: "#^Parameter \\#1 \\.\\.\\.\\$data of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection constructor expects T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel, array\\<int, verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\> given\\.$#"
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
@@ -1046,53 +951,8 @@ parameters:
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildren\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildrenInclusive\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchChildrenInclusive\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) has parameter \\$direction with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) has parameter \\$order with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchDirectChildren\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Tree/TreeDataModelInterface.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\:\\:fetchPath\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
+			message: "#^Type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface in generic type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\TreeDataModelInterface\\> in PHPDoc tag @return is not subtype of template type T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel of class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\.$#"
+			count: 4
 			path: _/DataModel/Tree/TreeDataModelInterface.php
 
 		-
@@ -4691,23 +4551,18 @@ parameters:
 			path: tests/bootstrap.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/unit/Console/Argument/ArgvParserTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/unit/Console/Argument/ArgvParserTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\unit\\\\Console\\\\Argument\\\\ArgvParserTest\\:\\:testGetArguements\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: tests/unit/Console/Argument/ArgvParserTest.php
-
-		-
 			message: "#^Cannot call method getId\\(\\) on null\\.$#"
 			count: 2
+			path: tests/unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$callable of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\:\\:map\\(\\) expects Closure\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\: int, Closure\\(CollectionDummy\\)\\: int given\\.$#"
+			count: 1
+			path: tests/unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Using nullsafe method call on non\\-nullable type CollectionDummy\\. Use \\-\\> instead\\.$#"
+			count: 1
 			path: tests/unit/DataModel/CollectionTest.php
 
 		-

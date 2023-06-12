@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\DataModel;
 
 use ArrayAccess;
+use Closure;
 use Countable;
 use Exception;
 use Iterator;
@@ -42,11 +43,11 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     }
 
     /**
-     * @template TArg of Datamodel
+     * @template TModel of DataModel
      *
-     * @param TArg $prototype
+     * @param TModel $prototype
      *
-     * @return Collection<TArg>
+     * @return Collection<TModel>
      */
     public static function buildFromQuery(DataModel $prototype, QueryBuilder $query)
     {
@@ -54,22 +55,21 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     }
 
     /**
-     * @template TArg of Datamodel
+     * @template TModel of DataModel
      *
-     * @param TArg $prototype
+     * @param TModel $prototype
      *
-     * @return Collection<TArg>
+     * @return Collection<TModel>
      */
     public static function buildFromPdoResult(DataModel $prototype, PDOStatement $result): Collection
     {
-        $collection = new static();
         $instances = [];
 
         while ($data = $result->fetch()) {
             $instances[] = (new $prototype())->initData($data);
         }
 
-        return $collection->initialize(...$instances);
+        return new static(...$instances);
     }
 
     public function setLoadingCallback(callable $func): self
@@ -91,7 +91,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     /**
      * @param T ...$data
      *
-     * @return $this
+     * @return Collection<T>
      */
     public function initialize(DataModel ...$data): self
     {
@@ -117,15 +117,11 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     }
 
     /**
-     * @return ?T
+     * @return T
      */
-    public function current(): ?DataModel
+    public function current(): DataModel
     {
-        if ($this->valid()) {
-            return $this->offsetGet($this->pointer);
-        }
-
-        return null;
+        return $this->offsetGet($this->pointer);
     }
 
     public function key(): int
@@ -248,11 +244,11 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     /**
      * @template TReturn
      *
-     * @param callable(T): TReturn $callable
+     * @param Closure(T): TReturn $callable
      *
      * @return TReturn[]
      */
-    public function map(callable $callable): array
+    public function map(Closure $callable): array
     {
         $result = [];
 

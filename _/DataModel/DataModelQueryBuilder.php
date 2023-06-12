@@ -105,7 +105,7 @@ class DataModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * @param Collection<T>|null $overrideInstance
+     * @param Collection<T> $overrideInstance
      *
      * @return Collection<T>
      */

@@ -35,7 +35,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return $this->fetchChildren()->count();
     }
 
-    public function fetchChildren($order = 'left', $direction = 'ASC', int $depth = null): Collection
+    public function fetchChildren(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection
     {
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
         $primaryProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getRereferencedParentProperty());
@@ -111,7 +111,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return $query->get();
     }
 
-    public function fetchChildrenInclusive($order = 'left', $direction = 'ASC', int $depth = null): Collection
+    public function fetchChildrenInclusive(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection
     {
         return new Collection([
             $this,
@@ -119,7 +119,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         ]);
     }
 
-    public function fetchDirectChildren($order = 'left', $direction = 'ASC'): Collection
+    public function fetchDirectChildren(string $order = 'left', string $direction = 'ASC'): Collection
     {
         return $this->fetchChildren($order, $direction, depth: 1);
     }

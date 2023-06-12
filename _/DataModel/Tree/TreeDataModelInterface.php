@@ -14,12 +14,24 @@ interface TreeDataModelInterface
 
     public function isChildOf(TreeDataModelInterface $model): bool;
 
-    public function fetchDirectChildren($order = 'left', $direction = 'ASC'): Collection;
+    /**
+     * @return Collection<TreeDataModelInterface>
+     */
+    public function fetchDirectChildren(string $order = 'left', string $direction = 'ASC'): Collection;
 
-    public function fetchChildrenInclusive($order = 'left', $direction = 'ASC', int $depth = null): Collection;
+    /**
+     * @return Collection<TreeDataModelInterface>
+     */
+    public function fetchChildrenInclusive(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection;
 
-    public function fetchChildren($order = 'left', $direction = 'ASC', int $depth = null): Collection;
+    /**
+     * @return Collection<TreeDataModelInterface>
+     */
+    public function fetchChildren(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection;
 
+    /**
+     * @return Collection<TreeDataModelInterface>
+     */
     public function fetchPath(): Collection;
 
     public function move(): TreeDataModelInterface;

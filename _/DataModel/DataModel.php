@@ -20,9 +20,11 @@ use verfriemelt\wrapped\_\Http\ParameterBag;
 
 abstract class DataModel
 {
-    protected static $_analyserObjectCache = [];
+    /** @var array<DataModelAnalyser> */
+    protected static array $_analyserObjectCache = [];
 
-    protected $_propertyHashes = [];
+    /** @var array<string,string|null> */
+    protected array $_propertyHashes = [];
 
     final public function __construct()
     {
@@ -268,12 +270,6 @@ abstract class DataModel
 
     /**
      * creates an object with the given id as param
-     *
-     * @param type $id
-     *
-     * @return static
-     *
-     * @throws DatabaseObjectNotFound
      */
     public static function get(string|int $id): ?static
     {
@@ -394,8 +390,6 @@ abstract class DataModel
 
     /**
      * returns last Record in DB ( according to the PK )
-     *
-     * @return static
      */
     public static function last(): ?static
     {
@@ -541,11 +535,6 @@ abstract class DataModel
         }
     }
 
-    /**
-     * checks whether
-     *
-     * @param type $name
-     */
     protected function _isPropertyFuzzy(string $name): bool
     {
         $property = static::createDataModelAnalyser()->fetchPropertyByName($name);
@@ -560,10 +549,6 @@ abstract class DataModel
 
     public function isDirty(): bool
     {
-        //            if ( !$this->isPersisted() ) {
-        //                return true;
-        //            }
-
         foreach (static::createDataModelAnalyser()->fetchProperties() as $property) {
             if ($this->_isPropertyFuzzy($property->getName())) {
                 return true;
@@ -610,8 +595,6 @@ abstract class DataModel
      * data is simply ignored.
      *
      * this method uses the setters of that object
-     *
-     * @return \static returns the unsaved object instance
      */
     public static function createFromParameterBag(ParameterBag $params): static
     {
@@ -632,9 +615,9 @@ abstract class DataModel
     }
 
     /**
-     * @return DataModel|Collection<static>|null
+     * @return static|Collection<static>|null
      */
-    public function __call(string $propertyName, $args): DataModel|Collection|null
+    public function __call(string $propertyName, $args): static|Collection|null
     {
         // creates reflecteion
         $reflection = new ReflectionClass($this);
