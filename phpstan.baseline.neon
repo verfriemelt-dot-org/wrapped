@@ -481,7 +481,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
 			count: 1
 			path: _/DataModel/Collection.php
 
@@ -541,7 +541,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Class cognitive complexity is 75, keep it under 50$#"
+			message: "#^Class cognitive complexity is 74, keep it under 50$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -576,17 +576,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchBy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchBy\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchColumns\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -606,8 +596,8 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) invoked with 2 parameters, 1 required\\.$#"
+			count: 2
 			path: _/DataModel/DataModel.php
 
 		-
@@ -682,6 +672,11 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in an if condition, array\\|null given\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -796,12 +791,12 @@ parameters:
 			path: _/DataModel/DataModelQueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:count\\(\\) has parameter \\$table with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:count\\(\\) has parameter \\$table with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModelQueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:count\\(\\) has parameter \\$what with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:count\\(\\) has parameter \\$what with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModelQueryBuilder.php
 
@@ -816,7 +811,7 @@ parameters:
 			path: _/DataModel/DataModelQueryBuilder.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\:\\:\\$context has no type specified\\.$#"
+			message: "#^Trying to invoke \\(callable\\(\\)\\: mixed\\)\\|null but it might not be a callable\\.$#"
 			count: 1
 			path: _/DataModel/DataModelQueryBuilder.php
 
@@ -826,12 +821,7 @@ parameters:
 			path: _/DataModel/DatabaseOverride.php
 
 		-
-			message: "#^Call to an undefined static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\:\\:getSearchFields\\(\\)\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\)\" is 13, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\)\" is 12, keep it under 8$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -841,18 +831,8 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder does not specify its types\\: T$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder but returns verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\<T of verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel&verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\> but returns verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModelQueryBuilder\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel&verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\>\\.$#"
 			count: 2
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:search\\(\\) return type with generic class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection does not specify its types\\: T$#"
-			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
@@ -866,27 +846,7 @@ parameters:
 			path: _/DataModel/Search/DataModelSearch.php
 
 		-
-			message: "#^PHPDoc tag @var for property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype contains generic type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\> but class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel is not generic\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$fields type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype \\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T\\>\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\Searchable\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:\\$prototype has unknown class verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\T as its type\\.$#"
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -1087,6 +1047,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$column of method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Update\\:\\:add\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Clause\\\\From given\\.$#"
+			count: 1
+			path: _/DataModel/TreeDataModel.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -1361,11 +1326,6 @@ parameters:
 			path: _/Database/Driver/Mysql.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\JoinBuilder\\:\\:on\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/JoinBuilder.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\JoinBuilder\\:\\:on\\(\\) has parameter \\$destinationColumn with no type specified\\.$#"
 			count: 1
 			path: _/Database/Facade/JoinBuilder.php
@@ -1381,7 +1341,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) has parameter \\$ident with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:boxIdent\\(\\) has parameter \\$ident with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1391,17 +1351,17 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has parameter \\$table with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has parameter \\$table with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has parameter \\$what with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:count\\(\\) has parameter \\$what with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:delete\\(\\) has parameter \\$table with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:delete\\(\\) has parameter \\$table with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1426,12 +1386,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has parameter \\$cols with no type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has parameter \\$table with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:insert\\(\\) has parameter \\$table with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1446,17 +1401,7 @@ parameters:
 			path: _/Database/Facade/QueryBuilder.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$cols with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$table with no type specified\\.$#"
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:values\\(\\) has parameter \\$data with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Facade\\\\QueryBuilder\\:\\:update\\(\\) has parameter \\$table with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1467,6 +1412,11 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in a negated boolean, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\|null given\\.$#"
+			count: 1
+			path: _/Database/Facade/QueryBuilder.php
+
+		-
+			message: "#^Parameter \\#1 \\.\\.\\.\\$parts of class verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -1621,11 +1571,6 @@ parameters:
 			path: _/Database/SQL/Command/Values.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Command/Values.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Command\\\\Values\\:\\:\\$expressions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Database/SQL/Command/Values.php
@@ -1706,27 +1651,12 @@ parameters:
 			path: _/Database/SQL/Expression/Identifier.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\:\\:__construct\\(\\) has parameter \\$parts with no type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Identifier.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\:\\:translateField\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Identifier.php
-
-		-
 			message: "#^Only booleans are allowed in a negated boolean, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\|null given\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Identifier.php
 
 		-
 			message: "#^Only booleans are allowed in a ternary operator condition, verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\|null given\\.$#"
-			count: 1
-			path: _/Database/SQL/Expression/Identifier.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Database\\\\SQL\\\\Expression\\\\Identifier\\:\\:\\$parts has no type specified\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Identifier.php
 

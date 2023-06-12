@@ -10,17 +10,19 @@ use verfriemelt\wrapped\_\Database\SQL\Alias;
 use verfriemelt\wrapped\_\Database\SQL\Aliasable;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use verfriemelt\wrapped\_\DataModel\DataModelProperty;
 
 class Identifier extends QueryPart implements ExpressionItem, Aliasable
 {
     use Alias;
 
-    protected $parts = [];
+    /** @var string[] */
+    protected array $parts = [];
 
-    public function __construct(...$parts)
+    public function __construct(?string ...$parts)
     {
         // filter out null values
-        $parts = array_filter($parts, fn ($p) => !is_null($p));
+        $parts = array_filter($parts);
 
         // validation
         if (count($parts) === 0 || count($parts) > 3) {
@@ -45,13 +47,13 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         return $driver->quoteIdentifier($ident);
     }
 
-    protected function translateField(string $ident, string $table = null)
+    protected function translateField(string $ident, string $table = null): string
     {
         if ($ident === '*' || count($this->context) === 0) {
             return $ident;
         }
 
-        $translations = array_map(function (DataModel $context) use ($ident, $table) {
+        $translations = array_map(function (DataModel $context) use ($ident, $table): ?DataModelProperty {
             try {
                 if ($table !== null && $context->fetchTablename() !== $table) {
                     return null;
@@ -110,7 +112,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         return implode(
             '.',
             array_map(
-                fn (string $p) => $p !== '*' ? $this->quote($p, $driver) : '*',
+                fn (string $p): string => $p !== '*' ? $this->quote($p, $driver) : '*',
                 $parts
             )
         ) . $this->stringifyAlias($driver);

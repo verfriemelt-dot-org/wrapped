@@ -59,11 +59,11 @@ class OperatorExpression extends QueryPart implements ExpressionItem
         return match ($this->operator) {
             'in' => sprintf(
                 static::OPTERATORS[$this->operator]['string'],
-                implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
+                implode(', ', array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
             ),
             default => sprintf(
                 static::OPTERATORS[$this->operator]['string'],
-                ...array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)
+                ...array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)
             ),
         };
     }

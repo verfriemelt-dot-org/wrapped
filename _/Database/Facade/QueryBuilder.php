@@ -153,7 +153,7 @@ class QueryBuilder
     }
 
     /**
-     * @param array<string,mixed> $cols
+     * @param string[] $cols
      */
     public function insert(array|string $table, array $cols): static
     {
