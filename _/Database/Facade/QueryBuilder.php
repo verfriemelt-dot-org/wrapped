@@ -69,7 +69,7 @@ class QueryBuilder
         $this->stmt = new Statement();
     }
 
-    protected function boxIdent($ident): array
+    protected function boxIdent(array|string $ident): array
     {
         return !is_array($ident) ? [$ident] : $ident;
     }
@@ -127,7 +127,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function delete(string $table): static
+    public function delete(array|string $table): static
     {
         $this->delete = new Delete(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->delete);
@@ -138,7 +138,7 @@ class QueryBuilder
     /**
      * @param array<string,mixed> $cols
      */
-    public function update(string $table, array $cols): static
+    public function update(array|string $table, array $cols): static
     {
         $this->update = new Update(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->update);
@@ -155,7 +155,7 @@ class QueryBuilder
     /**
      * @param array<string,mixed> $cols
      */
-    public function insert(string $table, array $cols): static
+    public function insert(array|string $table, array $cols): static
     {
         $this->insert = new Insert(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->insert);
@@ -182,7 +182,7 @@ class QueryBuilder
     {
         $this->values = new Values();
         $this->stmt->add($this->values);
-        array_map(fn (mixed $element): Value => $this->values->add(new Value($element)), $data);
+        array_map(fn (mixed $element): Values => $this->values->add(new Value($element)), $data);
         return $this;
     }
 
