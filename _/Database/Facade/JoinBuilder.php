@@ -10,11 +10,11 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 
-class JoinBuilder
+final class JoinBuilder
 {
-    private readonly Identifier $joinedTable;
+    private Identifier $joinedTable;
 
-    private readonly Expression $on;
+    private Expression $on;
 
     public function __construct(?string ...$source)
     {
@@ -22,7 +22,7 @@ class JoinBuilder
         $this->on = new Expression();
     }
 
-    public function on($sourceColumn, $destinationColumn)
+    public function on($sourceColumn, $destinationColumn): JoinBuilder
     {
         $source = new Identifier(...(is_array($sourceColumn) ? $sourceColumn : [$sourceColumn]));
         $dest = new Identifier(...(is_array($destinationColumn) ? $destinationColumn : [$destinationColumn]));

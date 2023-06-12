@@ -20,7 +20,7 @@ use verfriemelt\wrapped\_\Http\ParameterBag;
 
 abstract class DataModel
 {
-    /** @var array<DataModelAnalyser> */
+    /** @var array<class-string,DataModelAnalyser> */
     protected static array $_analyserObjectCache = [];
 
     /** @var array<string,string|null> */
@@ -40,13 +40,16 @@ abstract class DataModel
      * should only be used, to initialise a set of objects
      * this stores the hashvalues of the properties, to determine which columns
      * should be updated
+     *
      * [ "key" => "value" ]
+     *
+     * @param array<string, mixed> $data
      */
-    public function initData(array $data, bool $deserialize = false): static
+    public function initData(array $data): static
     {
         $analyser = static::createDataModelAnalyser();
 
-        foreach ($data as $key => &$value) {
+        foreach ($data as $key => $value) {
             $property = $analyser->fetchPropertyByName((string) $key);
 
             // property not found, we ignore this
@@ -156,11 +159,7 @@ abstract class DataModel
 
     public static function createDataModelAnalyser(): DataModelAnalyser
     {
-        if (!isset(static::$_analyserObjectCache[static::class])) {
-            static::$_analyserObjectCache[static::class] = new DataModelAnalyser(static::class);
-        }
-
-        return static::$_analyserObjectCache[static::class];
+        return static::$_analyserObjectCache[static::class] ??= new DataModelAnalyser(static::class);
     }
 
     public static function translateFieldName(string $fieldName): DataModelProperty
@@ -206,7 +205,10 @@ abstract class DataModel
         return $data;
     }
 
-    public function fetchColumns()
+    /**
+     * @return string[]
+     */
+    public function fetchColumns(): array
     {
         return array_map(
             fn (DataModelProperty $a) => $a->fetchBackendName(),
@@ -219,7 +221,7 @@ abstract class DataModel
         return $this->initData((array) \json_decode($json, null, 512, JSON_THROW_ON_ERROR), true);
     }
 
-    public static function fetchBy(string $field, $value)
+    public static function fetchBy(string $field, $value): ?static
     {
         return static::findSingle([$field => $value]);
     }

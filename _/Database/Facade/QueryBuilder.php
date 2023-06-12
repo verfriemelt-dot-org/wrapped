@@ -97,7 +97,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function count($table, $what = '*', bool $distinct = false): static
+    public function count(string|array $table, string|array $what = '*', bool $distinct = false): static
     {
         $this->select = new Select();
 
@@ -127,7 +127,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function delete($table): static
+    public function delete(string $table): static
     {
         $this->delete = new Delete(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->delete);
@@ -135,7 +135,10 @@ class QueryBuilder
         return $this;
     }
 
-    public function update($table, array $cols): static
+    /**
+     * @param array<string,mixed> $cols
+     */
+    public function update(string $table, array $cols): static
     {
         $this->update = new Update(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->update);
@@ -149,7 +152,10 @@ class QueryBuilder
         return $this;
     }
 
-    public function insert($table, $cols): static
+    /**
+     * @param array<string,mixed> $cols
+     */
+    public function insert(string $table, array $cols): static
     {
         $this->insert = new Insert(new Identifier(...$this->boxIdent($table)));
         $this->stmt->setCommand($this->insert);
@@ -169,11 +175,14 @@ class QueryBuilder
         return $this;
     }
 
-    public function values($data): static
+    /**
+     * @param mixed[] $data
+     */
+    public function values(array $data): static
     {
         $this->values = new Values();
         $this->stmt->add($this->values);
-        array_map(fn ($element) => $this->values->add(new Value($element)), $data);
+        array_map(fn (mixed $element): Value => $this->values->add(new Value($element)), $data);
         return $this;
     }
 

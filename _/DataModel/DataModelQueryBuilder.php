@@ -20,7 +20,8 @@ class DataModelQueryBuilder extends QueryBuilder
     /** @var T */
     protected DataModel $prototype;
 
-    protected $context = [];
+    /** @var list<DataModel> */
+    protected array $context = [];
 
     protected bool $disableAutomaticGroupBy = false;
 
@@ -35,7 +36,7 @@ class DataModelQueryBuilder extends QueryBuilder
         $this->addContext($prototype);
     }
 
-    public function count($table, $what = '*', bool $distinct = false): static
+    public function count(string|array $table, string|array $what = '*', bool $distinct = false): static
     {
         $this->disableAutomaticGroupBy();
         return parent::count($table, $what, $distinct);
@@ -83,9 +84,9 @@ class DataModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * @return self<T>
+     * @return DataModelQueryBuilder<T>
      */
-    public function with(DataModel $dest, callable $callback = null): self
+    public function with(DataModel $dest, callable $callback = null): DataModelQueryBuilder
     {
         if (!$callback) {
             $callback = array_values(

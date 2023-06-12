@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DataModel\Search;
 
-use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Order;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Where;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Bracket;
@@ -19,12 +18,12 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\DataModelQueryBuilder;
 
 /**
- * @template T of Searchable
+ * @template T of DataModel&Searchable
  */
 class DataModelSearch
 {
-    /** @var DataModel<T> */
-    private readonly DataModel $prototype;
+    /** @var T */
+    private readonly DataModel&Searchable $prototype;
 
     private ?array $fields = null;
 
@@ -33,7 +32,7 @@ class DataModelSearch
     /**
      * @param T $prototype
      */
-    public function __construct(Searchable $prototype)
+    public function __construct(DataModel&Searchable $prototype)
     {
         $this->prototype = $prototype;
     }
@@ -63,17 +62,19 @@ class DataModelSearch
     }
 
     /**
+     * @param DataModelQueryBuilder<T> $query
+     *
      * @return DataModelQueryBuilder<T>
      */
-    public function buildQuery(string $searchString, QueryBuilder $query = null): DataModelQueryBuilder
+    public function buildQuery(string $searchString, DataModelQueryBuilder $query = null): DataModelQueryBuilder
     {
+        $query = $query ?? $this->prototype::buildSelectQuery();
+
         if (in_array($this->operator, ['~', '~*'], true)) {
             $searchString = preg_quote($searchString);
         } elseif (in_array($this->operator, ['~~', '~~*', 'LIKE', 'ILIKE', 'like', 'ilike'], true)) {
             $searchString = $this->escapeLike($searchString);
         }
-
-        $query = $query ?: $this->prototype::buildSelectQuery();
 
         $pieces = $this->split($searchString);
         $fields = $this->fields ?? $this->prototype::getSearchFields();

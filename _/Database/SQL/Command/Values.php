@@ -21,7 +21,7 @@ class Values extends QueryPart implements Command, CommandExpression
         return 15;
     }
 
-    public function add(QueryPart $item)
+    public function add(QueryPart $item): Values
     {
         // wrap in brackets if need be
         $exp = $this->wrap($item);
