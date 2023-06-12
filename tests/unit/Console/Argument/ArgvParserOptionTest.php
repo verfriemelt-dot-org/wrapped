@@ -12,7 +12,7 @@ use verfriemelt\wrapped\_\Cli\Argument\OptionMissingValueException;
 
 class ArgvParserOptionTest extends TestCase
 {
-    public function testOptionHasValue(): void
+    public function test_option_has_value(): void
     {
         $argument = new ArgvParser(['script.php', '-a', 'test']);
         $argument->addOptions(new Option('abc', flags: Option::EXPECTS_VALUE, short: 'a'));
@@ -24,7 +24,7 @@ class ArgvParserOptionTest extends TestCase
         static::assertSame('test', $option->getValue());
     }
 
-    public function testOptionValueMissingException(): void
+    public function test_option_value_missing_exception(): void
     {
         static::expectException(OptionMissingValueException::class);
 
@@ -34,7 +34,7 @@ class ArgvParserOptionTest extends TestCase
         $argument->parse();
     }
 
-    public function testPresentOnNoValue(): void
+    public function test_present_on_no_value(): void
     {
         $argument = new ArgvParser(['script.php', '-a']);
         $argument->addOptions(new Option('abc', short: 'a'));
@@ -43,7 +43,7 @@ class ArgvParserOptionTest extends TestCase
         static::assertTrue($argument->getOption('abc')->isPresent());
     }
 
-    public function testCombinedOptions(): void
+    public function test_combined_options(): void
     {
         $argument = new ArgvParser(['script.php', '-abc']);
         $argument->addOptions(new Option('test1', short: 'a'));
@@ -57,7 +57,7 @@ class ArgvParserOptionTest extends TestCase
         static::assertTrue($argument->getOption('test3')->isPresent());
     }
 
-    public function testSplitCombinedOptions(): void
+    public function test_split_combined_options(): void
     {
         $argument = new ArgvParser(['script.php', '-ab', '-c']);
         $argument->addOptions(new Option('test1', short: 'a'));
@@ -71,7 +71,7 @@ class ArgvParserOptionTest extends TestCase
         static::assertTrue($argument->getOption('test1')->isPresent(), 'a must be present');
     }
 
-    public function testCombinedWithValue(): void
+    public function test_combined_with_value(): void
     {
         $argument = new ArgvParser(['script.php', '-ab', 'test']);
         $argument->addOptions(new Option('test1', short: 'a'));
@@ -84,7 +84,7 @@ class ArgvParserOptionTest extends TestCase
         static::assertSame('test', $argument->getOption('test2')->getValue());
     }
 
-    public function testCombinedWithValueWrongOrder(): void
+    public function test_combined_with_value_wrong_order(): void
     {
         static::expectException(RuntimeException::class);
 

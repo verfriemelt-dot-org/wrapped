@@ -15,7 +15,9 @@ class RouteGotFiltered extends RouterException
         $this->response = $resposne;
     }
 
-    /** @phpstan-assert-if-true !null $this->getResponse() */
+    /**
+     * @phpstan-assert-if-true !null $this->getResponse()
+     */
     public function hasResponse(): bool
     {
         return $this->response !== null;

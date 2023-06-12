@@ -8,17 +8,13 @@ use Closure;
 
 class KeyInput
 {
-    /**
-     * @var array<string, Closure[]>
-     */
+    /** @var array<string, Closure[]> */
     protected $registeredKeys = [];
 
     private bool $readMode = false;
     private Closure $readModeCallback;
 
-    /**
-     * @var array<int,int|string>
-     */
+    /** @var array<int,int|string> */
     public array $readBuffer = [];
 
     /**

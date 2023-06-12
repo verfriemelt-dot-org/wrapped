@@ -21,7 +21,9 @@ class Mysql extends DatabaseDriver
         return $this;
     }
 
-    /** @return array<string> */
+    /**
+     * @return array<string>
+     */
     public function fetchTableNames(): array
     {
         $tableNames = [];

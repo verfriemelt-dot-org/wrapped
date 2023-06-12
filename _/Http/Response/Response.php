@@ -16,9 +16,7 @@ class Response
 
     private string $version = '1.1';
 
-    /**
-     * @var HttpHeader[]
-     */
+    /** @var HttpHeader[] */
     private array $headers = [];
 
     private ?string $statusText = null;

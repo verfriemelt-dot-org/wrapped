@@ -116,25 +116,25 @@ class B extends DataModel
 
 class IdentifierTest extends TestCase
 {
-    public function testInit(): void
+    public function test_init(): void
     {
         $ident = new Identifier('test');
         static::assertSame('test', $ident->stringify());
     }
 
-    public function testTable(): void
+    public function test_table(): void
     {
         $ident = new Identifier('table', 'column');
         static::assertSame('table.column', $ident->stringify());
     }
 
-    public function testSchema(): void
+    public function test_schema(): void
     {
         $ident = new Identifier('schema', 'table', 'column');
         static::assertSame('schema.table.column', $ident->stringify());
     }
 
-    public function testQuotedIdent(): void
+    public function test_quoted_ident(): void
     {
         $driver = new Postgres('test', 'test', 'test', 'test', 'test');
 
@@ -143,7 +143,7 @@ class IdentifierTest extends TestCase
         static::assertSame('"column"', $ident->stringify($driver));
     }
 
-    public function testTranslatedIdentifier(): void
+    public function test_translated_identifier(): void
     {
         $ident = new Identifier('TEST');
         $ident->addDataModelContext(new Example());
@@ -167,7 +167,7 @@ class IdentifierTest extends TestCase
         static::assertSame('strangecase', $ident->stringify());
     }
 
-    public function testTranslateMultipleContext(): void
+    public function test_translate_multiple_context(): void
     {
         $ident = new Identifier('bId');
         $ident->addDataModelContext(new A());

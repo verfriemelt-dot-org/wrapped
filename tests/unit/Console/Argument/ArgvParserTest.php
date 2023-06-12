@@ -16,19 +16,19 @@ use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 
 class ArgvParserTest extends TestCase
 {
-    public function testEmpty(): void
+    public function test_empty(): void
     {
         static::expectException(RuntimeException::class);
         (new ArgvParser([]))->parse();
     }
 
-    public function testAssocArray(): void
+    public function test_assoc_array(): void
     {
         static::expectException(RuntimeException::class);
         (new ArgvParser(['foo' => 'bar']))->parse();
     }
 
-    public function testgetSciptName(): void
+    public function testget_scipt_name(): void
     {
         $argument = new ArgvParser(['script.php']);
         static::assertSame('script.php', $argument->getScript());
@@ -119,7 +119,7 @@ class ArgvParserTest extends TestCase
     }
 
     #[DataProvider('arguments')]
-    public function testGetArguements(array $input, array|Throwable $expected, array $arguments = []): void
+    public function test_get_arguements(array $input, array|Throwable $expected, array $arguments = []): void
     {
         if ($expected instanceof Throwable) {
             static::expectException($expected::class);
@@ -134,7 +134,7 @@ class ArgvParserTest extends TestCase
         }
     }
 
-    public function testGetShortOptions(): void
+    public function test_get_short_options(): void
     {
         $argument = new ArgvParser(['script.php', '-a']);
         $argument->parse();
@@ -145,7 +145,7 @@ class ArgvParserTest extends TestCase
         static::assertSame([], $argument->getShortOptions());
     }
 
-    public function testParserWorksTwice(): void
+    public function test_parser_works_twice(): void
     {
         $parser = new ArgvParser(['script.php', 'a', 'b']);
         $parser->addArguments(new Argument('test-1'));

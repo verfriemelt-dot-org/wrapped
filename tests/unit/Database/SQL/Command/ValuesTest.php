@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class ValuesTest extends TestCase
 {
-    public function testTrue(): void
+    public function test_true(): void
     {
         $select = new Values();
         $select->add(new Value(true));
@@ -18,7 +18,7 @@ class ValuesTest extends TestCase
         static::assertSame('VALUES ( true )', $select->stringify());
     }
 
-    public function testOnePlusOne(): void
+    public function test_one_plus_one(): void
     {
         $select = new Values();
         $select->add(

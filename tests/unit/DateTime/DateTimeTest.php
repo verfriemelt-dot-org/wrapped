@@ -10,7 +10,7 @@ use verfriemelt\wrapped\_\DateTime\DateTimeImmutable;
 
 class DateTimeTest extends TestCase
 {
-    public function testReturnsNewDateTimeAfterModification(): void
+    public function test_returns_new_date_time_after_modification(): void
     {
         $a = new DateTime();
         $b = $a->modify('+1 day');
@@ -18,7 +18,7 @@ class DateTimeTest extends TestCase
         static::assertTrue($b === $a);
     }
 
-    public function testDateTimeImmuteable(): void
+    public function test_date_time_immuteable(): void
     {
         $a = new DateTimeImmutable();
         $b = $a->modify('+1 day');

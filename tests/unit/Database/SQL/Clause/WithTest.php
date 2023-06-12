@@ -11,14 +11,14 @@ use verfriemelt\wrapped\_\Database\SQL\Statement;
 
 class WithTest extends TestCase
 {
-    public function testMinimal(): void
+    public function test_minimal(): void
     {
         $cte = new CTE();
         $cte->with(new Identifier('test'), new Statement(new Select(new Value(true))));
         static::assertSame('WITH test AS ( SELECT true )', $cte->stringify());
     }
 
-    public function testMultiple(): void
+    public function test_multiple(): void
     {
         $cte = new CTE();
         $cte->with(new Identifier('test'), new Statement(new Select(new Value(true))));

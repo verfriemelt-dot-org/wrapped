@@ -11,9 +11,7 @@ use Traversable;
 
 class ParameterBag implements Countable, IteratorAggregate
 {
-    /**
-     * @var mixed[]
-     */
+    /** @var mixed[] */
     private array $parameters = [];
 
     private ?string $raw = null;

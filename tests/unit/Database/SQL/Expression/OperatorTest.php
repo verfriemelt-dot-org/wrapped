@@ -9,13 +9,13 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class OperatorTest extends TestCase
 {
-    public function testSimpleOperator(): void
+    public function test_simple_operator(): void
     {
         $op = new Operator('=');
         static::assertSame('=', $op->stringify());
     }
 
-    public function testOperatorExpression(): void
+    public function test_operator_expression(): void
     {
         $op = new OperatorExpression(
             'in',

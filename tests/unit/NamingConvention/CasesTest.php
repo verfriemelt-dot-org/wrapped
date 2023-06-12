@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SpaceCase;
 
 class CasesTest extends TestCase
 {
-    public function testSpaceCase(): void
+    public function test_space_case(): void
     {
         $case = new SpaceCase('test case experiment');
         static::assertSame(['test', 'case', 'experiment'], $case->fetchStringParts());
@@ -21,7 +21,7 @@ class CasesTest extends TestCase
         static::assertSame('testCaseExperiment', $camelcase->getString());
     }
 
-    public function testLowerCase(): void
+    public function test_lower_case(): void
     {
         $case = LowerCase::fromStringParts(...['space', 'seperated', 'text']);
         static::assertSame('spaceseperatedtext', $case->getString());
@@ -32,7 +32,7 @@ class CasesTest extends TestCase
         static::assertSame('spaceseperatedtext', $lc->getString());
     }
 
-    public function testCamelCase(): void
+    public function test_camel_case(): void
     {
         $case = new CamelCase('thisIsSparta');
 
@@ -40,7 +40,7 @@ class CasesTest extends TestCase
         static::assertSame('thisIsSparta', CamelCase::fromStringParts(...['this', 'is', 'sparta'])->getString());
     }
 
-    public function testPascalCase(): void
+    public function test_pascal_case(): void
     {
         $case = new PascalCase('thisIsSparta');
 
@@ -48,7 +48,7 @@ class CasesTest extends TestCase
         static::assertSame('ThisIsSparta', PascalCase::fromStringParts(...['this', 'is', 'sparta'])->getString());
     }
 
-    public function testConversion(): void
+    public function test_conversion(): void
     {
         $case = (new CamelCase('complexFieldNameSnakeCase'))->convertTo(new SnakeCase());
         static::assertSame('complex_field_name_snake_case', $case->getString());

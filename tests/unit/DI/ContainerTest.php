@@ -62,7 +62,7 @@ class b_i implements i
 
 class ContainerTest extends TestCase
 {
-    public function testGetClass(): void
+    public function test_get_class(): void
     {
         $container = new Container();
 
@@ -70,7 +70,7 @@ class ContainerTest extends TestCase
         static::assertInstanceOf(a::class, $container->get(a::class));
     }
 
-    public function testShouldReuseInstancesPerDefault(): void
+    public function test_should_reuse_instances_per_default(): void
     {
         $container = new Container();
 
@@ -81,7 +81,7 @@ class ContainerTest extends TestCase
         static::assertSame($result->b->instance, $b->instance, 'instance must be reused');
     }
 
-    public function testDoNotReuseOnWhenConfigured(): void
+    public function test_do_not_reuse_on_when_configured(): void
     {
         $container = new Container();
 
@@ -92,7 +92,7 @@ class ContainerTest extends TestCase
         static::assertNotSame($result->b->instance, $b->instance, 'instance must not be reused');
     }
 
-    public function testShouldThrowExceptionOnCircularDepedencies(): void
+    public function test_should_throw_exception_on_circular_depedencies(): void
     {
         $this->expectExceptionMessage('circular');
         $container = new Container();
@@ -100,7 +100,7 @@ class ContainerTest extends TestCase
         $container->get(circleA::class);
     }
 
-    public function testGetInstanceFromInterfaceWhenRegistered(): void
+    public function test_get_instance_from_interface_when_registered(): void
     {
         $container = new Container();
         $container->register(a_i::class);
@@ -108,7 +108,7 @@ class ContainerTest extends TestCase
         static::assertTrue($container->get(i::class) instanceof a_i);
     }
 
-    public function testRegisterInterfaceWithInstance(): void
+    public function test_register_interface_with_instance(): void
     {
         $container = new Container();
         $container->register(i::class, new b_i());
@@ -116,7 +116,7 @@ class ContainerTest extends TestCase
         static::assertTrue($container->get(i::class) instanceof b_i);
     }
 
-    public function testEmptyRequest(): void
+    public function test_empty_request(): void
     {
         $this->expectExceptionObject(new ContainerException('illegal'));
 

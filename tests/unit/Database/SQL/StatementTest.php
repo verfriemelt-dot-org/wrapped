@@ -15,13 +15,13 @@ use verfriemelt\wrapped\_\Database\SQL\Statement;
 
 class StatementTest extends TestCase
 {
-    public function testMinimalSelect(): void
+    public function test_minimal_select(): void
     {
         $statement = new Statement((new Select())->add(new Value(true)));
         static::assertSame('SELECT true', $statement->stringify());
     }
 
-    public function testNestedSelect(): void
+    public function test_nested_select(): void
     {
         $statement = new Statement(
             (new Select())
@@ -33,7 +33,7 @@ class StatementTest extends TestCase
         static::assertSame('SELECT ( SELECT true )', $statement->stringify());
     }
 
-    public function testSimpleQuery(): void
+    public function test_simple_query(): void
     {
         $statement = new Statement(
             (new Select())
@@ -47,7 +47,7 @@ class StatementTest extends TestCase
         static::assertSame('SELECT column_a FROM table WHERE true', $statement->stringify());
     }
 
-    public function testInsert(): void
+    public function test_insert(): void
     {
         $statement = new Statement(
             (new Insert(new Identifier('test')))
@@ -59,7 +59,7 @@ class StatementTest extends TestCase
         static::assertSame('INSERT INTO test ( column_a ) SELECT true', $statement->stringify());
     }
 
-    public function testDataBindings(): void
+    public function test_data_bindings(): void
     {
         $statement = new Statement(
             (new Select())
@@ -73,7 +73,7 @@ class StatementTest extends TestCase
         static::assertSame([15, 1], array_values($statement->fetchBindings()));
     }
 
-    public function testDataBindingsClause(): void
+    public function test_data_bindings_clause(): void
     {
         $statement = new Statement(
             (new Select())
@@ -89,7 +89,7 @@ class StatementTest extends TestCase
         static::assertTrue(in_array(1, array_values($statement->fetchBindings()), true));
     }
 
-    public function testForUpdateOnlyWithSelect(): void
+    public function test_for_update_only_with_select(): void
     {
         self::expectExceptionMessage('SELECT');
 
@@ -97,7 +97,7 @@ class StatementTest extends TestCase
         $stmt->add(new ForUpdate());
     }
 
-    public function testForUpdateWithSelect(): void
+    public function test_for_update_with_select(): void
     {
         $stmt = new Statement(new Select(new Value(true)));
         $stmt->add(new From(new Identifier('table')));

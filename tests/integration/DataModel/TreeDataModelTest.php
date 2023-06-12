@@ -57,7 +57,7 @@ class TreeDataModelTest extends DatabaseTestCase
         //            static::$connection->query( 'drop table if exists "TreeDummy";' );
     }
 
-    public function testSaveUnder()
+    public function test_save_under()
     {
         $parent = new TreeDummy();
         $parent->setName('parent');
@@ -125,7 +125,7 @@ class TreeDataModelTest extends DatabaseTestCase
         static::assertSame(6, $child3->getRight(), 'right');
     }
 
-    public function testUpdate()
+    public function test_update()
     {
         $struct = [
             'a' => [],
@@ -188,7 +188,7 @@ class TreeDataModelTest extends DatabaseTestCase
         return $res;
     }
 
-    public function testSimpleSave()
+    public function test_simple_save()
     {
         $struct = [
             'a' => [],
@@ -200,7 +200,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->validateStruct($struct);
     }
 
-    public function testMoveSimpleUnderLeft()
+    public function test_move_simple_under_left()
     {
         $struct = [
             'a' => [],
@@ -222,7 +222,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testMoveSimpleUnderRight()
+    public function test_move_simple_under_right()
     {
         $struct = [
             'a' => [],
@@ -244,7 +244,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testMoveUnderLeft()
+    public function test_move_under_left()
     {
         $struct = [
             'a' => [],
@@ -271,7 +271,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testMoveUnderRight()
+    public function test_move_under_right()
     {
         $struct = [
             'a' => [],
@@ -298,7 +298,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testMove()
+    public function test_move()
     {
         $struct = [
             'a' => [],
@@ -372,7 +372,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testDeeplyNestedMove()
+    public function test_deeply_nested_move()
     {
         $struct = [
             'a' => [
@@ -449,7 +449,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->validateStruct($struct);
     }
 
-    public function testPositionedMove()
+    public function test_positioned_move()
     {
         $struct = [
             'a' => [
@@ -525,7 +525,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function testInsert()
+    public function test_insert()
     {
         $struct = [
             'a' => [],

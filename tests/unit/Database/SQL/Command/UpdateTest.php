@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class UpdateTest extends TestCase
 {
-    public function testEmptyStatement(): void
+    public function test_empty_statement(): void
     {
         $update = new Update(new Identifier('table'));
 
@@ -19,7 +19,7 @@ class UpdateTest extends TestCase
         $update->stringify();
     }
 
-    public function testSimple(): void
+    public function test_simple(): void
     {
         $update = new Update(new Identifier('table'));
         $update->add(new Identifier('test'), new Value(1));
@@ -29,7 +29,7 @@ class UpdateTest extends TestCase
         static::assertSame($expected, $update->stringify());
     }
 
-    public function testComplex(): void
+    public function test_complex(): void
     {
         $update = new Update(new Identifier('table'));
         $update->add(new Identifier('test'), new Value(1));

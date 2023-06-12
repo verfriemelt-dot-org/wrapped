@@ -17,7 +17,7 @@ class TemplateCallbackTest extends TestCase
 {
     private Template $tpl;
 
-    public function testClousure(): void
+    public function test_clousure(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ testingVar }}');
@@ -27,7 +27,7 @@ class TemplateCallbackTest extends TestCase
         static::assertSame($this->tpl->run(), 'epic');
     }
 
-    public function testShouldNotCallFunctions(): void
+    public function test_should_not_call_functions(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ testingVar }}');

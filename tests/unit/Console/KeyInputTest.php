@@ -35,7 +35,7 @@ class KeyInputTest extends TestCase
     }
 
     #[DataProvider('keys')]
-    public function testKeyWasRead(string $key, string $input): void
+    public function test_key_was_read(string $key, string $input): void
     {
         $keyInput = new KeyInput();
         $stream = fopen('php://temp', 'rw');

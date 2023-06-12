@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class BracketTest extends TestCase
 {
-    public function testWrapping(): void
+    public function test_wrapping(): void
     {
         $bracket = new Bracket();
         $bracket->add(

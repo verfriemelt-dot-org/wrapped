@@ -11,9 +11,7 @@ class ArgumentMetadata
 {
     private readonly string $name;
 
-    /**
-     * @var class-string|null
-     */
+    /** @var class-string|null */
     private ?string $type = null;
 
     private readonly bool $hasDefaultValue;

@@ -128,7 +128,7 @@ class DataModelFindTest extends DatabaseTestCase
         TypeTester::get(1);
     }
 
-    public function testFind()
+    public function test_find()
     {
         // non existing
         static::assertNull(TypeTester::findSingle(['id' => 1]));

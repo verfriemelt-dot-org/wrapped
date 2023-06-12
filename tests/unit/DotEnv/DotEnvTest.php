@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\DotEnv\DotEnv;
 
 class DotEnvTest extends TestCase
 {
-    public function testSingleFile(): void
+    public function test_single_file(): void
     {
         $dotenv = new DotEnv();
         $dotenv->load(\TEST_ROOT . '/Fixtures/DotEnv/valid.ini');
@@ -29,7 +29,7 @@ class DotEnvTest extends TestCase
         static::assertContains('TEST_DB_PASSWORD', $handled);
     }
 
-    public function testOverloading(): void
+    public function test_overloading(): void
     {
         $dotenv = new DotEnv();
         $dotenv->load(
@@ -40,7 +40,7 @@ class DotEnvTest extends TestCase
         static::assertSame('10000', $_ENV['TEST_DB_PORT']);
     }
 
-    public function testPreventExistingEnvOverloading(): void
+    public function test_prevent_existing_env_overloading(): void
     {
         putenv('EXISTING_ENV=1');
 

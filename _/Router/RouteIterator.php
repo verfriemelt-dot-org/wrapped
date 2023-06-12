@@ -6,9 +6,7 @@ namespace verfriemelt\wrapped\_\Router;
 
 trait RouteIterator
 {
-    /**
-     * @var Routable[]
-     */
+    /** @var Routable[] */
     public $routes = [];
 
     public function current()

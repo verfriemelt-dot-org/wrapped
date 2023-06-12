@@ -25,7 +25,7 @@ class NonNullableIdModel extends DataModel
 
 class DataModelHydrationTest extends TestCase
 {
-    public function testHydrationOnNonNullableProperties(): void
+    public function test_hydration_on_non_nullable_properties(): void
     {
         $model = new NonNullableIdModel();
         $model->initData(['id' => null]);
@@ -36,12 +36,12 @@ class DataModelHydrationTest extends TestCase
         static::assertSame(1, $model->getId());
     }
 
-    public function testPersistedObject(): void
+    public function test_persisted_object(): void
     {
         static::assertFalse((new NonNullableIdModel())->isPersisted());
     }
 
-    public function testDirtyObject(): void
+    public function test_dirty_object(): void
     {
         $model = new NonNullableIdModel();
         $model->initData(['id' => 1]);

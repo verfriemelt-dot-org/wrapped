@@ -75,7 +75,7 @@ class DataModelPropertyRenameTest extends DatabaseTestCase
         return RenameTester::get(1);
     }
 
-    public function testUpdate()
+    public function test_update()
     {
         $instance = $this->createInstance();
         $instance->setRandomCasing('test')->save();

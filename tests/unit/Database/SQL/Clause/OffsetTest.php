@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class OffsetTest extends TestCase
 {
-    public function testSimple(): void
+    public function test_simple(): void
     {
         $offset = new Offset(new Value(1));
         static::assertSame('OFFSET 1', $offset->stringify());

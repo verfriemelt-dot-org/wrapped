@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class LimitTest extends TestCase
 {
-    public function testSimple(): void
+    public function test_simple(): void
     {
         $limit = new Limit(
             new Value(1)

@@ -9,9 +9,7 @@ namespace verfriemelt\wrapped\_\DI;
  */
 class ServiceBuilder
 {
-    /**
-     * @var ServiceConfiguration<T>
-     */
+    /** @var ServiceConfiguration<T> */
     private readonly ServiceConfiguration $service;
 
     private readonly Container $container;

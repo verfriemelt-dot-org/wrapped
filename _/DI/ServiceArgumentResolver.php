@@ -11,9 +11,7 @@ use Closure;
  */
 class ServiceArgumentResolver extends ArgumentResolver
 {
-    /**
-     * @var ServiceConfiguration<T>
-     */
+    /** @var ServiceConfiguration<T> */
     protected ServiceConfiguration $service;
 
     /**

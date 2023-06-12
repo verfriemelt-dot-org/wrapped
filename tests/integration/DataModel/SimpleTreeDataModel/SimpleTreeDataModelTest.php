@@ -62,7 +62,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         return $obj;
     }
 
-    public function testNestedSave()
+    public function test_nested_save()
     {
         $obj1 = new Tree();
         $obj1->save();
@@ -75,7 +75,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::assertSame($obj1->getId(), $obj2->fetchParent()->getId());
     }
 
-    public function testChildren()
+    public function test_children()
     {
         $obj1 = new Tree();
         $obj1->save();
@@ -100,7 +100,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::assertSame(1, $obj3->fetchChildCount());
     }
 
-    public function testFetchParent()
+    public function test_fetch_parent()
     {
         $obj1 = new Tree();
         $obj1->save();

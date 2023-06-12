@@ -13,28 +13,22 @@ use OutOfBoundsException;
 use PDOStatement;
 use RuntimeException;
 use SeekableIterator;
-use Traversable;
 use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
 /**
  * @template T of DataModel
+ *
  * @implements Iterator<int, T>
  */
 class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, JsonSerializable
 {
-    /**
-     * @var int<0,max>
-     */
+    /** @var int<0,max> */
     private int $length = 0;
 
-    /**
-     * @var int<0,max>
-     */
+    /** @var int<0,max> */
     private int $pointer = 0;
 
-    /**
-     * @var T[]
-     */
+    /** @var T[] */
     private array $data = [];
 
     private $loadMoreCallback;
@@ -49,7 +43,9 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
 
     /**
      * @template TArg of Datamodel
+     *
      * @param TArg $prototype
+     *
      * @return Collection<TArg>
      */
     public static function buildFromQuery(DataModel $prototype, QueryBuilder $query)
@@ -59,7 +55,9 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
 
     /**
      * @template TArg of Datamodel
+     *
      * @param TArg $prototype
+     *
      * @return Collection<TArg>
      */
     public static function buildFromPdoResult(DataModel $prototype, PDOStatement $result): Collection
@@ -249,7 +247,9 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
 
     /**
      * @template TReturn
+     *
      * @param callable(T): TReturn $callable
+     *
      * @return TReturn[]
      */
     public function map(callable $callable): array

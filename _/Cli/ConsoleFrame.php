@@ -8,16 +8,12 @@ class ConsoleFrame
 {
     private readonly Console $cli;
 
-    /**
-     * @var array{x:int,y:int}
-     */
+    /** @var array{x:int,y:int} */
     private array $pos;
     private int $height;
     private int $width;
 
-    /**
-     * @var array<array{string, int}>
-     */
+    /** @var array<array{string, int}> */
     private array $buffer = [];
 
     private int $scrollPos = 0;

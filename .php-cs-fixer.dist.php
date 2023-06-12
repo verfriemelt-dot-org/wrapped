@@ -31,9 +31,17 @@ $config->setRules([
     // we have long params list on throw
     'single_line_throw' => false,
 
+    'php_unit_method_casing' => ["case" => 'snake_case'],
+
     // wtf, we need space
     'concat_space' => ['spacing' => 'one'],
     'global_namespace_import' => ['import_classes' => true, 'import_constants' => false, 'import_functions' => false],
+
+    'phpdoc_line_span' => [
+        'property' => 'single',
+        'const' => 'single',
+        'method' => 'multi'
+    ]
 ]);
 $config->setFinder($finder);
 $config->setRiskyAllowed(true);

@@ -37,7 +37,9 @@ final class DotEnv
         return $env;
     }
 
-    /** @param array<string,string> $env */
+    /**
+     * @param array<string,string> $env
+     */
     private function putenv(array $env): void
     {
         $getenv = getenv(static::STORAGE_KEY);

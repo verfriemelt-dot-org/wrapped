@@ -8,14 +8,10 @@ use verfriemelt\wrapped\_\Template\Repeater;
 
 class Select extends FormType
 {
-    /**
-     * @var array<int,SelectGroup|SelectItem>
-     */
+    /** @var array<int,SelectGroup|SelectItem> */
     private array $options = [];
 
-    /**
-     * @var array<string, SelectGroup>
-     */
+    /** @var array<string, SelectGroup> */
     private array $optGroups = [];
 
     public function addOption(string $name, string|int $value, string $optGroupName = null): self

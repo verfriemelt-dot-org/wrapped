@@ -25,13 +25,13 @@ class LongerExample extends DataModel
 
 class DataModelTest extends TestCase
 {
-    public function testDatabaseNames(): void
+    public function test_database_names(): void
     {
         static::assertSame('Example', Example::fetchTablename());
         static::assertSame(null, Example::fetchSchemaname());
     }
 
-    public function testCasingConvention(): void
+    public function test_casing_convention(): void
     {
         static::assertSame('example2', Example2::fetchTablename());
         static::assertSame('longer_example', LongerExample::fetchTablename(), 'snake case');

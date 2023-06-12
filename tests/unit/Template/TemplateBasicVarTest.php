@@ -10,7 +10,7 @@ class TemplateBasicVarTest extends TestCase
 {
     private Template $tpl;
 
-    public function testsingleVar(): void
+    public function testsingle_var(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1 }}');
@@ -20,7 +20,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), 'test');
     }
 
-    public function testsingleVarWithFormat(): void
+    public function testsingle_var_with_format(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1|test}}');
@@ -35,7 +35,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), 'test');
     }
 
-    public function testsameVarTwice(): void
+    public function testsame_var_twice(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1 }} {{ var1 }}');
@@ -45,7 +45,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), 'test test');
     }
 
-    public function testTwoVars(): void
+    public function test_two_vars(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1 }} {{ var2 }}');
@@ -56,7 +56,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), 'test1 test2');
     }
 
-    public function testTwoVarsWithSetArray(): void
+    public function test_two_vars_with_set_array(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1 }} {{ var2 }}');
@@ -66,13 +66,13 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), 'test1 test2');
     }
 
-    public function testSetArrayShouldOnlyWorkWithArrays(): void
+    public function test_set_array_should_only_work_with_arrays(): void
     {
         $this->tpl = new Template();
         static::assertSame($this->tpl->setArray(false), false);
     }
 
-    public function testOutputShouldBeEscaped(): void
+    public function test_output_should_be_escaped(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ var1 }}');
@@ -82,7 +82,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), '&lt; &gt; &amp; &#039; &quot;');
     }
 
-    public function testOutputCanBeUnescaped(): void
+    public function test_output_can_be_unescaped(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ !var1 }}');
@@ -92,7 +92,7 @@ class TemplateBasicVarTest extends TestCase
         static::assertSame($this->tpl->run(), "< > & ' \"");
     }
 
-    public function testEmptyVariables(): void
+    public function test_empty_variables(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate('{{ }}');

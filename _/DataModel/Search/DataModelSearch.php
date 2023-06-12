@@ -20,9 +20,7 @@ use verfriemelt\wrapped\_\DataModel\DataModelQueryBuilder;
 
 class DataModelSearch
 {
-    /**
-     * @var DataModel<T>
-     */
+    /** @var DataModel<T> */
     private readonly DataModel $prototype;
 
     private ?array $fields = null;

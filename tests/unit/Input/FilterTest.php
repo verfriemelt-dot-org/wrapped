@@ -73,7 +73,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         $this->request = new Request($_GET, $_POST, [], $_COOKIE, [], $_SERVER, '');
     }
 
-    public function testFilterLength(): void
+    public function test_filter_length(): void
     {
         $filter = new Filter($this->request);
         $filter->query()->this('bar')->minLength(5);
@@ -92,7 +92,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         static::assertTrue($filter->validate());
     }
 
-    public function testOptionalFilters(): void
+    public function test_optional_filters(): void
     {
         $filter = new Filter($this->request);
         $filter->query()->this('bar')->maxLength(6)->optional();
@@ -115,7 +115,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         static::assertFalse($filter->validate());
     }
 
-    public function testCookiesFilter(): void
+    public function test_cookies_filter(): void
     {
         $filter = new Filter($this->request);
         $filter->cookies()->this('bar')->optional();
@@ -130,14 +130,14 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         static::assertTrue($filter->validate());
     }
 
-    public function testMultipleFiltersAtOnce(): void
+    public function test_multiple_filters_at_once(): void
     {
         $filter = new Filter($this->request);
         $filter->query()->has('bar')->minLength(3)->maxLength(3)->allowedChars('inwaè');
         static::assertTrue($filter->validate());
     }
 
-    public function testUTFStuff(): void
+    public function test_utf_stuff(): void
     {
         $filter = new Filter($this->request);
         $filter->query()->has('utf')->minLength(3)->maxLength(3)->allowedChars('èµ€');
@@ -148,7 +148,7 @@ class FilterTest extends \PHPUnit\Framework\TestCase
         static::assertFalse($filter->validate());
     }
 
-    public function testSetPredefinedValues(): void
+    public function test_set_predefined_values(): void
     {
         $filter = new Filter($this->request);
         $filter->request()->has('test')->allowedValues(['a', 'b', 'c']);

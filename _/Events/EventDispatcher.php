@@ -6,9 +6,7 @@ namespace verfriemelt\wrapped\_\Events;
 
 class EventDispatcher
 {
-    /**
-     * @var EventSubscriberInterface[]
-     */
+    /** @var EventSubscriberInterface[] */
     protected array $subscriber = [];
 
     public function addSubscriber(EventSubscriberInterface $subscriber): static

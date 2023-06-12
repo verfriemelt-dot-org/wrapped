@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Queue\QueueItem;
 
 class QueueTest extends TestCase
 {
-    public function testAddingQueueItem(): void
+    public function test_adding_queue_item(): void
     {
         $queue = new Queue(new MemoryBackend());
         $queue->add(new QueueItem('testing'));
@@ -22,14 +22,14 @@ class QueueTest extends TestCase
         }
     }
 
-    public function testEmptyQueue(): void
+    public function test_empty_queue(): void
     {
         $queue = new Queue(new MemoryBackend());
 
         static::assertSame([], $queue->fetchByKey('testing'));
     }
 
-    public function testQueueSepartion(): void
+    public function test_queue_separtion(): void
     {
         $queue = new Queue(new MemoryBackend());
         $queue->add(new QueueItem('testing'));
@@ -44,7 +44,7 @@ class QueueTest extends TestCase
         static::assertSame(1, count($queue->fetchByKey('b', 'email')));
     }
 
-    public function testDeleteItemFromQueue(): void
+    public function test_delete_item_from_queue(): void
     {
         $backend = new MemoryBackend();
         $queue = new Queue($backend);
@@ -59,7 +59,7 @@ class QueueTest extends TestCase
         static::assertSame([], $queue->fetchByKey('b'));
     }
 
-    public function testAlterQueueItem(): void
+    public function test_alter_queue_item(): void
     {
         $backend = new MemoryBackend();
         $queue = new Queue($backend);
@@ -73,7 +73,7 @@ class QueueTest extends TestCase
         static::assertSame(5, $queue->fetchByKey('b')[0]->getData());
     }
 
-    public function testThatLockedQueueItemsWillNotBeRetrived(): void
+    public function test_that_locked_queue_items_will_not_be_retrived(): void
     {
         $backend = new MemoryBackend();
         $queue = new Queue($backend);

@@ -84,7 +84,7 @@ class Example2 extends DataModel
 
 class DataModelQueryContextTest extends TestCase
 {
-    public function testContext(): void
+    public function test_context(): void
     {
         $ident = new Identifier('NAME');
         static::assertSame('NAME', $ident->stringify());
@@ -93,7 +93,7 @@ class DataModelQueryContextTest extends TestCase
         static::assertSame('name', $ident->stringify());
     }
 
-    public function testContextFQN(): void
+    public function test_context_fqn(): void
     {
         $ident = new Identifier('schema', 'table', 'NAME');
         static::assertSame('schema.table.NAME', $ident->stringify());
@@ -103,7 +103,7 @@ class DataModelQueryContextTest extends TestCase
         static::assertSame('public.Example.name', $ident->stringify());
     }
 
-    public function testPassingDownContext(): void
+    public function test_passing_down_context(): void
     {
         $select = new Select();
         $select->addDataModelContext(new Example());
@@ -127,7 +127,7 @@ class DataModelQueryContextTest extends TestCase
         static::assertSame('SELECT Example2.name', $select->stringify());
     }
 
-    public function testMultipleContextAmbiguous(): void
+    public function test_multiple_context_ambiguous(): void
     {
         $this->expectExceptionObject(new Exception('ambiguous'));
 
@@ -139,7 +139,7 @@ class DataModelQueryContextTest extends TestCase
         static::assertSame('SELECT name', $select->stringify());
     }
 
-    public function testMultipleContext(): void
+    public function test_multiple_context(): void
     {
         $select = new Select();
         $select->addDataModelContext(new Example());

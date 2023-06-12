@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
 
 class EventDispatcherTest extends TestCase
 {
-    public function testSubscriberBeeingCalled(): void
+    public function test_subscriber_beeing_called(): void
     {
         $mockSubscriber = $this->createMock(EventSubscriberInterface::class);
         $mockSubscriber->expects(static::once())->method('on');

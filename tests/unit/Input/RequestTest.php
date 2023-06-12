@@ -55,13 +55,13 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         $_GET = ['foo' => [0 => 'test1', 1 => 'test2', 'test' => 'test3'], 'bar' => '1'];
     }
 
-    public function testCanDetectHttp(): void
+    public function test_can_detect_http(): void
     {
         $request = Request::createFromGlobals();
         static::assertTrue($request->secure());
     }
 
-    public function testCanRetrieveCookieInformations(): void
+    public function test_can_retrieve_cookie_informations(): void
     {
         $request = Request::createFromGlobals();
 
@@ -74,7 +74,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         static::assertFalse($request->cookies()->is('testCookie', '!testValue'));
     }
 
-    public function testCanIHaveGetParams(): void
+    public function test_can_i_have_get_params(): void
     {
         $request = Request::createFromGlobals();
         static::assertSame($_GET, $request->query()->all());
@@ -94,12 +94,12 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         static::assertSame('default value', $request->query()->get('nope', 'default value'), 'getting defaults');
     }
 
-    public function testCanIGetReferer(): void
+    public function test_can_i_get_referer(): void
     {
         static::assertSame($_SERVER['HTTP_REFERER'], Request::createFromGlobals()->referer());
     }
 
-    public function testAggregate(): void
+    public function test_aggregate(): void
     {
         $request = new Request(['win' => 1], ['bar' => 2], [], ['foo' => 3]);
 
@@ -108,7 +108,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
         static::assertSame(3, $request->aggregate()->get('foo'));
     }
 
-    public function testAggregateOverwrite(): void
+    public function test_aggregate_overwrite(): void
     {
         $request = new Request(['win' => 1], ['win' => 2], [], ['win' => 3]);
 

@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\DateTime\DateTime;
 
 class ValueTest extends TestCase
 {
-    public function testWrapping(): void
+    public function test_wrapping(): void
     {
         $time = new DateTime();
 

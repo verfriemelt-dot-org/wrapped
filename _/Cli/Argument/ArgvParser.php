@@ -8,38 +8,26 @@ use RuntimeException;
 
 class ArgvParser
 {
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private array $rawArguments = [];
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private array $short = [];
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     private array $long = [];
 
     private int $argumentCounter = 0;
 
-    /**
-     * @var Argument[]
-     */
+    /** @var Argument[] */
     private array $arguments = [];
 
-    /**
-     * @var Option[]
-     */
+    /** @var Option[] */
     private array $options = [];
 
     private int $pos = 1;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected array $argv = [];
 
     /**

@@ -7,7 +7,7 @@ use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
 class QueryTest extends TestCase
 {
-    public function testWhereWithValueFromArray(): void
+    public function test_where_with_value_from_array(): void
     {
         $query = new QueryBuilder();
 
@@ -23,7 +23,7 @@ class QueryTest extends TestCase
         );
     }
 
-    public function testWhereWithNullFromArray(): void
+    public function test_where_with_null_from_array(): void
     {
         $query = new QueryBuilder();
 

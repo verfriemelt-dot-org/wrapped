@@ -29,14 +29,14 @@ class CollectionTest extends TestCase
         parent::setUp();
     }
 
-    public function testCollectionInit(): void
+    public function test_collection_init(): void
     {
         $collection = new Collection();
         static::assertSame(0, $collection->count());
         static::assertTrue($collection->isEmpty());
     }
 
-    public function testCollectionLength(): void
+    public function test_collection_length(): void
     {
         $collection = new Collection(...[
             new CollectionDummy(),
@@ -46,7 +46,7 @@ class CollectionTest extends TestCase
         static::assertSame(2, $collection->count());
     }
 
-    public function testCallback(): void
+    public function test_callback(): void
     {
         $callback = function ($offset): DataModel {
             if ($offset < 10) {
@@ -72,7 +72,7 @@ class CollectionTest extends TestCase
         static::assertSame(10, $counter);
     }
 
-    public function testMap(): void
+    public function test_map(): void
     {
         $callback = function ($offset): DataModel {
             if ($offset < 10) {
@@ -94,7 +94,7 @@ class CollectionTest extends TestCase
         static::assertSame(10, count($result));
     }
 
-    public function testArrayAccess(): void
+    public function test_array_access(): void
     {
         $callback = fn ($offset): DataModel => (new CollectionDummy())->setId($offset + 1);
 
@@ -112,7 +112,7 @@ class CollectionTest extends TestCase
         $collection[11];
     }
 
-    public function testStartEndGetter(): void
+    public function test_start_end_getter(): void
     {
         /**
          * @var Collection<CollectionDummy> $collection
@@ -132,7 +132,7 @@ class CollectionTest extends TestCase
         static::assertSame(1, $collection->first()?->getId());
     }
 
-    public function testSeek(): void
+    public function test_seek(): void
     {
         $callback = fn ($offset): DataModel => (new CollectionDummy())->setId($offset + 1);
 
@@ -148,7 +148,7 @@ class CollectionTest extends TestCase
         $collection->seek(11);
     }
 
-    public function testIllegalOffget(): void
+    public function test_illegal_offget(): void
     {
         $callback = fn ($offset): DataModel => (new CollectionDummy())->setId($offset + 1);
 
@@ -163,7 +163,7 @@ class CollectionTest extends TestCase
         $collection[-1];
     }
 
-    public function testIllegalOffset(): void
+    public function test_illegal_offset(): void
     {
         $collection = new Collection(new CollectionDummy());
 
@@ -171,7 +171,7 @@ class CollectionTest extends TestCase
         $collection[1] = new CollectionDummy();
     }
 
-    public function testIllegalOffunset(): void
+    public function test_illegal_offunset(): void
     {
         $collection = new Collection(new CollectionDummy());
 

@@ -68,7 +68,7 @@ class Example extends DataModel
 
 class DataModelAnalyserTest extends TestCase
 {
-    public function testNames(): void
+    public function test_names(): void
     {
         $analyser = new DataModelAnalyser(new Example());
 
@@ -76,7 +76,7 @@ class DataModelAnalyserTest extends TestCase
         static::assertSame('extraNamespace\\Example', $analyser->getStaticName());
     }
 
-    public function testAttributes(): void
+    public function test_attributes(): void
     {
         $analyser = new DataModelAnalyser(new Example());
 
@@ -87,7 +87,7 @@ class DataModelAnalyserTest extends TestCase
         static::assertSame('complex_field_name', $analyser->fetchProperties()[1]->getNamingConvention()->getString());
     }
 
-    public function testTypedAttributes(): void
+    public function test_typed_attributes(): void
     {
         $analyser = new DataModelAnalyser(new Example());
         static::assertSame('typed', $analyser->fetchProperties()[2]->getNamingConvention()->getString());
@@ -96,7 +96,7 @@ class DataModelAnalyserTest extends TestCase
         static::assertTrue(class_exists($analyser->fetchProperties()[2]->getType()));
     }
 
-    public function testSnakeCaseConvention(): void
+    public function test_snake_case_convention(): void
     {
         $analyser = new DataModelAnalyser(new Example());
         static::assertSame(

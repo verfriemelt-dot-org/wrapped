@@ -8,21 +8,21 @@ use RuntimeException;
 
 class PostgresqlDriverTest extends DatabaseTestCase
 {
-    public function testExceptionOnRollingbackNonexistingTransactions(): void
+    public function test_exception_on_rollingback_nonexisting_transactions(): void
     {
         static::expectException(RuntimeException::class);
         static::expectExceptionMessage('no active transaction');
         static::$connection->rollbackTransaction();
     }
 
-    public function testExceptionOnCommittingNonexistingTransactions(): void
+    public function test_exception_on_committing_nonexisting_transactions(): void
     {
         static::expectException(RuntimeException::class);
         static::expectExceptionMessage('no active transaction');
         static::$connection->commitTransaction();
     }
 
-    public function testStartTransactionsAndRollingBack(): void
+    public function test_start_transactions_and_rolling_back(): void
     {
         static::expectNotToPerformAssertions();
 
@@ -30,7 +30,7 @@ class PostgresqlDriverTest extends DatabaseTestCase
         static::$connection->rollbackTransaction();
     }
 
-    public function testNestingTransactions(): void
+    public function test_nesting_transactions(): void
     {
         static::$connection->startTransaction();
         static::$connection->query('CREATE TABLE  foo (id int not null)');

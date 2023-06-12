@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class AliasableTest extends TestCase
 {
-    public function testPrimitive(): void
+    public function test_primitive(): void
     {
         $primitive = new Value(true);
         $primitive->addAlias(new Identifier('testing'));

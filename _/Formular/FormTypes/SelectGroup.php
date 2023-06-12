@@ -8,9 +8,7 @@ class SelectGroup
 {
     public readonly string $name;
 
-    /**
-     * @var SelectItem[]
-     */
+    /** @var SelectItem[] */
     private array $children = [];
 
     public function __construct(string $name)

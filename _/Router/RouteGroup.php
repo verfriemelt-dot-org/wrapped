@@ -33,7 +33,9 @@ class RouteGroup implements Routable
         return $this;
     }
 
-    /** @return Route[] */
+    /**
+     * @return Route[]
+     */
     public function getRoutes(): array
     {
         return $this->routes;

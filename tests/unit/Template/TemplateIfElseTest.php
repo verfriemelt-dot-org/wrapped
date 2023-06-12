@@ -72,7 +72,7 @@ class TemplateIfElseTest extends TestCase
         }
     }
 
-    public function testNestedEmpty(): void
+    public function test_nested_empty(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
@@ -80,7 +80,7 @@ class TemplateIfElseTest extends TestCase
         static::assertSame('', $this->tpl->run());
     }
 
-    public function testNestedSetA(): void
+    public function test_nested_set_a(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
@@ -90,7 +90,7 @@ class TemplateIfElseTest extends TestCase
         static::assertSame('aa', $this->tpl->run());
     }
 
-    public function testNestedSetB(): void
+    public function test_nested_set_b(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
@@ -100,7 +100,7 @@ class TemplateIfElseTest extends TestCase
         static::assertEmpty($this->tpl->run());
     }
 
-    public function testNestedSetAB(): void
+    public function test_nested_set_ab(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));

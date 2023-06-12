@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class ExpressionTest extends TestCase
 {
-    public function testNesting(): void
+    public function test_nesting(): void
     {
         $exp = new Expression();
         $exp->add(
@@ -19,7 +19,7 @@ class ExpressionTest extends TestCase
         static::assertSame('true', $exp->stringify());
     }
 
-    public function testEmpty(): void
+    public function test_empty(): void
     {
         $exp = new Expression();
 

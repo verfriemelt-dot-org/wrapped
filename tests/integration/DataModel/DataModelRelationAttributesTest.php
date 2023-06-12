@@ -112,7 +112,7 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
         b::get(1)->setAId(1)->save();
     }
 
-    public function testNotPrepped()
+    public function test_not_prepped()
     {
         $this->buildObjects();
         $this->expectExceptionObject(new Exception('attribute'));
@@ -120,7 +120,7 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
         b::get(1)->aObjectNotMarked();
     }
 
-    public function testResolv()
+    public function test_resolv()
     {
         $this->buildObjects();
 

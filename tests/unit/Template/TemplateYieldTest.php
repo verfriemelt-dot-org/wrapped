@@ -9,7 +9,7 @@ class TemplateYieldTest extends TestCase
 {
     private Template $tpl;
 
-    public function testLoadTemplateFile(): void
+    public function test_load_template_file(): void
     {
         $this->tpl = new Template();
         $this->tpl->parseFile(__DIR__ . '/templateTests/repeater.tpl');

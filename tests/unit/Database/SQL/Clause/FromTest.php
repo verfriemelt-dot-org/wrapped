@@ -10,13 +10,13 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 
 class FromTest extends TestCase
 {
-    public function testSimple(): void
+    public function test_simple(): void
     {
         $from = new From(new Identifier('table'));
         static::assertSame('FROM table', $from->stringify());
     }
 
-    public function testSimpleAlias(): void
+    public function test_simple_alias(): void
     {
         $from = new From(
             (new Identifier('table'))
@@ -25,7 +25,7 @@ class FromTest extends TestCase
         static::assertSame('FROM table AS tb', $from->stringify());
     }
 
-    public function testFromExpression(): void
+    public function test_from_expression(): void
     {
         $from = new From(
             (new Select())->add(new Value(true))

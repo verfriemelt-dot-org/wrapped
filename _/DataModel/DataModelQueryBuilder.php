@@ -17,9 +17,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
  */
 class DataModelQueryBuilder extends QueryBuilder
 {
-    /**
-     * @var T
-     */
+    /** @var T */
     protected DataModel $prototype;
 
     protected $context = [];

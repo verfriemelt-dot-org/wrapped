@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 
 class InsertTest extends TestCase
 {
-    public function testOne(): void
+    public function test_one(): void
     {
         $insert = new Insert(new Identifier('table'));
         $insert->add(new Identifier('column_b'));
@@ -16,7 +16,7 @@ class InsertTest extends TestCase
         static::assertSame('INSERT INTO table ( column_b )', $insert->stringify());
     }
 
-    public function testMore(): void
+    public function test_more(): void
     {
         $insert = new Insert(new Identifier('table'));
         $insert->add(new Identifier('column_a'));

@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 
 class DeleteTest extends TestCase
 {
-    public function testSimple(): void
+    public function test_simple(): void
     {
         $delete = new Delete(new Identifier('table'));
         static::assertSame('DELETE FROM table', $delete->stringify());

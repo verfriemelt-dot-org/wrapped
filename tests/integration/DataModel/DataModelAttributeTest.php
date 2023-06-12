@@ -84,7 +84,7 @@ class DataModelAttributeTest extends DatabaseTestCase
         return $obj;
     }
 
-    public function testallLower()
+    public function testall_lower()
     {
         static::$connection->query('create table lowerdummy ( id serial primary key, complexfieldname text );');
         $this->saveInstance(LowerDummy::class, 'test');
@@ -93,7 +93,7 @@ class DataModelAttributeTest extends DatabaseTestCase
         static::assertNotNull(LowerDummy::findSingle(['complexFieldName' => 'test']));
     }
 
-    public function testCamelCase()
+    public function test_camel_case()
     {
         static::$connection->query('create table "camelCaseDummy" ( id serial primary key, "complexFieldName" text );');
         $this->saveInstance(CamelCaseDummy::class, 'test');
@@ -101,7 +101,7 @@ class DataModelAttributeTest extends DatabaseTestCase
         static::assertNotNull(CamelCaseDummy::findSingle(['complexFieldName' => 'test']));
     }
 
-    public function testSnakeCase()
+    public function test_snake_case()
     {
         static::$connection->query('create table snake_case_dummy ( id serial primary key, complex_field_name text );');
         $this->saveInstance(SnakeCaseDummy::class, 'test');

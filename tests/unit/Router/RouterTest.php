@@ -11,13 +11,13 @@ use verfriemelt\wrapped\_\Router\Router;
 
 class RouterTest extends TestCase
 {
-    public function testRouterEmpty(): void
+    public function test_router_empty(): void
     {
         $this->expectException(NoRoutesPresent::class);
         (new Router())->handleRequest(new Request());
     }
 
-    public function testRouteVsRouteGroupWeight(): void
+    public function test_route_vs_route_group_weight(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/admin']);
 
@@ -40,7 +40,7 @@ class RouterTest extends TestCase
         static::assertSame('a', $result());
     }
 
-    public function testRouteGroupFirstButNoMatchingChildren(): void
+    public function test_route_group_first_but_no_matching_children(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/admin']);
 
@@ -63,7 +63,7 @@ class RouterTest extends TestCase
         static::assertSame('a', $result());
     }
 
-    public function testNestedRouteGroups(): void
+    public function test_nested_route_groups(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/test/nice']);
 
@@ -88,7 +88,7 @@ class RouterTest extends TestCase
         static::assertSame('default', $result());
     }
 
-    public function testMatchingGroupsWithNoChilds(): void
+    public function test_matching_groups_with_no_childs(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/api/win']);
 
@@ -103,7 +103,7 @@ class RouterTest extends TestCase
         static::assertSame('win', $result());
     }
 
-    public function testCapturingRouteData(): void
+    public function test_capturing_route_data(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/list/geocaches']);
 
@@ -121,7 +121,7 @@ class RouterTest extends TestCase
         static::assertTrue($request->attributes()->has('key2'));
     }
 
-    public function testOptionalRouteGroup(): void
+    public function test_optional_route_group(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/test/a']);
 
@@ -141,7 +141,7 @@ class RouterTest extends TestCase
         static::assertTrue(is_callable($result));
     }
 
-    public function testWut(): void
+    public function test_wut(): void
     {
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/th/detail/geocacher/1']);
 

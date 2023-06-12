@@ -11,9 +11,7 @@ abstract class QueryPart
 {
     protected array $children = [];
 
-    /**
-     * @var DataModel[]
-     */
+    /** @var DataModel[] */
     protected array $context = [];
 
     abstract public function stringify(DatabaseDriver $driver = null): string;

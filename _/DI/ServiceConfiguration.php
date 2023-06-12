@@ -16,9 +16,7 @@ class ServiceConfiguration
 
     private readonly string $id;
 
-    /**
-     * @var class-string<T>
-     */
+    /** @var class-string<T> */
     private string $class;
 
     private array $resolver = [];

@@ -28,28 +28,20 @@ class Console
     protected int $currentBgColor = self::STYLE_NONE;
     protected int $currentFontStyle = self::STYLE_REGULAR;
 
-    /**
-     * @var resource
-     */
+    /** @var resource */
     protected $selectedStream;
 
-    /**
-     * @var resource
-     */
+    /** @var resource */
     protected $stdout = STDOUT;
 
-    /**
-     * @var resource
-     */
+    /** @var resource */
     protected $stderr = STDERR;
     protected Closure $linePrefixFunc;
     protected bool $hadLineOutput = false;
     protected bool $inTerminal = false;
     protected bool $forceColor = false;
 
-    /**
-     * @var array{int, int}
-     */
+    /** @var array{int, int} */
     protected array $dimensions;
 
     protected ParameterBag $argv;

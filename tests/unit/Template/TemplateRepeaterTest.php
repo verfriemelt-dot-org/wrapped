@@ -9,7 +9,7 @@ class TemplateRepeaterTest extends TestCase
 {
     public Template $tpl;
 
-    public function testBasicRepeater(): void
+    public function test_basic_repeater(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/repeater.tpl'));
@@ -24,7 +24,7 @@ class TemplateRepeaterTest extends TestCase
         static::assertSame($testString, $this->tpl->run());
     }
 
-    public function testNestedRepeater(): void
+    public function test_nested_repeater(): void
     {
         $this->tpl = new Template();
         $this->tpl->setRawTemplate((string) file_get_contents(__DIR__ . '/templateTests/nestedRepeater.tpl'));

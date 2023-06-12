@@ -116,7 +116,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::$connection->query('drop table "Dummy" ;');
     }
 
-    public function testSave()
+    public function test_save()
     {
         $test = new TypedDummy();
         $test->setPubtime(new DateTime());
@@ -127,7 +127,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::assertTrue(is_object($data->getPubtime()));
     }
 
-    public function testSaveWithNull()
+    public function test_save_with_null()
     {
         $test = new TypedDummy();
         $test->save();
@@ -137,7 +137,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::assertTrue($data->getPubtime() === null);
     }
 
-    public function testReloadWithTime()
+    public function test_reload_with_time()
     {
         $test = new TypedDummy();
         $test->save();
