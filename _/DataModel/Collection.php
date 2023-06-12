@@ -13,10 +13,12 @@ use OutOfBoundsException;
 use PDOStatement;
 use RuntimeException;
 use SeekableIterator;
+use Traversable;
 use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
 
 /**
  * @template T of DataModel
+ * @implements Iterator<int, T>
  */
 class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, JsonSerializable
 {
@@ -45,15 +47,20 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
         $this->initialize(...$data);
     }
 
+    /**
+     * @template TArg of Datamodel
+     * @param TArg $prototype
+     * @return Collection<TArg>
+     */
     public static function buildFromQuery(DataModel $prototype, QueryBuilder $query)
     {
         return static::buildFromPdoResult($prototype, $query->run());
     }
 
     /**
-     * @param T $prototype
-     *
-     * @return Collection<T>
+     * @template TArg of Datamodel
+     * @param TArg $prototype
+     * @return Collection<TArg>
      */
     public static function buildFromPdoResult(DataModel $prototype, PDOStatement $result): Collection
     {
@@ -241,7 +248,9 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     }
 
     /**
-     * @return mixed[]
+     * @template TReturn
+     * @param callable(T): TReturn $callable
+     * @return TReturn[]
      */
     public function map(callable $callable): array
     {
