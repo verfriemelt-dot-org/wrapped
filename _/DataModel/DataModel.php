@@ -617,7 +617,7 @@ abstract class DataModel
     /**
      * @return static|Collection<static>|null
      */
-    public function __call(string $propertyName, $args): static|Collection|null
+    public function __call(string $propertyName, $args): DataModel|Collection|null
     {
         // creates reflecteion
         $reflection = new ReflectionClass($this);
