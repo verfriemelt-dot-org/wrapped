@@ -18,6 +18,9 @@ use verfriemelt\wrapped\_\DataModel\Collection;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\DataModelQueryBuilder;
 
+/**
+ * @template T of Searchable
+ */
 class DataModelSearch
 {
     /** @var DataModel<T> */
@@ -27,6 +30,9 @@ class DataModelSearch
 
     private string $operator = '~*';
 
+    /**
+     * @param T $prototype
+     */
     public function __construct(Searchable $prototype)
     {
         $this->prototype = $prototype;
@@ -56,6 +62,9 @@ class DataModelSearch
         return array_values(array_filter([...$pieces[1], ...$pieces[2]]));
     }
 
+    /**
+     * @return DataModelQueryBuilder<T>
+     */
     public function buildQuery(string $searchString, QueryBuilder $query = null): DataModelQueryBuilder
     {
         if (in_array($this->operator, ['~', '~*'], true)) {
@@ -116,6 +125,9 @@ class DataModelSearch
         return $query;
     }
 
+    /**
+     * @return Collection<T>
+     */
     public function search(string $searchString): Collection
     {
         return $this->buildQuery($searchString)->get();

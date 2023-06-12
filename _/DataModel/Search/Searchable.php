@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\DataModel\Collection;
 
 interface Searchable
 {
+    /** @return Collection<Searchable> */
     public static function search(string $searchString, QueryBuilder $query = null): Collection;
 
     public static function getSearchFields(): array;
