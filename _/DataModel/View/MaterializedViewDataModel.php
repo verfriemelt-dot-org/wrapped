@@ -6,14 +6,24 @@ namespace verfriemelt\wrapped\_\DataModel\View;
 
 class MaterializedViewDataModel extends ViewDataModel
 {
-    public static function refresh()
+    public static function refresh(bool $concurrently = true): void
     {
         $database = static::fetchDatabase();
         $tablename = static::fetchTablename();
         $schemaname = static::fetchSchemaname();
 
-        $query = "REFRESH MATERIALIZED VIEW CONCURRENTLY {$schemaname}.{$tablename}";
+        $queryParts = [
+            "REFRESH",
+            "MATERIALIZED",
+            "VIEW"
+        ];
 
-        $database->query($query);
+        if ($concurrently) {
+            $queryParts[] = "CONCURRENTLY";
+        }
+
+        $queryParts[] = "{$schemaname}.{$tablename}";
+
+        $database->query(implode(' ', $queryParts));
     }
 }
