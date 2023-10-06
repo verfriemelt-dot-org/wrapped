@@ -53,8 +53,10 @@ class ArgumentMetadataFactory
      */
     private function getTypes(ReflectionParameter $parameter, ReflectionFunctionAbstract $function): array
     {
-        if (!$type = $parameter->getType()) {
-            return null;
+        $type = $parameter->getType();
+
+        if ($type === null) {
+            return [];
         }
 
         if ($type instanceof ReflectionNamedType) {

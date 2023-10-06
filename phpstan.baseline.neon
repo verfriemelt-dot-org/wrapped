@@ -281,16 +281,6 @@ parameters:
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:getTypes\\(\\) should return array\\<string\\> but returns null\\.$#"
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
-
-		-
-			message: "#^Only booleans are allowed in a negated boolean, ReflectionType\\|null given\\.$#"
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/ArgumentResolver.php
@@ -322,6 +312,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			count: 1
+			path: _/DI/ServiceArgumentResolver.php
+
+		-
+			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:has\\(\\) expects class\\-string, string given\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
 
