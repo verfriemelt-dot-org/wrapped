@@ -8,78 +8,54 @@ use verfriemelt\wrapped\_\DI\ContainerException;
 
 class a
 {
-    public function __construct(public b $arg)
-    {
-    }
+    public function __construct(public b $arg) {}
 }
 
 class b
 {
-    public function __construct(public string $instance = 'number 1')
-    {
-    }
+    public function __construct(public string $instance = 'number 1') {}
 }
 
 class a_union
 {
-    public function __construct(public b_union|c_union $union)
-    {
-    }
+    public function __construct(public b_union|c_union $union) {}
 }
 
 class b_union
 {
-    public function __construct(public string $instance = 'default')
-    {
-    }
+    public function __construct(public string $instance = 'default') {}
 }
 
 class c_union
 {
-    public function __construct(public string $instance = 'default')
-    {
-    }
+    public function __construct(public string $instance = 'default') {}
 }
 
 class circle
 {
-    public function __construct(public circle $circle)
-    {
-    }
+    public function __construct(public circle $circle) {}
 }
 
 class circleA
 {
-    public function __construct(public circleB $circle)
-    {
-    }
+    public function __construct(public circleB $circle) {}
 }
 
 class circleB
 {
-    public function __construct(public circleC $circle)
-    {
-    }
+    public function __construct(public circleC $circle) {}
 }
 
 class circleC
 {
-    public function __construct(public circleA $circle)
-    {
-    }
+    public function __construct(public circleA $circle) {}
 }
 
-interface i
-{
-}
+interface i {}
 
-class a_i implements i
-{
-}
+class a_i implements i {}
 
-class b_i implements i
-{
-}
+class b_i implements i {}
 
 class ContainerTest extends TestCase
 {

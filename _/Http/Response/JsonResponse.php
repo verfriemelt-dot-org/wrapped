@@ -8,11 +8,11 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 
 class JsonResponse extends Response
 {
-    private $pretty = false;
+    private bool $pretty = false;
 
     private $content;
 
-    private $alreadyEncoded = false;
+    private bool $alreadyEncoded = false;
 
     public function __construct($content = null, $alreadyEncoded = false)
     {

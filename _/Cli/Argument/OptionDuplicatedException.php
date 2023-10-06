@@ -6,6 +6,4 @@ namespace verfriemelt\wrapped\_\Cli\Argument;
 
 use RuntimeException;
 
-class OptionDuplicatedException extends RuntimeException
-{
-}
+class OptionDuplicatedException extends RuntimeException {}

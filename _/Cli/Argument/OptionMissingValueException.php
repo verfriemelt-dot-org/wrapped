@@ -6,6 +6,4 @@ namespace verfriemelt\wrapped\_\Cli\Argument;
 
 use RuntimeException;
 
-class OptionMissingValueException extends RuntimeException
-{
-}
+class OptionMissingValueException extends RuntimeException {}

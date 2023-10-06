@@ -51,7 +51,7 @@ class Update extends QueryPart implements Command
 
         $colParts = [];
 
-        foreach ($this->columns as [ $column, $expression ]) {
+        foreach ($this->columns as [$column, $expression]) {
             $colParts[] = "{$column->stringify($driver)} = {$expression->stringify($driver)}";
         }
 

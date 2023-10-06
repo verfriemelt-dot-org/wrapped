@@ -12,8 +12,7 @@ class Argument
         public readonly string $name,
         public readonly bool $optional = false,
         public readonly ?string $description = null,
-    ) {
-    }
+    ) {}
 
     public function setValue(string $input): self
     {

@@ -12,7 +12,7 @@ class StatsdTimer
 
     private ?float $diff = null;
 
-    private $name = '';
+    private string $name = '';
 
     public function __construct(StatsdClient $statsd, $key)
     {

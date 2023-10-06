@@ -6,6 +6,4 @@ namespace verfriemelt\wrapped\_\Cli\Argument;
 
 use RuntimeException;
 
-class ArgumentMissingException extends RuntimeException
-{
-}
+class ArgumentMissingException extends RuntimeException {}

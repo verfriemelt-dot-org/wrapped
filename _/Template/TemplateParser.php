@@ -18,7 +18,7 @@ class TemplateParser
 {
     private ?\verfriemelt\wrapped\_\Template\Token\Token $chain = null;
 
-    private $data = [];
+    private array $data = [];
 
     private $currentToken;
 

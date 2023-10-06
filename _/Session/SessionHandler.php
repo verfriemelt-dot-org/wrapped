@@ -6,34 +6,13 @@ namespace verfriemelt\wrapped\_\Session;
 
 interface SessionHandler
 {
-    /**
-     * @param type $name
-     * @param type $value
-     */
-    public function set($name, $value);
+    public function set(string $name, mixed $value): static;
 
-    /**
-     * returns the given variable or returns the given default
-     *
-     * @param type $name
-     * @param type $default
-     */
-    public function get($name, $default = null);
+    public function get(string $name, mixed $default = null): mixed;
 
-    /**
-     * checks if value has been set
-     */
-    public function has($name);
+    public function has(string $name): bool;
 
-    /**
-     * deletes value
-     *
-     * @param type $name
-     */
-    public function delete($name);
+    public function delete(string $name): static;
 
-    /**
-     * destroys current session
-     */
-    public function destroy();
+    public function destroy(): void;
 }

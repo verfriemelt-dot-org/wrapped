@@ -128,7 +128,7 @@ class ConsoleFrame
         $width = $this->getRenderWidth();
         $height = $this->getRenderHeight();
 
-        foreach (array_slice($this->buffer, $this->scrollPos, $height) as [ $line, $style ]) {
+        foreach (array_slice($this->buffer, $this->scrollPos, $height) as [$line, $style]) {
             $this->cli->jump($this->pos['x'], $this->pos['y'] + $offset);
             //                $this->cli->write( mb_substr( $line, 0,  $this->getRenderWidth() ), $style );
 

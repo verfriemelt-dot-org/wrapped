@@ -11,9 +11,7 @@ trait Singleton
     /**
      * nope
      */
-    protected function __construct()
-    {
-    }
+    protected function __construct() {}
 
     /**
      * static function for retriving the session handle

@@ -16,7 +16,7 @@ final class StatsdClient
 
     private ?\verfriemelt\wrapped\_\Statsd\Connection $connection = null;
 
-    private $namespace = '';
+    private string $namespace = '';
 
     public function setConnection(Connection $connection)
     {

@@ -10,13 +10,16 @@ abstract class Convention
 {
     protected string $string;
 
-    public const DESTRUCTIVE = false;
-
     final public function __construct(string $str = null)
     {
         if ($str !== null) {
             $this->setString($str);
         }
+    }
+
+    protected static function isDestructive(): bool
+    {
+        return false;
     }
 
     public function setString(string $str)
@@ -32,7 +35,7 @@ abstract class Convention
 
     public function convertTo($class)
     {
-        if (static::DESTRUCTIVE) {
+        if (static::isDestructive()) {
             throw new Exception('not possible');
         }
 

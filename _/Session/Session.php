@@ -16,9 +16,10 @@ final class Session implements SessionHandler
 
     private ?string $sessionId = null;
 
-    private string|\verfriemelt\wrapped\_\Session\SessionDataObject|null $storageObj = null;
+    private string|SessionDataObject|null $storageObj = null;
 
-    private $currentData = [];
+    /** @var mixed[] */
+    private array $currentData = [];
 
     private readonly Request $request;
 
@@ -42,7 +43,7 @@ final class Session implements SessionHandler
     public function __destruct()
     {
         if ($this->dataObj === null) {
-            return false;
+            return;
         }
 
         $this->dataObj->setTimeout(time() + static::SESSION_TIMEOUT);
@@ -50,13 +51,13 @@ final class Session implements SessionHandler
         $this->dataObj->save();
     }
 
-    public function delete($name)
+    public function delete(string $name): static
     {
         unset($this->currentData[$name]);
         return $this;
     }
 
-    public function destroy()
+    public function destroy(): void
     {
         $this->dataObj->delete();
         $this->currentData = [];
@@ -68,7 +69,7 @@ final class Session implements SessionHandler
         );
     }
 
-    public function get($name, $default = null)
+    public function get(string $name, mixed $default = null): mixed
     {
         if ($this->has($name)) {
             return $this->currentData[$name];
@@ -77,20 +78,12 @@ final class Session implements SessionHandler
         return $default;
     }
 
-    public function has($name)
+    public function has(string $name): bool
     {
         return isset($this->currentData[$name]);
     }
 
-    /**
-     * we have to copy it locally, since its not possible to to stuff like
-     * $htis->storageObj::staticCall();
-     *
-     * @param type $sessionId
-     *
-     * @return Session
-     */
-    private function resume($sessionId)
+    private function resume(string $sessionId): static
     {
         $localCopy = $this->storageObj;
 
@@ -98,7 +91,8 @@ final class Session implements SessionHandler
 
         // if not found, create new session
         if ($this->dataObj === null) {
-            return $this->start();
+            $this->start();
+            return $this;
         }
 
         $this->sessionId = $sessionId;
@@ -107,12 +101,7 @@ final class Session implements SessionHandler
         return $this;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Session
-     */
-    public function set($name, $value)
+    public function set(string $name, mixed $value): static
     {
         if ($this->sessionId === null) {
             $this->start();
@@ -122,7 +111,7 @@ final class Session implements SessionHandler
         return $this;
     }
 
-    private function start()
+    private function start(): void
     {
         $this->sessionId = sha1(microtime(true) . random_int(0, mt_getrandmax()));
 
@@ -139,7 +128,7 @@ final class Session implements SessionHandler
         $this->dataObj->setTimeout(time() + self::SESSION_TIMEOUT);
     }
 
-    public function fetchSessionId()
+    public function fetchSessionId(): string
     {
         if ($this->sessionId === null) {
             $this->start();

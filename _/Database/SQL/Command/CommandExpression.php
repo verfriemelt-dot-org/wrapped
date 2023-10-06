@@ -6,6 +6,4 @@ namespace verfriemelt\wrapped\_\Database\SQL\Command;
 
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 
-interface CommandExpression extends ExpressionItem
-{
-}
+interface CommandExpression extends ExpressionItem {}

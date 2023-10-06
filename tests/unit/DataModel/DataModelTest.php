@@ -9,19 +9,13 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 
-class Example extends DataModel
-{
-}
+class Example extends DataModel {}
 
 #[LowerCase]
-class Example2 extends DataModel
-{
-}
+class Example2 extends DataModel {}
 
 #[SnakeCase]
-class LongerExample extends DataModel
-{
-}
+class LongerExample extends DataModel {}
 
 class DataModelTest extends TestCase
 {

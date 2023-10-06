@@ -9,11 +9,14 @@ use Attribute;
 #[Attribute]
 class LowerCase extends Convention
 {
-    final public const DESTRUCTIVE = true;
-
     public function fetchStringParts(): array
     {
         return [$this->string];
+    }
+
+    protected static function isDestructive(): bool
+    {
+        return true;
     }
 
     public static function fromStringParts(string ...$parts): Convention

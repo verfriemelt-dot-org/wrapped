@@ -128,13 +128,13 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
         static::assertSame(1, b::get(1)->aObject()->getId());
     }
 
-//        public function testWrongMarked() {
-//
-//            $this->buildObjects();
-//
-// //            $this->markTestIncomplete( 'not implemented' );
-//            $this->expectExceptionObject( new Exception( 'not translateable' ) );
-//
-//            b::get( 1 )->aWrongMarked();
-//        }
+    //        public function testWrongMarked() {
+    //
+    //            $this->buildObjects();
+    //
+    // //            $this->markTestIncomplete( 'not implemented' );
+    //            $this->expectExceptionObject( new Exception( 'not translateable' ) );
+    //
+    //            b::get( 1 )->aWrongMarked();
+    //        }
 }

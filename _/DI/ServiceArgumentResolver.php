@@ -27,7 +27,6 @@ class ServiceArgumentResolver extends ArgumentResolver
     protected function buildParameter(ArgumentMetadata $parameter): object
     {
         foreach ([$parameter->getName(), ...$parameter->getTypes()] as $param) {
-
             if (!$this->service->hasParameter($param) && !$this->container->has($param)) {
                 continue;
             }

@@ -13,13 +13,13 @@ class MaterializedViewDataModel extends ViewDataModel
         $schemaname = static::fetchSchemaname();
 
         $queryParts = [
-            "REFRESH",
-            "MATERIALIZED",
-            "VIEW"
+            'REFRESH',
+            'MATERIALIZED',
+            'VIEW',
         ];
 
         if ($concurrently) {
-            $queryParts[] = "CONCURRENTLY";
+            $queryParts[] = 'CONCURRENTLY';
         }
 
         $queryParts[] = "{$schemaname}.{$tablename}";

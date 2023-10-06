@@ -38,9 +38,9 @@ class Formular implements Viewable
 
     private string $method = self::METHOD_POST;
 
-    private $cssClass = '';
+    private string $cssClass = '';
 
-    private $cssId = '';
+    private string $cssId = '';
 
     private $action;
 
@@ -48,7 +48,7 @@ class Formular implements Viewable
 
     private readonly string $csrfTokenName;
 
-    private $storeValuesOnFail = false;
+    private bool $storeValuesOnFail = false;
 
     private bool $prefilledWithSubmitData = false;
 

@@ -190,8 +190,6 @@ abstract class TreeDataModel extends DataModel
      *              / \
      *             C   D
      *
-     * @param static $before
-     *
      * @return bool|static
      *
      * @throws Exception

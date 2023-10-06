@@ -18,8 +18,7 @@ class Option
         public readonly ?int $flags = 0,
         public readonly ?string $description = null,
         public readonly ?string $short = null,
-    ) {
-    }
+    ) {}
 
     public function setValue(string $value): static
     {

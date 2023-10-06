@@ -2261,27 +2261,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$cssClass has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$cssId has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$method \\(string\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\type\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$storeValuesOnFail has no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
@@ -2616,17 +2601,7 @@ parameters:
 			path: _/Http/Response/JsonResponse.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:\\$alreadyEncoded has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:\\$content has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:\\$pretty has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/JsonResponse.php
 
@@ -2712,6 +2687,11 @@ parameters:
 
 		-
 			message: "#^Cannot call method set\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
+			count: 1
+			path: _/Input/CSRF.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\CSRF\\:\\:generateToken\\(\\) should return string but returns mixed\\.$#"
 			count: 1
 			path: _/Input/CSRF.php
 
@@ -3406,87 +3386,17 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:__destruct\\(\\) with return type void returns false but should not return anything\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:fetchSessionId\\(\\) should return string but returns string\\|null\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:destroy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:fetchSessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:has\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:start\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\#1 \\$name \\(string\\) of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:set\\(\\) should be compatible with parameter \\$name \\(verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\) of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:set\\(\\)$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\$default of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:delete\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:set\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$currentData has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$currentData \\(array\\) does not accept mixed\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$dataObj has no type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$sessionId \\(string\\|null\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
@@ -3564,61 +3474,6 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setTimeout\\(\\) has parameter \\$timeout with no type specified\\.$#"
 			count: 1
 			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:destroy\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:has\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:set\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Parameter \\$default of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:delete\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:get\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Parameter \\$name of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:set\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionHandler\\:\\:set\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Session\\\\type\\.$#"
-			count: 1
-			path: _/Session/SessionHandler.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getBySessionId\\(\\) has no return type specified\\.$#"
@@ -3931,11 +3786,6 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:\\$namespace has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
 			message: "#^Cannot call method send\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\|null\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
@@ -3962,11 +3812,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:restart\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdTimer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdTimer\\:\\:\\$name has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdTimer.php
 
@@ -4286,7 +4131,7 @@ parameters:
 			path: _/Template/TemplateParser.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$data has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateParser\\:\\:\\$data type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
 
@@ -4459,6 +4304,16 @@ parameters:
 			message: "#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#"
 			count: 1
 			path: tests/bootstrap.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with 1 and null will always evaluate to false\\.$#"
+			count: 1
+			path: tests/unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertSame\\(\\) with 10 and null will always evaluate to false\\.$#"
+			count: 1
+			path: tests/unit/DataModel/CollectionTest.php
 
 		-
 			message: "#^Cannot call method getId\\(\\) on null\\.$#"
