@@ -167,6 +167,17 @@ class ContainerTest extends TestCase
         static::assertSame('number 2', $instance->arg->instance);
     }
 
+    public function test_paramconfiguration_overwrite_with_argument_type(): void
+    {
+        $container = new Container();
+        $container->register(a::class)
+            ->parameter(b::class, fn (): b => new b('number 2'));
+
+        $instance = $container->get(a::class);
+
+        static::assertSame('number 2', $instance->arg->instance);
+    }
+
     public function test_paramconfiguration_overwrite_with_union_types(): void
     {
         $container = new Container();

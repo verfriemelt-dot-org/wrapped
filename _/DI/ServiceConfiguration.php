@@ -73,6 +73,10 @@ class ServiceConfiguration
      */
     public function getInterfaces(): array
     {
+        if (!isset($this->class)) {
+            return [];
+        }
+
         /** @var class-string[] $interfaces */
         $interfaces = class_implements($this->class);
 
@@ -99,8 +103,8 @@ class ServiceConfiguration
     /**
      * @param string|class-string $parameter
      */
-    public function getResolver(string $parameter): Closure
+    public function getResolver(string $parameter): ?Closure
     {
-        return $this->resolver[$parameter];
+        return $this->resolver[$parameter] ?? null;
     }
 }

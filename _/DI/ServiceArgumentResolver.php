@@ -27,20 +27,24 @@ class ServiceArgumentResolver extends ArgumentResolver
     protected function buildParameter(ArgumentMetadata $parameter): object
     {
         foreach ([$parameter->getName(), ...$parameter->getTypes()] as $param) {
-            if (!$this->service->hasParameter($param)) {
+
+            if (!$this->service->hasParameter($param) && !$this->container->has($param)) {
                 continue;
             }
 
             $paramResolver = $this->service->getResolver($param);
 
+            if ($paramResolver === null) {
+                continue;
+            }
+
             return $paramResolver(
-                ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($param)
+                ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($paramResolver)
             );
         }
 
-        $types = $parameter->getTypes();
-        if (count($types) === 1) {
-            return $this->container->get($types[0]);
+        if (count($parameter->getTypes()) === 1) {
+            return $this->container->get($parameter->getTypes()[0]);
         }
 
         throw new RuntimeException('cannot resolv params for ' . $parameter->getName());
