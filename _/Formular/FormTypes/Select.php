@@ -14,7 +14,7 @@ class Select extends FormType
     /** @var array<string, SelectGroup> */
     private array $optGroups = [];
 
-    public function addOption(string $name, string|int $value, string $optGroupName = null): self
+    public function addOption(string $name, string|int $value, ?string $optGroupName = null): self
     {
         if ($optGroupName !== null) {
             if (!isset($this->optGroups[$optGroupName])) {

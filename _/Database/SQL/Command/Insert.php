@@ -52,7 +52,7 @@ class Insert extends QueryPart implements Command, CommandExpression
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         if (count($this->columns) === 0) {
             throw new Exception('empty insert into statement');

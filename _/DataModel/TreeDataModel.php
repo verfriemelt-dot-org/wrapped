@@ -1272,7 +1272,7 @@ abstract class TreeDataModel extends DataModel
     /**
      * @return Collection<static>
      */
-    public function fetchChildren(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection
+    public function fetchChildren(string $order = 'left', string $direction = 'ASC', ?int $depth = null): Collection
     {
         $logic = DbLogic::create()
             ->where('left', '>', $this->getLeft())->addAnd()
@@ -1296,7 +1296,7 @@ abstract class TreeDataModel extends DataModel
     public function fetchChildrenInclusive(
         string $order = 'left',
         string $direction = 'ASC',
-        int $depth = null
+        ?int $depth = null
     ): Collection {
         $logic = DbLogic::create()
             ->where('left', '>=', $this->getLeft())->addAnd()

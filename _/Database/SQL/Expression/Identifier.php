@@ -38,7 +38,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         $this->parts = array_values($parts);
     }
 
-    public function quote(string $ident, DatabaseDriver $driver = null): string
+    public function quote(string $ident, ?DatabaseDriver $driver = null): string
     {
         if (!$driver) {
             return $ident;
@@ -47,7 +47,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         return $driver->quoteIdentifier($ident);
     }
 
-    protected function translateField(string $ident, string $table = null): string
+    protected function translateField(string $ident, ?string $table = null): string
     {
         if ($ident === '*' || count($this->context) === 0) {
             return $ident;
@@ -75,7 +75,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         };
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         $parts = [];
 

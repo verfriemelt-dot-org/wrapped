@@ -11,12 +11,7 @@ class Queue
 {
     final public const DEFAULT_CHANNEL = 'default';
 
-    private readonly QueuePersistance $storage;
-
-    public function __construct(QueuePersistance $storage = null)
-    {
-        $this->storage = $storage ?? new MysqlBackend();
-    }
+    public function __construct(private readonly QueuePersistance $storage = new MysqlBackend()) {}
 
     /**
      * adds items to specifiyed channel
@@ -44,12 +39,12 @@ class Queue
         return true;
     }
 
-    public function fetchByKey(string $key, string $channel = self::DEFAULT_CHANNEL, int $limit = null): array
+    public function fetchByKey(string $key, string $channel = self::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         return $this->storage->fetchByKey($key, $channel, $limit);
     }
 
-    public function fetchChannel(string $channel = self::DEFAULT_CHANNEL, int $limit = null): array
+    public function fetchChannel(string $channel = self::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         return $this->storage->fetchChannel($channel, $limit);
     }

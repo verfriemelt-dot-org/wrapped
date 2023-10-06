@@ -22,7 +22,7 @@ class MemoryBackend implements QueuePersistance
         return $this;
     }
 
-    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, int $count = null): array
+    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, ?int $count = null): array
     {
         $result = [];
 
@@ -37,7 +37,7 @@ class MemoryBackend implements QueuePersistance
         return $result;
     }
 
-    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, int $count = null): array
+    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, ?int $count = null): array
     {
         $result = [];
 

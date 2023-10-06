@@ -171,7 +171,7 @@ class TemplateLexer
         $this->currentToken = $token;
     }
 
-    public function printChainInline(Token $currentToken = null): void
+    public function printChainInline(?Token $currentToken = null): void
     {
         $currentToken = $currentToken ?: $this->tokenChain;
 
@@ -182,7 +182,7 @@ class TemplateLexer
         }
     }
 
-    public function printChain(Token $currentToken = null): void
+    public function printChain(?Token $currentToken = null): void
     {
         $currentToken = $currentToken ?: $this->tokenChain;
 

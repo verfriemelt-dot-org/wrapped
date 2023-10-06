@@ -26,7 +26,7 @@ class Conjunction extends QueryPart implements ExpressionItem
         $this->operator = $op;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return strtoupper($this->operator);
     }

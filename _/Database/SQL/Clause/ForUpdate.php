@@ -22,7 +22,7 @@ class ForUpdate extends QueryPart implements Clause
         return 100;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

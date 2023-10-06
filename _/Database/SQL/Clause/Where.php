@@ -38,7 +38,7 @@ class Where extends QueryPart implements Clause
         $this->expression = $wrap;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

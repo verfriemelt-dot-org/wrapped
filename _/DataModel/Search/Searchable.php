@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\DataModel\DataModelQueryBuilder;
 
 interface Searchable
 {
-    public static function search(string $searchString, QueryBuilder $query = null): Collection;
+    public static function search(string $searchString, ?QueryBuilder $query = null): Collection;
 
     public static function getSearchFields(): array;
 

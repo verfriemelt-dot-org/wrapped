@@ -40,7 +40,7 @@ abstract class FormType
 
     abstract public function fetchHtml(): string;
 
-    public function __construct(string $name, string $value = null, Template $template = null)
+    public function __construct(string $name, ?string $value = null, ?Template $template = null)
     {
         $this->name = $name;
         $this->value = $value;

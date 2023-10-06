@@ -32,7 +32,7 @@ class Container
      *
      * @return ServiceConfiguration<T>
      */
-    public function register(string $id, object $instance = null): ServiceConfiguration
+    public function register(string $id, ?object $instance = null): ServiceConfiguration
     {
         /** @var ServiceConfiguration<T> $service */
         $service = (new ServiceConfiguration($id));

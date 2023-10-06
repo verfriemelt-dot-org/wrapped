@@ -25,7 +25,7 @@ class Limit extends QueryPart implements Clause
         $this->limit = $limit;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

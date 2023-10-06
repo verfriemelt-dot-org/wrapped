@@ -16,7 +16,7 @@ class Cast extends QueryPart implements ExpressionItem
         $this->type = $type;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return "::{$this->type}";
     }

@@ -24,7 +24,7 @@ class Delete extends QueryPart implements Command
         return 10;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::COMMAND,

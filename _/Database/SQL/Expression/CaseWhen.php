@@ -23,7 +23,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
 
     protected ?ExpressionItem $else = null;
 
-    public function __construct(ExpressionItem $exp = null)
+    public function __construct(?ExpressionItem $exp = null)
     {
         if ($exp !== null) {
             $this->addChild($exp);
@@ -49,7 +49,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         $exp = ($this->expression) ? "{$this->expression->stringify($driver)} " : '';
 

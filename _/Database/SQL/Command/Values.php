@@ -32,7 +32,7 @@ class Values extends QueryPart implements Command, CommandExpression
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::COMMAND,

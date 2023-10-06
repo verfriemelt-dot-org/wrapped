@@ -52,7 +52,7 @@ abstract class DatabaseDriver
 
     abstract public function quoteIdentifier(string $ident): string;
 
-    public function __construct(string $name, string $user, string $password, string $host, string $database, int $port = null)
+    public function __construct(string $name, string $user, string $password, string $host, string $database, ?int $port = null)
     {
         $this->connectionName = $name;
 

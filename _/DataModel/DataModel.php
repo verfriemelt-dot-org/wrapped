@@ -319,7 +319,7 @@ abstract class DataModel
     /**
      * @return Collection<static>
      */
-    public static function find(array|DbLogic $params, string $orderBy = null, string $order = 'asc'): Collection
+    public static function find(array|DbLogic $params, ?string $orderBy = null, string $order = 'asc'): Collection
     {
         if ($params instanceof DbLogic) {
             $query = static::buildQueryFromDbLogic($params);
@@ -337,7 +337,7 @@ abstract class DataModel
 
     public static function findSingle(
         array|Dblogic $params = [],
-        string $orderBy = null,
+        ?string $orderBy = null,
         string $order = 'asc'
     ): ?static {
         if ($params instanceof DbLogic) {
@@ -671,7 +671,7 @@ abstract class DataModel
     /**
      * @return DataModelQueryBuilder<static>
      */
-    public static function with(DataModel $dest, callable $callback = null): DataModelQueryBuilder
+    public static function with(DataModel $dest, ?callable $callback = null): DataModelQueryBuilder
     {
         $query = static::buildSelectQuery();
         $query->with($dest, $callback);

@@ -33,7 +33,7 @@ abstract class Token
         return $this;
     }
 
-    public function setNextToken(Token $next = null): static
+    public function setNextToken(?Token $next = null): static
     {
         $this->nextToken = $next;
         $this->nextToken->prevToken = $this;

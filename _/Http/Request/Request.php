@@ -31,7 +31,7 @@ class Request
         array $cookies = [],
         array $files = [],
         array $server = [],
-        string $content = null
+        ?string $content = null
     ) {
         $this->initialize($query, $request, $attributes, $cookies, $files, $server, $content);
     }
@@ -43,7 +43,7 @@ class Request
         array $cookies = [],
         array $files = [],
         array $server = [],
-        string $content = null
+        ?string $content = null
     ) {
         $this->request = new ParameterBag($request);
         $this->query = new ParameterBag($query);

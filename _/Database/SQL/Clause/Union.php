@@ -16,7 +16,7 @@ class Union extends QueryPart implements Clause
         return 10000;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return 'UNION ALL';
     }

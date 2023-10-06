@@ -33,7 +33,7 @@ class ArgvParser
     /**
      * @param string[]|null $argv $_SERVER['argv']
      */
-    public function __construct(array $argv = null)
+    public function __construct(?array $argv = null)
     {
         $argv ??= $_SERVER['argv'] ?? [];
 

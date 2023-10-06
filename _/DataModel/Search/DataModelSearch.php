@@ -66,7 +66,7 @@ class DataModelSearch
      *
      * @return DataModelQueryBuilder<T>
      */
-    public function buildQuery(string $searchString, DataModelQueryBuilder $query = null): DataModelQueryBuilder
+    public function buildQuery(string $searchString, ?DataModelQueryBuilder $query = null): DataModelQueryBuilder
     {
         $query ??= $this->prototype::buildSelectQuery();
 

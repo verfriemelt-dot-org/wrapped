@@ -98,7 +98,7 @@ class Console
         return $this;
     }
 
-    public function write(string $text, int $color = null): static
+    public function write(string $text, ?int $color = null): static
     {
         if ($color !== null) {
             $this->setForegroundColor($color);

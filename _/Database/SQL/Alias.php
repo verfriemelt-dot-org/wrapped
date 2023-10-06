@@ -22,7 +22,7 @@ trait Alias
         return $this->addAlias($ident);
     }
 
-    protected function stringifyAlias(DatabaseDriver $driver = null): string
+    protected function stringifyAlias(?DatabaseDriver $driver = null): string
     {
         return $this->alias ? " AS {$this->alias->stringify($driver)}" : '';
     }

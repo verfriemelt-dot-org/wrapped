@@ -20,7 +20,7 @@ class Statement extends QueryPart implements ExpressionItem
 
     private bool $sortingDisabled = false;
 
-    public function __construct(Command $command = null, QueryPart ...$parts)
+    public function __construct(?Command $command = null, QueryPart ...$parts)
     {
         if ($command) {
             $this->setCommand($command);
@@ -61,7 +61,7 @@ class Statement extends QueryPart implements ExpressionItem
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         if (!$this->sortingDisabled) {
             usort($this->parts, fn ($a, $b) => $a->getWeight() <=> $b->getWeight());

@@ -17,13 +17,13 @@ interface QueuePersistance
     /**
      * Retrives items from the queue which are sorted from oldest to youngest and not locked
      */
-    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, int $limit = null): array;
+    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array;
 
     /**
      * Retrives items from the queue which are sorted from oldest to youngest and not locked
      * filtered by key
      */
-    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, int $limit = null): array;
+    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array;
 
     /**
      * removes items off the queue

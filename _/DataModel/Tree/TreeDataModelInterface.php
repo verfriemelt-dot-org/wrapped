@@ -22,12 +22,12 @@ interface TreeDataModelInterface
     /**
      * @return Collection<TreeDataModelInterface>
      */
-    public function fetchChildrenInclusive(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection;
+    public function fetchChildrenInclusive(string $order = 'left', string $direction = 'ASC', ?int $depth = null): Collection;
 
     /**
      * @return Collection<TreeDataModelInterface>
      */
-    public function fetchChildren(string $order = 'left', string $direction = 'ASC', int $depth = null): Collection;
+    public function fetchChildren(string $order = 'left', string $direction = 'ASC', ?int $depth = null): Collection;
 
     /**
      * @return Collection<TreeDataModelInterface>

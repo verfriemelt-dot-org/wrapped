@@ -31,7 +31,8 @@ $config->setRules([
     // we have long params list on throw
     'single_line_throw' => false,
 
-    'php_unit_method_casing' => ["case" => 'snake_case'],
+    // snake case testmethods
+    'php_unit_method_casing' => ['case' => 'snake_case'],
 
     // wtf, we need space
     'concat_space' => ['spacing' => 'one'],
@@ -40,8 +41,11 @@ $config->setRules([
     'phpdoc_line_span' => [
         'property' => 'single',
         'const' => 'single',
-        'method' => 'multi'
-    ]
+        'method' => 'multi',
+    ],
+
+    // keep explizity types
+    'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
 ]);
 $config->setFinder($finder);
 $config->setRiskyAllowed(true);

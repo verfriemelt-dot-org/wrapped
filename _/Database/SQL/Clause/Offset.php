@@ -25,7 +25,7 @@ class Offset extends QueryPart implements Clause
         $this->offset = $offset;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

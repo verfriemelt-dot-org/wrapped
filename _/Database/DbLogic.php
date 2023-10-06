@@ -224,7 +224,7 @@ final class DbLogic
     public function order(
         string $column,
         string $direction = 'ASC',
-        string $overrideTable = null,
+        ?string $overrideTable = null,
         bool $skipQuote = false
     ): self {
         if (!$this->order) {

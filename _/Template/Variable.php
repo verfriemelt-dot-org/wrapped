@@ -15,7 +15,7 @@ class Variable implements TemplateItem
 
     private static array $formats = [];
 
-    public function __construct(string $name = null, $value = null)
+    public function __construct(?string $name = null, $value = null)
     {
         $this->name = $name;
         $this->value = $value;

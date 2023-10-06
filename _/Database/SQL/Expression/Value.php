@@ -40,7 +40,7 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
         return $this->value;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         if ($driver) {
             return $this->bind . $this->stringifyAlias($driver);

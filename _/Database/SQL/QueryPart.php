@@ -14,7 +14,7 @@ abstract class QueryPart
     /** @var DataModel[] */
     protected array $context = [];
 
-    abstract public function stringify(DatabaseDriver $driver = null): string;
+    abstract public function stringify(?DatabaseDriver $driver = null): string;
 
     public function addDataModelContext(DataModel $context)
     {

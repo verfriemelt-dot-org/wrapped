@@ -37,7 +37,7 @@ class FormularTemplateTest extends TestCase
      * @param callable(Template): void|null $setup
      */
     #[DataProvider('templates')]
-    public function test(string $filepath, callable $setup = null): void
+    public function test(string $filepath, ?callable $setup = null): void
     {
         static::expectNotToPerformAssertions();
 

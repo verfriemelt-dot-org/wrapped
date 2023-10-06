@@ -17,7 +17,7 @@ class GroupBy extends QueryPart implements Clause
 
     private array $expressions = [];
 
-    public function __construct(QueryPart $by = null)
+    public function __construct(?QueryPart $by = null)
     {
         if ($by !== null) {
             $this->add($by);
@@ -40,7 +40,7 @@ class GroupBy extends QueryPart implements Clause
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

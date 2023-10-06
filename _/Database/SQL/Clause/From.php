@@ -27,7 +27,7 @@ class From extends QueryPart implements Clause
         $this->addChild($this->source);
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(
             static::CLAUSE,

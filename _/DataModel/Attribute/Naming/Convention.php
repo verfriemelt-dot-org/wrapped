@@ -10,7 +10,7 @@ abstract class Convention
 {
     protected string $string;
 
-    final public function __construct(string $str = null)
+    final public function __construct(?string $str = null)
     {
         if ($str !== null) {
             $this->setString($str);

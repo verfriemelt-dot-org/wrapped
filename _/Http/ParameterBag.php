@@ -44,7 +44,7 @@ class ParameterBag implements Countable, IteratorAggregate
         return isset($this->parameters[$key]);
     }
 
-    public function get(string $key, string|int $default = null)
+    public function get(string $key, string|int|null $default = null)
     {
         if (!$this->has($key)) {
             return $default;

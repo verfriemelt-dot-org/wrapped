@@ -86,7 +86,7 @@ class DataModelQueryBuilder extends QueryBuilder
     /**
      * @return DataModelQueryBuilder<T>
      */
-    public function with(DataModel $dest, callable $callback = null): DataModelQueryBuilder
+    public function with(DataModel $dest, ?callable $callback = null): DataModelQueryBuilder
     {
         if (!$callback) {
             $callback = array_values(
@@ -110,7 +110,7 @@ class DataModelQueryBuilder extends QueryBuilder
      *
      * @return Collection<T>
      */
-    public function get(Collection $overrideInstance = null): Collection
+    public function get(?Collection $overrideInstance = null): Collection
     {
         if ($overrideInstance !== null) {
             return $overrideInstance::buildFromQuery($this->prototype, $this);

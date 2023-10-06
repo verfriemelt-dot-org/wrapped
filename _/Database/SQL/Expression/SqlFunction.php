@@ -37,7 +37,7 @@ class SqlFunction extends QueryPart implements ExpressionItem
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         // some functions are keywords
         $keywords = [

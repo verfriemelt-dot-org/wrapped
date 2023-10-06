@@ -23,7 +23,7 @@ class Response
 
     private $contentCallback;
 
-    public function __construct(int $statuscode = 200, string $content = null)
+    public function __construct(int $statuscode = 200, ?string $content = null)
     {
         $this->setStatusCode($statuscode);
         $this->setContent($content ?? '');

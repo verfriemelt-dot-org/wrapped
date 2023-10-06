@@ -54,7 +54,7 @@ class OperatorExpression extends QueryPart implements ExpressionItem
         $this->arguments = $args;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         return match ($this->operator) {
             'in' => sprintf(

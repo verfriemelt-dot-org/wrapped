@@ -23,7 +23,7 @@ final class Session implements SessionHandler
 
     private readonly Request $request;
 
-    public function __construct(Request $request, SessionDataObject $sessionStorage = null)
+    public function __construct(Request $request, ?SessionDataObject $sessionStorage = null)
     {
         $this->request = $request;
 

@@ -18,7 +18,7 @@ class ArgumentResolver
         $this->container = $container;
     }
 
-    public function resolv(object|string $obj, string $method = null): array
+    public function resolv(object|string $obj, ?string $method = null): array
     {
         $args = [];
 

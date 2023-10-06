@@ -63,7 +63,7 @@ class QueryBuilder
 
     public ?DatabaseDriver $db = null;
 
-    public function __construct(DatabaseDriver $database = null)
+    public function __construct(?DatabaseDriver $database = null)
     {
         $this->db = $database;
         $this->stmt = new Statement();

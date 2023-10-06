@@ -10,8 +10,8 @@ class Button extends FormType
 
     public function __construct(
         string $name,
-        string $value = null,
-        \verfriemelt\wrapped\_\Template\Template $template = null
+        ?string $value = null,
+        ?\verfriemelt\wrapped\_\Template\Template $template = null
     ) {
         parent::__construct($name, $value, $template);
 

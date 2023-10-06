@@ -10,12 +10,7 @@ use verfriemelt\wrapped\_\Queue\QueueItem;
 
 class MysqlBackend implements QueuePersistance
 {
-    private readonly MysqlBackendDataObject $storage;
-
-    public function __construct(MysqlBackendDataObject $storage = null)
-    {
-        $this->storage = $storage ?? new MysqlBackendDataObject();
-    }
+    public function __construct(private readonly MysqlBackendDataObject $storage = new MysqlBackendDataObject()) {}
 
     public function deleteItem(QueueItem $item): bool
     {
@@ -35,7 +30,7 @@ class MysqlBackend implements QueuePersistance
         return $item ? $item->read() : null;
     }
 
-    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, int $limit = null): array
+    public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         $collection = $this->storage::find(['channel' => $channel, 'locked' => 0, 'key' => $key], 'date');
         $queueItems = $collection->map(fn (MysqlBackendDataObject $i) => $i->read());
@@ -43,7 +38,7 @@ class MysqlBackend implements QueuePersistance
         return $queueItems;
     }
 
-    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, int $limit = null): array
+    public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         $collection = $this->storage::find(['channel' => $channel, 'locked' => 0], 'date');
         $queueItems = $collection->map(fn (MysqlBackendDataObject $i) => $i->read());

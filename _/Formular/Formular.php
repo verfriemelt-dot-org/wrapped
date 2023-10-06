@@ -68,8 +68,8 @@ class Formular implements Viewable
         string $name,
         Request $request,
         Session $session,
-        Filter $filter = null,
-        Template $template = null
+        ?Filter $filter = null,
+        ?Template $template = null
     ) {
         $this->formname = $name;
         $this->filter = $filter;
@@ -120,7 +120,7 @@ class Formular implements Viewable
         return $input;
     }
 
-    public function addDate($name, DateTime $value = null): Date
+    public function addDate($name, ?DateTime $value = null): Date
     {
         $input = new Date($name);
 

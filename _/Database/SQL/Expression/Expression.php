@@ -36,7 +36,7 @@ class Expression extends QueryPart implements ExpressionItem, Aliasable
         return $this;
     }
 
-    public function stringify(DatabaseDriver $driver = null): string
+    public function stringify(?DatabaseDriver $driver = null): string
     {
         if (count($this->expressions) === 0) {
             throw new Exception('empty expression');
