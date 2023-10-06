@@ -11,6 +11,8 @@ use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
+use ReflectionUnionType;
+use RuntimeException;
 
 class ArgumentMetadataFactory
 {
@@ -30,12 +32,14 @@ class ArgumentMetadataFactory
             }
 
             $reflection = new ReflectionMethod($obj, $method ?? $constructor->getName());
+        } else {
+            return [];
         }
 
         foreach ($reflection->getParameters() as $param) {
             $arguments[] = new ArgumentMetadata(
                 $param->getName(),
-                $this->getType($param, $reflection),
+                $this->getTypes($param, $reflection),
                 $param->isDefaultValueAvailable(),
                 $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null
             );
@@ -45,16 +49,22 @@ class ArgumentMetadataFactory
     }
 
     /**
-     * @return class-string|null
+     * @return array<class-string|string>
      */
-    private function getType(ReflectionParameter $parameter, ReflectionFunctionAbstract $function): ?string
+    private function getTypes(ReflectionParameter $parameter, ReflectionFunctionAbstract $function): array
     {
         if (!$type = $parameter->getType()) {
             return null;
         }
 
-        /** @var class-string $name */
-        $name = $type instanceof ReflectionNamedType ? $type->getName() : $type->getName();
-        return $name;
+        if ($type instanceof ReflectionNamedType) {
+            return [$type->getName()];
+        }
+
+        if ($type instanceof ReflectionUnionType) {
+            return array_map(static fn (ReflectionNamedType $type): string => $type->getName(), $type->getTypes());
+        }
+
+        throw new RuntimeException('cannot get type');
     }
 }

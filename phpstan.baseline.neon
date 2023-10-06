@@ -266,17 +266,12 @@ parameters:
 			path: _/Controller/RestController.php
 
 		-
-			message: "#^Call to an undefined method ReflectionType\\:\\:getName\\(\\)\\.$#"
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
-
-		-
 			message: "#^Cannot call method getName\\(\\) on ReflectionMethod\\|null\\.$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
-			message: "#^Cannot call method getParameters\\(\\) on ReflectionFunction\\|ReflectionMethod\\|null\\.$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php
 
@@ -286,22 +281,27 @@ parameters:
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:getTypes\\(\\) should return array\\<string\\> but returns null\\.$#"
+			count: 1
+			path: _/DI/ArgumentMetadataFactory.php
+
+		-
 			message: "#^Only booleans are allowed in a negated boolean, ReflectionType\\|null given\\.$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
-			message: "#^Parameter \\#2 \\$function of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:getType\\(\\) expects ReflectionFunctionAbstract, ReflectionFunction\\|ReflectionMethod\\|null given\\.$#"
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:buildParameter\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/ArgumentResolver.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			count: 1
+			path: _/DI/ArgumentResolver.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\)$#"
 			count: 1
 			path: _/DI/ArgumentResolver.php
 
@@ -321,9 +321,19 @@ parameters:
 			path: _/DI/Container.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceArgumentResolver\\:\\:buildParameter\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\)$#"
+			count: 1
+			path: _/DI/ServiceArgumentResolver.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:getResolver\\(\\) return type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/DI/ServiceConfiguration.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:parameter\\(\\) has parameter \\$resolver with no signature specified for Closure\\.$#"
@@ -341,7 +351,7 @@ parameters:
 			path: _/DI/ServiceConfiguration.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$resolver type has no value type specified in iterable type array\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$resolver type has no signature specified for Closure\\.$#"
 			count: 1
 			path: _/DI/ServiceConfiguration.php
 
@@ -2677,11 +2687,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:setContentCallback\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$content has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/Response.php
 

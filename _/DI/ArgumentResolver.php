@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
+use RuntimeException;
+
 class ArgumentResolver
 {
     protected Container $container;
@@ -31,8 +33,14 @@ class ArgumentResolver
         return $args;
     }
 
-    protected function buildParameter(ArgumentMetadata $parameter)
+    protected function buildParameter(ArgumentMetadata $parameter): object
     {
-        return $this->container->get($parameter->getType());
+        $types = $parameter->getTypes();
+
+        if (count($types) !== 1) {
+            throw new RuntimeException('cannot resolv union type');
+        }
+
+        return $this->container->get($types[0]);
     }
 }

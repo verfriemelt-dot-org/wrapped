@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\DI\ContainerException;
 
 class a
 {
-    public function __construct(public b $b)
+    public function __construct(public b $arg)
     {
     }
 }
@@ -16,6 +16,27 @@ class a
 class b
 {
     public function __construct(public string $instance = 'number 1')
+    {
+    }
+}
+
+class a_union
+{
+    public function __construct(public b_union|c_union $union)
+    {
+    }
+}
+
+class b_union
+{
+    public function __construct(public string $instance = 'default')
+    {
+    }
+}
+
+class c_union
+{
+    public function __construct(public string $instance = 'default')
     {
     }
 }
@@ -78,7 +99,7 @@ class ContainerTest extends TestCase
         $container->register($b::class, $b);
 
         $result = $container->get(a::class);
-        static::assertSame($result->b->instance, $b->instance, 'instance must be reused');
+        static::assertSame($result->arg->instance, $b->instance, 'instance must be reused');
     }
 
     public function test_do_not_reuse_on_when_configured(): void
@@ -89,7 +110,7 @@ class ContainerTest extends TestCase
         $container->register($b::class, $b)->share(false);
 
         $result = $container->get(a::class);
-        static::assertNotSame($result->b->instance, $b->instance, 'instance must not be reused');
+        static::assertNotSame($result->arg->instance, $b->instance, 'instance must not be reused');
     }
 
     public function test_should_throw_exception_on_circular_depedencies(): void
@@ -122,5 +143,38 @@ class ContainerTest extends TestCase
 
         /* @phpstan-ignore-next-line */
         (new Container())->get('');
+    }
+
+    public function test_paramconfiguration_overwrite(): void
+    {
+        $container = new Container();
+        $container->register(a::class)
+            ->parameter(b::class, fn (): b => new b('number 2'));
+
+        $instance = $container->get(a::class);
+
+        static::assertSame('number 2', $instance->arg->instance);
+    }
+
+    public function test_paramconfiguration_overwrite_with_argument_name(): void
+    {
+        $container = new Container();
+        $container->register(a::class)
+            ->parameter('arg', fn (): b => new b('number 2'));
+
+        $instance = $container->get(a::class);
+
+        static::assertSame('number 2', $instance->arg->instance);
+    }
+
+    public function test_paramconfiguration_overwrite_with_union_types(): void
+    {
+        $container = new Container();
+        $container->register(a_union::class)
+            ->parameter('union', fn (): b_union => new b_union('number 2'));
+
+        $instance = $container->get(a_union::class);
+
+        static::assertSame('number 2', $instance->union->instance);
     }
 }

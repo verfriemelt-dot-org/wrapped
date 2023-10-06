@@ -19,6 +19,7 @@ class ServiceConfiguration
     /** @var class-string<T> */
     private string $class;
 
+    /** @var array<string|class-string, Closure> */
     private array $resolver = [];
 
     /**
@@ -79,27 +80,27 @@ class ServiceConfiguration
     }
 
     /**
-     * @param class-string $class
+     * @param string|class-string $parameter
      */
-    public function parameter(string $class, Closure $resolver): static
+    public function parameter(string $parameter, Closure $resolver): static
     {
-        $this->resolver[$class] = $resolver;
+        $this->resolver[$parameter] = $resolver;
         return $this;
     }
 
     /**
-     * @param class-string $class
+     * @param string|class-string $parameter
      */
-    public function hasParameter(string $class): bool
+    public function hasParameter(string $parameter): bool
     {
-        return isset($this->resolver[$class]);
+        return isset($this->resolver[$parameter]);
     }
 
     /**
-     * @param class-string $class
+     * @param string|class-string $parameter
      */
-    public function getParemeter(string $class): mixed
+    public function getResolver(string $parameter): Closure
     {
-        return $this->resolver[$class];
+        return $this->resolver[$parameter];
     }
 }

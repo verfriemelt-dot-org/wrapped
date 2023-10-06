@@ -216,7 +216,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      * @param int    $offset
      * @param T|null $value
      */
-    public function offsetSet(mixed $offset, mixed $value): void
+    public function offsetSet(mixed $offset, mixed $value): never
     {
         throw new Exception('write only collections');
     }
@@ -227,7 +227,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      *
      * @param int $offset
      */
-    public function offsetUnset(mixed $offset): void
+    public function offsetUnset(mixed $offset): never
     {
         throw new Exception('write only collections');
     }

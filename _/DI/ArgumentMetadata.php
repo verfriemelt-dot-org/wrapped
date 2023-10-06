@@ -5,28 +5,20 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\DI;
 
 use Exception;
-use RuntimeException;
 
 class ArgumentMetadata
 {
-    private readonly string $name;
-
-    /** @var class-string|null */
-    private ?string $type = null;
-
-    private readonly bool $hasDefaultValue;
-
     private mixed $defaultValue;
 
     /**
-     * @param class-string|null $type
+     * @param array<class-string|string> $types
      */
-    public function __construct(string $name, ?string $type, bool $hasDefaultValue = false, mixed $defaultValue = null)
-    {
-        $this->name = $name;
-        $this->type = $type;
-        $this->hasDefaultValue = $hasDefaultValue;
-
+    public function __construct(
+        private readonly string $name,
+        private readonly array $types,
+        private readonly bool $hasDefaultValue = false,
+        mixed $defaultValue = null
+    ) {
         if ($this->hasDefaultValue) {
             $this->defaultValue = $defaultValue;
         }
@@ -38,20 +30,11 @@ class ArgumentMetadata
     }
 
     /**
-     * @return class-string
+     * @return array<class-string|string>
      */
-    public function getType(): string
+    public function getTypes(): array
     {
-        if ($this->type === null) {
-            throw new RuntimeException('nope');
-        }
-
-        return $this->type;
-    }
-
-    public function hasType(): bool
-    {
-        return $this->type !== null;
+        return $this->types;
     }
 
     public function hasDefaultValue(): bool

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
-use Closure;
+use RuntimeException;
 
 /**
  * @template T of object
@@ -24,20 +24,25 @@ class ServiceArgumentResolver extends ArgumentResolver
         $this->service = $service;
     }
 
-    protected function buildParameter(ArgumentMetadata $parameter)
+    protected function buildParameter(ArgumentMetadata $parameter): object
     {
-        if ($parameter->hasType() && $this->service->hasParameter($parameter->getType())) {
-            $param = $this->service->getParemeter($parameter->getType());
-
-            if ($param instanceof Closure) {
-                return $param(
-                    ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($param)
-                );
+        foreach ([$parameter->getName(), ...$parameter->getTypes()] as $param) {
+            if (!$this->service->hasParameter($param)) {
+                continue;
             }
 
-            return $param;
+            $paramResolver = $this->service->getResolver($param);
+
+            return $paramResolver(
+                ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($param)
+            );
         }
 
-        return $this->container->get($parameter->getType());
+        $types = $parameter->getTypes();
+        if (count($types) === 1) {
+            return $this->container->get($types[0]);
+        }
+
+        throw new RuntimeException('cannot resolv params for ' . $parameter->getName());
     }
 }
