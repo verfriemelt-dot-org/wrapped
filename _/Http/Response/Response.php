@@ -10,7 +10,7 @@ class Response
 {
     private int $statusCode = Http::OK;
 
-    private $content = '';
+    private string $content = '';
 
     private array $cookies = [];
 
@@ -125,5 +125,9 @@ class Response
     {
         $this->contentCallback = $function;
         return $this;
+    }
+
+    public function getContent(): string {
+        return $this->content;
     }
 }
