@@ -5,53 +5,45 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Statsd\Connection;
 
 use Exception;
+use RuntimeException;
+use verfriemelt\wrapped\_\Statsd\Connection;
 
-class UdpSocket implements \verfriemelt\wrapped\_\Statsd\Connection
+class UdpSocket implements Connection
 {
-    private $host;
-
-    private $port;
-
     private $socket;
 
     private bool $isConnected = false;
 
-    public function __construct($host = '127.0.0.1', $port = 8125)
-    {
-        $this->host = $host;
-        $this->port = $port;
-    }
+    public function __construct(
+        private readonly string $host = '127.0.0.1',
+        private readonly int $port = 8125,
+    ) {}
 
-    public function connect()
+    public function connect(): static
     {
         $url = 'udp://' . $this->host;
-
-        $errorNumber = null;
-        $errorMessage = null;
-
-        $this->socket = fsockopen($url, $this->port, $errorNumber, $errorMessage);
-
+        $this->socket = fsockopen($url, $this->port);
         $this->isConnected = true;
         return $this;
     }
 
-    public function send($message)
+    public function send(string $message): bool
     {
         if ($message === '') {
-            return;
+            throw new RuntimeException('message cannot be empty');
         }
 
-        $this->writeToSocket($message);
+        return $this->writeToSocket($message);
     }
 
-    public function writeToSocket($message)
+    public function writeToSocket(string $message): bool
     {
         if (!$this->isConnected) {
             return false;
         }
 
         try {
-            fwrite($this->socket, (string) $message);
+            fwrite($this->socket, $message);
         } catch (Exception) {
             return false;
         }

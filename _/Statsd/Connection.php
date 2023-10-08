@@ -6,5 +6,5 @@ namespace verfriemelt\wrapped\_\Statsd;
 
 interface Connection
 {
-    public function send($message);
+    public function send(string $message): bool;
 }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Statsd;
 
+use verfriemelt\wrapped\_\Singleton;
+
 final class StatsdClient
 {
-    use \verfriemelt\wrapped\_\Singleton;
+    use Singleton;
 
     public const COUNTER = 'c';
 
@@ -14,7 +16,7 @@ final class StatsdClient
 
     public const GAUGE = 'g';
 
-    private ?\verfriemelt\wrapped\_\Statsd\Connection $connection = null;
+    private ?Connection $connection = null;
 
     private string $namespace = '';
 
@@ -30,76 +32,43 @@ final class StatsdClient
         return $this;
     }
 
-    /**
-     * @param type $key
-     *
-     * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
-     */
-    public function incrementCounter($key)
+    public function incrementCounter(string $key): static
     {
         $this->counter($key, 1);
         return $this;
     }
 
-    /**
-     * @param type $key
-     * @param type $value
-     *
-     * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
-     */
-    public function gauge($key, $value)
+    public function gauge(string $key, float $value): static
     {
         $this->send($key, $value, self::GAUGE);
         return $this;
     }
 
-    /**
-     * @param type $key
-     *
-     * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
-     */
-    public function decrementCounter($key)
+    public function decrementCounter(string $key): static
     {
         $this->counter($key, -1);
         return $this;
     }
 
-    public function counter($key, $value)
+    public function counter(string $key, int $value): static
     {
         $this->send($key, $value, self::COUNTER);
+        return $this;
     }
 
-    /**
-     * @param type                                   $key
-     * @param \verfriemelt\wrapped\_\Statsd\callable $function
-     */
-    public function time($key, callable $function)
+    public function time(string $key, callable $function): void
     {
         $timer = new StatsdTimer($this, $key);
         $function();
         $timer->report();
     }
 
-    /**
-     * @param type $key
-     *
-     * @return \verfriemelt\wrapped\_\Statsd\StatsdTimer
-     */
-    public function createTimer($key)
+    public function createTimer(string $key): StatsdTimer
     {
         return new StatsdTimer($this, $key);
     }
 
-    /**
-     * send raw data
-     *
-     * @param type $key
-     * @param type $value
-     * @param type $type
-     *
-     * @return \verfriemelt\wrapped\_\Statsd\StatsdClient
-     */
-    public function send($key, $value, $type, $rate = null)
+    public function send(string $key, int|float $value, string $type, ?float $rate = null): static
     {
         $key = ($this->namespace !== '') ? "{$this->namespace}.{$key}" : $key;
 
