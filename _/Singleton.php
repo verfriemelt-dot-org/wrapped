@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_;
 
+/** @deprecated */
 trait Singleton
 {
     protected static $handle;
