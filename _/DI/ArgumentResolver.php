@@ -18,11 +18,15 @@ class ArgumentResolver
         $this->container = $container;
     }
 
-    public function resolv(object|string $obj, ?string $method = null): array
+    public function resolv(object|string $obj, ?string $method = null, int $skip = 0): array
     {
         $args = [];
-
+        $count = 0;
         foreach ($this->factory->createArgumentMetadata($obj, $method) as $parameter) {
+            if ($count++ < $skip) {
+                continue;
+            }
+
             if ($parameter->hasDefaultValue()) {
                 continue;
             }
