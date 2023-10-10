@@ -10,7 +10,7 @@ class Cookie
     private $value;
     private $path;
     private $domain;
-    private $expiresTime;
+    private int|float $expiresTime;
 
     public function __construct($name, $value, $expires = 3600 * 24)
     {

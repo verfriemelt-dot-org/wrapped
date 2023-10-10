@@ -42,7 +42,7 @@ class Formular implements Viewable
 
     private string $cssId = '';
 
-    private $action;
+    private string $action;
 
     private readonly string $formname;
 

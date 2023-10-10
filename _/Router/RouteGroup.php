@@ -8,7 +8,7 @@ class RouteGroup implements Routable
 {
     use RouteIterator;
 
-    private $path;
+    private string $path;
 
     private int $priority = 100;
 

@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Http\Response;
 
 class Redirect extends Response
 {
-    private $destination;
+    private string $destination;
 
     public function __construct($path = null)
     {

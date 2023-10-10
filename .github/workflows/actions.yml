@@ -54,7 +54,7 @@ jobs:
       run: composer install
 
     - name: run tests
-      run: vendor/bin/phpunit tests/integration
+      run: vendor/bin/phpunit --testsuite=integration
       env:
         DATABASE_DRIVER: postgres
 
@@ -76,6 +76,6 @@ jobs:
       run: composer install
 
     - name: run tests
-      run: vendor/bin/phpunit tests/integration
+      run: vendor/bin/phpunit --testsuite=integration
       env:
         DATABASE_DRIVER: sqlite

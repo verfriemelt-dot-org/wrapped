@@ -151,6 +151,7 @@ class TemplateParser
 
     public function searchForData($type, $name)
     {
+        $layers = [];
         $layers[] = $this->data;
         $dataSource = $this->data;
 
