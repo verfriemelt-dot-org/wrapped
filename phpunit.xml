@@ -9,6 +9,17 @@
         failOnWarning="true"
         defaultTestSuite="unit"
         displayDetailsOnTestsThatTriggerWarnings="true"
+        displayDetailsOnTestsThatTriggerErrors="true"
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnTestsThatTriggerNotices="true"
+        displayDetailsOnIncompleteTests="true"
+        displayDetailsOnSkippedTests="true"
+        failOnSkipped="true"
+        failOnRisky="true"
+        failOnNotice="true"
+        failOnIncomplete="true"
+        failOnEmptyTestSuite="true"
+        failOnDeprecation="true"
 >
     <testsuites>
         <testsuite name="unit">
