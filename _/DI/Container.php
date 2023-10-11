@@ -84,7 +84,7 @@ class Container
     private function build(ServiceConfiguration $config): object
     {
         if (in_array($config->getClass(), $this->currentlyLoading)) {
-            throw new Exception(sprintf('circulare references'));
+            throw new Exception("circulare references while loading {$config->getClass()}. Stack: \n" . print_r($this->currentlyLoading, true));
         }
 
         $this->currentlyLoading[] = $config->getClass();

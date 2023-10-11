@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_;
 
 use Closure;
+use ErrorException;
 use Throwable;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
@@ -32,6 +33,8 @@ abstract class Kernel implements KernelInterface
         $this->container = new Container();
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
+
+        $this->initializeErrorHandling();
     }
 
     public function getContainer(): Container
@@ -115,7 +118,7 @@ abstract class Kernel implements KernelInterface
 
             $this->triggerKernelResponse($request, $response ?? new Response());
         } catch (Throwable $e) {
-            $response = $this->dispatchException($request, $e);
+            $response = $this->dispatchException($e);
         }
 
         return $response;
@@ -126,14 +129,25 @@ abstract class Kernel implements KernelInterface
         $this->eventDispatcher->dispatch((new KernelResponse($request))->setResponse($response));
     }
 
-    protected function dispatchException(Request $request, Throwable $exception): Response
+    protected function dispatchException(Throwable $exception): Response
     {
-        $exceptionEvent = $this->eventDispatcher->dispatch(new ExceptionEvent($exception, $request));
+        $exceptionEvent = $this->eventDispatcher->dispatch(new ExceptionEvent($exception, $this->container->get(Request::class)));
 
         if ($exceptionEvent->hasResponse()) {
             return $exceptionEvent->getResponse();
         }
 
         throw $exceptionEvent->getThrowable();
+    }
+
+    protected function initializeErrorHandling(): void
+    {
+        \set_error_handler(function ($errno, $errstr, $errfile, $errline): never {
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+
+        \set_exception_handler(function (Throwable $e): void {
+            $this->dispatchException($e);
+        });
     }
 }
