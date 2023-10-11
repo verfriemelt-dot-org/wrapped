@@ -26,6 +26,8 @@ return static function (RectorConfig $rectorConfig): void {
         CountOnNullRector::class,
 
         ClassPropertyAssignToConstructorPromotionRector::class,
+
+        'tests/integration/Event/EventDispatcherTest.php'
+
     ]);
 };
-
