@@ -46,6 +46,11 @@ $config->setRules([
 
     // keep explizity types
     'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
+
+    // keep closure spaces
+    'function_declaration' => [
+        'closure_fn_spacing' => 'one',
+    ],
 ]);
 $config->setFinder($finder);
 $config->setRiskyAllowed(true);
