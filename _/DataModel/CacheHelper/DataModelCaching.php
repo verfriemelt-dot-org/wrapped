@@ -61,13 +61,6 @@ trait DataModelCaching
         return $instance;
     }
 
-    /**
-     * this should only be used on unique column
-     *
-     * @param type $value
-     *
-     * @return type
-     */
     public static function fetchBy(string $field, $value): ?static
     {
         // mapping
