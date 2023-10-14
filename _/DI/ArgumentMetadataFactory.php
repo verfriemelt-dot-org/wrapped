@@ -16,6 +16,9 @@ use RuntimeException;
 
 class ArgumentMetadataFactory
 {
+    /**
+     * @return ArgumentMetadata[]
+     */
     public function createArgumentMetadata(object|string $obj, ?string $method = null): array
     {
         $reflection = null;

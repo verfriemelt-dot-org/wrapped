@@ -276,11 +276,6 @@ parameters:
 			path: _/DI/ArgumentMetadataFactory.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/ArgumentResolver.php
@@ -3351,7 +3346,17 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Method _\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:serialze\\(\\) should return string but returns string\\|false\\.$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/Serializer/Encoder/JsonEncoder.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
+			count: 1
+			path: _/Serializer/Encoder/JsonEncoder.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 
@@ -4779,11 +4784,6 @@ parameters:
 			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
 			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
-
-		-
-			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) with true will always evaluate to true\\.$#"
-			count: 1
-			path: tests/Unit/Serializer/Encoder/JsonEncoderTest.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\Template\\\\TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"
