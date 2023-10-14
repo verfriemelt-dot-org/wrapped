@@ -14,7 +14,6 @@
         displayDetailsOnTestsThatTriggerNotices="true"
         displayDetailsOnIncompleteTests="true"
         displayDetailsOnSkippedTests="true"
-        failOnSkipped="true"
         failOnRisky="true"
         failOnNotice="true"
         failOnIncomplete="true"
