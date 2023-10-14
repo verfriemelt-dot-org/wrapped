@@ -27,7 +27,7 @@ return static function (RectorConfig $rectorConfig): void {
 
         ClassPropertyAssignToConstructorPromotionRector::class,
 
-        'tests/integration/Event/EventDispatcherTest.php'
+        'tests/Integration/Event/EventDispatcherTest.php'
 
     ]);
 };
