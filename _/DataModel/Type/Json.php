@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DataModel\Type;
 
+use stdClass;
 use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 
 class Json implements PropertyObjectInterface
 {
-    public $data;
+    public stdClass $data;
 
-    final public function __construct(string $data)
+    final public function __construct(string $data = '{}')
     {
         $this->data = json_decode($data, null, 512, JSON_THROW_ON_ERROR);
     }

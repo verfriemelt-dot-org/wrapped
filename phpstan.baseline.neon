@@ -1111,7 +1111,7 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data \\(stdClass\\) does not accept mixed\\.$#"
 			count: 1
 			path: _/DataModel/Type/Json.php
 
@@ -2256,11 +2256,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$action has no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2546,11 +2541,6 @@ parameters:
 			path: _/Http/Response/Cookie.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Cookie\\:\\:\\$expiresTime has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Cookie.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Cookie\\:\\:\\$name has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/Cookie.php
@@ -2638,11 +2628,6 @@ parameters:
 		-
 			message: "#^PHPDoc tag @return with type verfriemelt\\\\wrapped\\\\_\\\\Response\\\\Redirect is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\.$#"
 			count: 2
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:\\$destination has no type specified\\.$#"
-			count: 1
 			path: _/Http/Response/Redirect.php
 
 		-
@@ -3236,11 +3221,6 @@ parameters:
 			path: _/Router/RouteGroup.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:\\$path has no type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
 			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:setAttributes\\(\\)\\.$#"
 			count: 1
 			path: _/Router/Router.php
@@ -3591,87 +3571,12 @@ parameters:
 			path: _/Session/SessionSql.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\:\\:send\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\:\\:send\\(\\) has parameter \\$message with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:__construct\\(\\) has parameter \\$host with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:__construct\\(\\) has parameter \\$port with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:connect\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:send\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:send\\(\\) has parameter \\$message with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:writeToSocket\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:writeToSocket\\(\\) has parameter \\$message with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$host has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$port has no type specified\\.$#"
-			count: 1
-			path: _/Statsd/Connection/UdpSocket.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$socket has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/Connection/UdpSocket.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:counter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:counter\\(\\) has parameter \\$key with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:counter\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:getInstance\\(\\) has parameter \\$args with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:send\\(\\) has parameter \\$rate with no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
 
@@ -3691,92 +3596,12 @@ parameters:
 			path: _/Statsd/StatsdClient.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
 
 		-
 			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\|null given\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$function with type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\callable is not subtype of native type callable\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, string\\|verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type given\\.$#"
-			count: 2
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\#3 \\$type of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:send\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type, string given\\.$#"
-			count: 2
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type given\\.$#"
-			count: 2
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type given\\.$#"
-			count: 2
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$function of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\callable\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:createTimer\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:decrementCounter\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:gauge\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:incrementCounter\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:send\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$type of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:send\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:gauge\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Parameter \\$value of method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:send\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\type\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
 
@@ -4057,11 +3882,6 @@ parameters:
 
 		-
 			message: "#^Foreach overwrites \\$dataSource with its value variable\\.$#"
-			count: 1
-			path: _/Template/TemplateParser.php
-
-		-
-			message: "#^Implicit array creation is not allowed \\- variable \\$layers does not exist\\.$#"
 			count: 1
 			path: _/Template/TemplateParser.php
 
