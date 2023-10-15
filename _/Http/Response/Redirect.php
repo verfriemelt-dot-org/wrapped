@@ -6,11 +6,9 @@ namespace verfriemelt\wrapped\_\Http\Response;
 
 class Redirect extends Response
 {
-    private string $destination;
-
-    public function __construct($path = null)
-    {
-        $this->destination = $path;
+    public function __construct(
+        private ?string $destination = null
+    ) {
         $this->temporarily();
     }
 
@@ -20,27 +18,19 @@ class Redirect extends Response
         return parent::send();
     }
 
-    /**
-     * returns http 301
-     *
-     * @return \verfriemelt\wrapped\_\Response\Redirect
-     */
     public function permanent(): Redirect
     {
         $this->setStatusCode(Http::MOVED_PERMANENTLY);
         return $this;
     }
 
-    /**
-     * @return \verfriemelt\wrapped\_\Response\Redirect
-     */
     public function temporarily(): Redirect
     {
         $this->setStatusCode(Http::TEMPORARY_REDIRECT);
         return $this;
     }
 
-    public function seeOther($to): Redirect
+    public function seeOther(string $to): Redirect
     {
         $this->setStatusCode(Http::SEE_OTHER);
         $this->destination = $to;
@@ -53,7 +43,7 @@ class Redirect extends Response
         return $this;
     }
 
-    public static function to($path): Redirect
+    public static function to(string $path): Redirect
     {
         return new self($path);
     }

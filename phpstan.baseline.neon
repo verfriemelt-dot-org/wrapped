@@ -2596,33 +2596,8 @@ parameters:
 			path: _/Http/Response/JsonResponse.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:__construct\\(\\) has parameter \\$path with no type specified\\.$#"
+			message: "#^Parameter \\#2 \\$value of class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\HttpHeader constructor expects string, string\\|null given\\.$#"
 			count: 1
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:permanent\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Response\\\\Redirect\\.$#"
-			count: 1
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:seeOther\\(\\) has parameter \\$to with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:temporarily\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Response\\\\Redirect\\.$#"
-			count: 1
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:to\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^PHPDoc tag @return with type verfriemelt\\\\wrapped\\\\_\\\\Response\\\\Redirect is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\.$#"
-			count: 2
 			path: _/Http/Response/Redirect.php
 
 		-
