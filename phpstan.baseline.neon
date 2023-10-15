@@ -3346,17 +3346,17 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\)\" is 9, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
+			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 
 		-
-			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapInputOnClass\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$input of method verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 

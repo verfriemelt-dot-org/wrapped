@@ -18,7 +18,7 @@ class JsonEncoder implements EncoderInterface
         }
 
         $decodedInput = \json_decode($input, true, flags: \JSON_THROW_ON_ERROR);
-        return $this->mapInputOnClass($decodedInput, $class);
+        return $this->mapJsonOnObject($decodedInput, $class);
     }
 
     public function serialze(object $input): string
@@ -34,7 +34,7 @@ class JsonEncoder implements EncoderInterface
      *
      * @return T
      */
-    public function mapInputOnClass(array $input, string $class): object
+    public function mapJsonOnObject(array $input, string $class): object
     {
         $constructorProperties = (new ArgumentMetadataFactory())->createArgumentMetadata($class);
         $arguments = [];
@@ -58,7 +58,7 @@ class JsonEncoder implements EncoderInterface
                 $argumentType = $argument->getTypes()[0];
                 assert(\class_exists($argumentType));
 
-                $arguments[] = $this->mapInputOnClass($input[$argument->getName()], $argumentType);
+                $arguments[] = $this->mapJsonOnObject($input[$argument->getName()], $argumentType);
                 continue;
             }
 

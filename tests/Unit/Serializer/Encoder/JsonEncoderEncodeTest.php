@@ -16,4 +16,15 @@ class JsonEncoderEncodeTest extends TestCase
 
         static::assertSame('{"foo":"foo","bar":1}', $encoder->serialze($dto));
     }
+
+    public function test_encode_nested(): void
+    {
+        $dto = new NestedDto(
+            'bar',
+            new SimpleDto('foo', 1)
+        );
+        $encoder = new JsonEncoder();
+
+        static::assertSame('{"foo":"bar","subDto":{"foo":"foo","bar":1}}', $encoder->serialze($dto));
+    }
 }
