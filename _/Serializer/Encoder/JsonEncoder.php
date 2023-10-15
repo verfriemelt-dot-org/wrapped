@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Serializer\Encoder;
 
-use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use RuntimeException;
+use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 
 class JsonEncoder implements EncoderInterface
 {
@@ -21,7 +21,7 @@ class JsonEncoder implements EncoderInterface
         return $this->mapJsonOnObject($decodedInput, $class);
     }
 
-    public function serialze(object $input): string
+    public function serialize(object $input): string
     {
         return \json_encode($input, \JSON_THROW_ON_ERROR);
     }

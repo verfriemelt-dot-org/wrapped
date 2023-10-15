@@ -26,6 +26,6 @@ class Serializer
 
     public function serialze(object $input): string
     {
-        return $this->encoder->serialze($input);
+        return $this->encoder->serialize($input);
     }
 }

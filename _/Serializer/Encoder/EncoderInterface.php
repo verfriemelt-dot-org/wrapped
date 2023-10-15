@@ -15,5 +15,5 @@ interface EncoderInterface
      */
     public function deserialize(string $input, string $class): object;
 
-    public function serialze(object $input): string;
+    public function serialize(object $input): string;
 }
