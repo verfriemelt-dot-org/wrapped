@@ -15,7 +15,13 @@ class ForUpdate extends QueryPart implements Clause
 
     final public const CLAUSE = 'FOR UPDATE %s';
 
+    final public const SKIP_LOCKED = 'SKIP LOCKED';
+
     public ExpressionItem $expression;
+
+    public function __construct(
+        private readonly string $lockMode = ''
+    ) {}
 
     public function getWeight(): int
     {
@@ -26,7 +32,7 @@ class ForUpdate extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            ''
+            $this->lockMode
         );
     }
 }

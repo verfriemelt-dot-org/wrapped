@@ -8,6 +8,7 @@ use Exception;
 use PDOStatement;
 use verfriemelt\wrapped\_\Database\DbLogic;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
+use verfriemelt\wrapped\_\Database\SQL\Clause\ForUpdate;
 use verfriemelt\wrapped\_\Database\SQL\Clause\From;
 use verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Having;
@@ -60,6 +61,8 @@ class QueryBuilder
     public GroupBy $groupBy;
 
     public Having $having;
+
+    public ForUpdate $forUpdate;
 
     public ?DatabaseDriver $db = null;
 
@@ -316,6 +319,13 @@ class QueryBuilder
         }
 
         return $this->db->run($this->stmt);
+    }
+
+    public function forUpdate(string $lockMode = ''): static
+    {
+        $this->forUpdate = new ForUpdate($lockMode);
+        $this->stmt->add($this->forUpdate);
+        return $this;
     }
 
     public function stringify(): string
