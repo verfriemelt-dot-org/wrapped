@@ -66,7 +66,7 @@ class KeyInput
         // normal keys with ?!<> etc.
         if ($keybuffer[0] >= 33 && $keybuffer[0] <= 125) {
             $key = chr($keybuffer[0]);
-            // alt alfa-num
+        // alt alfa-num
         } elseif (
             \count($keybuffer) === 2
             && $keybuffer[0] === 27
@@ -90,7 +90,7 @@ class KeyInput
                     $key = 'bcksp';
                     break;
             }
-            // f1-f4
+        // f1-f4
         } elseif (
             \count($keybuffer) === 3
             && $keybuffer[0] === 27
@@ -111,7 +111,7 @@ class KeyInput
                     $key = 'F4';
                     break;
             }
-            // f5-f8
+        // f5-f8
         } elseif (
             \count($keybuffer) === 5
             && $keybuffer[0] === 27
@@ -134,7 +134,7 @@ class KeyInput
                     $key = 'F8';
                     break;
             }
-            // f9-f12
+        // f9-f12
         } elseif (
             \count($keybuffer) === 5
             && $keybuffer[0] === 27
@@ -157,7 +157,7 @@ class KeyInput
                     $key = 'F12';
                     break;
             }
-            // navigation
+        // navigation
         } elseif (
             \count($keybuffer) === 3
             && $keybuffer[0] === 27
@@ -184,7 +184,7 @@ class KeyInput
                     $key = 'del';
                     break;
             }
-            // navigation2
+        // navigation2
         } elseif (
             \count($keybuffer) === 4
             && $keybuffer[0] === 27
