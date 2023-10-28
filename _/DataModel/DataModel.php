@@ -390,9 +390,6 @@ abstract class DataModel
         return Collection::buildFromQuery(new static(), $query);
     }
 
-    /**
-     * returns last Record in DB ( according to the PK )
-     */
     public static function last(): ?static
     {
         return static::findSingle([], static::getPrimaryKey(), 'desc');
