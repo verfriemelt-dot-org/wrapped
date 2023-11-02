@@ -40,6 +40,11 @@ class JsonEncoder implements EncoderInterface
         $arguments = [];
 
         foreach ($constructorProperties as $argument) {
+            if (\count($argument->getTypes()) !== 1) {
+                throw new RuntimeException('no support for untyped, union or intersection types');
+            }
+
+            // handling of variadic arguments
             if ($argument->isVariadic() && \array_is_list($input)) {
                 $argumentType = $argument->getTypes()[0];
                 \assert(\class_exists($argumentType));
@@ -51,16 +56,12 @@ class JsonEncoder implements EncoderInterface
             }
 
             if (!\array_key_exists($argument->getName(), $input) && !$argument->hasDefaultValue()) {
-                throw new RuntimeException("cannot map {$argument->getName()} on {$class}");
+                throw new RuntimeException("missing value from input for argument {$class}::{$argument->getName()}");
             }
 
             // if we found defaults, we are done
             if (!\array_key_exists($argument->getName(), $input) && $argument->hasDefaultValue()) {
                 break;
-            }
-
-            if (count($argument->getTypes()) !== 1) {
-                throw new RuntimeException('no support for untyped, union or intersection types');
             }
 
             // handling of non scalar, non composite types
