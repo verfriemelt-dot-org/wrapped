@@ -17,7 +17,8 @@ class ArgumentMetadata
         private readonly string $name,
         private readonly array $types,
         private readonly bool $hasDefaultValue = false,
-        mixed $defaultValue = null
+        mixed $defaultValue = null,
+        private readonly bool $isVariadic = false,
     ) {
         if ($this->hasDefaultValue) {
             $this->defaultValue = $defaultValue;
@@ -40,6 +41,11 @@ class ArgumentMetadata
     public function hasDefaultValue(): bool
     {
         return $this->hasDefaultValue;
+    }
+
+    public function isVariadic(): bool
+    {
+        return $this->isVariadic;
     }
 
     public function getDefaultValue(): mixed

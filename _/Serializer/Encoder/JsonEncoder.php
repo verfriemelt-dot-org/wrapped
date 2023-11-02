@@ -21,9 +21,9 @@ class JsonEncoder implements EncoderInterface
         return $this->mapJsonOnObject($decodedInput, $class);
     }
 
-    public function serialize(object $input): string
+    public function serialize(object $input, bool $pretty = false): string
     {
-        return \json_encode($input, \JSON_THROW_ON_ERROR);
+        return \json_encode($input, \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
     }
 
     /**
@@ -40,12 +40,23 @@ class JsonEncoder implements EncoderInterface
         $arguments = [];
 
         foreach ($constructorProperties as $argument) {
-            if (!isset($input[$argument->getName()]) && !$argument->hasDefaultValue()) {
-                throw new RuntimeException("cannot map input on {$class}");
+            if ($argument->isVariadic() && \array_is_list($input)) {
+                $argumentType = $argument->getTypes()[0];
+                \assert(\class_exists($argumentType));
+
+                // variadics are always the last argument, so we can stop here
+                $variadic = \array_map(fn (array $input) => $this->mapJsonOnObject($input, $argumentType), $input);
+
+                return new $class(...$arguments, ...$variadic);
+            }
+
+            if (!\array_key_exists($argument->getName(), $input) && !$argument->hasDefaultValue()) {
+                //                var_dump($argument, $input);
+                throw new RuntimeException("cannot map {$argument->getName()} on {$class}");
             }
 
             // if we found defaults, we are done
-            if (!isset($input[$argument->getName()]) && $argument->hasDefaultValue()) {
+            if (!\array_key_exists($argument->getName(), $input) && $argument->hasDefaultValue()) {
                 break;
             }
 
@@ -54,9 +65,9 @@ class JsonEncoder implements EncoderInterface
             }
 
             // handling of non scalar, non composite types
-            if (is_array($input[$argument->getName()]) && $argument->getTypes()[0] !== 'array') {
+            if (\is_array($input[$argument->getName()]) && $argument->getTypes()[0] !== 'array') {
                 $argumentType = $argument->getTypes()[0];
-                assert(\class_exists($argumentType));
+                \assert(\class_exists($argumentType));
 
                 $arguments[] = $this->mapJsonOnObject($input[$argument->getName()], $argumentType);
                 continue;

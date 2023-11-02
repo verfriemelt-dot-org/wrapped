@@ -46,4 +46,46 @@ class JsonEncoderDecodeTest extends TestCase
         static::assertInstanceOf(SimpleDto::class, $dto->subDto);
         static::assertSame('bar', $dto->subDto->foo);
     }
+
+    public function test_decode_null(): void
+    {
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize('{"null":null}', NullDto::class);
+
+        static::assertNull($dto->null);
+    }
+
+    public function test_variadic(): void
+    {
+        $input = <<<JSON
+        {
+            "variadic": [
+                {
+                    "foo": "foo",
+                    "bar": 1
+                },
+                {
+                    "foo": "foo",
+                    "bar": 2
+                },
+                {
+                    "foo": "foo",
+                    "bar": 3
+                }
+            ]
+        }
+        JSON;
+
+        $class = new class () {
+            public function __construct(
+                public readonly ?VariadicDto $variadic = null
+            ) {}
+        };
+
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize($input, $class::class);
+
+        static::assertInstanceOf($class::class, $dto);
+        static::assertCount(3, $dto->variadic->subDtos ?? []);
+    }
 }

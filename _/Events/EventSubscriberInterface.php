@@ -9,7 +9,11 @@ use Closure;
 interface EventSubscriberInterface
 {
     /**
-     * @return Closure(EventInterface, mixed ...): EventInterface
+     * @template T of EventInterface
+     *
+     * @param T $event
+     *
+     * @return Closure(T, mixed ...): T|null
      */
     public function on(EventInterface $event): ?Closure;
 }

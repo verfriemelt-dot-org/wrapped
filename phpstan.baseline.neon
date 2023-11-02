@@ -3321,7 +3321,7 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 9, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 11, keep it under 8$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 
@@ -4716,7 +4716,7 @@ parameters:
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Events\\\\EventInterface, mixed \\.\\.\\.\\)\\: verfriemelt\\\\wrapped\\\\_\\\\Events\\\\EventInterface\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|null\\.$#"
+			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T, mixed \\.\\.\\.\\)\\: T\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|null\\.$#"
 			count: 1
 			path: tests/Integration/Event/EventDispatcherTest.php
 
