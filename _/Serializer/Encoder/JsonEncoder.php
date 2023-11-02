@@ -51,7 +51,6 @@ class JsonEncoder implements EncoderInterface
             }
 
             if (!\array_key_exists($argument->getName(), $input) && !$argument->hasDefaultValue()) {
-                //                var_dump($argument, $input);
                 throw new RuntimeException("cannot map {$argument->getName()} on {$class}");
             }
 
