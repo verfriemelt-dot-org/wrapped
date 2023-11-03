@@ -59,6 +59,21 @@ class a_i implements i {}
 
 class b_i implements i {}
 
+class default_a
+{
+    public function __construct(public default_b $b = new default_b()) {}
+}
+
+class default_a_null
+{
+    public function __construct(public ?default_b $b = null) {}
+}
+
+class default_b
+{
+    public function __construct(public string $foo = 'foo') {}
+}
+
 class ContainerTest extends TestCase
 {
     public function test_get_class(): void
@@ -165,5 +180,28 @@ class ContainerTest extends TestCase
         $instance = $container->get(a_union::class);
 
         static::assertSame('number 2', $instance->union->instance);
+    }
+
+    public function test_providing_default_overrides(): void
+    {
+        $container = new Container();
+        $container->register(
+            default_a::class
+        )->parameter(
+            default_b::class,
+            fn () => new default_b('bar')
+        );
+
+        $instance = $container->get(default_a::class);
+
+        static::assertSame('bar', $instance->b->foo);
+    }
+
+    public function test_with_object_default(): void
+    {
+        $container = new Container();
+        $instance = $container->get(default_a_null::class);
+
+        static::assertNull($instance->b);
     }
 }

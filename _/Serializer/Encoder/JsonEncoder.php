@@ -34,7 +34,7 @@ class JsonEncoder implements EncoderInterface
      *
      * @return T
      */
-    public function mapJsonOnObject(array $input, string $class): object
+    private function mapJsonOnObject(array $input, string $class): object
     {
         $constructorProperties = (new ArgumentMetadataFactory())->createArgumentMetadata($class);
         $arguments = [];

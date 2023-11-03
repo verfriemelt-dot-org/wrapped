@@ -13,7 +13,7 @@ class Container
 
     private array $instances = [];
 
-    /** @var array<string,ServiceConfiguration<object>[]> */
+    /** @var array<string,ServiceConfiguration[]> */
     private array $interfaces = [];
 
     private array $currentlyLoading = [];
@@ -153,7 +153,8 @@ class Container
             throw new Exception(sprintf('multiple implementations preset for interface: »%s«', $class));
         }
 
-        /* @phpstan-ignore-next-line */
+        assert(\array_is_list($this->interfaces[$class]));
+
         return $this->interfaces[$class][0];
     }
 }

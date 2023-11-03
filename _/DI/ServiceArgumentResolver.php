@@ -24,13 +24,9 @@ class ServiceArgumentResolver extends ArgumentResolver
         $this->service = $service;
     }
 
-    protected function buildParameter(ArgumentMetadata $parameter): object
+    protected function buildParameter(ArgumentMetadata $parameter): mixed
     {
         foreach ([$parameter->getName(), ...$parameter->getTypes()] as $param) {
-            if (!$this->service->hasParameter($param) && !$this->container->has($param)) {
-                continue;
-            }
-
             $paramResolver = $this->service->getResolver($param);
 
             if ($paramResolver === null) {
@@ -38,11 +34,15 @@ class ServiceArgumentResolver extends ArgumentResolver
             }
 
             return $paramResolver(
-                ...(new ArgumentResolver($this->container, new ArgumentMetadataFactory()))->resolv($paramResolver)
+                ...$this->resolv($paramResolver)
             );
         }
 
         if (count($parameter->getTypes()) === 1) {
+            if (!$this->service->hasParameter($parameter->getName()) && $parameter->hasDefaultValue()) {
+                return $parameter->getDefaultValue();
+            }
+
             return $this->container->get($parameter->getTypes()[0]);
         }
 

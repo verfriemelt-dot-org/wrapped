@@ -306,12 +306,12 @@ parameters:
 			path: _/DI/Container.php
 
 		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$interfaces with generic class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration does not specify its types\\: T$#"
 			count: 1
-			path: _/DI/ServiceArgumentResolver.php
+			path: _/DI/Container.php
 
 		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:has\\(\\) expects class\\-string, string given\\.$#"
+			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
 
@@ -2751,7 +2751,7 @@ parameters:
 			path: _/Kernel.php
 
 		-
-			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects object\\|string, \\(callable\\)\\|object\\|string given\\.$#"
+			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 3
 			path: _/Kernel.php
 

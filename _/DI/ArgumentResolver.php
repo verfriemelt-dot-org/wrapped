@@ -18,6 +18,9 @@ class ArgumentResolver
         $this->container = $container;
     }
 
+    /**
+     * @param object|class-string $obj
+     */
     public function resolv(object|string $obj, ?string $method = null, int $skip = 0): array
     {
         $args = [];
@@ -27,17 +30,13 @@ class ArgumentResolver
                 continue;
             }
 
-            if ($parameter->hasDefaultValue()) {
-                continue;
-            }
-
             $args[] = $this->buildParameter($parameter);
         }
 
         return $args;
     }
 
-    protected function buildParameter(ArgumentMetadata $parameter): object
+    protected function buildParameter(ArgumentMetadata $parameter): mixed
     {
         $types = $parameter->getTypes();
 
@@ -45,6 +44,12 @@ class ArgumentResolver
             throw new RuntimeException('cannot resolv union type');
         }
 
-        return $this->container->get($types[0]);
+        $type = $types[0];
+
+        if (!\class_exists($type) && $parameter->hasDefaultValue()) {
+            return $parameter->getDefaultValue();
+        }
+
+        return $this->container->get($type);
     }
 }
