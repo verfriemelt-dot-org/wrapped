@@ -21,11 +21,10 @@ class ArgumentMetadataFactory
      */
     public function createArgumentMetadata(object|string $obj, ?string $method = null): array
     {
-        $reflection = null;
         $arguments = [];
 
         if ($obj instanceof Closure) {
-            $reflection = new ReflectionFunction($obj);
+            $methodReflection = new ReflectionFunction($obj);
         } elseif (is_object($obj) || class_exists($obj)) {
             $constructor = (new ReflectionClass($obj))->getConstructor();
 
@@ -34,18 +33,19 @@ class ArgumentMetadataFactory
                 return [];
             }
 
-            $reflection = new ReflectionMethod($obj, $method ?? $constructor->getName());
+            $methodReflection = new ReflectionMethod($obj, $method ?? $constructor->getName());
         } else {
             return [];
         }
 
-        foreach ($reflection->getParameters() as $param) {
+        foreach ($methodReflection->getParameters() as $param) {
             $arguments[] = new ArgumentMetadata(
                 $param->getName(),
-                $this->getTypes($param, $reflection),
+                $this->getTypes($param, $methodReflection),
                 $param->isDefaultValueAvailable(),
                 $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null,
                 $param->isVariadic(),
+                $methodReflection->getName()
             );
         }
 

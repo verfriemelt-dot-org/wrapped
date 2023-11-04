@@ -16,9 +16,10 @@ class ArgumentMetadata
     public function __construct(
         private readonly string $name,
         private readonly array $types,
-        private readonly bool $hasDefaultValue = false,
-        mixed $defaultValue = null,
-        private readonly bool $isVariadic = false,
+        private readonly bool $hasDefaultValue,
+        mixed $defaultValue,
+        private readonly bool $isVariadic,
+        private readonly string $method,
     ) {
         if ($this->hasDefaultValue) {
             $this->defaultValue = $defaultValue;
@@ -28,6 +29,11 @@ class ArgumentMetadata
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getMethodName(): string
+    {
+        return $this->method;
     }
 
     /**

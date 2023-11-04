@@ -46,6 +46,6 @@ class ServiceArgumentResolver extends ArgumentResolver
             return $this->container->get($parameter->getTypes()[0]);
         }
 
-        throw new RuntimeException('cannot resolv params for ' . $parameter->getName());
+        throw new RuntimeException("cannot resolv params for {$this->service->getClass()}::{$parameter->getMethodName()}() \${$parameter->getName()}");
     }
 }
