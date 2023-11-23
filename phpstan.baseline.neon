@@ -3321,7 +3321,7 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 11, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 13, keep it under 8$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 

@@ -64,4 +64,12 @@ class JsonEncoderEncodeTest extends TestCase
         $encoder = new JsonEncoder();
         static::assertSame($expected, $encoder->serialize($dto, true));
     }
+
+    public function test_default_enum_encode(): void
+    {
+        $encoder = new JsonEncoder();
+        $json = $encoder->serialize(new DefaultEnumDto());
+
+        static::assertSame('{"arg":"foo"}', $json);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Serializer\Encoder;
 
+use BackedEnum;
 use RuntimeException;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 
@@ -47,9 +48,10 @@ class JsonEncoder implements EncoderInterface
                 throw new RuntimeException('no support for untyped, union or intersection types');
             }
 
+            $argumentType = $argument->getTypes()[0];
+
             // handling of variadic arguments
             if ($argument->isVariadic() && \array_is_list($input)) {
-                $argumentType = $argument->getTypes()[0];
                 \assert(\class_exists($argumentType));
 
                 // variadics are always the last argument, so we can stop here
@@ -67,9 +69,14 @@ class JsonEncoder implements EncoderInterface
                 continue;
             }
 
+            // check for backed enum
+            if (\class_exists($argumentType) && in_array(BackedEnum::class, \class_implements($argumentType), true)) {
+                $arguments[$argument->getName()] = $argumentType::from($input[$argument->getName()]);
+                continue;
+            }
+
             // handling of non scalar, non composite types
             if (\is_array($input[$argument->getName()]) && $argument->getTypes()[0] !== 'array') {
-                $argumentType = $argument->getTypes()[0];
                 \assert(\class_exists($argumentType));
 
                 $arguments[$argument->getName()] = $this->mapJsonOnObject($input[$argument->getName()], $argumentType);

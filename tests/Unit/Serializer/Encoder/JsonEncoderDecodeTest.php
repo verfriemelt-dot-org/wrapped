@@ -27,6 +27,16 @@ class JsonEncoderDecodeTest extends TestCase
         static::assertSame(1, $dto->bar);
     }
 
+    public function test_decode_all_defaults(): void
+    {
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize('{}', DefaultDto::class);
+
+        static::assertSame(1, $dto->one);
+        static::assertSame(2, $dto->two);
+        static::assertSame(3, $dto->three);
+    }
+
     public function test_decode_skipping_defaults(): void
     {
         $encoder = new JsonEncoder();
@@ -97,5 +107,21 @@ class JsonEncoderDecodeTest extends TestCase
 
         static::assertInstanceOf($class::class, $dto);
         static::assertCount(3, $dto->variadic->subDtos ?? []);
+    }
+
+    public function test_simple_enum_decode(): void
+    {
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize('{"arg": "bar"}', SimpleEnumDto::class);
+
+        static::assertSame(TestEnum::Bar, $dto->arg);
+    }
+
+    public function test_default_enum_decode(): void
+    {
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize('{}', DefaultEnumDto::class);
+
+        static::assertSame(TestEnum::Foo->value, $dto->arg->value);
     }
 }
