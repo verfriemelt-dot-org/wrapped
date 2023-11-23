@@ -27,6 +27,16 @@ class JsonEncoderDecodeTest extends TestCase
         static::assertSame(1, $dto->bar);
     }
 
+    public function test_decode_skipping_defaults(): void
+    {
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize('{"one":5, "three": 8}', DefaultDto::class);
+
+        static::assertSame(5, $dto->one);
+        static::assertSame(2, $dto->two);
+        static::assertSame(8, $dto->three);
+    }
+
     public function test_ignoring_extra(): void
     {
         $encoder = new JsonEncoder();

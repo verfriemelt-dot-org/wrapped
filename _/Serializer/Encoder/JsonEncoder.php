@@ -21,7 +21,10 @@ class JsonEncoder implements EncoderInterface
         return $this->mapJsonOnObject($decodedInput, $class);
     }
 
-    public function serialize(object $input, bool $pretty = false): string
+    /**
+     * @param mixed[]|object $input
+     */
+    public function serialize(array|object $input, bool $pretty = false): string
     {
         return \json_encode($input, \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
     }
@@ -59,9 +62,9 @@ class JsonEncoder implements EncoderInterface
                 throw new RuntimeException("missing value from input for argument {$class}::{$argument->getName()}");
             }
 
-            // if we found defaults, we are done
+            // if we have defaults and no input, we stick to default
             if (!\array_key_exists($argument->getName(), $input) && $argument->hasDefaultValue()) {
-                break;
+                continue;
             }
 
             // handling of non scalar, non composite types
@@ -69,11 +72,11 @@ class JsonEncoder implements EncoderInterface
                 $argumentType = $argument->getTypes()[0];
                 \assert(\class_exists($argumentType));
 
-                $arguments[] = $this->mapJsonOnObject($input[$argument->getName()], $argumentType);
+                $arguments[$argument->getName()] = $this->mapJsonOnObject($input[$argument->getName()], $argumentType);
                 continue;
             }
 
-            $arguments[] = $input[$argument->getName()];
+            $arguments[$argument->getName()] = $input[$argument->getName()];
         }
 
         return new $class(...$arguments);
