@@ -22,9 +22,6 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->skip([
-        // this is a type error on recent versions
-        CountOnNullRector::class,
-
         ClassPropertyAssignToConstructorPromotionRector::class,
 
         'tests/Integration/Event/EventDispatcherTest.php'
