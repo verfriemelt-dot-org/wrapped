@@ -4716,6 +4716,11 @@ parameters:
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
+			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) never returns Closure\\(T, mixed \\.\\.\\.\\)\\: T so it can be removed from the return type\\.$#"
+			count: 1
+			path: tests/Integration/Event/EventDispatcherTest.php
+
+		-
 			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T, mixed \\.\\.\\.\\)\\: T\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|null\\.$#"
 			count: 1
 			path: tests/Integration/Event/EventDispatcherTest.php
