@@ -6,7 +6,14 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
+use RecursiveIteratorIterator;
+use ReflectionAttribute;
+use RegexIterator;
+use SplFileInfo;
 use Throwable;
+use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Command\AbstractCommand;
+use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
@@ -18,11 +25,15 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Routable;
+use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Router\Router;
+use RecursiveDirectoryIterator;
+use ReflectionClass;
 
-abstract class Kernel implements KernelInterface
+abstract class AbstractKernel implements KernelInterface
 {
     protected Router $router;
+    protected Router $cliRouter;
 
     protected Container $container;
 
@@ -31,7 +42,9 @@ abstract class Kernel implements KernelInterface
     public function __construct()
     {
         $this->container = new Container();
-        $this->router = $this->container->get(Router::class);
+        $this->router = new Router();
+        $this->cliRouter = new Router();
+
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
         $this->initializeErrorHandling();
@@ -66,7 +79,7 @@ abstract class Kernel implements KernelInterface
      */
     public function loadRoutes(array $routes): static
     {
-        $this->router->addRoutes(...$routes);
+        $this->router->add(...$routes);
         return $this;
     }
 
@@ -124,6 +137,17 @@ abstract class Kernel implements KernelInterface
         return $response;
     }
 
+    public function execute(Console $cli): void
+    {
+        $this->container->register(Console::class, $cli);
+        $route = $this->cliRouter->handleRequest($cli->getArgvAsString());
+        $command = $this->container->get($route->getCallback());
+
+        \assert($command instanceof AbstractCommand);
+
+        $command->execute($cli);
+    }
+
     protected function triggerKernelResponse(Request $request, Response $response): void
     {
         $this->eventDispatcher->dispatch((new KernelResponse($request))->setResponse($response));
@@ -149,5 +173,34 @@ abstract class Kernel implements KernelInterface
         \set_exception_handler(function (Throwable $e): void {
             $this->dispatchException($e);
         });
+    }
+
+    public function loadCommands(string $path, string $pathPrefix): void
+    {
+        $iterator = new RegexIterator(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($path)
+            ),
+            '/\.php$/'
+        );
+
+        $namespace = dirname(\str_replace('\\', '/', static::class));
+
+        foreach ($iterator as $file) {
+            \assert($file instanceof SplFileInfo);
+
+            /** @var class-string $class */
+            $class =  $namespace . '\\' . \str_replace('/', '\\', \ltrim($file->getPath(), $pathPrefix)) . '\\' . \basename($file->getFilename(), '.php');
+            $reflection = new ReflectionClass($class);
+
+            $attributes = array_filter($reflection->getAttributes(), static fn (ReflectionAttribute $ra): bool => $ra->getName() === Command::class);
+
+            foreach ($attributes as $attribute) {
+                $instance = $attribute->newInstance();
+                \assert($instance instanceof Command);
+
+                $this->cliRouter->add((new Route($instance->name))->call($class));
+            }
+        }
     }
 }

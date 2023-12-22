@@ -23,4 +23,8 @@ interface Routable
      * the callback wont be executed
      */
     public function getFilters();
+
+    public function setPath(string $path): static;
+
+    public function addFilter(callable $filter): static;
 }

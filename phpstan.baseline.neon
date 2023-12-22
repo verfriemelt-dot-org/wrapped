@@ -1,6 +1,36 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 11, keep it under 8$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:containerConfiguration\\(\\) has parameter \\$config with no signature specified for Closure\\.$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
+			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, \\(callable\\)\\|object\\|string given\\.$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
+			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
+			count: 3
+			path: _/AbstractKernel.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\)$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\Cache\\:\\:get\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\type\\.$#"
 			count: 1
 			path: _/Cache/Cache.php
@@ -2736,26 +2766,6 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:handle\\(\\)\" is 11, keep it under 8$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Kernel\\:\\:containerConfiguration\\(\\) has parameter \\$config with no signature specified for Closure\\.$#"
-			count: 1
-			path: _/Kernel.php
-
-		-
-			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
-			count: 3
-			path: _/Kernel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Queue/Backend/MemoryBackend.php
@@ -3081,6 +3091,11 @@ parameters:
 			path: _/Router/RedirectException.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Router/Routable.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:getFilters\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Router/Routable.php
@@ -3216,37 +3231,17 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) has parameter \\$uri with no type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$filters with no signature specified for callable\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$filters with no type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$prefix with no type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$routes with no type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:isFiltered\\(\\) has parameter \\$filterFunction with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:isFiltered\\(\\) has parameter \\$filterFunction with no signature specified for callable\\.$#"
 			count: 1
 			path: _/Router/Router.php
 
@@ -3271,37 +3266,7 @@ parameters:
 			path: _/Router/Router.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:sortRoutes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:sortRoutes\\(\\) has parameter \\$routes with no type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
 			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$routes with type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routeable is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$routes with type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\type is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Parameter \\$routes of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:add\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\type\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Parameter \\$routes of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:addRoutes\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routeable\\.$#"
 			count: 1
 			path: _/Router/Router.php
 

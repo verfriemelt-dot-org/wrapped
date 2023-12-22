@@ -18,27 +18,6 @@ final class Router
 
     private array $globalFilter = [];
 
-    /**
-     * used for adding multiple routes
-     *
-     * @param Routeable $routes
-     *
-     * @return Router
-     *
-     * @deprecated since version number
-     */
-    public function addRoutes(Routable ...$routes)
-    {
-        return $this->add(...$routes);
-    }
-
-    /**
-     * adding routes to the router
-     *
-     * @param type $routes
-     *
-     * @return $this
-     */
     public function add(Routable ...$routes): self
     {
         foreach ($routes as $route) {
@@ -48,12 +27,8 @@ final class Router
         return $this;
     }
 
-    private function isFiltered($filterFunction): bool
+    private function isFiltered(callable $filterFunction): bool
     {
-        if (!is_callable($filterFunction)) {
-            return false;
-        }
-
         $functionResult = $filterFunction($this->request);
 
         if ($functionResult === false) {
@@ -69,19 +44,27 @@ final class Router
         throw $filterException;
     }
 
-    public function flattenRoutes($routes, $prefix = '', $filters = [])
+    /**
+     * @param Routable[] $routes
+     * @param callable[] $filters
+     *
+     * @return Route[]
+     */
+    private function flattenRoutes(array $routes, string $prefix = '', array $filters = []): array
     {
         $flattened = [];
 
         foreach ($routes as $routeable) {
             $routeable->setPath($prefix . $routeable->getPath());
 
-            array_map(fn ($c) => $routeable->addFilter($c), $filters);
+            array_map(fn (callable $c) => $routeable->addFilter($c), $filters);
 
             if ($routeable instanceof Route) {
                 $flattened[] = $routeable;
                 continue;
             }
+
+            assert($routeable instanceof RouteGroup);
 
             // routegroup
             $flattened = [
@@ -107,16 +90,16 @@ final class Router
             throw new NoRoutesPresent('Router is empty');
         }
 
-        $this->sortRoutes($this->routes);
+        \usort($this->routes, fn (Routable $a, Routable $b) => $a->getPriority() <=> $b->getPriority());
         $this->routes = $this->flattenRoutes($this->routes);
 
         return $this->findMatchingRoute($uri);
     }
 
-    protected function findMatchingRoute($uri): Route
+    protected function findMatchingRoute(string $uri): Route
     {
         foreach ($this->routes as $route) {
-            if (preg_match("~^{$route->getPath()}~", (string) $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
+            if (preg_match("~^{$route->getPath()}~", $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
                 $route->setAttributes(array_slice($routeHits, 1));
                 return $route;
             }
@@ -125,20 +108,7 @@ final class Router
         throw new NoRouteMatching("Router has no matching routes for {$uri}");
     }
 
-    /**
-     * sort routes according to priority
-     */
-    private function sortRoutes(&$routes)
-    {
-        usort($routes, fn (Routable $a, Routable $b) => $a->getPriority() <=> $b->getPriority());
-    }
-
-    /**
-     * runs a filter before matching any routes
-     *
-     * @return $this
-     */
-    public function addGlobalFilter(callable $filter)
+    public function addGlobalFilter(callable $filter): self
     {
         $this->globalFilter[] = $filter;
         return $this;
