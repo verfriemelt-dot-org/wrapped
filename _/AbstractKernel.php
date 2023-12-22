@@ -199,7 +199,7 @@ abstract class AbstractKernel implements KernelInterface
                 $instance = $attribute->newInstance();
                 \assert($instance instanceof Command);
 
-                $this->cliRouter->add((new Route($instance->name))->call($class));
+                $this->cliRouter->add((new Route($instance->command))->call($class));
             }
         }
     }
