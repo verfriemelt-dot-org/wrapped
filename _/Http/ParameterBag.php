@@ -34,7 +34,7 @@ final class ParameterBag implements Countable, IteratorAggregate
         return new ArrayIterator($this->parameters);
     }
 
-    public function hasNot(string $param): bool
+    public function hasNot(string|int $param): bool
     {
         return !$this->has($param);
     }
