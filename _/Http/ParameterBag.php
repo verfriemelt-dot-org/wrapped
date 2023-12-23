@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-class ParameterBag implements Countable, IteratorAggregate
+final class ParameterBag implements Countable, IteratorAggregate
 {
     /** @var mixed[] */
     private array $parameters = [];
@@ -39,28 +39,18 @@ class ParameterBag implements Countable, IteratorAggregate
         return !$this->has($param);
     }
 
-    public function has(string $key): bool
+    public function has(string|int $key): bool
     {
         return isset($this->parameters[$key]);
     }
 
-    public function get(string $key, string|int|null $default = null)
+    public function get(string|int $key, string|int|null $default = null): mixed
     {
         if (!$this->has($key)) {
             return $default;
         }
 
         return $this->parameters[$key];
-    }
-
-    public function is(string $key, string|int $value)
-    {
-        return $this->get($key) === $value;
-    }
-
-    public function isNot(string $key, string|int $value)
-    {
-        return $this->get($key) !== $value;
     }
 
     /**

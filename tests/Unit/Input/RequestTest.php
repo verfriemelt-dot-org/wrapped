@@ -73,8 +73,7 @@ class RequestTest extends TestCase
 
         static::assertSame('testValue', $request->cookies()->get('testCookie'));
 
-        static::assertTrue($request->cookies()->is('testCookie', 'testValue'));
-        static::assertFalse($request->cookies()->is('testCookie', '!testValue'));
+        static::assertSame('testValue', $request->cookies()->get('testCookie'));
     }
 
     public function test_can_i_have_get_params(): void
@@ -85,7 +84,7 @@ class RequestTest extends TestCase
         static::assertSame([0 => 'test1', 1 => 'test2', 'test' => 'test3'], $request->query()->first());
         static::assertSame('1', $request->query()->last(), 'fetching last item');
         static::assertSame(2, $request->query()->count(), 'counting items');
-        static::assertTrue($request->query()->isNot('bar', 2), 'is NOT');
+        static::assertTrue($request->query()->get('bar') !== 2);
 
         static::assertSame(['bar' => '1'], $request->query()->except(['foo']), 'fetching items except one');
 

@@ -6,10 +6,7 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
-use RecursiveIteratorIterator;
 use ReflectionAttribute;
-use RegexIterator;
-use SplFileInfo;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
@@ -17,6 +14,7 @@ use verfriemelt\wrapped\_\Command\Command;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DI\ServiceDiscovery;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
@@ -27,7 +25,6 @@ use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Routable;
 use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Router\Router;
-use RecursiveDirectoryIterator;
 use ReflectionClass;
 
 abstract class AbstractKernel implements KernelInterface
@@ -177,29 +174,25 @@ abstract class AbstractKernel implements KernelInterface
 
     public function loadCommands(string $path, string $pathPrefix): void
     {
-        $iterator = new RegexIterator(
-            new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path)
-            ),
-            '/\.php$/'
-        );
-
         $namespace = dirname(\str_replace('\\', '/', static::class));
 
-        foreach ($iterator as $file) {
-            \assert($file instanceof SplFileInfo);
+        $discovery = $this->container->get(ServiceDiscovery::class);
+        $commands = $discovery->findTags(
+            $path,
+            $pathPrefix,
+            $namespace,
+            Command::class
+        );
 
-            /** @var class-string $class */
-            $class =  $namespace . '\\' . \str_replace('/', '\\', \ltrim($file->getPath(), $pathPrefix)) . '\\' . \basename($file->getFilename(), '.php');
-            $reflection = new ReflectionClass($class);
-
-            $attributes = array_filter($reflection->getAttributes(), static fn (ReflectionAttribute $ra): bool => $ra->getName() === Command::class);
+        foreach ($commands as $command) {
+            $reflection = new ReflectionClass($command);
+            $attributes = \array_filter($reflection->getAttributes(), fn (ReflectionAttribute $ra): bool => $ra->getName() === Command::class);
 
             foreach ($attributes as $attribute) {
                 $instance = $attribute->newInstance();
-                \assert($instance instanceof Command);
+                assert($instance instanceof Command);
 
-                $this->cliRouter->add((new Route($instance->command))->call($class));
+                $this->cliRouter->add((new Route($instance->command))->call($command));
             }
         }
     }

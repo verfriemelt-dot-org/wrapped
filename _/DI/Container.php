@@ -18,6 +18,9 @@ class Container
 
     private array $currentlyLoading = [];
 
+    /** @var class-string[][] */
+    private array $tags = [];
+
     public function __construct()
     {
         /* @phpstan-ignore-next-line */
@@ -156,5 +159,19 @@ class Container
         assert(\array_is_list($this->interfaces[$class]));
 
         return $this->interfaces[$class][0];
+    }
+
+    public function tag(string $tag, string $class): void
+    {
+        $this->tags[$tag] ??= [];
+        $this->tags[$tag][] = $class;
+    }
+
+    /**
+     * @return iterable<class-string>
+     */
+    public function tagIterator(string $tag): iterable
+    {
+        return $this->tags[$tag] ?? [];
     }
 }

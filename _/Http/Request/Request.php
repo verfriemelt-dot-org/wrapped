@@ -150,22 +150,12 @@ class Request
         );
     }
 
-    /**
-     * tells wether this is an https request
-     *
-     * @return bool
-     */
-    public function secure()
+    public function secure(): bool
     {
-        return $this->server()->is('HTTPS', 'on');
+        return $this->server()->get('HTTPS')  === 'on';
     }
 
-    /**
-     * The URI which was given in order to access this page; for instance, '/index.html'.
-     *
-     * @return string
-     */
-    public function uri()
+    public function uri(): ?string
     {
         $uri = $this->server->get('REQUEST_URI');
 
@@ -176,53 +166,39 @@ class Request
         return $this->server->get('REQUEST_URI');
     }
 
-    public function uriWithoutQueryString()
-    {
-        return explode('?', $this->uri())[0];
-    }
-
     /**
      * Contains any client-provided pathname information trailing the actual
      * script filename but preceding the query string, if available. For instance,
      * if the current script was accessed via the
      * URL http://www.example.com/php/path_info.php/some/stuff?foo=bar,
      * then $_SERVER['PATH_INFO'] would contain /some/stuff
-     *
-     * @return type
      */
-    public function pathInfo()
+    public function pathInfo(): ?string
     {
         return $this->server->get('PATH_INFO');
     }
 
-    public function referer()
+    public function referer(): ?string
     {
         return $this->server->get('HTTP_REFERER');
     }
 
-    public function hostname()
+    public function hostname(): ?string
     {
         return $this->server->get('HTTP_HOST');
     }
 
-    public function ajax()
-    {
-        return strtolower($this->server->get('HTTP_X_REQUESTED_WITH') ?? '') === 'xmlhttprequest' || $this->query->has(
-            'ajax'
-        );
-    }
-
-    public function requestMethod()
+    public function requestMethod(): ?string
     {
         return $this->server->get('REQUEST_METHOD');
     }
 
-    public function remoteIp()
+    public function remoteIp(): ?string
     {
         return $this->server->get('REMOTE_ADDR', '127.0.0.1');
     }
 
-    public function remoteHost()
+    public function remoteHost(): ?string
     {
         if ($ip = $this->remoteIp()) {
             return gethostbyaddr($ip);
@@ -231,21 +207,18 @@ class Request
         return null;
     }
 
-    public function userAgent()
+    public function userAgent(): ?string
     {
         return $this->server->get('HTTP_USER_AGENT');
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): self
     {
         $this->attributes = new ParameterBag($attributes);
         return $this;
     }
 
-    /**
-     * @return ParameterBag
-     */
-    public function attributes()
+    public function attributes(): ParameterBag
     {
         return $this->attributes;
     }
@@ -253,10 +226,8 @@ class Request
     /**
      * merges the input vectors in that order of priority
      * GET > POST > COOKIE > RAWINPUT
-     *
-     * @return ParameterBag
      */
-    public function aggregate()
+    public function aggregate(): ParameterBag
     {
         return new ParameterBag(
             $this->query->all() + $this->request->all() + $this->cookies->all() + $this->content->all()

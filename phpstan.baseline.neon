@@ -26,6 +26,11 @@ parameters:
 			path: _/AbstractKernel.php
 
 		-
+			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:handleRequest\\(\\) expects string\\|verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request, string\\|null given\\.$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
 			message: "#^Unable to resolve the template type T in call to method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\)$#"
 			count: 1
 			path: _/AbstractKernel.php
@@ -286,6 +291,11 @@ parameters:
 			path: _/Controller/RestController.php
 
 		-
+			message: "#^Parameter \\#2 \\$method of function method_exists expects string, string\\|null given\\.$#"
+			count: 1
+			path: _/Controller/RestController.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\RestController\\:\\:\\$supportedVerbs has no type specified\\.$#"
 			count: 1
 			path: _/Controller/RestController.php
@@ -337,6 +347,11 @@ parameters:
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$interfaces with generic class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration does not specify its types\\: T$#"
+			count: 1
+			path: _/DI/Container.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$tags \\(array\\<array\\<class\\-string\\>\\>\\) does not accept array\\<array\\<string\\>\\>\\.$#"
 			count: 1
 			path: _/DI/Container.php
 
@@ -2281,6 +2296,11 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$action \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: _/Formular/Formular.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2301,24 +2321,14 @@ parameters:
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/Http/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:is\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:isNot\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 2
+			path: _/Http/Request/Request.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
@@ -2351,17 +2361,12 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:ajax\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:createFromGlobals\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:hostname\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:hostname\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2401,32 +2406,27 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:pathInfo\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\type\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:pathInfo\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:referer\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:referer\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteHost\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteHost\\(\\) should return string\\|null but returns string\\|false\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteIp\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteIp\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:setAttributes\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2436,12 +2436,17 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:uriWithoutQueryString\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:uri\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:userAgent\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:userAgent\\(\\) should return string\\|null but returns mixed\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, string\\|null given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2726,12 +2731,12 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) expects int\\|string, string\\|null given\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) expects int\\|string, string\\|null given\\.$#"
 			count: 2
 			path: _/Input/FilterItem.php
 
@@ -3271,6 +3276,11 @@ parameters:
 			path: _/Router/Router.php
 
 		-
+			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: _/Router/Router.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter is never read, only written\\.$#"
 			count: 1
 			path: _/Router/Router.php
@@ -3317,6 +3327,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:fetchSessionId\\(\\) should return string but returns string\\|null\\.$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
+			message: "#^Parameter \\#1 \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
