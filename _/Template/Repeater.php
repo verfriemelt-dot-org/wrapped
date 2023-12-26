@@ -34,7 +34,7 @@ class Repeater implements TemplateItem
     /**
      * @param string $name
      *
-     * @return \verfriemelt\wrapped\_\Template\Repeater
+     * @return Repeater
      */
     public function set($name, mixed $value)
     {
@@ -70,7 +70,7 @@ class Repeater implements TemplateItem
      * @param string $name
      * @param bool   $bool
      *
-     * @return \verfriemelt\wrapped\_\Template\Repeater
+     * @return Repeater
      */
     public function setIf($name, $bool = true)
     {
@@ -83,7 +83,7 @@ class Repeater implements TemplateItem
      *
      * @param string $name
      *
-     * @return \verfriemelt\wrapped\_\Template\Repeater
+     * @return Repeater
      */
     public function createChildRepeater($name)
     {

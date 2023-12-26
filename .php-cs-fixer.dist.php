@@ -10,7 +10,7 @@ $finder = PhpCsFixer\Finder::create()
 $config = new PhpCsFixer\Config();
 $config->setRules([
     '@Symfony' => true,
-    '@PER' => true,
+    '@PER-CS' => true,
 
     'php_unit_test_case_static_method_calls' => true,
     'declare_strict_types' => true,
