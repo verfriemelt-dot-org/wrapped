@@ -19,14 +19,14 @@ class ArgvParserTest extends TestCase
     public function test_new_instance(): void
     {
         static::expectNotToPerformAssertions();
-        (new ArgvParser())->parse(['script.php']);
+        (new ArgvParser())->parse([]);
     }
 
     public function test_with_single_argument(): void
     {
         $parser = new ArgvParser();
         $parser->addArguments(new Argument('test'));
-        $parser->parse(['script.php', 'foo']);
+        $parser->parse(['foo']);
 
         $argument = $parser->getArgument('test');
         static::assertSame('foo', $argument->get());
@@ -38,7 +38,7 @@ class ArgvParserTest extends TestCase
 
         $parser = new ArgvParser();
         $parser->addArguments(new Argument('test'));
-        $parser->parse(['script.php']);
+        $parser->parse([]);
     }
 
     public function test_with_single_missing_optional_argument(): void
@@ -46,14 +46,14 @@ class ArgvParserTest extends TestCase
         static::expectNotToPerformAssertions();
         $parser = new ArgvParser();
         $parser->addArguments(new Argument('test', Argument::OPTIONAL));
-        $parser->parse(['script.php']);
+        $parser->parse([]);
     }
 
     public function test_with_single_present_optional_argument(): void
     {
         $parser = new ArgvParser();
         $parser->addArguments(new Argument('test', Argument::OPTIONAL));
-        $parser->parse(['script.php', 'foo']);
+        $parser->parse(['foo']);
 
         $argument = $parser->getArgument('test');
         static::assertSame('foo', $argument->get());
@@ -64,14 +64,14 @@ class ArgvParserTest extends TestCase
         static::expectException(ArgumentUnexpectedException::class);
 
         $parser = new ArgvParser();
-        $parser->parse(['script.php', 'foo']);
+        $parser->parse(['foo']);
     }
 
     public function test_with_option_present(): void
     {
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo'));
-        $parser->parse(['script.php', '--foo']);
+        $parser->parse(['--foo']);
 
         $option = $parser->getOption('foo');
         static::assertTrue($option->present());
@@ -81,7 +81,7 @@ class ArgvParserTest extends TestCase
     {
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo'));
-        $parser->parse(['script.php']);
+        $parser->parse([]);
 
         $option = $parser->getOption('foo');
         static::assertFalse($option->present());
@@ -92,14 +92,14 @@ class ArgvParserTest extends TestCase
         static::expectException(OptionMissingException::class);
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo', Option::REQUIRED));
-        $parser->parse(['script.php']);
+        $parser->parse([]);
     }
 
     public function test_with_option_unexpected(): void
     {
         static::expectException(OptionUnexpectedException::class);
         $parser = new ArgvParser();
-        $parser->parse(['script.php', '--foo']);
+        $parser->parse(['--foo']);
     }
 
     public function test_with_option_requiring_value_missing_value(): void
@@ -107,14 +107,14 @@ class ArgvParserTest extends TestCase
         static::expectException(OptionMissingValueException::class);
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
-        $parser->parse(['script.php', '--foo']);
+        $parser->parse(['--foo']);
     }
 
     public function test_with_option_requiring_value_provided(): void
     {
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
-        $parser->parse(['script.php', '--foo', 'bar']);
+        $parser->parse(['--foo', 'bar']);
 
         $option = $parser->getOption('foo');
         static::assertTrue($option->present());
@@ -125,7 +125,7 @@ class ArgvParserTest extends TestCase
     {
         $parser = new ArgvParser();
         $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
-        $parser->parse(['script.php']);
+        $parser->parse([]);
 
         $option = $parser->getOption('foo');
         static::assertFalse($option->present());
@@ -137,7 +137,7 @@ class ArgvParserTest extends TestCase
         $parser->addOptions(new Option('foo', short: 'f'));
         $parser->addOptions(new Option('bar', short: 'b'));
 
-        $parser->parse(['script.php', '-f', '-b']);
+        $parser->parse(['-f', '-b']);
 
         static::assertTrue($parser->getOption('foo')->present());
         static::assertTrue($parser->getOption('bar')->present());
@@ -149,7 +149,7 @@ class ArgvParserTest extends TestCase
         $parser->addOptions(new Option('foo', short: 'f'));
         $parser->addOptions(new Option('bar', short: 'b'));
 
-        $parser->parse(['script.php', '-fb']);
+        $parser->parse(['-fb']);
 
         static::assertTrue($parser->getOption('foo')->present());
         static::assertTrue($parser->getOption('bar')->present());
@@ -161,7 +161,7 @@ class ArgvParserTest extends TestCase
         $parser->addOptions(new Option('foo', short: 'f'));
         $parser->addOptions(new Option('bar', Option::EXPECTS_VALUE, short: 'b'));
 
-        $parser->parse(['script.php', '-fb', 'nope']);
+        $parser->parse(['-fb', 'nope']);
 
         static::assertTrue($parser->getOption('foo')->present());
         static::assertTrue($parser->getOption('bar')->present());
@@ -176,6 +176,6 @@ class ArgvParserTest extends TestCase
         $parser->addOptions(new Option('foo', short: 'f'));
         $parser->addOptions(new Option('bar', Option::EXPECTS_VALUE, short: 'b'));
 
-        $parser->parse(['script.php', '-bf', 'nope']);
+        $parser->parse(['-bf', 'nope']);
     }
 }

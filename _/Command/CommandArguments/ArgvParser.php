@@ -65,7 +65,7 @@ class ArgvParser
     {
         $this->argv = $argv;
         $this->argumentCounter = 0;
-        $this->pos = 1;
+        $this->pos = 0;
 
         while ($input = $this->consume()) {
             match (true) {
@@ -129,11 +129,6 @@ class ArgvParser
     private function consume(): ?string
     {
         return $this->argv[$this->pos++] ?? null;
-    }
-
-    public function getScript(): string
-    {
-        return $this->argv[0];
     }
 
     public function getOption(string $name): Option
