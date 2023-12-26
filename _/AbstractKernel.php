@@ -145,7 +145,12 @@ abstract class AbstractKernel implements KernelInterface
 
         $parser = $this->container->get(ArgvParser::class);
         $command->configure($parser);
-        $parser->parse($cli->getArgv()->all());
+
+        $arguments = $cli->getArgv()->all();
+        \array_shift($arguments); // scriptname
+        \array_shift($arguments); // command name
+
+        $parser->parse($arguments);
 
         exit($command->execute($cli)->value);
     }
