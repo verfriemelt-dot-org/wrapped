@@ -4,173 +4,178 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\tests\Unit\Console\Argument;
 
-use Generator;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
-use Throwable;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentDuplicatedException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentUnexpectedException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\CommandArguments\Option;
 use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingException;
+use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingValueException;
+use verfriemelt\wrapped\_\Command\CommandArguments\OptionUnexpectedException;
 
 class ArgvParserTest extends TestCase
 {
-    public function test_empty(): void
+    public function test_new_instance(): void
     {
-        static::expectException(RuntimeException::class);
-        (new ArgvParser([]))->parse();
+        static::expectNotToPerformAssertions();
+        (new ArgvParser())->parse(['script.php']);
     }
 
-    public function test_assoc_array(): void
+    public function test_with_single_argument(): void
     {
-        static::expectException(RuntimeException::class);
-        (new ArgvParser(['foo' => 'bar']))->parse();
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('test'));
+        $parser->parse(['script.php', 'foo']);
+
+        $argument = $parser->getArgument('test');
+        static::assertSame('foo', $argument->get());
     }
 
-    public function testget_scipt_name(): void
+    public function test_with_single_missing_argument(): void
     {
-        $argument = new ArgvParser(['script.php']);
-        static::assertSame('script.php', $argument->getScript());
+        static::expectException(ArgumentMissingException::class);
+
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('test'));
+        $parser->parse(['script.php']);
     }
 
-    /**
-     * @return Generator<string, array{input: string[], expected: Throwable|string[], args?: Argument[]}>
-     */
-    public static function arguments(): Generator
+    public function test_with_single_missing_optional_argument(): void
     {
-        yield 'no input' => [
-            'input' => [],
-            'expected' => new RuntimeException(),
-        ];
-
-        yield 'empty' => [
-            'input' => ['script.php'],
-            'expected' => [],
-        ];
-
-        yield 'simple' => [
-            'input' => ['script.php', 'a', 'b'],
-            'expected' => ['a', 'b'],
-        ];
-
-        yield 'repeated' => [
-            'input' => ['script.php', 'a', 'a'],
-            'expected' => ['a', 'a'],
-        ];
-
-        yield 'mixed with short' => [
-            'input' => ['script.php', '-a', 'a', 'b'],
-            'expected' => ['a', 'b'],
-        ];
-
-        yield 'mixed with long' => [
-            'input' => ['script.php', '-a', 'a', '--logn', 'b'],
-            'expected' => ['a', 'b'],
-        ];
-
-        yield 'described argument' => [
-            'input' => ['script', 'a'],
-            'expected' => ['a'],
-            'args' => [new Argument('test')],
-        ];
-
-        yield 'missing argument' => [
-            'input' => ['script'],
-            'expected' => new ArgumentMissingException(),
-            'args' => [new Argument('test')],
-        ];
-
-        yield 'sencond argument missing after' => [
-            'input' => ['script', 'a'],
-            'expected' => new ArgumentMissingException(),
-            'args' => [new Argument('test'), new Argument('test2')],
-        ];
-
-        yield 'missing optional argument' => [
-            'input' => ['script'],
-            'expected' => [],
-            'args' => [new Argument('test', true)],
-        ];
-
-        yield 'mixed arguments missing' => [
-            'input' => ['script', 'a'],
-            'expected' => ['a'],
-            'args' => [new Argument('test'), new Argument('test2', true)],
-        ];
-
-        yield 'argument already present' => [
-            'input' => ['script', 'a', 'b'],
-            'expected' => new ArgumentDuplicatedException(),
-            'args' => [new Argument('test'), new Argument('test')],
-        ];
-
-        yield 'optional argument first' => [
-            'input' => ['script', 'a', 'b'],
-            'expected' => ['a', 'b'],
-            'args' => [new Argument('test', true), new Argument('test2')],
-        ];
-
-        yield 'optional argument first, missing second required' => [
-            'input' => ['script', 'a'],
-            'expected' => new ArgumentMissingException(),
-            'args' => [new Argument('test', true), new Argument('test2')],
-        ];
+        static::expectNotToPerformAssertions();
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('test', Argument::OPTIONAL));
+        $parser->parse(['script.php']);
     }
 
-    /**
-     * @param array<string>           $input
-     * @param array<string>|Throwable $expected
-     * @param array<Argument>         $arguments
-     */
-    #[DataProvider('arguments')]
-    public function test_get_arguements(array $input, array|Throwable $expected, array $arguments = []): void
+    public function test_with_single_present_optional_argument(): void
     {
-        if ($expected instanceof Throwable) {
-            static::expectException($expected::class);
-        }
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('test', Argument::OPTIONAL));
+        $parser->parse(['script.php', 'foo']);
 
-        $argument = new ArgvParser($input);
-        $argument->addArguments(...$arguments);
-        $argument->parse();
-
-        if (!$expected instanceof Throwable) {
-            static::assertSame($expected, $argument->getRawArguments());
-        }
+        $argument = $parser->getArgument('test');
+        static::assertSame('foo', $argument->get());
     }
 
-    public function test_get_short_options(): void
+    public function test_with_unexpected_argument(): void
     {
-        $argument = new ArgvParser(['script.php', '-a']);
-        $argument->parse();
-        static::assertSame(['-a'], $argument->getShortOptions());
+        static::expectException(ArgumentUnexpectedException::class);
 
-        $argument = new ArgvParser(['script.php']);
-        $argument->parse();
-        static::assertSame([], $argument->getShortOptions());
+        $parser = new ArgvParser();
+        $parser->parse(['script.php', 'foo']);
     }
 
-    public function test_parser_works_twice(): void
+    public function test_with_option_present(): void
     {
-        $parser = new ArgvParser(['script.php', 'a', 'b']);
-        $parser->addArguments(new Argument('test-1'));
-        $parser->parse();
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo'));
+        $parser->parse(['script.php', '--foo']);
 
-        $parser->addArguments(new Argument('test-2'));
-        $parser->parse();
-
-        static::assertSame('a', $parser->getArgument('test-1')->getValue());
-        static::assertSame('b', $parser->getArgument('test-2')->getValue());
+        $option = $parser->getOption('foo');
+        static::assertTrue($option->present());
     }
 
-    public function test_for_missing_option(): void {
-        
+    public function test_with_option_missing(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo'));
+        $parser->parse(['script.php']);
+
+        $option = $parser->getOption('foo');
+        static::assertFalse($option->present());
+    }
+
+    public function test_with_required_option_missing(): void
+    {
         static::expectException(OptionMissingException::class);
-
-        $parser = new ArgvParser(['script']);
+        $parser = new ArgvParser();
         $parser->addOptions(new Option('foo', Option::REQUIRED));
-        $parser->parse();
+        $parser->parse(['script.php']);
+    }
+
+    public function test_with_option_unexpected(): void
+    {
+        static::expectException(OptionUnexpectedException::class);
+        $parser = new ArgvParser();
+        $parser->parse(['script.php', '--foo']);
+    }
+
+    public function test_with_option_requiring_value_missing_value(): void
+    {
+        static::expectException(OptionMissingValueException::class);
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
+        $parser->parse(['script.php', '--foo']);
+    }
+
+    public function test_with_option_requiring_value_provided(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
+        $parser->parse(['script.php', '--foo', 'bar']);
+
+        $option = $parser->getOption('foo');
+        static::assertTrue($option->present());
+        static::assertSame('bar', $option->get());
+    }
+
+    public function test_with_option_requiring_value_missing_option(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', Option::EXPECTS_VALUE));
+        $parser->parse(['script.php']);
+
+        $option = $parser->getOption('foo');
+        static::assertFalse($option->present());
+    }
+
+    public function test_options_with_shorthand(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', short: 'f'));
+        $parser->addOptions(new Option('bar', short: 'b'));
+
+        $parser->parse(['script.php', '-f', '-b']);
+
+        static::assertTrue($parser->getOption('foo')->present());
+        static::assertTrue($parser->getOption('bar')->present());
+    }
+
+    public function test_options_with_shorthand_combined(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', short: 'f'));
+        $parser->addOptions(new Option('bar', short: 'b'));
+
+        $parser->parse(['script.php', '-fb']);
+
+        static::assertTrue($parser->getOption('foo')->present());
+        static::assertTrue($parser->getOption('bar')->present());
+    }
+
+    public function test_options_with_shorthand_combined_with_value(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', short: 'f'));
+        $parser->addOptions(new Option('bar', Option::EXPECTS_VALUE, short: 'b'));
+
+        $parser->parse(['script.php', '-fb', 'nope']);
+
+        static::assertTrue($parser->getOption('foo')->present());
+        static::assertTrue($parser->getOption('bar')->present());
+        static::assertSame('nope', $parser->getOption('bar')->get());
+    }
+
+    public function test_options_with_shorthand_combined_with_value_mixed_up(): void
+    {
+        static::expectException(OptionMissingValueException::class);
+
+        $parser = new ArgvParser();
+        $parser->addOptions(new Option('foo', short: 'f'));
+        $parser->addOptions(new Option('bar', Option::EXPECTS_VALUE, short: 'b'));
+
+        $parser->parse(['script.php', '-bf', 'nope']);
     }
 }

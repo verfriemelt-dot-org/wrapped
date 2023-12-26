@@ -8,140 +8,122 @@ use RuntimeException;
 
 class ArgvParser
 {
-    /** @var string[] */
-    private array $rawArguments = [];
-
-    /** @var string[] */
-    private array $short = [];
-
-    /** @var string[] */
-    private array $long = [];
-
-    private int $argumentCounter = 0;
+    private int $argumentCounter;
 
     /** @var Argument[] */
     private array $arguments = [];
 
-    /** @var Option[] */
+    /** @var array<string,Argument> */
+    private array $argumentsNamed = [];
+
+    /** @var array<string,Option> */
     private array $options = [];
 
-    private int $pos = 1;
+    /** @var array<string,Option> */
+    private array $shortOptions = [];
+
+    private int $pos;
 
     /** @var string[] */
-    protected array $argv = [];
-
-    /**
-     * @param string[]|null $argv $_SERVER['argv']
-     */
-    public function __construct(?array $argv = null)
-    {
-        $this->argv = $argv ?? $_SERVER['argv'] ?? [];
-    }
+    protected array $argv;
 
     public function addOptions(Option ...$options): self
     {
         foreach ($options as $option) {
-            if (in_array($option->name, array_map(fn (Option $o): string => $o->name, $this->options), true)) {
+            if (\array_key_exists($option->name, $this->options)) {
                 throw new OptionDuplicatedException("option «{$option->name}» already present");
             }
 
-            $this->options[] = $option;
+            $this->options[$option->name] = $option;
+
+            if ($option->short !== null) {
+                $this->shortOptions[$option->short] = $option;
+            }
         }
 
         return $this;
     }
 
-    public function addArguments(Argument ...$argument): self
+    public function addArguments(Argument ...$arguments): self
     {
-        foreach ($argument as $arg) {
-            if (in_array($arg->name, array_map(fn (Argument $a): string => $a->name, $this->arguments), true)) {
+        foreach ($arguments as $arg) {
+            if (isset($this->arguments[$arg->name])) {
                 throw new ArgumentDuplicatedException("argument «{$arg->name}» already present");
             }
 
             $this->arguments[] = $arg;
+            $this->argumentsNamed[$arg->name] = $arg;
         }
 
         return $this;
     }
 
-    public function parse(): self
+    /**
+     * @param string[] $argv
+     */
+    public function parse(array $argv): void
     {
+        $this->argv = $argv;
         $this->argumentCounter = 0;
         $this->pos = 1;
 
         while ($input = $this->consume()) {
             match (true) {
-                \str_starts_with($input, '-') => $this->parseOption($input),
+                \str_starts_with($input, '--') => $this->parseLongOption(\substr($input, 2)),
+                \str_starts_with($input, '-') => $this->parseShortOptions(\substr($input, 1)),
                 default => $this->parseArgument($input),
             };
         }
 
-        // check for missing args
+        // check for missing args/opts
         foreach ($this->arguments as $arg) {
-            if ($arg->optional === false && $arg->isInitialized() === false) {
+            if ($arg->required() === true && $arg->present() === false) {
                 throw new ArgumentMissingException("missing Argument {$arg->name}");
             }
         }
 
-        return $this;
+        foreach ($this->options as $opt) {
+            if ($opt->required() === true && $opt->present() === false) {
+                throw new OptionMissingException("missing option {$opt->name}");
+            }
+        }
     }
 
-    private function parseOption(string $input): ?Option
+    private function parseLongOption(string $name): void
     {
-        $longFormat = \str_starts_with('--', $input);
+        $this->handleOption($this->options[$name] ?? throw new OptionUnexpectedException("unknown option {$name}"));
+    }
 
-        if ($longFormat) {
-            $this->long[] = $input;
-        } else {
-            $combinedOpts = \str_split(\substr($input, 1));
+    private function parseShortOptions(string $input): void
+    {
+        $shorts = \str_split($input);
+        $i = 0;
 
-            if (count($combinedOpts) > 1) {
-                for ($i = 0; $i < count($combinedOpts); ++$i) {
-                    $option = $this->parseOption("-{$combinedOpts[$i]}");
-                    if ($option?->isValueRequired() === true && $i < count($combinedOpts) - 1) {
-                        throw new RuntimeException('only last combined option can require a value');
-                    }
-                }
+        foreach ($shorts as $short) {
+            $this->handleOption(
+                $this->shortOptions[$short] ?? throw new OptionUnexpectedException("unknown option {$short}"),
+                ++$i === count($shorts)
+            );
+        }
+    }
 
-                return $option ?? null;
-            }
+    private function handleOption(Option $option, bool $isLastProvided = true): void
+    {
+        $option->markPresent();
 
-            $this->short[] = $input;
+        if (!$isLastProvided && $option->isValueRequired()) {
+            throw new OptionMissingValueException("shorthand {$option->name} cannot required value while not been last");
         }
 
-        foreach ($this->options as $option) {
-            if ($longFormat && $option->name === \substr($input, 2) || !$longFormat && $option->short === \substr(
-                $input,
-                1
-            )) {
-                $option->markPresent();
-
-                if ($option->isValueRequired()) {
-                    $option->setValue(
-                        $this->consume() ?? throw new OptionMissingValueException(
-                            "missing value for option {$option->name}"
-                        )
-                    );
-                }
-
-                return $option;
-            }
+        if ($option->isValueRequired()) {
+            $option->set($this->consume() ?? throw new OptionMissingValueException("missing value for {$option->name}"));
         }
-
-        return null;
     }
 
     private function parseArgument(string $input): void
     {
-        $argument = $this->arguments[$this->argumentCounter++] ?? null;
-        $this->rawArguments[] = $input;
-
-        // anonymous argument
-        if ($argument === null) {
-            return;
-        }
-
-        $argument->setValue($input);
+        $argument = $this->arguments[$this->argumentCounter++] ?? throw new ArgumentUnexpectedException();
+        $argument->set($input);
     }
 
     private function consume(): ?string
@@ -154,83 +136,23 @@ class ArgvParser
         return $this->argv[0];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getRawArguments(): array
-    {
-        return $this->rawArguments;
-    }
-
     public function getOption(string $name): Option
     {
-        $option = null;
-
-        foreach ($this->options as $opt) {
-            if ($opt->name === $name) {
-                $option = $opt;
-                break;
-            }
-        }
-
-        if ($option === null) {
-            throw new RuntimeException("unknown option {$name}");
-        }
-
-        return $option;
+        return $this->options[$name] ?? throw new RuntimeException("unknown option {$name}");
     }
 
     public function hasOption(string $name): bool
     {
-        try {
-            $this->getOption($name);
-            return true;
-        } catch (RuntimeException) {
-            return false;
-        }
+        return isset($this->options[$name]);
     }
 
     public function getArgument(string $name): Argument
     {
-        $argument = null;
-
-        foreach ($this->arguments as $arg) {
-            if ($arg->name === $name) {
-                $argument = $arg;
-                break;
-            }
-        }
-
-        if ($argument === null) {
-            throw new RuntimeException("unknown argument {$name}");
-        }
-
-        return $argument;
+        return $this->argumentsNamed[$name] ?? throw new RuntimeException("unknown argument {$name}");
     }
 
     public function hasArgument(string $name): bool
     {
-        try {
-            $this->getArgument($name);
-            return true;
-        } catch (RuntimeException) {
-            return false;
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getShortOptions(): array
-    {
-        return $this->short;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getLongOptions(): array
-    {
-        return $this->long;
+        return isset($this->argumentsNamed[$name]);
     }
 }

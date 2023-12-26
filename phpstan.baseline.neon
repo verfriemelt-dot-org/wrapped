@@ -16,6 +16,11 @@ parameters:
 			path: _/AbstractKernel.php
 
 		-
+			message: "#^Parameter \\#1 \\$argv of method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\) expects array\\<string\\>, array given\\.$#"
+			count: 1
+			path: _/AbstractKernel.php
+
+		-
 			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 1
 			path: _/AbstractKernel.php
@@ -176,11 +181,6 @@ parameters:
 			path: _/Cache/MemoryCacheProvider.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Argument\\\\ArgvParser\\:\\:parseOption\\(\\)\" is 20, keep it under 8$#"
-			count: 1
-			path: _/Cli/Argument/ArgvParser.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:read\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Cli/Console.php
@@ -254,6 +254,11 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:\\$registeredKeys type has no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Cli/KeyInput.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/Command/CommandArguments/ArgvParser.php
 
 		-
 			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
