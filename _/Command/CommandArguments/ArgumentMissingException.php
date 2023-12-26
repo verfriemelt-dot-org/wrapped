@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Cli\Argument;
+namespace verfriemelt\wrapped\_\Command\CommandArguments;
 
 use RuntimeException;
 

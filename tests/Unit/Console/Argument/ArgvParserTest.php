@@ -9,10 +9,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
-use verfriemelt\wrapped\_\Cli\Argument\Argument;
-use verfriemelt\wrapped\_\Cli\Argument\ArgumentDuplicatedException;
-use verfriemelt\wrapped\_\Cli\Argument\ArgumentMissingException;
-use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentDuplicatedException;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandArguments\Option;
+use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingException;
 
 class ArgvParserTest extends TestCase
 {
@@ -161,5 +163,14 @@ class ArgvParserTest extends TestCase
 
         static::assertSame('a', $parser->getArgument('test-1')->getValue());
         static::assertSame('b', $parser->getArgument('test-2')->getValue());
+    }
+
+    public function test_for_missing_option(): void {
+        
+        static::expectException(OptionMissingException::class);
+
+        $parser = new ArgvParser(['script']);
+        $parser->addOptions(new Option('foo', Option::REQUIRED));
+        $parser->parse();
     }
 }

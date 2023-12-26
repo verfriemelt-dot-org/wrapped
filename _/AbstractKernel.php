@@ -7,10 +7,12 @@ namespace verfriemelt\wrapped\_;
 use Closure;
 use ErrorException;
 use ReflectionAttribute;
+use ReflectionClass;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Command;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
@@ -25,7 +27,6 @@ use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Routable;
 use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Router\Router;
-use ReflectionClass;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -134,7 +135,7 @@ abstract class AbstractKernel implements KernelInterface
         return $response;
     }
 
-    public function execute(Console $cli): void
+    public function execute(Console $cli): never
     {
         $this->container->register(Console::class, $cli);
         $route = $this->cliRouter->handleRequest($cli->getArgvAsString());
@@ -142,7 +143,11 @@ abstract class AbstractKernel implements KernelInterface
 
         \assert($command instanceof AbstractCommand);
 
-        $command->execute($cli);
+        $parser = $this->container->get(ArgvParser::class);
+        $command->configure($parser);
+        $parser->parse();
+
+        die($command->execute($cli)->value);
     }
 
     protected function triggerKernelResponse(Request $request, Response $response): void

@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 
 require 'vendor/autoload.php';
 
@@ -12,7 +12,7 @@ if (!Console::isCli()) {
 
 
 $parser = new ArgvParser();
-$parser->addArguments(new verfriemelt\wrapped\_\Cli\Argument\Argument('command', true));
+$parser->addArguments(new verfriemelt\wrapped\_\Command\CommandArguments\Argument('command', true));
 $parser->parse();
 
 if ( !$parser->hasArgument('command') ) {
@@ -27,7 +27,7 @@ if ($argument->getValue() === 'help') {
     $console = new Console();
     $console->write('there is no help')->eol();
 
-    $parser->addArguments(new verfriemelt\wrapped\_\Cli\Argument\Argument('sub'));
+    $parser->addArguments(new verfriemelt\wrapped\_\Command\CommandArguments\Argument('sub'));
     $parser->parse();
 }
 

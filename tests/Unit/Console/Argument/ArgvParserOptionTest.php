@@ -6,9 +6,9 @@ namespace verfriemelt\wrapped\tests\Unit\Console\Argument;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use verfriemelt\wrapped\_\Cli\Argument\ArgvParser;
-use verfriemelt\wrapped\_\Cli\Argument\Option;
-use verfriemelt\wrapped\_\Cli\Argument\OptionMissingValueException;
+use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandArguments\Option;
+use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingValueException;
 
 class ArgvParserOptionTest extends TestCase
 {

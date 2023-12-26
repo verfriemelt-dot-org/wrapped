@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Cli\Argument;
+namespace verfriemelt\wrapped\_\Command\CommandArguments;
 
 use RuntimeException;
 
@@ -35,14 +35,7 @@ class ArgvParser
      */
     public function __construct(?array $argv = null)
     {
-        $argv ??= $_SERVER['argv'] ?? [];
-
-        if (!\is_array($argv) || !\array_is_list($argv) || count($argv) === 0) {
-            throw new RuntimeException('argv expected to be an list with at least 1 element');
-        }
-
-        /* @phpstan-ignore-next-line */
-        $this->argv = $argv;
+        $this->argv = $argv ?? $_SERVER['argv'] ?? [];
     }
 
     public function addOptions(Option ...$options): self
