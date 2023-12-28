@@ -155,4 +155,12 @@ class ArgvParser
     {
         return isset($this->argumentsNamed[$name]);
     }
+
+    /**
+     * @return Argument[]
+     */
+    public function arguments(): array
+    {
+        return $this->arguments;
+    }
 }

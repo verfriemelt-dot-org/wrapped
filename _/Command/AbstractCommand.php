@@ -7,7 +7,7 @@ namespace verfriemelt\wrapped\_\Command;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 
-abstract readonly class AbstractCommand
+abstract class AbstractCommand
 {
     public function configure(ArgvParser $argv): void {}
 

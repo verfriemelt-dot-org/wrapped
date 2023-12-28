@@ -137,6 +137,8 @@ abstract class AbstractKernel implements KernelInterface
 
     public function execute(Console $cli): never
     {
+        $this->loadCommands(__DIR__ . '/Command', __DIR__, __NAMESPACE__);
+
         $this->container->register(Console::class, $cli);
         $route = $this->cliRouter->handleRequest($cli->getArgvAsString());
         $command = $this->container->get($route->getCallback());
@@ -182,10 +184,8 @@ abstract class AbstractKernel implements KernelInterface
         });
     }
 
-    public function loadCommands(string $path, string $pathPrefix): void
+    public function loadCommands(string $path, string $pathPrefix, string $namespace): void
     {
-        $namespace = dirname(\str_replace('\\', '/', static::class));
-
         $discovery = $this->container->get(ServiceDiscovery::class);
         $commands = $discovery->findTags(
             $path,
