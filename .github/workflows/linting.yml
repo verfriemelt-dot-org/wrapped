@@ -9,10 +9,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.2
+    - name: Setup PHP 8.3
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.2
+        php-version: 8.3
 
     - name: composer install
       run: composer install
@@ -28,10 +28,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.2
+    - name: Setup PHP 8.3
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.2
+        php-version: 8.3
 
     - name: composer install
       run: composer install
@@ -47,10 +47,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup PHP 8.2
+    - name: Setup PHP 8.3
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.2
+        php-version: 8.3
 
     - name: composer install
       run: composer install
