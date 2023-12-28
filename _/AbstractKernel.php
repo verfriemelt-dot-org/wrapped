@@ -6,12 +6,11 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
-use ReflectionAttribute;
 use ReflectionClass;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
-use verfriemelt\wrapped\_\Command\Command;
+use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
@@ -196,9 +195,8 @@ abstract class AbstractKernel implements KernelInterface
 
         foreach ($commands as $command) {
             $reflection = new ReflectionClass($command);
-            $attributes = \array_filter($reflection->getAttributes(), fn (ReflectionAttribute $ra): bool => $ra->getName() === Command::class);
 
-            foreach ($attributes as $attribute) {
+            foreach ($reflection->getAttributes(Command::class) as $attribute) {
                 $instance = $attribute->newInstance();
                 assert($instance instanceof Command);
 

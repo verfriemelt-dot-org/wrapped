@@ -6,7 +6,6 @@ namespace verfriemelt\wrapped\_\DI;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use ReflectionAttribute;
 use ReflectionClass;
 use RegexIterator;
 use SplFileInfo;
@@ -41,9 +40,8 @@ final readonly class ServiceDiscovery
             /** @var class-string $class */
             $class =  $namespace . '\\' . \str_replace('/', '\\', \ltrim($file->getPath(), $pathPrefix)) . '\\' . \basename($file->getFilename(), '.php');
             $reflection = new ReflectionClass($class);
-            $attributes = \array_filter($reflection->getAttributes(), fn (ReflectionAttribute $ra): bool => $ra->getName() === $filterAttribute);
 
-            foreach ($attributes as $attribute) {
+            foreach ($reflection->getAttributes($filterAttribute) as $attribute) {
                 $this->container->tag($filterAttribute, $class);
             }
         }
