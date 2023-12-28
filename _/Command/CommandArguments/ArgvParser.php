@@ -51,6 +51,11 @@ class ArgvParser
                 throw new ArgumentDuplicatedException("argument «{$arg->name}» already present");
             }
 
+            $optinalArguments = array_filter($this->arguments, static fn (Argument $a): bool => !$a->required());
+            if (count($optinalArguments) > 0 && $arg->required()) {
+                throw new ArgumentUnexpectedException('required arguments cannot follow after optional arguments');
+            }
+
             $this->arguments[] = $arg;
             $this->argumentsNamed[$arg->name] = $arg;
         }

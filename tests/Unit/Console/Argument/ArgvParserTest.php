@@ -178,4 +178,12 @@ class ArgvParserTest extends TestCase
 
         $parser->parse(['-bf', 'nope']);
     }
+
+    public function test_optional_arguments_cannot_follow_required(): void
+    {
+        static::expectException(ArgumentUnexpectedException::class);
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('foo', Argument::OPTIONAL));
+        $parser->addArguments(new Argument('bar', Argument::REQUIRED));
+    }
 }
