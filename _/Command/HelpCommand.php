@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Command;
 
+use ReflectionClass;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\Container;
 use Override;
+use RuntimeException;
 
 #[Command('help')]
 final class HelpCommand extends AbstractCommand
@@ -35,13 +37,37 @@ final class HelpCommand extends AbstractCommand
             return ExitCode::Success;
         }
 
-        $this->describeCommand($cli);
+        try {
+            $this->describeCommand($cli);
+        } catch (RuntimeException $e) {
+            $cli->writeLn($e->getMessage());
+            return ExitCode::Error;
+        }
+
         return ExitCode::Success;
     }
 
     private function describeCommand(Console $cli): void
     {
-        // ???
+        $command = $this->findCommandByRoute($this->cmdArgument->get() ?? throw new RuntimeException());
+
+        $cli->writeLn($command::class);
+    }
+
+    private function findCommandByRoute(string $route): AbstractCommand
+    {
+        foreach ($this->container->tagIterator(Command::class) as $cmd) {
+            $reflection = new ReflectionClass($cmd);
+            foreach ($reflection->getAttributes(Command::class) as $attribute) {
+                if ($attribute->newInstance()->command === $route) {
+                    $instance = $this->container->get($cmd);
+                    assert($instance instanceof AbstractCommand);
+                    return $instance;
+                }
+            }
+        }
+
+        throw new RuntimeException("command {$route} not found");
     }
 
     private function listCommands(Console $cli): void
@@ -49,11 +75,13 @@ final class HelpCommand extends AbstractCommand
         foreach ($this->container->tagIterator(Command::class) as $cmd) {
             $instance = $this->container->get($cmd);
             \assert($instance instanceof AbstractCommand);
+
+            $attribute = (new ReflectionClass($instance))->getAttributes(Command::class)[0] ?? throw new RuntimeException('missing Command Attribute');
             $parser = new ArgvParser();
 
             $instance->configure($parser);
 
-            $cli->write($instance::class);
+            $cli->write($attribute->newInstance()->command);
             $parenthesisCount = 0;
 
             foreach ($parser->arguments() as $arg) {

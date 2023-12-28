@@ -24,13 +24,15 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Routable;
-use verfriemelt\wrapped\_\Router\Route;
 use verfriemelt\wrapped\_\Router\Router;
+use RuntimeException;
 
 abstract class AbstractKernel implements KernelInterface
 {
     protected Router $router;
-    protected Router $cliRouter;
+
+    /** @var array<string,class-string> */
+    protected array $commands;
 
     protected Container $container;
 
@@ -39,8 +41,7 @@ abstract class AbstractKernel implements KernelInterface
     public function __construct()
     {
         $this->container = new Container();
-        $this->router = new Router();
-        $this->cliRouter = new Router();
+        $this->router = $this->container->get(Router::class);
 
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
@@ -139,21 +140,24 @@ abstract class AbstractKernel implements KernelInterface
         $this->loadCommands(__DIR__ . '/Command', __DIR__, __NAMESPACE__);
 
         $this->container->register(Console::class, $cli);
-        $route = $this->cliRouter->handleRequest($cli->getArgvAsString());
-        $command = $this->container->get($route->getCallback());
+        $arguments = $cli->getArgv()->all();
 
-        \assert($command instanceof AbstractCommand);
+        // scriptname
+        \array_shift($arguments);
+
+        // command name
+        $commandName = \array_shift($arguments);
+        assert(is_string($commandName));
+        $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new RuntimeException("command {$commandName} not found"));
+
+        \assert($commandInstance instanceof AbstractCommand);
 
         $parser = $this->container->get(ArgvParser::class);
-        $command->configure($parser);
-
-        $arguments = $cli->getArgv()->all();
-        \array_shift($arguments); // scriptname
-        \array_shift($arguments); // command name
+        $commandInstance->configure($parser);
 
         $parser->parse($arguments);
 
-        exit($command->execute($cli)->value);
+        exit($commandInstance->execute($cli)->value);
     }
 
     protected function triggerKernelResponse(Request $request, Response $response): void
@@ -200,7 +204,7 @@ abstract class AbstractKernel implements KernelInterface
                 $instance = $attribute->newInstance();
                 assert($instance instanceof Command);
 
-                $this->cliRouter->add((new Route($instance->command))->call($command));
+                $this->commands[$instance->command] = $command;
             }
         }
     }
