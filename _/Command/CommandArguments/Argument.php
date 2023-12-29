@@ -6,8 +6,9 @@ namespace verfriemelt\wrapped\_\Command\CommandArguments;
 
 final class Argument
 {
-    final public const int REQUIRED = 0b1;
-    final public const int OPTIONAL = 0b0;
+    final public const int VARIADIC = 0b10;
+    final public const int REQUIRED = 0b01;
+    final public const int OPTIONAL = 0b00;
 
     private ?string $value = null;
     private bool $isPresent = false;
@@ -21,6 +22,11 @@ final class Argument
     public function required(): bool
     {
         return ($this->flags & self::REQUIRED) === self::REQUIRED;
+    }
+
+    public function variadic(): bool
+    {
+        return ($this->flags & self::VARIADIC) === self::VARIADIC;
     }
 
     public function present(): bool

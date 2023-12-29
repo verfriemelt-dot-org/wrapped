@@ -182,8 +182,56 @@ class ArgvParserTest extends TestCase
     public function test_optional_arguments_cannot_follow_required(): void
     {
         static::expectException(ArgumentUnexpectedException::class);
+        static::expectExceptionMessage('after optional arguments');
+
         $parser = new ArgvParser();
         $parser->addArguments(new Argument('foo', Argument::OPTIONAL));
         $parser->addArguments(new Argument('bar', Argument::REQUIRED));
+    }
+
+    public function test_variadic_argument_must_be_last(): void
+    {
+        static::expectException(ArgumentUnexpectedException::class);
+        static::expectExceptionMessage('after variadic');
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC | Argument::REQUIRED));
+        $parser->addArguments(new Argument('foo'));
+    }
+
+    public function test_variadic_argument(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC));
+        $parser->parse(['foo', 'bar', 'nope']);
+
+        static::assertSame('foo bar nope', $parser->getArgument('bar')->get());
+    }
+
+    public function test_variadic_optional_argument(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC));
+        $parser->parse([]);
+
+        static::assertSame(null, $parser->getArgument('bar')->get());
+    }
+
+    public function test_variadic_required_argument(): void
+    {
+        static::expectException(ArgumentMissingException::class);
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC | Argument::REQUIRED));
+        $parser->parse([]);
+    }
+
+    public function test_variadic_argument_after_other(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('foo'));
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC));
+        $parser->parse(['foo', 'bar', 'nope']);
+
+        static::assertSame('foo', $parser->getArgument('foo')->get());
+        static::assertSame('bar nope', $parser->getArgument('bar')->get());
     }
 }

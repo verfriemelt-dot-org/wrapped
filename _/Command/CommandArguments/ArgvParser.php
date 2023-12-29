@@ -51,9 +51,14 @@ class ArgvParser
                 throw new ArgumentDuplicatedException("argument «{$arg->name}» already present");
             }
 
-            $optinalArguments = array_filter($this->arguments, static fn (Argument $a): bool => !$a->required());
-            if (count($optinalArguments) > 0 && $arg->required()) {
+            $optinalArguments = \array_filter($this->arguments, static fn (Argument $a): bool => !$a->required());
+            if (\count($optinalArguments) > 0 && $arg->required()) {
                 throw new ArgumentUnexpectedException('required arguments cannot follow after optional arguments');
+            }
+
+            $variadic = \array_filter($this->arguments, static fn (Argument $a): bool => $a->variadic());
+            if (\count($variadic) > 0) {
+                throw new ArgumentUnexpectedException('no arguments can follow after variadic arguments');
             }
 
             $this->arguments[] = $arg;
@@ -107,7 +112,7 @@ class ArgvParser
         foreach ($shorts as $short) {
             $this->handleOption(
                 $this->shortOptions[$short] ?? throw new OptionUnexpectedException("unknown option {$short}"),
-                ++$i === count($shorts)
+                ++$i === \count($shorts)
             );
         }
     }
@@ -128,6 +133,16 @@ class ArgvParser
     private function parseArgument(string $input): void
     {
         $argument = $this->arguments[$this->argumentCounter++] ?? throw new ArgumentUnexpectedException();
+
+        if ($argument->variadic()) {
+            $inputs = [$input];
+            while ($inputs[] = $this->consume()) {
+            }
+
+            $argument->set(implode(' ', \array_filter($inputs)));
+            return;
+        }
+
         $argument->set($input);
     }
 
