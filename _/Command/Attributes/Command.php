@@ -11,5 +11,6 @@ final readonly class Command
 {
     public function __construct(
         public readonly string $command,
+        public readonly string $description = '',
     ) {}
 }

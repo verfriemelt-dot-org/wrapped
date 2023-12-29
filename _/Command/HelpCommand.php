@@ -15,7 +15,7 @@ use Override;
 use RuntimeException;
 
 #[DefaultCommand]
-#[Command('help')]
+#[Command('help', 'prints out helpful information about commands')]
 final class HelpCommand extends AbstractCommand
 {
     private Argument $cmdArgument;
@@ -51,12 +51,35 @@ final class HelpCommand extends AbstractCommand
 
     private function describeCommand(Console $cli): void
     {
-        $command = $this->findCommandByRoute($this->cmdArgument->get() ?? throw new RuntimeException());
+        $name = $this->cmdArgument->get() ?? throw new RuntimeException();
+        [$attribute, $command] = $this->findCommandByRoute($name);
 
-        $cli->writeLn($command::class);
+        $cli->writeLn('handled by ' . $command::class);
+        $cli->eol();
+        $cli->write("  {$name}");
+
+        $parser = new ArgvParser();
+        $command->configure($parser);
+        $parenthesisCount = 0;
+        foreach ($parser->arguments() as $arg) {
+            $cli->write(' ');
+            if (!$arg->required()) {
+                ++$parenthesisCount;
+                $cli->write('[');
+            }
+
+            $cli->write($arg->name);
+        }
+        $cli->writeLn(\str_repeat(']', $parenthesisCount));
+        $cli->eol();
+
+        $cli->writeLn('  ' . $attribute->description);
     }
 
-    private function findCommandByRoute(string $route): AbstractCommand
+    /**
+     * @return array{Command, AbstractCommand}
+     */
+    private function findCommandByRoute(string $route): array
     {
         foreach ($this->container->tagIterator(Command::class) as $cmd) {
             $reflection = new ReflectionClass($cmd);
@@ -64,7 +87,7 @@ final class HelpCommand extends AbstractCommand
                 if ($attribute->newInstance()->command === $route) {
                     $instance = $this->container->get($cmd);
                     assert($instance instanceof AbstractCommand);
-                    return $instance;
+                    return [$attribute->newInstance(), $instance];
                 }
             }
         }
@@ -79,24 +102,8 @@ final class HelpCommand extends AbstractCommand
             \assert($instance instanceof AbstractCommand);
 
             $attribute = (new ReflectionClass($instance))->getAttributes(Command::class)[0] ?? throw new RuntimeException('missing Command Attribute');
-            $parser = new ArgvParser();
-
-            $instance->configure($parser);
 
             $cli->write($attribute->newInstance()->command);
-            $parenthesisCount = 0;
-
-            foreach ($parser->arguments() as $arg) {
-                $cli->write(' ');
-                if (!$arg->required()) {
-                    ++$parenthesisCount;
-                    $cli->write('[');
-                }
-
-                $cli->write($arg->name);
-            }
-
-            $cli->write(\str_repeat(']', $parenthesisCount));
             $cli->eol();
         }
     }
