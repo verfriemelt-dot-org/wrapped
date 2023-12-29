@@ -11,6 +11,7 @@ use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
+use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
@@ -29,6 +30,8 @@ use RuntimeException;
 
 abstract class AbstractKernel implements KernelInterface
 {
+    protected const string DEFAULT_COMMAND = '_';
+
     protected Router $router;
 
     /** @var array<string,class-string> */
@@ -46,6 +49,8 @@ abstract class AbstractKernel implements KernelInterface
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
         $this->initializeErrorHandling();
+
+        $this->loadCommands(__DIR__ . '/Command', __DIR__, __NAMESPACE__);
     }
 
     public function getContainer(): Container
@@ -137,8 +142,6 @@ abstract class AbstractKernel implements KernelInterface
 
     public function execute(Console $cli): never
     {
-        $this->loadCommands(__DIR__ . '/Command', __DIR__, __NAMESPACE__);
-
         $this->container->register(Console::class, $cli);
         $arguments = $cli->getArgv()->all();
 
@@ -146,7 +149,7 @@ abstract class AbstractKernel implements KernelInterface
         \array_shift($arguments);
 
         // command name
-        $commandName = \array_shift($arguments);
+        $commandName = \array_shift($arguments) ?? self::DEFAULT_COMMAND;
         assert(is_string($commandName));
         $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new RuntimeException("command {$commandName} not found"));
 
@@ -199,6 +202,10 @@ abstract class AbstractKernel implements KernelInterface
 
         foreach ($commands as $command) {
             $reflection = new ReflectionClass($command);
+            $defaultAttribute = $reflection->getAttributes(DefaultCommand::class)[0] ?? null;
+            if ($defaultAttribute !== null) {
+                $this->commands[self::DEFAULT_COMMAND] = $command;
+            }
 
             foreach ($reflection->getAttributes(Command::class) as $attribute) {
                 $instance = $attribute->newInstance();

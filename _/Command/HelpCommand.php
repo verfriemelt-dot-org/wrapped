@@ -7,12 +7,14 @@ namespace verfriemelt\wrapped\_\Command;
 use ReflectionClass;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
+use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\Container;
 use Override;
 use RuntimeException;
 
+#[DefaultCommand]
 #[Command('help')]
 final class HelpCommand extends AbstractCommand
 {
