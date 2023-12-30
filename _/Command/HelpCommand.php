@@ -97,13 +97,27 @@ final class HelpCommand extends AbstractCommand
 
     private function listCommands(Console $cli): void
     {
+        $commands = [];
+        $maxLength = 0;
+
         foreach ($this->container->tagIterator(Command::class) as $cmd) {
             $instance = $this->container->get($cmd);
             \assert($instance instanceof AbstractCommand);
 
             $attribute = (new ReflectionClass($instance))->getAttributes(Command::class)[0] ?? throw new RuntimeException('missing Command Attribute');
 
-            $cli->write($attribute->newInstance()->command);
+            $command = $attribute->newInstance();
+            $commands[] = $command;
+            if (\mb_strlen($command->command) > $maxLength) {
+                $maxLength = \mb_strlen($command->command);
+            }
+        }
+
+        usort($commands, static fn (Command $a, Command $b): int => $a->command <=> $b->command);
+
+        foreach ($commands as $command) {
+            $cli->write(\mb_str_pad($command->command, $maxLength + 4));
+            $cli->write($command->description);
             $cli->eol();
         }
     }
