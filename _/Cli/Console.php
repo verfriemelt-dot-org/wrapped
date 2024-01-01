@@ -8,7 +8,7 @@ use Closure;
 use RuntimeException;
 use verfriemelt\wrapped\_\Http\ParameterBag;
 
-class Console
+class Console implements InputInterface, OutputInterface
 {
     final public const STYLE_NONE = 0;
     final public const STYLE_BLACK = 30;
@@ -128,7 +128,7 @@ class Console
         return $this;
     }
 
-    public function writeLn($text, $color = null): static
+    public function writeLn(string $text, ?int $color = null): static
     {
         return $this->write($text, $color)->eol();
     }

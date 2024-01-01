@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Command;
 
 use ReflectionClass;
-use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
@@ -32,7 +32,7 @@ final class HelpCommand extends AbstractCommand
     }
 
     #[Override]
-    public function execute(Console $cli): ExitCode
+    public function execute(OutputInterface $cli): ExitCode
     {
         if (!$this->cmdArgument->present()) {
             $this->listCommands($cli);
@@ -49,7 +49,7 @@ final class HelpCommand extends AbstractCommand
         return ExitCode::Success;
     }
 
-    private function describeCommand(Console $cli): void
+    private function describeCommand(OutputInterface $cli): void
     {
         $name = $this->cmdArgument->get() ?? throw new RuntimeException();
         [$attribute, $command] = $this->findCommandByRoute($name);
@@ -95,7 +95,7 @@ final class HelpCommand extends AbstractCommand
         throw new RuntimeException("command {$route} not found");
     }
 
-    private function listCommands(Console $cli): void
+    private function listCommands(OutputInterface $cli): void
     {
         $commands = [];
         $maxLength = 0;
