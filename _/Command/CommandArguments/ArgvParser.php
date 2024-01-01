@@ -178,4 +178,12 @@ class ArgvParser
     {
         return $this->arguments;
     }
+
+    /**
+     * @return Option[]
+     */
+    public function options(): array
+    {
+        return $this->options;
+    }
 }

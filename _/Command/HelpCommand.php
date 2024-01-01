@@ -72,8 +72,16 @@ final class HelpCommand extends AbstractCommand
         }
         $cli->writeLn(\str_repeat(']', $parenthesisCount));
         $cli->eol();
-
         $cli->writeLn('  ' . $attribute->description);
+
+        $cli->eol();
+        foreach ($parser->options() as $opt) {
+            $cli->write("    --{$opt->name}");
+            $cli->write("\t");
+            $cli->write($opt->description ?? '');
+        }
+        $cli->eol();
+        $cli->eol();
     }
 
     /**
