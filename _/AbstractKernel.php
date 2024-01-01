@@ -151,6 +151,13 @@ abstract class AbstractKernel implements KernelInterface
         // command name
         $commandName = \array_shift($arguments) ?? self::DEFAULT_COMMAND;
         assert(is_string($commandName));
+
+        // if its an option, readd it to arguments and use default command
+        if (\str_starts_with($commandName, '-')) {
+            $arguments[] = $commandName;
+            $commandName = self::DEFAULT_COMMAND;
+        }
+
         $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new RuntimeException("command {$commandName} not found"));
 
         \assert($commandInstance instanceof AbstractCommand);
