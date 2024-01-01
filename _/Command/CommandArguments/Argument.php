@@ -29,6 +29,9 @@ final class Argument
         return ($this->flags & self::VARIADIC) === self::VARIADIC;
     }
 
+    /**
+     * @phpstan-assert-if-true !null $this->get()
+     */
     public function present(): bool
     {
         return $this->isPresent;
