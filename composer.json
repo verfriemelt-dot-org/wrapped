@@ -4,7 +4,8 @@
     "license": "MIT",
     "require": {
         "php" : "^8.3",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "psr/clock": "^1.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10.50",
