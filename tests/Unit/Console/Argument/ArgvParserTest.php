@@ -234,4 +234,13 @@ class ArgvParserTest extends TestCase
         static::assertSame('foo', $parser->getArgument('foo')->get());
         static::assertSame('bar nope', $parser->getArgument('bar')->get());
     }
+
+    public function test_parsing_double_dash(): void
+    {
+        $parser = new ArgvParser();
+        $parser->addArguments(new Argument('bar', Argument::VARIADIC));
+        $parser->parse(['--', '-foo', 'bar', 'nope']);
+
+        static::assertSame('-foo bar nope', $parser->getArgument('bar')->get());
+    }
 }

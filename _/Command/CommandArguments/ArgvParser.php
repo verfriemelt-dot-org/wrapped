@@ -77,24 +77,24 @@ class ArgvParser
         $this->argumentCounter = 0;
         $this->pos = 0;
 
+        $parseOptions = true;
+
         while ($input = $this->consume()) {
             match (true) {
-                \str_starts_with($input, '--') => $this->parseLongOption(\substr($input, 2)),
-                \str_starts_with($input, '-') => $this->parseShortOptions(\substr($input, 1)),
+                $parseOptions && $input === '--' => $parseOptions = false,
+                $parseOptions && \str_starts_with($input, '--') => $this->parseLongOption(\substr($input, 2)),
+                $parseOptions && \str_starts_with($input, '-') => $this->parseShortOptions(\substr($input, 1)),
                 default => $this->parseArgument($input),
             };
         }
 
         // check for missing args/opts
-        foreach ($this->arguments as $arg) {
-            if ($arg->required() === true && $arg->present() === false) {
-                throw new ArgumentMissingException("missing Argument {$arg->name}");
-            }
-        }
-
-        foreach ($this->options as $opt) {
-            if ($opt->required() === true && $opt->present() === false) {
-                throw new OptionMissingException("missing option {$opt->name}");
+        foreach ([...$this->arguments, ...$this->options] as $input) {
+            if ($input->required() === true && $input->present() === false) {
+                match ($input::class) {
+                    Argument::class => throw new ArgumentMissingException("missing Argument {$input->name}"),
+                    Option::class => throw new OptionMissingException("missing Option {$input->name}"),
+                };
             }
         }
     }
