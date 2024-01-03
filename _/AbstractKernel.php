@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\ExitCode;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
@@ -140,7 +141,7 @@ abstract class AbstractKernel implements KernelInterface
         return $response;
     }
 
-    public function execute(Console $cli): never
+    public function execute(Console $cli): ExitCode
     {
         $this->container->register(Console::class, $cli);
         $arguments = $cli->getArgv()->all();
@@ -167,7 +168,7 @@ abstract class AbstractKernel implements KernelInterface
 
         $parser->parse($arguments);
 
-        exit($commandInstance->execute($cli)->value);
+        return $commandInstance->execute($cli);
     }
 
     protected function triggerKernelResponse(Request $request, Response $response): void
