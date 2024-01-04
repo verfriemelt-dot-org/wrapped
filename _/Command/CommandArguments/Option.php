@@ -18,6 +18,7 @@ final class Option
         public readonly int $flags = self::OPTIONAL,
         public readonly ?string $description = null,
         public readonly ?string $short = null,
+        public readonly ?string $default = null,
     ) {}
 
     public function required(): bool
@@ -48,6 +49,6 @@ final class Option
 
     public function get(): ?string
     {
-        return $this->value;
+        return $this->value ?? $this->default;
     }
 }

@@ -17,7 +17,12 @@ final class Argument
         public readonly string $name,
         public readonly int $flags = self::REQUIRED,
         public readonly ?string $description = null,
-    ) {}
+        public readonly ?string $default = null,
+    ) {
+        if ($this->required() && $this->default !== null) {
+            throw new ArgumentDefinitionError('cannot mix required arguments with default value');
+        }
+    }
 
     public function required(): bool
     {
@@ -39,7 +44,7 @@ final class Argument
 
     public function get(): ?string
     {
-        return $this->value;
+        return $this->value ?? $this->default;
     }
 
     public function set(string $value): void
