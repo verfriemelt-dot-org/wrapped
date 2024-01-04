@@ -31,7 +31,7 @@ class JsonEncoderEncodeTest extends TestCase
     public function test_encode_null(): void
     {
         $encoder = new JsonEncoder();
-        static::assertSame('{"null":null}', $encoder->serialize(new \verfriemelt\wrapped\tests\Unit\Serializer\Encoder\NullDto(null)));
+        static::assertSame('{"null":null}', $encoder->serialize(new NullDto(null)));
     }
 
     public function test_variadic(): void
