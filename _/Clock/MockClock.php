@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 use Override;
 
-final readonly class MockClock implements ClockInterface
+final class MockClock implements ClockInterface
 {
     public function __construct(
         private DateTimeImmutable $clock
@@ -18,5 +18,10 @@ final readonly class MockClock implements ClockInterface
     public function now(): DateTimeImmutable
     {
         return $this->clock;
+    }
+
+    public function set(DateTimeImmutable $time): void
+    {
+        $this->clock = $time;
     }
 }
