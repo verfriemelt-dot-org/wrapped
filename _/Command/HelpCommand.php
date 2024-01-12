@@ -68,7 +68,7 @@ final class HelpCommand extends AbstractCommand
                 $cli->write('[');
             }
 
-            $cli->write($arg->name);
+            $cli->write("<{$arg->name}>");
         }
         $cli->writeLn(\str_repeat(']', $parenthesisCount));
         $cli->eol();
