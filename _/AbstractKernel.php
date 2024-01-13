@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
+use verfriemelt\wrapped\_\Command\CommandNotFoundException;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
@@ -27,7 +28,6 @@ use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
 use verfriemelt\wrapped\_\Router\Routable;
 use verfriemelt\wrapped\_\Router\Router;
-use RuntimeException;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -159,7 +159,7 @@ abstract class AbstractKernel implements KernelInterface
             $commandName = self::DEFAULT_COMMAND;
         }
 
-        $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new RuntimeException("command {$commandName} not found"));
+        $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new CommandNotFoundException("command {$commandName} not found"));
 
         \assert($commandInstance instanceof AbstractCommand);
 
