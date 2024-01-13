@@ -202,7 +202,7 @@ abstract class AbstractKernel implements KernelInterface
     {
         $discovery = $this->container->get(ServiceDiscovery::class);
         $commands = $discovery->findTags(
-            "{$this->getProjectPath()}/{$path}",
+            $path,
             $pathPrefix,
             $namespace,
             Command::class
