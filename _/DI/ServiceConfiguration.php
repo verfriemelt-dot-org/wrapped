@@ -22,6 +22,9 @@ class ServiceConfiguration
     /** @var array<string|class-string, Closure> */
     private array $resolver = [];
 
+    /** @var Closure():T */
+    private Closure $factory;
+
     /**
      * @param class-string<T> $id
      */
@@ -32,6 +35,28 @@ class ServiceConfiguration
         if (class_exists($id)) {
             $this->setClass($id);
         }
+    }
+
+    /**
+     * @param Closure():T $facorty
+     */
+    public function factory(Closure $facorty): static
+    {
+        $this->factory = $facorty;
+        return $this;
+    }
+
+    public function hasFactory(): bool
+    {
+        return isset($this->factory);
+    }
+
+    /**
+     * @return Closure():T
+     */
+    public function getFactory(): Closure
+    {
+        return $this->factory;
     }
 
     public function share(bool $bool = true): static

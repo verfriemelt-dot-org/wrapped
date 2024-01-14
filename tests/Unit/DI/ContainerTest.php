@@ -204,4 +204,47 @@ class ContainerTest extends TestCase
 
         static::assertNull($instance->b);
     }
+
+    public function test_factory_with_function(): void
+    {
+        $container = new Container();
+        $container->register(b::class, fn () => new b());
+
+        static::assertSame(
+            $container->get(b::class),
+            $container->get(b::class),
+            'factory should create single instance'
+        );
+    }
+
+    public function test_factory_registration(): void
+    {
+        $container = new Container();
+        $container->register(b::class, fn () => new b('factory'));
+
+        $instance = $container->get(b::class);
+
+        static::assertInstanceOf(b::class, $instance);
+        static::assertSame('factory', $instance->instance);
+    }
+
+    public function test_factory_arguments(): void
+    {
+        static::expectNotToPerformAssertions();
+
+        $container = new Container();
+        $container->register(b::class, fn (a_i $a) => new b('factory'));
+        $container->get(b::class);
+    }
+
+    public function test_factory_non_shareable(): void
+    {
+        $container = new Container();
+        $container->register(b::class, fn () => new b('factory'))->share(false);
+
+        $first = $container->get(b::class);
+        $second = $container->get(b::class);
+
+        static::assertNotSame($first, $second);
+    }
 }

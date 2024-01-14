@@ -26,13 +26,30 @@ class ServiceBuilder
     /**
      * @return T
      */
-    public function build()
+    public function build(): object
     {
         $class = $this->service->getClass();
+
+        if ($this->service->hasFactory()) {
+            return $this->callFactory();
+        }
 
         $arguments = (new ServiceArgumentResolver($this->container, new ArgumentMetadataFactory(), $this->service))
             ->resolv($class);
 
         return new $class(...$arguments);
+    }
+
+    /**
+     * @return T
+     */
+    private function callFactory(): object
+    {
+        $factory = $this->service->getFactory();
+
+        $arguments = (new ArgumentResolver($this->container, new ArgumentMetadataFactory()))
+            ->resolv($factory);
+
+        return $factory(... $arguments);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
+use Closure;
 use Exception;
 
 class Container
@@ -39,6 +40,11 @@ class Container
     {
         /** @var ServiceConfiguration<T> $service */
         $service = (new ServiceConfiguration($id));
+
+        if ($instance instanceof Closure) {
+            $service->factory($instance);
+            $instance = null;
+        }
 
         if ($instance !== null) {
             $this->instances[$id] = $instance;
@@ -130,11 +136,7 @@ class Container
             return $this->build($configuration);
         }
 
-        if (!isset($this->instances[$id])) {
-            $this->instances[$id] = $this->build($configuration);
-        }
-
-        return $this->instances[$id];
+        return $this->instances[$id] ??= $this->build($configuration);
     }
 
     /**
