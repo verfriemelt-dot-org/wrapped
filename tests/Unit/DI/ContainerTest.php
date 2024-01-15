@@ -247,4 +247,13 @@ class ContainerTest extends TestCase
 
         static::assertNotSame($first, $second);
     }
+
+    public function test_non_existing(): void
+    {
+        static::expectException(ContainerException::class);
+        $container = new Container();
+
+        /** @phpstan-ignore-next-line */
+        $container->get(nope::class);
+    }
 }

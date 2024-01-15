@@ -31,15 +31,19 @@ class Container
     /**
      * @template T of object
      *
-     * @param class-string<T> $id
+     * @param class-string<T> $class
      * @param T               $instance
      *
      * @return ServiceConfiguration<T>
      */
-    public function register(string $id, ?object $instance = null): ServiceConfiguration
+    public function register(string $class, ?object $instance = null): ServiceConfiguration
     {
+        if (!\class_exists($class) && !\interface_exists($class)) {
+            throw new ContainerException("class or interface «{$class}» not found");
+        }
+
         /** @var ServiceConfiguration<T> $service */
-        $service = (new ServiceConfiguration($id));
+        $service = (new ServiceConfiguration($class));
 
         if ($instance instanceof Closure) {
             $service->factory($instance);
@@ -47,7 +51,7 @@ class Container
         }
 
         if ($instance !== null) {
-            $this->instances[$id] = $instance;
+            $this->instances[$class] = $instance;
             $service->setClass($instance::class);
         }
 
@@ -56,7 +60,7 @@ class Container
             $this->interfaces[$interface][] = $service;
         }
 
-        $this->services[$id] = $service;
+        $this->services[$class] = $service;
 
         return $service;
     }
@@ -93,7 +97,7 @@ class Container
     private function build(ServiceConfiguration $config): object
     {
         if (in_array($config->getClass(), $this->currentlyLoading)) {
-            throw new Exception("circulare references while loading {$config->getClass()}. Stack: \n" . print_r($this->currentlyLoading, true));
+            throw new ContainerException("circulare references while loading {$config->getClass()}. Stack: \n" . print_r($this->currentlyLoading, true));
         }
 
         $this->currentlyLoading[] = $config->getClass();
@@ -113,7 +117,7 @@ class Container
      *
      * @return T
      *
-     * @throws Exception
+     * @throws ContainerException
      */
     public function get(string $id): object
     {
@@ -121,11 +125,11 @@ class Container
             throw new ContainerException('illegal class');
         }
 
-        if (interface_exists($id)) {
+        if (\interface_exists($id)) {
             $configuration = $this->getInterface($id);
         } else {
             if (!$this->has($id)) {
-                throw new Exception(sprintf('unkown service: »%s«', $id));
+                throw new ContainerException(sprintf('unkown service: »%s«', $id));
             }
 
             $configuration = $this->services[$id];
@@ -146,16 +150,16 @@ class Container
      *
      * @return ServiceConfiguration<T>
      *
-     * @throws Exception
+     * @throws ContainerException
      */
     private function getInterface(string $class): ServiceConfiguration
     {
         if (!isset($this->interfaces[$class])) {
-            throw new Exception(sprintf('unkown interface: »%s«', $class));
+            throw new ContainerException(sprintf('unkown interface: »%s«', $class));
         }
 
         if (count($this->interfaces[$class]) > 1) {
-            throw new Exception(sprintf('multiple implementations preset for interface: »%s«', $class));
+            throw new ContainerException(sprintf('multiple implementations preset for interface: »%s«', $class));
         }
 
         assert(\array_is_list($this->interfaces[$class]));

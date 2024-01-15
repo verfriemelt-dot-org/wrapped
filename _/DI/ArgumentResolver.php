@@ -30,7 +30,19 @@ class ArgumentResolver
                 continue;
             }
 
-            $args[] = $this->buildParameter($parameter);
+            try {
+                $args[] = $this->buildParameter($parameter);
+            } catch (RuntimeException $e) {
+                $msg = "cannot resolv param #{$count} \${$parameter->getName()} for ";
+                $msg .= \is_object($obj) ? $obj::class : $obj;
+                $msg .= '::';
+                $msg .= $method ?? '__construct()';
+
+                $msg .= PHP_EOL;
+                $msg .= $e->getMessage();
+
+                throw new RuntimeException($msg);
+            }
         }
 
         return $args;

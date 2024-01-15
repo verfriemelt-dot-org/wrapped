@@ -32,4 +32,9 @@ final class DateTimeImmutable extends \DateTimeImmutable implements PropertyObje
     {
         return $this->toSqlFormat();
     }
+
+    public function toDate(): Date
+    {
+        return new Date($this->format('Y-m-d'));
+    }
 }
