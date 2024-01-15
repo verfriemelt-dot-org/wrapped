@@ -12,3 +12,7 @@ phpunit: ## run phpunit
 
 cs: ## Run php-cs-fixer
 	php vendor/bin/php-cs-fixer fix -v
+
+.PHONY: coverage
+coverage: ## generate coverage
+	XDEBUG_MODE=coverage phpunit --coverage-html coverage --coverage-text

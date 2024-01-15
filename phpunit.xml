@@ -28,4 +28,10 @@
             <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
+
+    <source>
+        <include>
+            <directory>_</directory>
+        </include>
+    </source>
 </phpunit>
