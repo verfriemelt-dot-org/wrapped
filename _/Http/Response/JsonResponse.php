@@ -4,35 +4,33 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Response;
 
+use verfriemelt\wrapped\_\DataModel\Collection;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 
 final class JsonResponse extends Response
 {
     private bool $pretty = false;
 
-    private $content;
-
-    private bool $alreadyEncoded = false;
-
-    public function __construct($content = null, $alreadyEncoded = false)
+    public function __construct(mixed $content = null, bool $alreadyEncoded = false)
     {
         $this->addHeader(
             new HttpHeader('Content-type', 'application/json')
         );
 
-        $this->alreadyEncoded = $alreadyEncoded;
-
-        if ($content instanceof \verfriemelt\wrapped\_\DataModel\Collection) {
-            $this->setContent($content->toArray());
-        } else {
+        if ($alreadyEncoded) {
             $this->setContent($content);
+            return;
         }
-    }
 
-    public function pretty($bool = true): JsonResponse
-    {
-        $this->pretty = $bool;
-        return $this;
+        if ($content instanceof Collection) {
+            $json = \json_encode($content->toArray());
+        } elseif ($content instanceof DataModel) {
+            $json = $content->toJson($this->pretty);
+        } else {
+            $json = \json_encode($content);
+        }
+
+        $this->setContent($json);
     }
 
     public function setContent($content): static
@@ -43,17 +41,6 @@ final class JsonResponse extends Response
 
     public function send(): static
     {
-        if ($this->alreadyEncoded) {
-            parent::setContent($this->content);
-            return parent::send();
-        }
-
-        if ($this->content instanceof DataModel) {
-            parent::setContent($this->content->toJson($this->pretty));
-        } else {
-            parent::setContent(json_encode($this->content, $this->pretty ? 128 : 0));
-        }
-
         return parent::send();
     }
 }

@@ -8,20 +8,20 @@ use verfriemelt\wrapped\_\Cli\Console;
 
 class Response
 {
-    private int $statusCode = Http::OK;
+    protected int $statusCode = Http::OK;
 
-    private string $content = '';
+    protected string $content = '';
 
-    private array $cookies = [];
+    protected array $cookies = [];
 
-    private string $version = '1.1';
+    protected string $version = '1.1';
 
     /** @var HttpHeader[] */
-    private array $headers = [];
+    protected array $headers = [];
 
-    private ?string $statusText = null;
+    protected ?string $statusText = null;
 
-    private $contentCallback;
+    protected $contentCallback;
 
     public function __construct(int $statuscode = 200, ?string $content = null)
     {
