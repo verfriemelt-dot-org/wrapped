@@ -18,6 +18,7 @@ final class JsonResponse extends Response
         );
 
         if ($alreadyEncoded) {
+            assert(is_string($content), 'must be string when preencoded');
             $this->setContent($content);
             return;
         }
