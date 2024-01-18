@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Http\Router;
 
 use verfriemelt\wrapped\_\Http\Response\Response;
 
@@ -13,8 +13,6 @@ class Route implements Routable
     private $callback;
 
     private array $filters = [];
-
-    private int $priority = 100;
 
     protected array $attributes = [];
 
@@ -31,17 +29,6 @@ class Route implements Routable
     public function getPath(): string
     {
         return $this->path;
-    }
-
-    public function getPriority(): int
-    {
-        return $this->priority;
-    }
-
-    public function setPriority(int $prio): static
-    {
-        $this->priority = $prio;
-        return $this;
     }
 
     public function getCallback(): object|callable|string

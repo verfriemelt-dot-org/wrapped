@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Http\Router;
+
+use Closure;
 
 interface Routable
 {
@@ -13,18 +15,15 @@ interface Routable
     public function getPath(): string;
 
     /**
-     * defaults to 10; priorioty while 1 beeing more importatnt
-     */
-    public function getPriority(): int;
-
-    /**
+     * @return Closure[]
+     *
      * returns the filter functions for the route.
      * if that function returns true, the requests get filtered and
      * the callback wont be executed
      */
-    public function getFilters();
+    public function getFilters(): array;
 
-    public function setPath(string $path): static;
+    public function setPath(string $path): self;
 
-    public function addFilter(callable $filter): static;
+    public function addFilter(callable $filter): self;
 }

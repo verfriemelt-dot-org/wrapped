@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Exception\Router;
+namespace verfriemelt\wrapped\_\Http\Router\Exception;
 
 use verfriemelt\wrapped\_\Exception\CoreException;
 

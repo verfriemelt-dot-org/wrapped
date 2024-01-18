@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Controller;
+namespace verfriemelt\wrapped\_\Http\Controller;
 
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
-use verfriemelt\wrapped\_\Exception\Router\RouterException;
+use verfriemelt\wrapped\_\Exception\Http\Router\RouterException;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 

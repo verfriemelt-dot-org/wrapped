@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Request;
 
-use verfriemelt\wrapped\_\Http\ParameterBag;
+use verfriemelt\wrapped\_\ParameterBag;
 
 class Request
 {
@@ -60,7 +60,6 @@ class Request
             }
 
             $this->content = new ParameterBag((array) $contents);
-            $this->content->setRawData($content);
         } else {
             $this->content = new ParameterBag([]);
         }

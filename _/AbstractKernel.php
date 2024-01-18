@@ -21,13 +21,13 @@ use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\DI\ServiceDiscovery;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
-use verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
+use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
+use verfriemelt\wrapped\_\Http\Router\Routable;
+use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
-use verfriemelt\wrapped\_\Router\Routable;
-use verfriemelt\wrapped\_\Router\Router;
 
 abstract class AbstractKernel implements KernelInterface
 {

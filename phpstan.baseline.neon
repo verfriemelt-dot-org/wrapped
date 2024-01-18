@@ -16,27 +16,12 @@ parameters:
 			path: _/AbstractKernel.php
 
 		-
-			message: "#^Parameter \\#1 \\$argv of method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\) expects array\\<string\\>, array given\\.$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, \\(callable\\)\\|object\\|string given\\.$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
 			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 3
 			path: _/AbstractKernel.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:handleRequest\\(\\) expects string\\|verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request, string\\|null given\\.$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Unable to resolve the template type T in call to method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\)$#"
+			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:handleRequest\\(\\) expects string\\|verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request, string\\|null given\\.$#"
 			count: 1
 			path: _/AbstractKernel.php
 
@@ -191,16 +176,6 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:writeLn\\(\\) has parameter \\$color with no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:writeLn\\(\\) has parameter \\$text with no type specified\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:writePadded\\(\\) has parameter \\$color with no type specified\\.$#"
 			count: 1
 			path: _/Cli/Console.php
@@ -254,61 +229,6 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\KeyInput\\:\\:\\$registeredKeys type has no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Cli/KeyInput.php
-
-		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\)\" is 9, keep it under 8$#"
-			count: 1
-			path: _/Command/CommandArguments/ArgvParser.php
-
-		-
-			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
-			count: 4
-			path: _/Controller/CliController.php
-
-		-
-			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
-			count: 1
-			path: _/Controller/CliController.php
-
-		-
-			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\CliController\\)\\.$#"
-			count: 1
-			path: _/Controller/CliController.php
-
-		-
-			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
-			count: 4
-			path: _/Controller/Controller.php
-
-		-
-			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
-			count: 1
-			path: _/Controller/Controller.php
-
-		-
-			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\Controller\\)\\.$#"
-			count: 1
-			path: _/Controller/Controller.php
-
-		-
-			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
-			count: 1
-			path: _/Controller/RestController.php
-
-		-
-			message: "#^Parameter \\#2 \\$method of function method_exists expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/Controller/RestController.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\RestController\\:\\:\\$supportedVerbs has no type specified\\.$#"
-			count: 1
-			path: _/Controller/RestController.php
-
-		-
-			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Controller\\\\RestController\\)\\.$#"
-			count: 1
-			path: _/Controller/RestController.php
 
 		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\)\" is 9, keep it under 8$#"
@@ -1851,11 +1771,6 @@ parameters:
 			path: _/EnvironmentDetector.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Router\\\\RouteGotFiltered\\:\\:setResponse\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Exception/Router/RouteGotFiltered.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\File\\\\Path\\:\\:getCallerPath\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\File\\\\type\\.$#"
 			count: 1
 			path: _/File/Path.php
@@ -2316,19 +2231,34 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			message: "#^Instantiated class verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Http\\\\Router\\\\RouterException not found\\.$#"
 			count: 1
-			path: _/Http/ParameterBag.php
+			path: _/Http/Controller/Controller.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Http/ParameterBag.php
+			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			count: 4
+			path: _/Http/Controller/Controller.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
-			path: _/Http/ParameterBag.php
+			path: _/Http/Controller/Controller.php
+
+		-
+			message: "#^Throwing object of an unknown class verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Http\\\\Router\\\\RouterException\\.$#"
+			count: 1
+			path: _/Http/Controller/Controller.php
+
+		-
+			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Controller\\\\Controller\\)\\.$#"
+			count: 1
+			path: _/Http/Controller/Controller.php
+
+		-
+			message: "#^Variable method call on \\$this\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Controller\\\\RestController\\)\\.$#"
+			count: 1
+			path: _/Http/Controller/RestController.php
 
 		-
 			message: "#^Cannot cast mixed to string\\.$#"
@@ -2666,6 +2596,116 @@ parameters:
 			path: _/Http/Response/Response.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Routable\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/Routable.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Routable\\:\\:getFilters\\(\\) return type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Http/Router/Routable.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:call\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:getCallback\\(\\) return type has no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:getFilters\\(\\) return type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:setPath\\(\\) has parameter \\$path with no type specified\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:\\$callback has no type specified\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Route\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Http/Router/Route.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\RouteGroup\\:\\:addFilter\\(\\) has parameter \\$filterFunc with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/RouteGroup.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\RouteGroup\\:\\:getFilters\\(\\) return type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Http/Router/RouteGroup.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\RouteGroup\\:\\:\\$filters \\(array\\<Closure\\>\\) does not accept non\\-empty\\-array\\<callable\\(\\)\\: mixed\\>\\.$#"
+			count: 1
+			path: _/Http/Router/RouteGroup.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\RouteGroup\\:\\:\\$filters type has no signature specified for Closure\\.$#"
+			count: 1
+			path: _/Http/Router/RouteGroup.php
+
+		-
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
+			count: 1
+			path: _/Http/Router/RouteGroup.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: _/Http/Router/Router.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$filters with no signature specified for callable\\.$#"
+			count: 1
+			path: _/Http/Router/Router.php
+
+		-
+			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
+			count: 1
+			path: _/Http/Router/Router.php
+
+		-
+			message: "#^Parameter \\#2 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: _/Http/Router/Router.php
+
+		-
 			message: "#^Cannot call method delete\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
 			count: 1
 			path: _/Input/CSRF.php
@@ -2736,12 +2776,12 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:get\\(\\) expects int\\|string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:get\\(\\) expects int\\|string, string\\|null given\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\ParameterBag\\:\\:has\\(\\) expects int\\|string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:has\\(\\) expects int\\|string, string\\|null given\\.$#"
 			count: 2
 			path: _/Input/FilterItem.php
 
@@ -2774,6 +2814,26 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem\\:\\:\\$minLength has no type specified\\.$#"
 			count: 1
 			path: _/Input/FilterItem.php
+
+		-
+			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: _/ParameterBag.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/ParameterBag.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: _/ParameterBag.php
+
+		-
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:\\$raw is never read, only written\\.$#"
+			count: 1
+			path: _/ParameterBag.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\Backend\\\\MemoryBackend\\:\\:fetchByKey\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3094,211 +3154,6 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Queue\\\\QueueItem\\:\\:\\$uniqId has no type specified\\.$#"
 			count: 1
 			path: _/Queue/QueueItem.php
-
-		-
-			message: "#^verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RedirectException\\:\\:__construct\\(\\) does not call parent constructor from Exception\\.$#"
-			count: 1
-			path: _/Router/RedirectException.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Routable.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:getFilters\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Routable.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:addFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:call\\(\\) has parameter \\$callback with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getCallback\\(\\) return type has no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:setPath\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$callback has no type specified\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Route.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:addFilter\\(\\) has parameter \\$filterFunc with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:create\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:current\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:getFilters\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:getRoutes\\(\\) should return array\\<verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route\\> but returns array\\<verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\>\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:key\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:next\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:rewind\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:setPath\\(\\) has parameter \\$prefix with no type specified\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\RouteGroup\\:\\:\\$filters type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/RouteGroup.php
-
-		-
-			message: "#^Call to an undefined method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\:\\:setAttributes\\(\\)\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router has an uninitialized readonly property \\$request\\. Assign it in the constructor\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:addGlobalFilter\\(\\) has parameter \\$filter with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:current\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Route but returns verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Routable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$filters with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:isFiltered\\(\\) has parameter \\$filterFunction with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:isFiltered\\(\\) is unused\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:key\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:next\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:rewind\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter is never read, only written\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$globalFilter type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Router/Router.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Router\\\\Router\\:\\:\\$request is never written, only read\\.$#"
-			count: 1
-			path: _/Router/Router.php
 
 		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 13, keep it under 8$#"

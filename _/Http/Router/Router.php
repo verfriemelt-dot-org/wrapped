@@ -2,21 +2,19 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Http\Router;
 
-use verfriemelt\wrapped\_\Exception\Router\NoRouteMatching;
-use verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
-use verfriemelt\wrapped\_\Exception\Router\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Request\Request;
-use verfriemelt\wrapped\_\Http\Response\Response;
+use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
+use verfriemelt\wrapped\_\Http\Router\Exception\NoRoutesPresent;
 
 final class Router
 {
-    use RouteIterator;
+    /** @var Routable[] */
+    private array $routes = [];
 
-    private readonly Request $request;
-
-    private array $globalFilter = [];
+    /** @var Route[] */
+    private array $flattenedRoutes;
 
     public function add(Routable ...$routes): self
     {
@@ -25,23 +23,6 @@ final class Router
         }
 
         return $this;
-    }
-
-    private function isFiltered(callable $filterFunction): bool
-    {
-        $functionResult = $filterFunction($this->request);
-
-        if ($functionResult === false) {
-            return false;
-        }
-
-        $filterException = new RouteGotFiltered('route got filtered');
-
-        if ($functionResult instanceof Response) {
-            $filterException->setResponse($functionResult);
-        }
-
-        throw $filterException;
     }
 
     /**
@@ -90,15 +71,17 @@ final class Router
             throw new NoRoutesPresent('Router is empty');
         }
 
-        \usort($this->routes, fn (Routable $a, Routable $b) => $a->getPriority() <=> $b->getPriority());
-        $this->routes = $this->flattenRoutes($this->routes);
+        $this->flattenedRoutes ??= $this->flattenRoutes($this->routes);
 
-        return $this->findMatchingRoute($uri);
+        return $this->findMatchingRoute($this->flattenedRoutes, $uri);
     }
 
-    protected function findMatchingRoute(string $uri): Route
+    /**
+     * @param Route[] $routes
+     */
+    private function findMatchingRoute(array $routes, string $uri): Route
     {
-        foreach ($this->routes as $route) {
+        foreach ($routes as $route) {
             if (preg_match("~^{$route->getPath()}~", $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
                 $route->setAttributes(array_slice($routeHits, 1));
                 return $route;
@@ -106,11 +89,5 @@ final class Router
         }
 
         throw new NoRouteMatching("Router has no matching routes for {$uri}");
-    }
-
-    public function addGlobalFilter(callable $filter): self
-    {
-        $this->globalFilter[] = $filter;
-        return $this;
     }
 }

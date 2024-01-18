@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Http;
+namespace verfriemelt\wrapped\_;
 
 use ArrayIterator;
 use Countable;
@@ -95,16 +95,5 @@ final class ParameterBag implements Countable, IteratorAggregate
     {
         $this->parameters[$key] = $value;
         return $this;
-    }
-
-    public function setRawData(string $content): static
-    {
-        $this->raw = $content;
-        return $this;
-    }
-
-    public function getRawData(): ?string
-    {
-        return $this->raw;
     }
 }

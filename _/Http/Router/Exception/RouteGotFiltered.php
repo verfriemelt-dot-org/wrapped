@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Exception\Router;
+namespace verfriemelt\wrapped\_\Http\Router\Exception;
 
 use verfriemelt\wrapped\_\Http\Response\Response;
 
@@ -10,7 +10,7 @@ class RouteGotFiltered extends RouterException
 {
     private ?Response $response = null;
 
-    public function setResponse(Response $resposne)
+    public function setResponse(Response $resposne): void
     {
         $this->response = $resposne;
     }

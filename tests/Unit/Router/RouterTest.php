@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\tests\Unit\Router;
 
 use PHPUnit\Framework\TestCase;
-use verfriemelt\wrapped\_\Exception\Router\NoRoutesPresent;
 use verfriemelt\wrapped\_\Http\Request\Request;
-use verfriemelt\wrapped\_\Router\Route;
-use verfriemelt\wrapped\_\Router\RouteGroup;
-use verfriemelt\wrapped\_\Router\Router;
+use verfriemelt\wrapped\_\Http\Router\Exception\NoRoutesPresent;
+use verfriemelt\wrapped\_\Http\Router\Route;
+use verfriemelt\wrapped\_\Http\Router\RouteGroup;
+use verfriemelt\wrapped\_\Http\Router\Router;
 
 class RouterTest extends TestCase
 {

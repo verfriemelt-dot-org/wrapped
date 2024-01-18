@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Controller;
+namespace verfriemelt\wrapped\_\Http\Controller;
 
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\Http\Request\Request;
@@ -11,7 +11,8 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 
 abstract class RestController extends Controller implements ControllerInterface
 {
-    protected $supportedVerbs = [
+    /** @var string[] */
+    protected array $supportedVerbs = [
         'GET',
         'POST',
         'DELETE',
@@ -24,7 +25,7 @@ abstract class RestController extends Controller implements ControllerInterface
         $verb = $request->requestMethod();
 
         if (
-            in_array($verb, $this->supportedVerbs)
+            in_array($verb, $this->supportedVerbs, true)
             && method_exists($this, $verb)
             && is_callable([$this, $verb])
         ) {

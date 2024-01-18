@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Cli;
 
 use Closure;
 use RuntimeException;
-use verfriemelt\wrapped\_\Http\ParameterBag;
+use verfriemelt\wrapped\_\ParameterBag;
 
 class Console implements InputInterface, OutputInterface
 {

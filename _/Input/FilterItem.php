@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Input;
 
 use verfriemelt\wrapped\_\Exception\Input\InputException;
-use verfriemelt\wrapped\_\Http\ParameterBag;
+use verfriemelt\wrapped\_\ParameterBag;
 
 class FilterItem
 {

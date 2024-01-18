@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Router;
+namespace verfriemelt\wrapped\_\Http\Router;
 
 use RuntimeException;
 

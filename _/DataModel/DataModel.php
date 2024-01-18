@@ -16,7 +16,7 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToManyRelation;
 use verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseObjectNotFound;
-use verfriemelt\wrapped\_\Http\ParameterBag;
+use verfriemelt\wrapped\_\ParameterBag;
 
 abstract class DataModel
 {
