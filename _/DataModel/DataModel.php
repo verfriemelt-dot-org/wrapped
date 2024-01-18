@@ -336,7 +336,7 @@ abstract class DataModel
     }
 
     public static function findSingle(
-        array|Dblogic $params = [],
+        array|DbLogic $params = [],
         ?string $orderBy = null,
         string $order = 'asc'
     ): ?static {

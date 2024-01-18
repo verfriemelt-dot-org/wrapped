@@ -8,7 +8,7 @@ use verfriemelt\wrapped\_\Session\Session;
 
 class CSRF
 {
-    private ?\verfriemelt\wrapped\_\Session\Session $session = null;
+    private ?Session $session = null;
 
     public function __construct(Session $session)
     {

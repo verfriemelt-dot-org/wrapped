@@ -32,7 +32,7 @@ class Formular implements Viewable
 
     final public const FORM_FIELD_NAME = '_form';
 
-    private ?\verfriemelt\wrapped\_\Input\Filter $filter = null;
+    private ?Filter $filter = null;
 
     private array $elements = [];
 

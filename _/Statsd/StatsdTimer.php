@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Statsd;
 
 class StatsdTimer
 {
-    private ?\verfriemelt\wrapped\_\Statsd\StatsdClient $statsdInstace = null;
+    private ?StatsdClient $statsdInstace = null;
 
     private $start = 0;
 
