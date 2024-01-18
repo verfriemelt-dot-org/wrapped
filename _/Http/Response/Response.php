@@ -29,7 +29,7 @@ class Response
         $this->setContent($content ?? '');
     }
 
-    public function setStatusCode(int $code): Response
+    public function setStatusCode(int $code): static
     {
         $this->statusCode = $code;
         return $this;
@@ -40,37 +40,37 @@ class Response
         return $this->statusCode;
     }
 
-    public function setStatusText(string $statusText): Response
+    public function setStatusText(string $statusText): static
     {
         $this->statusText = $statusText;
         return $this;
     }
 
-    public function appendContent(string $content): Response
+    public function appendContent(string $content): static
     {
         $this->content .= $content;
         return $this;
     }
 
-    public function setContent($content): Response
+    public function setContent($content): static
     {
         $this->content = $content;
         return $this;
     }
 
-    public function addCookie(Cookie $cookie): Response
+    public function addCookie(Cookie $cookie): static
     {
         $this->cookies[] = $cookie;
         return $this;
     }
 
-    public function addHeader(HttpHeader $header): Response
+    public function addHeader(HttpHeader $header): static
     {
         $this->headers[] = $header;
         return $this;
     }
 
-    public function sendHeaders(): Response
+    public function sendHeaders(): static
     {
         $httpHeader = sprintf(
             'HTTP/%s %s %s',
@@ -101,7 +101,7 @@ class Response
         return $this;
     }
 
-    public function sendContent(): Response
+    public function sendContent(): static
     {
         if ($this->contentCallback !== null) {
             ($this->contentCallback)();
@@ -112,7 +112,7 @@ class Response
         return $this;
     }
 
-    public function send(): Response
+    public function send(): static
     {
         if (!Console::isCli()) {
             $this->sendHeaders();
@@ -121,7 +121,7 @@ class Response
         return $this->sendContent();
     }
 
-    public function setContentCallback(callable $function): Response
+    public function setContentCallback(callable $function): static
     {
         $this->contentCallback = $function;
         return $this;

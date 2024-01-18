@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Http\Response;
 
 use verfriemelt\wrapped\_\DataModel\DataModel;
 
-class JsonResponse extends Response
+final class JsonResponse extends Response
 {
     private bool $pretty = false;
 
@@ -35,13 +35,13 @@ class JsonResponse extends Response
         return $this;
     }
 
-    public function setContent($content): Response
+    public function setContent($content): static
     {
         $this->content = $content;
         return $this;
     }
 
-    public function send(): Response
+    public function send(): static
     {
         if ($this->alreadyEncoded) {
             parent::setContent($this->content);
