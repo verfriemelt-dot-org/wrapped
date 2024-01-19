@@ -1,0 +1,15 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "_"
+        ],
+        "excludes": [
+            "src/index.php",
+            "src/Kernel.php",
+        ]
+    },
+    "mutators": {
+        "@default": true
+    }
+}
