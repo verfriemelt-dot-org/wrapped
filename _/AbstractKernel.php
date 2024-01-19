@@ -6,19 +6,14 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
-use ReflectionClass;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
-use verfriemelt\wrapped\_\Command\AbstractCommand;
-use verfriemelt\wrapped\_\Command\Attributes\Command;
-use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
-use verfriemelt\wrapped\_\Command\CommandNotFoundException;
+use verfriemelt\wrapped\_\Command\CommandDiscovery;
+use verfriemelt\wrapped\_\Command\CommandExecutor;
 use verfriemelt\wrapped\_\Command\ExitCode;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
-use verfriemelt\wrapped\_\DI\ServiceDiscovery;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Http\Request\Request;
@@ -31,12 +26,7 @@ use verfriemelt\wrapped\_\Kernel\KernelResponse;
 
 abstract class AbstractKernel implements KernelInterface
 {
-    protected const string DEFAULT_COMMAND = '_';
-
     protected Router $router;
-
-    /** @var array<string,class-string> */
-    protected array $commands;
 
     protected Container $container;
 
@@ -50,8 +40,6 @@ abstract class AbstractKernel implements KernelInterface
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
         $this->initializeErrorHandling();
-
-        $this->loadCommands(__DIR__ . '/Command', __DIR__, __NAMESPACE__);
     }
 
     public function getContainer(): Container
@@ -141,36 +129,6 @@ abstract class AbstractKernel implements KernelInterface
         return $response;
     }
 
-    public function execute(Console $cli): ExitCode
-    {
-        $this->container->register(Console::class, $cli);
-        $arguments = $cli->getArgv()->all();
-
-        // scriptname
-        \array_shift($arguments);
-
-        // command name
-        $commandName = \array_shift($arguments) ?? self::DEFAULT_COMMAND;
-        assert(is_string($commandName));
-
-        // if its an option, readd it to arguments and use default command
-        if (\str_starts_with($commandName, '-')) {
-            $arguments[] = $commandName;
-            $commandName = self::DEFAULT_COMMAND;
-        }
-
-        $commandInstance = $this->container->get($this->commands[$commandName] ?? throw new CommandNotFoundException("command {$commandName} not found"));
-
-        \assert($commandInstance instanceof AbstractCommand);
-
-        $parser = $this->container->get(ArgvParser::class);
-        $commandInstance->configure($parser);
-
-        $parser->parse($arguments);
-
-        return $commandInstance->execute($cli);
-    }
-
     protected function triggerKernelResponse(Request $request, Response $response): void
     {
         $this->eventDispatcher->dispatch((new KernelResponse($request))->setResponse($response));
@@ -178,7 +136,9 @@ abstract class AbstractKernel implements KernelInterface
 
     protected function dispatchException(Throwable $exception): Response
     {
-        $exceptionEvent = $this->eventDispatcher->dispatch(new ExceptionEvent($exception, $this->container->get(Request::class)));
+        $exceptionEvent = $this->eventDispatcher->dispatch(
+            new ExceptionEvent($exception, $this->container->get(Request::class))
+        );
 
         if ($exceptionEvent->hasResponse()) {
             return $exceptionEvent->getResponse();
@@ -198,29 +158,18 @@ abstract class AbstractKernel implements KernelInterface
         });
     }
 
+    public function execute(Console $cli): ExitCode
+    {
+        $exec = $this->container->get(CommandExecutor::class);
+        assert($exec instanceof CommandExecutor);
+
+        return $exec->execute($cli);
+    }
+
     public function loadCommands(string $path, string $pathPrefix, string $namespace): void
     {
-        $discovery = $this->container->get(ServiceDiscovery::class);
-        $commands = $discovery->findTags(
-            $path,
-            $pathPrefix,
-            $namespace,
-            Command::class
-        );
-
-        foreach ($commands as $command) {
-            $reflection = new ReflectionClass($command);
-            $defaultAttribute = $reflection->getAttributes(DefaultCommand::class)[0] ?? null;
-            if ($defaultAttribute !== null) {
-                $this->commands[self::DEFAULT_COMMAND] = $command;
-            }
-
-            foreach ($reflection->getAttributes(Command::class) as $attribute) {
-                $instance = $attribute->newInstance();
-                assert($instance instanceof Command);
-
-                $this->commands[$instance->command] = $command;
-            }
-        }
+        $discovery = $this->container->get(CommandDiscovery::class);
+        assert($discovery instanceof CommandDiscovery);
+        $discovery->loadCommands($path, $pathPrefix, $namespace);
     }
 }
