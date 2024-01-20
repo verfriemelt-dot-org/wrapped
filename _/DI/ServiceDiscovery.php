@@ -37,8 +37,12 @@ final readonly class ServiceDiscovery
         foreach ($iterator as $file) {
             \assert($file instanceof SplFileInfo);
 
-            /** @var class-string $class */
             $class =  $namespace . '\\' . \str_replace('/', '\\', \ltrim($file->getPath(), $pathPrefix)) . '\\' . \basename($file->getFilename(), '.php');
+
+            if (!\class_exists($class)) {
+                continue;
+            }
+
             $reflection = new ReflectionClass($class);
 
             foreach ($reflection->getAttributes($filterAttribute) as $attribute) {

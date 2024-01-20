@@ -23,7 +23,7 @@ class CommandDiscovery
 
     public function loadBuiltInCommands(): void
     {
-        $this->loadCommands(__DIR__, dirname(__DIR__), '\verfriemelt\wrapped\_');
+        $this->loadCommands(dirname(__DIR__), dirname(__DIR__, 2), '\verfriemelt\wrapped');
     }
 
     public function loadCommands(string $path, string $pathPrefix, string $namespace): void

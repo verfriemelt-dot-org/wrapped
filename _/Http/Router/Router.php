@@ -77,6 +77,14 @@ final class Router
     }
 
     /**
+     * @return Route[]
+     */
+    public function dumpRoutes(): array
+    {
+        return $this->flattenedRoutes ??= $this->flattenRoutes($this->routes);
+    }
+
+    /**
      * @param Route[] $routes
      */
     private function findMatchingRoute(array $routes, string $uri): Route
