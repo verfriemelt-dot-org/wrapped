@@ -52,10 +52,14 @@ class JsonEncoder implements EncoderInterface
 
             // handling of variadic arguments
             if ($argument->isVariadic() && \array_is_list($input)) {
-                \assert(\class_exists($argumentType));
-
-                // variadics are always the last argument, so we can stop here
-                $variadic = \array_map(fn (array $input) => $this->mapJsonOnObject($input, $argumentType), $input);
+                if (\in_array($argumentType, ['string', 'int'], true)) {
+                    // no mapping
+                    $variadic =  $input;
+                } else {
+                    // variadics are always the last argument, so we can stop here
+                    \assert(\class_exists($argumentType));
+                    $variadic = \array_map(fn (array $input) => $this->mapJsonOnObject($input, $argumentType), $input);
+                }
 
                 return new $class(...$arguments, ...$variadic);
             }
@@ -70,7 +74,7 @@ class JsonEncoder implements EncoderInterface
             }
 
             // check for backed enum
-            if (\class_exists($argumentType) && in_array(BackedEnum::class, \class_implements($argumentType), true)) {
+            if (\class_exists($argumentType) && \in_array(BackedEnum::class, \class_implements($argumentType), true)) {
                 $arguments[$argument->getName()] = $argumentType::from($input[$argument->getName()]);
                 continue;
             }

@@ -2231,22 +2231,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Instantiated class verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Http\\\\Router\\\\RouterException not found\\.$#"
-			count: 1
-			path: _/Http/Controller/Controller.php
-
-		-
 			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
 			count: 4
 			path: _/Http/Controller/Controller.php
 
 		-
 			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
-			count: 1
-			path: _/Http/Controller/Controller.php
-
-		-
-			message: "#^Throwing object of an unknown class verfriemelt\\\\wrapped\\\\_\\\\Exception\\\\Http\\\\Router\\\\RouterException\\.$#"
 			count: 1
 			path: _/Http/Controller/Controller.php
 
@@ -2536,27 +2526,7 @@ parameters:
 			path: _/Http/Response/HttpHeader.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:__construct\\(\\) has parameter \\$alreadyEncoded with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:__construct\\(\\) has parameter \\$content with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:pretty\\(\\) has parameter \\$bool with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:setContent\\(\\) has parameter \\$content with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:\\$content has no type specified\\.$#"
 			count: 1
 			path: _/Http/Response/JsonResponse.php
 
@@ -3156,7 +3126,7 @@ parameters:
 			path: _/Queue/QueueItem.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 13, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 17, keep it under 8$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 
@@ -4604,6 +4574,11 @@ parameters:
 			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
 			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Property class@anonymous/tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest\\.php\\:138\\:\\:\\$variadic type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\Template\\\\TemplateIfElseTest\\:\\:\\$testCases type has no value type specified in iterable type array\\.$#"

@@ -124,4 +124,31 @@ class JsonEncoderDecodeTest extends TestCase
 
         static::assertSame(TestEnum::Foo->value, $dto->arg->value);
     }
+
+    public function test_arry_of_string(): void
+    {
+        $input = <<<JSON
+        [
+           "foo1",
+           "foo2",
+           "foo3"
+        ]
+        JSON;
+
+        $class = new class ('') {
+            public array $variadic = [];
+
+            public function __construct(
+                string ... $variadic
+            ) {
+                $this->variadic = $variadic;
+            }
+        };
+
+        $encoder = new JsonEncoder();
+        $dto = $encoder->deserialize($input, $class::class);
+
+        static::assertInstanceOf($class::class, $dto);
+        static::assertSame(['foo1', 'foo2', 'foo3'], $dto->variadic);
+    }
 }
