@@ -32,6 +32,8 @@ abstract class AbstractKernel implements KernelInterface
 
     protected EventDispatcher $eventDispatcher;
 
+    private bool $buildInCommandsLoaded = false;
+
     public function __construct()
     {
         $this->container = new Container();
@@ -170,6 +172,12 @@ abstract class AbstractKernel implements KernelInterface
     {
         $discovery = $this->container->get(CommandDiscovery::class);
         assert($discovery instanceof CommandDiscovery);
+
+        if ($this->buildInCommandsLoaded === false) {
+            $this->buildInCommandsLoaded = true;
+            //            $discovery->loadBuiltInCommands();
+        }
+
         $discovery->loadCommands($path, $pathPrefix, $namespace);
     }
 }

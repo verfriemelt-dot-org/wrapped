@@ -231,6 +231,11 @@ parameters:
 			path: _/Cli/KeyInput.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandDiscovery\\:\\:loadCommands\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/Command/CommandDiscovery.php
+
+		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/DI/ArgumentMetadataFactory.php

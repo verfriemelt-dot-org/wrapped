@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Command;
 
 use ReflectionClass;
+use verfriemelt\wrapped\_\Command\Attributes\Alias;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\DI\ServiceDiscovery;
+use RuntimeException;
 
 class CommandDiscovery
 {
@@ -17,9 +19,7 @@ class CommandDiscovery
 
     public function __construct(
         private readonly Container $container
-    ) {
-        $this->loadBuiltInCommands();
-    }
+    ) {}
 
     public function loadBuiltInCommands(): void
     {
@@ -36,18 +36,35 @@ class CommandDiscovery
             Command::class
         );
 
-        foreach ($commands as $command) {
-            $reflection = new ReflectionClass($command);
-            $defaultAttribute = $reflection->getAttributes(DefaultCommand::class)[0] ?? null;
-            if ($defaultAttribute !== null) {
-                $this->commands[CommandExecutor::DEFAULT_COMMAND] = $command;
+        foreach ($commands as $commandClass) {
+            $reflection = new ReflectionClass($commandClass);
+
+            $commandAttribute = $reflection->getAttributes(Command::class)[0] ?? null;
+            if ($commandAttribute === null) {
+                continue;
             }
 
-            foreach ($reflection->getAttributes(Command::class) as $attribute) {
-                $instance = $attribute->newInstance();
-                \assert($instance instanceof Command);
+            if (null !== ($reflection->getAttributes(DefaultCommand::class)[0] ?? null)) {
+                $this->commands[CommandExecutor::DEFAULT_COMMAND] = $commandClass;
+            }
 
-                $this->commands[$instance->command] = $command;
+            $instance = $commandAttribute->newInstance();
+            \assert($instance instanceof Command);
+
+            if (isset($this->commands[$instance->command])) {
+                throw new RuntimeException("command {$instance->command} already registered");
+            }
+
+            $this->commands[$instance->command] = $commandClass;
+
+            foreach ($reflection->getAttributes(Alias::class) as $aliasAttribute) {
+                $alias = $aliasAttribute->newInstance();
+
+                if (isset($this->commands[$alias->alias])) {
+                    throw new RuntimeException("command {$alias->alias} already registered");
+                }
+
+                $this->commands[$alias->alias] = $commandClass;
             }
         }
     }

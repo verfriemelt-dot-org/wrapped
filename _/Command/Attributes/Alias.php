@@ -6,11 +6,10 @@ namespace verfriemelt\wrapped\_\Command\Attributes;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_CLASS)]
-final readonly class Command
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
+final readonly class Alias
 {
     public function __construct(
-        public string $command,
-        public string $description = '',
+        public string $alias
     ) {}
 }
