@@ -21,7 +21,7 @@ final readonly class ServiceDiscovery
      *
      * @return class-string[]
      */
-    public function findTags(
+    public function findTaggedServices(
         string $path,
         string $pathPrefix,
         string $namespace,

@@ -18,23 +18,28 @@ class CommandDiscovery
     protected array $commands;
 
     public function __construct(
-        private readonly Container $container
+        private readonly Container $container,
+        private readonly ServiceDiscovery $serviceDiscovery,
     ) {}
 
     public function loadBuiltInCommands(): void
     {
-        $this->loadCommands(dirname(__DIR__), dirname(__DIR__, 2), '\verfriemelt\wrapped');
+        $this->findCommands(dirname(__DIR__), dirname(__DIR__, 2), '\verfriemelt\wrapped');
     }
 
-    public function loadCommands(string $path, string $pathPrefix, string $namespace): void
+    public function findCommands(string $path, string $pathPrefix, string $namespace): void
     {
-        $discovery = $this->container->get(ServiceDiscovery::class);
-        $commands = $discovery->findTags(
+        $this->serviceDiscovery->findTaggedServices(
             $path,
             $pathPrefix,
             $namespace,
             Command::class
         );
+    }
+
+    public function loadCommands(): void
+    {
+        $commands = $this->container->tagIterator(Command::class);
 
         foreach ($commands as $commandClass) {
             $reflection = new ReflectionClass($commandClass);

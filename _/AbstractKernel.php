@@ -175,9 +175,10 @@ abstract class AbstractKernel implements KernelInterface
 
         if ($this->buildInCommandsLoaded === false) {
             $this->buildInCommandsLoaded = true;
-            //            $discovery->loadBuiltInCommands();
+            $discovery->loadBuiltInCommands();
         }
 
-        $discovery->loadCommands($path, $pathPrefix, $namespace);
+        $discovery->findCommands($path, $pathPrefix, $namespace);
+        $discovery->loadCommands();
     }
 }

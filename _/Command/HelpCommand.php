@@ -22,6 +22,7 @@ final class HelpCommand extends AbstractCommand
 
     public function __construct(
         private readonly Container $container,
+        private readonly CommandDiscovery $commandDiscovery,
     ) {}
 
     public function configure(ArgvParser $argv): void
@@ -89,18 +90,15 @@ final class HelpCommand extends AbstractCommand
      */
     private function findCommandByRoute(string $route): array
     {
-        foreach ($this->container->tagIterator(Command::class) as $cmd) {
-            $reflection = new ReflectionClass($cmd);
-            foreach ($reflection->getAttributes(Command::class) as $attribute) {
-                if ($attribute->newInstance()->command === $route) {
-                    $instance = $this->container->get($cmd);
-                    assert($instance instanceof AbstractCommand);
-                    return [$attribute->newInstance(), $instance];
-                }
-            }
-        }
+        $commandClass = $this->commandDiscovery->getCommands()[$route] ?? throw new CommandNotFoundException("command {$route} not found");
+        $command = $this->container->get($commandClass);
 
-        throw new CommandNotFoundException("command {$route} not found");
+        assert($command instanceof AbstractCommand);
+
+        $reflection = new ReflectionClass($command);
+        $attribute = $reflection->getAttributes(Command::class)[0] ?? throw new RuntimeException();
+
+        return [$attribute->newInstance(), $command];
     }
 
     private function listCommands(OutputInterface $cli): void
