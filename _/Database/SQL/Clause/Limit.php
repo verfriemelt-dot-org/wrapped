@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Limit extends QueryPart implements Clause
 {
@@ -14,6 +15,7 @@ class Limit extends QueryPart implements Clause
 
     protected ExpressionItem $limit;
 
+    #[Override]
     public function getWeight(): int
     {
         return 60;
@@ -25,6 +27,7 @@ class Limit extends QueryPart implements Clause
         $this->limit = $limit;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

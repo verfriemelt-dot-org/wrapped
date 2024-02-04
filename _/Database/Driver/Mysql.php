@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Database\Driver;
 
 use PDO;
+use Override;
 
 class Mysql extends DatabaseDriver
 {
     final public const PDO_NAME = 'mysql';
 
+    #[Override]
     public function quoteIdentifier(string $ident): string
     {
         return "`{$ident}`";

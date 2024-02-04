@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
+use Override;
+
 class Textarea extends Text
 {
     public $type = 'textarea';
 
     public $placeholder;
 
+    #[Override]
     public function loadTemplate(): FormType
     {
         $this->tpl->parseFile(dirname(__DIR__) . '/Template/Textarea.tpl.php');
         return $this;
     }
 
+    #[Override]
     public function placeholder($placeholder): Text
     {
         $this->placeholder = $placeholder;
         return $this;
     }
 
+    #[Override]
     public function fetchHtml(): string
     {
         $this->writeTplValues();

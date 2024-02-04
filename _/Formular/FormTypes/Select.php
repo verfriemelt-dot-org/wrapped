@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use verfriemelt\wrapped\_\Template\Repeater;
+use Override;
 
 class Select extends FormType
 {
@@ -52,6 +53,7 @@ class Select extends FormType
         $repeater->save();
     }
 
+    #[Override]
     public function fetchHtml(): string
     {
         $optionsRepeater = $this->tpl->createRepeater('options');
@@ -78,6 +80,7 @@ class Select extends FormType
         return $this->tpl->run();
     }
 
+    #[Override]
     public function loadTemplate(): FormType
     {
         $this->tpl->parseFile(dirname(__DIR__) . '/Template/Select.tpl.php');

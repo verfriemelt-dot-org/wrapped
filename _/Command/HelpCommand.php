@@ -25,6 +25,7 @@ final class HelpCommand extends AbstractCommand
         private readonly CommandDiscovery $commandDiscovery,
     ) {}
 
+    #[Override]
     public function configure(ArgvParser $argv): void
     {
         $this->cmdArgument = new Argument('command', Argument::OPTIONAL);

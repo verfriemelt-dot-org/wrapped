@@ -7,10 +7,11 @@ namespace verfriemelt\wrapped\_\Database\SQL\Command;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Delete extends QueryPart implements Command
 {
-    private const COMMAND = 'DELETE FROM %s';
+    private const string COMMAND = 'DELETE FROM %s';
 
     private readonly Identifier $table;
 
@@ -19,11 +20,13 @@ class Delete extends QueryPart implements Command
         $this->table = $table;
     }
 
+    #[Override]
     public function getWeight(): int
     {
         return 10;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

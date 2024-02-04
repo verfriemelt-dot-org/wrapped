@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Database\Driver;
 
 use RuntimeException;
+use Override;
 
 class SQLite extends DatabaseDriver
 {
@@ -12,16 +13,19 @@ class SQLite extends DatabaseDriver
 
     private string $databaseVersion;
 
+    #[Override]
     protected function getConnectionString(): string
     {
         return self::PDO_NAME;
     }
 
+    #[Override]
     public function quoteIdentifier(string $ident): string
     {
         return sprintf('"%s"', $ident);
     }
 
+    #[Override]
     public function connect(): void
     {
         parent::connect();

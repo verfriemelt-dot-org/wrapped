@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Alias;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class SqlFunction extends QueryPart implements ExpressionItem
 {
@@ -37,6 +38,7 @@ class SqlFunction extends QueryPart implements ExpressionItem
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         // some functions are keywords

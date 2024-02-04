@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\DataModel\Type;
 
 use stdClass;
 use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
+use Override;
 
 class Json implements PropertyObjectInterface
 {
@@ -21,6 +22,7 @@ class Json implements PropertyObjectInterface
         return json_encode($this->data, JSON_THROW_ON_ERROR);
     }
 
+    #[Override]
     public static function hydrateFromString(?string $storedValue): ?static
     {
         if ($storedValue === null) {
@@ -30,6 +32,7 @@ class Json implements PropertyObjectInterface
         return new static($storedValue);
     }
 
+    #[Override]
     public function dehydrateToString(): string
     {
         return $this->toSqlFormat();

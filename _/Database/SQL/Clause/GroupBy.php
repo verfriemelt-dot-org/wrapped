@@ -8,6 +8,7 @@ use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class GroupBy extends QueryPart implements Clause
 {
@@ -24,6 +25,7 @@ class GroupBy extends QueryPart implements Clause
         }
     }
 
+    #[Override]
     public function getWeight(): int
     {
         return 50;
@@ -40,6 +42,7 @@ class GroupBy extends QueryPart implements Clause
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

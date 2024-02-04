@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
+use Override;
+
 class Repeater implements TemplateItem
 {
     public $name = '';
@@ -94,6 +96,7 @@ class Repeater implements TemplateItem
         return $this->currentDataLine['repeater'][$name];
     }
 
+    #[Override]
     public function run(&$html)
     {
         $this->findRepeater($html);

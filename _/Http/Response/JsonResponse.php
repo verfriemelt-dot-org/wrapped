@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\Http\Response;
 
 use verfriemelt\wrapped\_\DataModel\Collection;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use Override;
 
 final class JsonResponse extends Response
 {
@@ -34,12 +35,14 @@ final class JsonResponse extends Response
         $this->setContent($json);
     }
 
+    #[Override]
     public function setContent($content): static
     {
         $this->content = $content;
         return $this;
     }
 
+    #[Override]
     public function send(): static
     {
         return parent::send();

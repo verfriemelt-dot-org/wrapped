@@ -10,11 +10,11 @@ final class StatsdClient
 {
     use Singleton;
 
-    public const COUNTER = 'c';
+    public const string COUNTER = 'c';
 
-    public const TIMER_MS = 'ms';
+    public const string TIMER_MS = 'ms';
 
-    public const GAUGE = 'g';
+    public const string GAUGE = 'g';
 
     private ?Connection $connection = null;
 

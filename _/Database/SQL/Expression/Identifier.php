@@ -11,6 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Aliasable;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\DataModelProperty;
+use Override;
 
 class Identifier extends QueryPart implements ExpressionItem, Aliasable
 {
@@ -75,6 +76,7 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
         };
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         $parts = [];

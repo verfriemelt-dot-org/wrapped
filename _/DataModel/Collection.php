@@ -15,6 +15,7 @@ use PDOStatement;
 use RuntimeException;
 use SeekableIterator;
 use verfriemelt\wrapped\_\Database\Facade\QueryBuilder;
+use Override;
 
 /**
  * @template T of DataModel
@@ -106,6 +107,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      *
      * @return int<0,max>
      */
+    #[Override]
     public function count(): int
     {
         return $this->length;
@@ -119,26 +121,31 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
     /**
      * @return T
      */
+    #[Override]
     public function current(): DataModel
     {
         return $this->offsetGet($this->pointer);
     }
 
+    #[Override]
     public function key(): int
     {
         return $this->pointer;
     }
 
+    #[Override]
     public function next(): void
     {
         ++$this->pointer;
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->pointer = 0;
     }
 
+    #[Override]
     public function valid(): bool
     {
         return $this->pointer < $this->length;
@@ -173,6 +180,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      *
      * @throws Exception
      */
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         if ($offset < 0 || $offset >= $this->length) {
@@ -201,6 +209,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      *
      * @throws Exception
      */
+    #[Override]
     public function offsetGet(mixed $offset): DataModel
     {
         // validate offset
@@ -216,6 +225,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      * @param int    $offset
      * @param T|null $value
      */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): never
     {
         throw new Exception('write only collections');
@@ -227,11 +237,13 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
      *
      * @param int $offset
      */
+    #[Override]
     public function offsetUnset(mixed $offset): never
     {
         throw new Exception('write only collections');
     }
 
+    #[Override]
     public function seek(int $position): void
     {
         if ($position >= $this->length || $position < 0) {
@@ -319,6 +331,7 @@ class Collection implements Iterator, ArrayAccess, Countable, SeekableIterator, 
         return $this->data;
     }
 
+    #[Override]
     public function jsonSerialize(): mixed
     {
         return $this->toArray();

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Cache;
 
+use Override;
+
 class MemoryCacheProvider implements CacheProviderInterface
 {
     public static $cache = [];
@@ -23,12 +25,14 @@ class MemoryCacheProvider implements CacheProviderInterface
         return $key;
     }
 
+    #[Override]
     public function set(string $key, $value, int $timeout = 0): bool
     {
         static::$cache[$key] = $value;
         return true;
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         unset(static::$cache[$key]);
@@ -40,16 +44,19 @@ class MemoryCacheProvider implements CacheProviderInterface
      *
      * @return type
      */
+    #[Override]
     public function get(string $key)
     {
         return static::$cache[$key] ?? false;
     }
 
+    #[Override]
     public function purge()
     {
         static::$cache = [];
     }
 
+    #[Override]
     public function replace(string $key, $value, int $timeout = 0): bool
     {
         return static::$cache[$key] = $value;

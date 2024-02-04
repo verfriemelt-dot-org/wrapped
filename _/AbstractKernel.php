@@ -23,6 +23,7 @@ use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
+use Override;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -44,6 +45,7 @@ abstract class AbstractKernel implements KernelInterface
         $this->initializeErrorHandling();
     }
 
+    #[Override]
     public function getContainer(): Container
     {
         return $this->container;

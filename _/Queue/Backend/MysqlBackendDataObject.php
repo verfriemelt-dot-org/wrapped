@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Queue\Backend;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\TablenameOverride;
 use verfriemelt\wrapped\_\Queue\QueueItem;
+use Override;
 
 class MysqlBackendDataObject extends DataModel implements TablenameOverride
 {
@@ -28,6 +29,7 @@ class MysqlBackendDataObject extends DataModel implements TablenameOverride
 
     public $locked = 0;
 
+    #[Override]
     public static function fetchTablename(): string
     {
         return 'queuebackend';

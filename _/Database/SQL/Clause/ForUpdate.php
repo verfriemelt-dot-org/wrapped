@@ -8,6 +8,7 @@ use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class ForUpdate extends QueryPart implements Clause
 {
@@ -23,11 +24,13 @@ class ForUpdate extends QueryPart implements Clause
         private readonly string $lockMode = ''
     ) {}
 
+    #[Override]
     public function getWeight(): int
     {
         return 100;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

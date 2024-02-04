@@ -8,6 +8,7 @@ use BackedEnum;
 use RuntimeException;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\Serializer\Transformer;
+use Override;
 
 class JsonEncoder implements EncoderInterface
 {
@@ -16,6 +17,7 @@ class JsonEncoder implements EncoderInterface
 
     public function __construct() {}
 
+    #[Override]
     public function deserialize(string $input, string $class): object
     {
         if (!\class_exists($class)) {
@@ -29,11 +31,13 @@ class JsonEncoder implements EncoderInterface
     /**
      * @param mixed[]|object $input
      */
+    #[Override]
     public function serialize(array|object $input, bool $pretty = false): string
     {
         return \json_encode($input, \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
     }
 
+    #[Override]
     public function addTransformer(Transformer $transformer): void
     {
         $this->transformer[] = $transformer;

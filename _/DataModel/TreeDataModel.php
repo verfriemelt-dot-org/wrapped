@@ -23,6 +23,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\SqlFunction;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
+use Override;
 
 abstract class TreeDataModel extends DataModel
 {
@@ -50,6 +51,7 @@ abstract class TreeDataModel extends DataModel
 
     protected static $_transactionInitiatorId;
 
+    #[Override]
     final public static function getPrimaryKey(): string
     {
         return 'id';
@@ -116,6 +118,7 @@ abstract class TreeDataModel extends DataModel
      *
      * @return bool
      */
+    #[Override]
     public function delete(): static
     {
         $width = $this->right - $this->left + 1;
@@ -222,6 +225,7 @@ abstract class TreeDataModel extends DataModel
         return $this;
     }
 
+    #[Override]
     protected function prepareDataForStorage(bool $includeNonFuzzy = false): array
     {
         $result = [];
@@ -1079,6 +1083,7 @@ abstract class TreeDataModel extends DataModel
      *
      * @throws Exception
      */
+    #[Override]
     public function save(): static
     {
         if ($this->_isPropertyFuzzy(static::getPrimaryKey())) {
@@ -1094,6 +1099,7 @@ abstract class TreeDataModel extends DataModel
         return $this;
     }
 
+    #[Override]
     protected function updateRecord(): static
     {
         $isMovement = $this->insertPosition !== null;
@@ -1115,6 +1121,7 @@ abstract class TreeDataModel extends DataModel
         return $this;
     }
 
+    #[Override]
     protected function insertRecord(): static
     {
         $query = static::buildQuery();

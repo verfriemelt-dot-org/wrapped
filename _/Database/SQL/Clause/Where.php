@@ -8,6 +8,7 @@ use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Where extends QueryPart implements Clause
 {
@@ -17,6 +18,7 @@ class Where extends QueryPart implements Clause
 
     public Expression $expression;
 
+    #[Override]
     public function getWeight(): int
     {
         return 40;
@@ -38,6 +40,7 @@ class Where extends QueryPart implements Clause
         $this->expression = $wrap;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

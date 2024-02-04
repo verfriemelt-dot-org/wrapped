@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Session;
 
 use verfriemelt\wrapped\_\Http\Request\Request;
+use Override;
 
 final class Session implements SessionHandler
 {
-    public const SESSION_COOKIE_NAME = '_';
+    public const string SESSION_COOKIE_NAME = '_';
 
     public const SESSION_TIMEOUT = 60 * 60 * 24 * 365;
 
@@ -51,12 +52,14 @@ final class Session implements SessionHandler
         $this->dataObj->save();
     }
 
+    #[Override]
     public function delete(string $name): static
     {
         unset($this->currentData[$name]);
         return $this;
     }
 
+    #[Override]
     public function destroy(): void
     {
         $this->dataObj->delete();
@@ -69,6 +72,7 @@ final class Session implements SessionHandler
         );
     }
 
+    #[Override]
     public function get(string $name, mixed $default = null): mixed
     {
         if ($this->has($name)) {
@@ -78,6 +82,7 @@ final class Session implements SessionHandler
         return $default;
     }
 
+    #[Override]
     public function has(string $name): bool
     {
         return isset($this->currentData[$name]);
@@ -101,6 +106,7 @@ final class Session implements SessionHandler
         return $this;
     }
 
+    #[Override]
     public function set(string $name, mixed $value): static
     {
         if ($this->sessionId === null) {

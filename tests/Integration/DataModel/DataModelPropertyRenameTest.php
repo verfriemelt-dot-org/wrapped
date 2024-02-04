@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\Rename;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
+use Override;
 
 class RenameTester extends DataModel
 {
@@ -42,11 +43,13 @@ class RenameTester extends DataModel
 
 class DataModelPropertyRenameTest extends DatabaseTestCase
 {
+    #[Override]
     public function tearDown(): void
     {
         static::$connection->query('drop table if exists "RenameTester" ');
     }
 
+    #[Override]
     public function setUp(): void
     {
         $this->tearDown();

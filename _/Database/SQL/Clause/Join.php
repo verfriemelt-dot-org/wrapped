@@ -8,6 +8,7 @@ use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Join extends QueryPart implements Clause
 {
@@ -19,6 +20,7 @@ class Join extends QueryPart implements Clause
 
     private readonly ExpressionItem $on;
 
+    #[Override]
     public function getWeight(): int
     {
         return 30;
@@ -33,6 +35,7 @@ class Join extends QueryPart implements Clause
         $this->on = $on;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

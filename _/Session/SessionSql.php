@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\TablenameOverride;
+use Override;
 
 class SessionSql extends DataModel implements TablenameOverride, SessionDataObject
 {
@@ -26,11 +27,13 @@ class SessionSql extends DataModel implements TablenameOverride, SessionDataObje
 
     public $sessionId;
 
+    #[Override]
     public static function getBySessionId($id)
     {
         return static::findSingle(['sessionId' => $id]);
     }
 
+    #[Override]
     public static function purgeOldSessions()
     {
         $stmt = new Statement(new Delete(new Identifier(static::fetchTablename())));
@@ -46,6 +49,7 @@ class SessionSql extends DataModel implements TablenameOverride, SessionDataObje
         static::fetchDatabase()->run($stmt);
     }
 
+    #[Override]
     public static function fetchTablename(): string
     {
         return 'Session';
@@ -56,21 +60,25 @@ class SessionSql extends DataModel implements TablenameOverride, SessionDataObje
         return $this->id;
     }
 
+    #[Override]
     public function getData()
     {
         return $this->data;
     }
 
+    #[Override]
     public function getTimeout()
     {
         return $this->timeout;
     }
 
+    #[Override]
     public function getIp()
     {
         return $this->ip;
     }
 
+    #[Override]
     public function getSessionId()
     {
         return $this->sessionId;
@@ -82,24 +90,28 @@ class SessionSql extends DataModel implements TablenameOverride, SessionDataObje
         return $this;
     }
 
+    #[Override]
     public function setData($data)
     {
         $this->data = $data;
         return $this;
     }
 
+    #[Override]
     public function setTimeout($timeout)
     {
         $this->timeout = $timeout;
         return $this;
     }
 
+    #[Override]
     public function setIp($ip)
     {
         $this->ip = $ip;
         return $this;
     }
 
+    #[Override]
     public function setSessionId($sessionId)
     {
         $this->sessionId = $sessionId;

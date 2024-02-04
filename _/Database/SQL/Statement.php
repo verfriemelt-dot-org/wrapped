@@ -11,6 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Clause\Union;
 use verfriemelt\wrapped\_\Database\SQL\Command\Command;
 use verfriemelt\wrapped\_\Database\SQL\Command\Select;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
+use Override;
 
 class Statement extends QueryPart implements ExpressionItem
 {
@@ -61,6 +62,7 @@ class Statement extends QueryPart implements ExpressionItem
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         if (!$this->sortingDisabled) {

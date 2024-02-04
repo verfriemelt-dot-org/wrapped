@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use Override;
 
 class A extends DataModel
 {
@@ -80,6 +81,7 @@ class B extends DataModel
 
 class DataModelRelationAttributesTest extends DatabaseTestCase
 {
+    #[Override]
     public function setUp(): void
     {
         if (static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35) {
@@ -98,6 +100,7 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
         }
     }
 
+    #[Override]
     public function tearDown(): void
     {
         static::$connection->query('drop table if exists "A";');

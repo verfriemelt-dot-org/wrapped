@@ -17,6 +17,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 use verfriemelt\wrapped\_\DataModel\Collection;
 use verfriemelt\wrapped\_\DataModel\DataModel;
+use Override;
 
 abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInterface
 {
@@ -30,11 +31,13 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return static::getPrimaryKey();
     }
 
+    #[Override]
     public function fetchChildCount(): int
     {
         return $this->fetchChildren()->count();
     }
 
+    #[Override]
     public function fetchChildren(string $order = 'left', string $direction = 'ASC', ?int $depth = null): Collection
     {
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
@@ -111,6 +114,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return $query->get();
     }
 
+    #[Override]
     public function fetchChildrenInclusive(string $order = 'left', string $direction = 'ASC', ?int $depth = null): Collection
     {
         return new Collection([
@@ -119,11 +123,13 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         ]);
     }
 
+    #[Override]
     public function fetchDirectChildren(string $order = 'left', string $direction = 'ASC'): Collection
     {
         return $this->fetchChildren($order, $direction, depth: 1);
     }
 
+    #[Override]
     public function fetchParent(): ?static
     {
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
@@ -139,21 +145,25 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         return static::fetchBy($referencedProperty->getName(), $parent);
     }
 
+    #[Override]
     public function fetchPath(): Collection
     {
         return new Collection();
     }
 
+    #[Override]
     public function isChildOf(TreeDataModelInterface $model): bool
     {
         return false;
     }
 
+    #[Override]
     public function move(): static
     {
         return $this;
     }
 
+    #[Override]
     public function under(TreeDataModelInterface $parent): static
     {
         if (!($parent instanceof $this)) {

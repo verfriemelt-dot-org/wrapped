@@ -10,6 +10,7 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
+use Override;
 
 #[LowerCase]
 class LowerDummy extends DataModel
@@ -58,6 +59,7 @@ class SnakeCaseDummy extends LowerDummy
 
 class DataModelAttributeTest extends DatabaseTestCase
 {
+    #[Override]
     public function setUp(): void
     {
         if (static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35) {
@@ -67,6 +69,7 @@ class DataModelAttributeTest extends DatabaseTestCase
         parent::setUp();
     }
 
+    #[Override]
     public function tearDown(): void
     {
         static::$connection->query('drop table if exists dummy;');

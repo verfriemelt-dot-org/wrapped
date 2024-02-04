@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\Http\Router;
 
 use Closure;
 use RuntimeException;
+use Override;
 
 final class RouteGroup implements Routable
 {
@@ -41,11 +42,13 @@ final class RouteGroup implements Routable
         return $this->routes;
     }
 
+    #[Override]
     public function getPath(): string
     {
         return $this->path;
     }
 
+    #[Override]
     public function setPath(string $prefix): self
     {
         $this->path = $prefix;
@@ -55,11 +58,13 @@ final class RouteGroup implements Routable
     /**
      * @return Closure[]
      */
+    #[Override]
     public function getFilters(): array
     {
         return $this->filters;
     }
 
+    #[Override]
     public function addFilter(callable $filterFunc): self
     {
         $this->filters[] = $filterFunc;

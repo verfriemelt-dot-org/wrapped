@@ -8,7 +8,7 @@ use http\Exception\RuntimeException;
 
 final class DotEnv
 {
-    private const STORAGE_KEY = '_WRAPPED_HANDLED_VARS';
+    private const string STORAGE_KEY = '_WRAPPED_HANDLED_VARS';
 
     public function load(string ...$paths): self
     {

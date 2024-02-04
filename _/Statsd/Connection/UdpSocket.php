@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Statsd\Connection;
 use Exception;
 use RuntimeException;
 use verfriemelt\wrapped\_\Statsd\Connection;
+use Override;
 
 class UdpSocket implements Connection
 {
@@ -27,6 +28,7 @@ class UdpSocket implements Connection
         return $this;
     }
 
+    #[Override]
     public function send(string $message): bool
     {
         if ($message === '') {

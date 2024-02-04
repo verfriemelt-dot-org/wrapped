@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\View\BuiltIns;
 
 use verfriemelt\wrapped\_\View\View;
+use Override;
 
 class Link extends View
 {
@@ -24,12 +25,14 @@ class Link extends View
         $this->destination = $destination;
     }
 
+    #[Override]
     protected function prepare(): void
     {
         $this->tpl->set('name', $this->name);
         $this->tpl->set('destination', $this->destination);
     }
 
+    #[Override]
     public function getTemplatePath(): string
     {
         return '';

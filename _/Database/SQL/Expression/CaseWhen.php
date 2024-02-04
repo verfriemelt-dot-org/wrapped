@@ -8,6 +8,7 @@ use Exception;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Alias;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class CaseWhen extends QueryPart implements ExpressionItem
 {
@@ -49,6 +50,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         $exp = ($this->expression) ? "{$this->expression->stringify($driver)} " : '';

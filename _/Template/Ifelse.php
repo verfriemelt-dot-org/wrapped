@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
+use Override;
+
 class Ifelse implements TemplateItem
 {
     public $name = '';
@@ -16,6 +18,7 @@ class Ifelse implements TemplateItem
         $this->bool = $bool;
     }
 
+    #[Override]
     public function run(&$data)
     {
         $preg = "~{{ ?(?<negate>[\!])?if=['\"]{$this->name}['\"] ?}}(?<ifcontent>.*)?(?<elseblock>{{ ?else=['\"]{$this->name}['\"] ?}}(?<elsecontent>.*)?)?{{ ?/if=['\"]{$this->name}['\"] ?}}~sU";

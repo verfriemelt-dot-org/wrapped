@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use DateTime;
+use Override;
 
 class Date extends FormType
 {
     public $type = 'date';
 
+    #[Override]
     public function loadTemplate(): FormType
     {
         $this->tpl->parseFile(dirname(__DIR__) . '/Template/Date.tpl.php');
         return $this;
     }
 
+    #[Override]
     public function setValue($value): FormType
     {
         if ($value instanceof DateTime) {
@@ -27,6 +30,7 @@ class Date extends FormType
         return $this;
     }
 
+    #[Override]
     public function parseValue($input)
     {
         $parsedTime = DateTime::createFromFormat('Y-m-d', $input);
@@ -39,6 +43,7 @@ class Date extends FormType
         return null;
     }
 
+    #[Override]
     public function fetchHtml(): string
     {
         $this->writeTplValues();

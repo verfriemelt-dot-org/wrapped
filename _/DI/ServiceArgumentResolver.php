@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\DI;
 
 use RuntimeException;
+use Override;
 
 /**
  * @template T of object
@@ -24,6 +25,7 @@ class ServiceArgumentResolver extends ArgumentResolver
         $this->service = $service;
     }
 
+    #[Override]
     protected function buildParameter(ArgumentMetadata $parameter): mixed
     {
         foreach ([$parameter->getName(), ...$parameter->getTypes()] as $param) {

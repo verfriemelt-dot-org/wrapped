@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
+use Override;
+
 class Button extends FormType
 {
     public $type = 'button';
@@ -18,6 +20,7 @@ class Button extends FormType
         $this->addCssClass('btn btn-default');
     }
 
+    #[Override]
     public function loadTemplate(): FormType
     {
         $this->tpl->parseFile(dirname(__DIR__) . '/Template/Button.tpl.php');
@@ -30,6 +33,7 @@ class Button extends FormType
         return $this;
     }
 
+    #[Override]
     public function fetchHtml(): string
     {
         $this->writeTplValues();

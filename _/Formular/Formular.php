@@ -21,6 +21,7 @@ use verfriemelt\wrapped\_\Input\Filter;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Session\Session;
 use verfriemelt\wrapped\_\Template\Template;
+use Override;
 
 class Formular implements Viewable
 {
@@ -332,6 +333,7 @@ class Formular implements Viewable
         return $this;
     }
 
+    #[Override]
     public function getContents(): string
     {
         $r = $this->tpl->createRepeater('elements');

@@ -8,6 +8,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Traversable;
+use Override;
 
 final class ParameterBag implements Countable, IteratorAggregate
 {
@@ -21,6 +22,7 @@ final class ParameterBag implements Countable, IteratorAggregate
         $this->parameters = $parameters;
     }
 
+    #[Override]
     public function count(): int
     {
         return count($this->parameters);
@@ -29,6 +31,7 @@ final class ParameterBag implements Countable, IteratorAggregate
     /**
      * @return ArrayIterator
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->parameters);

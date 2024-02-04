@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Response;
 
+use Override;
+
 final class Redirect extends Response
 {
     public function __construct(
@@ -12,6 +14,7 @@ final class Redirect extends Response
         $this->temporarily();
     }
 
+    #[Override]
     public function send(): static
     {
         $this->addHeader(new HttpHeader('Location', $this->destination));

@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\Template;
 
 use Closure;
 use verfriemelt\wrapped\_\Output\Viewable;
+use Override;
 
 class Variable implements TemplateItem
 {
@@ -49,6 +50,7 @@ class Variable implements TemplateItem
         static::$formats[$name] = $function;
     }
 
+    #[Override]
     public function run(&$source)
     {
         preg_match_all(

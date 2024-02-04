@@ -10,6 +10,7 @@ use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\TablenameOverride;
 use verfriemelt\wrapped\_\DateTime\DateTime;
+use Override;
 
 class TypedDummy extends DataModel implements TablenameOverride
 {
@@ -46,6 +47,7 @@ class TypedDummy extends DataModel implements TablenameOverride
         return $this;
     }
 
+    #[Override]
     public static function fetchTablename(): string
     {
         return 'Dummy';
@@ -87,6 +89,7 @@ class TypedDummy extends DataModel implements TablenameOverride
 
 class DataModelTypedPropertiesTest extends DatabaseTestCase
 {
+    #[Override]
     public function setUp(): void
     {
         if (static::$connection instanceof SQLite && static::$connection->getVersion() < 3.35) {
@@ -111,6 +114,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         }
     }
 
+    #[Override]
     public function tearDown(): void
     {
         static::$connection->query('drop table "Dummy" ;');

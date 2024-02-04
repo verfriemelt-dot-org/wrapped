@@ -9,15 +9,17 @@ use verfriemelt\wrapped\_\Database\SQL\Command\Command;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandExpression;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Returning extends QueryPart implements Command, CommandExpression
 {
     use CommandWrapperTrait;
 
-    private const CLAUSE = 'RETURNING %s';
+    private const string CLAUSE = 'RETURNING %s';
 
     private array $expressions = [];
 
+    #[Override]
     public function getWeight(): int
     {
         return 100;
@@ -33,6 +35,7 @@ class Returning extends QueryPart implements Command, CommandExpression
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

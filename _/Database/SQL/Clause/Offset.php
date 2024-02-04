@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Offset extends QueryPart implements Clause
 {
@@ -14,6 +15,7 @@ class Offset extends QueryPart implements Clause
 
     protected ExpressionItem $offset;
 
+    #[Override]
     public function getWeight(): int
     {
         return 70;
@@ -25,6 +27,7 @@ class Offset extends QueryPart implements Clause
         $this->offset = $offset;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

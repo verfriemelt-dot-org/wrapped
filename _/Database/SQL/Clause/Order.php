@@ -10,6 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Order extends QueryPart implements Clause
 {
@@ -19,6 +20,7 @@ class Order extends QueryPart implements Clause
 
     private array $expressions = [];
 
+    #[Override]
     public function getWeight(): int
     {
         return 55;
@@ -37,6 +39,7 @@ class Order extends QueryPart implements Clause
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

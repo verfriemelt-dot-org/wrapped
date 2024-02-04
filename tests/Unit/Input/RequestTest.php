@@ -6,9 +6,11 @@ namespace verfriemelt\wrapped\tests\Unit\Input;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Http\Request\Request;
+use Override;
 
 class RequestTest extends TestCase
 {
+    #[Override]
     public function setUp(): void
     {
         $_SERVER = [

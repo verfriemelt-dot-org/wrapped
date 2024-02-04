@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouterException;
+use Override;
 
 abstract class Controller implements ControllerInterface
 {
@@ -28,6 +29,7 @@ abstract class Controller implements ControllerInterface
         return $this;
     }
 
+    #[Override]
     public function handleRequest(Request $request): Response
     {
         // used to filter out named regexp hits

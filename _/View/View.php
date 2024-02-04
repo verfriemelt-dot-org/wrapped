@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
+use Override;
 
 abstract class View implements Viewable
 {
@@ -78,6 +79,7 @@ abstract class View implements Viewable
      */
     abstract protected function prepare(): void;
 
+    #[Override]
     public function getContents(): string
     {
         $this->prepare();

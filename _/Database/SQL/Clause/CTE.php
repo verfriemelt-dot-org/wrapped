@@ -9,6 +9,7 @@ use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
+use Override;
 
 class CTE extends QueryPart implements Clause
 {
@@ -20,6 +21,7 @@ class CTE extends QueryPart implements Clause
 
     private bool $recursive = false;
 
+    #[Override]
     public function getWeight(): int
     {
         return 5;
@@ -40,6 +42,7 @@ class CTE extends QueryPart implements Clause
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

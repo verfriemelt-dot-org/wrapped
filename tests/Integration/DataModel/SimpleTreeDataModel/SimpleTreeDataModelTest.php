@@ -8,6 +8,7 @@ use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
 use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
+use Override;
 
 #[LowerCase]
 class Tree extends SimpleTreeDataModel
@@ -39,6 +40,7 @@ class Tree extends SimpleTreeDataModel
 
 class SimpleTreeDataModelTest extends DatabaseTestCase
 {
+    #[Override]
     public function setUp(): void
     {
         if (static::$connection instanceof SQLite) {
@@ -49,6 +51,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::$connection->query('create table tree ( id serial primary key, parent_id int );');
     }
 
+    #[Override]
     public function tearDown(): void
     {
         static::$connection->query('drop table if exists tree;');

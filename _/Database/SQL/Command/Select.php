@@ -6,12 +6,13 @@ namespace verfriemelt\wrapped\_\Database\SQL\Command;
 
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Select extends QueryPart implements Command, CommandExpression
 {
     use CommandWrapperTrait;
 
-    private const COMMAND = 'SELECT %s';
+    private const string COMMAND = 'SELECT %s';
 
     private array $expressions = [];
 
@@ -20,6 +21,7 @@ class Select extends QueryPart implements Command, CommandExpression
         array_map(fn ($i) => $this->add($i), $items);
     }
 
+    #[Override]
     public function getWeight(): int
     {
         return 10;
@@ -37,6 +39,7 @@ class Select extends QueryPart implements Command, CommandExpression
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

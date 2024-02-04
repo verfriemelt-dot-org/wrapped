@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Cli;
 use Closure;
 use RuntimeException;
 use verfriemelt\wrapped\_\ParameterBag;
+use Override;
 
 class Console implements InputInterface, OutputInterface
 {
@@ -98,6 +99,7 @@ class Console implements InputInterface, OutputInterface
         return $this;
     }
 
+    #[Override]
     public function write(string $text, ?int $color = null): static
     {
         if ($color !== null) {
@@ -128,6 +130,7 @@ class Console implements InputInterface, OutputInterface
         return $this;
     }
 
+    #[Override]
     public function writeLn(string $text, ?int $color = null): static
     {
         return $this->write($text, $color)->eol();
@@ -139,6 +142,7 @@ class Console implements InputInterface, OutputInterface
         return $this;
     }
 
+    #[Override]
     public function eol(): static
     {
         $this->write(PHP_EOL);

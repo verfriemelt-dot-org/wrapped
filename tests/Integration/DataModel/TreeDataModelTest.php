@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\tests\Integration;
 
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\TreeDataModel;
+use Override;
 
 class TreeDummy extends TreeDataModel
 {
@@ -13,11 +14,13 @@ class TreeDummy extends TreeDataModel
 
     public ?string $name = null;
 
+    #[Override]
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    #[Override]
     public function setId(?int $id)
     {
         $this->id = $id;
@@ -38,6 +41,7 @@ class TreeDummy extends TreeDataModel
 
 class TreeDataModelTest extends DatabaseTestCase
 {
+    #[Override]
     public function setUp(): void
     {
         if (static::$connection instanceof SQLite) {
@@ -52,6 +56,7 @@ class TreeDataModelTest extends DatabaseTestCase
         );
     }
 
+    #[Override]
     public function tearDown(): void
     {
         //            static::$connection->query( 'drop table if exists "TreeDummy";' );

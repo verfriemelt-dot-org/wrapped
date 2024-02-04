@@ -7,11 +7,13 @@ namespace verfriemelt\wrapped\_\Queue\Backend;
 use verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
 use verfriemelt\wrapped\_\Queue\Queue;
 use verfriemelt\wrapped\_\Queue\QueueItem;
+use Override;
 
 class MysqlBackend implements QueuePersistance
 {
     public function __construct(private readonly MysqlBackendDataObject $storage = new MysqlBackendDataObject()) {}
 
+    #[Override]
     public function deleteItem(QueueItem $item): bool
     {
         $instance = $this->storage::findSingle(['uniqId' => $item->uniqId]);
@@ -30,6 +32,7 @@ class MysqlBackend implements QueuePersistance
         return $item ? $item->read() : null;
     }
 
+    #[Override]
     public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         $collection = $this->storage::find(['channel' => $channel, 'locked' => 0, 'key' => $key], 'date');
@@ -38,6 +41,7 @@ class MysqlBackend implements QueuePersistance
         return $queueItems;
     }
 
+    #[Override]
     public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, ?int $limit = null): array
     {
         $collection = $this->storage::find(['channel' => $channel, 'locked' => 0], 'date');
@@ -46,11 +50,13 @@ class MysqlBackend implements QueuePersistance
         return $queueItems;
     }
 
+    #[Override]
     public function purge(): bool
     {
         return false;
     }
 
+    #[Override]
     public function store(QueueItem $item)
     {
         $backend = new MysqlBackendDataObject();
@@ -60,6 +66,7 @@ class MysqlBackend implements QueuePersistance
         return $this;
     }
 
+    #[Override]
     public function lock(QueueItem $item): bool
     {
         $item = $this->storage::findSingle(['uniqId' => $item->uniqId]);
@@ -72,6 +79,7 @@ class MysqlBackend implements QueuePersistance
         return true;
     }
 
+    #[Override]
     public function unlock(QueueItem $item): bool
     {
         $item = $this->storage::findSingle(['uniqId' => $item->uniqId]);

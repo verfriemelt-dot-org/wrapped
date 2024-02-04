@@ -10,10 +10,11 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
+use Override;
 
 class Insert extends QueryPart implements Command, CommandExpression
 {
-    private const COMMAND = 'INSERT INTO %s ( %s )';
+    private const string COMMAND = 'INSERT INTO %s ( %s )';
 
     private array $columns = [];
 
@@ -26,6 +27,7 @@ class Insert extends QueryPart implements Command, CommandExpression
         $this->into = $ident;
     }
 
+    #[Override]
     public function getWeight(): int
     {
         return 10;
@@ -52,6 +54,7 @@ class Insert extends QueryPart implements Command, CommandExpression
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         if (count($this->columns) === 0) {

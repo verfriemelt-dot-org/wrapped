@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Http\Router;
 
 use verfriemelt\wrapped\_\Http\Response\Response;
+use Override;
 
 class Route implements Routable
 {
@@ -26,6 +27,7 @@ class Route implements Routable
         return new self($path);
     }
 
+    #[Override]
     public function getPath(): string
     {
         return $this->path;
@@ -36,11 +38,13 @@ class Route implements Routable
         return $this->callback;
     }
 
+    #[Override]
     public function getFilters(): array
     {
         return $this->filters;
     }
 
+    #[Override]
     public function setPath($path): static
     {
         $this->path = $path;
@@ -56,6 +60,7 @@ class Route implements Routable
     /**
      * if this function returns true no callback is triggered
      */
+    #[Override]
     public function addFilter(callable $filter): static
     {
         $this->filters[] = $filter;

@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Clause;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Having extends QueryPart implements Clause
 {
@@ -16,6 +17,7 @@ class Having extends QueryPart implements Clause
 
     private readonly QueryPart $expression;
 
+    #[Override]
     public function getWeight(): int
     {
         return 52;
@@ -29,6 +31,7 @@ class Having extends QueryPart implements Clause
         $this->expression = $wrap;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return sprintf(

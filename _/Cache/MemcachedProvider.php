@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Cache;
 
 use Memcached;
+use Override;
 
 class MemcachedProvider implements CacheProviderInterface
 {
@@ -33,11 +34,13 @@ class MemcachedProvider implements CacheProviderInterface
         return static::$prefix . $key;
     }
 
+    #[Override]
     public function set(string $key, $value, int $timeout = 0): bool
     {
         return $this->memcached->set($this->prefix($key), $value, $timeout);
     }
 
+    #[Override]
     public function delete(string $key): bool
     {
         return $this->memcached->delete($this->prefix($key));
@@ -48,16 +51,19 @@ class MemcachedProvider implements CacheProviderInterface
      *
      * @return type
      */
+    #[Override]
     public function get(string $key)
     {
         return $this->memcached->get($this->prefix($key));
     }
 
+    #[Override]
     public function purge()
     {
         // nope
     }
 
+    #[Override]
     public function replace(string $key, $value, int $timeout = 0): bool
     {
         return $this->memcached->replace($this->prefix($key), $value, $timeout);

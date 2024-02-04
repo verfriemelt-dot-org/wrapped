@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 use Exception;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class OperatorExpression extends QueryPart implements ExpressionItem
 {
@@ -54,6 +55,7 @@ class OperatorExpression extends QueryPart implements ExpressionItem
         $this->arguments = $args;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return match ($this->operator) {

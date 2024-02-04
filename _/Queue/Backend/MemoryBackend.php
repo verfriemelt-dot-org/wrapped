@@ -7,11 +7,13 @@ namespace verfriemelt\wrapped\_\Queue\Backend;
 use verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
 use verfriemelt\wrapped\_\Queue\Queue;
 use verfriemelt\wrapped\_\Queue\QueueItem;
+use Override;
 
 class MemoryBackend implements QueuePersistance
 {
     private array $storage = [];
 
+    #[Override]
     public function store(QueueItem $item)
     {
         $this->storage[$item->channel][] = [
@@ -22,6 +24,7 @@ class MemoryBackend implements QueuePersistance
         return $this;
     }
 
+    #[Override]
     public function fetchByKey(string $key, string $channel = Queue::DEFAULT_CHANNEL, ?int $count = null): array
     {
         $result = [];
@@ -37,6 +40,7 @@ class MemoryBackend implements QueuePersistance
         return $result;
     }
 
+    #[Override]
     public function fetchChannel(string $channel = Queue::DEFAULT_CHANNEL, ?int $count = null): array
     {
         $result = [];
@@ -56,6 +60,7 @@ class MemoryBackend implements QueuePersistance
         return $result;
     }
 
+    #[Override]
     public function deleteItem(QueueItem $item): bool
     {
         if (!isset($this->storage[$item->channel])) {
@@ -74,12 +79,14 @@ class MemoryBackend implements QueuePersistance
         return false;
     }
 
+    #[Override]
     public function purge(): bool
     {
         $this->storage = [];
         return true;
     }
 
+    #[Override]
     public function lock(QueueItem $item): bool
     {
         if (!isset($this->storage[$item->channel])) {
@@ -99,6 +106,7 @@ class MemoryBackend implements QueuePersistance
         return false;
     }
 
+    #[Override]
     public function unlock(QueueItem $item): bool
     {
         if (!isset($this->storage[$item->channel])) {

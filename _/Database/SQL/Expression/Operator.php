@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Database\SQL\Expression;
 use Exception;
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Operator extends QueryPart implements ExpressionItem
 {
@@ -67,6 +68,7 @@ class Operator extends QueryPart implements ExpressionItem
         $this->operator = $op;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         return strtoupper($this->operator);

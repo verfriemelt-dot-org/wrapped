@@ -6,11 +6,13 @@ namespace verfriemelt\wrapped\tests\Unit\Input;
 
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Input\Filter;
+use Override;
 
 class FilterTest extends \PHPUnit\Framework\TestCase
 {
     protected Request $request;
 
+    #[Override]
     public function setUp(): void
     {
         $_SERVER = [

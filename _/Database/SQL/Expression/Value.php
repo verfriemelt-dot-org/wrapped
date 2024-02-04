@@ -11,6 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Aliasable;
 use verfriemelt\wrapped\_\Database\SQL\DataBinding;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
 use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
+use Override;
 
 class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
 {
@@ -35,11 +36,13 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
         $this->bind .= (string) ++static::$counter;
     }
 
+    #[Override]
     public function getBinding()
     {
         return $this->value;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         if ($driver) {
@@ -86,6 +89,7 @@ class Value extends QueryPart implements ExpressionItem, Aliasable, DataBinding
         return $value . $this->stringifyAlias($driver);
     }
 
+    #[Override]
     public function fetchBindings(): array
     {
         return [$this->bind => $this->value];

@@ -10,6 +10,7 @@ use verfriemelt\wrapped\_\Database\SQL\Alias;
 use verfriemelt\wrapped\_\Database\SQL\Aliasable;
 use verfriemelt\wrapped\_\Database\SQL\Command\CommandWrapperTrait;
 use verfriemelt\wrapped\_\Database\SQL\QueryPart;
+use Override;
 
 class Expression extends QueryPart implements ExpressionItem, Aliasable
 {
@@ -36,6 +37,7 @@ class Expression extends QueryPart implements ExpressionItem, Aliasable
         return $this;
     }
 
+    #[Override]
     public function stringify(?DatabaseDriver $driver = null): string
     {
         if (count($this->expressions) === 0) {

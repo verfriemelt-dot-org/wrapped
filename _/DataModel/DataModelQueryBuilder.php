@@ -11,6 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Clause\GroupBy;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Join;
 use verfriemelt\wrapped\_\Database\SQL\Command\Select;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
+use Override;
 
 /**
  * @template T of DataModel
@@ -36,6 +37,7 @@ class DataModelQueryBuilder extends QueryBuilder
         $this->addContext($prototype);
     }
 
+    #[Override]
     public function count(string|array $table, string|array $what = '*', bool $distinct = false): static
     {
         $this->disableAutomaticGroupBy();
@@ -59,6 +61,7 @@ class DataModelQueryBuilder extends QueryBuilder
         return $this;
     }
 
+    #[Override]
     public function run(): PDOStatement
     {
         foreach ($this->context as $context) {
