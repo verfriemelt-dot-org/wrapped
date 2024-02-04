@@ -7,9 +7,13 @@ namespace verfriemelt\wrapped\_\Serializer\Encoder;
 use BackedEnum;
 use RuntimeException;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
+use verfriemelt\wrapped\_\Serializer\Transformer;
 
 class JsonEncoder implements EncoderInterface
 {
+    /** @var Transformer[] */
+    private array $transformer = [];
+
     public function __construct() {}
 
     public function deserialize(string $input, string $class): object
@@ -30,6 +34,11 @@ class JsonEncoder implements EncoderInterface
         return \json_encode($input, \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
     }
 
+    public function addTransformer(Transformer $transformer): void
+    {
+        $this->transformer[] = $transformer;
+    }
+
     /**
      * @template T of object
      *
@@ -42,6 +51,12 @@ class JsonEncoder implements EncoderInterface
     {
         $constructorProperties = (new ArgumentMetadataFactory())->createArgumentMetadata($class);
         $arguments = [];
+
+        foreach ($this->transformer as $transformer) {
+            if ($transformer->supports($input)) {
+                $input = $transformer->transform($input);
+            }
+        }
 
         foreach ($constructorProperties as $argument) {
             if (\count($argument->getTypes()) !== 1) {

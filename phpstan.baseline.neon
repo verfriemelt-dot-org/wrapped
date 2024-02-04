@@ -3131,7 +3131,7 @@ parameters:
 			path: _/Queue/QueueItem.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 17, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Serializer\\\\Encoder\\\\JsonEncoder\\:\\:mapJsonOnObject\\(\\)\" is 20, keep it under 8$#"
 			count: 1
 			path: _/Serializer/Encoder/JsonEncoder.php
 

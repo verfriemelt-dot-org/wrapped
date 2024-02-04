@@ -12,6 +12,11 @@ class Serializer
         private readonly EncoderInterface $encoder
     ) {}
 
+    public function addTransformer(Transformer $transformer): void
+    {
+        $this->encoder->addTransformer($transformer);
+    }
+
     /**
      * @template T of object
      *
