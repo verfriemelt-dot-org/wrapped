@@ -26,7 +26,7 @@ final readonly class CommandExecutor
 
         \assert($commandInstance instanceof AbstractCommand);
 
-        $parser = $this->container->get(ArgvParser::class);
+        $parser = new ArgvParser();
         $commandInstance->configure($parser);
 
         $parser->parse($arguments);

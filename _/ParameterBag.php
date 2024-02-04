@@ -7,15 +7,13 @@ namespace verfriemelt\wrapped\_;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use Traversable;
 use Override;
+use Traversable;
 
 final class ParameterBag implements Countable, IteratorAggregate
 {
     /** @var mixed[] */
     private array $parameters = [];
-
-    private ?string $raw = null;
 
     public function __construct(array $parameters)
     {
@@ -94,8 +92,13 @@ final class ParameterBag implements Countable, IteratorAggregate
         return $return;
     }
 
-    public function override(string|int $key, mixed $value = null): static
+    public function override(array|string|int $key, mixed $value = null): static
     {
+        if (\is_array($key)) {
+            $this->parameters = $key;
+            return $this;
+        }
+
         $this->parameters[$key] = $value;
         return $this;
     }

@@ -166,6 +166,11 @@ parameters:
 			path: _/Cache/MemoryCacheProvider.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:__construct\\(\\) has parameter \\$argv with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Cli/Console.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:read\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Cli/Console.php
@@ -2806,7 +2811,7 @@ parameters:
 			path: _/ParameterBag.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:\\$raw is never read, only written\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:override\\(\\) has parameter \\$key with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/ParameterBag.php
 

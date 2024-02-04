@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Cli;
 
 use Closure;
+use Override;
 use RuntimeException;
 use verfriemelt\wrapped\_\ParameterBag;
-use Override;
 
 class Console implements InputInterface, OutputInterface
 {
@@ -52,16 +52,17 @@ class Console implements InputInterface, OutputInterface
         return new self();
     }
 
-    public function __construct()
+    public function __construct(?array $argv = null)
     {
         $this->selectedStream = &$this->stdout;
 
-        if (!is_array($_SERVER['argv'])) {
+        $argv ??= $_SERVER['argv'];
+
+        if (!is_array($argv)) {
             throw new RuntimeException('cannot read argv');
         }
 
-        $this->argv = new ParameterBag($_SERVER['argv']);
-
+        $this->argv = new ParameterBag($argv);
         $this->inTerminal = isset($_SERVER['TERM']);
     }
 
