@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DataModel;
 
-use Error;
 use Exception;
 use ReflectionClass;
+use ReflectionProperty;
 use RuntimeException;
 use verfriemelt\wrapped\_\Database\Database;
 use verfriemelt\wrapped\_\Database\DbLogic;
@@ -87,23 +87,9 @@ abstract class DataModel
         return null;
     }
 
-    protected function isPropertyInitialized(DataModelProperty $property)
+    protected function isPropertyInitialized(DataModelProperty $property): bool
     {
-        // used to exclude it frmo the try except block
-        $propName = $property->getName();
-
-        if (isset($this->{$propName})) {
-            return true;
-        }
-
-        // this will result in either a null value or not initialized error
-        try {
-            if (is_null($this->{$propName})) {
-                return true;
-            }
-        } catch (Error) {
-            return false;
-        }
+        return (new ReflectionProperty(static::class, $property->getName()))->isInitialized($this);
     }
 
     protected function hydrateProperty(DataModelProperty $property, mixed $input): mixed
@@ -549,7 +535,7 @@ abstract class DataModel
     public function isDirty(): bool
     {
         foreach (static::createDataModelAnalyser()->fetchProperties() as $property) {
-            if ($this->_isPropertyFuzzy($property->getName())) {
+            if (!$this->isPropertyInitialized($property) || $this->_isPropertyFuzzy($property->getName())) {
                 return true;
             }
         }

@@ -77,7 +77,7 @@ class DataModelAnalyser
 
     public function fetchNameOverride($element): ?ReflectionAttribute
     {
-        return $attributes = $element->getAttributes(
+        return $element->getAttributes(
             Attribute\Naming\Rename::class,
             ReflectionAttribute::IS_INSTANCEOF
         )[0] ?? null;
