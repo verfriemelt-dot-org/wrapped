@@ -6,7 +6,7 @@ parameters:
 			path: _/AbstractKernel.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 9, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 10, keep it under 8$#"
 			count: 1
 			path: _/AbstractKernel.php
 

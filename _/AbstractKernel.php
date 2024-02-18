@@ -6,7 +6,10 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
+use KernelRequestEvent;
+use KernelResponseEvent;
 use Override;
+use RuntimeException;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\CommandDiscovery;
@@ -26,7 +29,6 @@ use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
-use RuntimeException;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -104,6 +106,7 @@ abstract class AbstractKernel implements KernelInterface
             throw new RuntimeException('kernel not booted');
         }
 
+        $this->eventDispatcher->dispatch(new KernelRequestEvent($request));
         $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
         try {
@@ -128,17 +131,18 @@ abstract class AbstractKernel implements KernelInterface
             } catch (Throwable $e) {
                 $response = $this->dispatchException($e);
             }
-
-            return $response;
         } catch (NoRouteMatching) {
-            return $this->build404Response();
+            $response = $this->build404Response();
         } catch (RouteGotFiltered $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse();
+                $response = $e->getResponse();
+            } else {
+                $response = $this->build307Response();
             }
-
-            return $this->build307Response();
         }
+
+        $this->eventDispatcher->dispatch(new KernelResponseEvent($response));
+        return $response;
     }
 
     protected function triggerKernelResponse(Request $request, Response $response): void

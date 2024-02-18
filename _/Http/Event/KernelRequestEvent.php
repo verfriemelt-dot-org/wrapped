@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+use verfriemelt\wrapped\_\Events\EventInterface;
+use verfriemelt\wrapped\_\Http\Request\Request;
+
+final readonly class KernelRequestEvent implements EventInterface
+{
+    public function __construct(
+        public Request $request
+    ) {}
+}
