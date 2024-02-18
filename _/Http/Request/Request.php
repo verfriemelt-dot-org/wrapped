@@ -187,9 +187,9 @@ class Request
         return $this->server->get('HTTP_HOST');
     }
 
-    public function requestMethod(): ?string
+    public function requestMethod(): string
     {
-        return $this->server->get('REQUEST_METHOD');
+        return $this->server->get('REQUEST_METHOD', 'GET');
     }
 
     public function remoteIp(): ?string

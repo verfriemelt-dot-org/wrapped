@@ -2351,7 +2351,7 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) should return string\\|null but returns mixed\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) should return string but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
