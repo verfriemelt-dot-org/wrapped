@@ -1,26 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 10, keep it under 8$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:containerConfiguration\\(\\) has parameter \\$config with no signature specified for Closure\\.$#"
-			count: 1
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
-			count: 3
-			path: _/AbstractKernel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\Cache\\:\\:get\\(\\) has invalid return type verfriemelt\\\\wrapped\\\\_\\\\Cache\\\\type\\.$#"
 			count: 1
 			path: _/Cache/Cache.php
@@ -2776,6 +2756,21 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
+			message: "#^Call to an undefined method object\\:\\:setContainer\\(\\)\\.$#"
+			count: 1
+			path: _/Kernel/AbstractKernel.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Kernel\\\\AbstractKernel\\:\\:handle\\(\\)\" is 10, keep it under 8$#"
+			count: 1
+			path: _/Kernel/AbstractKernel.php
+
+		-
+			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
+			count: 3
+			path: _/Kernel/AbstractKernel.php
+
+		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/ParameterBag.php
@@ -4564,6 +4559,11 @@ parameters:
 			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
 			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Method class@anonymous/tests/Unit/Kernel/KernelTest\\.php\\:47\\:\\:__construct\\(\\) has parameter \\$spy with no signature specified for Closure\\.$#"
+			count: 1
+			path: tests/Unit/Kernel/KernelTest.php
 
 		-
 			message: "#^Property class@anonymous/tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest\\.php\\:138\\:\\:\\$variadic type has no value type specified in iterable type array\\.$#"

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_;
+namespace verfriemelt\wrapped\_\Kernel;
 
 use Closure;
 use ErrorException;
@@ -27,7 +27,6 @@ use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
-use verfriemelt\wrapped\_\Kernel\KernelInterface;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -53,7 +52,10 @@ abstract class AbstractKernel implements KernelInterface
     }
 
     #[Override]
-    public function boot(): void {}
+    public function boot(): void
+    {
+        $this->booted = true;
+    }
 
     #[Override]
     public function getContainer(): Container
@@ -74,6 +76,11 @@ abstract class AbstractKernel implements KernelInterface
         return $this;
     }
 
+    /**
+     * @param Closure(Container): void $config
+     *
+     * @return $this
+     */
     public function containerConfiguration(Closure $config): static
     {
         $config($this->container);
@@ -99,6 +106,7 @@ abstract class AbstractKernel implements KernelInterface
         return new Response(Http::FORBIDDEN, '403');
     }
 
+    #[Override]
     public function handle(Request $request): Response
     {
         if ($this->booted === false) {
