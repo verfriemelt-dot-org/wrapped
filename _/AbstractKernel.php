@@ -26,6 +26,7 @@ use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
+use RuntimeException;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -35,7 +36,9 @@ abstract class AbstractKernel implements KernelInterface
 
     protected EventDispatcher $eventDispatcher;
 
-    private bool $buildInCommandsLoaded = false;
+    protected bool $buildInCommandsLoaded = false;
+
+    protected bool $booted = false;
 
     public function __construct()
     {
@@ -47,6 +50,9 @@ abstract class AbstractKernel implements KernelInterface
 
         $this->initializeErrorHandling();
     }
+
+    #[Override]
+    public function boot(): void {}
 
     #[Override]
     public function getContainer(): Container
@@ -94,7 +100,10 @@ abstract class AbstractKernel implements KernelInterface
 
     public function handle(Request $request): Response
     {
-        $this->container->register($request::class, $request);
+        if ($this->booted === false) {
+            throw new RuntimeException('kernel not booted');
+        }
+
         $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
         try {

@@ -6,7 +6,7 @@ parameters:
 			path: _/AbstractKernel.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 11, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\AbstractKernel\\:\\:handle\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/AbstractKernel.php
 
@@ -18,11 +18,6 @@ parameters:
 		-
 			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
 			count: 3
-			path: _/AbstractKernel.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:handleRequest\\(\\) expects string\\|verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request, string\\|null given\\.$#"
-			count: 1
 			path: _/AbstractKernel.php
 
 		-
@@ -2661,22 +2656,12 @@ parameters:
 			path: _/Http/Router/RouteGroup.php
 
 		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/Http/Router/Router.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:flattenRoutes\\(\\) has parameter \\$filters with no signature specified for callable\\.$#"
 			count: 1
 			path: _/Http/Router/Router.php
 
 		-
 			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
-			count: 1
-			path: _/Http/Router/Router.php
-
-		-
-			message: "#^Parameter \\#2 \\$uri of method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Router\\\\Router\\:\\:findMatchingRoute\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: _/Http/Router/Router.php
 

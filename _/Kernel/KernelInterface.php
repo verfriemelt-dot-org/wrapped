@@ -11,4 +11,6 @@ interface KernelInterface
     public function getProjectPath(): string;
 
     public function getContainer(): Container;
+
+    public function boot(): void;
 }

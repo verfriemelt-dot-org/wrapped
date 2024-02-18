@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Response;
 
-use verfriemelt\wrapped\_\Cli\Console;
-
 class Response
 {
     protected int $statusCode = Http::OK;
@@ -114,10 +112,6 @@ class Response
 
     public function send(): static
     {
-        if (!Console::isCli()) {
-            $this->sendHeaders();
-        }
-
         return $this->sendContent();
     }
 
