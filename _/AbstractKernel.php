@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
+use Override;
 use Throwable;
 use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Command\CommandDiscovery;
@@ -17,13 +18,14 @@ use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Response\Http;
 use verfriemelt\wrapped\_\Http\Response\Response;
+use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Kernel\KernelResponse;
-use Override;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -38,8 +40,9 @@ abstract class AbstractKernel implements KernelInterface
     public function __construct()
     {
         $this->container = new Container();
-        $this->router = $this->container->get(Router::class);
+        $this->container->register(KernelInterface::class, $this);
 
+        $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
         $this->initializeErrorHandling();
@@ -53,7 +56,7 @@ abstract class AbstractKernel implements KernelInterface
 
     public function loadSetup(string $path): static
     {
-        foreach (include_once $path as $callback) {
+        foreach (require $path as $callback) {
             $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
             $arguments = $resolver->resolv($callback);
 
@@ -79,58 +82,54 @@ abstract class AbstractKernel implements KernelInterface
         return $this;
     }
 
+    protected function build404Response(): Response
+    {
+        return new Response(Http::NOT_FOUND, '404');
+    }
+
+    public function build307Response(): Response
+    {
+        return new Response(Http::FORBIDDEN, '403');
+    }
+
     public function handle(Request $request): Response
     {
         $this->container->register($request::class, $request);
-        $route = $this->router->handleRequest($request->uri());
+        $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
-        foreach ($route->getAttributes() as $key => $value) {
-            $request->attributes()->override($key, $value);
-        }
+        try {
+            $route = $this->router->handleRequest($request);
+            $callback = $route->getCallback();
 
-        // router filter
-        foreach ($route->getFilters() as $filter) {
-            $callbackArguments = $this->container->get(ArgumentResolver::class)->resolv($filter);
-
-            $result = $filter(...$callbackArguments);
-
-            if ($result !== false) {
-                $exception = new RouteGotFiltered();
-
-                if ($result instanceof Response) {
-                    $exception->setResponse($result);
+            try {
+                if ($callback instanceof Response) {
+                    $response = $callback;
+                } elseif ($callback instanceof Closure) {
+                    $arguments = $resolver->resolv($callback);
+                    $response = $callback(...$arguments);
+                    $response ??= new Response();
+                } else {
+                    $response = (new $callback(...$resolver->resolv($callback)))
+                        ->setContainer($this->container) // controller container hack :(
+                        ->prepare(...$resolver->resolv($callback, 'prepare'))
+                        ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));
                 }
 
-                throw $exception;
-            }
-        }
-
-        $callback = $route->getCallback();
-
-        // handle exceptions for 404 and redirect
-        try {
-            if ($callback instanceof Response) {
-                $response = $callback;
-            } elseif ($callback instanceof Closure) {
-                $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
-                $arguments = $resolver->resolv($callback);
-                $response = $callback(...$arguments);
-                $response ??= new Response();
-            } else {
-                $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
-
-                $response = (new $callback(...$resolver->resolv($callback)))
-                    ->setContainer($this->container)
-                    ->prepare(...$resolver->resolv($callback, 'prepare'))
-                    ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));
+                $this->triggerKernelResponse($request, $response ?? new Response());
+            } catch (Throwable $e) {
+                $response = $this->dispatchException($e);
             }
 
-            $this->triggerKernelResponse($request, $response ?? new Response());
-        } catch (Throwable $e) {
-            $response = $this->dispatchException($e);
-        }
+            return $response;
+        } catch (NoRouteMatching) {
+            return $this->build404Response();
+        } catch (RouteGotFiltered $e) {
+            if ($e->hasResponse()) {
+                return $e->getResponse();
+            }
 
-        return $response;
+            return $this->build307Response();
+        }
     }
 
     protected function triggerKernelResponse(Request $request, Response $response): void

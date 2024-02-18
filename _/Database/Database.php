@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Database;
 
 use verfriemelt\wrapped\_\Database\Driver\DatabaseDriver;
-use verfriemelt\wrapped\_\Database\Driver\Mysql;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseDriverUnknown;
 use verfriemelt\wrapped\_\Exception\Database\DatabaseException;
 
-class Database
+final class Database
 {
     private static array $connections = [];
 
@@ -37,8 +36,6 @@ class Database
     }
 
     /**
-     * @return Mysql
-     *
      * @throws DatabaseException
      */
     public static function getConnection(string $name = 'default'): DatabaseDriver
@@ -48,5 +45,10 @@ class Database
         }
 
         throw new DatabaseException('No connection by that name, sorry');
+    }
+
+    public static function clear(): void
+    {
+        self::$connections = [];
     }
 }

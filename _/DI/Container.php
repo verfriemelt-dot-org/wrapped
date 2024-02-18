@@ -167,6 +167,25 @@ class Container
         return $this->interfaces[$class][0];
     }
 
+    public function resetInterface(string $class): void
+    {
+        unset($this->interfaces[$class]);
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $class
+     * @param T               $instance
+     *
+     * @return ServiceConfiguration<T>
+     */
+    public function replaceInterace(string $class, object $instance): ServiceConfiguration
+    {
+        $this->resetInterface($class);
+        return $this->register($class, $instance);
+    }
+
     public function tag(string $tag, string $class): void
     {
         $this->tags[$tag] ??= [];

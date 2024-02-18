@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Controller;
 
+use Override;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouterException;
-use Override;
 
 abstract class Controller implements ControllerInterface
 {
     protected Container $container;
 
-    /**
-     * sets the DI Container
-     */
     public function setContainer(Container $container): static
     {
         $this->container = $container;

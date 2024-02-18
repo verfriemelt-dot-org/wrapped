@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Http\Router;
 
+use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
-use verfriemelt\wrapped\_\Http\Router\Exception\NoRoutesPresent;
+use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 
 final class Router
 {
@@ -15,6 +17,10 @@ final class Router
 
     /** @var Route[] */
     private array $flattenedRoutes;
+
+    public function __construct(
+        private readonly ArgumentResolver $argumentResolver,
+    ) {}
 
     public function add(Routable ...$routes): self
     {
@@ -61,19 +67,40 @@ final class Router
         return $flattened;
     }
 
-    public function handleRequest(string|Request $uri): Route
+    public function handleRequest(Request $request): Route
     {
-        if ($uri instanceof Request) {
-            $uri = $uri->uri();
-        }
-
-        if (empty($this->routes)) {
-            throw new NoRoutesPresent('Router is empty');
-        }
-
         $this->flattenedRoutes ??= $this->flattenRoutes($this->routes);
 
-        return $this->findMatchingRoute($this->flattenedRoutes, $uri);
+        $route = $this->findMatchingRoute($this->flattenedRoutes, $request);
+
+        foreach ($route->getAttributes() as $key => $value) {
+            $request->attributes()->override($key, $value);
+        }
+
+        $this->checkRouterFilter($route);
+
+        return $route;
+    }
+
+    /**
+     * @throws RouteGotFiltered
+     */
+    protected function checkRouterFilter(Route $route): void
+    {
+        // router filter
+        foreach ($route->getFilters() as $filter) {
+            $result = $filter(...$this->argumentResolver->resolv($filter));
+
+            if ($result !== false) {
+                $exception = new RouteGotFiltered();
+
+                if ($result instanceof Response) {
+                    $exception->setResponse($result);
+                }
+
+                throw $exception;
+            }
+        }
     }
 
     /**
@@ -87,8 +114,11 @@ final class Router
     /**
      * @param Route[] $routes
      */
-    private function findMatchingRoute(array $routes, string $uri): Route
+    private function findMatchingRoute(array $routes, Request $request): Route
     {
+        $uri = $request->uri();
+        assert(\is_string($uri));
+
         foreach ($routes as $route) {
             if (preg_match("~^{$route->getPath()}~", $uri, $routeHits, PREG_UNMATCHED_AS_NULL)) {
                 $route->setAttributes(array_slice($routeHits, 1));

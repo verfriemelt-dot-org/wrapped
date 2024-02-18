@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Session;
 
-use verfriemelt\wrapped\_\Http\Request\Request;
 use Override;
+use verfriemelt\wrapped\_\Http\Request\Request;
 
 final class Session implements SessionHandler
 {
