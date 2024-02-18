@@ -28,7 +28,6 @@ use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
-use verfriemelt\wrapped\_\Kernel\KernelResponse;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -126,8 +125,6 @@ abstract class AbstractKernel implements KernelInterface
                         ->prepare(...$resolver->resolv($callback, 'prepare'))
                         ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));
                 }
-
-                $this->triggerKernelResponse($request, $response ?? new Response());
             } catch (Throwable $e) {
                 $response = $this->dispatchException($e);
             }
@@ -143,11 +140,6 @@ abstract class AbstractKernel implements KernelInterface
 
         $this->eventDispatcher->dispatch(new KernelResponseEvent($response));
         return $response;
-    }
-
-    protected function triggerKernelResponse(Request $request, Response $response): void
-    {
-        $this->eventDispatcher->dispatch((new KernelResponse($request))->setResponse($response));
     }
 
     protected function dispatchException(Throwable $exception): Response
