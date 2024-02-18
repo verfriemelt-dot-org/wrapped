@@ -112,7 +112,10 @@ class Response
 
     public function send(): static
     {
-        return $this->sendContent();
+        $this->sendHeaders();
+        $this->sendContent();
+
+        return $this;
     }
 
     public function setContentCallback(callable $function): static
