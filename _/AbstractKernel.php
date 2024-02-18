@@ -6,8 +6,6 @@ namespace verfriemelt\wrapped\_;
 
 use Closure;
 use ErrorException;
-use KernelRequestEvent;
-use KernelResponseEvent;
 use Override;
 use RuntimeException;
 use Throwable;
@@ -20,6 +18,8 @@ use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
+use verfriemelt\wrapped\_\Http\Event\KernelRequestEvent;
+use verfriemelt\wrapped\_\Http\Event\KernelResponseEvent;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Http;
 use verfriemelt\wrapped\_\Http\Response\Response;
