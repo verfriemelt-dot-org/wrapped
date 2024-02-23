@@ -232,4 +232,9 @@ class Request
             $this->query->all() + $this->request->all() + $this->cookies->all() + $this->content->all()
         );
     }
+
+    public function ajax(): bool
+    {
+        return strtolower($this->server->get('HTTP_X_REQUESTED_WITH') ?? '') === 'xmlhttprequest';
+    }
 }

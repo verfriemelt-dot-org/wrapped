@@ -2356,6 +2356,11 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
+			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
 			message: "#^Parameter \\#7 \\$content of class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request constructor expects string\\|null, string\\|false given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
