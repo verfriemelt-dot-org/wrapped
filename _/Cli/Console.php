@@ -79,7 +79,7 @@ class Console implements InputInterface, OutputInterface
     public function getArgvAsString(): string
     {
         // omit first element
-        return implode(' ', $this->argv->except([0]));
+        return implode(' ', \array_slice($this->argv->all(), 1));
     }
 
     public function setPrefixCallback(Closure $func): static

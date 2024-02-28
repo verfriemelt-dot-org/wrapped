@@ -45,7 +45,7 @@ class FilterItem
             throw new InputException("input not present [{$this->valueName}]");
         }
 
-        $input = $this->parameter->get($this->valueName);
+        $input = $this->parameter->all()[$this->valueName];
 
         if (is_array($input)) {
             if (!$this->allowMultipleValuesSent) {

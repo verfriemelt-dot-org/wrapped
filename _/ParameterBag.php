@@ -9,16 +9,16 @@ use Countable;
 use IteratorAggregate;
 use Override;
 use Traversable;
+use RuntimeException;
 
 final class ParameterBag implements Countable, IteratorAggregate
 {
-    /** @var mixed[] */
-    private array $parameters = [];
-
-    public function __construct(array $parameters)
-    {
-        $this->parameters = $parameters;
-    }
+    /**
+     * @param array<int|string, mixed> $parameters
+     */
+    public function __construct(
+        private array $parameters = []
+    ) {}
 
     #[Override]
     public function count(): int
@@ -45,61 +45,34 @@ final class ParameterBag implements Countable, IteratorAggregate
         return isset($this->parameters[$key]);
     }
 
-    public function get(string|int $key, string|int|null $default = null): mixed
+    public function get(string|int $key, ?string $default = null): ?string
     {
         if (!$this->has($key)) {
             return $default;
         }
 
-        return $this->parameters[$key];
+        if (!\is_scalar($this->parameters[$key])) {
+            throw new RuntimeException('non-scalar element requested');
+        }
+
+        return (string) $this->parameters[$key];
     }
 
     /**
-     * @return mixed[]
+     * @return array<int|string, mixed>
      */
     public function all(): array
     {
         return $this->parameters;
     }
 
-    public function first(): mixed
+    public function first(): ?string
     {
-        reset($this->parameters);
-        return current($this->parameters);
+        return $this->get(0);
     }
 
-    public function last(): mixed
+    public function last(): ?string
     {
-        end($this->parameters);
-        return current($this->parameters);
-    }
-
-    /**
-     * @param mixed[] $filter
-     *
-     * @return mixed[]
-     */
-    public function except(array $filter = []): array
-    {
-        $return = [];
-
-        foreach ($this->all() as $key => $value) {
-            if (!in_array($key, $filter, true)) {
-                $return[$key] = $value;
-            }
-        }
-
-        return $return;
-    }
-
-    public function override(array|string|int $key, mixed $value = null): static
-    {
-        if (\is_array($key)) {
-            $this->parameters = $key;
-            return $this;
-        }
-
-        $this->parameters[$key] = $value;
-        return $this;
+        return $this->get(array_key_last($this->parameters));
     }
 }

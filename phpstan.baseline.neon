@@ -176,6 +176,11 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
+			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
+			count: 1
+			path: _/Cli/Console.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$linePrefixFunc type has no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Cli/Console.php
@@ -214,6 +219,16 @@ parameters:
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandDiscovery\\:\\:loadCommands\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/Command/CommandDiscovery.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandExecutor\\:\\:getCommandName\\(\\) should return array\\{string, array\\<string\\>\\} but returns array\\{string, array\\<int\\|string, mixed\\>\\}\\.$#"
+			count: 1
+			path: _/Command/CommandExecutor.php
+
+		-
+			message: "#^Parameter \\#1 \\$argv of method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\) expects array\\<string\\>, array\\<int, mixed\\> given\\.$#"
+			count: 1
+			path: _/Command/CommandExecutor.php
 
 		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentMetadataFactory\\:\\:createArgumentMetadata\\(\\)\" is 9, keep it under 8$#"
@@ -622,6 +637,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array\\<string, mixed\\>, array given\\.$#"
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:initData\\(\\) expects array\\<string, mixed\\>, array\\<int\\|string, mixed\\> given\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -2231,11 +2251,6 @@ parameters:
 			path: _/Http/Controller/RestController.php
 
 		-
-			message: "#^Cannot cast mixed to string\\.$#"
-			count: 2
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:__construct\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
@@ -2267,11 +2282,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:createFromGlobals\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:hostname\\(\\) should return string\\|null but returns mixed\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2311,27 +2321,12 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:pathInfo\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:referer\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteHost\\(\\) should return string\\|null but returns string\\|false\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:remoteIp\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) should return string but returns mixed\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:requestMethod\\(\\) should return string but returns string\\|null\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2341,22 +2336,12 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:uri\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:userAgent\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Only booleans are allowed in an if condition, string\\|null given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2721,11 +2706,6 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:get\\(\\) expects int\\|string, string\\|null given\\.$#"
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
 			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:has\\(\\) expects int\\|string, string\\|null given\\.$#"
 			count: 2
 			path: _/Input/FilterItem.php
@@ -2781,17 +2761,12 @@ parameters:
 			path: _/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/ParameterBag.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:getIterator\\(\\) return type with generic class ArrayIterator does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/ParameterBag.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:override\\(\\) has parameter \\$key with no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$key of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:get\\(\\) expects int\\|string, int\\|string\\|null given\\.$#"
 			count: 1
 			path: _/ParameterBag.php
 
@@ -3151,7 +3126,7 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Parameter \\#1 \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: _/Session/Session.php
 

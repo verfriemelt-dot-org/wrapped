@@ -73,10 +73,7 @@ final class Router
 
         $route = $this->findMatchingRoute($this->flattenedRoutes, $request);
 
-        foreach ($route->getAttributes() as $key => $value) {
-            $request->attributes()->override($key, $value);
-        }
-
+        $request->setAttributes($route->getAttributes());
         $this->checkRouterFilter($route);
 
         return $route;

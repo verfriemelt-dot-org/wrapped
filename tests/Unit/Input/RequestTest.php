@@ -83,12 +83,10 @@ class RequestTest extends TestCase
         $request = Request::createFromGlobals();
         static::assertSame($_GET, $request->query()->all());
 
-        static::assertSame([0 => 'test1', 1 => 'test2', 'test' => 'test3'], $request->query()->first());
+        static::assertSame([0 => 'test1', 1 => 'test2', 'test' => 'test3'], $request->query()->all()['foo']);
         static::assertSame('1', $request->query()->last(), 'fetching last item');
         static::assertSame(2, $request->query()->count(), 'counting items');
         static::assertTrue($request->query()->get('bar') !== 2);
-
-        static::assertSame(['bar' => '1'], $request->query()->except(['foo']), 'fetching items except one');
 
         foreach ($request->query() as $key => $item) {
             static::assertTrue(isset($_GET[$key]));
@@ -105,17 +103,17 @@ class RequestTest extends TestCase
 
     public function test_aggregate(): void
     {
-        $request = new Request(['win' => 1], ['bar' => 2], [], ['foo' => 3]);
+        $request = new Request(['win' => '1'], ['bar' => '2'], [], ['foo' => '3']);
 
-        static::assertSame(1, $request->aggregate()->get('win'));
-        static::assertSame(2, $request->aggregate()->get('bar'));
-        static::assertSame(3, $request->aggregate()->get('foo'));
+        static::assertSame('1', $request->aggregate()->get('win'));
+        static::assertSame('2', $request->aggregate()->get('bar'));
+        static::assertSame('3', $request->aggregate()->get('foo'));
     }
 
     public function test_aggregate_overwrite(): void
     {
-        $request = new Request(['win' => 1], ['win' => 2], [], ['win' => 3]);
+        $request = new Request(['win' => '1'], ['win' => '2'], [], ['win' => '3']);
 
-        static::assertSame(1, $request->aggregate()->get('win'));
+        static::assertSame('1', $request->aggregate()->get('win'));
     }
 }

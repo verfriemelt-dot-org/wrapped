@@ -47,7 +47,6 @@ class Request
     ) {
         $this->request = new ParameterBag($request);
         $this->query = new ParameterBag($query);
-        $this->attributes = new ParameterBag($attributes);
         $this->cookies = new ParameterBag($cookies);
         $this->server = new ParameterBag($server);
         $this->files = new ParameterBag($files);
