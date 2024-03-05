@@ -74,6 +74,7 @@ class Request
         }
 
         $this->header = new ParameterBag($header);
+        $this->attributes = new ParameterBag($attributes);
     }
 
     /**
