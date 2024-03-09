@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\View;
 
 use Exception;
+use Override;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
-use Override;
+use RuntimeException;
 
 abstract class View implements Viewable
 {
@@ -34,7 +35,7 @@ abstract class View implements Viewable
 
         $template = static::$container->get(Template::class);
         assert($template instanceof Template);
-        return $template->parse($this->getTemplatePath() . $this->tplPath);
+        return $template->parse(\file_get_contents($this->getTemplatePath() . $this->tplPath) ?: throw new RuntimeException());
     }
 
     public static function create(...$params): static
@@ -63,7 +64,17 @@ abstract class View implements Viewable
         $context ??= $this->tpl;
 
         foreach ($properties as $prop) {
-            $context->set($prefix . ucfirst($prop->getName()), $object->{$prop->getGetter()}());
+            $value = $object->{$prop->getGetter()}();
+
+            if (!$value instanceof Viewable && !\is_scalar($value)) {
+                continue;
+            }
+
+            if (\is_scalar($value)) {
+                $value = (string) $value;
+            }
+
+            $context->set($prefix . \ucfirst($prop->getName()), $value);
         }
     }
 

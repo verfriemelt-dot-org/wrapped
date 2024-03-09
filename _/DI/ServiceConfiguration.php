@@ -78,7 +78,7 @@ class ServiceConfiguration
     public function setClass(string $class): static
     {
         if (!class_exists($class)) {
-            throw new Exception(sprintf('unkown class: »%s«', $class));
+            throw new ArgumentResolverException(sprintf('unkown class: »%s«', $class));
         }
 
         $this->class = $class;

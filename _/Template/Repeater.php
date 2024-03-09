@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
-use Closure;
 use verfriemelt\wrapped\_\Output\Viewable;
+use RuntimeException;
 
 class Repeater implements TemplateItem
 {
@@ -17,8 +17,16 @@ class Repeater implements TemplateItem
         public readonly string $name
     ) {}
 
-    public function set(string $name, string|Closure|Viewable $value): static
+    public function set(string $name, mixed $value): static
     {
+        if (\is_scalar($value) || $value === null) {
+            $value = (string) $value;
+        }
+
+        if (!\is_scalar($value) && !$value instanceof Viewable) {
+            throw new RuntimeException('illegal variable type');
+        }
+
         $this->currentDataLine['vars'][$name] = new Variable($name, $value);
         return $this;
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
-use RuntimeException;
 use Override;
 
 /**
@@ -48,6 +47,6 @@ class ServiceArgumentResolver extends ArgumentResolver
             return $this->container->get($parameter->getTypes()[0]);
         }
 
-        throw new RuntimeException("cannot resolv params for {$this->service->getClass()}::{$parameter->getMethodName()}() \${$parameter->getName()}");
+        throw new ArgumentResolverException("cannot resolv params for {$this->service->getClass()}::{$parameter->getMethodName()}() \${$parameter->getName()}");
     }
 }

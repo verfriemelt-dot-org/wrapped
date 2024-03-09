@@ -13,7 +13,7 @@
             {{ /if='openOptGroup' }}
 
             {{ if='option' }}
-            <option value="{{ value }}" {{ if='selected' }} selected='selected' {{/if="selected"}} >{{ name }}</option>
+            <option value="{{ value }}" {{ if='selected' }} selected='selected' {{/if='selected'}} >{{ name }}</option>
             {{ /if='option' }}
 
             {{ if='closeOptGroup' }}
