@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
 use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
 use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
@@ -65,5 +66,51 @@ class TokenizerTest extends TestCase
 
         static::assertCount(1, $repeater->children());
         static::assertInstanceOf(StringToken::class, $repeater->children()[0] ?? null);
+    }
+
+    public function test_empty_repeater(): void
+    {
+        $result = $this->tokenizer->parse("{{ repeater='hi' }}{{ /repeater='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $repeater = $result[0];
+        static::assertInstanceOf(RepeaterToken::class, $repeater);
+
+        static::assertCount(0, $repeater->children());
+    }
+
+    public function test_nested_repeater(): void
+    {
+        $result = $this->tokenizer->parse("{{ repeater='hi' }}{{ repeater='foo' }}{{ /repeater='foo' }}{{ /repeater='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $repeater = $result[0];
+        static::assertInstanceOf(RepeaterToken::class, $repeater);
+
+        static::assertCount(1, $repeater->children());
+    }
+
+    public function test_conditional(): void
+    {
+        $result = $this->tokenizer->parse("{{ if='hi' }}foo{{ /if='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $conditional = $result[0];
+
+        static::assertInstanceOf(ConditionalToken::class, $conditional);
+        static::assertFalse($conditional->expression()->negated);
+        static::assertCount(1, $conditional->children());
+    }
+
+    public function test_negated_conditional(): void
+    {
+        $result = $this->tokenizer->parse("{{ !if='hi' }}foo{{ /if='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $conditional = $result[0];
+
+        static::assertInstanceOf(ConditionalToken::class, $conditional);
+        static::assertTrue($conditional->expression()->negated);
+        static::assertCount(1, $conditional->children());
     }
 }
