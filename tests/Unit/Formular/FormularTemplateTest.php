@@ -6,14 +6,15 @@ namespace verfriemelt\wrapped\tests\Unit\Formular;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
+use verfriemelt\wrapped\_\Template\TemplateRenderer;
+use Override;
 
 class FormularTemplateTest extends TestCase
 {
-    public function setUp(): void
-    {
-        static::markTestSkipped('not implemented');
-    }
+    #[Override]
+    public function setUp(): void {}
 
     /**
      * @return iterable<string,array{string, callable(Template): void|null}>
@@ -48,13 +49,14 @@ class FormularTemplateTest extends TestCase
     {
         static::expectNotToPerformAssertions();
 
-        $template = new Template();
-        $template->render($filepath);
+        $template = new Template(new TemplateRenderer(new Container()));
+        $template->parse($filepath);
+        $template->render();
 
         if ($setup !== null) {
             $setup($template);
         }
 
-        $template->run();
+        $template->render();
     }
 }

@@ -15,7 +15,7 @@ class Textarea extends Text
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->render(dirname(__DIR__) . '/Template/Textarea.tpl.php');
+        $this->tpl->parse(dirname(__DIR__) . '/Template/Textarea.tpl.php');
         return $this;
     }
 
@@ -36,6 +36,6 @@ class Textarea extends Text
             $this->tpl->set('placeholder', $this->placeholder);
         }
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template\v2\Token;
+namespace verfriemelt\wrapped\_\Template\Token;
 
-use verfriemelt\wrapped\_\Template\v2\Expression;
+use verfriemelt\wrapped\_\Template\Expression;
 
 class ConditionalToken extends Token
 {
@@ -33,12 +33,12 @@ class ConditionalToken extends Token
         $this->alternative = $token;
     }
 
-    public function Consequent(): Token
+    public function consequent(): Token
     {
         return $this->consequent;
     }
 
-    public function Alternative(): Token
+    public function alternative(): Token
     {
         return $this->alternative;
     }

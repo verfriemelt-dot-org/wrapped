@@ -5,56 +5,65 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template;
 
 use Exception;
-use verfriemelt\wrapped\_\Template\v2\Token\PrintableToken;
-use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
-use verfriemelt\wrapped\_\Template\v2\Token\Token;
-use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
-use verfriemelt\wrapped\_\Template\v2\TokenizerException;
+use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Template\Token\ConditionalToken;
+use verfriemelt\wrapped\_\Template\Token\PrintableToken;
+use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
+use verfriemelt\wrapped\_\Template\Token\StringToken;
+use verfriemelt\wrapped\_\Template\Token\Token;
+use verfriemelt\wrapped\_\Template\Token\VariableToken;
 
 class TemplateRenderer
 {
     private array $repeaterDataSourcePath = [];
 
     public function __construct(
-        private readonly Token $token,
-        private readonly array $data
+        private readonly Container $container
     ) {}
 
-    public function render(): string
-    {
-        return $this->process($this->token);
+    public function render(
+        Token $token,
+        array $data
+    ): string {
+        return $this->process($token, $data);
     }
 
-    private function process(Token $token): string
+    private function process(Token $token, array $data): string
     {
         $output = '';
 
         if ($token instanceof PrintableToken) {
-            $output .= $this->printToken($token);
+            $output .= $this->printToken($token, $data);
+        }
+
+        if ($token instanceof RepeaterToken) {
+            return $output . $this->processRepeaterToken($token, $data);
+        }
+
+        if ($token instanceof ConditionalToken) {
+            return $output . $this->processConditionalToken($token, $data);
         }
 
         foreach ($token->children() as $child) {
-            $output .= $this->process($child);
+            $output .= $this->process($child, $data);
         }
 
         return $output;
     }
 
-    private function printToken(Token $token): string
+    private function printToken(Token $token, array $data): string
     {
         return match ($token::class) {
             StringToken::class => $token->content(),
-            VariableToken::class => $this->parseVar($token),
+            VariableToken::class => $this->processVariableToken($token, $data),
             default => throw new TokenizerException('not printable'),
         };
     }
 
-    private function parseVar(VariableToken $token): string
+    private function processVariableToken(VariableToken $token, array $data): string
     {
-        $name = trim((string) $token->expression()->expr);
-        //        $outputCallbackPresent = isset($token->formatCallback);
-
-        $dataSource = $this->searchForData('vars', $name);
+        $name = trim($token->expression()->expr);
+        $dataSource = $this->searchForData('vars', $name, $data);
 
         if ($dataSource === false) {
             return '';
@@ -62,69 +71,32 @@ class TemplateRenderer
             $variable = $dataSource['vars'][$name];
         }
 
-        //        if ($outputCallbackPresent) {
-        //            $output = $variable->readFormattedValue($token->formatCallback);
-        //        } else {
         $output = $variable->readValue();
-        //        }
 
-        //        if ($variable->getValue() instanceof \verfriemelt\wrapped\_\View\BuiltIns\Link) {
-        //            return $output;
-        //        }
+        if ($token->hasFormatter()) {
+            foreach ($this->container->tagIterator(VariableFormatter::class) as $formatterClass) {
+                $formatter = $this->container->get($formatterClass);
+                \assert($formatter instanceof VariableFormatter);
+
+                if (!$formatter->supports($token->formatter())) {
+                    continue;
+                }
+
+                $output = $formatter->format($output);
+            }
+        }
 
         if (is_object($output)) {
             throw new Exception("object passed to template variable '{$name}'");
         }
 
-        return !$token->raw() ? htmlspecialchars($output, ENT_QUOTES) : $output;
+        return !$token->raw() ? htmlspecialchars((string) $output, ENT_QUOTES) : $output;
     }
 
-    private function parseIf()
+    private function searchForData(string $type, string $name, array $data)
     {
-        $name = $this->currentToken->currentContent;
-
-        $dataSource = $this->searchForData('if', $name);
-
-        // delete all if not there
-        if ($dataSource === false) {
-            while ($this->currentToken = $this->currentToken->nextToken) {
-                // and quit if we hit t_IfClose
-                if ($this->currentToken instanceof T_IfClose && $this->currentToken->currentContent === $name) {
-                    return '';
-                }
-            }
-
-            throw new Exception('T_IfClose Missing');
-        }
-
-        $bool = $this->currentToken->negated ? !$dataSource['if'][$name]->bool : $dataSource['if'][$name]->bool;
-        $output = '';
-
-        while ($this->currentToken = $this->currentToken->nextToken) {
-            // if expr is true, collect data
-            if ($bool) {
-                $output .= $this->parseCurrentToken();
-            }
-
-            // we hit else, we switch bool
-            if ($this->currentToken instanceof T_IfElse && $this->currentToken->currentContent === $name) {
-                $bool = !$bool;
-            }
-
-            // we quit
-            if ($this->currentToken instanceof T_IfClose && $this->currentToken->currentContent === $name) {
-                return $output;
-            }
-        }
-
-        throw new Exception('T_IfClose Missing');
-    }
-
-    public function searchForData($type, $name)
-    {
-        $layers = [];
-        $layers[] = $this->data;
-        $dataSource = $this->data;
+        $layers = [$data];
+        $dataSource = $data;
 
         // stack repeater on top
         foreach ($this->repeaterDataSourcePath as $repeaterLayer => $currentIndex) {
@@ -148,45 +120,55 @@ class TemplateRenderer
         return false;
     }
 
-    public function parseRepeater()
+    private function processRepeaterToken(RepeaterToken $token, array $data): string
     {
-        $name = $this->currentToken->currentContent;
+        $dataSource = $this->searchForData('repeater', $token->name(), $data);
+        $this->repeaterDataSourcePath[$token->name()] = 0;
 
-        $dataSource = $this->searchForData('repeater', $name);
-        $this->repeaterDataSourcePath[$name] = 0;
-
-        // delete all if not there or repeater empty
-        if ($dataSource === false || empty($dataSource['repeater'][$name]->data)) {
-            while ($this->currentToken = $this->currentToken->nextToken) {
-                // and quit if we hit t_IfClose
-                if ($this->currentToken instanceof T_RepeaterClose && $this->currentToken->currentContent === $name) {
-                    unset($this->repeaterDataSourcePath[$name]);
-                    return '';
-                }
-            }
-
-            throw new Exception('T_RepeaterClose Missing');
+        // no data to repeat
+        if ($dataSource === false || empty($dataSource['repeater'][$token->name()]->data)) {
+            return '';
         }
 
         $output = '';
-        $startToken = $this->currentToken;
 
-        // circle through datasets
-        foreach ($dataSource['repeater'][$name]->data as $index => $dataSource) {
-            // set current index for path
-            $this->repeaterDataSourcePath[$name] = $index;
-            $this->currentToken = $startToken;
-
-            while ($this->currentToken = $this->currentToken->nextToken) {
-                $output .= $this->parseCurrentToken();
-
-                if ($this->currentToken instanceof T_RepeaterClose && $this->currentToken->currentContent === $name) {
-                    break;
-                }
+        foreach ($dataSource['repeater'][$token->name()]->data as $element) {
+            foreach ($token->children() as $innerToken) {
+                $output .= $this->process(
+                    $innerToken,
+                    array_merge_recursive(
+                        $element,
+                        [
+                            'vars' => $data['vars'],
+                            'if' => $data['if'],
+                        ]
+                    )
+                );
             }
         }
 
-        unset($this->repeaterDataSourcePath[$name]);
+        return $output;
+    }
+
+    private function processConditionalToken(ConditionalToken $token, array $data): string
+    {
+        $output = '';
+
+        $value = $data['if'][$token->expression()->expr]->bool ?? false;
+
+        if ($value xor $token->expression()->negated) {
+            $children = $token->consequent()->children();
+        } else {
+            $children = $token->hasAlternative() ? $token->alternative()->children() : [];
+        }
+
+        foreach ($children as $innerToken) {
+            $output .= $this->process(
+                $innerToken,
+                $data
+            );
+        }
+
         return $output;
     }
 }

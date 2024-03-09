@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use Override;
+use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Template\Template;
+use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Checkbox extends FormType
 {
@@ -15,7 +18,7 @@ class Checkbox extends FormType
     public function __construct(
         string $name,
         ?string $value = null,
-        ?\verfriemelt\wrapped\_\Template\Template $template = null
+        Template $template = new Template(new TemplateRenderer(new Container()))
     ) {
         parent::__construct($name, $value, $template);
     }
@@ -23,7 +26,7 @@ class Checkbox extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->render(dirname(__DIR__) . '/Template/Checkbox.tpl.php');
+        $this->tpl->parse(dirname(__DIR__) . '/Template/Checkbox.tpl.php');
         return $this;
     }
 
@@ -38,7 +41,7 @@ class Checkbox extends FormType
     {
         $this->writeTplValues();
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 
     public function checked($bool = true): FormType

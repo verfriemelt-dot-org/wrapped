@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template\v2;
+namespace verfriemelt\wrapped\_\Template;
 
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyContionalExpressionException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyRepeaterExpressionException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingContionalClosingException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingRepeaterClosingException;
-use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
-use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
-use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
-use verfriemelt\wrapped\_\Template\v2\Token\Token;
-use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
 use Exception;
+use verfriemelt\wrapped\_\Template\Token\ConditionalElseToken;
+use verfriemelt\wrapped\_\Template\Token\ConditionalToken;
+use verfriemelt\wrapped\_\Template\Token\Exception\EmptyContionalExpressionException;
+use verfriemelt\wrapped\_\Template\Token\Exception\EmptyRepeaterExpressionException;
+use verfriemelt\wrapped\_\Template\Token\Exception\MissingContionalClosingException;
+use verfriemelt\wrapped\_\Template\Token\Exception\MissingRepeaterClosingException;
+use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
+use verfriemelt\wrapped\_\Template\Token\StringToken;
+use verfriemelt\wrapped\_\Template\Token\Token;
+use verfriemelt\wrapped\_\Template\Token\VariableToken;
 
 final class Tokenizer
 {
@@ -63,7 +64,7 @@ final class Tokenizer
 
     private function createToken(string $input, int $nextTokenStartPos, int $nextTokenEndPos): Token
     {
-        $tokenContent = \mb_substr($input, $nextTokenStartPos, $nextTokenEndPos);
+        $tokenContent = \mb_substr($input, $nextTokenStartPos + 2, $nextTokenEndPos - $nextTokenStartPos - 2);
 
         if (!\str_contains($tokenContent, '=')) {
             return $this->createVariableToken($input, $nextTokenStartPos, $nextTokenEndPos);
@@ -73,37 +74,55 @@ final class Tokenizer
             return $this->createRepeaterToken($input, $nextTokenStartPos, $nextTokenEndPos);
         }
 
-        if (\str_contains($tokenContent, 'if=')) {
+        if (\str_contains($tokenContent, 'if=') || \str_contains($tokenContent, 'else=')) {
             return $this->createConditionalToken($input, $nextTokenStartPos, $nextTokenEndPos);
         }
 
         throw new Exception('not implemented');
     }
 
-    private function createConditionalToken(string $input, int $start, int $end): ConditionalToken
+    private function createConditionalToken(string $input, int $start, int $end): ConditionalToken|ConditionalElseToken
     {
         $matches = [];
         $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
 
-        if (\preg_match("/.*?(?<closing>\/)?(?<negated>!)?if='(?<expr>.+?)'.*?/", $expression, $matches) !== 1) {
+        if (\preg_match("/.*?(?<closing>\/)?(?<negated>!)?(?<type>if|else)='(?<expr>.+?)'.*?/", $expression, $matches) !== 1) {
             throw new EmptyContionalExpressionException('cannot match repeater token: ' . $expression);
         }
 
+        \assert(\is_string($matches['type'] ?? null), 'match type missing');
         \assert(\is_string($matches['expr'] ?? null), 'match expr missing');
         \assert(\is_string($matches['negated'] ?? null), 'match negated missing');
         \assert(\is_string($matches['closing'] ?? null), 'match closing missing');
 
-        $token = new ConditionalToken($this->line, $this->offset, $this->lineOffset);
-        $token->setExpression(new Expression($matches['expr'], $matches['negated'] === '!'));
+        if ($matches['type'] === 'if') {
+            $token = new ConditionalToken($this->line, $this->offset, $this->lineOffset);
+            $token->setExpression(new Expression($matches['expr'], $matches['negated'] === '!'));
+        } else {
+            $token = new ConditionalElseToken($this->line, $this->offset, $this->lineOffset);
+        }
 
         $this->offset += $end - $start + 2;
 
-        if ($matches['closing'] === '/') {
+        if ($matches['type'] === 'else' || $matches['closing'] === '/') {
             return $token;
         }
 
+        assert($token instanceof ConditionalToken);
+
+        $bag = new Token($this->line, $this->offset, $this->lineOffset);
+        $token->setConsequent($bag);
+
         do {
             $innerToken = $this->consume($input);
+
+            if ($innerToken instanceof ConditionalElseToken) {
+                assert(!$token->hasAlternative());
+
+                $bag = new Token();
+                $token->setAlternative($bag);
+                continue;
+            }
 
             if ($innerToken instanceof ConditionalToken && $innerToken->expression()->expr === $token->expression()->expr) {
                 return $token;
@@ -113,7 +132,7 @@ final class Tokenizer
                 throw new MissingContionalClosingException('reached end, expected closing ConditionalToken for ' . $token->expression()->expr);
             }
 
-            $token->addChildren($innerToken);
+            $bag->addChildren($innerToken);
         } while (!$innerToken instanceof ConditionalToken || $innerToken->expression()->expr !== $token->expression()->expr);
 
         return $token;
@@ -159,9 +178,15 @@ final class Tokenizer
 
     private function createVariableToken(string $input, int $start, int $end): VariableToken
     {
-        $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
+        $defintion = explode('|', \trim(\mb_substr($input, $start + 2, $end - $start - 2)));
+        assert(count($defintion) >= 1);
+        $expression = $defintion[0];
 
         $token = new VariableToken($this->line, $this->offset, $this->lineOffset);
+
+        if (isset($defintion[1])) {
+            $token->setFormatter($defintion[1]);
+        }
 
         if (\str_starts_with($expression, '!')) {
             $token->setRaw(true);

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use Override;
+use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Template\Template;
+use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Button extends FormType
 {
@@ -13,7 +16,7 @@ class Button extends FormType
     public function __construct(
         string $name,
         ?string $value = null,
-        ?\verfriemelt\wrapped\_\Template\Template $template = null
+        Template $template = new Template(new TemplateRenderer(new Container()))
     ) {
         parent::__construct($name, $value, $template);
 
@@ -23,7 +26,7 @@ class Button extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->render(dirname(__DIR__) . '/Template/Button.tpl.php');
+        $this->tpl->parse(dirname(__DIR__) . '/Template/Button.tpl.php');
         return $this;
     }
 
@@ -38,6 +41,6 @@ class Button extends FormType
     {
         $this->writeTplValues();
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 }

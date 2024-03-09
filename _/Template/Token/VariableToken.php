@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template\v2\Token;
+namespace verfriemelt\wrapped\_\Template\Token;
 
-use verfriemelt\wrapped\_\Template\v2\Expression;
+use verfriemelt\wrapped\_\Template\Expression;
 
 class VariableToken extends Token implements PrintableToken
 {
     private Expression $expression;
     private bool $raw = false;
+    private string $formatter;
 
     public function setRaw(bool $raw = false): void
     {
@@ -29,5 +30,20 @@ class VariableToken extends Token implements PrintableToken
     public function expression(): Expression
     {
         return $this->expression;
+    }
+
+    public function hasFormatter(): bool
+    {
+        return isset($this->formatter);
+    }
+
+    public function formatter(): string
+    {
+        return $this->formatter;
+    }
+
+    public function setFormatter(string $formatter): void
+    {
+        $this->formatter = $formatter;
     }
 }

@@ -77,13 +77,13 @@ class Select extends FormType
 
         $this->writeTplValues();
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->render(dirname(__DIR__) . '/Template/Select.tpl.php');
+        $this->tpl->parse(dirname(__DIR__) . '/Template/Select.tpl.php');
         return $this;
     }
 }

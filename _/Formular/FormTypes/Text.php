@@ -15,7 +15,7 @@ class Text extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->render(dirname(__DIR__) . '/Template/Text.tpl.php');
+        $this->tpl->parse(dirname(__DIR__) . '/Template/Text.tpl.php');
         return $this;
     }
 
@@ -35,6 +35,6 @@ class Text extends FormType
             $this->tpl->set('placeholder', $this->placeholder);
         }
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 }
