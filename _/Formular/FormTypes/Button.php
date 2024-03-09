@@ -23,7 +23,7 @@ class Button extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parseFile(dirname(__DIR__) . '/Template/Button.tpl.php');
+        $this->tpl->render(dirname(__DIR__) . '/Template/Button.tpl.php');
         return $this;
     }
 

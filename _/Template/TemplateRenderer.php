@@ -5,83 +5,54 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template;
 
 use Exception;
-use verfriemelt\wrapped\_\Template\Token\T_IfClose;
-use verfriemelt\wrapped\_\Template\Token\T_IfElse;
-use verfriemelt\wrapped\_\Template\Token\T_IfOpen;
-use verfriemelt\wrapped\_\Template\Token\T_RepeaterClose;
-use verfriemelt\wrapped\_\Template\Token\T_RepeaterOpen;
-use verfriemelt\wrapped\_\Template\Token\T_String;
-use verfriemelt\wrapped\_\Template\Token\T_Variable;
-use verfriemelt\wrapped\_\Template\Token\Token;
+use verfriemelt\wrapped\_\Template\v2\Token\PrintableToken;
+use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
+use verfriemelt\wrapped\_\Template\v2\Token\Token;
+use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
+use verfriemelt\wrapped\_\Template\v2\TokenizerException;
 
-class TemplateParser
+class TemplateRenderer
 {
-    private ?Token $chain = null;
-
-    private array $data = [];
-
-    private $currentToken;
-
     private array $repeaterDataSourcePath = [];
 
-    public function setChain(Token $token)
+    public function __construct(
+        private readonly Token $token,
+        private readonly array $data
+    ) {}
+
+    public function render(): string
     {
-        $this->chain = $token;
-        return $this;
+        return $this->process($this->token);
     }
 
-    public function setData($data)
+    private function process(Token $token): string
     {
-        $this->data = $data;
-        return $this;
-    }
-
-    public function parseCurrentToken()
-    {
-        if ($this->currentToken instanceof T_String) {
-            return $this->currentToken->currentContent;
-        }
-
-        if ($this->currentToken instanceof T_Variable) {
-            return $this->parseVar();
-        }
-
-        if ($this->currentToken instanceof T_IfOpen) {
-            return $this->parseIf();
-        }
-
-        if ($this->currentToken instanceof T_RepeaterOpen) {
-            return $this->parseRepeater();
-        }
-
-        return '';
-    }
-
-    public function parse()
-    {
-        $this->currentToken = $this->chain;
         $output = '';
 
-        do {
-            $output .= $this->parseCurrentToken();
-        } while ($this->currentToken = $this->currentToken->nextToken);
+        if ($token instanceof PrintableToken) {
+            $output .= $this->printToken($token);
+        }
+
+        foreach ($token->children() as $child) {
+            $output .= $this->process($child);
+        }
 
         return $output;
     }
 
-    public function alternateParse()
+    private function printToken(Token $token): string
     {
-        $this->currentToken = $this->chain;
-
-        do {
-            yield $this->parseCurrentToken();
-        } while ($this->currentToken = $this->currentToken->nextToken);
+        return match ($token::class) {
+            StringToken::class => $token->content(),
+            VariableToken::class => $this->parseVar($token),
+            default => throw new TokenizerException('not printable'),
+        };
     }
 
-    private function parseVar()
+    private function parseVar(VariableToken $token): string
     {
-        $name = trim((string) $this->currentToken->currentContent);
-        $outputCallbackPresent = isset($this->currentToken->formatCallback);
+        $name = trim((string) $token->expression()->expr);
+        //        $outputCallbackPresent = isset($token->formatCallback);
 
         $dataSource = $this->searchForData('vars', $name);
 
@@ -91,21 +62,21 @@ class TemplateParser
             $variable = $dataSource['vars'][$name];
         }
 
-        if ($outputCallbackPresent) {
-            $output = $variable->readFormattedValue($this->currentToken->formatCallback);
-        } else {
-            $output = $variable->readValue();
-        }
+        //        if ($outputCallbackPresent) {
+        //            $output = $variable->readFormattedValue($token->formatCallback);
+        //        } else {
+        $output = $variable->readValue();
+        //        }
 
-        if ($variable->getValue() instanceof \verfriemelt\wrapped\_\View\BuiltIns\Link) {
-            return $output;
-        }
+        //        if ($variable->getValue() instanceof \verfriemelt\wrapped\_\View\BuiltIns\Link) {
+        //            return $output;
+        //        }
 
         if (is_object($output)) {
             throw new Exception("object passed to template variable '{$name}'");
         }
 
-        return $this->currentToken->escape ? htmlspecialchars((string) $output, ENT_QUOTES) : $output;
+        return !$token->raw() ? htmlspecialchars($output, ENT_QUOTES) : $output;
     }
 
     private function parseIf()

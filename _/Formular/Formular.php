@@ -83,7 +83,7 @@ class Formular implements Viewable
 
         if (!$template) {
             $this->tpl = new Template();
-            $this->tpl->parseFile(__DIR__ . '/Template/Formular.tpl.php');
+            $this->tpl->render(__DIR__ . '/Template/Formular.tpl.php');
         } else {
             $this->tpl = $template;
         }

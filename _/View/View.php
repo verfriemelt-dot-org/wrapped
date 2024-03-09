@@ -17,8 +17,6 @@ abstract class View implements Viewable
 
     public Template $tpl;
 
-    protected ?string $inlineTemplate = null;
-
     protected static Container $container;
 
     abstract public function getTemplatePath(): string;
@@ -30,17 +28,11 @@ abstract class View implements Viewable
 
     protected function getTemplateInstance(): Template
     {
-        if (isset($this->inlineTemplate)) {
-            return (new Template())->setRawTemplate($this->inlineTemplate);
-        }
-
         if (empty($this->tplPath)) {
             throw new Exception('unset Template Path in view ' . static::class);
         }
 
-        return (new Template())->parseFile(
-            $this->getTemplatePath() . $this->tplPath
-        );
+        return (new Template($this->getTemplatePath() . $this->tplPath))->parse();
     }
 
     public static function create(...$params): static

@@ -162,6 +162,12 @@ final class Tokenizer
         $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
 
         $token = new VariableToken($this->line, $this->offset, $this->lineOffset);
+
+        if (\str_starts_with($expression, '!')) {
+            $token->setRaw(true);
+            $expression = \substr($expression, 1);
+        }
+
         $token->setExpression(new Expression($expression));
 
         $this->offset += $end - $start + 2;
