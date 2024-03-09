@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
 use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
 use verfriemelt\wrapped\_\Template\v2\Tokenizer;
@@ -20,12 +21,12 @@ class TokenizerTest extends TestCase
         $this->tokenizer = new Tokenizer();
     }
 
-    public function test_return_empty_root(): void
+    public function test_empty_root(): void
     {
         static::assertSame([], $this->tokenizer->parse('')->children());
     }
 
-    public function test_return_single_token_for_character(): void
+    public function test_single_token_for_character(): void
     {
         $result = $this->tokenizer->parse('a')->children();
 
@@ -33,7 +34,7 @@ class TokenizerTest extends TestCase
         static::assertInstanceOf(StringToken::class, $result[0]);
     }
 
-    public function test_return_variable_expression(): void
+    public function test_variable_expression(): void
     {
         $result = $this->tokenizer->parse('{{ foo }}')->children();
 
@@ -42,7 +43,7 @@ class TokenizerTest extends TestCase
         static::assertSame('foo', $result[0]->expression()->expr);
     }
 
-    public function test_return_variable_expression_with_string(): void
+    public function test_variable_expression_with_string(): void
     {
         $result = $this->tokenizer->parse('{{ foo }} hello')->children();
 
@@ -51,5 +52,18 @@ class TokenizerTest extends TestCase
         static::assertInstanceOf(StringToken::class, $result[1]);
 
         static::assertSame(' hello', $result[1]->content());
+        static::assertSame(9, $result[1]->offset);
+    }
+
+    public function test_repeater(): void
+    {
+        $result = $this->tokenizer->parse("{{ repeater='hi' }}hello{{ /repeater='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $repeater = $result[0];
+        static::assertInstanceOf(RepeaterToken::class, $repeater);
+
+        static::assertCount(1, $repeater->children());
+        static::assertInstanceOf(StringToken::class, $repeater->children()[0] ?? null);
     }
 }
