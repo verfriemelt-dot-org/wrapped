@@ -6,6 +6,10 @@ namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyContionalExpressionException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyRepeaterExpressionException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingContionalClosingException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingRepeaterClosingException;
 use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
@@ -112,5 +116,29 @@ class TokenizerTest extends TestCase
         static::assertInstanceOf(ConditionalToken::class, $conditional);
         static::assertTrue($conditional->expression()->negated);
         static::assertCount(1, $conditional->children());
+    }
+
+    public function test_missing_conditional_expression(): void
+    {
+        static::expectException(EmptyContionalExpressionException::class);
+        $this->tokenizer->parse("{{ if='' }}foo{{ /if='' }}")->children();
+    }
+
+    public function test_missing_conditional_closing(): void
+    {
+        static::expectException(MissingContionalClosingException::class);
+        $this->tokenizer->parse("{{ if='asd' }}foo")->children();
+    }
+
+    public function test_missing_repeater_expression(): void
+    {
+        static::expectException(EmptyRepeaterExpressionException::class);
+        $this->tokenizer->parse("{{ repeater='' }}foo{{ /repeater='' }}")->children();
+    }
+
+    public function test_missing_repeater_closing(): void
+    {
+        static::expectException(MissingRepeaterClosingException::class);
+        $this->tokenizer->parse("{{ repeater='asd' }}foo")->children();
     }
 }

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template\v2;
 
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyContionalExpressionException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyRepeaterExpressionException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingContionalClosingException;
+use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingRepeaterClosingException;
 use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
 use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\Token;
 use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
 use Exception;
-use RuntimeException;
 
 final class Tokenizer
 {
@@ -82,8 +85,8 @@ final class Tokenizer
         $matches = [];
         $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
 
-        if (\preg_match("/.*?(?<closing>\/)?(?<negated>!)?if='(?<expr>.*?)'.*?/", $expression, $matches) !== 1) {
-            throw new RuntimeException('cannot match repeater token: ' . $expression);
+        if (\preg_match("/.*?(?<closing>\/)?(?<negated>!)?if='(?<expr>.+?)'.*?/", $expression, $matches) !== 1) {
+            throw new EmptyContionalExpressionException('cannot match repeater token: ' . $expression);
         }
 
         \assert(\is_string($matches['expr'] ?? null), 'match expr missing');
@@ -107,7 +110,7 @@ final class Tokenizer
             }
 
             if ($innerToken === null) {
-                throw new RuntimeException('reached end, expected closing ConditionalToken for ' . $token->expression()->expr);
+                throw new MissingContionalClosingException('reached end, expected closing ConditionalToken for ' . $token->expression()->expr);
             }
 
             $token->addChildren($innerToken);
@@ -121,8 +124,8 @@ final class Tokenizer
         $matches = [];
         $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
 
-        if (\preg_match("/.*?(?<closing>\/)?repeater='(?<name>.*?)'.*?/", $expression, $matches) !== 1) {
-            throw new RuntimeException('cannot match repeater token: ' . $expression);
+        if (\preg_match("/.*?(?<closing>\/)?repeater='(?<name>.+?)'.*?/", $expression, $matches) !== 1) {
+            throw new EmptyRepeaterExpressionException('cannot match repeater token: ' . $expression);
         }
 
         \assert(\is_string($matches['name'] ?? null), 'match name missing');
@@ -145,7 +148,7 @@ final class Tokenizer
             }
 
             if ($innerToken === null) {
-                throw new RuntimeException('reached end, expected closing RepeaterToken for ' . $token->name());
+                throw new MissingRepeaterClosingException('reached end, expected closing RepeaterToken for ' . $token->name());
             }
 
             $token->addChildren($innerToken);
