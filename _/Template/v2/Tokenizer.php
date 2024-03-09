@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template\v2;
 
+use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
 use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
 use verfriemelt\wrapped\_\Template\v2\Token\Token;
@@ -52,7 +53,7 @@ final class Tokenizer
 
         $nextTokenEndPos = \mb_strpos($input, '}}', $nextTokenStartPos);
 
-        assert(\is_int($nextTokenEndPos), '$nextTokenEndPos must be int');
+        \assert(\is_int($nextTokenEndPos), '$nextTokenEndPos must be int');
 
         return $this->createToken($input, $nextTokenStartPos, $nextTokenEndPos);
     }
@@ -69,7 +70,50 @@ final class Tokenizer
             return $this->createRepeaterToken($input, $nextTokenStartPos, $nextTokenEndPos);
         }
 
+        if (\str_contains($tokenContent, 'if=')) {
+            return $this->createConditionalToken($input, $nextTokenStartPos, $nextTokenEndPos);
+        }
+
         throw new Exception('not implemented');
+    }
+
+    private function createConditionalToken(string $input, int $start, int $end): ConditionalToken
+    {
+        $matches = [];
+        $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
+
+        if (\preg_match("/.*?(?<closing>\/)?(?<negated>!)?if='(?<expr>.*?)'.*?/", $expression, $matches) !== 1) {
+            throw new RuntimeException('cannot match repeater token: ' . $expression);
+        }
+
+        \assert(\is_string($matches['expr'] ?? null), 'match expr missing');
+        \assert(\is_string($matches['negated'] ?? null), 'match negated missing');
+        \assert(\is_string($matches['closing'] ?? null), 'match closing missing');
+
+        $token = new ConditionalToken($this->line, $this->offset, $this->lineOffset);
+        $token->setExpression(new Expression($matches['expr'], $matches['negated'] === '!'));
+
+        $this->offset += $end - $start + 2;
+
+        if ($matches['closing'] === '/') {
+            return $token;
+        }
+
+        do {
+            $innerToken = $this->consume($input);
+
+            if ($innerToken instanceof ConditionalToken && $innerToken->expression()->expr === $token->expression()->expr) {
+                return $token;
+            }
+
+            if ($innerToken === null) {
+                throw new RuntimeException('reached end, expected closing ConditionalToken for ' . $token->expression()->expr);
+            }
+
+            $token->addChildren($innerToken);
+        } while (!$innerToken instanceof ConditionalToken || $innerToken->expression()->expr !== $token->expression()->expr);
+
+        return $token;
     }
 
     private function createRepeaterToken(string $input, int $start, int $end): RepeaterToken
@@ -77,11 +121,12 @@ final class Tokenizer
         $matches = [];
         $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
 
-        if (preg_match("/.*?(?<closing>\/)?repeater='(?<name>.*?)'.*?/", $expression, $matches) !== 1) {
+        if (\preg_match("/.*?(?<closing>\/)?repeater='(?<name>.*?)'.*?/", $expression, $matches) !== 1) {
             throw new RuntimeException('cannot match repeater token: ' . $expression);
         }
 
-        assert(is_string($matches['name'] ?? null), 'match name missing');
+        \assert(\is_string($matches['name'] ?? null), 'match name missing');
+        \assert(\is_string($matches['closing'] ?? null), 'match closing missing');
 
         $token = new RepeaterToken($this->line, $this->offset, $this->lineOffset);
         $token->setName($matches['name']);

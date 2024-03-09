@@ -8,5 +8,6 @@ final readonly class Expression
 {
     public function __construct(
         public string $expr,
+        public bool $negated = false,
     ) {}
 }
