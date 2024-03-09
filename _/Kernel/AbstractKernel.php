@@ -27,6 +27,7 @@ use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
+use verfriemelt\wrapped\_\Template\Template;
 
 abstract class AbstractKernel implements KernelInterface
 {
@@ -44,6 +45,8 @@ abstract class AbstractKernel implements KernelInterface
     {
         $this->container = new Container();
         $this->container->register(KernelInterface::class, $this);
+
+        $this->container->register(Template::class)->share(false);
 
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);

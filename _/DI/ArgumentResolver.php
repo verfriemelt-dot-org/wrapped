@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
-use RuntimeException;
-
 class ArgumentResolver
 {
     protected Container $container;
@@ -32,7 +30,7 @@ class ArgumentResolver
 
             try {
                 $args[] = $this->buildParameter($parameter);
-            } catch (RuntimeException $e) {
+            } catch (ArgumentResolverException $e) {
                 $msg = "cannot resolv param #{$count} \${$parameter->getName()} for ";
                 $msg .= \is_object($obj) ? $obj::class : $obj;
                 $msg .= '::';
@@ -41,7 +39,7 @@ class ArgumentResolver
                 $msg .= PHP_EOL;
                 $msg .= $e->getMessage();
 
-                throw new RuntimeException($msg);
+                throw new ArgumentResolverException($msg);
             }
         }
 
@@ -53,7 +51,7 @@ class ArgumentResolver
         $types = $parameter->getTypes();
 
         if (count($types) !== 1) {
-            throw new RuntimeException('cannot resolv union type');
+            throw new ArgumentResolverException('cannot resolv union type');
         }
 
         $type = $types[0];

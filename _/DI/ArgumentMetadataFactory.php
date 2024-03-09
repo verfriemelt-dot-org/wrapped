@@ -12,7 +12,6 @@ use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionUnionType;
-use RuntimeException;
 
 class ArgumentMetadataFactory
 {
@@ -71,6 +70,6 @@ class ArgumentMetadataFactory
             return array_map(static fn (ReflectionNamedType $type): string => $type->getName(), $type->getTypes());
         }
 
-        throw new RuntimeException('cannot get type');
+        throw new ArgumentResolverException('cannot get type');
     }
 }

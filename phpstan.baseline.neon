@@ -3376,11 +3376,6 @@ parameters:
 			path: _/Statsd/StatsdTimer.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:set\\(\\) has parameter \\$value with no signature specified for Closure\\.$#"
-			count: 1
-			path: _/Template/Repeater.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Repeater.php
@@ -3391,7 +3386,7 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable constructor expects \\(Closure\\(\\)\\: string\\)\\|string\\|verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable, mixed given\\.$#"
+			message: "#^Parameter \\#2 \\$value of class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable constructor expects \\(Closure\\(\\)\\: string\\)\\|string\\|verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable, Closure\\|string\\|verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable\\|null given\\.$#"
 			count: 1
 			path: _/Template/Template.php
 
@@ -3507,6 +3502,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\View\\\\View\\:\\:writeDataModelProperties\\(\\) has parameter \\$prefix with no type specified\\.$#"
+			count: 1
+			path: _/View/View.php
+
+		-
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/View/View.php
 

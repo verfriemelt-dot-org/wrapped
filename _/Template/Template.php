@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
+use Closure;
+use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Token\Token;
+use RuntimeException;
 
 class Template
 {
@@ -55,6 +58,14 @@ class Template
 
     public function set(string $name, mixed $value): static
     {
+        if (!\is_scalar($value) && !$value instanceof Viewable && $value !== null && !$value instanceof Closure) {
+            throw new RuntimeException('wrong type');
+        }
+
+        if (\is_scalar($value)) {
+            $value = (string) $value;
+        }
+
         $this->vars[$name] = new Variable($name, $value);
         return $this;
     }

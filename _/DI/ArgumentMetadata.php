@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DI;
 
-use Exception;
-
 class ArgumentMetadata
 {
     private mixed $defaultValue;
@@ -57,7 +55,7 @@ class ArgumentMetadata
     public function getDefaultValue(): mixed
     {
         if (!$this->hasDefaultValue) {
-            throw new Exception(sprintf('Argument »%s« has no default value', $this->name));
+            throw new ArgumentResolverException(sprintf('Argument »%s« has no default value', $this->name));
         }
 
         return $this->defaultValue;
