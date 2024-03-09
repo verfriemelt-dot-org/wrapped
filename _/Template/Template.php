@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
-use RuntimeException;
+use verfriemelt\wrapped\_\Template\v2\Token\Token;
+use verfriemelt\wrapped\_\Template\v2\Tokenizer;
 
 class Template
 {
@@ -14,28 +15,40 @@ class Template
 
     private array $repeater = [];
 
-    private $tokenChain;
+    private Token $token;
 
-    private static array $chainCache = [];
+    public function __construct(
+        private readonly ?string $path = null,
+    ) {}
 
-    public function run()
+    public function parse(?string $raw = null): static
     {
-        $parser = (new TemplateParser())
-            ->setChain($this->tokenChain)
-            ->setData(
-                [
-                    'vars' => $this->vars,
-                    'if' => $this->if,
-                    'repeater' => $this->repeater,
-                ]
-            );
+        $tokenizer = new Tokenizer();
+        $this->token = $tokenizer->parse($raw ?? \file_get_contents($this->path));
 
-        return $parser->parse();
+        return $this;
+    }
+
+    public function render(): string
+    {
+        if (!isset($this->token)) {
+            $this->parse();
+        }
+
+        $parser = new TemplateRenderer(
+            $this->token,
+            [
+                'vars' => $this->vars,
+                'if' => $this->if,
+                'repeater' => $this->repeater,
+            ]
+        );
+        return $parser->render();
     }
 
     public function yieldRun()
     {
-        $parser = (new TemplateParser())
+        $parser = (new TemplateRenderer())
             ->setChain($this->tokenChain)
             ->setData(
                 [
@@ -48,28 +61,6 @@ class Template
         foreach ($parser->alternateParse() as $output) {
             yield $output;
         }
-    }
-
-    public function setRawTemplate(string $input): static
-    {
-        $this->tokenChain = (new TemplateLexer())->lex($input)->getChain();
-        return $this;
-    }
-
-    public function parseFile(string $path): static
-    {
-        if (!isset(self::$chainCache[$path])) {
-            $fileContent = file_get_contents($path);
-
-            if ($fileContent === false) {
-                throw new RuntimeException("cannot load template at {$path}");
-            }
-
-            self::$chainCache[$path] = (new TemplateLexer())->lex($fileContent)->getChain();
-        }
-
-        $this->tokenChain = self::$chainCache[$path];
-        return $this;
     }
 
     public function createRepeater(string $name): Repeater

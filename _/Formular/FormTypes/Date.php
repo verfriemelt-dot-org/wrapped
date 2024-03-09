@@ -14,7 +14,7 @@ class Date extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parseFile(dirname(__DIR__) . '/Template/Date.tpl.php');
+        $this->tpl->render(dirname(__DIR__) . '/Template/Date.tpl.php');
         return $this;
     }
 

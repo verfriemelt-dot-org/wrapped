@@ -15,7 +15,7 @@ class Text extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parseFile(dirname(__DIR__) . '/Template/Text.tpl.php');
+        $this->tpl->render(dirname(__DIR__) . '/Template/Text.tpl.php');
         return $this;
     }
 

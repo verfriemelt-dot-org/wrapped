@@ -45,6 +45,17 @@ class TokenizerTest extends TestCase
 
         static::assertCount(1, $result);
         static::assertInstanceOf(VariableToken::class, $result[0]);
+        static::assertFalse($result[0]->raw());
+        static::assertSame('foo', $result[0]->expression()->expr);
+    }
+
+    public function test_variable_unescaped_expression(): void
+    {
+        $result = $this->tokenizer->parse('{{ !foo }}')->children();
+
+        static::assertCount(1, $result);
+        static::assertInstanceOf(VariableToken::class, $result[0]);
+        static::assertTrue($result[0]->raw());
         static::assertSame('foo', $result[0]->expression()->expr);
     }
 

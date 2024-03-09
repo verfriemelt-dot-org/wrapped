@@ -23,7 +23,7 @@ class Checkbox extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parseFile(dirname(__DIR__) . '/Template/Checkbox.tpl.php');
+        $this->tpl->render(dirname(__DIR__) . '/Template/Checkbox.tpl.php');
         return $this;
     }
 
