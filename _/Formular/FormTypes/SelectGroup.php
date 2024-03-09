@@ -6,15 +6,12 @@ namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 class SelectGroup
 {
-    public readonly string $name;
-
     /** @var SelectItem[] */
     private array $children = [];
 
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
+    public function __construct(
+        public readonly string $name
+    ) {}
 
     public function addChild(SelectItem $item): self
     {

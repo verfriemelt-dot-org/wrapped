@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template\v2;
+namespace verfriemelt\wrapped\_\Template;
 
 final readonly class Expression
 {

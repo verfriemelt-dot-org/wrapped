@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular;
 
 use verfriemelt\wrapped\_\DateTime\DateTime;
+use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Exception\Input\InputException;
 use verfriemelt\wrapped\_\Formular\FormTypes\Button;
 use verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
@@ -22,6 +23,7 @@ use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Session\Session;
 use verfriemelt\wrapped\_\Template\Template;
 use Override;
+use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Formular implements Viewable
 {
@@ -55,8 +57,6 @@ class Formular implements Viewable
 
     private readonly Session $session;
 
-    private Template $tpl;
-
     protected Request $request;
 
     private function generateCSRF()
@@ -70,7 +70,7 @@ class Formular implements Viewable
         Request $request,
         Session $session,
         ?Filter $filter = null,
-        ?Template $template = null
+        private readonly Template $tpl = new Template(new TemplateRenderer(new Container()))
     ) {
         $this->formname = $name;
         $this->filter = $filter;
@@ -81,12 +81,7 @@ class Formular implements Viewable
         $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
         $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
 
-        if (!$template) {
-            $this->tpl = new Template();
-            $this->tpl->render(__DIR__ . '/Template/Formular.tpl.php');
-        } else {
-            $this->tpl = $template;
-        }
+        $this->tpl->parse(__DIR__ . '/Template/Formular.tpl.php');
 
         $this->request = $request;
         $this->action = $request->uri();
@@ -347,7 +342,7 @@ class Formular implements Viewable
             $r->save();
         }
 
-        return $this->tpl->run();
+        return $this->tpl->render();
     }
 
     public function fetchElement(string $name): ?FormType

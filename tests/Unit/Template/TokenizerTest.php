@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
-use PHPUnit\Framework\TestCase;
-use verfriemelt\wrapped\_\Template\v2\Token\ConditionalToken;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyContionalExpressionException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\EmptyRepeaterExpressionException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingContionalClosingException;
-use verfriemelt\wrapped\_\Template\v2\Token\Exception\MissingRepeaterClosingException;
-use verfriemelt\wrapped\_\Template\v2\Token\RepeaterToken;
-use verfriemelt\wrapped\_\Template\v2\Token\StringToken;
-use verfriemelt\wrapped\_\Template\v2\Token\VariableToken;
-use verfriemelt\wrapped\_\Template\v2\Tokenizer;
 use Override;
+use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Template\Token\ConditionalToken;
+use verfriemelt\wrapped\_\Template\Token\Exception\EmptyContionalExpressionException;
+use verfriemelt\wrapped\_\Template\Token\Exception\EmptyRepeaterExpressionException;
+use verfriemelt\wrapped\_\Template\Token\Exception\MissingContionalClosingException;
+use verfriemelt\wrapped\_\Template\Token\Exception\MissingRepeaterClosingException;
+use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
+use verfriemelt\wrapped\_\Template\Token\StringToken;
+use verfriemelt\wrapped\_\Template\Token\VariableToken;
+use verfriemelt\wrapped\_\Template\Tokenizer;
 
 class TokenizerTest extends TestCase
 {
@@ -57,6 +57,16 @@ class TokenizerTest extends TestCase
         static::assertInstanceOf(VariableToken::class, $result[0]);
         static::assertTrue($result[0]->raw());
         static::assertSame('foo', $result[0]->expression()->expr);
+    }
+
+    public function test_variable_formatter_expression(): void
+    {
+        $result = $this->tokenizer->parse('{{ foo|formatter }}')->children();
+
+        static::assertCount(1, $result);
+        static::assertInstanceOf(VariableToken::class, $result[0]);
+        static::assertSame('foo', $result[0]->expression()->expr);
+        static::assertSame('formatter', $result[0]->formatter());
     }
 
     public function test_variable_expression_with_string(): void
@@ -105,6 +115,17 @@ class TokenizerTest extends TestCase
         static::assertCount(1, $repeater->children());
     }
 
+    public function test_nested_repeater_with_variable(): void
+    {
+        $result = $this->tokenizer->parse("{{ repeater='hi' }}{{ bar }}{{ /repeater='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $repeater = $result[0];
+        static::assertInstanceOf(RepeaterToken::class, $repeater);
+
+        static::assertCount(1, $repeater->children());
+    }
+
     public function test_conditional(): void
     {
         $result = $this->tokenizer->parse("{{ if='hi' }}foo{{ /if='hi' }}")->children();
@@ -114,7 +135,7 @@ class TokenizerTest extends TestCase
 
         static::assertInstanceOf(ConditionalToken::class, $conditional);
         static::assertFalse($conditional->expression()->negated);
-        static::assertCount(1, $conditional->children());
+        static::assertCount(1, $conditional->consequent()->children());
     }
 
     public function test_negated_conditional(): void
@@ -126,7 +147,20 @@ class TokenizerTest extends TestCase
 
         static::assertInstanceOf(ConditionalToken::class, $conditional);
         static::assertTrue($conditional->expression()->negated);
-        static::assertCount(1, $conditional->children());
+        static::assertCount(1, $conditional->consequent()->children());
+    }
+
+    public function test_conditional_with_alternative(): void
+    {
+        $result = $this->tokenizer->parse("{{ !if='hi' }}foo{{else='hi'}}bar{{ /if='hi' }}")->children();
+
+        static::assertCount(1, $result);
+        $conditional = $result[0];
+
+        static::assertInstanceOf(ConditionalToken::class, $conditional);
+        static::assertTrue($conditional->expression()->negated);
+        static::assertCount(1, $conditional->consequent()->children());
+        static::assertCount(1, $conditional->alternative()->children());
     }
 
     public function test_missing_conditional_expression(): void

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Unit\Template\v2;
 
 use PHPUnit\Framework\TestCase;
-use verfriemelt\wrapped\_\Template\v2\Token\Token;
+use verfriemelt\wrapped\_\Template\Token\Token;
 
 class TokenBagTest extends TestCase
 {

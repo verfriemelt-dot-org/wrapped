@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
+use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Input\FilterItem;
 use verfriemelt\wrapped\_\Template\Template;
+use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 abstract class FormType
 {
-    public $name;
-
-    public $value;
-
     public $label;
-
-    public $tpl;
 
     public $type;
 
@@ -40,17 +36,12 @@ abstract class FormType
 
     abstract public function fetchHtml(): string;
 
-    public function __construct(string $name, ?string $value = null, ?Template $template = null)
-    {
-        $this->name = $name;
-        $this->value = $value;
-
-        if (!$template) {
-            $this->tpl = new Template();
-            $this->loadTemplate();
-        } else {
-            $this->tpl = $template;
-        }
+    public function __construct(
+        protected string $name,
+        protected ?string $value = null,
+        protected Template $tpl = new Template(new TemplateRenderer(new Container()))
+    ) {
+        $this->loadTemplate();
     }
 
     public function setFilterItem(FilterItem $filterItem): FormType

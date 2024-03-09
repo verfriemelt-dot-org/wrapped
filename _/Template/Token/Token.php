@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template\v2\Token;
+namespace verfriemelt\wrapped\_\Template\Token;
 
 use RuntimeException;
 

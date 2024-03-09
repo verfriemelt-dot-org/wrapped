@@ -32,7 +32,9 @@ abstract class View implements Viewable
             throw new Exception('unset Template Path in view ' . static::class);
         }
 
-        return (new Template($this->getTemplatePath() . $this->tplPath))->parse();
+        $template = static::$container->get(Template::class);
+        assert($template instanceof Template);
+        return $template->parse($this->getTemplatePath() . $this->tplPath);
     }
 
     public static function create(...$params): static
@@ -75,12 +77,6 @@ abstract class View implements Viewable
     public function getContents(): string
     {
         $this->prepare();
-        return $this->tpl->run();
-    }
-
-    public function yieldContents()
-    {
-        $this->prepare();
-        yield $this->tpl->yieldRun();
+        return $this->tpl->render();
     }
 }

@@ -60,6 +60,11 @@ class Container
             $this->interfaces[$interface][] = $service;
         }
 
+        // tag interfaces by default
+        if (\interface_exists($class) && $instance !== null) {
+            $this->tag($class, $instance::class);
+        }
+
         $this->services[$class] = $service;
 
         return $service;
