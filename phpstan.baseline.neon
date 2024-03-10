@@ -1791,6 +1791,11 @@ parameters:
 			path: _/Formular/FormTypes/Button.php
 
 		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Button.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Button\\:\\:\\$type has no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Button.php
@@ -1807,6 +1812,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:type\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Checkbox.php
+
+		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Checkbox.php
 
@@ -1837,6 +1847,11 @@ parameters:
 
 		-
 			message: "#^Only booleans are allowed in an if condition, DateTime\\|false given\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Date.php
+
+		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Date.php
 
@@ -1961,6 +1976,11 @@ parameters:
 			path: _/Formular/FormTypes/FormType.php
 
 		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Hidden.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Hidden\\:\\:\\$type has no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Hidden.php
@@ -1981,7 +2001,17 @@ parameters:
 			path: _/Formular/FormTypes/Select.php
 
 		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Select.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Text\\:\\:placeholder\\(\\) has parameter \\$placeholder with no type specified\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Text.php
+
+		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Text.php
 
@@ -1997,6 +2027,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Textarea\\:\\:placeholder\\(\\) has parameter \\$placeholder with no type specified\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Textarea.php
+
+		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Textarea.php
 
@@ -3386,11 +3421,6 @@ parameters:
 			path: _/Template/Repeater.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Variable constructor expects \\(Closure\\(\\)\\: string\\)\\|string\\|verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable, Closure\\|string\\|verfriemelt\\\\wrapped\\\\_\\\\Output\\\\Viewable\\|null given\\.$#"
-			count: 1
-			path: _/Template/Template.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:\\$if type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Template.php
@@ -3467,11 +3497,6 @@ parameters:
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/View/View.php
-
-		-
-			message: "#^Constructor of class verfriemelt\\\\wrapped\\\\_\\\\View\\\\View has an unused parameter \\$params\\.$#"
 			count: 1
 			path: _/View/View.php
 
