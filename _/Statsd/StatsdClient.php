@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Statsd;
 
-use verfriemelt\wrapped\_\Singleton;
-
 final class StatsdClient
 {
-    use Singleton;
-
     public const string COUNTER = 'c';
 
     public const string TIMER_MS = 'ms';
@@ -20,37 +16,50 @@ final class StatsdClient
 
     private string $namespace = '';
 
-    public function setConnection(Connection $connection)
+    protected static StatsdClient $handle;
+
+    private function __construct() {}
+
+    final public static function getInstance(): self
+    {
+        if (!isset(self::$handle)) {
+            self::$handle = new self();
+        }
+
+        return self::$handle;
+    }
+
+    public function setConnection(Connection $connection): self
     {
         $this->connection = $connection;
         return $this;
     }
 
-    public function setNamespace($namespace)
+    public function setNamespace(string $namespace): self
     {
         $this->namespace = $namespace;
         return $this;
     }
 
-    public function incrementCounter(string $key): static
+    public function incrementCounter(string $key): self
     {
         $this->counter($key, 1);
         return $this;
     }
 
-    public function gauge(string $key, float $value): static
+    public function gauge(string $key, float $value): self
     {
         $this->send($key, $value, self::GAUGE);
         return $this;
     }
 
-    public function decrementCounter(string $key): static
+    public function decrementCounter(string $key): self
     {
         $this->counter($key, -1);
         return $this;
     }
 
-    public function counter(string $key, int $value): static
+    public function counter(string $key, int $value): self
     {
         $this->send($key, $value, self::COUNTER);
         return $this;
@@ -68,7 +77,7 @@ final class StatsdClient
         return new StatsdTimer($this, $key);
     }
 
-    public function send(string $key, int|float $value, string $type, ?float $rate = null): static
+    public function send(string $key, int|float $value, string $type, ?float $rate = null): self
     {
         $key = ($this->namespace !== '') ? "{$this->namespace}.{$key}" : $key;
 
@@ -78,9 +87,7 @@ final class StatsdClient
             $message = sprintf('%s:%s|%s', $key, $value, $type);
         }
 
-        if ($this->connection) {
-            $this->connection->send($message);
-        }
+        $this->connection?->send($message);
 
         return $this;
     }
