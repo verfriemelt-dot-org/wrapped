@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
-use verfriemelt\wrapped\_\Template\Repeater;
 use Override;
+use verfriemelt\wrapped\_\Template\Repeater;
 
 class Select extends FormType
 {
@@ -83,7 +83,7 @@ class Select extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parse(dirname(__DIR__) . '/Template/Select.tpl.php');
+        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Select.tpl.php'));
         return $this;
     }
 }

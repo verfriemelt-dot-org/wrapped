@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template;
 
 use Closure;
+use RuntimeException;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Token\Token;
-use RuntimeException;
 
 class Template
 {
@@ -62,7 +62,7 @@ class Template
             throw new RuntimeException('wrong type');
         }
 
-        if (\is_scalar($value)) {
+        if (\is_scalar($value) || $value === null) {
             $value = (string) $value;
         }
 

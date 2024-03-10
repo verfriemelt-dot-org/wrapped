@@ -13,7 +13,7 @@ class Hidden extends FormType
     #[Override]
     public function loadTemplate(): FormType
     {
-        $this->tpl->parse(dirname(__DIR__) . '/Template/Hidden.tpl.php');
+        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Hidden.tpl.php'));
         return $this;
     }
 

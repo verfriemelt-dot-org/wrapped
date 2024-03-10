@@ -136,12 +136,12 @@ class TemplateRenderer
             foreach ($token->children() as $innerToken) {
                 $output .= $this->process(
                     $innerToken,
-                    array_merge_recursive(
-                        $element,
+                    \array_replace_recursive(
                         [
                             'vars' => $data['vars'],
                             'if' => $data['if'],
-                        ]
+                        ],
+                        $element,
                     )
                 );
             }

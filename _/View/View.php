@@ -6,11 +6,11 @@ namespace verfriemelt\wrapped\_\View;
 
 use Exception;
 use Override;
+use RuntimeException;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
-use RuntimeException;
 
 abstract class View implements Viewable
 {
@@ -22,7 +22,7 @@ abstract class View implements Viewable
 
     abstract public function getTemplatePath(): string;
 
-    public function __construct(mixed ...$params)
+    public function __construct()
     {
         $this->tpl = $this->getTemplateInstance();
     }
