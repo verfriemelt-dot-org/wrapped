@@ -48,7 +48,7 @@ abstract class AbstractKernel implements KernelInterface
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
 
-        $this->initializeErrorHandling();
+        $this->initializeErrorHandler();
     }
 
     #[Override]
@@ -163,7 +163,7 @@ abstract class AbstractKernel implements KernelInterface
         throw $exceptionEvent->getThrowable();
     }
 
-    protected function initializeErrorHandling(): void
+    protected function initializeErrorHandler(): void
     {
         \set_error_handler(function ($errno, $errstr, $errfile, $errline): never {
             throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
@@ -172,6 +172,12 @@ abstract class AbstractKernel implements KernelInterface
         \set_exception_handler(function (Throwable $e): void {
             $this->dispatchException($e);
         });
+    }
+
+    protected function unregisterErrorHandler(): void
+    {
+        \restore_error_handler();
+        \restore_exception_handler();
     }
 
     public function execute(Console $cli): ExitCode
@@ -194,5 +200,10 @@ abstract class AbstractKernel implements KernelInterface
 
         $discovery->findCommands($path, $pathPrefix, $namespace);
         $discovery->loadCommands();
+    }
+
+    public function shutdown(): void
+    {
+        $this->unregisterErrorHandler();
     }
 }
