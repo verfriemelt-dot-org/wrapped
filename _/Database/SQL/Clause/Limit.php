@@ -11,7 +11,7 @@ use Override;
 
 class Limit extends QueryPart implements Clause
 {
-    final public const CLAUSE = 'LIMIT %s';
+    final public const string CLAUSE = 'LIMIT %s';
 
     protected ExpressionItem $limit;
 

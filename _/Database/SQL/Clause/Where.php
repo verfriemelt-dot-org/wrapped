@@ -14,7 +14,7 @@ class Where extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'WHERE %s';
+    final public const string CLAUSE = 'WHERE %s';
 
     public Expression $expression;
 

@@ -25,13 +25,13 @@ use Override;
 
 class Formular implements Viewable
 {
-    final public const METHOD_POST = 'POST';
+    final public const string METHOD_POST = 'POST';
 
-    final public const METHOD_GET = 'GET';
+    final public const string METHOD_GET = 'GET';
 
-    final public const CSRF_FIELD_NAME = '_csrf';
+    final public const string CSRF_FIELD_NAME = '_csrf';
 
-    final public const FORM_FIELD_NAME = '_form';
+    final public const string FORM_FIELD_NAME = '_form';
 
     private ?Filter $filter = null;
 

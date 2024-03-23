@@ -13,7 +13,7 @@ class SqlFunction extends QueryPart implements ExpressionItem
 {
     use Alias;
 
-    final public const SYNTAX = '%s( %s )';
+    final public const string SYNTAX = '%s( %s )';
 
     protected Identifier $name;
     protected Identifier $schema;

@@ -14,7 +14,7 @@ class CaseWhen extends QueryPart implements ExpressionItem
 {
     use Alias;
 
-    final public const SYNTAX = 'CASE %s END';
+    final public const string SYNTAX = 'CASE %s END';
 
     protected Identifier $name;
 

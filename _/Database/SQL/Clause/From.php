@@ -13,7 +13,7 @@ class From extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'FROM %s';
+    final public const string CLAUSE = 'FROM %s';
 
     private readonly QueryPart $source;
 

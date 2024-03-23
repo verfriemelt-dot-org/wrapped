@@ -14,9 +14,9 @@ class ForUpdate extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'FOR UPDATE %s';
+    final public const string CLAUSE = 'FOR UPDATE %s';
 
-    final public const SKIP_LOCKED = 'SKIP LOCKED';
+    final public const string SKIP_LOCKED = 'SKIP LOCKED';
 
     public ExpressionItem $expression;
 

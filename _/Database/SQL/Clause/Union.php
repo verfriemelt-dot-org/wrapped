@@ -10,7 +10,7 @@ use Override;
 
 class Union extends QueryPart implements Clause
 {
-    final public const CLAUSE = 'UNION ALL';
+    final public const string CLAUSE = 'UNION ALL';
 
     #[Override]
     public function getWeight(): int

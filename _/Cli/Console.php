@@ -11,19 +11,19 @@ use verfriemelt\wrapped\_\ParameterBag;
 
 class Console implements InputInterface, OutputInterface
 {
-    final public const STYLE_NONE = 0;
-    final public const STYLE_BLACK = 30;
-    final public const STYLE_RED = 31;
-    final public const STYLE_GREEN = 32;
-    final public const STYLE_YELLOW = 33;
-    final public const STYLE_BLUE = 34;
-    final public const STYLE_PURPLE = 35;
-    final public const STYLE_CYAN = 36;
-    final public const STYLE_WHITE = 37;
+    final public const int STYLE_NONE = 0;
+    final public const int STYLE_BLACK = 30;
+    final public const int STYLE_RED = 31;
+    final public const int STYLE_GREEN = 32;
+    final public const int STYLE_YELLOW = 33;
+    final public const int STYLE_BLUE = 34;
+    final public const int STYLE_PURPLE = 35;
+    final public const int STYLE_CYAN = 36;
+    final public const int STYLE_WHITE = 37;
 
-    final public const STYLE_REGULAR = 0;
-    final public const STYLE_BOLD = 1;
-    final public const STYLE_UNDERLINE = 4;
+    final public const int STYLE_REGULAR = 0;
+    final public const int STYLE_BOLD = 1;
+    final public const int STYLE_UNDERLINE = 4;
 
     protected int $currentFgColor = self::STYLE_NONE;
     protected int $currentBgColor = self::STYLE_NONE;

@@ -11,7 +11,7 @@ use Override;
 
 class OperatorExpression extends QueryPart implements ExpressionItem
 {
-    final public const OPTERATORS = [
+    final public const array OPTERATORS = [
         'exists' => [
             'minArgs' => 1,
             'maxArgs' => 1,

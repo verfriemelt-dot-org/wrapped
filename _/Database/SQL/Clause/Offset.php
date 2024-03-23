@@ -11,7 +11,7 @@ use Override;
 
 class Offset extends QueryPart implements Clause
 {
-    final public const CLAUSE = 'OFFSET %s';
+    final public const string CLAUSE = 'OFFSET %s';
 
     protected ExpressionItem $offset;
 

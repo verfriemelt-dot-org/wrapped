@@ -11,7 +11,7 @@ use Override;
 
 class Operator extends QueryPart implements ExpressionItem
 {
-    final public const OPTERATORS = [
+    final public const array OPTERATORS = [
         '=',
         '!=',
         '+',

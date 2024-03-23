@@ -16,7 +16,7 @@ class Order extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'ORDER BY %s';
+    final public const string CLAUSE = 'ORDER BY %s';
 
     private array $expressions = [];
 

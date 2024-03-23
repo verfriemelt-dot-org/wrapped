@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Queue\Interfaces\QueuePersistance;
 
 class Queue
 {
-    final public const DEFAULT_CHANNEL = 'default';
+    final public const string DEFAULT_CHANNEL = 'default';
 
     public function __construct(private readonly QueuePersistance $storage = new MysqlBackend()) {}
 

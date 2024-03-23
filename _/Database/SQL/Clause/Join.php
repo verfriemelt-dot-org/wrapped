@@ -14,7 +14,7 @@ class Join extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'JOIN %s ON %s';
+    final public const string CLAUSE = 'JOIN %s ON %s';
 
     private readonly ExpressionItem $source;
 

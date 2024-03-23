@@ -11,7 +11,7 @@ use Override;
 
 class Conjunction extends QueryPart implements ExpressionItem
 {
-    final public const OPTERATORS = [
+    final public const array OPTERATORS = [
         'and',
         'or',
     ];

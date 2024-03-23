@@ -13,7 +13,7 @@ class Having extends QueryPart implements Clause
 {
     use CommandWrapperTrait;
 
-    final public const CLAUSE = 'HAVING %s';
+    final public const string CLAUSE = 'HAVING %s';
 
     private readonly QueryPart $expression;
 
