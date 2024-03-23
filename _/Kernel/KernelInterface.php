@@ -17,4 +17,6 @@ interface KernelInterface
     public function boot(): void;
 
     public function handle(Request $request): Response;
+
+    public function shutdown(): void;
 }
