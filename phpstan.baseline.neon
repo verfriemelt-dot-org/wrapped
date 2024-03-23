@@ -221,11 +221,6 @@ parameters:
 			path: _/Command/CommandDiscovery.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandExecutor\\:\\:getCommandName\\(\\) should return array\\{string, array\\<string\\>\\} but returns array\\{string, array\\<int\\|string, mixed\\>\\}\\.$#"
-			count: 1
-			path: _/Command/CommandExecutor.php
-
-		-
 			message: "#^Parameter \\#1 \\$argv of method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\) expects array\\<string\\>, array\\<int, mixed\\> given\\.$#"
 			count: 1
 			path: _/Command/CommandExecutor.php
@@ -4541,7 +4536,7 @@ parameters:
 			path: tests/Unit/DataModel/CollectionTest.php
 
 		-
-			message: "#^Method class@anonymous/tests/Unit/Kernel/KernelTest\\.php\\:47\\:\\:__construct\\(\\) has parameter \\$spy with no signature specified for Closure\\.$#"
+			message: "#^Method class@anonymous/tests/Unit/Kernel/KernelTest\\.php\\:53\\:\\:__construct\\(\\) has parameter \\$spy with no signature specified for Closure\\.$#"
 			count: 1
 			path: tests/Unit/Kernel/KernelTest.php
 

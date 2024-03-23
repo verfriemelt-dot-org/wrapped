@@ -40,6 +40,12 @@ class KernelTest extends TestCase
         $this->kernel->boot();
     }
 
+    #[Override]
+    public function tearDown(): void
+    {
+        $this->kernel->shutdown();
+    }
+
     public function test_for_kernel_request_and_response_event(): void
     {
         $spy = fn (EventInterface $event) => $this->seenEvents[] = $event::class;
