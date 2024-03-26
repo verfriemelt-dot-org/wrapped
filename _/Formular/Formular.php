@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular;
 
+use Override;
+use RuntimeException;
 use verfriemelt\wrapped\_\DateTime\DateTime;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Exception\Input\InputException;
@@ -22,7 +24,6 @@ use verfriemelt\wrapped\_\Input\Filter;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Session\Session;
 use verfriemelt\wrapped\_\Template\Template;
-use Override;
 use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Formular implements Viewable
@@ -35,8 +36,6 @@ class Formular implements Viewable
 
     final public const string FORM_FIELD_NAME = '_form';
 
-    private ?Filter $filter = null;
-
     private array $elements = [];
 
     private string $method = self::METHOD_POST;
@@ -47,17 +46,11 @@ class Formular implements Viewable
 
     private string $action;
 
-    private readonly string $formname;
-
     private readonly string $csrfTokenName;
 
     private bool $storeValuesOnFail = false;
 
     private bool $prefilledWithSubmitData = false;
-
-    private readonly Session $session;
-
-    protected Request $request;
 
     private function generateCSRF()
     {
@@ -66,24 +59,24 @@ class Formular implements Viewable
     }
 
     public function __construct(
-        string $name,
-        Request $request,
-        Session $session,
-        ?Filter $filter = null,
+        private readonly string $formname,
+        protected Request $request,
+        private readonly Session $session,
+        private readonly ?Filter $filter = null,
         private readonly Template $tpl = new Template(new TemplateRenderer(new Container()))
     ) {
-        $this->formname = $name;
-        $this->filter = $filter;
         $this->csrfTokenName = 'csrf-' . md5($this->formname);
-
-        $this->session = $session;
 
         $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
         $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
 
-        $this->tpl->parse(__DIR__ . '/Template/Formular.tpl.php');
+        $template = \file_get_contents(__DIR__ . '/Template/Formular.tpl.php');
+        if (!is_string($template)) {
+            throw new RuntimeException('cannot load template');
+        }
 
-        $this->request = $request;
+        $this->tpl->parse($template);
+
         $this->action = $request->uri();
     }
 
