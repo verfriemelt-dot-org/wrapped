@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\tests\Unit\Template;
 
+use Iterator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
 use verfriemelt\wrapped\_\Template\TemplateRenderer;
-use Iterator;
-use Override;
 
 class TemplateIfElseTest extends TestCase
 {
@@ -40,9 +40,9 @@ class TemplateIfElseTest extends TestCase
      * @param array<array{set: bool, expected: string}> $tests
      */
     #[DataProvider('data')]
-    public function test(string $tpl, array $tests): void
+    public function test(string $tpldata, array $tests): void
     {
-        $this->tpl->parse($tpl);
+        $this->tpl->parse($tpldata);
 
         foreach ($tests as $case) {
             $this->tpl->setIf('test', $case['set']);
