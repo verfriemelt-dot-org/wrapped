@@ -8,8 +8,8 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Override;
-use Traversable;
 use RuntimeException;
+use Traversable;
 
 final class ParameterBag implements Countable, IteratorAggregate
 {
@@ -74,5 +74,15 @@ final class ParameterBag implements Countable, IteratorAggregate
     public function last(): ?string
     {
         return $this->get(array_key_last($this->parameters));
+    }
+
+    public function set(string|int $key, string $value): void
+    {
+        $this->parameters[$key] = $value;
+    }
+
+    public function delete(string|int $key): void
+    {
+        unset($this->parameters[$key]);
     }
 }

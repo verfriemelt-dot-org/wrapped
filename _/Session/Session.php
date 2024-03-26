@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\Session;
 
 use Override;
 use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\ParameterBag;
 
 final class Session implements SessionHandler
 {
@@ -13,57 +14,47 @@ final class Session implements SessionHandler
 
     public const SESSION_TIMEOUT = 60 * 60 * 24 * 365;
 
-    private $dataObj;
-
     private ?string $sessionId = null;
 
-    private string|SessionDataObject|null $storageObj = null;
+    private ParameterBag $data;
 
-    /** @var mixed[] */
-    private array $currentData = [];
+    private bool $used = false;
 
-    private readonly Request $request;
-
-    public function __construct(Request $request, ?SessionDataObject $sessionStorage = null)
-    {
-        $this->request = $request;
-
-        if ($sessionStorage === null || !in_array(SessionDataObject::class, class_implements($sessionStorage))) {
-            $this->storageObj = SessionSql::class;
-        } else {
-            $this->storageObj = $sessionStorage;
-        }
-
-        $this->storageObj::purgeOldSessions();
+    public function __construct(
+        private readonly Request $request,
+        private SessionDataObject $storage
+    ) {
+        $this->data = new ParameterBag();
+        ($this->storage)::purgeOldSessions();
 
         if ($request->cookies()->has(self::SESSION_COOKIE_NAME)) {
             $this->resume($request->cookies()->get(self::SESSION_COOKIE_NAME));
         }
     }
 
-    public function __destruct()
+    public function shutdown(): void
     {
-        if ($this->dataObj === null) {
+        if (!$this->used) {
             return;
         }
 
-        $this->dataObj->setTimeout(time() + static::SESSION_TIMEOUT);
-        $this->dataObj->setData(base64_encode(serialize($this->currentData)));
-        $this->dataObj->save();
+        $this->storage->setTimeout(time() + static::SESSION_TIMEOUT);
+        $this->storage->setData(\json_encode($this->data->all(), \JSON_THROW_ON_ERROR));
+        $this->storage->save();
     }
 
     #[Override]
     public function delete(string $name): static
     {
-        unset($this->currentData[$name]);
+        $this->data->delete($name);
         return $this;
     }
 
     #[Override]
     public function destroy(): void
     {
-        $this->dataObj->delete();
-        $this->currentData = [];
+        $this->storage->delete();
+        $this->data = new ParameterBag();
 
         setcookie(
             self::SESSION_COOKIE_NAME,
@@ -76,7 +67,7 @@ final class Session implements SessionHandler
     public function get(string $name, mixed $default = null): mixed
     {
         if ($this->has($name)) {
-            return $this->currentData[$name];
+            return $this->data->get($name);
         }
 
         return $default;
@@ -85,23 +76,21 @@ final class Session implements SessionHandler
     #[Override]
     public function has(string $name): bool
     {
-        return isset($this->currentData[$name]);
+        return $this->data->has($name);
     }
 
     private function resume(string $sessionId): static
     {
-        $localCopy = $this->storageObj;
-
-        $this->dataObj = $localCopy::getBySessionId($sessionId);
+        $storage = ($this->storage)::getBySessionId($sessionId);
 
         // if not found, create new session
-        if ($this->dataObj === null) {
+        if ($storage === null) {
             $this->start();
             return $this;
         }
 
         $this->sessionId = $sessionId;
-        $this->currentData = unserialize(base64_decode((string) $this->dataObj->getData()));
+        $this->data = new ParameterBag(\json_decode($this->storage->getData()));
 
         return $this;
     }
@@ -109,17 +98,20 @@ final class Session implements SessionHandler
     #[Override]
     public function set(string $name, mixed $value): static
     {
+        $this->used = true;
+
         if ($this->sessionId === null) {
             $this->start();
         }
 
-        $this->currentData[$name] = $value;
+        $this->data->set($name, (string) $value);
         return $this;
     }
 
     private function start(): void
     {
         $this->sessionId = sha1(microtime(true) . random_int(0, mt_getrandmax()));
+        $this->used = true;
 
         setcookie(
             self::SESSION_COOKIE_NAME,
@@ -127,11 +119,11 @@ final class Session implements SessionHandler
             ['expires' => time() + self::SESSION_TIMEOUT, 'path' => '/']
         );
 
-        $this->dataObj = new $this->storageObj();
+        $this->storage = new $this->storage();
 
-        $this->dataObj->setSessionId($this->sessionId);
-        $this->dataObj->setIp($this->request->remoteIp());
-        $this->dataObj->setTimeout(time() + self::SESSION_TIMEOUT);
+        $this->storage->setSessionId($this->sessionId);
+        $this->storage->setIp($this->request->remoteIp());
+        $this->storage->setTimeout(time() + self::SESSION_TIMEOUT);
     }
 
     public function fetchSessionId(): string
@@ -141,5 +133,10 @@ final class Session implements SessionHandler
         }
 
         return $this->sessionId;
+    }
+
+    public function all(): array
+    {
+        return $this->data->all();
     }
 }

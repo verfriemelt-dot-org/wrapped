@@ -10,17 +10,12 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 
 class ExceptionEvent implements EventInterface
 {
-    protected Throwable $throwable;
-
-    protected Request $request;
-
     protected Response $response;
 
-    public function __construct(Throwable $throwable, Request $request)
-    {
-        $this->request = $request;
-        $this->throwable = $throwable;
-    }
+    public function __construct(
+        private readonly Throwable $throwable,
+        private readonly Request $request
+    ) {}
 
     public function setResponse(Response $response): static
     {

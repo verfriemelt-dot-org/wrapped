@@ -28,7 +28,7 @@ class TemplateIfElseTest extends TestCase
     public static function data(): Iterator
     {
         yield 'negated and standard if null 2' => [
-            'tpldata' => '{{ if=\'test\' }}false{{ else=\'test\'}}true{{ /if=\'test\' }}{{ !if=\'test\' }}true{{ /if=\'test\' }}',
+            'tpl' => '{{ if=\'test\' }}false{{ else=\'test\'}}true{{ /if=\'test\' }}{{ !if=\'test\' }}true{{ /if=\'test\' }}',
             'tests' => [
                 ['set' => false, 'expected' => 'truetrue'],
                 ['set' => true, 'expected' => 'false'],
@@ -40,9 +40,9 @@ class TemplateIfElseTest extends TestCase
      * @param array<array{set: bool, expected: string}> $tests
      */
     #[DataProvider('data')]
-    public function test(string $tpldata, array $tests): void
+    public function test(string $tpl, array $tests): void
     {
-        $this->tpl->parse($tpldata);
+        $this->tpl->parse($tpl);
 
         foreach ($tests as $case) {
             $this->tpl->setIf('test', $case['set']);

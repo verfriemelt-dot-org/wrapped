@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Http\Request;
 
 use verfriemelt\wrapped\_\ParameterBag;
+use verfriemelt\wrapped\_\Session\Session;
 
 class Request
 {
@@ -23,6 +24,8 @@ class Request
     private ParameterBag $content;
 
     private ParameterBag $header;
+
+    private Session $session;
 
     public function __construct(
         array $query = [],
@@ -236,5 +239,20 @@ class Request
     public function ajax(): bool
     {
         return strtolower($this->server->get('HTTP_X_REQUESTED_WITH') ?? '') === 'xmlhttprequest';
+    }
+
+    public function setSession(Session $session): void
+    {
+        $this->session = $session;
+    }
+
+    public function getSession(): Session
+    {
+        return $this->session;
+    }
+
+    public function hasSession(): bool
+    {
+        return isset($this->session);
     }
 }

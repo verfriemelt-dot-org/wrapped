@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\tests\Unit\Router;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
@@ -13,7 +14,6 @@ use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
 use verfriemelt\wrapped\_\Http\Router\Route;
 use verfriemelt\wrapped\_\Http\Router\RouteGroup;
 use verfriemelt\wrapped\_\Http\Router\Router;
-use Override;
 
 class RouterTest extends TestCase
 {

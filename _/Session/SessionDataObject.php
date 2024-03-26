@@ -6,23 +6,27 @@ namespace verfriemelt\wrapped\_\Session;
 
 interface SessionDataObject
 {
-    public static function getBySessionId($id);
+    public static function getBySessionId(string $id): ?SessionDataObject;
 
-    public static function purgeOldSessions();
+    public static function purgeOldSessions(): void;
 
-    public function getData();
+    public function getData(): string;
 
-    public function getTimeout();
+    public function getTimeout(): int;
 
-    public function getIp();
+    public function getIp(): string;
 
-    public function getSessionId();
+    public function getSessionId(): string;
 
-    public function setData($data);
+    public function setData(string $data): SessionDataObject;
 
-    public function setTimeout($timeout);
+    public function setTimeout(int $timeout): SessionDataObject;
 
-    public function setIp($ip);
+    public function setIp(string $ip);
 
-    public function setSessionId($sessionId);
+    public function setSessionId(string $sessionId): SessionDataObject;
+
+    public function save(): static;
+
+    public function delete(): static;
 }

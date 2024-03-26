@@ -21,12 +21,14 @@ use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Http\Event\KernelRequestEvent;
 use verfriemelt\wrapped\_\Http\Event\KernelResponseEvent;
 use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Request\RequestStack;
 use verfriemelt\wrapped\_\Http\Response\Http;
 use verfriemelt\wrapped\_\Http\Response\Response;
 use verfriemelt\wrapped\_\Http\Router\Exception\NoRouteMatching;
 use verfriemelt\wrapped\_\Http\Router\Exception\RouteGotFiltered;
 use verfriemelt\wrapped\_\Http\Router\Routable;
 use verfriemelt\wrapped\_\Http\Router\Router;
+use verfriemelt\wrapped\_\Session\SessionEventHandler;
 use verfriemelt\wrapped\_\Template\Template;
 
 abstract class AbstractKernel implements KernelInterface
@@ -45,11 +47,11 @@ abstract class AbstractKernel implements KernelInterface
     {
         $this->container = new Container();
         $this->container->register(KernelInterface::class, $this);
-
         $this->container->register(Template::class)->share(false);
 
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
+        $this->eventDispatcher->addSubscriber($this->container->get(SessionEventHandler::class));
 
         $this->initializeErrorHandler();
     }
@@ -116,6 +118,9 @@ abstract class AbstractKernel implements KernelInterface
             throw new RuntimeException('kernel not booted');
         }
 
+        $requestStack = $this->container->get(RequestStack::class);
+        $requestStack->push($request);
+
         $this->eventDispatcher->dispatch(new KernelRequestEvent($request));
         $resolver = new ArgumentResolver($this->container, new ArgumentMetadataFactory());
 
@@ -133,7 +138,7 @@ abstract class AbstractKernel implements KernelInterface
                 } else {
                     $response = (new $callback(...$resolver->resolv($callback)))
                         ->setContainer($this->container) // controller container hack :(
-                        ->prepare(...$resolver->resolv($callback, 'prepare'))
+                        ->prepare()
                         ->handleRequest(...$resolver->resolv($callback, 'handleRequest'));
                 }
             } catch (Throwable $e) {
@@ -150,6 +155,9 @@ abstract class AbstractKernel implements KernelInterface
         }
 
         $this->eventDispatcher->dispatch(new KernelResponseEvent($response));
+
+        $requestStack->pop();
+
         return $response;
     }
 

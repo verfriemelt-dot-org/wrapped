@@ -128,4 +128,12 @@ class Response
     {
         return $this->content;
     }
+
+    /**
+     * @return HttpHeader[]
+     */
+    public function getHeader(): array
+    {
+        return $this->headers;
+    }
 }

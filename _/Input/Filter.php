@@ -5,23 +5,20 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Input;
 
 use verfriemelt\wrapped\_\Exception\Input\InputException;
-use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Request\RequestStack;
 use verfriemelt\wrapped\_\ParameterBag;
 
 class Filter
 {
-    protected Request $request;
-
     private bool $failed = false;
 
     private array $messageStack = [];
 
     private array $filterItems = [];
 
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
+    public function __construct(
+        private readonly RequestStack $requestStack
+    ) {}
 
     /**
      * @return bool
@@ -64,31 +61,31 @@ class Filter
 
     public function query(): FilterItem
     {
-        return $this->createFilterItem($this->request->query());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->query());
     }
 
     public function request(): FilterItem
     {
-        return $this->createFilterItem($this->request->request());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->request());
     }
 
     public function cookies(): FilterItem
     {
-        return $this->createFilterItem($this->request->cookies());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->cookies());
     }
 
     public function server(): FilterItem
     {
-        return $this->createFilterItem($this->request->server());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->server());
     }
 
     public function files(): FilterItem
     {
-        return $this->createFilterItem($this->request->files());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->files());
     }
 
     public function content(): FilterItem
     {
-        return $this->createFilterItem($this->request->content());
+        return $this->createFilterItem($this->requestStack->getCurrentRequest()->content());
     }
 }
