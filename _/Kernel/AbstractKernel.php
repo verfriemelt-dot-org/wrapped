@@ -205,6 +205,7 @@ abstract class AbstractKernel implements KernelInterface
         $discovery->loadCommands();
     }
 
+    #[Override]
     public function shutdown(): void
     {
         $this->unregisterErrorHandler();
