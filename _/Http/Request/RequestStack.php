@@ -16,9 +16,10 @@ final readonly class RequestStack
         $this->stack = new SplStack();
     }
 
-    public function push(Request $request): void
+    public function push(Request $request): RequestStack
     {
         $this->stack->push($request);
+        return $this;
     }
 
     public function getCurrentRequest(): Request
