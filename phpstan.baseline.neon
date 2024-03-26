@@ -2176,11 +2176,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:generateCSRF\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:preFillFormWithSendData\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2641,26 +2636,6 @@ parameters:
 			path: _/Http/Router/Router.php
 
 		-
-			message: "#^Cannot call method delete\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
-			count: 1
-			path: _/Input/CSRF.php
-
-		-
-			message: "#^Cannot call method get\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
-			count: 2
-			path: _/Input/CSRF.php
-
-		-
-			message: "#^Cannot call method has\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
-			count: 1
-			path: _/Input/CSRF.php
-
-		-
-			message: "#^Cannot call method set\\(\\) on verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\|null\\.$#"
-			count: 1
-			path: _/Input/CSRF.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\CSRF\\:\\:generateToken\\(\\) should return string but returns mixed\\.$#"
 			count: 1
 			path: _/Input/CSRF.php
@@ -2757,7 +2732,7 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$obj of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ArgumentResolver\\:\\:resolv\\(\\) expects class\\-string\\|object, \\(callable\\)\\|object\\|string given\\.$#"
-			count: 3
+			count: 2
 			path: _/Kernel/AbstractKernel.php
 
 		-
@@ -3111,17 +3086,12 @@ parameters:
 			path: _/Serializer/Encoder/JsonEncoder.php
 
 		-
-			message: "#^Call to function base64_decode\\(\\) requires parameter \\#2 to be set\\.$#"
+			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
 		-
-			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Cannot call static method getBySessionId\\(\\) on string\\|verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\|null\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
@@ -3131,64 +3101,24 @@ parameters:
 			path: _/Session/Session.php
 
 		-
+			message: "#^Parameter \\#1 \\$ip of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
+			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
 			message: "#^Parameter \\#1 \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$currentData \\(array\\) does not accept mixed\\.$#"
+			message: "#^Parameter \\#2 \\$default of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:get\\(\\) expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: _/Session/Session.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:\\$dataObj has no type specified\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getBySessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getBySessionId\\(\\) has parameter \\$id with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getIp\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getSessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:getTimeout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:purgeOldSessions\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setData\\(\\) has parameter \\$data with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) has no return type specified\\.$#"
@@ -3196,144 +3126,14 @@ parameters:
 			path: _/Session/SessionDataObject.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) has parameter \\$ip with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) never returns Closure\\(T, mixed \\.\\.\\.\\)\\: T so it can be removed from the return type\\.$#"
 			count: 1
-			path: _/Session/SessionDataObject.php
+			path: _/Session/SessionEventHandler.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setSessionId\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) should return \\(Closure\\(T, mixed \\.\\.\\.\\)\\: T\\)\\|null but returns \\(Closure\\(\\)\\: void\\)\\|\\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Event\\\\KernelResponseEvent\\)\\: void\\)\\|null\\.$#"
 			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setSessionId\\(\\) has parameter \\$sessionId with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setTimeout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setTimeout\\(\\) has parameter \\$timeout with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getBySessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getBySessionId\\(\\) has parameter \\$id with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getIp\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getSessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:getTimeout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:purgeOldSessions\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setData\\(\\) has parameter \\$data with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setId\\(\\) has parameter \\$id with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setIp\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setIp\\(\\) has parameter \\$ip with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setSessionId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setSessionId\\(\\) has parameter \\$sessionId with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setTimeout\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:setTimeout\\(\\) has parameter \\$timeout with no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$data has no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$id has no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$ip has no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$sessionId has no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionSql\\:\\:\\$timeout has no type specified\\.$#"
-			count: 1
-			path: _/Session/SessionSql.php
+			path: _/Session/SessionEventHandler.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\\\UdpSocket\\:\\:\\$socket has no type specified\\.$#"
@@ -3341,37 +3141,7 @@ parameters:
 			path: _/Statsd/Connection/UdpSocket.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:getInstance\\(\\) has parameter \\$args with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:setConnection\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:setNamespace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:setNamespace\\(\\) has parameter \\$namespace with no type specified\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:time\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\Connection\\|null given\\.$#"
-			count: 1
-			path: _/Statsd/StatsdClient.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Statsd\\\\StatsdClient\\:\\:\\$handle has no type specified\\.$#"
 			count: 1
 			path: _/Statsd/StatsdClient.php
 

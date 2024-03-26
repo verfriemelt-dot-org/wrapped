@@ -18,11 +18,10 @@ use verfriemelt\wrapped\_\Formular\FormTypes\Password;
 use verfriemelt\wrapped\_\Formular\FormTypes\Select;
 use verfriemelt\wrapped\_\Formular\FormTypes\Text;
 use verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
-use verfriemelt\wrapped\_\Http\Request\Request;
+use verfriemelt\wrapped\_\Http\Request\RequestStack;
 use verfriemelt\wrapped\_\Input\CSRF;
 use verfriemelt\wrapped\_\Input\Filter;
 use verfriemelt\wrapped\_\Output\Viewable;
-use verfriemelt\wrapped\_\Session\Session;
 use verfriemelt\wrapped\_\Template\Template;
 use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
@@ -46,30 +45,18 @@ class Formular implements Viewable
 
     private string $action;
 
-    private readonly string $csrfTokenName;
+    private string $csrfTokenName;
 
     private bool $storeValuesOnFail = false;
 
     private bool $prefilledWithSubmitData = false;
 
-    private function generateCSRF()
-    {
-        $csrf = new CSRF($this->session);
-        return $csrf->generateToken($this->csrfTokenName);
-    }
-
     public function __construct(
         private readonly string $formname,
-        protected Request $request,
-        private readonly Session $session,
+        protected RequestStack $requestStack,
         private readonly ?Filter $filter = null,
         private readonly Template $tpl = new Template(new TemplateRenderer(new Container()))
     ) {
-        $this->csrfTokenName = 'csrf-' . md5($this->formname);
-
-        $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
-        $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
-
         $template = \file_get_contents(__DIR__ . '/Template/Formular.tpl.php');
         if (!is_string($template)) {
             throw new RuntimeException('cannot load template');
@@ -77,7 +64,13 @@ class Formular implements Viewable
 
         $this->tpl->parse($template);
 
-        $this->action = $request->uri();
+        $this->action = $this->requestStack->getCurrentRequest()->uri();
+    }
+
+    private function generateCSRF(): string
+    {
+        $csrf = new CSRF($this->requestStack->getCurrentRequest());
+        return $csrf->generateToken($this->csrfTokenName);
     }
 
     public function setCssClass($cssClass): Formular
@@ -222,7 +215,7 @@ class Formular implements Viewable
 
     public function isPosted(): bool
     {
-        return $this->request->request()->get(self::FORM_FIELD_NAME) === $this->formname;
+        return $this->requestStack->getCurrentRequest()->request()->get(self::FORM_FIELD_NAME) === $this->formname;
     }
 
     /**
@@ -231,8 +224,8 @@ class Formular implements Viewable
     public function get(string $name)
     {
         $input = ($this->method === self::METHOD_POST) ?
-            $this->request->request() :
-            $this->request->query();
+            $this->requestStack->getCurrentRequest()->request() :
+            $this->requestStack->getCurrentRequest()->query();
 
         if (!isset($this->elements[$name])) {
             return null;
@@ -273,7 +266,7 @@ class Formular implements Viewable
         if (
             (
                 $this->method === self::METHOD_POST
-                && $this->request->requestMethod() === 'POST'
+                && $this->requestStack->getCurrentRequest()->requestMethod() === 'POST'
                 && $this->get(self::FORM_FIELD_NAME) === $this->formname
             ) || $this->method === self::METHOD_GET) {
             $failed = false;
@@ -334,6 +327,11 @@ class Formular implements Viewable
             $r->set('element', $element->fetchHtml());
             $r->save();
         }
+
+        $this->csrfTokenName = 'csrf-' . \md5($this->formname);
+
+        $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
+        $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
 
         return $this->tpl->render();
     }

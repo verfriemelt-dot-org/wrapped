@@ -85,9 +85,13 @@ class Container
      */
     public function generateDefaultService(string $id): bool
     {
-        /* @phpstan-ignore-next-line */
-        $this->register($id, null);
-        return true;
+        if (\class_exists($id)) {
+            /* @phpstan-ignore-next-line */
+            $this->register($id, null);
+            return true;
+        }
+
+        return false;
     }
 
     /**
