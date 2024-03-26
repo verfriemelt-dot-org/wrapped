@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Session;
 use Override;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\ParameterBag;
+use RuntimeException;
 
 final class Session implements SessionHandler
 {
@@ -18,7 +19,7 @@ final class Session implements SessionHandler
 
     private ParameterBag $data;
 
-    private bool $used = false;
+    private bool $inUse = false;
 
     public function __construct(
         private readonly Request $request,
@@ -34,7 +35,7 @@ final class Session implements SessionHandler
 
     public function shutdown(): void
     {
-        if (!$this->used) {
+        if (!$this->inUse) {
             return;
         }
 
@@ -46,6 +47,7 @@ final class Session implements SessionHandler
     #[Override]
     public function delete(string $name): static
     {
+        $this->inUse = true;
         $this->data->delete($name);
         return $this;
     }
@@ -89,8 +91,15 @@ final class Session implements SessionHandler
             return $this;
         }
 
+        $this->storage = $storage;
         $this->sessionId = $sessionId;
-        $this->data = new ParameterBag(\json_decode($this->storage->getData()));
+
+        $sessionData = \json_decode($this->storage->getData(), true);
+        if ($sessionData === false) {
+            throw new RuntimeException('cant decode session');
+        }
+
+        $this->data = new ParameterBag($sessionData);
 
         return $this;
     }
@@ -98,7 +107,7 @@ final class Session implements SessionHandler
     #[Override]
     public function set(string $name, mixed $value): static
     {
-        $this->used = true;
+        $this->inUse = true;
 
         if ($this->sessionId === null) {
             $this->start();
@@ -111,7 +120,7 @@ final class Session implements SessionHandler
     private function start(): void
     {
         $this->sessionId = sha1(microtime(true) . random_int(0, mt_getrandmax()));
-        $this->used = true;
+        $this->inUse = true;
 
         setcookie(
             self::SESSION_COOKIE_NAME,

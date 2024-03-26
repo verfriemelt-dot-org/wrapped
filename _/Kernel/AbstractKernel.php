@@ -164,7 +164,7 @@ abstract class AbstractKernel implements KernelInterface
     protected function dispatchException(Throwable $exception): Response
     {
         $exceptionEvent = $this->eventDispatcher->dispatch(
-            new ExceptionEvent($exception, $this->container->get(Request::class))
+            new ExceptionEvent($exception, $this->container->get(RequestStack::class)->getCurrentRequest())
         );
 
         if ($exceptionEvent->hasResponse()) {
