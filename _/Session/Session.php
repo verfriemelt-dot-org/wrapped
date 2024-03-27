@@ -7,7 +7,6 @@ namespace verfriemelt\wrapped\_\Session;
 use Override;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\ParameterBag;
-use RuntimeException;
 
 final class Session implements SessionHandler
 {
@@ -95,11 +94,12 @@ final class Session implements SessionHandler
         $this->sessionId = $sessionId;
 
         $sessionData = \json_decode($this->storage->getData(), true);
-        if ($sessionData === false) {
-            throw new RuntimeException('cant decode session');
+        if (!is_array($sessionData)) {
+            $this->data = new ParameterBag();
+            $this->inUse = true;
+        } else {
+            $this->data = new ParameterBag($sessionData);
         }
-
-        $this->data = new ParameterBag($sessionData);
 
         return $this;
     }

@@ -3111,7 +3111,7 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/Session/Session.php
 
