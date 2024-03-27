@@ -2736,6 +2736,11 @@ parameters:
 			path: _/Kernel/AbstractKernel.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Kernel\\\\PerformanceHeadersResponseSubscriber\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Event\\\\KernelResponseEvent\\)\\: void\\)\\|null\\.$#"
+			count: 1
+			path: _/Kernel/PerformanceHeadersResponseSubscriber.php
+
+		-
 			message: "#^Class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: _/ParameterBag.php
@@ -3116,22 +3121,17 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Parameter \\#2 \\$default of method verfriemelt\\\\wrapped\\\\_\\\\ParameterBag\\:\\:get\\(\\) expects string\\|null, mixed given\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Session/SessionDataObject.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) never returns Closure\\(T, mixed \\.\\.\\.\\)\\: T so it can be removed from the return type\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) never returns Closure\\(T\\)\\: T so it can be removed from the return type\\.$#"
 			count: 1
 			path: _/Session/SessionEventHandler.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) should return \\(Closure\\(T, mixed \\.\\.\\.\\)\\: T\\)\\|null but returns \\(Closure\\(\\)\\: void\\)\\|\\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Event\\\\KernelResponseEvent\\)\\: void\\)\\|null\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(\\)\\: void\\)\\|\\(Closure\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Event\\\\KernelResponseEvent\\)\\: void\\)\\|null\\.$#"
 			count: 1
 			path: _/Session/SessionEventHandler.php
 
@@ -3921,12 +3921,12 @@ parameters:
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) never returns Closure\\(T, mixed \\.\\.\\.\\)\\: T so it can be removed from the return type\\.$#"
+			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) never returns Closure\\(T\\)\\: T so it can be removed from the return type\\.$#"
 			count: 1
 			path: tests/Integration/Event/EventDispatcherTest.php
 
 		-
-			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T, mixed \\.\\.\\.\\)\\: T\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|null\\.$#"
+			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|null\\.$#"
 			count: 1
 			path: tests/Integration/Event/EventDispatcherTest.php
 

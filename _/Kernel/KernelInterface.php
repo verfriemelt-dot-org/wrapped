@@ -19,4 +19,6 @@ interface KernelInterface
     public function handle(Request $request): Response;
 
     public function shutdown(): void;
+
+    public function getMetrics(): KernelMetricDto;
 }

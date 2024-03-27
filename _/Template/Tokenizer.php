@@ -18,24 +18,19 @@ use verfriemelt\wrapped\_\Template\Token\VariableToken;
 
 final class Tokenizer
 {
-    private readonly Token $root;
-
     private int $line = 0;
     private int $offset = 0;
     private int $lineOffset = 0;
 
-    public function __construct()
-    {
-        $this->root = new Token();
-    }
+    private static int $templatesParsed = 0;
+    private static float $parseTime = 0.0;
+
+    /** @var array<string,Token> */
+    private static array $cache = [];
 
     public function parse(string $input): Token
     {
-        while (($token = $this->consume($input)) !== null) {
-            $this->root->addChildren($token);
-        }
-
-        return $this->root;
+        return static::$cache[md5($input)] ??= $this->buildAst($input);
     }
 
     private function consume(string $input): ?Token
@@ -208,5 +203,25 @@ final class Tokenizer
         $this->offset += \mb_strlen($input);
 
         return $stringToken;
+    }
+
+    public function getPerformanceData(): TokenizerPerformanceDto
+    {
+        return new TokenizerPerformanceDto(static::$templatesParsed, static::$parseTime);
+    }
+
+    public function buildAst(string $input): Token
+    {
+        $root = new Token();
+
+        ++static::$templatesParsed;
+        $timer = \microtime(true);
+        while (($token = $this->consume($input)) !== null) {
+            $root->addChildren($token);
+        }
+
+        static::$parseTime += \microtime(true) - $timer;
+
+        return $root;
     }
 }

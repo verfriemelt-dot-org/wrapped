@@ -14,7 +14,7 @@ class ExceptionEvent implements EventInterface
 
     public function __construct(
         private readonly Throwable $throwable,
-        private readonly Request $request
+        private readonly ?Request $request = null
     ) {}
 
     public function setResponse(Response $response): static
@@ -28,7 +28,7 @@ class ExceptionEvent implements EventInterface
         return $this->throwable;
     }
 
-    public function getRequest(): Request
+    public function getRequest(): ?Request
     {
         return $this->request;
     }
