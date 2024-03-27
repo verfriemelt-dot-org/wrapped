@@ -43,8 +43,13 @@ abstract class AbstractKernel implements KernelInterface
 
     protected bool $booted = false;
 
+    protected readonly float $constructTime;
+    protected float $requestHandleTime;
+    protected float $responseTime;
+
     public function __construct()
     {
+        $this->constructTime = \microtime(true);
         $this->container = new Container();
         $this->container->register(KernelInterface::class, $this);
         $this->container->register(Template::class)->share(false);
@@ -52,6 +57,7 @@ abstract class AbstractKernel implements KernelInterface
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);
         $this->eventDispatcher->addSubscriber($this->container->get(SessionEventHandler::class));
+        $this->eventDispatcher->addSubscriber($this->container->get(PerformanceHeadersResponseSubscriber::class));
 
         $this->initializeErrorHandler();
     }
@@ -114,6 +120,8 @@ abstract class AbstractKernel implements KernelInterface
     #[Override]
     public function handle(Request $request): Response
     {
+        $this->requestHandleTime = \microtime(true);
+
         if ($this->booted === false) {
             throw new RuntimeException('kernel not booted');
         }
@@ -154,18 +162,23 @@ abstract class AbstractKernel implements KernelInterface
             }
         }
 
+        $this->responseTime = \microtime(true);
         $this->eventDispatcher->dispatch(new KernelResponseEvent($response));
 
         $requestStack->pop();
-
         return $response;
     }
 
     protected function dispatchException(Throwable $exception): Response
     {
-        $exceptionEvent = $this->eventDispatcher->dispatch(
-            new ExceptionEvent($exception, $this->container->get(RequestStack::class)->getCurrentRequest())
-        );
+        $stack = $this->container->get(RequestStack::class);
+        if ($stack->hasRequest()) {
+            $throwable = new ExceptionEvent($exception, $stack->getCurrentRequest());
+        } else {
+            $throwable = new ExceptionEvent($exception);
+        }
+
+        $exceptionEvent = $this->eventDispatcher->dispatch($throwable);
 
         if ($exceptionEvent->hasResponse()) {
             return $exceptionEvent->getResponse();
@@ -217,5 +230,15 @@ abstract class AbstractKernel implements KernelInterface
     public function shutdown(): void
     {
         $this->unregisterErrorHandler();
+    }
+
+    #[Override]
+    public function getMetrics(): KernelMetricDto
+    {
+        return new KernelMetricDto(
+            $this->constructTime,
+            $this->requestHandleTime,
+            $this->responseTime,
+        );
     }
 }

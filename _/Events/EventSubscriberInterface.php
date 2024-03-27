@@ -13,7 +13,7 @@ interface EventSubscriberInterface
      *
      * @param T $event
      *
-     * @return Closure(T, mixed ...): T|null
+     * @return Closure(T): T|null
      */
     public function on(EventInterface $event): ?Closure;
 }

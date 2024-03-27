@@ -22,6 +22,11 @@ final readonly class RequestStack
         return $this;
     }
 
+    public function hasRequest(): bool
+    {
+        return $this->stack->count() > 0;
+    }
+
     public function getCurrentRequest(): Request
     {
         return $this->stack->bottom();
