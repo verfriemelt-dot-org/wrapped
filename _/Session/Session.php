@@ -27,8 +27,15 @@ final class Session implements SessionHandler
         $this->data = new ParameterBag();
         ($this->storage)::purgeOldSessions();
 
-        if ($request->cookies()->has(self::SESSION_COOKIE_NAME)) {
-            $this->resume($request->cookies()->get(self::SESSION_COOKIE_NAME));
+        if (!$request->cookies()->has(self::SESSION_COOKIE_NAME)) {
+            return;
+        }
+
+        $cookieData = $request->cookies()->all()[self::SESSION_COOKIE_NAME];
+        if (is_string($cookieData)) {
+            $this->resume($cookieData);
+        } else {
+            $this->start();
         }
     }
 
