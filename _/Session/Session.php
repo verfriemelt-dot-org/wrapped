@@ -54,6 +54,11 @@ final class Session implements SessionHandler
     public function delete(string $name): static
     {
         $this->inUse = true;
+
+        if ($this->sessionId === null) {
+            $this->start();
+        }
+
         $this->data->delete($name);
         return $this;
     }
@@ -63,6 +68,8 @@ final class Session implements SessionHandler
     {
         $this->storage->delete();
         $this->data = new ParameterBag();
+        $this->sessionId = null;
+        unset($this->storage);
 
         setcookie(
             self::SESSION_COOKIE_NAME,
