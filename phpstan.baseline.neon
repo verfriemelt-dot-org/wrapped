@@ -3116,11 +3116,6 @@ parameters:
 			path: _/Session/Session.php
 
 		-
-			message: "#^Parameter \\#1 \\$sessionId of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:resume\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Session/SessionDataObject.php
@@ -3181,6 +3176,46 @@ parameters:
 			path: _/Statsd/StatsdTimer.php
 
 		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 3
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Cannot access property \\$bool on mixed\\.$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Cannot access property \\$data on mixed\\.$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Cannot call method readValue\\(\\) on mixed\\.$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\LegacyProcessor\\:\\:processVariableToken\\(\\)\" is 10, keep it under 8$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Offset 'if' might not exist on array\\{vars\\?\\: mixed, if\\?\\: mixed, repeater\\?\\: mixed\\}\\.$#"
+			count: 1
+			path: _/Template/LegacyProcessor.php
+
+		-
+			message: "#^Offset 'vars' might not exist on array\\{vars\\?\\: mixed, if\\?\\: mixed, repeater\\?\\: mixed\\}\\.$#"
+			count: 2
+			path: _/Template/LegacyProcessor.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/Repeater.php
@@ -3206,57 +3241,7 @@ parameters:
 			path: _/Template/Template.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:processVariableToken\\(\\)\" is 10, keep it under 8$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:printToken\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:process\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:processConditionalToken\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:processRepeaterToken\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:processVariableToken\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:render\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:searchForData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:searchForData\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Template/TemplateRenderer.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\TemplateRenderer\\:\\:\\$repeaterDataSourcePath type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Template/TemplateRenderer.php
 

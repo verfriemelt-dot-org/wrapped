@@ -29,8 +29,15 @@ class Template
         return $this;
     }
 
-    public function render(): string
+    /**
+     * @param array<string|mixed> $data
+     */
+    public function render(?array $data = null): string
     {
+        if ($data === null) {
+            $this->templateRenderer->enableLegacyMode();
+        }
+
         return $this->templateRenderer->render(
             $this->token,
             [
