@@ -10,8 +10,10 @@ class ConditionalToken extends Token
 {
     private Expression $expression;
 
-    private Token $consequent;
-    private Token $alternative;
+    private RootToken $consequent;
+    private RootToken $alternative;
+
+    public const string MATCH_STRING = 'if=';
 
     public function setExpression(Expression $expr): void
     {
@@ -23,22 +25,22 @@ class ConditionalToken extends Token
         return $this->expression;
     }
 
-    public function setConsequent(Token $token): void
+    public function setConsequent(RootToken $token): void
     {
         $this->consequent = $token;
     }
 
-    public function setAlternative(Token $token): void
+    public function setAlternative(RootToken $token): void
     {
         $this->alternative = $token;
     }
 
-    public function consequent(): Token
+    public function consequent(): RootToken
     {
         return $this->consequent;
     }
 
-    public function alternative(): Token
+    public function alternative(): RootToken
     {
         return $this->alternative;
     }

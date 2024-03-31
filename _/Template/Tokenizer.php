@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
-use Exception;
 use verfriemelt\wrapped\_\Template\Token\ConditionalElseToken;
 use verfriemelt\wrapped\_\Template\Token\ConditionalToken;
+use verfriemelt\wrapped\_\Template\Token\EndForToken;
 use verfriemelt\wrapped\_\Template\Token\Exception\EmptyContionalExpressionException;
 use verfriemelt\wrapped\_\Template\Token\Exception\EmptyRepeaterExpressionException;
 use verfriemelt\wrapped\_\Template\Token\Exception\MissingContionalClosingException;
+use verfriemelt\wrapped\_\Template\Token\Exception\MissingEndForException;
 use verfriemelt\wrapped\_\Template\Token\Exception\MissingRepeaterClosingException;
+use verfriemelt\wrapped\_\Template\Token\ForToken;
 use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
+use verfriemelt\wrapped\_\Template\Token\RootToken;
 use verfriemelt\wrapped\_\Template\Token\StringToken;
 use verfriemelt\wrapped\_\Template\Token\Token;
 use verfriemelt\wrapped\_\Template\Token\VariableToken;
@@ -25,10 +28,10 @@ final class Tokenizer
     private static int $templatesParsed = 0;
     private static float $parseTime = 0.0;
 
-    /** @var array<string,Token> */
+    /** @var array<string,RootToken> */
     private static array $cache = [];
 
-    public function parse(string $input): Token
+    public function parse(string $input): RootToken
     {
         return static::$cache[md5($input)] ??= $this->buildAst($input);
     }
@@ -61,19 +64,55 @@ final class Tokenizer
     {
         $tokenContent = \mb_substr($input, $nextTokenStartPos + 2, $nextTokenEndPos - $nextTokenStartPos - 2);
 
-        if (!\str_contains($tokenContent, '=')) {
-            return $this->createVariableToken($input, $nextTokenStartPos, $nextTokenEndPos);
-        }
-
-        if (\str_contains($tokenContent, 'repeater=')) {
+        if (\str_contains($tokenContent, RepeaterToken::MATCH_STRING)) {
             return $this->createRepeaterToken($input, $nextTokenStartPos, $nextTokenEndPos);
         }
 
-        if (\str_contains($tokenContent, 'if=') || \str_contains($tokenContent, 'else=')) {
+        if (\str_contains($tokenContent, ConditionalToken::MATCH_STRING) || \str_contains($tokenContent, ConditionalElseToken::MATCH_STRING)) {
             return $this->createConditionalToken($input, $nextTokenStartPos, $nextTokenEndPos);
         }
 
-        throw new Exception('not implemented');
+        if (\preg_match(ForToken::MATCH_REGEX, $tokenContent) === 1) {
+            return $this->createForToken($input, $nextTokenStartPos, $nextTokenEndPos);
+        }
+
+        if (\preg_match(EndForToken::MATCH_REGEX, $tokenContent) === 1) {
+            $this->offset += $nextTokenEndPos - $nextTokenStartPos + 2;
+            return new EndForToken($this->line, $this->offset, $this->lineOffset);
+        }
+
+        return $this->createVariableToken($input, $nextTokenStartPos, $nextTokenEndPos);
+    }
+
+    private function createForToken(string $input, int $start, int $end): ForToken
+    {
+        $matches = [];
+        $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
+
+        if (\preg_match(ForToken::MATCH_REGEX, $expression, $matches) !== 1) {
+            throw new EmptyContionalExpressionException('cannot match foreach token: ' . $expression);
+        }
+
+        \assert(\is_string($matches['collection'] ?? null), 'match collection missing');
+        \assert(\is_string($matches['value'] ?? null), 'match value missing');
+
+        $this->offset += $end - $start + 2;
+
+        $forToken = new ForToken($this->line, $this->offset, $this->lineOffset);
+        $forToken->setCollectionExpression(new Expression($matches['collection']));
+        $forToken->setValueName($matches['value']);
+
+        do {
+            $innerToken = $this->consume($input);
+
+            if ($innerToken === null) {
+                throw new MissingEndForException('reached end, expected closing ForEnd for: ' . $expression);
+            }
+
+            $forToken->addChildren($innerToken);
+        } while (!$innerToken instanceof EndForToken);
+
+        return $forToken;
     }
 
     private function createConditionalToken(string $input, int $start, int $end): ConditionalToken|ConditionalElseToken
@@ -103,18 +142,18 @@ final class Tokenizer
             return $token;
         }
 
-        assert($token instanceof ConditionalToken);
+        \assert($token instanceof ConditionalToken);
 
-        $bag = new Token($this->line, $this->offset, $this->lineOffset);
+        $bag = new RootToken($this->line, $this->offset, $this->lineOffset);
         $token->setConsequent($bag);
 
         do {
             $innerToken = $this->consume($input);
 
             if ($innerToken instanceof ConditionalElseToken) {
-                assert(!$token->hasAlternative());
+                \assert(!$token->hasAlternative());
 
-                $bag = new Token();
+                $bag = new RootToken();
                 $token->setAlternative($bag);
                 continue;
             }
@@ -174,7 +213,7 @@ final class Tokenizer
     private function createVariableToken(string $input, int $start, int $end): VariableToken
     {
         $defintion = explode('|', \trim(\mb_substr($input, $start + 2, $end - $start - 2)));
-        assert(count($defintion) >= 1);
+        \assert(count($defintion) >= 1);
         $expression = $defintion[0];
 
         $token = new VariableToken($this->line, $this->offset, $this->lineOffset);
@@ -210,9 +249,9 @@ final class Tokenizer
         return new TokenizerPerformanceDto(static::$templatesParsed, static::$parseTime);
     }
 
-    public function buildAst(string $input): Token
+    public function buildAst(string $input): RootToken
     {
-        $root = new Token();
+        $root = new RootToken();
 
         ++static::$templatesParsed;
         $timer = \microtime(true);

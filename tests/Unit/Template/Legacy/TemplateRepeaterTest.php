@@ -22,7 +22,7 @@ class TemplateRepeaterTest extends TestCase
 
     public function test_basic_repeater(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/repeater.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/repeater.tpl'));
 
         $r = $this->tpl->createRepeater('r');
         $testString = '';
@@ -36,7 +36,7 @@ class TemplateRepeaterTest extends TestCase
 
     public function test_nested_repeater(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/nestedRepeater.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/nestedRepeater.tpl'));
 
         $k = $this->tpl->createRepeater('k');
 

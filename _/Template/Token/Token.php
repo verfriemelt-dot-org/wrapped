@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\_\Template\Token;
 
 use RuntimeException;
 
-class Token
+abstract class Token
 {
     /** @var Token[] */
     protected array $children = [];

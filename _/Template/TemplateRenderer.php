@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template;
 
 use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Template\Processor\LegacyProcessor;
+use verfriemelt\wrapped\_\Template\Processor\Processor;
 use verfriemelt\wrapped\_\Template\Token\Token;
-use RuntimeException;
 
 class TemplateRenderer
 {
@@ -28,8 +29,9 @@ class TemplateRenderer
         if ($this->legacyModeEnabled) {
             $processor = new LegacyProcessor($this->container);
         } else {
-            throw new RuntimeException('not yet supported');
+            $processor = new Processor($this->container);
         }
+
         return $processor->process($token, $data);
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\Template;
+namespace verfriemelt\wrapped\_\Template\Processor;
 
 use Exception;
 use verfriemelt\wrapped\_\DI\Container;
@@ -12,6 +12,8 @@ use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\Token\StringToken;
 use verfriemelt\wrapped\_\Template\Token\Token;
 use verfriemelt\wrapped\_\Template\Token\VariableToken;
+use verfriemelt\wrapped\_\Template\VariableFormatter;
+use Override;
 
 /**
  * @phpstan-type data array{
@@ -20,7 +22,7 @@ use verfriemelt\wrapped\_\Template\Token\VariableToken;
  *      repeater?: mixed,
  *  }
  */
-final class LegacyProcessor
+final class LegacyProcessor implements TemplateProcessor
 {
     /** @var data */
     private array $repeaterDataSourcePath = [];
@@ -32,6 +34,7 @@ final class LegacyProcessor
     /**
      * @param data $data
      */
+    #[Override]
     public function process(Token $token, array $data): string
     {
         $output = '';

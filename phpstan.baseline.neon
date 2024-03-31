@@ -3178,42 +3178,77 @@ parameters:
 		-
 			message: "#^Cannot access offset string on mixed\\.$#"
 			count: 3
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Cannot access property \\$bool on mixed\\.$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Cannot access property \\$data on mixed\\.$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Cannot call method readValue\\(\\) on mixed\\.$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\LegacyProcessor\\:\\:processVariableToken\\(\\)\" is 10, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\LegacyProcessor\\:\\:processVariableToken\\(\\)\" is 10, keep it under 8$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
+			message: "#^Instantiated class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\TokenizerException not found\\.$#"
+			count: 1
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Offset 'if' might not exist on array\\{vars\\?\\: mixed, if\\?\\: mixed, repeater\\?\\: mixed\\}\\.$#"
 			count: 1
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
 
 		-
 			message: "#^Offset 'vars' might not exist on array\\{vars\\?\\: mixed, if\\?\\: mixed, repeater\\?\\: mixed\\}\\.$#"
 			count: 2
-			path: _/Template/LegacyProcessor.php
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
+			message: "#^Parameter \\#2 \\$data \\(array\\{vars\\?\\: mixed, if\\?\\: mixed, repeater\\?\\: mixed\\}\\) of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\LegacyProcessor\\:\\:process\\(\\) should be contravariant with parameter \\$data \\(array\\) of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\TemplateProcessor\\:\\:process\\(\\)$#"
+			count: 1
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
+			message: "#^Throwing object of an unknown class verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\TokenizerException\\.$#"
+			count: 1
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\Processor\\:\\:extract\\(\\)\" is 17, keep it under 8$#"
+			count: 1
+			path: _/Template/Processor/Processor.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\Processor\\:\\:printVariable\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/Template/Processor/Processor.php
+
+		-
+			message: "#^Variable method call on object\\.$#"
+			count: 1
+			path: _/Template/Processor/Processor.php
+
+		-
+			message: "#^Variable property access on object\\.$#"
+			count: 2
+			path: _/Template/Processor/Processor.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Repeater\\:\\:\\$currentDataLine type has no value type specified in iterable type array\\.$#"

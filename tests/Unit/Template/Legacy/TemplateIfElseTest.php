@@ -100,14 +100,14 @@ class TemplateIfElseTest extends TestCase
 
     public function test_nested_empty(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/ifelseNested.tpl'));
 
         static::assertSame('', $this->tpl->render());
     }
 
     public function test_nested_set_a(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/ifelseNested.tpl'));
 
         $this->tpl->setIf('a');
 
@@ -116,7 +116,7 @@ class TemplateIfElseTest extends TestCase
 
     public function test_nested_set_b(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/ifelseNested.tpl'));
 
         $this->tpl->setIf('b');
 
@@ -125,7 +125,7 @@ class TemplateIfElseTest extends TestCase
 
     public function test_nested_set_ab(): void
     {
-        $this->tpl->parse((string) file_get_contents(__DIR__ . '/templateTests/ifelseNested.tpl'));
+        $this->tpl->parse((string) file_get_contents(__DIR__ . '/../templateTests/ifelseNested.tpl'));
 
         $this->tpl->setIf('a');
         $this->tpl->setIf('b');

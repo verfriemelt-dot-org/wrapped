@@ -36,16 +36,18 @@ class Template
     {
         if ($data === null) {
             $this->templateRenderer->enableLegacyMode();
+
+            return $this->templateRenderer->render(
+                $this->token,
+                [
+                    'vars' => $this->vars,
+                    'if' => $this->if,
+                    'repeater' => $this->repeater,
+                ]
+            );
         }
 
-        return $this->templateRenderer->render(
-            $this->token,
-            [
-                'vars' => $this->vars,
-                'if' => $this->if,
-                'repeater' => $this->repeater,
-            ]
-        );
+        return $this->templateRenderer->render($this->token, $data);
     }
 
     public function createRepeater(string $name): Repeater
