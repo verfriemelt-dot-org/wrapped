@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template\Processor;
 
 use Closure;
-use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Template\Expression;
 use verfriemelt\wrapped\_\Template\Token\ForToken;
 use verfriemelt\wrapped\_\Template\Token\RootToken;
@@ -17,7 +17,7 @@ use Override;
 
 final readonly class Processor implements TemplateProcessor
 {
-    public function __construct(private Container $container) {}
+    public function __construct(private ContainerInterface $container) {}
 
     #[Override]
     public function process(Token $token, array $data): string

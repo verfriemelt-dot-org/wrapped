@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Template\Processor;
 
 use Exception;
-use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Template\Token\ConditionalToken;
 use verfriemelt\wrapped\_\Template\Token\PrintableToken;
 use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
@@ -28,7 +28,7 @@ final class LegacyProcessor implements TemplateProcessor
     private array $repeaterDataSourcePath = [];
 
     public function __construct(
-        private readonly Container $container
+        private readonly ContainerInterface $container
     ) {}
 
     /**

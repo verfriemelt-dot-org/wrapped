@@ -8,7 +8,7 @@ use Exception;
 use Override;
 use RuntimeException;
 use verfriemelt\wrapped\_\DataModel\DataModel;
-use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
 
@@ -18,7 +18,7 @@ abstract class View implements Viewable
 
     public Template $tpl;
 
-    protected static Container $container;
+    protected static ContainerInterface $container;
 
     abstract public function getTemplatePath(): string;
 
@@ -53,7 +53,7 @@ abstract class View implements Viewable
         return static::create(...$params)->getContents();
     }
 
-    public static function setContainer(Container $container)
+    public static function setContainer(ContainerInterface $container)
     {
         static::$container = $container;
     }

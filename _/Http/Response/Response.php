@@ -19,8 +19,6 @@ class Response
 
     protected ?string $statusText = null;
 
-    protected $contentCallback;
-
     public function __construct(int $statuscode = 200, ?string $content = null)
     {
         $this->setStatusCode($statuscode);
@@ -50,7 +48,7 @@ class Response
         return $this;
     }
 
-    public function setContent($content): static
+    public function setContent(string $content): static
     {
         $this->content = $content;
         return $this;
@@ -101,11 +99,7 @@ class Response
 
     public function sendContent(): static
     {
-        if ($this->contentCallback !== null) {
-            ($this->contentCallback)();
-        } else {
-            echo $this->content;
-        }
+        echo $this->content;
 
         return $this;
     }
@@ -115,12 +109,6 @@ class Response
         $this->sendHeaders();
         $this->sendContent();
 
-        return $this;
-    }
-
-    public function setContentCallback(callable $function): static
-    {
-        $this->contentCallback = $function;
         return $this;
     }
 

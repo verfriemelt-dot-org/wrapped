@@ -20,25 +20,28 @@ final class JsonResponse extends Response
 
         if ($alreadyEncoded) {
             assert(is_string($content), 'must be string when preencoded');
-            $this->setContent($content);
+            assert(\json_validate($content), 'invalid json');
+
+            $this->content = $content;
             return;
         }
 
-        if ($content instanceof Collection) {
-            $json = \json_encode($content->toArray());
-        } elseif ($content instanceof DataModel) {
-            $json = $content->toJson($this->pretty);
-        } else {
-            $json = \json_encode($content);
-        }
-
-        $this->setContent($json);
+        $this->setContent($content);
     }
 
     #[Override]
-    public function setContent($content): static
+    public function setContent(mixed $content): static
     {
-        $this->content = $content;
+        if ($content instanceof Collection) {
+            $json = \json_encode($content->toArray(), \JSON_THROW_ON_ERROR);
+        } elseif ($content instanceof DataModel) {
+            $json = $content->toJson($this->pretty);
+        } else {
+            $json = \json_encode($content, \JSON_THROW_ON_ERROR);
+        }
+
+        $this->content = $json;
+
         return $this;
     }
 

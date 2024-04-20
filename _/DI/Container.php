@@ -6,8 +6,9 @@ namespace verfriemelt\wrapped\_\DI;
 
 use Closure;
 use Exception;
+use Override;
 
-class Container
+class Container implements ContainerInterface
 {
     /** @var ServiceConfiguration<object>[] */
     private array $services = [];
@@ -36,6 +37,7 @@ class Container
      *
      * @return ServiceConfiguration<T>
      */
+    #[Override]
     public function register(string $class, ?object $instance = null): ServiceConfiguration
     {
         if (!\class_exists($class) && !\interface_exists($class)) {
@@ -73,6 +75,7 @@ class Container
     /**
      * @param class-string $id
      */
+    #[Override]
     public function has(string $id): bool
     {
         return isset($this->services[$id]) || $this->generateDefaultService($id);
@@ -83,7 +86,7 @@ class Container
      *
      * @param class-string<T> $id
      */
-    public function generateDefaultService(string $id): bool
+    private function generateDefaultService(string $id): bool
     {
         if (\class_exists($id)) {
             /* @phpstan-ignore-next-line */
@@ -128,6 +131,7 @@ class Container
      *
      * @throws ContainerException
      */
+    #[Override]
     public function get(string $id): object
     {
         if ($id === '') {
@@ -176,7 +180,7 @@ class Container
         return $this->interfaces[$class][0];
     }
 
-    public function resetInterface(string $class): void
+    private function resetInterface(string $class): void
     {
         unset($this->interfaces[$class]);
     }
@@ -189,12 +193,14 @@ class Container
      *
      * @return ServiceConfiguration<T>
      */
+    #[Override]
     public function replaceInterace(string $class, object $instance): ServiceConfiguration
     {
         $this->resetInterface($class);
         return $this->register($class, $instance);
     }
 
+    #[Override]
     public function tag(string $tag, string $class): void
     {
         $this->tags[$tag] ??= [];
@@ -204,6 +210,7 @@ class Container
     /**
      * @return iterable<class-string>
      */
+    #[Override]
     public function tagIterator(string $tag): iterable
     {
         return $this->tags[$tag] ?? [];
