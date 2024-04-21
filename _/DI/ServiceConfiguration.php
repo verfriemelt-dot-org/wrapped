@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\DI;
 
 use Closure;
-use Exception;
 
 /**
  * @template T of object
@@ -14,11 +13,6 @@ class ServiceConfiguration
 {
     private bool $shareable = true;
 
-    private readonly string $id;
-
-    /** @var class-string<T> */
-    private string $class;
-
     /** @var array<string|class-string, Closure> */
     private array $resolver = [];
 
@@ -26,16 +20,11 @@ class ServiceConfiguration
     private Closure $factory;
 
     /**
-     * @param class-string<T> $id
+     * @param class-string<T> $class
      */
-    public function __construct(string $id)
-    {
-        $this->id = $id;
-
-        if (class_exists($id)) {
-            $this->setClass($id);
-        }
-    }
+    public function __construct(
+        private readonly string $class
+    ) {}
 
     /**
      * @param Closure():T $facorty
@@ -68,21 +57,6 @@ class ServiceConfiguration
     public function isShareable(): bool
     {
         return $this->shareable;
-    }
-
-    /**
-     * @param class-string<T> $class
-     *
-     * @throws Exception
-     */
-    public function setClass(string $class): static
-    {
-        if (!class_exists($class)) {
-            throw new ArgumentResolverException(sprintf('unkown class: »%s«', $class));
-        }
-
-        $this->class = $class;
-        return $this;
     }
 
     /**

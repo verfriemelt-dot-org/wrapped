@@ -6,22 +6,25 @@ namespace verfriemelt\wrapped\_\DI;
 
 use Closure;
 use Exception;
+use InvalidArgumentException;
 use Override;
+use ReflectionClass;
+use ReflectionException;
 
 class Container implements ContainerInterface
 {
-    /** @var ServiceConfiguration<object>[] */
-    private array $services = [];
-
     private array $instances = [];
 
-    /** @var array<string,ServiceConfiguration[]> */
-    private array $interfaces = [];
+    /** @var array<class-string,int> */
+    private array $interfacesCount = [];
 
     private array $currentlyLoading = [];
 
     /** @var class-string[][] */
     private array $tags = [];
+
+    /** @var array<class-string,ServiceConfiguration> */
+    private array $serviceConfigurations = [];
 
     public function __construct()
     {
@@ -32,69 +35,62 @@ class Container implements ContainerInterface
     /**
      * @template T of object
      *
-     * @param class-string<T> $class
+     * @param class-string<T> $service
      * @param T               $instance
      *
      * @return ServiceConfiguration<T>
      */
     #[Override]
-    public function register(string $class, ?object $instance = null): ServiceConfiguration
+    public function register(string $service, ?object $instance = null): ServiceConfiguration
     {
-        if (!\class_exists($class) && !\interface_exists($class)) {
-            throw new ContainerException("class or interface «{$class}» not found");
+        try {
+            $reflection = new ReflectionClass($instance ?? $service);
+        } catch (ReflectionException $exception) {
+            throw new ContainerException($exception->getMessage());
         }
 
-        /** @var ServiceConfiguration<T> $service */
-        $service = (new ServiceConfiguration($class));
+        if ($reflection->isInterface() && $instance === null) {
+            throw new InvalidArgumentException("{$service} interface must be registered with an instance");
+        }
+
+        $serviceConfiguration = $this->serviceConfigurations[$service] = (new ServiceConfiguration($service));
 
         if ($instance instanceof Closure) {
-            $service->factory($instance);
-            $instance = null;
+            $serviceConfiguration->factory($instance);
+        } elseif ($instance !== null) {
+            $this->instances[$service] = $instance;
         }
 
-        if ($instance !== null) {
-            $this->instances[$class] = $instance;
-            $service->setClass($instance::class);
+        if ($reflection->isInterface()) {
+            $this->interfacesCount[$service] ??= 0;
+            ++$this->interfacesCount[$service];
         }
 
-        foreach ($service->getInterfaces() as $interface) {
-            $this->interfaces[$interface] ??= [];
-            $this->interfaces[$interface][] = $service;
+        foreach ($serviceConfiguration->getInterfaces() as $interface) {
+            if ($service === $interface) {
+                continue;
+            }
+            $this->serviceConfigurations[$interface] ??= $serviceConfiguration;
+            $this->interfacesCount[$interface] ??= 0;
+            ++$this->interfacesCount[$interface];
         }
 
-        // tag interfaces by default
-        if (\interface_exists($class) && $instance !== null) {
-            $this->tag($class, $instance::class);
-        }
-
-        $this->services[$class] = $service;
-
-        return $service;
+        return $serviceConfiguration;
     }
 
     /**
-     * @param class-string $id
+     * @param class-string $service
      */
     #[Override]
-    public function has(string $id): bool
+    public function has(string $service): bool
     {
-        return isset($this->services[$id]) || $this->generateDefaultService($id);
-    }
-
-    /**
-     * @template T of object
-     *
-     * @param class-string<T> $id
-     */
-    private function generateDefaultService(string $id): bool
-    {
-        if (\class_exists($id)) {
-            /* @phpstan-ignore-next-line */
-            $this->register($id, null);
-            return true;
+        try {
+            $reflection = new ReflectionClass($service);
+        } catch (ReflectionException $exception) {
+            throw new ContainerException($exception->getMessage());
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -125,79 +121,47 @@ class Container implements ContainerInterface
     /**
      * @template T of object
      *
-     * @param class-string<T> $id
+     * @param class-string<T> $service
      *
      * @return T
      *
      * @throws ContainerException
      */
     #[Override]
-    public function get(string $id): object
+    public function get(string $service): object
     {
-        if ($id === '') {
-            throw new ContainerException('illegal class');
-        }
-
-        if (\interface_exists($id)) {
-            $configuration = $this->getInterface($id);
-        } else {
-            if (!$this->has($id)) {
-                throw new ContainerException(sprintf('unkown service: »%s«', $id));
+        if (\interface_exists($service)) {
+            if (($this->interfacesCount[$service] ?? 0) > 1) {
+                throw new ContainerException(\sprintf('multiple implementations preset for interface: »%s«', $service));
             }
-
-            $configuration = $this->services[$id];
         }
 
-        if (!$configuration->isShareable()) {
-            /* @phpstan-ignore-next-line */
-            return $this->build($configuration);
+        $this->serviceConfigurations[$service] ??= $this->register($service);
+
+        if ($this->serviceConfigurations[$service]->isShareable()) {
+            return $this->instances[$this->serviceConfigurations[$service]->getClass()] ??= $this->build($this->serviceConfigurations[$service]);
         }
 
-        return $this->instances[$id] ??= $this->build($configuration);
+        return $this->build($this->serviceConfigurations[$service]);
     }
 
     /**
      * @template T of object
      *
-     * @param class-string<T> $class
-     *
-     * @return ServiceConfiguration<T>
-     *
-     * @throws ContainerException
-     */
-    private function getInterface(string $class): ServiceConfiguration
-    {
-        if (!isset($this->interfaces[$class])) {
-            throw new ContainerException(sprintf('unkown interface: »%s«', $class));
-        }
-
-        if (count($this->interfaces[$class]) > 1) {
-            throw new ContainerException(sprintf('multiple implementations preset for interface: »%s«', $class));
-        }
-
-        assert(\array_is_list($this->interfaces[$class]));
-
-        return $this->interfaces[$class][0];
-    }
-
-    private function resetInterface(string $class): void
-    {
-        unset($this->interfaces[$class]);
-    }
-
-    /**
-     * @template T of object
-     *
-     * @param class-string<T> $class
+     * @param class-string<T> $service
      * @param T               $instance
      *
      * @return ServiceConfiguration<T>
      */
     #[Override]
-    public function replaceInterace(string $class, object $instance): ServiceConfiguration
+    public function replaceInterface(string $service, object $instance): ServiceConfiguration
     {
-        $this->resetInterface($class);
-        return $this->register($class, $instance);
+        if (!\interface_exists($service)) {
+            throw new ContainerException('unknown interace' . $service);
+        }
+
+        unset($this->serviceConfigurations[$service]);
+        return $this->register($service, $instance);
     }
 
     #[Override]

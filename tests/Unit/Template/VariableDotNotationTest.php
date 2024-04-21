@@ -87,20 +87,20 @@ class VariableDotNotationTest extends TestCase
 
     public function test_read_from_callable_with_formatter(): void
     {
-        $this->container->register(
-            VariableFormatter::class,
-            new class () implements VariableFormatter {
-                public function supports(string $name): bool
-                {
-                    return true;
-                }
-
-                public function format(string $input): string
-                {
-                    return 'hi ' . $input;
-                }
+        $formatter = new class () implements VariableFormatter {
+            public function supports(string $name): bool
+            {
+                return true;
             }
-        );
+
+            public function format(string $input): string
+            {
+                return 'hi ' . $input;
+            }
+        };
+
+        $this->container->register($formatter::class, $formatter);
+        $this->container->tag(VariableFormatter::class, $formatter::class);
 
         $this->tpl->parse('{{ foo|formatter }}');
         $result = $this->tpl->render([

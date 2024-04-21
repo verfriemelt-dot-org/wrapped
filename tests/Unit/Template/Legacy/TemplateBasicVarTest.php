@@ -18,8 +18,7 @@ class TemplateBasicVarTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $container = new Container();
-        $container->register(VariableFormatter::class, new class () implements VariableFormatter {
+        $formatter = new class () implements VariableFormatter {
             #[Override]
             public function supports(string $name): bool
             {
@@ -31,7 +30,11 @@ class TemplateBasicVarTest extends TestCase
             {
                 return 'formatted';
             }
-        });
+        };
+
+        $container = new Container();
+        $container->register($formatter::class, $formatter);
+        $container->tag(VariableFormatter::class, $formatter::class);
 
         $this->tpl = new Template(new TemplateRenderer($container));
     }

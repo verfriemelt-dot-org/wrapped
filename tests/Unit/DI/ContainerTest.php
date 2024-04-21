@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\tests\Unit\DI;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\DI\ContainerException;
+use verfriemelt\wrapped\_\DI\ContainerInterface;
 
 class a
 {
@@ -130,12 +131,15 @@ class ContainerTest extends TestCase
         static::assertTrue($container->get(i::class) instanceof b_i);
     }
 
-    public function test_empty_request(): void
+    public function test_multiple_definitions_for_interface(): void
     {
-        $this->expectExceptionObject(new ContainerException('illegal'));
+        $this->expectException(ContainerException::class);
 
-        /* @phpstan-ignore-next-line */
-        (new Container())->get('');
+        $container = new Container();
+        $container->register(a_i::class);
+        $container->register(b_i::class);
+
+        $container->get(i::class);
     }
 
     public function test_paramconfiguration_overwrite(): void
@@ -255,5 +259,15 @@ class ContainerTest extends TestCase
 
         /** @phpstan-ignore-next-line */
         $container->get(nope::class);
+    }
+
+    public function test_container_interface(): void
+    {
+        $container = new Container();
+
+        static::assertTrue($container->has(Container::class));
+        static::assertTrue($container->has(ContainerInterface::class));
+        static::assertSame($container, $container->get(Container::class));
+        static::assertSame($container, $container->get(ContainerInterface::class));
     }
 }

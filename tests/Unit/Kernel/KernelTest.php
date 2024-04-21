@@ -16,6 +16,8 @@ use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Http;
 use verfriemelt\wrapped\_\Kernel\AbstractKernel;
 use verfriemelt\wrapped\_\Kernel\KernelInterface;
+use verfriemelt\wrapped\_\Session\NullSession;
+use verfriemelt\wrapped\_\Session\SessionDataObject;
 
 class KernelTest extends TestCase
 {
@@ -36,6 +38,8 @@ class KernelTest extends TestCase
             }
         };
 
+        $this->kernel->getContainer()->register(SessionDataObject::class, new NullSession());
+
         $this->eventDispatcher = $this->kernel->getContainer()->get(EventDispatcher::class);
         $this->kernel->boot();
     }
@@ -51,6 +55,9 @@ class KernelTest extends TestCase
         $spy = fn (EventInterface $event) => $this->seenEvents[] = $event::class;
 
         $this->eventDispatcher->addSubscriber(new class ($spy) implements EventSubscriberInterface {
+            /**
+             * @param Closure(EventInterface): string $spy
+             */
             public function __construct(
                 public readonly Closure $spy,
             ) {}

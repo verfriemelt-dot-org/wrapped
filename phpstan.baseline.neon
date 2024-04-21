@@ -241,7 +241,7 @@ parameters:
 			path: _/DI/ArgumentResolver.php
 
 		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			message: "#^Parameter \\#1 \\$service of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
 			count: 1
 			path: _/DI/ArgumentResolver.php
 
@@ -256,6 +256,21 @@ parameters:
 			path: _/DI/Container.php
 
 		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:register\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/DI/Container.php
+
+		-
+			message: "#^Dead catch \\- ReflectionException is never thrown in the try block\\.$#"
+			count: 2
+			path: _/DI/Container.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) should return T of object but returns object\\.$#"
+			count: 1
+			path: _/DI/Container.php
+
+		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$currentlyLoading type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DI/Container.php
@@ -266,7 +281,7 @@ parameters:
 			path: _/DI/Container.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$interfaces with generic class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration does not specify its types\\: T$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:\\$serviceConfigurations with generic class verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration does not specify its types\\: T$#"
 			count: 1
 			path: _/DI/Container.php
 
@@ -276,7 +291,7 @@ parameters:
 			path: _/DI/Container.php
 
 		-
-			message: "#^Parameter \\#1 \\$id of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			message: "#^Parameter \\#1 \\$service of method verfriemelt\\\\wrapped\\\\_\\\\DI\\\\Container\\:\\:get\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
 			count: 1
 			path: _/DI/ServiceArgumentResolver.php
 
@@ -297,11 +312,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @var with type array\\<class\\-string\\> is not subtype of native type array\\<string, class\\-string\\>\\|false\\.$#"
-			count: 1
-			path: _/DI/ServiceConfiguration.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DI\\\\ServiceConfiguration\\:\\:\\$id is never read, only written\\.$#"
 			count: 1
 			path: _/DI/ServiceConfiguration.php
 
@@ -2496,11 +2506,6 @@ parameters:
 			path: _/Http/Response/HttpHeader.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:setContent\\(\\) has parameter \\$content with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/JsonResponse.php
-
-		-
 			message: "#^verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\JsonResponse\\:\\:__construct\\(\\) does not call parent constructor from verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\.$#"
 			count: 1
 			path: _/Http/Response/JsonResponse.php
@@ -2514,21 +2519,6 @@ parameters:
 			message: "#^verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Redirect\\:\\:__construct\\(\\) does not call parent constructor from verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\.$#"
 			count: 1
 			path: _/Http/Response/Redirect.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:setContent\\(\\) has parameter \\$content with no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:setContentCallback\\(\\) has parameter \\$function with no signature specified for callable\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$contentCallback has no type specified\\.$#"
-			count: 1
-			path: _/Http/Response/Response.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Response\\\\Response\\:\\:\\$cookies type has no value type specified in iterable type array\\.$#"
@@ -3114,11 +3104,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/Session/Session.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Session/SessionDataObject.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionEventHandler\\:\\:on\\(\\) never returns Closure\\(T\\)\\: T so it can be removed from the return type\\.$#"
@@ -3989,11 +3974,6 @@ parameters:
 			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
 			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
-
-		-
-			message: "#^Method class@anonymous/tests/Unit/Kernel/KernelTest\\.php\\:53\\:\\:__construct\\(\\) has parameter \\$spy with no signature specified for Closure\\.$#"
-			count: 1
-			path: tests/Unit/Kernel/KernelTest.php
 
 		-
 			message: "#^Property class@anonymous/tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest\\.php\\:138\\:\\:\\$variadic type has no value type specified in iterable type array\\.$#"

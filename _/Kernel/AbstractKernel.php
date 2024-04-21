@@ -51,6 +51,7 @@ abstract class AbstractKernel implements KernelInterface
     {
         $this->constructTime = \microtime(true);
         $this->container = new Container();
+
         $this->container->register(KernelInterface::class, $this);
         $this->container->register(Template::class)->share(false);
 

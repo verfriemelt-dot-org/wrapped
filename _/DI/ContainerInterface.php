@@ -9,12 +9,12 @@ interface ContainerInterface
     /**
      * @template T of object
      *
-     * @param class-string<T> $class
+     * @param class-string<T> $service
      * @param T               $instance
      *
      * @return ServiceConfiguration<T>
      */
-    public function register(string $class, ?object $instance = null): ServiceConfiguration;
+    public function register(string $service, ?object $instance = null): ServiceConfiguration;
 
     /**
      * @param class-string $id
@@ -40,7 +40,7 @@ interface ContainerInterface
      *
      * @return ServiceConfiguration<T>
      */
-    public function replaceInterace(string $class, object $instance): ServiceConfiguration;
+    public function replaceInterface(string $class, object $instance): ServiceConfiguration;
 
     public function tag(string $tag, string $class): void;
 

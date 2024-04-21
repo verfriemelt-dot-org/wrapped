@@ -22,7 +22,7 @@ interface SessionDataObject
 
     public function setTimeout(int $timeout): SessionDataObject;
 
-    public function setIp(string $ip);
+    public function setIp(string $ip): SessionDataObject;
 
     public function setSessionId(string $sessionId): SessionDataObject;
 
