@@ -11,11 +11,14 @@ class KernelTest extends TestCase
 {
     public function test_boot_abstract_kernel(): void
     {
-        new class () extends AbstractKernel {
+        static::expectNotToPerformAssertions();
+
+        $kernel = new class () extends AbstractKernel {
             public function getProjectPath(): string
             {
                 return 'fake';
             }
         };
+        $kernel->shutdown();
     }
 }
