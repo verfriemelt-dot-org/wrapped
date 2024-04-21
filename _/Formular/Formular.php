@@ -24,6 +24,7 @@ use verfriemelt\wrapped\_\Input\Filter;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
 use verfriemelt\wrapped\_\Template\TemplateRenderer;
+use Exception;
 
 class Formular implements Viewable
 {
@@ -45,7 +46,7 @@ class Formular implements Viewable
 
     private string $action;
 
-    private string $csrfTokenName;
+    private readonly string $csrfTokenName;
 
     private bool $storeValuesOnFail = false;
 
@@ -65,6 +66,11 @@ class Formular implements Viewable
         $this->tpl->parse($template);
 
         $this->action = $this->requestStack->getCurrentRequest()->uri();
+
+        $this->csrfTokenName = 'csrf-' . \md5($this->formname);
+
+        $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
+        $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
     }
 
     private function generateCSRF(): string
@@ -187,7 +193,7 @@ class Formular implements Viewable
         return $input;
     }
 
-    public function addSubmit($value)
+    public function addSubmit($value): Button
     {
         return $this->addButton('submit', $value)->type('submit')->setOptional();
     }
@@ -200,13 +206,11 @@ class Formular implements Viewable
 
     /**
      * switches between post and get method
-     *
-     * @param type $method
      */
-    public function setMethod($method): Formular
+    public function setMethod(string $method): Formular
     {
-        if (!in_array($method, [self::METHOD_GET, self::METHOD_POST])) {
-            return false;
+        if (!in_array($method, [self::METHOD_GET, self::METHOD_POST], true)) {
+            throw new RuntimeException("cannot handle method: {$method}");
         }
 
         $this->method = $method;
@@ -221,20 +225,20 @@ class Formular implements Viewable
     /**
      * @return mixed sended form values
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         $input = ($this->method === self::METHOD_POST) ?
             $this->requestStack->getCurrentRequest()->request() :
             $this->requestStack->getCurrentRequest()->query();
 
-        if (!isset($this->elements[$name])) {
+        if ($input->hasNot($name)) {
             return null;
         }
 
-        return $this->elements[$name]->parseValue($input->get($name, null));
+        return $this->elements[$name]->parseValue($input->get($name));
     }
 
-    private function preFillFormWithSendData()
+    private function preFillFormWithSendData(): static
     {
         foreach ($this->elements as $element) {
             // skip csrf token, otherwise the form will silently fail
@@ -301,7 +305,7 @@ class Formular implements Viewable
     public function markFailed(string $fieldName): Formular
     {
         if (!isset($this->elements[$fieldName])) {
-            throw new \Exception("illegal form element {$fieldName}");
+            throw new Exception("illegal form element {$fieldName}");
         }
 
         $this->elements[$fieldName]->addCssClass('input-error');
@@ -327,11 +331,6 @@ class Formular implements Viewable
             $r->set('element', $element->fetchHtml());
             $r->save();
         }
-
-        $this->csrfTokenName = 'csrf-' . \md5($this->formname);
-
-        $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
-        $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
 
         return $this->tpl->render();
     }
