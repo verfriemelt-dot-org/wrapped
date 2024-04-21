@@ -50,10 +50,10 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
         $recursiveStatement->getCommand()->add(
             (new Expression(
                 new Value(1),
-                new Cast('int')
+                new Cast('int'),
             ))->as(
-                new Identifier('_depth')
-            )
+                new Identifier('_depth'),
+            ),
         );
 
         $lowerSelect = static::buildSelectQuery()->stmt->getCommand();
@@ -62,8 +62,8 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
                 new Identifier('_depth'),
                 new Cast('int'),
                 new Operator('+'),
-                new Value(1)
-            )
+                new Value(1),
+            ),
         );
 
         $cte->with(
@@ -74,9 +74,9 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
                         new Expression(
                             new Identifier($parentProp->fetchBackendName()),
                             new Operator('='),
-                            new Value($this->{$primaryProp->getGetter()}())
-                        )
-                    )
+                            new Value($this->{$primaryProp->getGetter()}()),
+                        ),
+                    ),
                 )
                 ->add(new Union())
                 ->add($lowerSelect)
@@ -88,18 +88,18 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
                             new Identifier(
                                 static::fetchSchemaname(),
                                 static::fetchTablename(),
-                                $parentProp->fetchBackendName()
+                                $parentProp->fetchBackendName(),
                             ),
                             new Operator('='),
                             new Identifier('_data', $primaryProp->fetchBackendName()),
-                        )
-                    )
-                )
+                        ),
+                    ),
+                ),
         );
 
         if ($depth !== null) {
             $recursiveStatement->add(
-                new Where(new Expression(new Identifier('_depth'), new Operator('<'), new Value($depth)))
+                new Where(new Expression(new Identifier('_depth'), new Operator('<'), new Value($depth))),
             );
         }
 
@@ -134,7 +134,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
     {
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
         $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(
-            static::getRereferencedParentProperty()
+            static::getRereferencedParentProperty(),
         );
         $parent = $this->{$parentProp->getGetter()}();
 
@@ -172,7 +172,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
 
         $parentProp = static::createDataModelAnalyser()->fetchPropertyByName(static::getParentProperty());
         $referencedProperty = static::createDataModelAnalyser()->fetchPropertyByName(
-            static::getRereferencedParentProperty()
+            static::getRereferencedParentProperty(),
         );
 
         $this->{$parentProp->getSetter()}($parent->{$referencedProperty->getGetter()}());

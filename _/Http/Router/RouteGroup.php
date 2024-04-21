@@ -17,7 +17,7 @@ final class RouteGroup implements Routable
     private array $filters = [];
 
     public function __construct(
-        private string $path
+        private string $path,
     ) {}
 
     public static function create(string $path): self

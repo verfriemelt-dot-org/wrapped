@@ -16,7 +16,7 @@ class ArgumentTest extends TestCase
         new Argument(
             'foo',
             Argument::REQUIRED,
-            default: 'bar'
+            default: 'bar',
         );
     }
 }

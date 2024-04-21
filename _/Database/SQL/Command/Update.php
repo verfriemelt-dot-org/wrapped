@@ -63,8 +63,8 @@ class Update extends QueryPart implements Command
             $this->table->stringify($driver),
             implode(
                 ', ',
-                $colParts
-            )
+                $colParts,
+            ),
         );
     }
 }

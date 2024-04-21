@@ -311,11 +311,11 @@ abstract class TreeDataModel extends DataModel
                         (new CaseWhen(new Value($this->insertMode)))
                             ->when(
                                 new Value(self::INSERT_UNDER_LEFT),
-                                new Identifier('id')
+                                new Identifier('id'),
                             )
                             ->when(
                                 new Value(self::INSERT_UNDER_RIGHT),
-                                new Identifier('id')
+                                new Identifier('id'),
                             )
                             ->else(new Identifier('parentId'))
                             ->as(new Identifier('_parent_id')),
@@ -323,15 +323,15 @@ abstract class TreeDataModel extends DataModel
                         (new CaseWhen(new Value($this->insertMode)))
                             ->when(
                                 new Value(self::INSERT_BEFORE),
-                                new Expression(new Identifier('left'))
+                                new Expression(new Identifier('left')),
                             )
                             ->when(
                                 new Value(self::INSERT_UNDER_LEFT),
-                                new Expression(new Identifier('left'), new Operator('+'), new Value(1))
+                                new Expression(new Identifier('left'), new Operator('+'), new Value(1)),
                             )
                             ->when(
                                 new Value(self::INSERT_UNDER_RIGHT),
-                                new Identifier('right')
+                                new Identifier('right'),
                             )
                             ->when(
                                 new Value(self::INSERT_AFTER),
@@ -342,15 +342,15 @@ abstract class TreeDataModel extends DataModel
                         (new CaseWhen(new Value($this->insertMode)))
                             ->when(
                                 new Value(self::INSERT_UNDER_LEFT),
-                                new Expression(new Identifier('depth'), new Operator('+'), new Value(1))
+                                new Expression(new Identifier('depth'), new Operator('+'), new Value(1)),
                             )
                             ->when(
                                 new Value(self::INSERT_UNDER_RIGHT),
-                                new Expression(new Identifier('depth'), new Operator('+'), new Value(1))
+                                new Expression(new Identifier('depth'), new Operator('+'), new Value(1)),
                             )
                             ->else(new Identifier('depth'))
-                            ->as(new Identifier('_depth'))
-                    )
+                            ->as(new Identifier('_depth')),
+                    ),
                 ))
                     ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename())))
                     ->add(
@@ -358,10 +358,10 @@ abstract class TreeDataModel extends DataModel
                             new Expression(
                                 new Identifier('id'),
                                 new Operator('='),
-                                new Value($parentId)
-                            )
-                        )
-                    )
+                                new Value($parentId),
+                            ),
+                        ),
+                    ),
             );
 
             // update other nodes
@@ -382,21 +382,21 @@ abstract class TreeDataModel extends DataModel
                                             (new Bracket())
                                                 ->add(
                                                     (new Statement(
-                                                        new Select(new Identifier('_to_pos'))
+                                                        new Select(new Identifier('_to_pos')),
                                                     ))
                                                         ->add(
-                                                            new From(new Identifier('_move'))
-                                                        )
-                                                )
+                                                            new From(new Identifier('_move')),
+                                                        ),
+                                                ),
                                         ),
                                         new Expression(
                                             new Identifier('left'),
                                             new Operator('+'),
-                                            new Value(2)
+                                            new Value(2),
                                         ),
                                     )
-                                    ->else(new Identifier('left'))
-                            )
+                                    ->else(new Identifier('left')),
+                            ),
                         )
                         // right
                         ->add(
@@ -404,9 +404,9 @@ abstract class TreeDataModel extends DataModel
                             new Expression(
                                 new Identifier('right'),
                                 new Operator('+'),
-                                new Value(2)
-                            )
-                        )
+                                new Value(2),
+                            ),
+                        ),
                 ))
                     ->add(
                         new Where(
@@ -416,15 +416,15 @@ abstract class TreeDataModel extends DataModel
                                 (new Bracket())
                                     ->add(
                                         (new Statement(
-                                            new Select(new Identifier('_to_pos'))
+                                            new Select(new Identifier('_to_pos')),
                                         ))
                                             ->add(
-                                                new From(new Identifier('_move'))
-                                            )
-                                    )
-                            )
-                        )
-                    )
+                                                new From(new Identifier('_move')),
+                                            ),
+                                    ),
+                            ),
+                        ),
+                    ),
             );
         } else {
             $cte->with(
@@ -436,8 +436,8 @@ abstract class TreeDataModel extends DataModel
                                 new SqlFunction(
                                     new Identifier('coalesce'),
                                     new SqlFunction(new Identifier('max'), new Identifier('right')),
-                                    new Value(0)
-                                )
+                                    new Value(0),
+                                ),
                             )
                             ->add(new Operator('+'))
                             ->add(new Value(1))
@@ -445,9 +445,9 @@ abstract class TreeDataModel extends DataModel
                         // under
                         (new Expression(new Value(0), new Cast('int')))->addAlias(new Identifier('_depth')),
                         (new Expression(new Value(null), new Cast('int')))->addAlias(new Identifier('_parent_id')),
-                    )
+                    ),
                 ))
-                    ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename())))
+                    ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename()))),
             );
         }
 
@@ -464,10 +464,10 @@ abstract class TreeDataModel extends DataModel
                         ->add(new Expression(new Identifier('_to_pos')))
                         ->add(new Expression(new Identifier('_to_pos'), new Operator('+'), new Value(1)))
                         ->add(new Identifier('_depth'))
-                        ->add(new Identifier('_parent_id'))
+                        ->add(new Identifier('_parent_id')),
                 )
                 )
-                    ->add(new From(new Identifier('_move')))
+                    ->add(new From(new Identifier('_move'))),
             );
 
         return [$cte, $insert];
@@ -484,8 +484,8 @@ abstract class TreeDataModel extends DataModel
                 new Select(
                     (new Identifier('left'))->as(new Identifier('_left')),
                     (new Identifier('right'))->as(new Identifier('_right')),
-                    (new Identifier('depth'))->as(new Identifier('_depth'))
-                )
+                    (new Identifier('depth'))->as(new Identifier('_depth')),
+                ),
             ))
                 ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename())))
                 ->add(
@@ -493,10 +493,10 @@ abstract class TreeDataModel extends DataModel
                         new Expression(
                             new Identifier(static::getPrimaryKey()),
                             new Operator('='),
-                            new Value($this->{static::getPrimaryKey()})
-                        )
-                    )
-                )
+                            new Value($this->{static::getPrimaryKey()}),
+                        ),
+                    ),
+                ),
         );
 
         // move to
@@ -508,11 +508,11 @@ abstract class TreeDataModel extends DataModel
                     (new CaseWhen(new Value($this->insertMode)))
                         ->when(
                             new Value(self::INSERT_UNDER_LEFT),
-                            new Identifier('id')
+                            new Identifier('id'),
                         )
                         ->when(
                             new Value(self::INSERT_UNDER_RIGHT),
-                            new Identifier('id')
+                            new Identifier('id'),
                         )
                         ->else(new Identifier('parentId'))
                         ->as(new Identifier('_new_parent')),
@@ -524,8 +524,8 @@ abstract class TreeDataModel extends DataModel
                                 new Bracket(
                                     new Statement(
                                         new Select(new Expression(new Identifier('_depth'))),
-                                        new From(new Identifier('_move'))
-                                    )
+                                        new From(new Identifier('_move')),
+                                    ),
                                 ),
                                 new Operator('>='),
                                 new Identifier('depth'),
@@ -537,29 +537,29 @@ abstract class TreeDataModel extends DataModel
                                 (new CaseWhen(new Value($this->insertMode)))
                                     ->when(
                                         new Value(self::INSERT_UNDER_LEFT),
-                                        new Expression(new Value(1), new Cast('int'))
+                                        new Expression(new Value(1), new Cast('int')),
                                     )
                                     ->when(
                                         new Value(self::INSERT_UNDER_RIGHT),
-                                        new Expression(new Value(1), new Cast('int'))
+                                        new Expression(new Value(1), new Cast('int')),
                                     )
                                     ->else(new Expression(new Value(0), new Cast('int'))),
                                 new Operator('-'),
                                 new Bracket(
                                     new Statement(
                                         new Select(new Expression(new Identifier('_depth'))),
-                                        new From(new Identifier('_move'))
-                                    )
-                                )
-                            )
+                                        new From(new Identifier('_move')),
+                                    ),
+                                ),
+                            ),
                         )
                         ->else(
                             new Expression(
                                 new Bracket(
                                     new Statement(
                                         new Select(new Expression(new Identifier('_depth'))),
-                                        new From(new Identifier('_move'))
-                                    )
+                                        new From(new Identifier('_move')),
+                                    ),
                                 ),
                                 new Operator('+'),
                                 new Identifier('depth'),
@@ -567,36 +567,36 @@ abstract class TreeDataModel extends DataModel
                                 (new CaseWhen(new Value($this->insertMode)))
                                     ->when(
                                         new Value(self::INSERT_UNDER_LEFT),
-                                        new Expression(new Value(1), new Cast('int'))
+                                        new Expression(new Value(1), new Cast('int')),
                                     )
                                     ->when(
                                         new Value(self::INSERT_UNDER_RIGHT),
-                                        new Expression(new Value(1), new Cast('int'))
+                                        new Expression(new Value(1), new Cast('int')),
                                     )
-                                    ->else(new Expression(new Value(0), new Cast('int')))
-                            )
+                                    ->else(new Expression(new Value(0), new Cast('int'))),
+                            ),
                         )
                         ->as(new Identifier('_depth_diff')),
                     // new left
                     (new CaseWhen(new Value($this->insertMode)))
                         ->when(
                             new Value(self::INSERT_BEFORE),
-                            new Expression(new Identifier('left'))
+                            new Expression(new Identifier('left')),
                         )
                         ->when(
                             new Value(self::INSERT_UNDER_LEFT),
-                            new Expression(new Identifier('left'), new Operator('+'), new Value(1))
+                            new Expression(new Identifier('left'), new Operator('+'), new Value(1)),
                         )
                         ->when(
                             new Value(self::INSERT_UNDER_RIGHT),
-                            new Identifier('right')
+                            new Identifier('right'),
                         )
                         ->when(
                             new Value(self::INSERT_AFTER),
                             new Expression(new Identifier('right'), new Operator('+'), new Value(1)),
                         )
-                        ->as(new Identifier('_to_pos'))
-                )
+                        ->as(new Identifier('_to_pos')),
+                ),
             ))
                 ->add(new From(new Identifier(static::fetchSchemaname(), static::fetchTablename())))
                 ->add(
@@ -604,10 +604,10 @@ abstract class TreeDataModel extends DataModel
                         new Expression(
                             new Identifier(static::getPrimaryKey()),
                             new Operator('='),
-                            new Value($to->{static::getPrimaryKey()})
-                        )
-                    )
-                )
+                            new Value($to->{static::getPrimaryKey()}),
+                        ),
+                    ),
+                ),
         );
 
         // move context
@@ -624,12 +624,12 @@ abstract class TreeDataModel extends DataModel
                                         new Operator('-'),
                                         new Identifier('_left'),
                                         new Operator('+'),
-                                        new Value(1)
-                                    )
+                                        new Value(1),
+                                    ),
                                 ),
-                                new From(new Identifier('_move'))
-                            )
-                        )
+                                new From(new Identifier('_move')),
+                            ),
+                        ),
                     ))->as(new Identifier('_width')),
                     (new CaseWhen())
                         ->when(
@@ -637,30 +637,30 @@ abstract class TreeDataModel extends DataModel
                                 new Bracket(
                                     new Statement(
                                         new Select(new Identifier('_to_pos')),
-                                        new From(new Identifier('_to'))
-                                    )
+                                        new From(new Identifier('_to')),
+                                    ),
                                 ),
                                 new Operator('<'),
                                 new Bracket(
                                     new Statement(
                                         new Select(new Identifier('_left')),
-                                        new From(new Identifier('_move'))
-                                    )
+                                        new From(new Identifier('_move')),
+                                    ),
                                 ),
                             ),
                             new Expression(
                                 new Bracket(
                                     new Statement(
                                         new Select(new Identifier('_left')),
-                                        new From(new Identifier('_move'))
-                                    )
+                                        new From(new Identifier('_move')),
+                                    ),
                                 ),
                                 new Operator('-'),
                                 new Bracket(
                                     new Statement(
                                         new Select(new Identifier('_to_pos')),
-                                        new From(new Identifier('_to'))
-                                    )
+                                        new From(new Identifier('_to')),
+                                    ),
                                 ),
                             ),
                         )
@@ -670,8 +670,8 @@ abstract class TreeDataModel extends DataModel
                                     new Bracket(
                                         new Statement(
                                             new Select(new Identifier('_to_pos')),
-                                            new From(new Identifier('_to'))
-                                        )
+                                            new From(new Identifier('_to')),
+                                        ),
                                     ),
                                     new Operator('-'),
                                     new Bracket(
@@ -680,15 +680,15 @@ abstract class TreeDataModel extends DataModel
                                                 new Expression(
                                                     new Identifier('_right'),
                                                     new Operator('+'),
-                                                    new Value(1)
-                                                )
+                                                    new Value(1),
+                                                ),
                                             ),
-                                            new From(new Identifier('_move'))
-                                        )
-                                    )
+                                            new From(new Identifier('_move')),
+                                        ),
+                                    ),
                                 ),
                                 new Operator('*'),
-                                new Value(-1)
+                                new Value(-1),
                             ),
                         )
                         ->as(new Identifier('_distance')),
@@ -697,14 +697,14 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                     ))->as(new Identifier('_left_min')),
                     (new SqlFunction(
@@ -712,18 +712,18 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
-                    ))->as(new Identifier('_left_max'))
-                )
-            )
+                    ))->as(new Identifier('_left_max')),
+                ),
+            ),
         );
 
         $upd = new Update(new Identifier(static::fetchSchemaname(), static::fetchTablename()));
@@ -736,15 +736,15 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Operator('<'),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -752,8 +752,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_min')),
-                                new From(new Identifier('_context'))
-                            )
+                                new From(new Identifier('_context')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -761,8 +761,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_max')),
-                                new From(new Identifier('_context'))
-                            )
+                                new From(new Identifier('_context')),
+                            ),
                         ),
                     ),
                     (new Expression())
@@ -772,10 +772,10 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_width')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
                 // make space, to right
                 ->when(
@@ -783,15 +783,15 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Operator('>'),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -799,8 +799,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -808,9 +808,9 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_max')),
-                                new From(new Identifier('_context'))
-                            )
-                        )
+                                new From(new Identifier('_context')),
+                            ),
+                        ),
                     ),
                     (new Expression())
                         ->add(new Identifier('left'))
@@ -819,10 +819,10 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_width')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
                 // update self
                 ->when(
@@ -832,8 +832,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -841,8 +841,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                     ),
                     (new Expression())
@@ -852,13 +852,13 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_distance')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
                 // rest
-                ->else(new Identifier('left'))
+                ->else(new Identifier('left')),
         );
 
         $upd->add(
@@ -870,15 +870,15 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Operator('<'),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -886,8 +886,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_min')),
-                                new From(new Identifier('_context'))
-                            )
+                                new From(new Identifier('_context')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -895,8 +895,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_max')),
-                                new From(new Identifier('_context'))
-                            )
+                                new From(new Identifier('_context')),
+                            ),
                         ),
                     ),
                     (new Expression())
@@ -906,10 +906,10 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_width')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
 
                 // update self
@@ -920,8 +920,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('left'),
@@ -929,8 +929,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                     ),
                     (new Expression())
@@ -940,10 +940,10 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_distance')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
 
                 // make space, to right
@@ -952,15 +952,15 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_to_pos')),
-                                new From(new Identifier('_to'))
-                            )
+                                new From(new Identifier('_to')),
+                            ),
                         ),
                         new Operator('>'),
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -968,8 +968,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -977,9 +977,9 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left_max')),
-                                new From(new Identifier('_context'))
-                            )
-                        )
+                                new From(new Identifier('_context')),
+                            ),
+                        ),
                     ),
                     (new Expression())
                         ->add(new Identifier('right'))
@@ -988,14 +988,14 @@ abstract class TreeDataModel extends DataModel
                             new Bracket(
                                 new Statement(
                                     new Select(new Identifier('_width')),
-                                    new From(new Identifier('_context'))
-                                )
-                            )
-                        )
+                                    new From(new Identifier('_context')),
+                                ),
+                            ),
+                        ),
                 )
 
                 // rest
-                ->else(new Identifier('right'))
+                ->else(new Identifier('right')),
         );
 
         // depth
@@ -1010,8 +1010,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -1019,8 +1019,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                     ),
                     (new Expression())
@@ -1031,13 +1031,13 @@ abstract class TreeDataModel extends DataModel
                                 new Bracket(
                                     new Statement(
                                         new Select(new Identifier('_depth_diff')),
-                                        new From(new Identifier('_to'))
-                                    )
-                                )
-                            )
-                        )
+                                        new From(new Identifier('_to')),
+                                    ),
+                                ),
+                            ),
+                        ),
                 )
-                ->else(new Identifier('depth'))
+                ->else(new Identifier('depth')),
         );
 
         // update parent id
@@ -1052,8 +1052,8 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_left')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                         new Conjunction('and'),
                         new Identifier('right'),
@@ -1061,18 +1061,18 @@ abstract class TreeDataModel extends DataModel
                         new Bracket(
                             new Statement(
                                 new Select(new Identifier('_right')),
-                                new From(new Identifier('_move'))
-                            )
+                                new From(new Identifier('_move')),
+                            ),
                         ),
                     ),
                     new Bracket(
                         new Statement(
                             new Select(new Identifier('_new_parent')),
-                            new From(new Identifier('_to'))
-                        )
-                    )
+                            new From(new Identifier('_to')),
+                        ),
+                    ),
                 )
-                ->else(new Identifier('parentId'))
+                ->else(new Identifier('parentId')),
         );
 
         return [$cte, $upd];
@@ -1194,8 +1194,8 @@ abstract class TreeDataModel extends DataModel
                     new Identifier('right'),
                     new Operator('>='),
                     new Value($this->getLeft()),
-                )
-            )
+                ),
+            ),
         );
 
         $query->order([['left', 'asc']]);
@@ -1237,7 +1237,7 @@ abstract class TreeDataModel extends DataModel
     {
         if (!in_array(
             $field,
-            array_map(fn (DataModelProperty $p) => $p->getName(), static::createDataModelAnalyser()->fetchProperties())
+            array_map(fn (DataModelProperty $p) => $p->getName(), static::createDataModelAnalyser()->fetchProperties()),
         )) {
             throw new \Exception('invalid field specified');
         }
@@ -1293,7 +1293,7 @@ abstract class TreeDataModel extends DataModel
         }
 
         return static::find(
-            $logic
+            $logic,
         );
     }
 
@@ -1303,7 +1303,7 @@ abstract class TreeDataModel extends DataModel
     public function fetchChildrenInclusive(
         string $order = 'left',
         string $direction = 'ASC',
-        ?int $depth = null
+        ?int $depth = null,
     ): Collection {
         $logic = DbLogic::create()
             ->where('left', '>=', $this->getLeft())->addAnd()
@@ -1327,7 +1327,7 @@ abstract class TreeDataModel extends DataModel
         return static::find(
             DbLogic::create()
                 ->where('parentId', '=', $this->getId())
-                ->order($order, $direction)
+                ->order($order, $direction),
         );
     }
 

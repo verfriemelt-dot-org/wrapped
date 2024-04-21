@@ -23,7 +23,7 @@ class ServiceConfiguration
      * @param class-string<T> $class
      */
     public function __construct(
-        private readonly string $class
+        private readonly string $class,
     ) {}
 
     /**

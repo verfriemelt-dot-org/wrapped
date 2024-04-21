@@ -38,8 +38,8 @@ class SessionSql extends DataModel implements TablenameOverride, SessionDataObje
                 (new Expression())
                     ->add(new Identifier('timeout'))
                     ->add(new Operator('<'))
-                    ->add(new Value(time()))
-            )
+                    ->add(new Value(time())),
+            ),
         );
 
         static::fetchDatabase()->run($stmt);

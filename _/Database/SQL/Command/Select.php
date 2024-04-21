@@ -46,8 +46,8 @@ class Select extends QueryPart implements Command, CommandExpression
             static::COMMAND,
             implode(
                 ', ',
-                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions)
-            )
+                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions),
+            ),
         );
     }
 }

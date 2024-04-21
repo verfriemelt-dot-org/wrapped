@@ -33,7 +33,7 @@ class PerformanceHeadersResponseSubscriber implements EventSubscriberInterface
 
                 $event->response->addHeader(new HttpHeader('Server-Timing', \implode(', ', $data)));
             },
-            default => null
+            default => null,
         };
     }
 

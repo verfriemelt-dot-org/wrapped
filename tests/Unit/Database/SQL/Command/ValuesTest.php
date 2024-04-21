@@ -27,7 +27,7 @@ class ValuesTest extends TestCase
             (new Expression())
                 ->add(new Value(1))
                 ->add(new Operator('+'))
-                ->add(new Value(3))
+                ->add(new Value(3)),
         );
 
         static::assertSame('VALUES ( 1 + 3 )', $select->stringify());

@@ -62,7 +62,7 @@ class SqlFunction extends QueryPart implements ExpressionItem
         return sprintf(
             static::SYNTAX,
             $name,
-            implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
+            implode(', ', array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)),
         )
             . $this->stringifyAlias($driver);
     }

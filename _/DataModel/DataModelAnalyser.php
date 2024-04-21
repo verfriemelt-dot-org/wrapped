@@ -71,7 +71,7 @@ class DataModelAnalyser
     {
         return $attributes = $element->getAttributes(
             Convention::class,
-            ReflectionAttribute::IS_INSTANCEOF
+            ReflectionAttribute::IS_INSTANCEOF,
         )[0] ?? null;
     }
 
@@ -79,7 +79,7 @@ class DataModelAnalyser
     {
         return $element->getAttributes(
             Attribute\Naming\Rename::class,
-            ReflectionAttribute::IS_INSTANCEOF
+            ReflectionAttribute::IS_INSTANCEOF,
         )[0] ?? null;
     }
 
@@ -117,7 +117,7 @@ class DataModelAnalyser
             $dmp = new DataModelProperty(
                 $name,
                 $property->getType()?->allowsNull() ?? true,
-                $convetion?->newInstance()
+                $convetion?->newInstance(),
             );
 
             $dmp->setGetter($getter);

@@ -56,7 +56,7 @@ class Formular implements Viewable
         private readonly string $formname,
         protected RequestStack $requestStack,
         private readonly ?Filter $filter = null,
-        private readonly Template $tpl = new Template(new TemplateRenderer(new Container()))
+        private readonly Template $tpl = new Template(new TemplateRenderer(new Container())),
     ) {
         $template = \file_get_contents(__DIR__ . '/Template/Formular.tpl.php');
         if (!is_string($template)) {

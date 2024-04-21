@@ -31,7 +31,7 @@ class Delete extends QueryPart implements Command
     {
         return sprintf(
             static::COMMAND,
-            $this->table->stringify($driver)
+            $this->table->stringify($driver),
         );
     }
 }

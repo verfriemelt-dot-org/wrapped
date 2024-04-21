@@ -35,7 +35,7 @@ class ServiceArgumentResolver extends ArgumentResolver
             }
 
             return $paramResolver(
-                ...$this->resolv($paramResolver)
+                ...$this->resolv($paramResolver),
             );
         }
 

@@ -34,7 +34,7 @@ class Request
         array $cookies = [],
         array $files = [],
         array $server = [],
-        ?string $content = null
+        ?string $content = null,
     ) {
         $this->initialize($query, $request, $attributes, $cookies, $files, $server, $content);
     }
@@ -46,7 +46,7 @@ class Request
         array $cookies = [],
         array $files = [],
         array $server = [],
-        ?string $content = null
+        ?string $content = null,
     ) {
         $this->request = new ParameterBag($request);
         $this->query = new ParameterBag($query);
@@ -148,7 +148,7 @@ class Request
             $_COOKIE,
             $_FILES,
             $_SERVER,
-            file_get_contents('php://input')
+            file_get_contents('php://input'),
         );
     }
 
@@ -232,7 +232,7 @@ class Request
     public function aggregate(): ParameterBag
     {
         return new ParameterBag(
-            $this->query->all() + $this->request->all() + $this->cookies->all() + $this->content->all()
+            $this->query->all() + $this->request->all() + $this->cookies->all() + $this->content->all(),
         );
     }
 

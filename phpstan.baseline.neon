@@ -216,6 +216,11 @@ parameters:
 			path: _/Cli/KeyInput.php
 
 		-
+			message: "#^Call to function array_filter\\(\\) requires parameter \\#2 to be passed to avoid loose comparison semantics\\.$#"
+			count: 1
+			path: _/Command/CommandArguments/ArgvParser.php
+
+		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandDiscovery\\:\\:loadCommands\\(\\)\" is 9, keep it under 8$#"
 			count: 1
 			path: _/Command/CommandDiscovery.php
@@ -789,6 +794,11 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DatabaseOverride\\:\\:fetchDatabase\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/DataModel/DatabaseOverride.php
+
+		-
+			message: "#^Call to function array_filter\\(\\) requires parameter \\#2 to be passed to avoid loose comparison semantics\\.$#"
+			count: 1
+			path: _/DataModel/Search/DataModelSearch.php
 
 		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Search\\\\DataModelSearch\\:\\:buildQuery\\(\\)\" is 12, keep it under 8$#"
@@ -1611,6 +1621,11 @@ parameters:
 			path: _/Database/SQL/Expression/Expression.php
 
 		-
+			message: "#^Call to function array_filter\\(\\) requires parameter \\#2 to be passed to avoid loose comparison semantics\\.$#"
+			count: 1
+			path: _/Database/SQL/Expression/Identifier.php
+
+		-
 			message: "#^Dynamic call to static method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:fetchTablename\\(\\)\\.$#"
 			count: 1
 			path: _/Database/SQL/Expression/Identifier.php
@@ -2194,6 +2209,11 @@ parameters:
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
+
+		-
+			message: "#^Call to function array_filter\\(\\) requires parameter \\#2 to be passed to avoid loose comparison semantics\\.$#"
+			count: 1
+			path: _/Http/Controller/Controller.php
 
 		-
 			message: "#^Part \\$methodName \\(mixed\\) of encapsed string cannot be cast to string\\.$#"

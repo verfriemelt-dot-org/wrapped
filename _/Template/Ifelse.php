@@ -8,6 +8,6 @@ class Ifelse implements TemplateItem
 {
     public function __construct(
         public readonly string $name,
-        public readonly bool $bool = true
+        public readonly bool $bool = true,
     ) {}
 }

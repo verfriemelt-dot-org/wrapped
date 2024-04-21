@@ -114,12 +114,12 @@ class QueryBuilder
             $this->select->add(
                 (new SqlFunction(
                     new Identifier('count'),
-                    new Expression(new Operator('distinct'), new Identifier(...$what))
-                ))->as(new Identifier('count'))
+                    new Expression(new Operator('distinct'), new Identifier(...$what)),
+                ))->as(new Identifier('count')),
             );
         } else {
             $this->select->add(
-                (new SqlFunction(new Identifier('count'), new Identifier(...$what)))->as(new Identifier('count'))
+                (new SqlFunction(new Identifier('count'), new Identifier(...$what)))->as(new Identifier('count')),
             );
         }
 
@@ -149,7 +149,7 @@ class QueryBuilder
         array_map(
             fn (string $column, $value) => $this->update->add(new Identifier($column), new Value($value)),
             array_keys($cols),
-            $cols
+            $cols,
         );
 
         return $this;
@@ -215,7 +215,7 @@ class QueryBuilder
         array_map(function ($column, $value) use ($expression) {
             if ($expression->fetchLast() !== null) {
                 $expression->add(
-                    new Conjunction('and')
+                    new Conjunction('and'),
                 );
             }
 

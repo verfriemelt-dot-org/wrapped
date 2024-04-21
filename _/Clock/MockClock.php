@@ -11,7 +11,7 @@ use Override;
 final class MockClock implements ClockInterface
 {
     public function __construct(
-        private DateTimeImmutable $clock
+        private DateTimeImmutable $clock,
     ) {}
 
     #[Override]

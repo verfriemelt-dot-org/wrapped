@@ -46,7 +46,7 @@ class Expression extends QueryPart implements ExpressionItem, Aliasable
 
         return implode(
             ' ',
-            array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions)
+            array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions),
         ) . $this->stringifyAlias($driver);
     }
 

@@ -66,8 +66,8 @@ class Insert extends QueryPart implements Command, CommandExpression
             $this->into->stringify($driver),
             implode(
                 ', ',
-                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->columns)
-            )
+                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->columns),
+            ),
         ) . ($this->query ? ' ' . $this->query->stringify($driver) : '');
     }
 }

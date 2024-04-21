@@ -43,7 +43,7 @@ class Template
                     'vars' => $this->vars,
                     'if' => $this->if,
                     'repeater' => $this->repeater,
-                ]
+                ],
             );
         }
 

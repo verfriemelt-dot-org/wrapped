@@ -14,7 +14,7 @@ class TemplateRenderer
     private bool $legacyModeEnabled = false;
 
     public function __construct(
-        private readonly ContainerInterface $container
+        private readonly ContainerInterface $container,
     ) {}
 
     public function enableLegacyMode(): void
@@ -24,7 +24,7 @@ class TemplateRenderer
 
     public function render(
         Token $token,
-        array $data
+        array $data,
     ): string {
         if ($this->legacyModeEnabled) {
             $processor = new LegacyProcessor($this->container);

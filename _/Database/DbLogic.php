@@ -225,7 +225,7 @@ final class DbLogic
         string $column,
         string $direction = 'ASC',
         ?string $overrideTable = null,
-        bool $skipQuote = false
+        bool $skipQuote = false,
     ): self {
         if (!$this->order) {
             $this->order = new Order();
@@ -233,7 +233,7 @@ final class DbLogic
 
         $this->order->add(
             new Identifier(...[$overrideTable, $column]),
-            $direction
+            $direction,
         );
 
         return $this;

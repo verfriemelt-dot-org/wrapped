@@ -72,7 +72,7 @@ class Response
             'HTTP/%s %s %s',
             $this->version,
             $this->statusCode,
-            $this->statusText ?? Http::STATUS_TEXT[$this->statusCode] ?? 'not given'
+            $this->statusText ?? Http::STATUS_TEXT[$this->statusCode] ?? 'not given',
         );
 
         // status
@@ -81,7 +81,7 @@ class Response
         foreach ($this->headers as $header) {
             header(
                 $header->getName() . ': ' . $header->getValue(),
-                $header->replaces()
+                $header->replaces(),
             );
         }
 
@@ -90,7 +90,7 @@ class Response
             setcookie(
                 $cookie->getName(),
                 (string) $cookie->getValue(),
-                ['expires' => $cookie->getExpiresTime(), 'path' => $cookie->getPath() ?? '/', 'domain' => $cookie->getDomain() ?? '']
+                ['expires' => $cookie->getExpiresTime(), 'path' => $cookie->getPath() ?? '/', 'domain' => $cookie->getDomain() ?? ''],
             );
         }
 

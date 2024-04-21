@@ -116,7 +116,7 @@ class DataModelSearch
         // distance expressions list
         $fieldExpressions = array_map(
             fn (Identifier $i) => new Expression($i, new Operator('<->'), new Value(preg_quote($searchString))),
-            $fieldIdentifier
+            $fieldIdentifier,
         );
 
         $query->order = new Order();

@@ -16,7 +16,7 @@ class ExpressionTest extends TestCase
         $exp = new Expression();
         $exp->add(
             (new Expression())
-                ->add(new Value(true))
+                ->add(new Value(true)),
         );
 
         static::assertSame('true', $exp->stringify());

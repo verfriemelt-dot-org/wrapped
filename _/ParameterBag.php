@@ -17,7 +17,7 @@ final class ParameterBag implements Countable, IteratorAggregate
      * @param array<int|string, mixed> $parameters
      */
     public function __construct(
-        private array $parameters = []
+        private array $parameters = [],
     ) {}
 
     #[Override]

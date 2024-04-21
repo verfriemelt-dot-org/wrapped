@@ -18,7 +18,7 @@ class Checkbox extends FormType
     public function __construct(
         string $name,
         ?string $value = null,
-        Template $template = new Template(new TemplateRenderer(new Container()))
+        Template $template = new Template(new TemplateRenderer(new Container())),
     ) {
         parent::__construct($name, $value, $template);
     }

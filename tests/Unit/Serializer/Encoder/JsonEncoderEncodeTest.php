@@ -21,7 +21,7 @@ class JsonEncoderEncodeTest extends TestCase
     {
         $dto = new NestedDto(
             'bar',
-            new SimpleDto('foo', 1)
+            new SimpleDto('foo', 1),
         );
         $encoder = new JsonEncoder();
 

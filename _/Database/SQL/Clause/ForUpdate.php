@@ -21,7 +21,7 @@ class ForUpdate extends QueryPart implements Clause
     public ExpressionItem $expression;
 
     public function __construct(
-        private readonly string $lockMode = ''
+        private readonly string $lockMode = '',
     ) {}
 
     #[Override]
@@ -35,7 +35,7 @@ class ForUpdate extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            $this->lockMode
+            $this->lockMode,
         );
     }
 }

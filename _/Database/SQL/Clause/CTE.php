@@ -52,8 +52,8 @@ class CTE extends QueryPart implements Clause
                 ', ',
                 array_map(
                     fn ($o) => "{$o['ident']->stringify($driver)} AS ( {$o['stmt']->stringify($driver)} )",
-                    $this->with
-                )
+                    $this->with,
+                ),
             ),
         );
     }

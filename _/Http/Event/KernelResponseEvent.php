@@ -10,6 +10,6 @@ use verfriemelt\wrapped\_\Http\Response\Response;
 final readonly class KernelResponseEvent implements EventInterface
 {
     public function __construct(
-        public Response $response
+        public Response $response,
     ) {}
 }

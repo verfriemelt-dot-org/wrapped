@@ -49,8 +49,8 @@ class GroupBy extends QueryPart implements Clause
             static::CLAUSE,
             implode(
                 ', ',
-                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions)
-            )
+                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions),
+            ),
         );
     }
 }

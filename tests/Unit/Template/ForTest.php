@@ -56,7 +56,7 @@ class ForTest extends TestCase
         $this->tpl->parse(
             <<<TPL
             {{ for a as item-a }}{{ for b as item-b }}{{ item-a }}:{{ item-b }}{{ endfor }}{{ endfor }}
-            TPL
+            TPL,
         );
         $result = $this->tpl->render([
             'a' => range(1, 3),
@@ -65,7 +65,7 @@ class ForTest extends TestCase
 
         static::assertSame(
             '1:11:22:12:23:13:2',
-            $result
+            $result,
         );
     }
 }

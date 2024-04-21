@@ -39,7 +39,7 @@ abstract class FormType
     public function __construct(
         protected string $name,
         protected ?string $value = null,
-        protected Template $tpl = new Template(new TemplateRenderer(new Container()))
+        protected Template $tpl = new Template(new TemplateRenderer(new Container())),
     ) {
         $this->loadTemplate();
     }

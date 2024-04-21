@@ -64,7 +64,7 @@ class DataModelPropertyRenameTest extends DatabaseTestCase
                 break;
             case SQLite::class:
                 static::$connection->query(
-                    'create table "RenameTester" ( id integer primary key, "rAnDoMCAsIng" text ) '
+                    'create table "RenameTester" ( id integer primary key, "rAnDoMCAsIng" text ) ',
                 );
                 break;
         }

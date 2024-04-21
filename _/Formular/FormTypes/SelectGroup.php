@@ -10,7 +10,7 @@ class SelectGroup
     private array $children = [];
 
     public function __construct(
-        public readonly string $name
+        public readonly string $name,
     ) {}
 
     public function addChild(SelectItem $item): self

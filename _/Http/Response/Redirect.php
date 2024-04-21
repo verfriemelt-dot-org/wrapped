@@ -9,7 +9,7 @@ use Override;
 final class Redirect extends Response
 {
     public function __construct(
-        private ?string $destination = null
+        private ?string $destination = null,
     ) {
         $this->temporarily();
     }

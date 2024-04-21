@@ -32,7 +32,7 @@ class Limit extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            $this->limit->stringify($driver)
+            $this->limit->stringify($driver),
         );
     }
 }

@@ -98,7 +98,7 @@ abstract class DatabaseDriver
             $this->connectionHandle = new PDO(
                 $this->getConnectionString(),
                 $this->config['dbUsername'],
-                $this->config['dbPassword']
+                $this->config['dbPassword'],
             );
 
             // switch to error mode to exceptions
@@ -158,7 +158,7 @@ abstract class DatabaseDriver
         } catch (PDOException $e) {
             $message = $e->getMessage() . "\n\n" . self::$debugLastStatement . "\n\n" . print_r(
                 self::$debugLastParams,
-                true
+                true,
             );
             throw (new DatabaseException($message))->setSqlState($e->getCode());
         }
@@ -196,7 +196,7 @@ abstract class DatabaseDriver
         self::$debugLastStatement = $statement;
 
         $this->lastStatement = $this->connectionHandle->prepare($statement) ?: throw new \RuntimeException(
-            'preparing the statement failed'
+            'preparing the statement failed',
         );
 
         return $this;

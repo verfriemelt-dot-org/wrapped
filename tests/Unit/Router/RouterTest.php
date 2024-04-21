@@ -26,8 +26,8 @@ class RouterTest extends TestCase
         $this->router = new Router(
             new ArgumentResolver(
                 $this->container = new Container(),
-                new ArgumentMetadataFactory()
-            )
+                new ArgumentMetadataFactory(),
+            ),
         );
     }
 
@@ -44,16 +44,16 @@ class RouterTest extends TestCase
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/admin']);
 
         $this->router->add(
-            Route::create('/admin')->call(fn () => 'a')
+            Route::create('/admin')->call(fn () => 'a'),
         );
         $this->router->add(
             RouteGroup::create('/admin')
                 ->add(
-                    Route::create('/test')->call(fn () => 'b')
+                    Route::create('/test')->call(fn () => 'b'),
                 )
                 ->add(
-                    Route::create('/test1')->call(fn () => 'b')
-                )
+                    Route::create('/test1')->call(fn () => 'b'),
+                ),
         );
 
         $result = $this->router->handleRequest($request)->getCallback();
@@ -68,14 +68,14 @@ class RouterTest extends TestCase
         $this->router->add(
             RouteGroup::create('/admin')
                 ->add(
-                    Route::create('/test')->call(fn () => 'b')
+                    Route::create('/test')->call(fn () => 'b'),
                 )
                 ->add(
-                    Route::create('/test1')->call(fn () => 'b')
-                )
+                    Route::create('/test1')->call(fn () => 'b'),
+                ),
         );
         $this->router->add(
-            Route::create('/admin')->call(fn () => 'a')
+            Route::create('/admin')->call(fn () => 'a'),
         );
 
         $result = $this->router->handleRequest($request)->getCallback();
@@ -90,10 +90,10 @@ class RouterTest extends TestCase
         $this->router->add(
             RouteGroup::create('/api')->add(
                 RouteGroup::create('/test')->add(
-                    Route::create('/nice')->call(fn () => 'win')
+                    Route::create('/nice')->call(fn () => 'win'),
                 ),
-                Route::create('.*')->call(fn () => 'default')
-            )
+                Route::create('.*')->call(fn () => 'default'),
+            ),
         );
 
         $result = $this->router->handleRequest($request)->getCallback();
@@ -113,7 +113,7 @@ class RouterTest extends TestCase
 
         $this->router->add(
             RouteGroup::create('/api'),
-            Route::create('.*')->call(fn () => 'win')
+            Route::create('.*')->call(fn () => 'win'),
         );
 
         $result = $this->router->handleRequest($request)->getCallback();
@@ -127,8 +127,8 @@ class RouterTest extends TestCase
 
         $this->router->add(
             RouteGroup::create('/(?<key>list)')->add(
-                Route::create('/(?<key2>geocaches)')->call(fn () => 'win')
-            )
+                Route::create('/(?<key2>geocaches)')->call(fn () => 'win'),
+            ),
         );
 
         $route = $this->router->handleRequest($request);
@@ -144,8 +144,8 @@ class RouterTest extends TestCase
 
         $this->router->add(
             RouteGroup::create('(?:/[a-z]{4})?')->add(
-                Route::create('/a')->call(fn () => true)
-            )
+                Route::create('/a')->call(fn () => true),
+            ),
         );
 
         $result = $this->router->handleRequest($request)->getCallback();
@@ -164,8 +164,8 @@ class RouterTest extends TestCase
         $this->router->add(
             RouteGroup::create('^(?:/([a-z]{2})(?=/))?')->add(
                 RouteGroup::create('(?:/detail)?')
-                    ->add(Route::create('/geocacher/(?<geocacherId>[0-9]+)')->call(fn () => true))
-            )
+                    ->add(Route::create('/geocacher/(?<geocacherId>[0-9]+)')->call(fn () => true)),
+            ),
         );
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/th/detail/geocacher/1']);
@@ -190,11 +190,11 @@ class RouterTest extends TestCase
             Route::create('/(foo)')->addFilter(function (Request $request): false {
                 static::assertSame(
                     'foo',
-                    $request->attributes()->first()
+                    $request->attributes()->first(),
                 );
 
                 return false;
-            })
+            }),
         );
 
         $request = new Request([], [], [], [], [], ['REQUEST_URI' => '/foo']);

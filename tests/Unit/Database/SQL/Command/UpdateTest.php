@@ -41,7 +41,7 @@ class UpdateTest extends TestCase
             (new Expression())
                 ->add(new Identifier('complex'))
                 ->add(new Operator('+'))
-                ->add(new Value(1))
+                ->add(new Value(1)),
         );
 
         $expected = 'UPDATE table SET test = 1, complex = complex + 1';

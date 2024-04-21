@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Http\Request\Request;
 class CSRF
 {
     public function __construct(
-        private readonly Request $request
+        private readonly Request $request,
     ) {}
 
     public function generateToken(string $contextName): string

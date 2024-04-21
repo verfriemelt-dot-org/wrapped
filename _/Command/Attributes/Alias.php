@@ -10,6 +10,6 @@ use Attribute;
 final readonly class Alias
 {
     public function __construct(
-        public string $alias
+        public string $alias,
     ) {}
 }

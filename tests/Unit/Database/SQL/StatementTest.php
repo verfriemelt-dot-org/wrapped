@@ -29,8 +29,8 @@ class StatementTest extends TestCase
             (new Select())
                 ->add(
                     (new Select())
-                        ->add(new Value(true))
-                )
+                        ->add(new Value(true)),
+                ),
         );
         static::assertSame('SELECT ( SELECT true )', $statement->stringify());
     }
@@ -40,8 +40,8 @@ class StatementTest extends TestCase
         $statement = new Statement(
             (new Select())
                 ->add(
-                    new Identifier('column_a')
-                )
+                    new Identifier('column_a'),
+                ),
         );
 
         $statement->add(new From(new Identifier('table')));
@@ -54,8 +54,8 @@ class StatementTest extends TestCase
         $statement = new Statement(
             (new Insert(new Identifier('test')))
                 ->add(
-                    new Identifier('column_a')
-                )
+                    new Identifier('column_a'),
+                ),
         );
         $statement->add((new Select())->add(new Value(true)));
         static::assertSame('INSERT INTO test ( column_a ) SELECT true', $statement->stringify());
@@ -68,8 +68,8 @@ class StatementTest extends TestCase
                 ->add(
                     (new Select())
                         ->add(new Value(15))
-                        ->add(new Value(1))
-                )
+                        ->add(new Value(1)),
+                ),
         );
 
         static::assertSame([15, 1], array_values($statement->fetchBindings()));
@@ -82,8 +82,8 @@ class StatementTest extends TestCase
                 ->add(
                     (new Select())
                         ->add(new Value(15))
-                        ->add(new Value(1))
-                )
+                        ->add(new Value(1)),
+                ),
         );
         $statement->add(new Where(new Value(666)));
 

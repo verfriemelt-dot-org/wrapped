@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\Serializer\Encoder\EncoderInterface;
 class Serializer
 {
     public function __construct(
-        private readonly EncoderInterface $encoder
+        private readonly EncoderInterface $encoder,
     ) {}
 
     public function addTransformer(Transformer $transformer): void

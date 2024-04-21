@@ -32,7 +32,7 @@ class Offset extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            $this->offset->stringify($driver)
+            $this->offset->stringify($driver),
         );
     }
 }

@@ -15,7 +15,7 @@ final class JsonResponse extends Response
     public function __construct(mixed $content = null, bool $alreadyEncoded = false)
     {
         $this->addHeader(
-            new HttpHeader('Content-type', 'application/json')
+            new HttpHeader('Content-type', 'application/json'),
         );
 
         if ($alreadyEncoded) {

@@ -39,7 +39,7 @@ final readonly class Processor implements TemplateProcessor
         return match ($token::class) {
             StringToken::class => $token->content(),
             VariableToken::class => $this->printVariable($token, $data),
-            default => ''
+            default => '',
         };
     }
 
@@ -63,7 +63,7 @@ final readonly class Processor implements TemplateProcessor
                     [
                         ... $input,
                         $token->valueName() => $value,
-                    ]
+                    ],
                 );
             }
         }
@@ -128,7 +128,7 @@ final readonly class Processor implements TemplateProcessor
                     $methodName = \substr($part, 0, -2);
                     if (!\is_callable([$data, $methodName])) {
                         throw new TemplateProcessorException(
-                            "cannot call {$part} on " . $data::class . " for {$expr->expr}"
+                            "cannot call {$part} on " . $data::class . " for {$expr->expr}",
                         );
                     }
 
@@ -136,7 +136,7 @@ final readonly class Processor implements TemplateProcessor
                 } else {
                     if (!property_exists($data, $part) ||  !isset($data->{$part})) {
                         throw new TemplateProcessorException(
-                            "cannot read {$part} on " . $data::class . " for {$expr->expr}"
+                            "cannot read {$part} on " . $data::class . " for {$expr->expr}",
                         );
                     }
 

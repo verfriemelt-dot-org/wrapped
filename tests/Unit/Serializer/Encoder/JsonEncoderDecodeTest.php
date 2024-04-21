@@ -98,7 +98,7 @@ class JsonEncoderDecodeTest extends TestCase
 
         $class = new class () {
             public function __construct(
-                public readonly ?VariadicDto $variadic = null
+                public readonly ?VariadicDto $variadic = null,
             ) {}
         };
 
@@ -139,7 +139,7 @@ class JsonEncoderDecodeTest extends TestCase
             public array $variadic = [];
 
             public function __construct(
-                string ... $variadic
+                string ... $variadic,
             ) {
                 $this->variadic = $variadic;
             }

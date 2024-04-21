@@ -41,8 +41,8 @@ class Values extends QueryPart implements Command, CommandExpression
             static::COMMAND,
             implode(
                 ', ',
-                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->expressions)
-            )
+                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->expressions),
+            ),
         );
     }
 }

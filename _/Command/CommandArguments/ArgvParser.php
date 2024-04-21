@@ -112,7 +112,7 @@ class ArgvParser
         foreach ($shorts as $short) {
             $this->handleOption(
                 $this->shortOptions[$short] ?? throw new OptionUnexpectedException("unknown option {$short}"),
-                ++$i === \count($shorts)
+                ++$i === \count($shorts),
             );
         }
     }

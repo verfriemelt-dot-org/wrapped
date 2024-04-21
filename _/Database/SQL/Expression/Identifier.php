@@ -115,8 +115,8 @@ class Identifier extends QueryPart implements ExpressionItem, Aliasable
             '.',
             array_map(
                 fn (string $p): string => $p !== '*' ? $this->quote($p, $driver) : '*',
-                $parts
-            )
+                $parts,
+            ),
         ) . $this->stringifyAlias($driver);
     }
 }

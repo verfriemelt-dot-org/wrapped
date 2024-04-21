@@ -33,7 +33,7 @@ class CommandDiscovery
             $path,
             $pathPrefix,
             $namespace,
-            Command::class
+            Command::class,
         );
     }
 

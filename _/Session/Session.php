@@ -22,7 +22,7 @@ final class Session implements SessionHandler
 
     public function __construct(
         private readonly Request $request,
-        private SessionDataObject $storage
+        private SessionDataObject $storage,
     ) {
         $this->data = new ParameterBag();
         ($this->storage)::purgeOldSessions();
@@ -74,7 +74,7 @@ final class Session implements SessionHandler
         setcookie(
             self::SESSION_COOKIE_NAME,
             '',
-            ['expires' => time() - self::SESSION_TIMEOUT * 10]
+            ['expires' => time() - self::SESSION_TIMEOUT * 10],
         );
     }
 
@@ -139,7 +139,7 @@ final class Session implements SessionHandler
         setcookie(
             self::SESSION_COOKIE_NAME,
             $this->sessionId,
-            ['expires' => time() + self::SESSION_TIMEOUT, 'path' => '/']
+            ['expires' => time() + self::SESSION_TIMEOUT, 'path' => '/'],
         );
 
         $this->storage = new $this->storage();

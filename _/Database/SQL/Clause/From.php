@@ -34,7 +34,7 @@ class From extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            $this->source->stringify($driver)
+            $this->source->stringify($driver),
         );
     }
 }

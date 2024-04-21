@@ -142,7 +142,7 @@ class ConsoleFrame
 //                        $this->instance
 //                    ),
                 ,
-                $style
+                $style,
             );
 
             ++$offset;

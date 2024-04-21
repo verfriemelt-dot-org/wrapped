@@ -52,7 +52,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->tearDown();
         static::$connection->query('drop table if exists "TreeDummy";');
         static::$connection->query(
-            'create table "TreeDummy" ( id serial primary key, name text, "left" int, "right" int, parent_id int, depth int );'
+            'create table "TreeDummy" ( id serial primary key, name text, "left" int, "right" int, parent_id int, depth int );',
         );
     }
 
@@ -550,7 +550,7 @@ class TreeDataModelTest extends DatabaseTestCase
                 'b' => [],
                 'c' => [],
                 'i' => [],
-            ]
+            ],
         );
 
         $instance = new TreeDummy();
@@ -565,7 +565,7 @@ class TreeDataModelTest extends DatabaseTestCase
                 'b' => [],
                 'c' => [],
                 'i' => [],
-            ]
+            ],
         );
     }
 }

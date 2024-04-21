@@ -14,7 +14,7 @@ class Repeater implements TemplateItem
     private array $currentDataLine = [];
 
     public function __construct(
-        public readonly string $name
+        public readonly string $name,
     ) {}
 
     public function set(string $name, mixed $value): static

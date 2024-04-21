@@ -14,7 +14,7 @@ class BracketTest extends TestCase
     {
         $bracket = new Bracket();
         $bracket->add(
-            new Value(true)
+            new Value(true),
         );
 
         static::assertSame('( true )', $bracket->stringify());

@@ -29,9 +29,9 @@ final readonly class ServiceDiscovery
     ): iterable {
         $iterator = new RegexIterator(
             new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($path)
+                new RecursiveDirectoryIterator($path),
             ),
-            '/\.php$/'
+            '/\.php$/',
         );
 
         foreach ($iterator as $file) {

@@ -36,7 +36,7 @@ class Having extends QueryPart implements Clause
     {
         return sprintf(
             static::CLAUSE,
-            $this->expression->stringify($driver)
+            $this->expression->stringify($driver),
         );
     }
 }

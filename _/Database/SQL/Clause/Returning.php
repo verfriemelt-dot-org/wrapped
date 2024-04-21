@@ -42,8 +42,8 @@ class Returning extends QueryPart implements Command, CommandExpression
             static::CLAUSE,
             implode(
                 ', ',
-                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions)
-            )
+                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->expressions),
+            ),
         );
     }
 }

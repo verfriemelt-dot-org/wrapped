@@ -20,8 +20,8 @@ $dotenv->load(
             dirname(TEST_ROOT) . '/.env.test',
             dirname(TEST_ROOT) . '/.env.test.local',
         ],
-        file_exists(...)
-    )
+        file_exists(...),
+    ),
 );
 
 match ($_ENV['DATABASE_DRIVER'] ?? null) {

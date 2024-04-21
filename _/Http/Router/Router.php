@@ -59,7 +59,7 @@ final class Router
                 ...$this->flattenRoutes(
                     $routeable->getRoutes(),
                     $routeable->getPath(),
-                    [...$filters, ...$routeable->getFilters()]
+                    [...$filters, ...$routeable->getFilters()],
                 ),
             ];
         }

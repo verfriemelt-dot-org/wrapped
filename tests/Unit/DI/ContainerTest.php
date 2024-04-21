@@ -190,10 +190,10 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
         $container->register(
-            default_a::class
+            default_a::class,
         )->parameter(
             default_b::class,
-            fn () => new default_b('bar')
+            fn () => new default_b('bar'),
         );
 
         $instance = $container->get(default_a::class);
@@ -217,7 +217,7 @@ class ContainerTest extends TestCase
         static::assertSame(
             $container->get(b::class),
             $container->get(b::class),
-            'factory should create single instance'
+            'factory should create single instance',
         );
     }
 

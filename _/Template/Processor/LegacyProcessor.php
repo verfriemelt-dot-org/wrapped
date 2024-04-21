@@ -28,7 +28,7 @@ final class LegacyProcessor implements TemplateProcessor
     private array $repeaterDataSourcePath = [];
 
     public function __construct(
-        private readonly ContainerInterface $container
+        private readonly ContainerInterface $container,
     ) {}
 
     /**
@@ -163,7 +163,7 @@ final class LegacyProcessor implements TemplateProcessor
                             'if' => $data['if'],
                         ],
                         $element,
-                    )
+                    ),
                 );
             }
         }
@@ -189,7 +189,7 @@ final class LegacyProcessor implements TemplateProcessor
         foreach ($children as $innerToken) {
             $output .= $this->process(
                 $innerToken,
-                $data
+                $data,
             );
         }
 

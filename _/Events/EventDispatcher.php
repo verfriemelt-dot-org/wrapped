@@ -39,7 +39,7 @@ final class EventDispatcher
             $callableArguments = $this->argumentResolver->resolv($handler, skip: 1);
             $handler(
                 $event,
-                ...$callableArguments
+                ...$callableArguments,
             );
         }
 

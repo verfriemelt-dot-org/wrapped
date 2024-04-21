@@ -21,7 +21,7 @@ class QueryTest extends TestCase
 
         static::assertStringContainsString(
             'SELECT column FROM table WHERE column = ',
-            $query->fetchStatement()->stringify()
+            $query->fetchStatement()->stringify(),
         );
     }
 
@@ -37,7 +37,7 @@ class QueryTest extends TestCase
 
         static::assertStringContainsString(
             'SELECT column FROM table WHERE column IS NULL',
-            $query->fetchStatement()->stringify()
+            $query->fetchStatement()->stringify(),
         );
     }
 }

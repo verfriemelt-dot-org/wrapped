@@ -20,7 +20,7 @@ final class Database
         $host,
         $database,
         $port,
-        $autoConnect = true
+        $autoConnect = true,
     ): DatabaseDriver {
         if (!class_exists($driver)) {
             throw new DatabaseDriverUnknown("unknown driver {$driver}");

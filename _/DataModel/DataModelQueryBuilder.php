@@ -77,8 +77,8 @@ class DataModelQueryBuilder extends QueryBuilder
                             $this->prototype::fetchSchemaname(),
                             $this->prototype::fetchTablename(),
                             $this->prototype->getPrimaryKey(),
-                        )
-                    )
+                        ),
+                    ),
                 );
             }
         }
@@ -93,14 +93,14 @@ class DataModelQueryBuilder extends QueryBuilder
     {
         if (!$callback) {
             $callback = array_values(
-                array_filter(array_map(fn ($c) => $c::fetchPredefinedJoins($dest::class), $this->context))
+                array_filter(array_map(fn ($c) => $c::fetchPredefinedJoins($dest::class), $this->context)),
             )[0] ?? null;
         }
 
         $join = $callback(new JoinBuilder($dest::fetchSchemaname(), $dest::fetchTablename()));
 
         $this->fetchStatement()->add(
-            $join->fetchJoinClause()
+            $join->fetchJoinClause(),
         );
 
         $this->addContext($dest);

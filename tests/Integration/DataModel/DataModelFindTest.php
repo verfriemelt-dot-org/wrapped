@@ -111,12 +111,12 @@ class DataModelFindTest extends DatabaseTestCase
         switch (static::$connection::class) {
             case Postgres::class:
                 static::$connection->query(
-                    'create table "TypeTester" ( id serial, a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) '
+                    'create table "TypeTester" ( id serial, a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) ',
                 );
                 break;
             case SQLite::class:
                 static::$connection->query(
-                    'create table "TypeTester" ( id integer primary key , a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) '
+                    'create table "TypeTester" ( id integer primary key , a_int int, a_float numeric, a_string text, a_bool bool, a_null int ) ',
                 );
                 break;
         }

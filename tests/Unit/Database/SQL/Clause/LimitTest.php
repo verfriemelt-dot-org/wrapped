@@ -13,7 +13,7 @@ class LimitTest extends TestCase
     public function test_simple(): void
     {
         $limit = new Limit(
-            new Value(1)
+            new Value(1),
         );
         static::assertSame('LIMIT 1', $limit->stringify());
     }

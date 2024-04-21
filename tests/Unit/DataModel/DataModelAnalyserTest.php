@@ -101,7 +101,7 @@ class DataModelAnalyserTest extends TestCase
         $analyser = new DataModelAnalyser(new Example());
         static::assertSame(
             'complex_field_name_snake_case',
-            $analyser->fetchProperties()[3]->getNamingConvention()->getString()
+            $analyser->fetchProperties()[3]->getNamingConvention()->getString(),
         );
     }
 }

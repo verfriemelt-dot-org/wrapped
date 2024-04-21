@@ -72,8 +72,8 @@ class Statement extends QueryPart implements ExpressionItem
         return trim(
             implode(
                 ' ',
-                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->parts)
-            )
+                array_map(fn (QueryPart $i) => $i->stringify($driver), $this->parts),
+            ),
         );
     }
 }

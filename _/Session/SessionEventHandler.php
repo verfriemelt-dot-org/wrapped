@@ -17,7 +17,7 @@ final class SessionEventHandler implements EventSubscriberInterface
     private Session $session;
 
     public function __construct(
-        private readonly Container $container
+        private readonly Container $container,
     ) {}
 
     #[Override]
@@ -39,7 +39,7 @@ final class SessionEventHandler implements EventSubscriberInterface
 
                 $this->session->shutdown();
             },
-            default => null
+            default => null,
         };
     }
 }

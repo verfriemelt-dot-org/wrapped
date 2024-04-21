@@ -46,8 +46,8 @@ class Order extends QueryPart implements Clause
             static::CLAUSE,
             implode(
                 ', ',
-                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->expressions)
-            )
+                array_map(fn (ExpressionItem $i) => $i->stringify($driver), $this->expressions),
+            ),
         );
     }
 }

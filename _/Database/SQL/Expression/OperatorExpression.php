@@ -42,7 +42,7 @@ class OperatorExpression extends QueryPart implements ExpressionItem
         }
 
         if (count($args) < static::OPTERATORS[$op]['minArgs'] || count(
-            $args
+            $args,
         ) > static::OPTERATORS[$op]['maxArgs']) {
             throw new Exception("missing arguments for operator »{$op}«");
         }
@@ -61,11 +61,11 @@ class OperatorExpression extends QueryPart implements ExpressionItem
         return match ($this->operator) {
             'in' => sprintf(
                 static::OPTERATORS[$this->operator]['string'],
-                implode(', ', array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments))
+                implode(', ', array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)),
             ),
             default => sprintf(
                 static::OPTERATORS[$this->operator]['string'],
-                ...array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments)
+                ...array_map(static fn (ExpressionItem $i) => $i->stringify($driver), $this->arguments),
             ),
         };
     }

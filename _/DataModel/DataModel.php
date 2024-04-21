@@ -117,7 +117,7 @@ abstract class DataModel
 
         if (class_exists($attributeType) && in_array(
             PropertyObjectInterface::class,
-            class_implements($attributeType)
+            class_implements($attributeType),
         )) {
             return $attributeType::hydrateFromString($input);
         }
@@ -166,7 +166,7 @@ abstract class DataModel
         if ($torwardsDatabase) {
             $keysTranslated = array_map(
                 fn (string $field) => static::translateFieldName($field)->fetchBackendName(),
-                $keys
+                $keys,
             );
         } else {
             $keysTranslated = array_map(fn (string $field) => static::translateFieldName($field)->getName(), $keys);
@@ -198,7 +198,7 @@ abstract class DataModel
     {
         return array_map(
             fn (DataModelProperty $a) => $a->fetchBackendName(),
-            static::createDataModelAnalyser()->fetchProperties()
+            static::createDataModelAnalyser()->fetchProperties(),
         );
     }
 
@@ -240,7 +240,7 @@ abstract class DataModel
     {
         return array_map(
             fn (DataModelProperty $a) => [static::fetchTablename(), $a->fetchBackendName()],
-            static::createDataModelAnalyser()->fetchProperties()
+            static::createDataModelAnalyser()->fetchProperties(),
         );
     }
 
@@ -272,7 +272,7 @@ abstract class DataModel
         // for backwards compatibility
         if ($result === null) {
             throw new DatabaseObjectNotFound(
-                'no such object found in database with name ' . static::class . " and id {$id}"
+                'no such object found in database with name ' . static::class . " and id {$id}",
             );
         }
 
@@ -324,7 +324,7 @@ abstract class DataModel
     public static function findSingle(
         array|DbLogic $params = [],
         ?string $orderBy = null,
-        string $order = 'asc'
+        string $order = 'asc',
     ): ?static {
         if ($params instanceof DbLogic) {
             $query = static::buildQueryFromDbLogic($params);
@@ -455,7 +455,7 @@ abstract class DataModel
         $query = static::buildQuery();
         $query->insert(
             [static::fetchSchemaname(), static::fetchTablename()],
-            array_keys($insertData)
+            array_keys($insertData),
         );
 
         $query->values($insertData);
@@ -491,11 +491,11 @@ abstract class DataModel
         $query = static::buildQuery();
         $query->update(
             [static::fetchSchemaname(), static::fetchTablename()],
-            $updateColumns
+            $updateColumns,
         );
 
         $pk = (new Attribute\Naming\SnakeCase(static::getPrimaryKey()))->convertTo(
-            new Attribute\Naming\CamelCase()
+            new Attribute\Naming\CamelCase(),
         )->getString();
 
         $query->where([static::getPrimaryKey() => $this->{$pk}]);

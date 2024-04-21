@@ -63,15 +63,15 @@ class CaseWhen extends QueryPart implements ExpressionItem
             ' ',
             array_map(
                 fn ($part) => "WHEN {$part['when']->stringify($driver)} THEN {$part['then']->stringify($driver)}",
-                $this->when
-            )
+                $this->when,
+            ),
         );
 
         $else = ($this->else !== null) ? " ELSE {$this->else->stringify($driver)}" : '';
 
         return sprintf(
             static::SYNTAX,
-            $exp . $when . $else
+            $exp . $when . $else,
         )
             . $this->stringifyAlias($driver);
     }
