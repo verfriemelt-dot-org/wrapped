@@ -8,9 +8,8 @@ use Override;
 
 class Text extends FormType
 {
-    public $type = 'text';
-
-    public $placeholder;
+    protected string $type = 'text';
+    protected string $placeholder;
 
     #[Override]
     public function loadTemplate(): static
@@ -19,7 +18,7 @@ class Text extends FormType
         return $this;
     }
 
-    public function placeholder($placeholder): Text
+    public function placeholder(string $placeholder): Text
     {
         $this->placeholder = $placeholder;
         return $this;
@@ -30,7 +29,7 @@ class Text extends FormType
     {
         $this->writeTplValues();
 
-        if ($this->placeholder) {
+        if (isset($this->placeholder)) {
             $this->tpl->setIf('placeholder');
             $this->tpl->set('placeholder', $this->placeholder);
         }

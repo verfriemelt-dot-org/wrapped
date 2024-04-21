@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Button extends FormType
 {
-    public $type = 'button';
+    protected string $type = 'button';
 
     public function __construct(
         string $name,

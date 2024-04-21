@@ -8,7 +8,7 @@ use Override;
 
 class Hidden extends FormType
 {
-    public $type = 'hidden';
+    protected string $type = 'hidden';
 
     #[Override]
     public function loadTemplate(): static

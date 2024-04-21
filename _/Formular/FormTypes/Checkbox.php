@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Checkbox extends FormType
 {
-    public $type = 'checkbox';
+    protected string $type = 'checkbox';
 
     private $checked;
 

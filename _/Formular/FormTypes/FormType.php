@@ -11,26 +11,20 @@ use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 abstract class FormType
 {
-    public $label;
+    protected string $label;
+    protected string $type;
+    protected string $pattern;
+    protected string $title;
 
-    public $type;
+    protected bool $disabled = false;
+    protected bool $readonly = false;
+    protected bool $required = false;
+    protected bool $postAsArray = false;
 
-    public $pattern;
+    public FilterItem $filterItem;
 
-    public $title;
-
-    public $disabled = false;
-
-    public $readonly = false;
-
-    public $required = false;
-
-    public $postAsArray = false;
-
-    /** @var FilterItem */
-    public $filterItem;
-
-    public $cssClasses = [];
+    /** @var string[] */
+    public array $cssClasses = [];
 
     abstract public function loadTemplate(): static;
 
@@ -55,13 +49,13 @@ abstract class FormType
         return $this->filterItem;
     }
 
-    public function setValue($value): static
+    public function setValue(?string $value): static
     {
         $this->value = $value;
         return $this;
     }
 
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -81,10 +75,8 @@ abstract class FormType
     /**
      * sets the element to disabled state;
      * disabled fields will not be sent along with the request
-     *
-     * @param type $bool
      */
-    public function disabled($bool = true): static
+    public function disabled(bool $bool = true): static
     {
         $this->disabled = $bool;
         return $this;
@@ -94,10 +86,8 @@ abstract class FormType
      * sets the element to readonly state;
      * this is just for frontend visuals
      * the field is sent along with the request
-     *
-     * @param type $bool
      */
-    public function readonly($bool = true): static
+    public function readonly(bool $bool = true): static
     {
         $this->readonly = $bool;
         return $this;
@@ -115,19 +105,21 @@ abstract class FormType
         $this->tpl->setIf('readonly', $this->readonly);
         $this->tpl->setIf('required', $this->required);
 
-        $this->tpl->set('label', $this->label);
-        $this->tpl->setIf('displayLabel', $this->label !== null);
+        if (isset($this->label)) {
+            $this->tpl->set('label', $this->label);
+            $this->tpl->setIf('displayLabel');
+        }
 
         $this->tpl->set('cssClasses', implode(' ', $this->cssClasses));
 
         $this->tpl->setIf('pattern', !empty($this->pattern));
-        $this->tpl->set('title', $this->title);
-        $this->tpl->set('pattern', $this->pattern);
+        $this->tpl->set('title', $this->title ?? '');
+        $this->tpl->set('pattern', $this->pattern ?? '');
 
         return $this;
     }
 
-    public function addCssClass($classname): static
+    public function addCssClass(string $classname): static
     {
         $this->cssClasses[] = $classname;
         return $this;
@@ -135,12 +127,8 @@ abstract class FormType
 
     /**
      * sets title used conjunction with pattern
-     *
-     * @param type $title
-     *
-     * @return $this
      */
-    public function setTitle($title): static
+    public function setTitle(string $title): static
     {
         $this->title = $title;
         return $this;
@@ -149,12 +137,8 @@ abstract class FormType
     /**
      * pattern for html5 validation
      * eg ".{5,}" for minimum 5 characters of input
-     *
-     * @param type $pattern
-     *
-     * @return $this
      */
-    public function setPattern($pattern): static
+    public function setPattern(string $pattern): static
     {
         $this->pattern = $pattern;
         return $this;

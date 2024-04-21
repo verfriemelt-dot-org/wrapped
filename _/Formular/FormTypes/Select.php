@@ -9,6 +9,8 @@ use verfriemelt\wrapped\_\Template\Repeater;
 
 class Select extends FormType
 {
+    protected string $type = 'select';
+
     /** @var array<int,SelectGroup|SelectItem> */
     private array $options = [];
 
@@ -36,14 +38,14 @@ class Select extends FormType
 
     private function buildOption(string $name, string $value): SelectItem
     {
-        if ($this->filterItem) {
+        if (isset($this->filterItem)) {
             $this->filterItem->addAllowedValue($value);
         }
 
         return new SelectItem($name, $value);
     }
 
-    private function writeOption(Repeater $repeater, SelectItem $option)
+    private function writeOption(Repeater $repeater, SelectItem $option): void
     {
         $repeater->set('name', $option->name);
         $repeater->set('value', $option->value);

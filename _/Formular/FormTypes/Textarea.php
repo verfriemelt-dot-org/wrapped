@@ -8,9 +8,7 @@ use Override;
 
 class Textarea extends Text
 {
-    public $type = 'textarea';
-
-    public $placeholder;
+    protected string $type = 'textarea';
 
     #[Override]
     public function loadTemplate(): static
@@ -20,7 +18,7 @@ class Textarea extends Text
     }
 
     #[Override]
-    public function placeholder($placeholder): Text
+    public function placeholder(string $placeholder): Textarea
     {
         $this->placeholder = $placeholder;
         return $this;
@@ -31,7 +29,7 @@ class Textarea extends Text
     {
         $this->writeTplValues();
 
-        if ($this->placeholder) {
+        if (isset($this->placeholder)) {
             $this->tpl->setIf('placeholder');
             $this->tpl->set('placeholder', $this->placeholder);
         }

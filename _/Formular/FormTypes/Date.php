@@ -9,24 +9,12 @@ use Override;
 
 class Date extends FormType
 {
-    public $type = 'date';
+    protected string $type = 'date';
 
     #[Override]
     public function loadTemplate(): static
     {
         $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Date.tpl.php'));
-        return $this;
-    }
-
-    #[Override]
-    public function setValue($value): static
-    {
-        if ($value instanceof DateTime) {
-            $this->value = $value->format('Y-m-d');
-        } else {
-            $this->value = $value;
-        }
-
         return $this;
     }
 

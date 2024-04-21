@@ -113,7 +113,7 @@ class Formular implements Viewable
         $input = new Date($name);
 
         if ($value) {
-            $input->setValue($value);
+            $input->setValue($value->format('Y-m-d'));
         }
 
         $input->setFilterItem($this->filter->request()->has($name));
