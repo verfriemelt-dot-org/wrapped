@@ -24,7 +24,7 @@ class Checkbox extends FormType
     }
 
     #[Override]
-    public function loadTemplate(): FormType
+    public function loadTemplate(): static
     {
         $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Checkbox.tpl.php'));
         return $this;
@@ -44,14 +44,14 @@ class Checkbox extends FormType
         return $this->tpl->render();
     }
 
-    public function checked($bool = true): FormType
+    public function checked($bool = true): static
     {
         $this->checked = $bool;
         return $this;
     }
 
     #[Override]
-    protected function writeTplValues(): FormType
+    protected function writeTplValues(): static
     {
         parent::writeTplValues();
         $this->tpl->setIf('checked', $this->checked);

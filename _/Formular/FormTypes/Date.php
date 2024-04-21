@@ -12,14 +12,14 @@ class Date extends FormType
     public $type = 'date';
 
     #[Override]
-    public function loadTemplate(): FormType
+    public function loadTemplate(): static
     {
         $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Date.tpl.php'));
         return $this;
     }
 
     #[Override]
-    public function setValue($value): FormType
+    public function setValue($value): static
     {
         if ($value instanceof DateTime) {
             $this->value = $value->format('Y-m-d');
@@ -31,7 +31,7 @@ class Date extends FormType
     }
 
     #[Override]
-    public function parseValue($input)
+    public function parseValue($input): ?DateTime
     {
         $parsedTime = DateTime::createFromFormat('Y-m-d', $input);
 

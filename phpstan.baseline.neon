@@ -1841,11 +1841,6 @@ parameters:
 			path: _/Formular/FormTypes/Checkbox.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:parseValue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Date.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:parseValue\\(\\) has parameter \\$input with no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Date.php
@@ -1897,16 +1892,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:label\\(\\) has parameter \\$label with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:parseValue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:parseValue\\(\\) has parameter \\$input with no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/FormType.php
 
@@ -2057,7 +2042,7 @@ parameters:
 
 		-
 			message: "#^Call to function in_array\\(\\) requires parameter \\#3 to be set\\.$#"
-			count: 2
+			count: 1
 			path: _/Formular/Formular.php
 
 		-
@@ -2151,11 +2136,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addSubmit\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addSubmit\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2186,22 +2166,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:preFillFormWithSendData\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:setCssClass\\(\\) has parameter \\$cssClass with no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:setCssId\\(\\) has parameter \\$id with no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:setMethod\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular but returns false\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
@@ -2216,27 +2186,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^PHPDoc tag @throws with type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Exception is not subtype of Throwable$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Parameter \\$method of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:setMethod\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\type\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$action \\(string\\) does not accept string\\|null\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
 		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$elements type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:\\$method \\(string\\) does not accept verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\type\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 

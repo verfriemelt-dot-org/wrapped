@@ -32,7 +32,7 @@ abstract class FormType
 
     public $cssClasses = [];
 
-    abstract public function loadTemplate(): FormType;
+    abstract public function loadTemplate(): static;
 
     abstract public function fetchHtml(): string;
 
@@ -44,7 +44,7 @@ abstract class FormType
         $this->loadTemplate();
     }
 
-    public function setFilterItem(FilterItem $filterItem): FormType
+    public function setFilterItem(FilterItem $filterItem): static
     {
         $this->filterItem = $filterItem;
         return $this;
@@ -55,7 +55,7 @@ abstract class FormType
         return $this->filterItem;
     }
 
-    public function setValue($value): FormType
+    public function setValue($value): static
     {
         $this->value = $value;
         return $this;
@@ -66,13 +66,13 @@ abstract class FormType
         return $this->value;
     }
 
-    public function setOptional(): FormType
+    public function setOptional(): static
     {
         $this->filterItem->optional(true);
         return $this;
     }
 
-    public function label($label): FormType
+    public function label($label): static
     {
         $this->label = $label;
         return $this;
@@ -84,7 +84,7 @@ abstract class FormType
      *
      * @param type $bool
      */
-    public function disabled($bool = true): FormType
+    public function disabled($bool = true): static
     {
         $this->disabled = $bool;
         return $this;
@@ -97,13 +97,13 @@ abstract class FormType
      *
      * @param type $bool
      */
-    public function readonly($bool = true): FormType
+    public function readonly($bool = true): static
     {
         $this->readonly = $bool;
         return $this;
     }
 
-    protected function writeTplValues(): FormType
+    protected function writeTplValues(): static
     {
         $this->tpl->set('value', $this->value);
         $this->tpl->set('name', $this->name);
@@ -127,7 +127,7 @@ abstract class FormType
         return $this;
     }
 
-    public function addCssClass($classname): FormType
+    public function addCssClass($classname): static
     {
         $this->cssClasses[] = $classname;
         return $this;
@@ -140,7 +140,7 @@ abstract class FormType
      *
      * @return $this
      */
-    public function setTitle($title): FormType
+    public function setTitle($title): static
     {
         $this->title = $title;
         return $this;
@@ -154,24 +154,24 @@ abstract class FormType
      *
      * @return $this
      */
-    public function setPattern($pattern): FormType
+    public function setPattern($pattern): static
     {
         $this->pattern = $pattern;
         return $this;
     }
 
-    public function required($bool = true): FormType
+    public function required($bool = true): static
     {
         $this->required = $bool;
         return $this;
     }
 
-    public function parseValue($input)
+    public function parseValue(string $input): mixed
     {
         return $input;
     }
 
-    public function postAsArray(bool $bool = true): FormType
+    public function postAsArray(bool $bool = true): static
     {
         $this->postAsArray = $bool;
         return $this;

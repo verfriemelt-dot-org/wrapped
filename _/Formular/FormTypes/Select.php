@@ -81,7 +81,7 @@ class Select extends FormType
     }
 
     #[Override]
-    public function loadTemplate(): FormType
+    public function loadTemplate(): static
     {
         $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Select.tpl.php'));
         return $this;

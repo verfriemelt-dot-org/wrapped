@@ -13,7 +13,7 @@ class Textarea extends Text
     public $placeholder;
 
     #[Override]
-    public function loadTemplate(): FormType
+    public function loadTemplate(): static
     {
         $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Textarea.tpl.php'));
         return $this;
