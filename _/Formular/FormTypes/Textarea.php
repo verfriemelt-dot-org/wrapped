@@ -11,10 +11,9 @@ class Textarea extends Text
     protected string $type = 'textarea';
 
     #[Override]
-    public function loadTemplate(): static
+    protected function loadTemplate(): string
     {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Textarea.tpl.php'));
-        return $this;
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Textarea.tpl.php');
     }
 
     #[Override]
@@ -25,15 +24,15 @@ class Textarea extends Text
     }
 
     #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
         $this->writeTplValues();
 
         if (isset($this->placeholder)) {
-            $this->tpl->setIf('placeholder');
-            $this->tpl->set('placeholder', $this->placeholder);
+            $this->template->setIf('placeholder');
+            $this->template->set('placeholder', $this->placeholder);
         }
 
-        return $this->tpl->render();
+        return $this->template->render();
     }
 }

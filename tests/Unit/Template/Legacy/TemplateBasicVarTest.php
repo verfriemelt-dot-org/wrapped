@@ -7,7 +7,6 @@ namespace verfriemelt\wrapped\tests\Unit\Template;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use verfriemelt\wrapped\_\Template\VariableFormatter;
 use Override;
 
@@ -36,7 +35,7 @@ class TemplateBasicVarTest extends TestCase
         $container->register($formatter::class, $formatter);
         $container->tag(VariableFormatter::class, $formatter::class);
 
-        $this->tpl = new Template(new TemplateRenderer($container));
+        $this->tpl = $container->get(Template::class);
     }
 
     public function testsingle_var(): void

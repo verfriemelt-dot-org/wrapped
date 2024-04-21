@@ -7,7 +7,7 @@ namespace verfriemelt\wrapped\_\Formular;
 use Override;
 use RuntimeException;
 use verfriemelt\wrapped\_\DateTime\DateTime;
-use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Exception\Input\InputException;
 use verfriemelt\wrapped\_\Formular\FormTypes\Button;
 use verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
@@ -23,54 +23,43 @@ use verfriemelt\wrapped\_\Input\CSRF;
 use verfriemelt\wrapped\_\Input\Filter;
 use verfriemelt\wrapped\_\Output\Viewable;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use Exception;
 
 class Formular implements Viewable
 {
     final public const string METHOD_POST = 'POST';
-
     final public const string METHOD_GET = 'GET';
-
     final public const string CSRF_FIELD_NAME = '_csrf';
-
     final public const string FORM_FIELD_NAME = '_form';
 
     private array $elements = [];
-
     private string $method = self::METHOD_POST;
-
     private string $cssClass = '';
-
     private string $cssId = '';
-
     private string $action;
-
-    private readonly string $csrfTokenName;
-
     private bool $storeValuesOnFail = false;
 
     private bool $prefilledWithSubmitData = false;
+    private string $formname;
+    private string $csrfTokenName;
 
     public function __construct(
-        private readonly string $formname,
-        protected RequestStack $requestStack,
-        private readonly ?Filter $filter = null,
-        private readonly Template $tpl = new Template(new TemplateRenderer(new Container())),
+        private readonly RequestStack $requestStack,
+        private readonly Template $tpl,
+        private readonly ContainerInterface $container,
+        private readonly ?Filter $filter,
     ) {
-        $template = \file_get_contents(__DIR__ . '/Template/Formular.tpl.php');
-        if (!is_string($template)) {
-            throw new RuntimeException('cannot load template');
-        }
-
-        $this->tpl->parse($template);
-
         $this->action = $this->requestStack->getCurrentRequest()->uri();
+    }
 
-        $this->csrfTokenName = 'csrf-' . \md5($this->formname);
-
+    public function setName(string $name): static
+    {
+        $this->formname = $name;
+        $this->csrfTokenName = 'csrf-' . \md5($name);
         $this->addHidden(self::CSRF_FIELD_NAME, $this->generateCSRF());
         $this->addHidden(self::FORM_FIELD_NAME, $this->formname);
+
+        return $this;
     }
 
     private function generateCSRF(): string
@@ -99,7 +88,8 @@ class Formular implements Viewable
 
     public function addText($name, $value = null): Text
     {
-        $input = new Text($name);
+        $input = $this->container->get(Text::class);
+        $input->setName($name);
         $input->setValue($value);
         $input->setFilterItem($this->filter->request()->has($name));
 
@@ -110,7 +100,8 @@ class Formular implements Viewable
 
     public function addDate($name, ?DateTime $value = null): Date
     {
-        $input = new Date($name);
+        $input = $this->container->get(Date::class);
+        $input->setName($name);
 
         if ($value) {
             $input->setValue($value->format('Y-m-d'));
@@ -125,7 +116,8 @@ class Formular implements Viewable
 
     public function addPassword($name, $value = null)
     {
-        $input = new Password($name);
+        $input = $this->container->get(Password::class);
+        $input->setName($name);
         $input->setValue($value);
         $input->setFilterItem($this->filter->request()->has($name));
 
@@ -142,7 +134,8 @@ class Formular implements Viewable
             $filter->allowedValues([$value]);
         }
 
-        $input = new Hidden($name);
+        $input = $this->container->get(Hidden::class);
+        $input->setName($name);
         $input->setValue($value);
         $input->setFilterItem($filter);
 
@@ -151,9 +144,10 @@ class Formular implements Viewable
         return $input;
     }
 
-    public function addButton($name, $value = null)
+    public function addButton($name, $value = null): Button
     {
-        $button = new Button($name);
+        $button = $this->container->get(Button::class);
+        $button->setName($name);
         $button->setValue($value);
         $this->elements[$name] = $button;
 
@@ -162,9 +156,11 @@ class Formular implements Viewable
         return $button;
     }
 
-    public function addCheckbox($name, $value = null)
+    public function addCheckbox($name, $value = null): Checkbox
     {
-        $checkbox = new Checkbox($name, $value);
+        $checkbox = $this->container->get(Checkbox::class);
+        $checkbox->setName($name);
+        $checkbox->setValue($value);
         $this->elements[$name] = $checkbox;
 
         $checkbox->setFilterItem($this->filter->request()->has($name));
@@ -172,9 +168,11 @@ class Formular implements Viewable
         return $checkbox;
     }
 
-    public function addSelect($name, $value = null)
+    public function addSelect($name, $value = null): Select
     {
-        $select = new Select($name, $value);
+        $select = $this->container->get(Select::class);
+        $select->setName($name);
+        $select->setValue($value);
         $select->setFilterItem($this->filter->request()->has($name));
 
         $this->elements[$name] = $select;
@@ -182,9 +180,10 @@ class Formular implements Viewable
         return $select;
     }
 
-    public function addTextarea($name, $value = null)
+    public function addTextarea($name, $value = null): Textarea
     {
-        $input = new Textarea($name);
+        $input = $this->container->get(Textarea::class);
+        $input->setName($name);
         $input->setValue($value);
         $input->setFilterItem($this->filter->request()->has($name));
 
@@ -250,10 +249,14 @@ class Formular implements Viewable
                 continue;
             }
 
-            $data = $this->get($element->name);
+            if ($element instanceof Hidden) {
+                continue;
+            }
 
-            if (is_string($data) || is_bool($data)) {
-                $element->setValue($this->get($element->name));
+            $data = $this->get($element->getName());
+
+            if (\is_string($data) || is_bool($data)) {
+                $element->setValue($this->get($element->getName()));
             }
         }
 
@@ -321,14 +324,23 @@ class Formular implements Viewable
     #[Override]
     public function getContents(): string
     {
+        assert(isset($this->formname));
+
+        $template = \file_get_contents(__DIR__ . '/Template/Formular.tpl.php');
+        if (!\is_string($template)) {
+            throw new RuntimeException('cannot load template');
+        }
+        $this->tpl->parse($template);
+
         $r = $this->tpl->createRepeater('elements');
+
         $this->tpl->set('method', $this->method);
         $this->tpl->set('action', $this->action);
         $this->tpl->set('cssClass', $this->cssClass);
         $this->tpl->set('cssId', $this->cssId);
 
         foreach ($this->elements as $element) {
-            $r->set('element', $element->fetchHtml());
+            $r->set('element', $element->render($this->tpl));
             $r->save();
         }
 

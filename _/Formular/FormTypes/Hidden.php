@@ -11,21 +11,22 @@ class Hidden extends FormType
     protected string $type = 'hidden';
 
     #[Override]
-    public function loadTemplate(): static
+    protected function loadTemplate(): string
     {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Hidden.tpl.php'));
-        return $this;
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Hidden.tpl.php');
     }
 
     #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
-        $this->tpl->set('value', $this->value);
-        $this->tpl->set('name', $this->name);
-        $this->tpl->set('id', $this->name);
+        $this->template->parse($this->loadTemplate());
 
-        $this->tpl->set('cssClasses', implode(' ', $this->cssClasses));
+        $this->template->set('value', $this->value);
+        $this->template->set('name', $this->name);
+        $this->template->set('id', $this->name);
 
-        return $this->tpl->render();
+        $this->template->set('cssClasses', implode(' ', $this->cssClasses));
+
+        return $this->template->render();
     }
 }

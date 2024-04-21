@@ -7,13 +7,13 @@ namespace verfriemelt\wrapped\tests\Unit\Template;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class TemplateTest extends TestCase
 {
     public function test_load_template_file(): void
     {
-        $tpl = new Template(new TemplateRenderer(new Container()));
+        $container = new Container();
+        $tpl = $container->get(Template::class);
         $tpl->parse('');
         $tpl->render();
 

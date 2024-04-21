@@ -1806,6 +1806,11 @@ parameters:
 			path: _/File/Path.php
 
 		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Button\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
+			count: 1
+			path: _/Formular/FormTypes/Button.php
+
+		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Button\\:\\:type\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Button.php
@@ -1816,52 +1821,17 @@ parameters:
 			path: _/Formular/FormTypes/Button.php
 
 		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Button.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Button\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Button.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:checked\\(\\) has parameter \\$bool with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Checkbox.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:type\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Checkbox.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:type\\(\\) has parameter \\$type with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Checkbox.php
-
-		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Checkbox.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:\\$checked has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Checkbox.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Checkbox\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Checkbox.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:parseValue\\(\\) has parameter \\$input with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Date.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:setValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:parseValue\\(\\) has parameter \\$input with no type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Date.php
 
@@ -1871,37 +1841,7 @@ parameters:
 			path: _/Formular/FormTypes/Date.php
 
 		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Date.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Date\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Date.php
-
-		-
 			message: "#^Construct empty\\(\\) is not allowed\\. Use more strict comparison\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$bool \\(true\\) of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:disabled\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Default value of the parameter \\#1 \\$bool \\(true\\) of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:readonly\\(\\) is incompatible with type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:addCssClass\\(\\) has parameter \\$classname with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:getValue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/FormType.php
 
@@ -1916,142 +1856,22 @@ parameters:
 			path: _/Formular/FormTypes/FormType.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:setValue\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:disabled\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\$bool of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:readonly\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\$pattern of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:setPattern\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\$title of method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:setTitle\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\type\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$cssClasses has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$disabled has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$label has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$pattern has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$postAsArray has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$readonly has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$required has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$title has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\FormType\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/FormType.php
-
-		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Hidden\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Hidden.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Hidden\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Hidden.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Password\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Password.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:writeOption\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Select\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Select.php
 
 		-
-			message: "#^Only booleans are allowed in an if condition, verfriemelt\\\\wrapped\\\\_\\\\Input\\\\FilterItem given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Select.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Text\\:\\:placeholder\\(\\) has parameter \\$placeholder with no type specified\\.$#"
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Text.php
 
 		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Text.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Text\\:\\:\\$placeholder has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Text.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Text\\:\\:\\$type has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Text.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Textarea\\:\\:placeholder\\(\\) has parameter \\$placeholder with no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Textarea.php
-
-		-
-			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Textarea.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Textarea\\:\\:\\$placeholder has no type specified\\.$#"
-			count: 1
-			path: _/Formular/FormTypes/Textarea.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Textarea\\:\\:\\$type has no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\FormTypes\\\\Textarea\\:\\:loadTemplate\\(\\) should return string but returns string\\|false\\.$#"
 			count: 1
 			path: _/Formular/FormTypes/Textarea.php
 
@@ -2076,22 +1896,12 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addButton\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addButton\\(\\) has parameter \\$name with no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addButton\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addCheckbox\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
@@ -2136,11 +1946,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addSelect\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addSelect\\(\\) has parameter \\$name with no type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
@@ -2162,11 +1967,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addText\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Formular\\\\Formular\\:\\:addTextarea\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Formular/Formular.php
 
@@ -3197,6 +2997,16 @@ parameters:
 
 		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\Processor\\:\\:printVariable\\(\\)\" is 9, keep it under 8$#"
+			count: 1
+			path: _/Template/Processor/Processor.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Processor\\\\Processor\\:\\:include\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: _/Template/Processor/Processor.php
+
+		-
+			message: "#^Parameter \\#1 \\$template of method verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Template\\:\\:parse\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: _/Template/Processor/Processor.php
 

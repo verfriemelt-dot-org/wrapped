@@ -12,10 +12,9 @@ class Date extends FormType
     protected string $type = 'date';
 
     #[Override]
-    public function loadTemplate(): static
+    protected function loadTemplate(): string
     {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Date.tpl.php'));
-        return $this;
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Date.tpl.php');
     }
 
     #[Override]
@@ -32,9 +31,9 @@ class Date extends FormType
     }
 
     #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
         $this->writeTplValues();
-        return $this->tpl->render();
+        return $this->template->render();
     }
 }

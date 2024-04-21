@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class TemplateIfElseTest extends TestCase
 {
@@ -19,7 +18,8 @@ class TemplateIfElseTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->tpl = new Template(new TemplateRenderer(new Container()));
+        $container = new Container();
+        $this->tpl = $container->get(Template::class);
     }
 
     /**

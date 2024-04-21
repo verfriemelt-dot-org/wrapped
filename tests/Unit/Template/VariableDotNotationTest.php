@@ -9,7 +9,6 @@ use stdClass;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Processor\TemplateProcessorException;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use verfriemelt\wrapped\_\Template\VariableFormatter;
 use Override;
 
@@ -22,7 +21,7 @@ class VariableDotNotationTest extends TestCase
     public function setUp(): void
     {
         $this->container = new Container();
-        $this->tpl = new Template(new TemplateRenderer($this->container));
+        $this->tpl = $this->container->get(Template::class);
     }
 
     public function test_read_scalar(): void

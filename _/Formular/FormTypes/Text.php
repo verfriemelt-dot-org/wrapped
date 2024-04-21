@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use Override;
+use RuntimeException;
 
 class Text extends FormType
 {
@@ -12,10 +13,9 @@ class Text extends FormType
     protected string $placeholder;
 
     #[Override]
-    public function loadTemplate(): static
+    protected function loadTemplate(): string
     {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Text.tpl.php'));
-        return $this;
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Text.tpl.php') ?: throw new RuntimeException('cant load template');
     }
 
     public function placeholder(string $placeholder): Text
@@ -25,15 +25,15 @@ class Text extends FormType
     }
 
     #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
         $this->writeTplValues();
 
         if (isset($this->placeholder)) {
-            $this->tpl->setIf('placeholder');
-            $this->tpl->set('placeholder', $this->placeholder);
+            $this->template->setIf('placeholder');
+            $this->template->set('placeholder', $this->placeholder);
         }
 
-        return $this->tpl->render();
+        return $this->template->render();
     }
 }

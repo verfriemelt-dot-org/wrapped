@@ -13,6 +13,7 @@ use verfriemelt\wrapped\_\Template\Token\Exception\MissingContionalClosingExcept
 use verfriemelt\wrapped\_\Template\Token\Exception\MissingEndForException;
 use verfriemelt\wrapped\_\Template\Token\Exception\MissingRepeaterClosingException;
 use verfriemelt\wrapped\_\Template\Token\ForToken;
+use verfriemelt\wrapped\_\Template\Token\IncludeToken;
 use verfriemelt\wrapped\_\Template\Token\RepeaterToken;
 use verfriemelt\wrapped\_\Template\Token\RootToken;
 use verfriemelt\wrapped\_\Template\Token\StringToken;
@@ -81,7 +82,26 @@ final class Tokenizer
             return new EndForToken($this->line, $this->offset, $this->lineOffset);
         }
 
+        if (\preg_match(IncludeToken::MATCH_REGEX, $tokenContent) === 1) {
+            return $this->createIncludeToken($input, $nextTokenStartPos, $nextTokenEndPos);
+        }
+
         return $this->createVariableToken($input, $nextTokenStartPos, $nextTokenEndPos);
+    }
+
+    private function createIncludeToken(string $input, int $start, int $end): IncludeToken
+    {
+        $expression = \trim(\mb_substr($input, $start + 2, $end - $start - 2));
+
+        if (\preg_match(IncludeToken::MATCH_REGEX, $expression, $matches) !== 1) {
+            throw new EmptyContionalExpressionException('cannot match includeToken: ' . $expression);
+        }
+
+        \assert(\is_string($matches['path'] ?? null), 'match path missing');
+
+        $this->offset += $end - $start + 2;
+
+        return (new IncludeToken($this->line, $this->offset, $this->lineOffset))->setPath($matches['path']);
     }
 
     private function createForToken(string $input, int $start, int $end): ForToken

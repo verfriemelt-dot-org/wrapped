@@ -5,46 +5,27 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
 use Override;
-use verfriemelt\wrapped\_\DI\Container;
-use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 class Checkbox extends FormType
 {
     protected string $type = 'checkbox';
 
-    private $checked;
+    private bool $checked = false;
 
-    public function __construct(
-        string $name,
-        ?string $value = null,
-        Template $template = new Template(new TemplateRenderer(new Container())),
-    ) {
-        parent::__construct($name, $value, $template);
+    #[Override]
+    protected function loadTemplate(): string
+    {
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Checkbox.tpl.php');
     }
 
     #[Override]
-    public function loadTemplate(): static
-    {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Checkbox.tpl.php'));
-        return $this;
-    }
-
-    public function type($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
         $this->writeTplValues();
-
-        return $this->tpl->render();
+        return $this->template->render();
     }
 
-    public function checked($bool = true): static
+    public function checked(bool $bool = true): static
     {
         $this->checked = $bool;
         return $this;
@@ -54,7 +35,7 @@ class Checkbox extends FormType
     protected function writeTplValues(): static
     {
         parent::writeTplValues();
-        $this->tpl->setIf('checked', $this->checked);
+        $this->template->setIf('checked', $this->checked);
 
         return $this;
     }

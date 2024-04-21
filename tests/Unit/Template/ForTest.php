@@ -7,7 +7,6 @@ namespace verfriemelt\wrapped\tests\Unit\Template;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use verfriemelt\wrapped\_\Template\Token\EndForToken;
 use verfriemelt\wrapped\_\Template\Token\ForToken;
 use verfriemelt\wrapped\_\Template\Token\VariableToken;
@@ -23,7 +22,7 @@ class ForTest extends TestCase
     public function setUp(): void
     {
         $this->container = new Container();
-        $this->tpl = new Template(new TemplateRenderer($this->container));
+        $this->tpl = $this->container->get(Template::class);
     }
 
     public function test_tokenizer(): void

@@ -6,8 +6,11 @@ namespace verfriemelt\wrapped\_\Template\Processor;
 
 use Closure;
 use verfriemelt\wrapped\_\DI\ContainerInterface;
+use verfriemelt\wrapped\_\Kernel\KernelInterface;
 use verfriemelt\wrapped\_\Template\Expression;
+use verfriemelt\wrapped\_\Template\Template;
 use verfriemelt\wrapped\_\Template\Token\ForToken;
+use verfriemelt\wrapped\_\Template\Token\IncludeToken;
 use verfriemelt\wrapped\_\Template\Token\RootToken;
 use verfriemelt\wrapped\_\Template\Token\StringToken;
 use verfriemelt\wrapped\_\Template\Token\Token;
@@ -22,6 +25,10 @@ final readonly class Processor implements TemplateProcessor
     #[Override]
     public function process(Token $token, array $data): string
     {
+        if ($token instanceof IncludeToken) {
+            return $this->include($token, $data);
+        }
+
         if ($token instanceof ForToken) {
             return $this->loop($token, $data);
         }
@@ -150,5 +157,17 @@ final readonly class Processor implements TemplateProcessor
         assert(isset($part));
 
         return [$data, $part];
+    }
+
+    private function include(IncludeToken $token, array $data): string
+    {
+        $tpl = $this->container->get(Template::class);
+        $path = $this->container->get(KernelInterface::class)->getProjectPath() . '/' . $token->getPath();
+
+        if (!\file_exists($path)) {
+            throw new TemplateProcessorException("include path {$path} is not readable");
+        }
+
+        return $tpl->parse(\file_get_contents($path))->render($data);
     }
 }

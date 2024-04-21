@@ -18,6 +18,15 @@ use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
+use verfriemelt\wrapped\_\Formular\FormTypes\Button;
+use verfriemelt\wrapped\_\Formular\FormTypes\Checkbox;
+use verfriemelt\wrapped\_\Formular\FormTypes\Date;
+use verfriemelt\wrapped\_\Formular\FormTypes\Hidden;
+use verfriemelt\wrapped\_\Formular\FormTypes\Password;
+use verfriemelt\wrapped\_\Formular\FormTypes\Select;
+use verfriemelt\wrapped\_\Formular\FormTypes\Text;
+use verfriemelt\wrapped\_\Formular\FormTypes\Textarea;
+use verfriemelt\wrapped\_\Formular\Formular;
 use verfriemelt\wrapped\_\Http\Event\KernelRequestEvent;
 use verfriemelt\wrapped\_\Http\Event\KernelResponseEvent;
 use verfriemelt\wrapped\_\Http\Request\Request;
@@ -53,7 +62,19 @@ abstract class AbstractKernel implements KernelInterface
         $this->container = new Container();
 
         $this->container->register(KernelInterface::class, $this);
+
         $this->container->register(Template::class)->share(false);
+
+        // formular stuff
+        $this->container->register(Formular::class)->share(false);
+        $this->container->register(Text::class)->share(false);
+        $this->container->register(Date::class)->share(false);
+        $this->container->register(Password::class)->share(false);
+        $this->container->register(Hidden::class)->share(false);
+        $this->container->register(Button::class)->share(false);
+        $this->container->register(Checkbox::class)->share(false);
+        $this->container->register(Select::class)->share(false);
+        $this->container->register(Textarea::class)->share(false);
 
         $this->router = $this->container->get(Router::class);
         $this->eventDispatcher = $this->container->get(EventDispatcher::class);

@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use Override;
 
 class FormularTemplateTest extends TestCase
@@ -49,7 +48,7 @@ class FormularTemplateTest extends TestCase
     {
         static::expectNotToPerformAssertions();
 
-        $template = new Template(new TemplateRenderer(new Container()));
+        $template = (new Container())->get(Template::class);
         $template->parse($filepath);
         $template->render();
 

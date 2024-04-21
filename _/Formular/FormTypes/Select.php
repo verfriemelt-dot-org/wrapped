@@ -56,9 +56,11 @@ class Select extends FormType
     }
 
     #[Override]
-    public function fetchHtml(): string
+    public function render(): string
     {
-        $optionsRepeater = $this->tpl->createRepeater('options');
+        $this->writeTplValues();
+
+        $optionsRepeater = $this->template->createRepeater('options');
 
         foreach ($this->options as $entry) {
             if ($entry instanceof SelectGroup) {
@@ -77,15 +79,12 @@ class Select extends FormType
             }
         }
 
-        $this->writeTplValues();
-
-        return $this->tpl->render();
+        return $this->template->render();
     }
 
     #[Override]
-    public function loadTemplate(): static
+    protected function loadTemplate(): string
     {
-        $this->tpl->parse(\file_get_contents(\dirname(__DIR__) . '/Template/Select.tpl.php'));
-        return $this;
+        return \file_get_contents(\dirname(__DIR__) . '/Template/Select.tpl.php');
     }
 }

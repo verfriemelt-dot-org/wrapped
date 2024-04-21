@@ -7,7 +7,6 @@ namespace verfriemelt\wrapped\tests\Unit\Template;
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 use Override;
 
 class TemplateRepeaterTest extends TestCase
@@ -17,7 +16,8 @@ class TemplateRepeaterTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->tpl = new Template(new TemplateRenderer(new Container()));
+        $container = new Container();
+        $this->tpl = $container->get(Template::class);
     }
 
     public function test_basic_repeater(): void

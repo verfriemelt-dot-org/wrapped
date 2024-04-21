@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Template;
 
-use verfriemelt\wrapped\_\DI\ContainerInterface;
 use verfriemelt\wrapped\_\Template\Processor\LegacyProcessor;
 use verfriemelt\wrapped\_\Template\Processor\Processor;
 use verfriemelt\wrapped\_\Template\Token\Token;
@@ -14,7 +13,8 @@ class TemplateRenderer
     private bool $legacyModeEnabled = false;
 
     public function __construct(
-        private readonly ContainerInterface $container,
+        private readonly LegacyProcessor $legacyProcessor,
+        private readonly Processor $processor,
     ) {}
 
     public function enableLegacyMode(): void
@@ -27,9 +27,9 @@ class TemplateRenderer
         array $data,
     ): string {
         if ($this->legacyModeEnabled) {
-            $processor = new LegacyProcessor($this->container);
+            $processor = $this->legacyProcessor;
         } else {
-            $processor = new Processor($this->container);
+            $processor = $this->processor;
         }
 
         return $processor->process($token, $data);

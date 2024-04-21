@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Formular\FormTypes;
 
-use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Input\FilterItem;
 use verfriemelt\wrapped\_\Template\Template;
-use verfriemelt\wrapped\_\Template\TemplateRenderer;
 
 abstract class FormType
 {
@@ -21,22 +19,32 @@ abstract class FormType
     protected bool $required = false;
     protected bool $postAsArray = false;
 
+    protected string $name;
+    protected ?string $value = null;
+
     public FilterItem $filterItem;
 
     /** @var string[] */
     public array $cssClasses = [];
 
-    abstract public function loadTemplate(): static;
-
-    abstract public function fetchHtml(): string;
-
     public function __construct(
-        protected string $name,
-        protected ?string $value = null,
-        protected Template $tpl = new Template(new TemplateRenderer(new Container())),
-    ) {
-        $this->loadTemplate();
+        protected readonly Template $template,
+    ) {}
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    abstract protected function loadTemplate(): string;
+
+    abstract public function render(): string;
 
     public function setFilterItem(FilterItem $filterItem): static
     {
@@ -95,26 +103,28 @@ abstract class FormType
 
     protected function writeTplValues(): static
     {
-        $this->tpl->set('value', $this->value);
-        $this->tpl->set('name', $this->name);
-        $this->tpl->set('postname', $this->name . ($this->postAsArray ? '[]' : ''));
-        $this->tpl->set('id', $this->name);
-        $this->tpl->set('type', $this->type);
+        $this->template->parse($this->loadTemplate());
 
-        $this->tpl->setIf('disabled', $this->disabled);
-        $this->tpl->setIf('readonly', $this->readonly);
-        $this->tpl->setIf('required', $this->required);
+        $this->template->set('value', $this->value);
+        $this->template->set('name', $this->name);
+        $this->template->set('postname', $this->name . ($this->postAsArray ? '[]' : ''));
+        $this->template->set('id', $this->name);
+        $this->template->set('type', $this->type);
+
+        $this->template->setIf('disabled', $this->disabled);
+        $this->template->setIf('readonly', $this->readonly);
+        $this->template->setIf('required', $this->required);
 
         if (isset($this->label)) {
-            $this->tpl->set('label', $this->label);
-            $this->tpl->setIf('displayLabel');
+            $this->template->set('label', $this->label);
+            $this->template->setIf('displayLabel');
         }
 
-        $this->tpl->set('cssClasses', implode(' ', $this->cssClasses));
+        $this->template->set('cssClasses', implode(' ', $this->cssClasses));
 
-        $this->tpl->setIf('pattern', !empty($this->pattern));
-        $this->tpl->set('title', $this->title ?? '');
-        $this->tpl->set('pattern', $this->pattern ?? '');
+        $this->template->setIf('pattern', !empty($this->pattern));
+        $this->template->set('title', $this->title ?? '');
+        $this->template->set('pattern', $this->pattern ?? '');
 
         return $this;
     }
