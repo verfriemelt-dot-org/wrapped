@@ -52,6 +52,6 @@ $config->setRules([
 $config->setFinder($finder);
 $config->setRiskyAllowed(true);
 $config->setUsingCache(false);
-
+$config->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect());
 
 return $config;
