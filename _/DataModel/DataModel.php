@@ -256,9 +256,6 @@ abstract class DataModel
         return $query;
     }
 
-    /**
-     * creates an object with the given id as param
-     */
     public static function get(string|int $id): ?static
     {
         $pk = static::getPrimaryKey();
@@ -267,16 +264,7 @@ abstract class DataModel
             throw new DatabaseException('::get is not possible without PK');
         }
 
-        $result = static::fetchBy($pk, $id);
-
-        // for backwards compatibility
-        if ($result === null) {
-            throw new DatabaseObjectNotFound(
-                'no such object found in database with name ' . static::class . " and id {$id}",
-            );
-        }
-
-        return $result;
+        return static::fetchBy($pk, $id) ?? throw new DatabaseObjectNotFound('no such object found in database with name ' . static::class . " and id {$id}");
     }
 
     public function reload(): static

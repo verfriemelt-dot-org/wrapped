@@ -521,7 +521,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Class cognitive complexity is 71, keep it under 50$#"
+			message: "#^Class cognitive complexity is 70, keep it under 50$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
@@ -546,12 +546,7 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:count\\(\\) has parameter \\$and with no type specified\\.$#"
-			count: 1
-			path: _/DataModel/DataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:count\\(\\) has parameter \\$params with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\:\\:count\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: _/DataModel/DataModel.php
 
