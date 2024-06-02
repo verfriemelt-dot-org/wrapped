@@ -79,8 +79,9 @@ final class HelpCommand extends AbstractCommand
         $cli->eol();
         foreach ($parser->options() as $opt) {
             $cli->write("    --{$opt->name}");
-            $cli->write("\t");
+            $cli->write("\t\t");
             $cli->write($opt->description ?? '');
+            $cli->eol();
         }
         $cli->eol();
         $cli->eol();
