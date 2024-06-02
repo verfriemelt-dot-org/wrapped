@@ -250,7 +250,7 @@ abstract class DataModel
     public static function buildCountQuery(): DataModelQueryBuilder
     {
         $query = static::buildQuery();
-        $query->count(static::fetchTablename());
+        $query->count([static::fetchSchemaname(), static::fetchTablename()]);
         $query->disableAutomaticGroupBy();
 
         return $query;
@@ -559,15 +559,14 @@ abstract class DataModel
         return $this;
     }
 
-    public static function count(string $what = '*', $params = null, $and = true): int
+    public static function count(string $what = '*', DbLogic|array|null $params = null): int
     {
-        $query = new DataModelQueryBuilder(new static());
-        $query->count([static::fetchSchemaname(), static::fetchTablename()], $what);
+        $query = static::buildCountQuery();
 
         if ($params instanceof DbLogic) {
             $query->translateDbLogic($params);
-        } elseif ($params) {
-            $query->where(static::translateFieldNameArray($params));
+        } elseif ($params !== null) {
+            $query->where($params);
         }
 
         return (int) $query->fetch()['count'];
