@@ -58,7 +58,6 @@ abstract class DatabaseDriver
 
         $this->config['dbUsername'] = $user;
         $this->config['dbPassword'] = $password;
-        $this->config['dbPassword'] = $password;
         $this->config['dbDatabase'] = $database;
         $this->config['dbHost'] = $host;
         $this->config['dbPort'] = $port;
