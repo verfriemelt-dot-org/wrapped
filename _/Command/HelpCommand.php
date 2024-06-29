@@ -7,6 +7,7 @@ namespace verfriemelt\wrapped\_\Command;
 use Override;
 use ReflectionClass;
 use RuntimeException;
+use verfriemelt\wrapped\_\Cli\Console;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
@@ -56,9 +57,11 @@ final class HelpCommand extends AbstractCommand
         $name = $this->cmdArgument->get() ?? throw new RuntimeException();
         [$attribute, $command] = $this->findCommandByRoute($name);
 
-        $cli->writeLn('handled by ' . $command::class);
+        $cli->write($name, Console::STYLE_GREEN);
         $cli->eol();
-        $cli->write("  {$name}");
+        $cli->eol();
+        $cli->write('handled by ');
+        $cli->write($command::class, Console::STYLE_GREEN);
 
         $parser = new ArgvParser();
         $command->configure($parser);
@@ -78,7 +81,7 @@ final class HelpCommand extends AbstractCommand
 
         $cli->eol();
         foreach ($parser->options() as $opt) {
-            $cli->write("    --{$opt->name}");
+            $cli->write("  --{$opt->name}", Console::STYLE_GREEN);
             $cli->write("\t\t");
             $cli->write($opt->description ?? '');
             $cli->eol();
@@ -123,10 +126,15 @@ final class HelpCommand extends AbstractCommand
 
         usort($commands, static fn (Command $a, Command $b): int => $a->command <=> $b->command);
 
+        $cli->eol();
+
         foreach ($commands as $command) {
-            $cli->write(\mb_str_pad($command->command, $maxLength + 4));
+            $cli->write('  ');
+            $cli->write(\mb_str_pad($command->command, $maxLength + 4), Console::STYLE_GREEN);
             $cli->write($command->description);
             $cli->eol();
         }
+
+        $cli->eol();
     }
 }
