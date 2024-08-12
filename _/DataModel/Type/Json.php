@@ -8,9 +8,14 @@ use stdClass;
 use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 use Override;
 
+use function json_encode;
+
+use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
+
 class Json implements PropertyObjectInterface
 {
-    public stdClass $data;
+    public string|stdClass $data;
 
     final public function __construct(string $data = '{}')
     {
@@ -41,5 +46,9 @@ class Json implements PropertyObjectInterface
     public function toString(): string
     {
         return $this->toSqlFormat();
+    }
+
+    public function pretty(): string {
+        return json_encode($this->data, JSON_THROW_ON_ERROR ^ JSON_PRETTY_PRINT);
     }
 }
