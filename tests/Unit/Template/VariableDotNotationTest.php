@@ -59,7 +59,7 @@ class VariableDotNotationTest extends TestCase
 
     public function test_read_from_method(): void
     {
-        $class = new class () {
+        $class = new class {
             public function bar(): string
             {
                 return 'test';
@@ -86,7 +86,7 @@ class VariableDotNotationTest extends TestCase
 
     public function test_read_from_callable_with_formatter(): void
     {
-        $formatter = new class () implements VariableFormatter {
+        $formatter = new class implements VariableFormatter {
             public function supports(string $name): bool
             {
                 return true;

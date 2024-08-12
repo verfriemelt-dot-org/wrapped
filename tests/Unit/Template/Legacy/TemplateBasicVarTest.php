@@ -17,7 +17,7 @@ class TemplateBasicVarTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $formatter = new class () implements VariableFormatter {
+        $formatter = new class implements VariableFormatter {
             #[Override]
             public function supports(string $name): bool
             {

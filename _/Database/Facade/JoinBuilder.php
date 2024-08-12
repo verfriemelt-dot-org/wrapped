@@ -10,11 +10,11 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Operator;
 
-final class JoinBuilder
+final readonly class JoinBuilder
 {
-    private readonly Identifier $joinedTable;
+    private Identifier $joinedTable;
 
-    private readonly Expression $on;
+    private Expression $on;
 
     public function __construct(?string ...$source)
     {

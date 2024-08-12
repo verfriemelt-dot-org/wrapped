@@ -30,7 +30,7 @@ class KernelTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->kernel = new class () extends AbstractKernel {
+        $this->kernel = new class extends AbstractKernel {
             #[Override]
             public function getProjectPath(): string
             {

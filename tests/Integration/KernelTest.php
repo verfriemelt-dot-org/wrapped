@@ -13,7 +13,7 @@ class KernelTest extends TestCase
     {
         static::expectNotToPerformAssertions();
 
-        $kernel = new class () extends AbstractKernel {
+        $kernel = new class extends AbstractKernel {
             public function getProjectPath(): string
             {
                 return 'fake';

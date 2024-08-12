@@ -8,12 +8,12 @@
         "psr/clock": "^1.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.11.5",
+        "phpstan/phpstan": "^1.11.10",
         "phpstan/phpstan-strict-rules": "^1.6.0",
         "phpstan/phpstan-phpunit": "^1.4.0",
-        "phpunit/phpunit": "^11.2.5",
-        "rector/rector": "^1.1.1",
-        "friendsofphp/php-cs-fixer": "^3.59.3",
+        "phpunit/phpunit": "^11.3.0",
+        "rector/rector": "^1.2.2",
+        "friendsofphp/php-cs-fixer": "^3.62.0",
         "tomasvotruba/type-coverage": "^0.3.1",
         "tomasvotruba/cognitive-complexity": "^0.2.3",
         "infection/infection": "^0.29.6"

@@ -20,7 +20,7 @@ class IncludeTokenTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->kernel = new class () extends AbstractKernel {
+        $this->kernel = new class extends AbstractKernel {
             public function getProjectPath(): string
             {
                 return __DIR__;

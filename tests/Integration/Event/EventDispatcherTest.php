@@ -23,7 +23,7 @@ class EventDispatcherTest extends TestCase
         $this->container = new Container();
         $argumentResolver = $this->container->get(ArgumentResolver::class);
 
-        $this->eventSubscriber = new class () implements EventSubscriberInterface {
+        $this->eventSubscriber = new class implements EventSubscriberInterface {
             public function on(EventInterface $event): ?Closure
             {
                 return match (true) {

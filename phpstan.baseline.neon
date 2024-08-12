@@ -996,6 +996,11 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
+			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
+			count: 4
+			path: _/DataModel/TreeDataModel.php
+
+		-
 			message: "#^PHPDoc tag @param for parameter \\$parent with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -1237,6 +1242,11 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:disconnet\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: _/Database/Driver/DatabaseDriver.php
+
+		-
+			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -2866,6 +2876,11 @@ parameters:
 			path: _/Session/Session.php
 
 		-
+			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
+			count: 1
+			path: _/Session/Session.php
+
+		-
 			message: "#^Parameter \\#1 \\$ip of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: _/Session/Session.php
@@ -3046,7 +3061,67 @@ parameters:
 			path: _/Template/TemplateRenderer.php
 
 		-
+			message: "#^Call to function is_string\\(\\) with ''\\|'\\!' will always evaluate to true\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with non\\-empty\\-string will always evaluate to true\\.$#"
+			count: 6
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Call to function is_string\\(\\) with string will always evaluate to true\\.$#"
+			count: 2
+			path: _/Template/Tokenizer.php
+
+		-
 			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Template\\\\Tokenizer\\:\\:createConditionalToken\\(\\)\" is 10, keep it under 8$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'closing' on array\\{0\\: string, closing\\: string, 1\\: string, name\\: non\\-empty\\-string, 2\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 2
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'closing' on array\\{0\\: string, closing\\: string, 1\\: string, negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'collection' on array\\{0\\: string, collection\\: non\\-empty\\-string, 1\\: non\\-empty\\-string, value\\: non\\-empty\\-string, 2\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'expr' on array\\{0\\: string, closing\\: string, 1\\: string, negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'name' on array\\{0\\: string, closing\\: string, 1\\: string, name\\: non\\-empty\\-string, 2\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'negated' on array\\{0\\: string, closing\\: string, 1\\: string, negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'path' on array\\{0\\: string, path\\: non\\-empty\\-string, 1\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'type' on array\\{0\\: string, closing\\: string, 1\\: string, negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
+			message: "#^Offset 'value' on array\\{0\\: string, collection\\: non\\-empty\\-string, 1\\: non\\-empty\\-string, value\\: non\\-empty\\-string, 2\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: _/Template/Tokenizer.php
 

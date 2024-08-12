@@ -96,7 +96,7 @@ class JsonEncoderDecodeTest extends TestCase
         }
         JSON;
 
-        $class = new class () {
+        $class = new class {
             public function __construct(
                 public readonly ?VariadicDto $variadic = null,
             ) {}
