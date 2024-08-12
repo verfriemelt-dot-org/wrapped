@@ -1091,7 +1091,7 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data \\(stdClass\\) does not accept mixed\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data \\(stdClass\\|string\\) does not accept mixed\\.$#"
 			count: 1
 			path: _/DataModel/Type/Json.php
 
