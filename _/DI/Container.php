@@ -85,7 +85,7 @@ class Container implements ContainerInterface
     public function has(string $service): bool
     {
         try {
-            $reflection = new ReflectionClass($service);
+            new ReflectionClass($service);
         } catch (ReflectionException $exception) {
             throw new ContainerException($exception->getMessage());
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Command;
 
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\ConsoleInput;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingException;
@@ -22,20 +23,22 @@ final readonly class CommandExecutor
     public function execute(Console $cli): ExitCode
     {
         try {
-            [$commandName, $arguments] = $this->getCommandName($cli);
+            $commandName = $this->getCommandName($cli);
 
             $commands = $this->commandDiscovery->getCommands();
             $commandInstance = $this->container->get($commands[$commandName] ?? throw new CommandNotFoundException("command {$commandName} not found"));
 
             \assert($commandInstance instanceof AbstractCommand);
 
-            $parser = new ArgvParser();
-            $commandInstance->configure($parser);
+            $commandInstance->configure();
 
-            $parser->parse($arguments);
-            $exitCode = $commandInstance->execute($cli);
+            $input = ConsoleInput::fromConsole(
+                $cli,
+                $commandInstance->getArguments(),
+                $commandInstance->getOptions(),
+            );
 
-            return $exitCode;
+            return $commandInstance->execute($input, $cli);
         } catch (ArgumentMissingException|OptionMissingException|CommandNotFoundException $e) {
             $cli->writeLn($e->getMessage(), Console::STYLE_RED);
             $this->printHelp($cli, $e instanceof CommandNotFoundException);
@@ -44,10 +47,7 @@ final readonly class CommandExecutor
         }
     }
 
-    /**
-     * @return array{string,string[]}
-     */
-    public function getCommandName(Console $cli): array
+    public function getCommandName(Console $cli): string
     {
         $this->container->register(Console::class, $cli);
         $arguments = $cli->getArgv()->all();
@@ -59,18 +59,11 @@ final readonly class CommandExecutor
         $commandName = \array_shift($arguments) ?? self::DEFAULT_COMMAND;
         \assert(\is_string($commandName));
 
-        // if its an option, readd it to arguments and use default command
-        if (\str_starts_with($commandName, '-')) {
-            $arguments[] = $commandName;
-            $commandName = self::DEFAULT_COMMAND;
-        }
-
-        return [$commandName, $arguments];
+        return $commandName;
     }
 
     public function printHelp(Console $cli, bool $ignoreArguemnt = false): void
     {
-        $argvParser = new ArgvParser();
         $argv = [];
 
         if (!$ignoreArguemnt) {
@@ -79,9 +72,15 @@ final readonly class CommandExecutor
 
         $helpCommand = $this->container->get(HelpCommand::class);
         assert($helpCommand instanceof HelpCommand);
+        $helpCommand->configure();
 
-        $helpCommand->configure($argvParser);
-        $argvParser->parse($argv);
-        $helpCommand->execute($cli);
+        $argvInstance = new ArgvParser();
+        $argvInstance->addArguments(... $helpCommand->getArguments());
+        $argvInstance->addOptions(... $helpCommand->getOptions());
+        $argvInstance->parse($argv);
+
+        $input = new ConsoleInput($argvInstance);
+
+        $helpCommand->execute($input, $cli);
     }
 }

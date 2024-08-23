@@ -8,53 +8,50 @@ use Override;
 use ReflectionClass;
 use RuntimeException;
 use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
 use verfriemelt\wrapped\_\Command\Attributes\DefaultCommand;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;
-use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\DI\Container;
 
 #[DefaultCommand]
 #[Command('help', 'prints out helpful information about commands')]
 final class HelpCommand extends AbstractCommand
 {
-    private Argument $cmdArgument;
-
     public function __construct(
         private readonly Container $container,
         private readonly CommandDiscovery $commandDiscovery,
     ) {}
 
     #[Override]
-    public function configure(ArgvParser $argv): void
+    public function configure(): void
     {
-        $this->cmdArgument = new Argument('command', Argument::OPTIONAL);
-
-        $argv->addArguments($this->cmdArgument);
+        $this->addArgument(new Argument('_', Argument::OPTIONAL));
+        $this->addArgument(new Argument('command', Argument::OPTIONAL));
     }
 
     #[Override]
-    public function execute(OutputInterface $cli): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
-        if (!$this->cmdArgument->present()) {
-            $this->listCommands($cli);
+        if (!$input->getArgument('command')->present()) {
+            $this->listCommands($output);
             return ExitCode::Success;
         }
 
         try {
-            $this->describeCommand($cli);
+            $this->describeCommand($input, $output);
         } catch (RuntimeException $e) {
-            $cli->writeLn($e->getMessage());
+            $output->writeLn($e->getMessage());
             return ExitCode::Error;
         }
 
         return ExitCode::Success;
     }
 
-    private function describeCommand(OutputInterface $cli): void
+    private function describeCommand(InputInterface $input, OutputInterface $cli): void
     {
-        $name = $this->cmdArgument->get() ?? throw new RuntimeException();
+        $name = $input->getArgument('command')->get() ?? throw new RuntimeException();
         [$attribute, $command] = $this->findCommandByRoute($name);
 
         $cli->write($name, Console::STYLE_GREEN);
@@ -63,10 +60,9 @@ final class HelpCommand extends AbstractCommand
         $cli->write('handled by ');
         $cli->write($command::class, Console::STYLE_GREEN);
 
-        $parser = new ArgvParser();
-        $command->configure($parser);
+        $command->configure();
         $parenthesisCount = 0;
-        foreach ($parser->arguments() as $arg) {
+        foreach ($command->getArguments() as $arg) {
             $cli->write(' ');
             if (!$arg->required()) {
                 ++$parenthesisCount;
@@ -80,7 +76,7 @@ final class HelpCommand extends AbstractCommand
         $cli->writeLn('  ' . $attribute->description);
 
         $cli->eol();
-        foreach ($parser->options() as $opt) {
+        foreach ($command->getOptions() as $opt) {
             $cli->write("  --{$opt->name}", Console::STYLE_GREEN);
             $cli->write("\t\t");
             $cli->write($opt->description ?? '');

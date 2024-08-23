@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\Http\Command;
 
 use Override;
+use verfriemelt\wrapped\_\Cli\InputInterface;
 use verfriemelt\wrapped\_\Cli\OutputInterface;
 use verfriemelt\wrapped\_\Command\AbstractCommand;
 use verfriemelt\wrapped\_\Command\Attributes\Command;
@@ -19,10 +20,10 @@ final class DebugRouterCommand extends AbstractCommand
     ) {}
 
     #[Override]
-    public function execute(OutputInterface $cli): ExitCode
+    public function execute(InputInterface $input, OutputInterface $output): ExitCode
     {
         foreach ($this->router->dumpRoutes() as $route) {
-            $cli->writeLn("{$route->getPath()}");
+            $output->writeLn("{$route->getPath()}");
         }
 
         return ExitCode::Success;

@@ -186,6 +186,11 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
+			message: "#^Parameter \\#1 \\$argv of method verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandArguments\\\\ArgvParser\\:\\:parse\\(\\) expects array\\<string\\>, array\\<int\\|string, mixed\\> given\\.$#"
+			count: 1
+			path: _/Cli/ConsoleInput.php
+
+		-
 			message: "#^Class cognitive complexity is 55, keep it under 50$#"
 			count: 1
 			path: _/Cli/KeyInput.php

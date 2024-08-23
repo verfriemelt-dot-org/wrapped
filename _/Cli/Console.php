@@ -9,7 +9,7 @@ use Override;
 use RuntimeException;
 use verfriemelt\wrapped\_\ParameterBag;
 
-class Console implements InputInterface, OutputInterface
+class Console implements OutputInterface
 {
     final public const int STYLE_NONE = 0;
     final public const int STYLE_BLACK = 30;
@@ -74,12 +74,6 @@ class Console implements InputInterface, OutputInterface
     public function getArgv(): ParameterBag
     {
         return $this->argv;
-    }
-
-    public function getArgvAsString(): string
-    {
-        // omit first element
-        return implode(' ', \array_slice($this->argv->all(), 1));
     }
 
     public function setPrefixCallback(Closure $func): static
