@@ -27,7 +27,7 @@ final readonly class ConsoleInput implements InputInterface
         $parser = new ArgvParser();
         $parser->addArguments(...$args);
         $parser->addOptions(...$options);
-        $parser->parse(\array_slice($console->getArgv()->all(), 1));
+        $parser->parse(\array_slice($console->getArgv()->all(), 2));
 
         return new self($parser);
     }

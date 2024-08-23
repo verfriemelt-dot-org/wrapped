@@ -27,7 +27,6 @@ final class HelpCommand extends AbstractCommand
     #[Override]
     public function configure(): void
     {
-        $this->addArgument(new Argument('_', Argument::OPTIONAL));
         $this->addArgument(new Argument('command', Argument::OPTIONAL));
     }
 
