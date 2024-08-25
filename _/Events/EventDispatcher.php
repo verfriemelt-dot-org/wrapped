@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\DI\ArgumentResolver;
 final class EventDispatcher
 {
     /** @var EventSubscriberInterface[] */
-    protected array $subscriber = [];
+    protected array $subscriberList = [];
 
     public function __construct(
         private readonly ArgumentResolver $argumentResolver,
@@ -17,7 +17,7 @@ final class EventDispatcher
 
     public function addSubscriber(EventSubscriberInterface $subscriber): static
     {
-        $this->subscriber[] = $subscriber;
+        $this->subscriberList[] = $subscriber;
         return $this;
     }
 
@@ -30,8 +30,8 @@ final class EventDispatcher
      */
     public function dispatch(EventInterface $event): EventInterface
     {
-        foreach ($this->subscriber as $sub) {
-            $handler = $sub->on($event);
+        foreach ($this->subscriberList as $subscriber) {
+            $handler = $subscriber->on($event);
             if ($handler === null) {
                 continue;
             }

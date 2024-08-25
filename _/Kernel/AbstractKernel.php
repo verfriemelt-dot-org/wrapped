@@ -87,9 +87,10 @@ abstract class AbstractKernel implements KernelInterface
     }
 
     #[Override]
-    public function boot(): void
+    public function boot(): static
     {
         $this->booted = true;
+        return $this;
     }
 
     #[Override]

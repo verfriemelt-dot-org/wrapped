@@ -16,7 +16,7 @@ interface KernelInterface
 
     public function getContainer(): Container;
 
-    public function boot(): void;
+    public function boot(): static;
 
     public function handle(Request $request): Response;
 
