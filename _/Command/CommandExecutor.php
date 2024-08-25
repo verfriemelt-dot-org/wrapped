@@ -9,7 +9,10 @@ use verfriemelt\wrapped\_\Cli\ConsoleInput;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgumentMissingException;
 use verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser;
 use verfriemelt\wrapped\_\Command\CommandArguments\OptionMissingException;
+use verfriemelt\wrapped\_\Command\Event\KernelPostCommandEvent;
+use verfriemelt\wrapped\_\Command\Event\KernelPreCommandEvent;
 use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\Events\EventDispatcher;
 
 final readonly class CommandExecutor
 {
@@ -18,6 +21,7 @@ final readonly class CommandExecutor
     public function __construct(
         private Container $container,
         private CommandDiscovery $commandDiscovery,
+        private EventDispatcher $eventDispatcher,
     ) {}
 
     public function execute(Console $cli): ExitCode
@@ -38,7 +42,25 @@ final readonly class CommandExecutor
                 $commandInstance->getOptions(),
             );
 
-            return $commandInstance->execute($input, $cli);
+            $this->eventDispatcher->dispatch(
+                new KernelPreCommandEvent(
+                    $input,
+                    $cli,
+                    $commandInstance,
+                ),
+            );
+
+            $exitCode = $commandInstance->execute($input, $cli);
+
+            $this->eventDispatcher->dispatch(
+                new KernelPostCommandEvent(
+                    $input,
+                    $cli,
+                    $commandInstance,
+                ),
+            );
+
+            return $exitCode;
         } catch (ArgumentMissingException|OptionMissingException|CommandNotFoundException $e) {
             $cli->writeLn($e->getMessage(), Console::STYLE_RED);
             $this->printHelp($cli, $e instanceof CommandNotFoundException);

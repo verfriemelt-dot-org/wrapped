@@ -7,6 +7,9 @@ namespace verfriemelt\wrapped\tests\Unit\Kernel;
 use Closure;
 use Override;
 use PHPUnit\Framework\TestCase;
+use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Command\Event\KernelPostCommandEvent;
+use verfriemelt\wrapped\_\Command\Event\KernelPreCommandEvent;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\EventInterface;
 use verfriemelt\wrapped\_\Events\EventSubscriberInterface;
@@ -74,6 +77,38 @@ class KernelTest extends TestCase
 
         static::assertContains(KernelRequestEvent::class, $this->seenEvents);
         static::assertContains(KernelResponseEvent::class, $this->seenEvents);
+    }
+
+    public function test_for_kernel_pre_and_post_command_event(): void
+    {
+        $spy = fn (EventInterface $event) => $this->seenEvents[] = $event::class;
+
+        $this->eventDispatcher->addSubscriber(new class ($spy) implements EventSubscriberInterface {
+            /**
+             * @param Closure(EventInterface): string $spy
+             */
+            public function __construct(
+                public readonly Closure $spy,
+            ) {}
+
+            #[Override]
+            public function on(EventInterface $event): ?Closure
+            {
+                ($this->spy)($event);
+                return null;
+            }
+        });
+
+        $this->kernel->execute(new class (['foo.php', 'help']) extends Console {
+            public function write(string $text, ?int $color = null): static
+            {
+                // nop
+                return $this;
+            }
+        });
+
+        static::assertContains(KernelPreCommandEvent::class, $this->seenEvents);
+        static::assertContains(KernelPostCommandEvent::class, $this->seenEvents);
     }
 
     public function test_for_default_404(): void

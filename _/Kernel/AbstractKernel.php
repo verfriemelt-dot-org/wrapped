@@ -48,8 +48,6 @@ abstract class AbstractKernel implements KernelInterface
 
     protected EventDispatcher $eventDispatcher;
 
-    protected bool $buildInCommandsLoaded = false;
-
     protected bool $booted = false;
 
     protected readonly float $constructTime;
@@ -82,6 +80,10 @@ abstract class AbstractKernel implements KernelInterface
         $this->eventDispatcher->addSubscriber($this->container->get(PerformanceHeadersResponseSubscriber::class));
 
         $this->initializeErrorHandler();
+
+        $discovery = $this->container->get(CommandDiscovery::class);
+        \assert($discovery instanceof CommandDiscovery);
+        $discovery->loadBuiltInCommands();
     }
 
     #[Override]
@@ -226,10 +228,11 @@ abstract class AbstractKernel implements KernelInterface
         \restore_exception_handler();
     }
 
+    #[Override]
     public function execute(Console $cli): ExitCode
     {
         $exec = $this->container->get(CommandExecutor::class);
-        assert($exec instanceof CommandExecutor);
+        \assert($exec instanceof CommandExecutor);
 
         return $exec->execute($cli);
     }
@@ -237,12 +240,7 @@ abstract class AbstractKernel implements KernelInterface
     public function loadCommands(string $path, string $pathPrefix, string $namespace): void
     {
         $discovery = $this->container->get(CommandDiscovery::class);
-        assert($discovery instanceof CommandDiscovery);
-
-        if ($this->buildInCommandsLoaded === false) {
-            $this->buildInCommandsLoaded = true;
-            $discovery->loadBuiltInCommands();
-        }
+        \assert($discovery instanceof CommandDiscovery);
 
         $discovery->findCommands($path, $pathPrefix, $namespace);
         $discovery->loadCommands();

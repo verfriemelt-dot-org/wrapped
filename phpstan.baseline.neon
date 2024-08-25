@@ -226,7 +226,7 @@ parameters:
 			path: _/Command/CommandArguments/ArgvParser.php
 
 		-
-			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandDiscovery\\:\\:loadCommands\\(\\)\" is 9, keep it under 8$#"
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\Command\\\\CommandDiscovery\\:\\:loadCommands\\(\\)\" is 10, keep it under 8$#"
 			count: 1
 			path: _/Command/CommandDiscovery.php
 

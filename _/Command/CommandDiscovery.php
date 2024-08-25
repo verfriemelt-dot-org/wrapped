@@ -17,6 +17,9 @@ class CommandDiscovery
     /** @var array<string,class-string> */
     protected array $commands;
 
+    /** @var array<class-string> */
+    private array $seen = [];
+
     public function __construct(
         private readonly Container $container,
         private readonly ServiceDiscovery $serviceDiscovery,
@@ -25,6 +28,7 @@ class CommandDiscovery
     public function loadBuiltInCommands(): void
     {
         $this->findCommands(dirname(__DIR__), dirname(__DIR__, 2), '\verfriemelt\wrapped');
+        $this->loadCommands();
     }
 
     public function findCommands(string $path, string $pathPrefix, string $namespace): void
@@ -43,6 +47,12 @@ class CommandDiscovery
 
         foreach ($commands as $commandClass) {
             $reflection = new ReflectionClass($commandClass);
+
+            if (\in_array($commandClass, $this->seen, true)) {
+                continue;
+            }
+
+            $this->seen[] = $commandClass;
 
             $commandAttribute = $reflection->getAttributes(Command::class)[0] ?? null;
             if ($commandAttribute === null) {

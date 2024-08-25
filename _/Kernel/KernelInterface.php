@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Kernel;
 
+use verfriemelt\wrapped\_\Cli\Console;
+use verfriemelt\wrapped\_\Command\ExitCode;
 use verfriemelt\wrapped\_\DI\Container;
 use verfriemelt\wrapped\_\Http\Request\Request;
 use verfriemelt\wrapped\_\Http\Response\Response;
@@ -21,4 +23,6 @@ interface KernelInterface
     public function shutdown(): void;
 
     public function getMetrics(): KernelMetricDto;
+
+    public function execute(Console $cli): ExitCode;
 }
