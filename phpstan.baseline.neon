@@ -3076,8 +3076,13 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
+			message: "#^Call to function is_string\\(\\) with 'else'\\|'if' will always evaluate to true\\.$#"
+			count: 1
+			path: _/Template/Tokenizer.php
+
+		-
 			message: "#^Call to function is_string\\(\\) with non\\-empty\\-string will always evaluate to true\\.$#"
-			count: 6
+			count: 5
 			path: _/Template/Tokenizer.php
 
 		-
@@ -3091,7 +3096,7 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
-			message: "#^Offset 'closing' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			message: "#^Offset 'closing' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: 'else'\\|'if', 3\\: 'else'\\|'if', expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: _/Template/Tokenizer.php
 
@@ -3101,7 +3106,7 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
-			message: "#^Offset 'expr' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			message: "#^Offset 'expr' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: 'else'\\|'if', 3\\: 'else'\\|'if', expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: _/Template/Tokenizer.php
 
@@ -3111,7 +3116,7 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
-			message: "#^Offset 'negated' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			message: "#^Offset 'negated' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: 'else'\\|'if', 3\\: 'else'\\|'if', expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: _/Template/Tokenizer.php
 
@@ -3121,7 +3126,7 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
-			message: "#^Offset 'type' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: non\\-empty\\-string, 3\\: non\\-empty\\-string, expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			message: "#^Offset 'type' on array\\{0\\: string, closing\\: ''\\|'/', 1\\: ''\\|'/', negated\\: ''\\|'\\!', 2\\: ''\\|'\\!', type\\: 'else'\\|'if', 3\\: 'else'\\|'if', expr\\: non\\-empty\\-string, \\.\\.\\.\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: _/Template/Tokenizer.php
 
