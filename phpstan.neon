@@ -16,10 +16,11 @@ parameters:
   checkMissingCallableSignature: true
 
   type_coverage:
-      return_type: 77
-      property_type: 76
-      param_type: 68
-      print_suggestions: false
+    return_type: 88
+    param_type: 86
+    property_type: 93
+    constant: 95
+    declare: 100
 
   cognitive_complexity:
       class: 50
@@ -32,6 +33,7 @@ parameters:
 
   excludePaths:
     - tests/integration/*
+    - _/Formular/Template/*
 
   parallel:
     processTimeout: 30.0

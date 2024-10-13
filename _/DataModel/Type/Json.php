@@ -12,6 +12,8 @@ class Json implements PropertyObjectInterface
 {
     protected mixed $data = null;
 
+    final public function __construct() {}
+
     public function toSqlFormat(): string
     {
         return \json_encode($this->data, \JSON_THROW_ON_ERROR);
