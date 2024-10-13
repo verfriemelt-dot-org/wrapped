@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DataModel\Type;
 
-use stdClass;
 use verfriemelt\wrapped\_\DataModel\PropertyObjectInterface;
 use Override;
+use RuntimeException;
 
 class Json implements PropertyObjectInterface
 {
-    public string|stdClass $data;
-
-    final public function __construct(string $data = '{}')
-    {
-        $this->data = json_decode($data, null, 512, \JSON_THROW_ON_ERROR);
-    }
+    protected mixed $data = null;
 
     public function toSqlFormat(): string
     {
@@ -29,7 +24,14 @@ class Json implements PropertyObjectInterface
             return null;
         }
 
-        return new static($storedValue);
+        if (!\json_validate($storedValue)) {
+            throw new RuntimeException('illegal json');
+        }
+
+        $instance = new static();
+        $instance->data = \json_decode($storedValue, true, 512, \JSON_THROW_ON_ERROR);
+
+        return $instance;
     }
 
     #[Override]
