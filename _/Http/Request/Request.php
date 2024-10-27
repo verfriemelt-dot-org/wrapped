@@ -6,6 +6,7 @@ namespace verfriemelt\wrapped\_\Http\Request;
 
 use verfriemelt\wrapped\_\ParameterBag;
 use verfriemelt\wrapped\_\Session\Session;
+use RuntimeException;
 
 class Request
 {
@@ -128,6 +129,11 @@ class Request
         return $this->content;
     }
 
+    public function rawContent(): string
+    {
+        return \file_get_contents('php://input') ?: throw new RuntimeException('cannot open php://input');
+    }
+
     /**
      * HTTP_ header parsed from server
      */
@@ -136,10 +142,7 @@ class Request
         return $this->header;
     }
 
-    /**
-     * @return static
-     */
-    public static function createFromGlobals()
+    public static function createFromGlobals(): self
     {
         return new self(
             $_GET,
@@ -148,7 +151,7 @@ class Request
             $_COOKIE,
             $_FILES,
             $_SERVER,
-            file_get_contents('php://input'),
+            \file_get_contents('php://input'),
         );
     }
 

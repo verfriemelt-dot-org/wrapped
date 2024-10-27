@@ -1001,11 +1001,6 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
-			count: 4
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^PHPDoc tag @param for parameter \\$parent with type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type is not subtype of native type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -1094,11 +1089,6 @@ parameters:
 			message: "#^Variable property access on verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Type\\\\Json\\:\\:\\$data \\(stdClass\\|string\\) does not accept mixed\\.$#"
-			count: 1
-			path: _/DataModel/Type/Json.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:connect\\(\\)\\.$#"
@@ -1247,11 +1237,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\:\\:disconnet\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
-
-		-
-			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
 			count: 1
 			path: _/Database/Driver/DatabaseDriver.php
 
@@ -2076,11 +2061,6 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:createFromGlobals\\(\\) should return static\\(verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\) but returns verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request\\:\\:initialize\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
@@ -2142,6 +2122,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#7 \\$content of class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request constructor expects string\\|null, string\\|false given\\.$#"
+			count: 1
+			path: _/Http/Request/Request.php
+
+		-
+			message: "#^Short ternary operator is not allowed\\. Use null coalesce operator if applicable or consider using long ternary\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
 
@@ -2877,11 +2862,6 @@ parameters:
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\Session\\:\\:fetchSessionId\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Out of 132 possible constant types, only 126 \\- 95\\.4 %% actually have it\\. Add more constant types to get over 99 %%$#"
 			count: 1
 			path: _/Session/Session.php
 
@@ -3839,6 +3819,16 @@ parameters:
 			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
 			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) with true will always evaluate to true\\.$#"
+			count: 1
+			path: tests/Unit/Input/RequestTest.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between string\\|null and 2 will always evaluate to true\\.$#"
+			count: 1
+			path: tests/Unit/Input/RequestTest.php
 
 		-
 			message: "#^Property class@anonymous/tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest\\.php\\:138\\:\\:\\$variadic type has no value type specified in iterable type array\\.$#"
