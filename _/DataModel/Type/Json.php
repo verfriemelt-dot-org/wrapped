@@ -36,6 +36,11 @@ class Json implements PropertyObjectInterface
         return $instance;
     }
 
+    public function raw(): mixed
+    {
+        return $this->data;
+    }
+
     #[Override]
     public function dehydrateToString(): string
     {
