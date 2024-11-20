@@ -143,12 +143,22 @@ class UriParserTest extends TestCase
         static::assertSame($expected, $result->getResult());
     }
 
-    public function test(): void
+    public function test_missing_number_after_port(): void
     {
         $parser = UriParser::port();
         $result = $parser->run(new ParserInput(':'));
 
         static::assertTrue($result->isError());
+    }
+
+    public function test_regression_with_only_path(): void
+    {
+        $result = UriParser::parser()->run(new ParserInput('/foobar'))->getResult();
+
+        static::assertIsList($result);
+        static::assertCount(7, $result);
+        static::assertSame('', $result[2], 'host part empty');
+        static::assertSame('/foobar', $result[4], 'uri part populated');
 
     }
 }

@@ -61,7 +61,7 @@ final class UriParser
 
     public static function host(): Parser
     {
-        return optional(regexp('[a-zA-Z0-9\-\.]+'))->map(fn (?string $result) => \strtolower($result ?? ''));
+        return optional(regexp('^[a-zA-Z0-9\-\.]+'))->map(fn (?string $result) => \strtolower($result ?? ''));
     }
 
     public static function port(): Parser

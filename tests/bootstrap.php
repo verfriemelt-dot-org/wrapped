@@ -6,10 +6,14 @@ use verfriemelt\wrapped\_\Database\Database;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
+use verfriemelt\wrapped\_\HttpClient\Psr7\StreamFactory;
+use verfriemelt\wrapped\_\HttpClient\Psr7\UriFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-define('TEST_ROOT', __DIR__);
+const STREAM_FACTORY = StreamFactory::class;
+const URI_FACTORY = UriFactory::class;
+const TEST_ROOT = __DIR__;
 
 $dotenv = new DotEnv();
 $dotenv->load(
