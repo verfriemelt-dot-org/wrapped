@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Psr\Http\Message\UriInterface;
 use verfriemelt\pp\Parser\ParserInput;
 use verfriemelt\wrapped\_\HttpClient\UriParser;
-use RuntimeException;
 use Override;
 
 final class Uri implements UriInterface
@@ -282,10 +281,6 @@ final class Uri implements UriInterface
 
         if ($scheme !== '') {
             $uri .= $scheme . '://';
-        }
-
-        if ($authority !== '') {
-            throw new RuntimeException('not implemented');
         }
 
         if ($userInfo !== '') {
