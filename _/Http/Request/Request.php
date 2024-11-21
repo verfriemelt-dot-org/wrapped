@@ -11,21 +11,13 @@ use RuntimeException;
 class Request
 {
     private ParameterBag $request;
-
     private ParameterBag $query;
-
     private ParameterBag $attributes;
-
     private ParameterBag $cookies;
-
     private ParameterBag $server;
-
     private ParameterBag $files;
-
     private ParameterBag $content;
-
     private ParameterBag $header;
-
     private Session $session;
 
     public function __construct(

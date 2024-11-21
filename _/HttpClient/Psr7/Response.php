@@ -10,13 +10,19 @@ use Override;
 
 final class Response extends Message implements ResponseInterface
 {
+    /**
+     * @param array<string,string[]> $headers
+     */
     public function __construct(
         public readonly int $statusCode = 200,
         public readonly string $reasonPhrase = '',
+        public array $headers = [],
     ) {
         if ($this->statusCode >= 600 || $this->statusCode < 200) {
             throw new InvalidArgumentException('invalid status code');
         }
+
+        parent::__construct($this->headers);
     }
 
     #[Override]
