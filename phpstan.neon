@@ -32,8 +32,11 @@ parameters:
     - tests
 
   excludePaths:
-    - tests/integration/*
     - _/Formular/Template/*
+
+  bootstrapFiles:
+    - tests/bootstrap.php
+
 
   parallel:
     processTimeout: 30.0
