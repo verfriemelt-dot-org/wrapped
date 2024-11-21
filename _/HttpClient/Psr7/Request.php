@@ -11,19 +11,26 @@ use InvalidArgumentException;
 
 class Request extends Message implements RequestInterface
 {
-    private UriInterface $uri;
+    protected UriInterface $uri;
 
-    private string $requestMethod;
-    private string $requestTarget = '/';
+    protected string $requestMethod;
+    protected string $requestTarget = '/';
 
-    public function __construct(string $method = 'GET', string|UriInterface $uri = '/')
-    {
+    /**
+     * @param array<string,string[]> $headers
+     */
+    public function __construct(
+        string $method = 'GET',
+        string|UriInterface $uri = '/',
+        array $headers = [],
+    ) {
         $this->requestMethod = $method;
 
         if (is_string($uri)) {
             $this->uri = new Uri($uri);
         }
 
+        parent::__construct($headers);
     }
 
     #[Override]

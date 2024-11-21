@@ -12,14 +12,28 @@ use InvalidArgumentException;
 abstract class Message implements MessageInterface
 {
     protected StreamInterface $body;
+    protected string $protocolVersion;
 
     /** @var array<string,string[]> */
-    private array $headers = [];
-
-    private string $protocolVersion;
+    protected array $headers = [];
 
     /** @var array<string,string> */
-    private array $normalizedHeaderNames = [];
+    protected array $normalizedHeaderNames = [];
+
+    /**
+     * @param array<string,string[]> $headers
+     */
+    public function __construct(array $headers = [])
+    {
+        foreach ($headers as $name => $value) {
+            if (!\is_array($value)) {
+                $value = [$value];
+            }
+
+            $this->normalizedHeaderNames[$this->normalizeHeaderName($name)] ??= $name;
+            $this->headers[$this->normalizeHeaderName($name)] = $value;
+        }
+    }
 
     #[Override]
     public function getProtocolVersion(): string
@@ -102,7 +116,6 @@ abstract class Message implements MessageInterface
         $instance->normalizedHeaderNames[$this->normalizeHeaderName($name)] ??= $name;
 
         return $instance;
-
     }
 
     #[Override]
