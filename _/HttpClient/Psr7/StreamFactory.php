@@ -12,7 +12,7 @@ final class StreamFactory implements \Psr\Http\Message\StreamFactoryInterface
     #[Override]
     public function createStream(string $content = ''): StreamInterface
     {
-        $stream = \fopen('php://memory', 'r+');
+        $stream = \fopen('php://temp', 'r+');
         \assert(\is_resource($stream));
         fwrite($stream, $content);
         \rewind($stream);
