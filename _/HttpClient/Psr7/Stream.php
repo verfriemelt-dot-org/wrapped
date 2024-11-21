@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\HttpClient\Psr7;
 
 use Psr\Http\Message\StreamInterface;
-use SebastianBergmann\Template\RuntimeException;
 use Exception;
 use Override;
+use RuntimeException;
 
 final class Stream implements StreamInterface
 {
@@ -43,7 +43,7 @@ final class Stream implements StreamInterface
     {
         $string = \stream_get_contents($this->stream, null, 0);
         if ($string === false) {
-            throw new \RuntimeException('Unable to read stream');
+            throw new RuntimeException('Unable to read stream');
         }
 
         return $string;
@@ -69,7 +69,14 @@ final class Stream implements StreamInterface
     #[Override]
     public function getSize(): ?int
     {
-        return null;
+        $stats = fstat($this->stream);
+        if ($stats === false) {
+            return null;
+        }
+
+        assert(\array_key_exists('size', $stats));
+
+        return $stats['size'];
     }
 
     #[Override]
@@ -77,7 +84,7 @@ final class Stream implements StreamInterface
     {
         $pos = \ftell($this->stream);
         if ($pos === false) {
-            throw new \RuntimeException('unable to determine stream position');
+            throw new RuntimeException('unable to determine stream position');
         }
 
         return $pos;
@@ -98,25 +105,39 @@ final class Stream implements StreamInterface
     #[Override]
     public function seek(int $offset, int $whence = SEEK_SET): void
     {
+        if (!$this->meta['seekable']) {
+            throw new RuntimeException('stream not seekable');
+        }
+
         \fseek($this->stream, $offset, $whence);
     }
 
     #[Override]
     public function rewind(): void
     {
-        \fseek($this->stream, 0);
+        if (!$this->meta['seekable']) {
+            throw new RuntimeException('stream not seekable');
+        }
+
+        \rewind($this->stream);
     }
 
     #[Override]
     public function isWritable(): bool
     {
-        return false;
+        return \str_contains($this->meta['mode'], 'w');
     }
 
     #[Override]
     public function write(string $string): int
     {
-        throw new RuntimeException('not implemented');
+        $bytes = \fwrite($this->stream, $string);
+
+        if ($bytes === false) {
+            throw new RuntimeException('write failed');
+        }
+
+        return $bytes;
     }
 
     #[Override]
@@ -133,11 +154,11 @@ final class Stream implements StreamInterface
         try {
             $string = \fread($this->stream, $length);
         } catch (Exception $e) {
-            throw new \RuntimeException('unable to read from stream', 0, $e);
+            throw new RuntimeException('unable to read from stream', 0, $e);
         }
 
         if (false === $string) {
-            throw new \RuntimeException('unable to read from stream');
+            throw new RuntimeException('unable to read from stream');
         }
 
         return $string;
@@ -148,7 +169,7 @@ final class Stream implements StreamInterface
     {
         $string = \stream_get_contents($this->stream);
         if ($string === false) {
-            throw new \RuntimeException('Unable to read stream');
+            throw new RuntimeException('Unable to read stream');
         }
 
         return $string;
