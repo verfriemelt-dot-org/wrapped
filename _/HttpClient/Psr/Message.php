@@ -42,7 +42,7 @@ abstract class Message implements MessageInterface
     }
 
     #[Override]
-    public function withProtocolVersion(string $version): MessageInterface
+    public function withProtocolVersion(string $version): static
     {
         $instance = clone $this;
         $instance->protocolVersion = $version;
@@ -75,7 +75,7 @@ abstract class Message implements MessageInterface
     }
 
     #[Override]
-    public function withHeader(string $name, $value): MessageInterface
+    public function withHeader(string $name, $value): static
     {
         $instance = clone $this;
 
@@ -98,7 +98,7 @@ abstract class Message implements MessageInterface
     }
 
     #[Override]
-    public function withAddedHeader(string $name, $value): MessageInterface
+    public function withAddedHeader(string $name, $value): static
     {
         $instance = clone $this;
 
@@ -119,7 +119,7 @@ abstract class Message implements MessageInterface
     }
 
     #[Override]
-    public function withoutHeader(string $name): MessageInterface
+    public function withoutHeader(string $name): static
     {
         $instance = clone $this;
 
@@ -140,7 +140,7 @@ abstract class Message implements MessageInterface
     }
 
     #[Override]
-    public function withBody(StreamInterface $body): MessageInterface
+    public function withBody(StreamInterface $body): static
     {
         $instance = clone $this;
         $instance->body = $body;

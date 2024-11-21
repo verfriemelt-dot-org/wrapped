@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\HttpClient;
 
 use Override;
+use Psr\Http\Client\ClientInterface;
 
-class DumpingHttpClient implements HttpClientInterface
+class DumpingHttpClient implements HttpClientInterface, ClientInterface
 {
+    use PsrAdapterTrait;
+
     private int $requestNumber = 0;
 
     public function __construct(

@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\_\HttpClient;
 
 use Override;
+use Psr\Http\Client\ClientInterface;
 use RuntimeException;
 
-final class MockHttpClient implements HttpClientInterface
+final class MockHttpClient implements HttpClientInterface, ClientInterface
 {
+    use PsrAdapterTrait;
+
     /** @var HttpResponse[] */
     private array $responses;
 

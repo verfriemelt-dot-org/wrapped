@@ -7,7 +7,7 @@ namespace verfriemelt\wrapped\_\HttpClient;
 final readonly class HttpResponse
 {
     /**
-     * @param array<string,string> $header
+     * @param array<string,string[]> $header
      */
     public function __construct(
         public int $statusCode,

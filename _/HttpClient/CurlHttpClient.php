@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\HttpClient;
 
+use Psr\Http\Client\ClientInterface;
 use RuntimeException;
 use Override;
 
-class CurlHttpClient implements HttpClientInterface
+class CurlHttpClient implements HttpClientInterface, ClientInterface
 {
+    use PsrAdapterTrait;
+
     #[Override]
     public function request(
         string $uri,
-        string $method = 'get',
+        string $method = 'GET',
         array $header = [],
         ?string $payload = null,
     ): HttpResponse {
+
+        $method = strtoupper($method);
+
         if ($uri === '') {
             throw new RuntimeException('empty uri passed');
         }
@@ -43,33 +49,33 @@ class CurlHttpClient implements HttpClientInterface
         \curl_setopt(
             $c,
             \CURLOPT_HEADERFUNCTION,
-            static function ($curl, $header) use (&$responseHeaders) {
-                $len = \strlen((string) $header);
-                $header = \explode(':', (string) $header, 2);
+            static function ($curl, string $header) use (&$responseHeaders) {
+                $length = \strlen($header);
+                $header = \explode(':', $header, 2);
 
                 if (\count($header) < 2) {
-                    return $len;
+                    return $length;
                 }
 
-                $name = \strtolower(\trim($header[0]));
-                $responseHeaders[$name] = \trim($header[1]);
+                $responseHeaders[$header[0]] ??= [];
+                $responseHeaders[$header[0]][] = \trim($header[1]);
 
-                return $len;
+                return $length;
             },
         );
 
-        switch ($method) {
-            case 'get':
-                break;
-            case 'post':
-                \curl_setopt($c, \CURLOPT_POST, true);
+        if ($method === 'GET' && $payload !== null) {
+            throw new RuntimeException('get cannot have payloads');
+        }
 
-                if ($payload !== null) {
-                    \curl_setopt($c, \CURLOPT_POSTFIELDS, $payload);
-                }
+        if ($method !== 'GET') {
 
-                break;
-            default: throw new RuntimeException('method not supported');
+            //            \curl_setopt($c, \CURLOPT_POST, true);
+
+            if ($payload !== null) {
+                \curl_setopt($c, \CURLOPT_POSTFIELDS, $payload);
+            }
+
         }
 
         $response = \curl_exec($c);
@@ -78,7 +84,7 @@ class CurlHttpClient implements HttpClientInterface
             throw new RuntimeException('request failed');
         }
 
-        if (\curl_errno($c) === 28) {
+        if (\curl_errno($c) === \CURLE_OPERATION_TIMEDOUT) {
             throw new HttpRequestTimeoutException("timeout connecting to: $uri");
         }
 

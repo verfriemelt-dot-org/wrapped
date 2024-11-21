@@ -176,11 +176,6 @@ parameters:
 			path: _/Cli/Console.php
 
 		-
-			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
-			count: 1
-			path: _/Cli/Console.php
-
-		-
 			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\Cli\\\\Console\\:\\:\\$linePrefixFunc type has no signature specified for Closure\\.$#"
 			count: 1
 			path: _/Cli/Console.php
@@ -2116,11 +2111,6 @@ parameters:
 			path: _/Http/Request/Request.php
 
 		-
-			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
-			count: 1
-			path: _/Http/Request/Request.php
-
-		-
 			message: "#^Parameter \\#7 \\$content of class verfriemelt\\\\wrapped\\\\_\\\\Http\\\\Request\\\\Request constructor expects string\\|null, string\\|false given\\.$#"
 			count: 1
 			path: _/Http/Request/Request.php
@@ -2394,6 +2384,11 @@ parameters:
 			message: "#^Only booleans are allowed in an if condition, int\\|false given\\.$#"
 			count: 1
 			path: _/Http/Router/Router.php
+
+		-
+			message: "#^Cognitive complexity for \"verfriemelt\\\\wrapped\\\\_\\\\HttpClient\\\\CurlHttpClient\\:\\:request\\(\\)\" is 10, keep it under 8$#"
+			count: 1
+			path: _/HttpClient/CurlHttpClient.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\Input\\\\CSRF\\:\\:generateToken\\(\\) should return string but returns mixed\\.$#"
@@ -2867,11 +2862,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$ip of method verfriemelt\\\\wrapped\\\\_\\\\Session\\\\SessionDataObject\\:\\:setIp\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: _/Session/Session.php
-
-		-
-			message: "#^Parameter \\#1 \\$parameters of class verfriemelt\\\\wrapped\\\\_\\\\ParameterBag constructor expects array\\<int\\|string, mixed\\>, array given\\.$#"
 			count: 1
 			path: _/Session/Session.php
 

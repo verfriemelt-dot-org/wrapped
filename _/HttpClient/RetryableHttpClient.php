@@ -6,10 +6,13 @@ namespace verfriemelt\wrapped\_\HttpClient;
 
 use Closure;
 use Override;
+use Psr\Http\Client\ClientInterface;
 use RuntimeException;
 
-final class RetryableHttpClient implements HttpClientInterface
+final class RetryableHttpClient implements HttpClientInterface, ClientInterface
 {
+    use PsrAdapterTrait;
+
     /** @var Closure(): void */
     private Closure $callback;
 
