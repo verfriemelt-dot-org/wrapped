@@ -49,13 +49,13 @@ final class Uri implements UriInterface
             return $input;
         };
 
-        $this->scheme = $assertString($results[0]);
-        $this->userInfo = $assertString($results[1]);
-        $this->host = $assertString($results[2]);
-        $this->port = $assertInt($results[3]);
-        $this->path = $assertString($results[4]);
-        $this->query = $assertString($results[5]);
-        $this->fragment = $assertString($results[6]);
+        $this->scheme = $assertString($results['scheme']);
+        $this->userInfo = $assertString($results['userInfo']);
+        $this->host = $assertString($results['host']);
+        $this->port = $assertInt($results['port']);
+        $this->path = $assertString($results['path']);
+        $this->query = $assertString($results['query']);
+        $this->fragment = $assertString($results['fragment']);
 
         // fix path
         $this->path = \str_replace(' ', '%20', $this->path);

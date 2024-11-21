@@ -28,7 +28,15 @@ final class UriParser
             static::path(),
             static::query(),
             static::fragment(),
-        );
+        )->map(fn (array $result): array => [
+            'scheme' =>  $result[0],
+            'userInfo' =>  $result[1],
+            'host' =>  $result[2],
+            'port' =>  $result[3],
+            'path' =>  $result[4],
+            'query' =>  $result[5],
+            'fragment' =>  $result[6],
+        ]);
     }
 
     public static function scheme(): Parser

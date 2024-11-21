@@ -155,10 +155,10 @@ class UriParserTest extends TestCase
     {
         $result = UriParser::parser()->run(new ParserInput('/foobar'))->getResult();
 
-        static::assertIsList($result);
+        static::assertIsArray($result);
         static::assertCount(7, $result);
-        static::assertSame('', $result[2], 'host part empty');
-        static::assertSame('/foobar', $result[4], 'uri part populated');
+        static::assertSame('', $result['host'], 'host part empty');
+        static::assertSame('/foobar', $result['path'], 'uri part populated');
 
     }
 }
