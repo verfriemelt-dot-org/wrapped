@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\HttpClient\Psr7;
 
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Override;
 
-final class StreamFactory implements \Psr\Http\Message\StreamFactoryInterface
+final class StreamFactory implements StreamFactoryInterface
 {
     #[Override]
     public function createStream(string $content = ''): StreamInterface
