@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\tests\psr7;
 
 use Http\Psr7Test\ResponseIntegrationTest;
-use verfriemelt\wrapped\_\HttpClient\Psr7\Response;
+use verfriemelt\wrapped\_\HttpClient\Psr\Response;
 use Override;
 
 class ResponseTest extends ResponseIntegrationTest

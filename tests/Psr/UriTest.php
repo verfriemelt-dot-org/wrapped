@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Psr7;
 
 use Http\Psr7Test\UriIntegrationTest;
-use verfriemelt\wrapped\_\HttpClient\Psr7\Uri;
+use verfriemelt\wrapped\_\HttpClient\Psr\Uri;
 use Override;
 
 class UriTest extends UriIntegrationTest

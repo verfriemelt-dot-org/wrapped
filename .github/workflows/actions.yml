@@ -39,7 +39,7 @@ jobs:
       run: composer install
 
     - name: run tests
-      run: vendor/bin/phpunit --testsuite=psr7
+      run: vendor/bin/phpunit --testsuite=psr
       env:
         DATABASE_DRIVER: none
 

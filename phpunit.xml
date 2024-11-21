@@ -27,8 +27,8 @@
         <testsuite name="integration">
             <directory>tests/Integration</directory>
         </testsuite>
-        <testsuite name="psr7">
-            <directory>tests/Psr7</directory>
+        <testsuite name="psr">
+            <directory>tests/Psr</directory>
         </testsuite>
     </testsuites>
 

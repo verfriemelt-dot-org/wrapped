@@ -6,8 +6,8 @@ use verfriemelt\wrapped\_\Database\Database;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;
-use verfriemelt\wrapped\_\HttpClient\Psr7\StreamFactory;
-use verfriemelt\wrapped\_\HttpClient\Psr7\UriFactory;
+use verfriemelt\wrapped\_\HttpClient\Psr\StreamFactory;
+use verfriemelt\wrapped\_\HttpClient\Psr\UriFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

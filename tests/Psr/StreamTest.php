@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\tests\psr7;
 
 use Http\Psr7Test\StreamIntegrationTest;
 use Override;
-use verfriemelt\wrapped\_\HttpClient\Psr7\StreamFactory;
+use verfriemelt\wrapped\_\HttpClient\Psr\StreamFactory;
 
 class StreamTest extends StreamIntegrationTest
 {

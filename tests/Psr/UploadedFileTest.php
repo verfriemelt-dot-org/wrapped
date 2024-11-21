@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace verfriemelt\wrapped\Tests\Psr7;
 
 use Http\Psr7Test\UploadedFileIntegrationTest;
-use verfriemelt\wrapped\_\HttpClient\Psr7\StreamFactory;
-use verfriemelt\wrapped\_\HttpClient\Psr7\UploadedFile;
+use verfriemelt\wrapped\_\HttpClient\Psr\StreamFactory;
+use verfriemelt\wrapped\_\HttpClient\Psr\UploadedFile;
 use Override;
 
 class UploadedFileTest extends UploadedFileIntegrationTest

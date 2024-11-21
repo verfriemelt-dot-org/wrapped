@@ -6,7 +6,7 @@ namespace verfriemelt\wrapped\tests\psr7;
 
 use Http\Psr7Test\RequestIntegrationTest;
 use Override;
-use verfriemelt\wrapped\_\HttpClient\Psr7\Request;
+use verfriemelt\wrapped\_\HttpClient\Psr\Request;
 
 class RequestTest extends RequestIntegrationTest
 {

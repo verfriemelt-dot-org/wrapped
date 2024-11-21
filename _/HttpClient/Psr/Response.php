@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\_\HttpClient\Psr7;
+namespace verfriemelt\wrapped\_\HttpClient\Psr;
 
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
