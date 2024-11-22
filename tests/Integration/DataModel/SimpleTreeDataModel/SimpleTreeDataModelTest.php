@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration\DataModel\SimpleTreeDataModel;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel\SimpleTreeDataModel;
 
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
-use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
 use Override;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 #[LowerCase]
 class Tree extends SimpleTreeDataModel
 {
-    public ?int $id = null;
-
+    public int $id;
     public ?int $parentId = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -27,7 +26,7 @@ class Tree extends SimpleTreeDataModel
         return $this->parentId;
     }
 
-    public function setId(?int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -45,7 +44,6 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
     {
         if (static::$connection instanceof SQLite) {
             static::markTestSkipped('sqlite not supported');
-            return;
         }
 
         static::$connection->query('create table tree ( id serial primary key, parent_id int );');
@@ -57,7 +55,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::$connection->query('drop table if exists tree;');
     }
 
-    public function saveInstance($class, $name = 'test')
+    public function saveInstance(string $class): SimpleTreeDataModel
     {
         $obj = new $class();
         $obj->save();
@@ -65,7 +63,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         return $obj;
     }
 
-    public function test_nested_save()
+    public function test_nested_save(): void
     {
         $obj1 = new Tree();
         $obj1->save();
@@ -78,7 +76,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::assertSame($obj1->getId(), $obj2->fetchParent()->getId());
     }
 
-    public function test_children()
+    public function test_children(): void
     {
         $obj1 = new Tree();
         $obj1->save();
@@ -103,7 +101,7 @@ class SimpleTreeDataModelTest extends DatabaseTestCase
         static::assertSame(1, $obj3->fetchChildCount());
     }
 
-    public function test_fetch_parent()
+    public function test_fetch_parent(): void
     {
         $obj1 = new Tree();
         $obj1->save();

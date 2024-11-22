@@ -926,31 +926,6 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:setDepth\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:setLeft\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:setParentId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:setRight\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:under\\(\\) has parameter \\$atEnd with no type specified\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -966,32 +941,12 @@ parameters:
 			path: _/DataModel/TreeDataModel.php
 
 		-
-			message: "#^Only booleans are allowed in &&, int\\|null given on the left side\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
 			message: "#^Only booleans are allowed in a negated boolean, int\\|null given\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
 		-
 			message: "#^Only booleans are allowed in an if condition, int\\|null given\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Only numeric types are allowed in \\+, int\\|null given on the left side\\.$#"
-			count: 2
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Only numeric types are allowed in \\-, int\\|null given on the left side\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Only numeric types are allowed in \\-, int\\|null given on the right side\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -1052,16 +1007,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\$path of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:fetchByPath\\(\\) has invalid type verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\type\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:\\$_transactionInitiatorId has no type specified\\.$#"
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:\\$depth \\(int\\) does not accept int\\|null\\.$#"
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
@@ -3161,277 +3106,97 @@ parameters:
 			path: tests/Integration/DataModel/DataModelAttributeTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:saveInstance\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModelAttributeTest\\:\\:saveInstance\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelAttributeTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:saveInstance\\(\\) has parameter \\$class with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:saveInstance\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:test_camel_case\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:test_snake_case\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\DataModelAttributeTest\\:\\:testall_lower\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\LowerDummy\\:\\:setComplexFieldName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\AttributeTest\\\\LowerDummy\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelAttributeTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelFindTest\\:\\:createInstance\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModelFindTest\\:\\:createInstance\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelFindTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelFindTest\\:\\:test_find\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setABool\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setAFloat\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setAInt\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setANull\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setAString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelPropertyRenameTest\\:\\:createInstance\\(\\) should return verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester but returns verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester\\|null\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModelPropertyRenameTest\\:\\:createInstance\\(\\) should return verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\RenameTester but returns verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\RenameTester\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelPropertyRenameTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelPropertyRenameTest\\:\\:test_update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelPropertyRenameTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelPropertyRenameTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester\\:\\:setRandomCasing\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelPropertyRenameTest.php
-
-		-
-			message: "#^Cannot call method aObject\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\|null\\.$#"
+			message: "#^Cannot call method aObject\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\B\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
 
 		-
-			message: "#^Cannot call method aObjectNotMarked\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\|null\\.$#"
+			message: "#^Cannot call method aObjectNotMarked\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\B\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
 
 		-
-			message: "#^Cannot call method getAId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\|null\\.$#"
+			message: "#^Cannot call method getAId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\B\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
 
 		-
-			message: "#^Cannot call method setAId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\|null\\.$#"
+			message: "#^Cannot call method setAId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\B\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
 
 		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\A referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\a\\.$#"
-			count: 4
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\b\\.$#"
-			count: 6
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\A\\:\\:setBId\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModelRelationAttributesTest\\:\\:buildObjects\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\A\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\:\\:setAId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\B\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelRelationAttributesTest\\:\\:buildObjects\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelRelationAttributesTest\\:\\:test_not_prepped\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelRelationAttributesTest\\:\\:test_resolv\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelRelationAttributesTest.php
-
-		-
-			message: "#^Attribute class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\test does not exist\\.$#"
+			message: "#^Cannot call method delete\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\Dummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Cannot call method delete\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\|null\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\|null\\.$#"
+			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\Dummy\\|null\\.$#"
 			count: 2
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Cannot call method getName\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\|null\\.$#"
+			message: "#^Cannot call method getName\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\Dummy\\|null\\.$#"
 			count: 5
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Cannot call method setName\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\|null\\.$#"
+			message: "#^Cannot call method setName\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\Dummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:saveInstance\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\DataModelTest\\:\\:saveInstance\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:saveInstance\\(\\) has parameter \\$name with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\DataModelTest\\:\\:saveInstance\\(\\) has parameter \\$name with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_all\\(\\) has no return type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\DataModel\\\\Dummy\\:\\:\\$id \\(int\\) does not accept int\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_delete\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_fetch\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_fetch_sorted\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_fetch_with_array\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_reload\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_save_auto_generate_id\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\DataModelTest\\:\\:test_object_update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\:\\:setName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\|null\\.$#"
+			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Cannot call method getLastFoundDate\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\|null\\.$#"
+			message: "#^Cannot call method getLastFoundDate\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\|null\\.$#"
 			count: 2
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Cannot call method getPubtime\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\|null\\.$#"
+			message: "#^Cannot call method getPubtime\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\|null\\.$#"
 			count: 2
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Cannot call method reload\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\|null\\.$#"
+			message: "#^Cannot call method reload\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\|null\\.$#"
 			count: 2
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
@@ -3441,57 +3206,17 @@ parameters:
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelTypedPropertiesTest\\:\\:test_reload_with_time\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\:\\:setUntyped\\(\\) has parameter \\$untyped with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelTypedPropertiesTest\\:\\:test_save\\(\\) has no return type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\:\\:\\$id \\(int\\) does not accept int\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModelTypedPropertiesTest\\:\\:test_save_with_null\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:getUntyped\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setLastFoundDate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setPubtime\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setUntyped\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:setUntyped\\(\\) has parameter \\$untyped with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
-
-		-
-			message: "#^Property verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TypedDummy\\:\\:\\$untyped has no type specified\\.$#"
+			message: "#^Property verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TypedDummy\\:\\:\\$untyped has no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelTypedPropertiesTest.php
 
@@ -3501,243 +3226,133 @@ parameters:
 			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method fetchParent\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\Tree\\|null\\.$#"
+			message: "#^Cannot call method fetchParent\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\Tree\\|null\\.$#"
 			count: 3
 			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\Tree\\|null\\.$#"
+			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\Tree\\|null\\.$#"
 			count: 3
 			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:saveInstance\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:saveInstance\\(\\) should return verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Tree\\\\SimpleTreeDataModel but returns object\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:saveInstance\\(\\) has parameter \\$class with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:saveInstance\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:test_children\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:test_fetch_parent\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\SimpleTreeDataModelTest\\:\\:test_nested_save\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Cannot call method getDepth\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method getDepth\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method getLeft\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method getLeft\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method getParentId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method getParentId\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method getRight\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method getRight\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method move\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method move\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 7
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method save\\(\\) on bool\\|verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\.$#"
-			count: 2
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Cannot call method save\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method save\\(\\) on bool\\|verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\.$#"
 			count: 3
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Cannot call method setName\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Cannot call method under\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null\\.$#"
+			message: "#^Cannot call method save\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 3
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:createStructure\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot call method setName\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:createStructure\\(\\) has parameter \\$parent with no type specified\\.$#"
+			message: "#^Cannot call method under\\(\\) on verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null\\.$#"
+			count: 3
+			path: tests/Integration/DataModel/TreeDataModelTest.php
+
+		-
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:createStructure\\(\\) has parameter \\$parent with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:createStructure\\(\\) has parameter \\$struct with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:createStructure\\(\\) has parameter \\$struct with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:getStruct\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:getStruct\\(\\) has parameter \\$res with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:getStruct\\(\\) has parameter \\$res with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:getStruct\\(\\) has parameter \\$struct with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:getStruct\\(\\) has parameter \\$struct with no type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:getStruct\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_deeply_nested_move\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$count with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_insert\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$depth with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_move\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$parentId with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_move_simple_under_left\\(\\) has no return type specified\\.$#"
+			message: "#^Method verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$struct with no type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_move_simple_under_right\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_move_under_left\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_move_under_right\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_positioned_move\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_save_under\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_simple_save\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:test_update\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$count with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$depth with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$parentId with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDataModelTest\\:\\:validateStruct\\(\\) has parameter \\$struct with no type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\:\\:setId\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\:\\:setName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Only numeric types are allowed in \\+, int\\|null given on the left side\\.$#"
-			count: 1
-			path: tests/Integration/DataModel/TreeDataModelTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$after of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:after\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$after of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:after\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null given\\.$#"
 			count: 2
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$before of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:before\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$before of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:before\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null given\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$parent of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:under\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\TreeDummy\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$parent of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel\\:\\:under\\(\\) expects verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\TreeDataModel, verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\DataModel\\\\TreeDummy\\|null given\\.$#"
 			count: 5
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 2
+			count: 1
 			path: tests/Integration/DataModel/TreeDataModelTest.php
 
 		-
@@ -3746,7 +3361,7 @@ parameters:
 			path: tests/Integration/Event/EventDispatcherTest.php
 
 		-
-			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(tests\\\\unit\\\\Event\\\\SecondTestEvent, tests\\\\unit\\\\Event\\\\Argument\\)\\: void\\)\\|\\(Closure\\(tests\\\\unit\\\\Event\\\\TestEvent\\)\\: void\\)\\|null\\.$#"
+			message: "#^Method class@anonymous/tests/Integration/Event/EventDispatcherTest\\.php\\:26\\:\\:on\\(\\) should return \\(Closure\\(T\\)\\: T\\)\\|null but returns \\(Closure\\(verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\Event\\\\SecondTestEvent, verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\Event\\\\Argument\\)\\: void\\)\\|\\(Closure\\(verfriemelt\\\\wrapped\\\\Tests\\\\Integration\\\\Event\\\\TestEvent\\)\\: void\\)\\|null\\.$#"
 			count: 1
 			path: tests/Integration/Event/EventDispatcherTest.php
 

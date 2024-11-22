@@ -27,29 +27,20 @@ use Override;
 
 abstract class TreeDataModel extends DataModel
 {
-    public ?int $id = null;
-
+    public int $id;
     public int $depth = 0;
-
-    public ?int $left = null;
-
-    public ?int $right = null;
-
+    public int $left;
+    public int $right;
     public ?int $parentId = null;
 
-    final public const INSERT_AFTER = 'after';
-
-    final public const INSERT_BEFORE = 'before';
-
-    final public const INSERT_UNDER_LEFT = 'under_left';
-
-    final public const INSERT_UNDER_RIGHT = 'under_right';
+    protected const string INSERT_AFTER = 'after';
+    protected const string INSERT_BEFORE = 'before';
+    protected const string INSERT_UNDER_LEFT = 'under_left';
+    protected const string INSERT_UNDER_RIGHT = 'under_right';
 
     private string $insertMode = self::INSERT_UNDER_LEFT;
 
     private ?TreeDataModel $insertPosition = null;
-
-    protected static $_transactionInitiatorId;
 
     #[Override]
     final public static function getPrimaryKey(): string
@@ -57,22 +48,22 @@ abstract class TreeDataModel extends DataModel
         return 'id';
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getDepth(): ?int
+    public function getDepth(): int
     {
         return $this->depth;
     }
 
-    public function getLeft(): ?int
+    public function getLeft(): int
     {
         return $this->left;
     }
 
-    public function getRight(): ?int
+    public function getRight(): int
     {
         return $this->right;
     }
@@ -82,31 +73,31 @@ abstract class TreeDataModel extends DataModel
         return $this->parentId;
     }
 
-    public function setId(?int $id)
+    public function setId(int $id): static
     {
         $this->id = $id;
         return $this;
     }
 
-    public function setDepth(?int $depth)
+    public function setDepth(int $depth): static
     {
         $this->depth = $depth;
         return $this;
     }
 
-    public function setLeft(?int $left)
+    public function setLeft(int $left): static
     {
         $this->left = $left;
         return $this;
     }
 
-    public function setRight(?int $right)
+    public function setRight(int $right): static
     {
         $this->right = $right;
         return $this;
     }
 
-    public function setParentId(?int $parentId)
+    public function setParentId(?int $parentId): static
     {
         $this->parentId = $parentId;
         return $this;
@@ -148,7 +139,7 @@ abstract class TreeDataModel extends DataModel
             throw new \Exception('illegal mix of items');
         }
 
-        if ($this->id && $this->id === $moveTo->getId()) {
+        if (isset($this->id) && $this->id === $moveTo->getId()) {
             throw new DatabaseException("cannot move model »{$this->id}« after »{$moveTo->getId()}«");
         }
 

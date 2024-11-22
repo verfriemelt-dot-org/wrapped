@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration\DataModel\AttributeTest;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel;
 
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\SnakeCase;
 use verfriemelt\wrapped\_\DataModel\DataModel;
-use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 use Override;
 
 #[LowerCase]
 class LowerDummy extends DataModel
 {
-    public ?int $id = null;
+    protected int $id;
 
     #[LowerCase]
-    public ?string $complexFieldName = null;
+    protected ?string $complexFieldName = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -30,13 +30,13 @@ class LowerDummy extends DataModel
         return $this->complexFieldName;
     }
 
-    public function setId(?int $id)
+    public function setId(int $id): static
     {
         $this->id = $id;
         return $this;
     }
 
-    public function setComplexFieldName(?string $complexFieldName)
+    public function setComplexFieldName(?string $complexFieldName): static
     {
         $this->complexFieldName = $complexFieldName;
         return $this;
@@ -67,6 +67,10 @@ class DataModelAttributeTest extends DatabaseTestCase
         }
 
         parent::setUp();
+
+        static::$connection->query('create table lowerdummy ( id integer primary key not null, complexfieldname text );');
+        static::$connection->query('create table "camelCaseDummy" ( id integer primary key not null, "complexFieldName" text );');
+        static::$connection->query('create table snake_case_dummy ( id integer primary key not null, complex_field_name text );');
     }
 
     #[Override]
@@ -78,7 +82,7 @@ class DataModelAttributeTest extends DatabaseTestCase
         static::$connection->query('drop table if exists "camelCaseDummy";');
     }
 
-    public function saveInstance($class, $name = 'test')
+    public function saveInstance(string $class, string $name = 'test')
     {
         $obj = new $class();
         $obj->setComplexFieldName($name);
@@ -87,26 +91,23 @@ class DataModelAttributeTest extends DatabaseTestCase
         return $obj;
     }
 
-    public function testall_lower()
+    public function testall_lower(): void
     {
-        static::$connection->query('create table lowerdummy ( id serial primary key, complexfieldname text );');
         $this->saveInstance(LowerDummy::class, 'test');
 
         static::assertNotNull(LowerDummy::findSingle(['complexfieldname' => 'test']));
         static::assertNotNull(LowerDummy::findSingle(['complexFieldName' => 'test']));
     }
 
-    public function test_camel_case()
+    public function test_camel_case(): void
     {
-        static::$connection->query('create table "camelCaseDummy" ( id serial primary key, "complexFieldName" text );');
         $this->saveInstance(CamelCaseDummy::class, 'test');
 
         static::assertNotNull(CamelCaseDummy::findSingle(['complexFieldName' => 'test']));
     }
 
-    public function test_snake_case()
+    public function test_snake_case(): void
     {
-        static::$connection->query('create table snake_case_dummy ( id serial primary key, complex_field_name text );');
         $this->saveInstance(SnakeCaseDummy::class, 'test');
 
         static::assertNotNull(SnakeCaseDummy::findSingle(['complex_field_name' => 'test']));

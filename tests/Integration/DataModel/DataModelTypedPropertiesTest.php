@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel;
 
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
@@ -11,16 +11,14 @@ use verfriemelt\wrapped\_\DataModel\DataModel;
 use verfriemelt\wrapped\_\DataModel\TablenameOverride;
 use verfriemelt\wrapped\_\DateTime\DateTime;
 use Override;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 class TypedDummy extends DataModel implements TablenameOverride
 {
-    public ?int $id = null;
-
-    public ?string $name = null;
-
-    public ?DateTime $pubtime = null;
-
-    public $untyped;
+    protected int $id;
+    protected ?string $name = null;
+    protected ?DateTime $pubtime = null;
+    protected $untyped;
 
     #[LowerCase]
     public ?DateTime $lastFoundDate = null;
@@ -30,7 +28,7 @@ class TypedDummy extends DataModel implements TablenameOverride
         return $this->id;
     }
 
-    public function setId(?int $id)
+    public function setId(?int $id): static
     {
         $this->id = $id;
         return $this;
@@ -41,7 +39,7 @@ class TypedDummy extends DataModel implements TablenameOverride
         return $this->name;
     }
 
-    public function setName(?string $name)
+    public function setName(?string $name): static
     {
         $this->name = $name;
         return $this;
@@ -58,18 +56,18 @@ class TypedDummy extends DataModel implements TablenameOverride
         return $this->pubtime;
     }
 
-    public function setPubtime(?DateTime $pubtime)
+    public function setPubtime(?DateTime $pubtime): static
     {
         $this->pubtime = $pubtime;
         return $this;
     }
 
-    public function getUntyped()
+    public function getUntyped(): mixed
     {
         return $this->untyped;
     }
 
-    public function setUntyped($untyped)
+    public function setUntyped($untyped): static
     {
         $this->untyped = $untyped;
         return $this;
@@ -80,7 +78,7 @@ class TypedDummy extends DataModel implements TablenameOverride
         return $this->lastFoundDate;
     }
 
-    public function setLastFoundDate(?DateTime $lastFoundDate)
+    public function setLastFoundDate(?DateTime $lastFoundDate): static
     {
         $this->lastFoundDate = $lastFoundDate;
         return $this;
@@ -108,7 +106,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
                 }
 
                 static::$connection->query(
-                    'create table "Dummy" ( id integer primary key, name text, pubtime timestamp, untyped text, lastfounddate timestamp );',
+                    'create table "Dummy" ( id integer primary key not null, name text, pubtime timestamp, untyped text, lastfounddate timestamp );',
                 );
                 break;
         }
@@ -120,7 +118,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::$connection->query('drop table "Dummy" ;');
     }
 
-    public function test_save()
+    public function test_save(): void
     {
         $test = new TypedDummy();
         $test->setPubtime(new DateTime());
@@ -131,7 +129,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::assertTrue(is_object($data->getPubtime()));
     }
 
-    public function test_save_with_null()
+    public function test_save_with_null(): void
     {
         $test = new TypedDummy();
         $test->save();
@@ -141,7 +139,7 @@ class DataModelTypedPropertiesTest extends DatabaseTestCase
         static::assertTrue($data->getPubtime() === null);
     }
 
-    public function test_reload_with_time()
+    public function test_reload_with_time(): void
     {
         $test = new TypedDummy();
         $test->save();

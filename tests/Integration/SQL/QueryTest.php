@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration\SQL;
+namespace verfriemelt\wrapped\Tests\Integration\SQL;
 
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
-use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 class QueryTest extends DatabaseTestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\unit\Event;
+namespace verfriemelt\wrapped\Tests\Integration\Event;
 
 use Closure;
 use PHPUnit\Framework\TestCase;

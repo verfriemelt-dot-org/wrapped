@@ -2,37 +2,23 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel;
 
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\TreeDataModel;
 use Override;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 class TreeDummy extends TreeDataModel
 {
-    public ?int $id = null;
+    public string $name;
 
-    public ?string $name = null;
-
-    #[Override]
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    #[Override]
-    public function setId(?int $id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(?string $name)
+    public function setName(string $name): static
     {
         $this->name = $name;
         return $this;
@@ -59,10 +45,10 @@ class TreeDataModelTest extends DatabaseTestCase
     #[Override]
     public function tearDown(): void
     {
-        //            static::$connection->query( 'drop table if exists "TreeDummy";' );
+        static::$connection->query('drop table if exists "TreeDummy";');
     }
 
-    public function test_save_under()
+    public function test_save_under(): void
     {
         $parent = new TreeDummy();
         $parent->setName('parent');
@@ -97,8 +83,6 @@ class TreeDataModelTest extends DatabaseTestCase
         $parent->reload();
         $child->reload();
 
-        //            codecept_debug( $parent );
-
         static::assertSame(1, $parent->getLeft(), 'left');
         static::assertSame(6, $parent->getRight(), 'right');
 
@@ -130,7 +114,7 @@ class TreeDataModelTest extends DatabaseTestCase
         static::assertSame(6, $child3->getRight(), 'right');
     }
 
-    public function test_update()
+    public function test_update(): void
     {
         $struct = [
             'a' => [],
@@ -151,7 +135,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function createStructure($struct, $parent = null)
+    protected function createStructure($struct, $parent = null): void
     {
         foreach ($struct as $e => $s) {
             $i = (new TreeDummy())->setName($e);
@@ -167,7 +151,7 @@ class TreeDataModelTest extends DatabaseTestCase
         }
     }
 
-    public function validateStruct($struct, &$count = 0, $depth = 0, $parentId = null)
+    protected function validateStruct($struct, &$count = 0, $depth = 0, $parentId = null): void
     {
         foreach ($struct as $e => $s) {
             $instance = TreeDummy::findSingle(['name' => $e]);
@@ -183,7 +167,7 @@ class TreeDataModelTest extends DatabaseTestCase
         }
     }
 
-    public function getStruct($struct, &$res = [])
+    protected function getStruct($struct, &$res = []): array
     {
         foreach ($struct as $e => $s) {
             $res[] = TreeDummy::findSingle(['name' => $e]);
@@ -193,7 +177,7 @@ class TreeDataModelTest extends DatabaseTestCase
         return $res;
     }
 
-    public function test_simple_save()
+    public function test_simple_save(): void
     {
         $struct = [
             'a' => [],
@@ -205,7 +189,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->validateStruct($struct);
     }
 
-    public function test_move_simple_under_left()
+    public function test_move_simple_under_left(): void
     {
         $struct = [
             'a' => [],
@@ -227,7 +211,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_move_simple_under_right()
+    public function test_move_simple_under_right(): void
     {
         $struct = [
             'a' => [],
@@ -249,7 +233,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_move_under_left()
+    public function test_move_under_left(): void
     {
         $struct = [
             'a' => [],
@@ -276,7 +260,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_move_under_right()
+    public function test_move_under_right(): void
     {
         $struct = [
             'a' => [],
@@ -303,7 +287,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_move()
+    public function test_move(): void
     {
         $struct = [
             'a' => [],
@@ -323,8 +307,6 @@ class TreeDataModelTest extends DatabaseTestCase
                 'c' => [],
             ],
         ]);
-
-        return;
 
         $c->move()->under($a)->save();
         $this->validateStruct([
@@ -377,7 +359,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_deeply_nested_move()
+    public function test_deeply_nested_move(): void
     {
         $struct = [
             'a' => [
@@ -454,7 +436,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->validateStruct($struct);
     }
 
-    public function test_positioned_move()
+    public function test_positioned_move(): void
     {
         $struct = [
             'a' => [
@@ -530,7 +512,7 @@ class TreeDataModelTest extends DatabaseTestCase
         ]);
     }
 
-    public function test_insert()
+    public function test_insert(): void
     {
         $struct = [
             'a' => [],
@@ -545,7 +527,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $instance->save();
 
         $this->validateStruct(
-            $struct = [
+            [
                 'a' => [],
                 'b' => [],
                 'c' => [],
@@ -559,7 +541,7 @@ class TreeDataModelTest extends DatabaseTestCase
         $instance->save();
 
         $this->validateStruct(
-            $struct = [
+            [
                 'a' => [],
                 'i2' => [],
                 'b' => [],

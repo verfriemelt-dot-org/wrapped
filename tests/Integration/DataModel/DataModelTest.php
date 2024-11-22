@@ -2,28 +2,26 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration\DataModel;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel\DataModel;
 
 use verfriemelt\wrapped\_\Database\Database;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\DataModel;
-use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
 use Override;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 class Dummy extends DataModel
 {
-    #[test]
-    public ?int $id = null;
-
-    public ?string $name = null;
+    protected int $id;
+    protected ?string $name = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(?int $id)
+    public function setId(?int $id): static
     {
         $this->id = $id;
         return $this;
@@ -34,7 +32,7 @@ class Dummy extends DataModel
         return $this->name;
     }
 
-    public function setName(?string $name)
+    public function setName(?string $name): static
     {
         $this->name = $name;
         return $this;
@@ -81,14 +79,14 @@ class DataModelTest extends DatabaseTestCase
         return $obj;
     }
 
-    public function test_object_save_auto_generate_id()
+    public function test_object_save_auto_generate_id(): void
     {
         $obj = $this->saveInstance();
 
         static::assertSame(1, $obj->getId());
     }
 
-    public function test_object_get()
+    public function test_object_get(): void
     {
         $this->saveInstance();
         $newObj = Dummy::get(1);
@@ -96,7 +94,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame('test', $newObj->getName());
     }
 
-    public function test_object_fetch()
+    public function test_object_fetch(): void
     {
         $this->saveInstance('test1');
         $this->saveInstance('test2');
@@ -107,7 +105,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame('test1', $newObj->getName());
     }
 
-    public function test_object_fetch_with_array()
+    public function test_object_fetch_with_array(): void
     {
         $this->saveInstance('test1');
         $this->saveInstance('test2');
@@ -118,7 +116,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame('test2', $newObj->getName());
     }
 
-    public function test_object_fetch_sorted()
+    public function test_object_fetch_sorted(): void
     {
         $this->saveInstance('test');
         $this->saveInstance('test');
@@ -128,7 +126,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame(1, Dummy::findSingle(['name' => 'test'], 'id')->getId());
     }
 
-    public function test_object_update()
+    public function test_object_update(): void
     {
         $this->saveInstance('test');
         $this->saveInstance('test');
@@ -140,7 +138,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame('updated', Dummy::get(1)->getName(), 'should have updated itself');
     }
 
-    public function test_object_delete()
+    public function test_object_delete(): void
     {
         $this->saveInstance('test');
         $this->saveInstance('test');
@@ -151,7 +149,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame(2, Dummy::count('id'), 'only two should remain');
     }
 
-    public function test_object_reload()
+    public function test_object_reload(): void
     {
         $obj = new Dummy();
         $obj->setName('test');
@@ -164,7 +162,7 @@ class DataModelTest extends DatabaseTestCase
         static::assertSame('epic', $obj->getName());
     }
 
-    public function test_object_all()
+    public function test_object_all(): void
     {
         $this->saveInstance('test');
         $this->saveInstance('test');

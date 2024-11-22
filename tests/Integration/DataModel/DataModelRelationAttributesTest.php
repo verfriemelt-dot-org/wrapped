@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Integration;
+namespace verfriemelt\wrapped\Tests\Integration\DataModel;
 
 use Exception;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
@@ -10,16 +10,15 @@ use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Relation\OneToOneRelation;
 use verfriemelt\wrapped\_\DataModel\DataModel;
 use Override;
+use verfriemelt\wrapped\Tests\Integration\DatabaseTestCase;
 
 class A extends DataModel
 {
-    public ?int $id = null;
+    protected int $id;
+    protected ?int $bId = null;
+    protected ?B $aObject = null;
 
-    public ?int $bId = null;
-
-    protected ?b $aObject = null;
-
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -29,32 +28,36 @@ class A extends DataModel
         return $this->bId;
     }
 
-    public function setId(?int $id)
+    public function setId(int $id): static
     {
         $this->id = $id;
         return $this;
     }
 
-    public function setBId(?int $bId)
+    public function setBId(?int $bId): static
     {
         $this->bId = $bId;
         return $this;
     }
 }
 
+/**
+ * @method aObject()
+ * @method aObjectNotMarked()
+ * @method aWrongMarked()
+ */
 class B extends DataModel
 {
-    public ?int $id = null;
-
-    public ?int $aId = null;
+    protected int $id;
+    protected ?int $aId = null;
 
     #[OneToOneRelation('aId', 'id')]
-    protected ?a $aObject = null;
+    protected ?A $aObject = null;
 
     #[OneToOneRelation('aId', 'did')]
-    protected ?a $aWrongMarked = null;
+    protected ?A $aWrongMarked = null;
 
-    protected ?a $aObjectNotMarked = null;
+    protected ?A $aObjectNotMarked = null;
 
     public function getId(): ?int
     {
@@ -66,13 +69,13 @@ class B extends DataModel
         return $this->aId;
     }
 
-    public function setId(?int $id)
+    public function setId(int $id): static
     {
         $this->id = $id;
         return $this;
     }
 
-    public function setAId(?int $aId)
+    public function setAId(?int $aId): static
     {
         $this->aId = $aId;
         return $this;
@@ -94,8 +97,8 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
                 static::$connection->query('create table "B" ( id serial primary key, a_id int );');
                 break;
             case SQLite::class:
-                static::$connection->query('create table "A" ( id integer primary key, b_id int );');
-                static::$connection->query('create table "B" ( id integer primary key, a_id int );');
+                static::$connection->query('create table "A" ( id integer primary key not null, b_id int );');
+                static::$connection->query('create table "B" ( id integer primary key not null, a_id int );');
                 break;
         }
     }
@@ -109,35 +112,25 @@ class DataModelRelationAttributesTest extends DatabaseTestCase
 
     public function buildObjects()
     {
-        (new b())->save();
-        (new a())->setBId(1)->save();
+        (new B())->save();
+        (new A())->setBId(1)->save();
 
-        b::get(1)->setAId(1)->save();
+        B::get(1)->setAId(1)->save();
     }
 
-    public function test_not_prepped()
+    public function test_not_prepped(): void
     {
         $this->buildObjects();
         $this->expectExceptionObject(new Exception('attribute'));
 
-        b::get(1)->aObjectNotMarked();
+        B::get(1)->aObjectNotMarked();
     }
 
-    public function test_resolv()
+    public function test_resolv(): void
     {
         $this->buildObjects();
 
-        static::assertSame(1, b::get(1)->getAId());
-        static::assertSame(1, b::get(1)->aObject()->getId());
+        static::assertSame(1, B::get(1)->getAId());
+        static::assertSame(1, B::get(1)->aObject()->getId());
     }
-
-    //        public function testWrongMarked() {
-    //
-    //            $this->buildObjects();
-    //
-    // //            $this->markTestIncomplete( 'not implemented' );
-    //            $this->expectExceptionObject( new Exception( 'not translateable' ) );
-    //
-    //            b::get( 1 )->aWrongMarked();
-    //        }
 }
