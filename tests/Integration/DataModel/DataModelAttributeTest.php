@@ -68,9 +68,17 @@ class DataModelAttributeTest extends DatabaseTestCase
 
         parent::setUp();
 
-        static::$connection->query('create table lowerdummy ( id integer primary key not null, complexfieldname text );');
-        static::$connection->query('create table "camelCaseDummy" ( id integer primary key not null, "complexFieldName" text );');
-        static::$connection->query('create table snake_case_dummy ( id integer primary key not null, complex_field_name text );');
+        if (static::$connection instanceof SQLite) {
+            static::$connection->query('create table lowerdummy ( id integer primary key not null, complexfieldname text );');
+            static::$connection->query('create table "camelCaseDummy" ( id integer primary key not null, "complexFieldName" text );');
+            static::$connection->query('create table snake_case_dummy ( id integer primary key not null, complex_field_name text );');
+        } else {
+            static::$connection->query('create table lowerdummy ( id serial primary key not null, complexfieldname text );');
+            static::$connection->query('create table "camelCaseDummy" ( id serial primary key not null, "complexFieldName" text );');
+            static::$connection->query('create table snake_case_dummy ( id serial primary key not null, complex_field_name text );');
+        }
+
+
     }
 
     #[Override]

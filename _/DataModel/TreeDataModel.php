@@ -144,7 +144,8 @@ abstract class TreeDataModel extends DataModel
         }
 
         if (
-            $moveTo->getLeft() > $this->left && $moveTo->getRight() < $this->right
+            isset($this->left) && isset($this->right)
+            && $moveTo->getLeft() > $this->left && $moveTo->getRight() < $this->right
         ) {
             throw new DatabaseException('cannot move model under itself');
         }
@@ -225,7 +226,7 @@ abstract class TreeDataModel extends DataModel
         foreach ((new DataModelAnalyser($this))->fetchProperties() as $attribute) {
             // skip pk
             if (static::getPrimaryKey() !== null && $attribute->getName() === static::getPrimaryKey(
-            ) && $this->{static::getPrimaryKey()} === null) {
+            ) && !isset($this->{static::getPrimaryKey()})) {
                 continue;
             }
 

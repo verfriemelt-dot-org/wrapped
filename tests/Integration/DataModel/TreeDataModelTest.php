@@ -308,6 +308,7 @@ class TreeDataModelTest extends DatabaseTestCase
             ],
         ]);
 
+
         $c->move()->under($a)->save();
         $this->validateStruct([
             'a' => [
@@ -342,8 +343,8 @@ class TreeDataModelTest extends DatabaseTestCase
         $this->validateStruct([
             'b' => [
                 'a' => [
-                    'd' => [],
                     'c' => [],
+                    'd' => [],
                 ],
             ],
         ]);
