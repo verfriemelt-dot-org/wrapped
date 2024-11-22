@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Serializer\Encoder;
+namespace verfriemelt\wrapped\Tests\Unit\Serializer\Encoder;
 
 final readonly class NullDto
 {

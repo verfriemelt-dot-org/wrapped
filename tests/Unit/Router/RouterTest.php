@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Router;
+namespace verfriemelt\wrapped\Tests\Unit\Router;
 
 use Override;
 use PHPUnit\Framework\TestCase;

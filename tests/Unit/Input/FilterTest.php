@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Input;
+namespace verfriemelt\wrapped\Tests\Unit\Input;
 
 use Override;
 use verfriemelt\wrapped\_\Http\Request\Request;

@@ -3201,11 +3201,6 @@ parameters:
 			path: tests/Integration/DataModel/DataModelAttributeTest.php
 
 		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DatabaseTestCase referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\integration\\\\DatabaseTestCase\\.$#"
-			count: 2
-			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelFindTest\\:\\:createInstance\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelFindTest.php
@@ -3244,11 +3239,6 @@ parameters:
 			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\TypeTester\\:\\:setId\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: tests/Integration/DataModel/DataModelFindTest.php
-
-		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DatabaseTestCase referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\integration\\\\DatabaseTestCase\\.$#"
-			count: 2
-			path: tests/Integration/DataModel/DataModelPropertyRenameTest.php
 
 		-
 			message: "#^Method verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\DataModelPropertyRenameTest\\:\\:createInstance\\(\\) should return verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester but returns verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\FindTest\\\\RenameTester\\|null\\.$#"
@@ -3358,11 +3348,6 @@ parameters:
 		-
 			message: "#^Cannot call method setName\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\Dummy\\|null\\.$#"
 			count: 1
-			path: tests/Integration/DataModel/DataModelTest.php
-
-		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DatabaseTestCase referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\integration\\\\DatabaseTestCase\\.$#"
-			count: 2
 			path: tests/Integration/DataModel/DataModelTest.php
 
 		-
@@ -3523,11 +3508,6 @@ parameters:
 		-
 			message: "#^Cannot call method getId\\(\\) on verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DataModel\\\\SimpleTreeDataModel\\\\Tree\\|null\\.$#"
 			count: 3
-			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
-
-		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DatabaseTestCase referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\integration\\\\DatabaseTestCase\\.$#"
-			count: 2
 			path: tests/Integration/DataModel/SimpleTreeDataModel/SimpleTreeDataModelTest.php
 
 		-
@@ -3776,11 +3756,6 @@ parameters:
 			path: tests/Integration/SQL/QueryTest.php
 
 		-
-			message: "#^Class verfriemelt\\\\wrapped\\\\tests\\\\Integration\\\\DatabaseTestCase referenced with incorrect case\\: verfriemelt\\\\wrapped\\\\tests\\\\integration\\\\DatabaseTestCase\\.$#"
-			count: 2
-			path: tests/Integration/SQL/QueryTest.php
-
-		-
 			message: "#^Match expression does not handle remaining value\\: class\\-string\\<verfriemelt\\\\wrapped\\\\_\\\\Database\\\\Driver\\\\DatabaseDriver\\>&literal\\-string$#"
 			count: 1
 			path: tests/Integration/SQL/QueryTest.php
@@ -3798,16 +3773,6 @@ parameters:
 		-
 			message: "#^Cannot call method getId\\(\\) on null\\.$#"
 			count: 2
-			path: tests/Unit/DataModel/CollectionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$callable of method verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\Collection\\<verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\>\\:\\:map\\(\\) expects Closure\\(verfriemelt\\\\wrapped\\\\_\\\\DataModel\\\\DataModel\\)\\: int, Closure\\(verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\)\\: int given\\.$#"
-			count: 1
-			path: tests/Unit/DataModel/CollectionTest.php
-
-		-
-			message: "#^Using nullsafe method call on non\\-nullable type verfriemelt\\\\wrapped\\\\tests\\\\Unit\\\\DataModel\\\\CollectionDummy\\. Use \\-\\> instead\\.$#"
-			count: 1
 			path: tests/Unit/DataModel/CollectionTest.php
 
 		-

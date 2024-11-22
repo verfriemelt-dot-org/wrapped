@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\DateTime;
+namespace verfriemelt\wrapped\Tests\Unit\DateTime;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DateTime\DateTime;

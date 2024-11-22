@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Console;
+namespace verfriemelt\wrapped\Tests\Unit\Console;
 
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;

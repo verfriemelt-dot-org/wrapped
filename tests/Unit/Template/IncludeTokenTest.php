@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Template;
+namespace verfriemelt\wrapped\Tests\Unit\Template;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Kernel\AbstractKernel;

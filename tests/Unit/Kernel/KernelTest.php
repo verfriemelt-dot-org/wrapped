@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Kernel;
+namespace verfriemelt\wrapped\Tests\Unit\Kernel;
 
 use Closure;
 use Override;

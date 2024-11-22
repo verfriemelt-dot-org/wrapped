@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Database\SQL\Command;
+namespace verfriemelt\wrapped\Tests\Unit\Database\SQL\Command;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\SQL\Command\Insert;

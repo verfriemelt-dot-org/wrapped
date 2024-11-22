@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Database\SQL;
+namespace verfriemelt\wrapped\Tests\Unit\Database\SQL;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\SQL\Clause\ForUpdate;

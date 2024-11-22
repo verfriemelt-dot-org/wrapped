@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Queue;
+namespace verfriemelt\wrapped\Tests\Unit\Queue;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Queue\Backend\MemoryBackend;

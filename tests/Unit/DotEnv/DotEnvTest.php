@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\DotEnv;
+namespace verfriemelt\wrapped\Tests\Unit\DotEnv;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DotEnv\DotEnv;

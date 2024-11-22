@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\NamingConvention;
+namespace verfriemelt\wrapped\Tests\Unit\NamingConvention;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\CamelCase;

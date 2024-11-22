@@ -11,7 +11,7 @@ use verfriemelt\wrapped\_\Database\SQL\Expression\Expression;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Identifier;
 use verfriemelt\wrapped\_\Database\SQL\Expression\Value;
 use verfriemelt\wrapped\_\Database\SQL\Statement;
-use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
+use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
 
 class QueryTest extends DatabaseTestCase
 {

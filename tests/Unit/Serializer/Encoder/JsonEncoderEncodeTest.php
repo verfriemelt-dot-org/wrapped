@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Serializer\Encoder;
+namespace verfriemelt\wrapped\Tests\Unit\Serializer\Encoder;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder;

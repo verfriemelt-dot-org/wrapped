@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Database\SQL\Clause;
+namespace verfriemelt\wrapped\Tests\Unit\Database\SQL\Clause;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Database\SQL\Clause\Limit;

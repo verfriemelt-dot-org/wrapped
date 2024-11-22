@@ -7,7 +7,7 @@ namespace verfriemelt\wrapped\tests\Integration\DataModel\SimpleTreeDataModel;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\Attribute\Naming\LowerCase;
 use verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel;
-use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
+use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
 use Override;
 
 #[LowerCase]

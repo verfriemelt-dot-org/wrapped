@@ -7,7 +7,7 @@ namespace verfriemelt\wrapped\tests\Integration\DataModel\FindTest;
 use verfriemelt\wrapped\_\Database\Driver\Postgres;
 use verfriemelt\wrapped\_\Database\Driver\SQLite;
 use verfriemelt\wrapped\_\DataModel\DataModel;
-use verfriemelt\wrapped\tests\integration\DatabaseTestCase;
+use verfriemelt\wrapped\tests\Integration\DatabaseTestCase;
 use Override;
 
 class TypeTester extends DataModel

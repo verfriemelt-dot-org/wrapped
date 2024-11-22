@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\DataModel;
+namespace verfriemelt\wrapped\Tests\Unit\DataModel;
 
 use Exception;
 use OutOfBoundsException;
@@ -81,7 +81,7 @@ class CollectionTest extends TestCase
             throw new Exception('empty');
         };
 
-        $collection = new Collection();
+        $collection = new Collection(new CollectionDummy());
         $collection->setLength(10);
         $collection->setLoadingCallback($callback);
 
@@ -141,7 +141,7 @@ class CollectionTest extends TestCase
 
         $collection->seek(4);
         // 5th element in array should have id of 5
-        static::assertSame(5, $collection->current()?->getId());
+        static::assertSame(5, $collection->current()->getId());
 
         $this->expectExceptionObject(new OutOfBoundsException());
         $collection->seek(11);

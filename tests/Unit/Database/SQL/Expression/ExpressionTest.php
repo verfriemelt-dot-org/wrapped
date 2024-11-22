@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Database\SQL\Expression;
+namespace verfriemelt\wrapped\Tests\Unit\Database\SQL\Expression;
 
 use Exception;
 use PHPUnit\Framework\TestCase;

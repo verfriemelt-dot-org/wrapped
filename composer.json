@@ -2,6 +2,13 @@
     "name": "verfriemelt/wrapped",
     "description": "for educational purposes only",
     "license": "MIT",
+    "bin": ["bin/console"],
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": false
+        },
+        "sort-packages": true
+    },
     "require": {
         "php": "^8.3",
         "ext-curl": "*",
@@ -31,14 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "verfriemelt\\wrapped\\": ""
+            "verfriemelt\\wrapped\\_\\": "_"
         }
     },
-    "bin": ["bin/console"],
-    "config": {
-        "allow-plugins": {
-            "infection/extension-installer": false
-        },
-        "sort-packages": true
+    "autoload-dev": {
+        "psr-4": {
+            "verfriemelt\\wrapped\\Tests\\": "tests"
+        }
     }
 }

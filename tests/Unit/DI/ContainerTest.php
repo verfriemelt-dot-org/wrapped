@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\DI;
+namespace verfriemelt\wrapped\Tests\Unit\DI;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\DI\Container;

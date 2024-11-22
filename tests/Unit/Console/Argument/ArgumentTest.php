@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\Console\Argument;
+namespace verfriemelt\wrapped\Tests\Unit\Console\Argument;
 
 use PHPUnit\Framework\TestCase;
 use verfriemelt\wrapped\_\Command\CommandArguments\Argument;

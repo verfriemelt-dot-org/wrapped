@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\tests\Unit\DataModel;
+namespace verfriemelt\wrapped\Tests\Unit\DataModel;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
