@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace verfriemelt\wrapped\Tests\psr7;
+namespace verfriemelt\wrapped\Tests\Psr7;
 
 use Http\Psr7Test\StreamIntegrationTest;
 use Override;

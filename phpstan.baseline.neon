@@ -349,6 +349,12 @@ parameters:
 			path: _/Command/CommandArguments/ArgvParser.php
 
 		-
+			message: '#^Only booleans are allowed in a while condition, string\|null given\.$#'
+			identifier: while.condNotBoolean
+			count: 2
+			path: _/Command/CommandArguments/ArgvParser.php
+
+		-
 			message: '#^Cognitive complexity for "verfriemelt\\wrapped\\_\\Command\\CommandDiscovery\:\:loadCommands\(\)" is 10, keep it under 8$#'
 			identifier: complexity.functionLike
 			count: 1
@@ -477,6 +483,12 @@ parameters:
 		-
 			message: '#^Property verfriemelt\\wrapped\\_\\DI\\ServiceConfiguration\:\:\$resolver type has no signature specified for Closure\.$#'
 			identifier: missingType.callable
+			count: 1
+			path: _/DI/ServiceConfiguration.php
+
+		-
+			message: '#^Property verfriemelt\\wrapped\\_\\DI\\ServiceConfiguration\<T of object\>\:\:\$class in isset\(\) is not nullable nor uninitialized\.$#'
+			identifier: isset.initializedProperty
 			count: 1
 			path: _/DI/ServiceConfiguration.php
 
@@ -649,6 +661,12 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
+			message: '#^Only booleans are allowed in a while condition, mixed given\.$#'
+			identifier: while.condNotBoolean
+			count: 1
+			path: _/DataModel/Collection.php
+
+		-
 			message: '#^Parameter \#1 \$data of method verfriemelt\\wrapped\\_\\DataModel\\DataModel\:\:initData\(\) expects array\<string, mixed\>, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -691,7 +709,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			message: '#^Property verfriemelt\\wrapped\\_\\DataModel\\Collection\<T of verfriemelt\\wrapped\\_\\DataModel\\DataModel\>\:\:\$data \(array\<T of verfriemelt\\wrapped\\_\\DataModel\\DataModel\>\) does not accept array\.$#'
+			message: '#^Property verfriemelt\\wrapped\\_\\DataModel\\Collection\<T of verfriemelt\\wrapped\\_\\DataModel\\DataModel\>\:\:\$data \(array\<T of verfriemelt\\wrapped\\_\\DataModel\\DataModel\>\) does not accept array\<mixed\>\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: _/DataModel/Collection.php
@@ -4951,55 +4969,55 @@ parameters:
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''closing'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', name\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''closing'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', name\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 2
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''closing'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''closing'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''collection'' on array\{0\: string, collection\: non\-empty\-string, 1\: non\-empty\-string, value\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''collection'' on array\{0\: non\-falsy\-string, collection\: non\-empty\-string, 1\: non\-empty\-string, value\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''expr'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''expr'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''name'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', name\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''name'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', name\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''negated'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''negated'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''path'' on array\{0\: string, path\: non\-empty\-string, 1\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''path'' on array\{0\: non\-falsy\-string, path\: non\-empty\-string, 1\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''type'' on array\{0\: string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''type'' on array\{0\: non\-falsy\-string, closing\: ''''\|''/'', 1\: ''''\|''/'', negated\: ''''\|''\!'', 2\: ''''\|''\!'', type\: ''else''\|''if'', 3\: ''else''\|''if'', expr\: non\-empty\-string, \.\.\.\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
-			message: '#^Offset ''value'' on array\{0\: string, collection\: non\-empty\-string, 1\: non\-empty\-string, value\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
+			message: '#^Offset ''value'' on array\{0\: non\-falsy\-string, collection\: non\-empty\-string, 1\: non\-empty\-string, value\: non\-empty\-string, 2\: non\-empty\-string\} on left side of \?\? always exists and is not nullable\.$#'
 			identifier: nullCoalesce.offset
 			count: 1
 			path: _/Template/Tokenizer.php
@@ -5512,13 +5530,13 @@ parameters:
 			message: '#^Cannot access offset 2 on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
-			path: tests/Psr/UriTest.php
+			path: tests/Psr7/UriTest.php
 
 		-
 			message: '#^Method verfriemelt\\wrapped\\Tests\\Psr7\\UriTest\:\:getPaths\(\) should return iterable but returns mixed\.$#'
 			identifier: return.type
 			count: 1
-			path: tests/Psr/UriTest.php
+			path: tests/Psr7/UriTest.php
 
 		-
 			message: '#^Binary operation "\+" between mixed and 1 results in an error\.$#'

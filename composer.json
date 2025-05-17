@@ -20,12 +20,12 @@
         "verfriemelt/pp": "^1.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.1.8",
-        "phpstan/phpstan-strict-rules": "^2.0.3",
-        "phpstan/phpstan-phpunit": "^2.0.4",
-        "phpunit/phpunit": "^10.5.45",
-        "rector/rector": "^2.0.10",
-        "friendsofphp/php-cs-fixer": "^3.72.0",
+        "phpstan/phpstan": "^2.1.16",
+        "phpstan/phpstan-strict-rules": "^2.0.4",
+        "phpstan/phpstan-phpunit": "^2.0.6",
+        "phpunit/phpunit": "^10.5.46",
+        "rector/rector": "^2.0.16",
+        "friendsofphp/php-cs-fixer": "^3.75.0",
         "tomasvotruba/type-coverage": "^2.0.2",
         "tomasvotruba/cognitive-complexity": "^1",
         "infection/infection": "^0.29.14",
