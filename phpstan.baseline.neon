@@ -979,6 +979,12 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
+			message: '#^Property name for \$this\(verfriemelt\\wrapped\\_\\DataModel\\DataModel\) must be a string, but mixed was given\.$#'
+			identifier: property.nameNotString
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
 			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
@@ -988,6 +994,42 @@ parameters:
 			message: '#^Strict comparison using \=\=\= between string and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 5
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method all\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method buildQuery\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method createFromParameterBag\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method find\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method findSingle\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
+			path: _/DataModel/DataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\DataModel in static method take\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
@@ -1581,6 +1623,12 @@ parameters:
 		-
 			message: '#^Strict comparison using \!\=\= between string and null will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: _/DataModel/TreeDataModel.php
+
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class verfriemelt\\wrapped\\_\\DataModel\\TreeDataModel in static method fetchByPath\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
 			count: 1
 			path: _/DataModel/TreeDataModel.php
 
