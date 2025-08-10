@@ -15,7 +15,7 @@ final class EventDispatcher
         private readonly ArgumentResolver $argumentResolver,
     ) {}
 
-    public function addSubscriber(EventSubscriberInterface $subscriber): static
+    public function addSubscriber(EventSubscriberInterface $subscriber): self
     {
         $this->subscriberList[] = $subscriber;
         return $this;
@@ -44,5 +44,17 @@ final class EventDispatcher
         }
 
         return $event;
+    }
+
+    /**
+     * @param class-string $subscriber
+     */
+    public function removeSubscriber(string $subscriber): void
+    {
+        foreach ($this->subscriberList as $key => $sub) {
+            if ($sub::class === $subscriber) {
+                unset($this->subscriberList[$key]);
+            }
+        }
     }
 }

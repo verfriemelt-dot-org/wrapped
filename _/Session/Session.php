@@ -31,9 +31,9 @@ final class Session implements SessionHandler
             return;
         }
 
-        $cookieData = $request->cookies()->all()[self::SESSION_COOKIE_NAME];
-        if (is_string($cookieData)) {
-            $this->resume($cookieData);
+        $sessionId = $request->cookies()->all()[self::SESSION_COOKIE_NAME];
+        if ($this->validateSessionId($sessionId)) {
+            $this->resume($sessionId);
         } else {
             $this->start();
         }
@@ -161,5 +161,21 @@ final class Session implements SessionHandler
     public function all(): array
     {
         return $this->data->all();
+    }
+
+    /**
+     * @phpstan-assert-if-true string $sessionId
+     */
+    private function validateSessionId(mixed $sessionId): bool
+    {
+        if (!\is_string($sessionId)) {
+            return false;
+        }
+
+        if (preg_match('/^[0-9a-f]{40}$/', $sessionId) !== 1) {
+            return false;
+        }
+
+        return true;
     }
 }

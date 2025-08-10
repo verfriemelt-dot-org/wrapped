@@ -55,4 +55,12 @@ final class MockHttpClient implements HttpClientInterface, ClientInterface
 
         return \array_shift($this->responses);
     }
+
+    /**
+     * @return HttpResponse[]
+     */
+    public function getResponses(): array
+    {
+        return $this->responses;
+    }
 }
