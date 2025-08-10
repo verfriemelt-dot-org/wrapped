@@ -57,12 +57,12 @@ class KernelTest extends TestCase
     {
         $spy = fn (EventInterface $event) => $this->seenEvents[] = $event::class;
 
-        $this->eventDispatcher->addSubscriber(new class ($spy) implements EventSubscriberInterface {
+        $this->eventDispatcher->addSubscriber(new readonly class ($spy) implements EventSubscriberInterface {
             /**
              * @param Closure(EventInterface): string $spy
              */
             public function __construct(
-                public readonly Closure $spy,
+                public Closure $spy,
             ) {}
 
             #[Override]
@@ -83,12 +83,12 @@ class KernelTest extends TestCase
     {
         $spy = fn (EventInterface $event) => $this->seenEvents[] = $event::class;
 
-        $this->eventDispatcher->addSubscriber(new class ($spy) implements EventSubscriberInterface {
+        $this->eventDispatcher->addSubscriber(new readonly class ($spy) implements EventSubscriberInterface {
             /**
              * @param Closure(EventInterface): string $spy
              */
             public function __construct(
-                public readonly Closure $spy,
+                public Closure $spy,
             ) {}
 
             #[Override]
