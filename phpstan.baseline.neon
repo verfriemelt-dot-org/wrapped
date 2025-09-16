@@ -3985,7 +3985,7 @@ parameters:
 			path: _/Http/Router/Router.php
 
 		-
-			message: '#^Cognitive complexity for "verfriemelt\\wrapped\\_\\HttpClient\\CurlHttpClient\:\:request\(\)" is 10, keep it under 8$#'
+			message: '#^Cognitive complexity for "verfriemelt\\wrapped\\_\\HttpClient\\CurlHttpClient\:\:request\(\)" is 11, keep it under 8$#'
 			identifier: complexity.functionLike
 			count: 1
 			path: _/HttpClient/CurlHttpClient.php

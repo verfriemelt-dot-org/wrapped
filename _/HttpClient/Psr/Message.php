@@ -33,6 +33,8 @@ abstract class Message implements MessageInterface
             $this->normalizedHeaderNames[$this->normalizeHeaderName($name)] ??= $name;
             $this->headers[$this->normalizeHeaderName($name)] = $value;
         }
+
+        $this->body = (new StreamFactory())->createStream();
     }
 
     #[Override]

@@ -21,6 +21,7 @@ class CurlHttpClient implements HttpClientInterface, ClientInterface
     ): HttpResponse {
 
         $method = strtoupper($method);
+        $payload = $payload === '' ? null : $payload;
 
         if ($uri === '') {
             throw new RuntimeException('empty uri passed');
