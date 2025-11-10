@@ -603,8 +603,8 @@ abstract class DataModel
         $property = $reflection->getProperty($propertyName);
         $propertyType = $property->getType();
 
-        $resolvAttribute = $property->getAttributes(OneToOneRelation::class)[0] ??
-            $property->getAttributes(OneToManyRelation::class)[0] ?? null;
+        $resolvAttribute = $property->getAttributes(OneToOneRelation::class)[0]
+            ?? $property->getAttributes(OneToManyRelation::class)[0] ?? null;
 
         if (!$resolvAttribute) {
             throw new Exception("missing relation attribute on {$propertyName}");

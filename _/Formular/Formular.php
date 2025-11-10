@@ -226,9 +226,9 @@ class Formular implements Viewable
      */
     public function get(string $name): mixed
     {
-        $input = ($this->method === self::METHOD_POST) ?
-            $this->requestStack->getCurrentRequest()->request() :
-            $this->requestStack->getCurrentRequest()->query();
+        $input = ($this->method === self::METHOD_POST)
+            ? $this->requestStack->getCurrentRequest()->request()
+            : $this->requestStack->getCurrentRequest()->query();
 
         if ($input->hasNot($name)) {
             return null;
