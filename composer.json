@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.89.2",
-        "infection/infection": "^0.31.1",
+        "infection/infection": "^0.31.9",
         "php-http/psr7-integration-tests": "^1.5",
         "phpstan/phpstan": "^2.1.31",
         "phpstan/phpstan-phpunit": "^2.0.7",
