@@ -13,7 +13,7 @@ class PascalCase extends Convention
     #[Override]
     public function fetchStringParts(): array
     {
-        return array_map('strtolower', preg_split('/(?=[A-Z])/', lcfirst($this->string)));
+        return array_map(strtolower(...), preg_split('/(?=[A-Z])/', lcfirst($this->string)));
     }
 
     #[Override]

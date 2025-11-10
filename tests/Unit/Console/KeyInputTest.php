@@ -25,12 +25,12 @@ class KeyInputTest extends TestCase
 
         yield 'F1' => [
             'key' => 'F1',
-            'input' => implode('', array_map(fn (int $i): string => chr($i), [27, 79, 80])),
+            'input' => implode('', array_map(chr(...), [27, 79, 80])),
         ];
 
         yield 'F5' => [
             'key' => 'F5',
-            'input' => implode('', array_map(fn (int $i): string => chr($i), [27, 91, 49, 53, 126])),
+            'input' => implode('', array_map(chr(...), [27, 91, 49, 53, 126])),
         ];
     }
 

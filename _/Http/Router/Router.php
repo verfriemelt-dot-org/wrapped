@@ -44,7 +44,7 @@ final class Router
         foreach ($routes as $routeable) {
             $routeable->setPath($prefix . $routeable->getPath());
 
-            array_map(fn (callable $c) => $routeable->addFilter($c), $filters);
+            array_map($routeable->addFilter(...), $filters);
 
             if ($routeable instanceof Route) {
                 $flattened[] = $routeable;

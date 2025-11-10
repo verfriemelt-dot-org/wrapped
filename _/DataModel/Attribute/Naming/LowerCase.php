@@ -25,6 +25,6 @@ class LowerCase extends Convention
     #[Override]
     public static function fromStringParts(string ...$parts): Convention
     {
-        return new static(implode('', array_map('strtolower', $parts)));
+        return new static(implode('', array_map(strtolower(...), $parts)));
     }
 }

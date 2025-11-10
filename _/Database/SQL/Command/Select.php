@@ -18,7 +18,7 @@ class Select extends QueryPart implements Command, CommandExpression
 
     public function __construct(QueryPart ...$items)
     {
-        array_map(fn ($i) => $this->add($i), $items);
+        array_map($this->add(...), $items);
     }
 
     #[Override]

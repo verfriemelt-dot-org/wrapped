@@ -69,17 +69,17 @@ class FilterItem
             throw new InputException("input type is wrong [{$this->valueName}]");
         }
 
-        if ($this->minLength && \mb_strlen($input, 'UTF-8') < $this->minLength) {
+        if ($this->minLength && \mb_strlen((string) $input, 'UTF-8') < $this->minLength) {
             throw new InputException("input to short [{$this->valueName}]");
         }
 
-        if ($this->maxLength && \mb_strlen($input, 'UTF-8') > $this->maxLength) {
+        if ($this->maxLength && \mb_strlen((string) $input, 'UTF-8') > $this->maxLength) {
             throw new InputException("input to long [{$this->valueName}]");
         }
 
         // validate content
         if ($this->allowedChars !== false) {
-            for ($i = 0; $i < \mb_strlen($input, 'UTF-8'); ++$i) {
+            for ($i = 0; $i < \mb_strlen((string) $input, 'UTF-8'); ++$i) {
                 if (!str_contains((string) $this->allowedChars, $input[$i])) {
                     throw new InputException("not allowed chars within [{$this->valueName}]");
                 }

@@ -62,7 +62,7 @@ class Request
         $header = [];
 
         foreach ($_SERVER as $key => $value) {
-            if (!str_starts_with($key, 'HTTP_')) {
+            if (!str_starts_with((string) $key, 'HTTP_')) {
                 continue;
             }
 

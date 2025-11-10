@@ -13,7 +13,7 @@ class CamelCase extends Convention
     #[Override]
     public function fetchStringParts(): array
     {
-        return array_map('strtolower', preg_split('/(?=[A-Z])/', $this->string));
+        return array_map(strtolower(...), preg_split('/(?=[A-Z])/', $this->string));
     }
 
     #[Override]

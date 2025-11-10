@@ -35,7 +35,7 @@ abstract class QueryPart
         $this->children[] = $child;
 
         // add context to children;
-        array_map(fn (DataModel $context) => $child->addDataModelContext($context), $this->context);
+        array_map($child->addDataModelContext(...), $this->context);
 
         return $this;
     }
