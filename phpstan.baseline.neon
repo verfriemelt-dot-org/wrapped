@@ -307,18 +307,6 @@ parameters:
 			path: _/Cli/ConsoleInput.php
 
 		-
-			rawMessage: 'Class cognitive complexity is 55, keep it under 50'
-			identifier: complexity.classLike
-			count: 1
-			path: _/Cli/KeyInput.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Cli\KeyInput::consume()" is 54, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Cli/KeyInput.php
-
-		-
 			rawMessage: 'Method verfriemelt\wrapped\_\Cli\KeyInput::readMode() has parameter $callback with no signature specified for Closure.'
 			identifier: missingType.callable
 			count: 1
@@ -355,22 +343,10 @@ parameters:
 			path: _/Command/CommandArguments/ArgvParser.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Command\CommandDiscovery::loadCommands()" is 10, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Command/CommandDiscovery.php
-
-		-
 			rawMessage: 'Parameter #1 $argv of method verfriemelt\wrapped\_\Command\CommandArguments\ArgvParser::parse() expects array<string>, list<mixed> given.'
 			identifier: argument.type
 			count: 1
 			path: _/Command/CommandExecutor.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\DI\ArgumentMetadataFactory::createArgumentMetadata()" is 9, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/DI/ArgumentMetadataFactory.php
 
 		-
 			rawMessage: 'Parameter #1 $callback of function array_map expects (callable(ReflectionIntersectionType|ReflectionNamedType): mixed)|null, Closure(ReflectionNamedType): string given.'
@@ -399,12 +375,6 @@ parameters:
 		-
 			rawMessage: 'Call to function in_array() requires parameter #3 to be set.'
 			identifier: function.strict
-			count: 1
-			path: _/DI/Container.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\DI\Container::register()" is 9, keep it under 8'
-			identifier: complexity.functionLike
 			count: 1
 			path: _/DI/Container.php
 
@@ -778,12 +748,6 @@ parameters:
 			rawMessage: Cannot cast mixed to string.
 			identifier: cast.string
 			count: 2
-			path: _/DataModel/DataModel.php
-
-		-
-			rawMessage: 'Class cognitive complexity is 70, keep it under 50'
-			identifier: complexity.classLike
-			count: 1
 			path: _/DataModel/DataModel.php
 
 		-
@@ -1257,12 +1221,6 @@ parameters:
 		-
 			rawMessage: 'Call to function array_filter() requires parameter #2 to be passed to avoid loose comparison semantics.'
 			identifier: arrayFilter.strict
-			count: 1
-			path: _/DataModel/Search/DataModelSearch.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\DataModel\Search\DataModelSearch::buildQuery()" is 12, keep it under 8'
-			identifier: complexity.functionLike
 			count: 1
 			path: _/DataModel/Search/DataModelSearch.php
 
@@ -2043,12 +2001,6 @@ parameters:
 		-
 			rawMessage: Cannot use array destructuring on mixed.
 			identifier: offsetAccess.nonArray
-			count: 1
-			path: _/Database/Facade/QueryBuilder.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Database\Facade\QueryBuilder::where()" is 16, keep it under 8'
-			identifier: complexity.functionLike
 			count: 1
 			path: _/Database/Facade/QueryBuilder.php
 
@@ -3211,12 +3163,6 @@ parameters:
 			path: _/Formular/Formular.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Formular\Formular::hasValidated()" is 10, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Formular/Formular.php
-
-		-
 			rawMessage: 'Method verfriemelt\wrapped\_\Formular\Formular::action() has parameter $path with no type specified.'
 			identifier: missingType.parameter
 			count: 1
@@ -4009,12 +3955,6 @@ parameters:
 			path: _/Http/Router/Router.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\HttpClient\CurlHttpClient::request()" is 11, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/HttpClient/CurlHttpClient.php
-
-		-
 			rawMessage: 'Parameter #3 $value of function curl_setopt expects array<int, string>, array<string> given.'
 			identifier: argument.type
 			count: 1
@@ -4025,6 +3965,12 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: _/HttpClient/MockHttpClient.php
+
+		-
+			rawMessage: Possibly invalid array key type string|null.
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: _/HttpClient/Psr/Stream.php
 
 		-
 			rawMessage: 'Property verfriemelt\wrapped\_\HttpClient\Psr\Stream::$meta (array{timed_out: bool, blocked: bool, eof: bool, unread_bytes: int, stream_type: string, wrapper_type: string, wrapper_data: mixed, mode: string, ...}) does not accept array{timed_out: bool, blocked: bool, eof: bool, unread_bytes: int, stream_type: string, wrapper_type: string, wrapper_data: mixed, mode: string, ...}.'
@@ -4087,12 +4033,6 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Input\FilterItem::checkValues()" is 15, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Input/FilterItem.php
-
-		-
 			rawMessage: 'Method verfriemelt\wrapped\_\Input\FilterItem::addAllowedValue() has no return type specified.'
 			identifier: missingType.return
 			count: 1
@@ -4117,9 +4057,9 @@ parameters:
 			path: _/Input/FilterItem.php
 
 		-
-			rawMessage: 'Parameter #1 $string of function mb_strlen expects string, int|string given.'
-			identifier: argument.type
-			count: 3
+			rawMessage: Possibly invalid array key type string|null.
+			identifier: offsetAccess.invalidOffset
+			count: 1
 			path: _/Input/FilterItem.php
 
 		-
@@ -4173,12 +4113,6 @@ parameters:
 		-
 			rawMessage: 'Cannot call method prepare() on mixed.'
 			identifier: method.nonObject
-			count: 1
-			path: _/Kernel/AbstractKernel.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Kernel\AbstractKernel::handle()" is 10, keep it under 8'
-			identifier: complexity.functionLike
 			count: 1
 			path: _/Kernel/AbstractKernel.php
 
@@ -4681,12 +4615,6 @@ parameters:
 			path: _/Queue/QueueItem.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder::mapJsonOnObject()" is 20, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Serializer/Encoder/JsonEncoder.php
-
-		-
 			rawMessage: 'Parameter #1 $input of method verfriemelt\wrapped\_\Serializer\Encoder\JsonEncoder::mapJsonOnObject() expects array<string, mixed>, array<mixed, mixed> given.'
 			identifier: argument.type
 			count: 1
@@ -4873,12 +4801,6 @@ parameters:
 			path: _/Template/Processor/LegacyProcessor.php
 
 		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Template\Processor\LegacyProcessor::processVariableToken()" is 10, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Template/Processor/LegacyProcessor.php
-
-		-
 			rawMessage: 'Construct empty() is not allowed. Use more strict comparison.'
 			identifier: empty.notAllowed
 			count: 1
@@ -4937,18 +4859,6 @@ parameters:
 			identifier: class.notFound
 			count: 1
 			path: _/Template/Processor/LegacyProcessor.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Template\Processor\Processor::extract()" is 17, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Template/Processor/Processor.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Template\Processor\Processor::printVariable()" is 9, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
-			path: _/Template/Processor/Processor.php
 
 		-
 			rawMessage: 'Method verfriemelt\wrapped\_\Template\Processor\Processor::include() has parameter $data with no value type specified in iterable type array.'
@@ -5050,12 +4960,6 @@ parameters:
 			rawMessage: 'Call to function is_string() with non-empty-string will always evaluate to true.'
 			identifier: function.alreadyNarrowedType
 			count: 5
-			path: _/Template/Tokenizer.php
-
-		-
-			rawMessage: 'Cognitive complexity for "verfriemelt\wrapped\_\Template\Tokenizer::createConditionalToken()" is 10, keep it under 8'
-			identifier: complexity.functionLike
-			count: 1
 			path: _/Template/Tokenizer.php
 
 		-
@@ -5765,12 +5669,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest.php
-
-		-
-			rawMessage: 'Call to method verfriemelt\wrapped\_\Template\Token\Token::children() on a separate line has no effect.'
-			identifier: method.resultUnused
-			count: 4
-			path: tests/Unit/Template/Legacy/TokenizerTest.php
 
 		-
 			rawMessage: 'Parameter #1 $value of function intval expects array|bool|float|int|resource|string|null, mixed given.'

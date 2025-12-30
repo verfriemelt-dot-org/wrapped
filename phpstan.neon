@@ -3,7 +3,6 @@ includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
     - vendor/tomasvotruba/type-coverage/config/extension.neon
-    - vendor/tomasvotruba/cognitive-complexity/config/extension.neon
     - phpstan.baseline.neon
 
 parameters:
@@ -21,11 +20,6 @@ parameters:
     property_type: 93
     constant: 95
     declare: 100
-
-  cognitive_complexity:
-      class: 50
-      function: 8
-
 
   paths:
     - _

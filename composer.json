@@ -10,10 +10,10 @@
         "sort-packages": true
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "ext-curl": "*",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^12.4.5",
+        "phpunit/phpunit": "^12.5.4",
         "psr/clock": "^1.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1",
@@ -21,15 +21,14 @@
         "verfriemelt/pp": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.91.2",
-        "infection/infection": "^0.31.9",
-        "php-http/psr7-integration-tests": "^1.5",
-        "phpstan/phpstan": "^2.1.32",
-        "phpstan/phpstan-phpunit": "^2.0.8",
+        "friendsofphp/php-cs-fixer": "^3.92.3",
+        "infection/infection": "^0.32.0",
+        "php-http/psr7-integration-tests": "^1.5.1",
+        "phpstan/phpstan": "^2.1.33",
+        "phpstan/phpstan-phpunit": "^2.0.11",
         "phpstan/phpstan-strict-rules": "^2.0.7",
-        "rector/rector": "^2.2.11",
-        "tomasvotruba/cognitive-complexity": "^1",
-        "tomasvotruba/type-coverage": "^2.0.2"
+        "rector/rector": "^2.3.0",
+        "tomasvotruba/type-coverage": "^2.1.0"
     },
     "provide": {
         "psr/clock-implementation": "1.0",
