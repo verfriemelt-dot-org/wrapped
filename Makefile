@@ -15,4 +15,4 @@ cs: ## Run php-cs-fixer
 
 .PHONY: coverage
 coverage: ## generate coverage
-	XDEBUG_MODE=coverage phpunit --coverage-html coverage --coverage-text
+	XDEBUG_MODE=coverage phpunit --coverage-html coverage --coverage-text --only-summary-for-coverage-text
