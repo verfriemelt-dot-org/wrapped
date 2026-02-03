@@ -5635,6 +5635,12 @@ parameters:
 			path: tests/Unit/Input/RequestTest.php
 
 		-
+			rawMessage: Possibly invalid array key type mixed.
+			identifier: offsetAccess.invalidOffset
+			count: 2
+			path: tests/Unit/Input/RequestTest.php
+
+		-
 			rawMessage: 'Strict comparison using !== between string|null and 2 will always evaluate to true.'
 			identifier: notIdentical.alwaysTrue
 			count: 1
