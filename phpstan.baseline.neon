@@ -565,7 +565,7 @@ parameters:
 			path: _/DataModel/Collection.php
 
 		-
-			rawMessage: 'Loose comparison via "==" is not allowed.'
+			rawMessage: 'Loose comparison via "==" between int<0, max> and int is not allowed.'
 			identifier: equal.notAllowed
 			count: 1
 			path: _/DataModel/Collection.php
@@ -1520,12 +1520,6 @@ parameters:
 
 		-
 			rawMessage: 'Parameter #1 $string of method PDO::quote() expects string, verfriemelt\wrapped\_\DataModel\type given.'
-			identifier: argument.type
-			count: 1
-			path: _/DataModel/TreeDataModel.php
-
-		-
-			rawMessage: 'Parameter #1 $to of method verfriemelt\wrapped\_\DataModel\TreeDataModel::cteMove() expects verfriemelt\wrapped\_\DataModel\TreeDataModel, verfriemelt\wrapped\_\DataModel\TreeDataModel|null given.'
 			identifier: argument.type
 			count: 1
 			path: _/DataModel/TreeDataModel.php
@@ -5632,12 +5626,6 @@ parameters:
 			rawMessage: 'Call to static method PHPUnit\Framework\Assert::assertTrue() with true will always evaluate to true.'
 			identifier: staticMethod.alreadyNarrowedType
 			count: 1
-			path: tests/Unit/Input/RequestTest.php
-
-		-
-			rawMessage: Possibly invalid array key type mixed.
-			identifier: offsetAccess.invalidOffset
-			count: 2
 			path: tests/Unit/Input/RequestTest.php
 
 		-
