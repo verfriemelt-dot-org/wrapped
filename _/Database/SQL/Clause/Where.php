@@ -26,7 +26,7 @@ class Where extends QueryPart implements Clause
 
     public function __construct(QueryPart $args)
     {
-        if (!($args instanceof Expression)) {
+        if (!$args instanceof Expression) {
             $exp = new Expression($args);
         } else {
             $exp = $args;

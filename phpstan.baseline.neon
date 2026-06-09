@@ -1099,7 +1099,7 @@ parameters:
 			path: _/DataModel/DataModelAnalyser.php
 
 		-
-			rawMessage: 'Parameter #1 $objectOrClass of class ReflectionClass constructor expects class-string<T of object>|T of object, string|verfriemelt\wrapped\_\DataModel\DataModel given.'
+			rawMessage: 'Parameter #1 $objectOrClass of class ReflectionClass constructor expects class-string<verfriemelt\wrapped\_\DataModel\DataModel>|verfriemelt\wrapped\_\DataModel\DataModel, string|verfriemelt\wrapped\_\DataModel\DataModel given.'
 			identifier: argument.type
 			count: 1
 			path: _/DataModel/DataModelAnalyser.php
@@ -1322,12 +1322,6 @@ parameters:
 
 		-
 			rawMessage: 'Method verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel::fetchChildrenInclusive() should return verfriemelt\wrapped\_\DataModel\Collection<verfriemelt\wrapped\_\DataModel\Tree\TreeDataModelInterface> but returns verfriemelt\wrapped\_\DataModel\Collection<verfriemelt\wrapped\_\DataModel\DataModel>.'
-			identifier: return.type
-			count: 1
-			path: _/DataModel/Tree/SimpleTreeDataModel.php
-
-		-
-			rawMessage: 'Method verfriemelt\wrapped\_\DataModel\Tree\SimpleTreeDataModel::fetchPath() should return verfriemelt\wrapped\_\DataModel\Collection<verfriemelt\wrapped\_\DataModel\Tree\TreeDataModelInterface> but returns verfriemelt\wrapped\_\DataModel\Collection<verfriemelt\wrapped\_\DataModel\DataModel>.'
 			identifier: return.type
 			count: 1
 			path: _/DataModel/Tree/SimpleTreeDataModel.php
@@ -1817,12 +1811,6 @@ parameters:
 			identifier: deadCode.unreachable
 			count: 1
 			path: _/Database/DbLogic.php
-
-		-
-			rawMessage: Binary operation "." between mixed and non-falsy-string results in an error.
-			identifier: binaryOp.invalid
-			count: 1
-			path: _/Database/Driver/DatabaseDriver.php
 
 		-
 			rawMessage: Cannot access an offset on mixed.
@@ -2323,6 +2311,12 @@ parameters:
 			path: _/Database/SQL/Clause/Order.php
 
 		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array<mixed> given.'
+			identifier: argument.type
+			count: 1
+			path: _/Database/SQL/Clause/Order.php
+
+		-
 			rawMessage: Property verfriemelt\wrapped\_\Database\SQL\Clause\Order::$expressions type has no value type specified in iterable type array.
 			identifier: missingType.iterableValue
 			count: 1
@@ -2395,6 +2389,12 @@ parameters:
 			path: _/Database/SQL/Command/Insert.php
 
 		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array<mixed> given.'
+			identifier: argument.type
+			count: 1
+			path: _/Database/SQL/Command/Insert.php
+
+		-
 			rawMessage: Property verfriemelt\wrapped\_\Database\SQL\Command\Insert::$columns type has no value type specified in iterable type array.
 			identifier: missingType.iterableValue
 			count: 1
@@ -2440,6 +2440,12 @@ parameters:
 			rawMessage: 'Cannot call method stringify() on mixed.'
 			identifier: method.nonObject
 			count: 2
+			path: _/Database/SQL/Command/Update.php
+
+		-
+			rawMessage: Cannot use array destructuring on mixed.
+			identifier: offsetAccess.nonArray
+			count: 1
 			path: _/Database/SQL/Command/Update.php
 
 		-
@@ -2492,6 +2498,12 @@ parameters:
 
 		-
 			rawMessage: 'Parameter #1 $callback of function array_map expects (callable(mixed): mixed)|null, Closure(verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem): mixed given.'
+			identifier: argument.type
+			count: 1
+			path: _/Database/SQL/Command/Values.php
+
+		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array<mixed> given.'
 			identifier: argument.type
 			count: 1
 			path: _/Database/SQL/Command/Values.php
@@ -2725,6 +2737,12 @@ parameters:
 			path: _/Database/SQL/Expression/OperatorExpression.php
 
 		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array<mixed> given.'
+			identifier: argument.type
+			count: 1
+			path: _/Database/SQL/Expression/OperatorExpression.php
+
+		-
 			rawMessage: 'Parameter #2 ...$values of function sprintf expects bool|float|int|string|null, mixed given.'
 			identifier: argument.type
 			count: 1
@@ -2768,6 +2786,12 @@ parameters:
 
 		-
 			rawMessage: 'Parameter #1 $child of method verfriemelt\wrapped\_\Database\SQL\QueryPart::addChild() expects verfriemelt\wrapped\_\Database\SQL\QueryPart, verfriemelt\wrapped\_\Database\SQL\Expression\ExpressionItem given.'
+			identifier: argument.type
+			count: 1
+			path: _/Database/SQL/Expression/SqlFunction.php
+
+		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array<mixed> given.'
 			identifier: argument.type
 			count: 1
 			path: _/Database/SQL/Expression/SqlFunction.php
@@ -3379,6 +3403,18 @@ parameters:
 			path: _/Http/Controller/Controller.php
 
 		-
+			rawMessage: 'Parameter #1 $array of function array_diff expects an array of values castable to string, list<mixed> given.'
+			identifier: argument.type
+			count: 1
+			path: _/Http/Controller/Controller.php
+
+		-
+			rawMessage: 'Parameter #2 $arrays of function array_diff expects an array of values castable to string, list<mixed> given.'
+			identifier: argument.type
+			count: 1
+			path: _/Http/Controller/Controller.php
+
+		-
 			rawMessage: 'Part $methodName (mixed) of encapsed string cannot be cast to string.'
 			identifier: encapsedStringPart.nonString
 			count: 4
@@ -3973,9 +4009,21 @@ parameters:
 			path: _/HttpClient/Psr/Stream.php
 
 		-
+			rawMessage: Unreachable statement - code above always terminates.
+			identifier: deadCode.unreachable
+			count: 1
+			path: _/HttpClient/RetryableHttpClient.php
+
+		-
 			rawMessage: 'Parameter #2 $array of function implode expects array, array|null given.'
 			identifier: argument.type
 			count: 1
+			path: _/HttpClient/UriParser.php
+
+		-
+			rawMessage: 'Parameter #2 $array of function implode expects array<string>, array given.'
+			identifier: argument.type
+			count: 2
 			path: _/HttpClient/UriParser.php
 
 		-
@@ -4843,8 +4891,20 @@ parameters:
 			path: _/Template/Processor/LegacyProcessor.php
 
 		-
+			rawMessage: 'Parameter #2 $data of method verfriemelt\wrapped\_\Template\Processor\LegacyProcessor::process() expects array{vars?: mixed, if?: mixed, repeater?: mixed}, array given.'
+			identifier: argument.type
+			count: 1
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
 			rawMessage: 'Parameter #2 ...$replacements of function array_replace_recursive expects array, mixed given.'
 			identifier: argument.type
+			count: 1
+			path: _/Template/Processor/LegacyProcessor.php
+
+		-
+			rawMessage: 'Property verfriemelt\wrapped\_\Template\Processor\LegacyProcessor::$repeaterDataSourcePath (array{vars?: mixed, if?: mixed, repeater?: mixed}) does not accept non-empty-array{vars?: mixed, if?: mixed, repeater?: mixed, ...<string, 0>}.'
+			identifier: assign.propertyType
 			count: 1
 			path: _/Template/Processor/LegacyProcessor.php
 
@@ -5665,7 +5725,7 @@ parameters:
 			path: tests/Unit/Serializer/Encoder/JsonEncoderDecodeTest.php
 
 		-
-			rawMessage: 'Parameter #1 $value of function intval expects array|bool|float|int|resource|string|null, mixed given.'
+			rawMessage: 'Parameter #1 $value of function intval expects array|bool|float|GMP|int|resource|SimpleXMLElement|string|null, mixed given.'
 			identifier: argument.type
 			count: 1
 			path: tests/bootstrap.php

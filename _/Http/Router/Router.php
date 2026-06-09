@@ -82,7 +82,7 @@ final class Router
     /**
      * @throws RouteGotFiltered
      */
-    protected function checkRouterFilter(Route $route): void
+    private function checkRouterFilter(Route $route): void
     {
         // router filter
         foreach ($route->getFilters() as $filter) {

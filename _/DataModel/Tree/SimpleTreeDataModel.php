@@ -166,7 +166,7 @@ abstract class SimpleTreeDataModel extends DataModel implements TreeDataModelInt
     #[Override]
     public function under(TreeDataModelInterface $parent): static
     {
-        if (!($parent instanceof $this)) {
+        if (!$parent instanceof $this) {
             throw new Exception('cannot mix models');
         }
 

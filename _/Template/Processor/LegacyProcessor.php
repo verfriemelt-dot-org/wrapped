@@ -80,9 +80,9 @@ final class LegacyProcessor implements TemplateProcessor
 
         if ($dataSource === false) {
             return '';
-        } else {
-            $variable = $dataSource['vars'][$name];
         }
+        $variable = $dataSource['vars'][$name];
+
 
         $output = $variable->readValue();
 

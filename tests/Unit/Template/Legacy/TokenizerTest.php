@@ -166,24 +166,24 @@ class TokenizerTest extends TestCase
     public function test_missing_conditional_expression(): void
     {
         static::expectException(EmptyContionalExpressionException::class);
-        $this->tokenizer->parse("{{ if='' }}foo{{ /if='' }}")->children();
+        $this->tokenizer->parse("{{ if='' }}foo{{ /if='' }}");
     }
 
     public function test_missing_conditional_closing(): void
     {
         static::expectException(MissingContionalClosingException::class);
-        $this->tokenizer->parse("{{ if='asd' }}foo")->children();
+        $this->tokenizer->parse("{{ if='asd' }}foo");
     }
 
     public function test_missing_repeater_expression(): void
     {
         static::expectException(EmptyRepeaterExpressionException::class);
-        $this->tokenizer->parse("{{ repeater='' }}foo{{ /repeater='' }}")->children();
+        $this->tokenizer->parse("{{ repeater='' }}foo{{ /repeater='' }}");
     }
 
     public function test_missing_repeater_closing(): void
     {
         static::expectException(MissingRepeaterClosingException::class);
-        $this->tokenizer->parse("{{ repeater='asd' }}foo")->children();
+        $this->tokenizer->parse("{{ repeater='asd' }}foo");
     }
 }

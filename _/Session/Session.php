@@ -12,7 +12,7 @@ final class Session implements SessionHandler
 {
     public const string SESSION_COOKIE_NAME = '_';
 
-    public const SESSION_TIMEOUT = 60 * 60 * 24 * 365;
+    public const int SESSION_TIMEOUT = 60 * 60 * 24 * 365;
 
     private ?string $sessionId = null;
 

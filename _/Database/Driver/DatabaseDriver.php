@@ -44,7 +44,7 @@ abstract class DatabaseDriver
 
     private int $nestedTransactionCounter = 0;
 
-    protected const PDO_NAME = 'undefined';
+    protected const string PDO_NAME = 'undefined';
 
     public PDO $connectionHandle;
 

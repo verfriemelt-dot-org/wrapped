@@ -9,7 +9,7 @@ use Override;
 
 class SQLite extends DatabaseDriver
 {
-    final public const PDO_NAME = 'sqlite::memory:';
+    final public const string PDO_NAME = 'sqlite::memory:';
 
     private string $databaseVersion;
 

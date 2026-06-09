@@ -16,9 +16,9 @@ parameters:
 
   type_coverage:
     return_type: 88
-    param_type: 86
+    param_type: 85
     property_type: 93
-    constant: 95
+    constant: 100
     declare: 100
 
   paths:

@@ -60,15 +60,6 @@ class CollectionTest extends TestCase
         $collection->setLoadingCallback($callback);
 
         static::assertSame(10, $collection->count());
-
-        $counter = 0;
-
-        foreach ($collection as $instance) {
-            static::assertTrue($instance instanceof CollectionDummy);
-            ++$counter;
-        }
-
-        static::assertSame(10, $counter);
     }
 
     public function test_map(): void

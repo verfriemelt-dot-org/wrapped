@@ -8,7 +8,7 @@ use Override;
 
 class Postgres extends DatabaseDriver
 {
-    final public const PDO_NAME = 'pgsql';
+    final public const string PDO_NAME = 'pgsql';
 
     #[Override]
     public function quoteIdentifier(string $ident): string

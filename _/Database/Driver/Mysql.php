@@ -9,7 +9,7 @@ use Override;
 
 class Mysql extends DatabaseDriver
 {
-    final public const PDO_NAME = 'mysql';
+    final public const string PDO_NAME = 'mysql';
 
     #[Override]
     public function quoteIdentifier(string $ident): string

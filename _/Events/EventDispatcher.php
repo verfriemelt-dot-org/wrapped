@@ -9,7 +9,7 @@ use verfriemelt\wrapped\_\DI\ArgumentResolver;
 final class EventDispatcher
 {
     /** @var EventSubscriberInterface[] */
-    protected array $subscriberList = [];
+    private array $subscriberList = [];
 
     public function __construct(
         private readonly ArgumentResolver $argumentResolver,

@@ -16,7 +16,7 @@ final class StatsdClient
 
     private string $namespace = '';
 
-    protected static StatsdClient $handle;
+    private static StatsdClient $handle;
 
     private function __construct() {}
 
