@@ -13,7 +13,6 @@
         "php": "^8.5",
         "ext-curl": "*",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^12.5",
         "psr/clock": "^1.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1",
@@ -21,12 +20,13 @@
         "verfriemelt/pp": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.95.5",
+        "friendsofphp/php-cs-fixer": "^3.95.7",
         "infection/infection": "^0.33.2",
         "php-http/psr7-integration-tests": "^1.5.1",
         "phpstan/phpstan": "^2.2.2",
         "phpstan/phpstan-phpunit": "^2.0.16",
         "phpstan/phpstan-strict-rules": "^2.0.11",
+        "phpunit/phpunit": "^12.5",
         "rector/rector": "^2.4.5",
         "tomasvotruba/type-coverage": "^2.2.2"
     },
