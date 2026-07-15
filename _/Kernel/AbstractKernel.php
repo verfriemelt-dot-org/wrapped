@@ -80,8 +80,6 @@ abstract class AbstractKernel implements KernelInterface
         $this->eventDispatcher->addSubscriber($this->container->get(SessionEventHandler::class));
         $this->eventDispatcher->addSubscriber($this->container->get(PerformanceHeadersResponseSubscriber::class));
 
-        $this->initializeErrorHandler();
-
         $discovery = $this->container->get(CommandDiscovery::class);
         \assert($discovery instanceof CommandDiscovery);
         $discovery->loadBuiltInCommands();
@@ -90,6 +88,8 @@ abstract class AbstractKernel implements KernelInterface
     #[Override]
     public function boot(): static
     {
+        $this->initializeErrorHandler();
+
         $this->booted = true;
         return $this;
     }

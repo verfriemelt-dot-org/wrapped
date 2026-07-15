@@ -26,6 +26,7 @@ class IncludeTokenTest extends TestCase
                 return __DIR__;
             }
         };
+        $this->kernel->boot();
 
         $this->tpl = $this->kernel->getContainer()->get(Template::class);
     }
