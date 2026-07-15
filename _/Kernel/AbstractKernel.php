@@ -16,6 +16,7 @@ use verfriemelt\wrapped\_\Command\ExitCode;
 use verfriemelt\wrapped\_\DI\ArgumentMetadataFactory;
 use verfriemelt\wrapped\_\DI\ArgumentResolver;
 use verfriemelt\wrapped\_\DI\Container;
+use verfriemelt\wrapped\_\DotEnv\Environment;
 use verfriemelt\wrapped\_\Events\EventDispatcher;
 use verfriemelt\wrapped\_\Events\ExceptionEvent;
 use verfriemelt\wrapped\_\Formular\FormTypes\Button;
@@ -261,5 +262,10 @@ abstract class AbstractKernel implements KernelInterface
             $this->requestHandleTime,
             $this->responseTime,
         );
+    }
+
+    public function environment(): string
+    {
+        return $this->container->get(Environment::class)->string('APP_ENV', 'prod');
     }
 }

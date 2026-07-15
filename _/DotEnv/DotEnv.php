@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\DotEnv;
 
-use http\Exception\RuntimeException;
+use RuntimeException;
 
 final class DotEnv
 {
@@ -14,7 +14,7 @@ final class DotEnv
     {
         foreach ($paths as $path) {
             if (!file_exists($path) || !is_readable($path)) {
-                throw new \RuntimeException("cannot load {$path}");
+                throw new RuntimeException("cannot load {$path}");
             }
 
             $this->putenv($this->parseFile($path));
