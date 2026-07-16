@@ -45,6 +45,7 @@ class ArgumentMetadataFactory
                 $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null,
                 $param->isVariadic(),
                 $methodReflection->getName(),
+                $param->getAttributes(),
             );
         }
 

@@ -6,27 +6,18 @@ namespace verfriemelt\wrapped\_\Statsd\Connection;
 
 use Exception;
 use RuntimeException;
+use verfriemelt\wrapped\_\DI\Attributes\Env;
 use verfriemelt\wrapped\_\Statsd\Connection;
 use Override;
 
-class UdpSocket implements Connection
+final readonly class UdpSocket implements Connection
 {
-    private $socket;
-
-    private bool $isConnected = false;
-
     public function __construct(
+        #[Env('STATSD_HOST')]
         private readonly string $host = '127.0.0.1',
+        #[Env('STATSD_PORT')]
         private readonly int $port = 8125,
     ) {}
-
-    public function connect(): static
-    {
-        $url = 'udp://' . $this->host;
-        $this->socket = fsockopen($url, $this->port);
-        $this->isConnected = true;
-        return $this;
-    }
 
     #[Override]
     public function send(string $message): bool
@@ -40,16 +31,20 @@ class UdpSocket implements Connection
 
     public function writeToSocket(string $message): bool
     {
-        if (!$this->isConnected) {
+        $url = 'udp://' . $this->host;
+        $socket = \fsockopen($url, $this->port);
+
+        if ($socket === false) {
             return false;
         }
+
 
         try {
-            fwrite($this->socket, $message);
+            return fwrite($socket, $message) !== false;
         } catch (Exception) {
             return false;
+        } finally {
+            \fclose($socket);
         }
-
-        return true;
     }
 }

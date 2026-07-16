@@ -4,42 +4,17 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Statsd;
 
-final class StatsdClient
+use verfriemelt\wrapped\_\Statsd\Connection\UdpSocket;
+
+final readonly class StatsdClient
 {
     public const string COUNTER = 'c';
-
     public const string TIMER_MS = 'ms';
-
     public const string GAUGE = 'g';
 
-    private ?Connection $connection = null;
-
-    private string $namespace = '';
-
-    private static StatsdClient $handle;
-
-    private function __construct() {}
-
-    final public static function getInstance(): self
-    {
-        if (!isset(self::$handle)) {
-            self::$handle = new self();
-        }
-
-        return self::$handle;
-    }
-
-    public function setConnection(Connection $connection): self
-    {
-        $this->connection = $connection;
-        return $this;
-    }
-
-    public function setNamespace(string $namespace): self
-    {
-        $this->namespace = $namespace;
-        return $this;
-    }
+    public function __construct(
+        private UdpSocket $connection,
+    ) {}
 
     public function incrementCounter(string $key): self
     {
@@ -79,15 +54,13 @@ final class StatsdClient
 
     public function send(string $key, int|float $value, string $type, ?float $rate = null): self
     {
-        $key = ($this->namespace !== '') ? "{$this->namespace}.{$key}" : $key;
-
         if ($rate !== null) {
             $message = sprintf('%s:%s|%s|@%0.1f', $key, $value, $type, $rate);
         } else {
             $message = sprintf('%s:%s|%s', $key, $value, $type);
         }
 
-        $this->connection?->send($message);
+        $this->connection->send($message);
 
         return $this;
     }
