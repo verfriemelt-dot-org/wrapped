@@ -84,7 +84,7 @@ final readonly class StatsdClient
                 $list[] = "$labelName:$labelValue";
             }
 
-            $message .= '#' . implode(',', $list);
+            $message .= '|#' . implode(',', $list);
         }
 
         $this->connection->send($message);
