@@ -19,6 +19,7 @@ class KernelTest extends TestCase
                 return 'fake';
             }
         };
+        $kernel->boot();
         $kernel->shutdown();
     }
 }

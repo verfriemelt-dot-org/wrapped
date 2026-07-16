@@ -7,7 +7,7 @@
         executionOrder="depends,defects"
         colors="true"
         failOnWarning="true"
-        defaultTestSuite="unit"
+        defaultTestSuite="Unit"
         displayDetailsOnTestsThatTriggerWarnings="true"
         displayDetailsOnTestsThatTriggerErrors="true"
         displayDetailsOnTestsThatTriggerDeprecations="true"
@@ -21,10 +21,10 @@
         failOnDeprecation="true"
 >
     <testsuites>
-        <testsuite name="unit">
+        <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
-        <testsuite name="integration">
+        <testsuite name="Integration">
             <directory>tests/Integration</directory>
         </testsuite>
         <testsuite name="psr">
