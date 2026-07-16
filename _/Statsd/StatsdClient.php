@@ -16,48 +16,75 @@ final readonly class StatsdClient
         private UdpSocket $connection,
     ) {}
 
-    public function incrementCounter(string $key): self
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function incrementCounter(string $key, array $labels = []): self
     {
-        $this->counter($key, 1);
+        $this->counter($key, 1, $labels);
         return $this;
     }
 
-    public function gauge(string $key, float $value): self
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function gauge(string $key, float $value, array $labels = []): self
     {
-        $this->send($key, $value, self::GAUGE);
+        $this->send($key, $labels, $value, self::GAUGE);
         return $this;
     }
 
-    public function decrementCounter(string $key): self
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function decrementCounter(string $key, array $labels = []): self
     {
-        $this->counter($key, -1);
+        $this->counter($key, -1, $labels);
         return $this;
     }
 
-    public function counter(string $key, int $value): self
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function counter(string $key, int $value, array $labels = []): self
     {
-        $this->send($key, $value, self::COUNTER);
+        $this->send($key, $labels, $value, self::COUNTER);
         return $this;
     }
 
-    public function time(string $key, callable $function): void
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function time(string $key, callable $function, array $labels = []): void
     {
-        $timer = new StatsdTimer($this, $key);
+        $timer = new StatsdTimer($this, $key, $labels);
         $function();
         $timer->report();
     }
 
-    public function createTimer(string $key): StatsdTimer
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function createTimer(string $key, array $labels = []): StatsdTimer
     {
-        return new StatsdTimer($this, $key);
+        return new StatsdTimer($this, $key, $labels);
     }
 
-    public function send(string $key, int|float $value, string $type, ?float $rate = null): self
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function send(string $key, array $labels, int|float $value, string $type): self
     {
-        if ($rate !== null) {
-            $message = sprintf('%s:%s|%s|@%0.1f', $key, $value, $type, $rate);
-        } else {
-            $message = sprintf('%s:%s|%s', $key, $value, $type);
+        $message = sprintf('%s:%s|%s', $key, $value, $type);
+
+        if ($labels !== []) {
+            $list = [];
+
+            foreach ($labels as $labelName => $labelValue) {
+                $list[] = "$labelName:$labelValue";
+            }
+
+            $message .= '#' . implode(',', $list);
         }
 
         $this->connection->send($message);

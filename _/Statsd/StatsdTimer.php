@@ -4,56 +4,50 @@ declare(strict_types=1);
 
 namespace verfriemelt\wrapped\_\Statsd;
 
-class StatsdTimer
+final class StatsdTimer
 {
-    private ?StatsdClient $statsdInstace = null;
-
-    private $start = 0;
-
+    private float $start = 0;
     private ?float $diff = null;
 
-    private string $name = '';
-
-    public function __construct(StatsdClient $statsd, $key)
-    {
-        $this->statsdInstace = $statsd;
-        $this->name = $key;
-
+    /**
+     * @param array<string,string|int> $labels
+     */
+    public function __construct(
+        private readonly StatsdClient $statsd,
+        private readonly string $name,
+        private readonly array $labels = [],
+    ) {
         $this->restart();
     }
 
     /**
      * reports back to statsd instance
      */
-    public function report()
+    public function report(): void
     {
         if ($this->diff === null) {
             $this->end();
         }
 
-        $this->statsdInstace->send($this->name, $this->diff, StatsdClient::TIMER_MS);
+        assert($this->diff !== null);
+
+        $this->statsd->send($this->name, $this->labels, $this->diff, StatsdClient::TIMER_MS);
     }
 
     /**
      * sets set startingtime to the current time
      */
-    public function restart()
+    public function restart(): void
     {
         $this->start = microtime(true);
     }
 
-    /**
-     * @return int
-     */
-    public function end()
+    public function end(): void
     {
-        return $this->diff = round(microtime(true) * 1000) - round($this->start * 1000);
+        $this->diff = round(microtime(true) * 1000) - round($this->start * 1000);
     }
 
-    /**
-     * @return int
-     */
-    public function getTime()
+    public function getTime(): ?float
     {
         return $this->diff;
     }
