@@ -12,7 +12,6 @@ class AttributesTest extends TestCase
 {
     public function test_attribute_default_overridden(): void
     {
-
         $_ENV['FOO_BAR'] = 'expected';
 
         $container = new Container();
@@ -57,7 +56,6 @@ class AttributesTest extends TestCase
 
     public function test_with_default_on_argument_overridden(): void
     {
-
         $_ENV['FOO_BAR'] = 'overridden';
 
         $container = new Container();
@@ -76,7 +74,6 @@ class AttributesTest extends TestCase
 
     public function test_with_default_on_both_overridden(): void
     {
-
         $_ENV['FOO_BAR'] = 'overridden';
 
         $container = new Container();
