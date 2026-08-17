@@ -763,6 +763,12 @@ parameters:
 			path: _/DataModel/DataModel.php
 
 		-
+			rawMessage: Cannot instantiate class using mixed.
+			identifier: new.nonObject
+			count: 2
+			path: _/DataModel/DataModel.php
+
+		-
 			rawMessage: 'Construct empty() is not allowed. Use more strict comparison.'
 			identifier: empty.notAllowed
 			count: 2
@@ -3799,7 +3805,7 @@ parameters:
 			path: _/Http/Response/Response.php
 
 		-
-			rawMessage: 'Parameter #3 $options of function setcookie expects array{expires?: int, path?: string, domain?: string, secure?: bool, httponly?: bool, samesite?: ''Lax''|''lax''|''None''|''none''|''Strict''|''strict''}, array{expires: mixed, path: mixed, domain: mixed} given.'
+			rawMessage: 'Parameter #3 $options of function setcookie expects array{expires?: int, path?: string, domain?: string, secure?: bool, httponly?: bool, samesite?: ''Lax''|''lax''|''None''|''none''|''Strict''|''strict'', partitioned?: bool}, array{expires: mixed, path: mixed, domain: mixed} given.'
 			identifier: argument.type
 			count: 1
 			path: _/Http/Response/Response.php
@@ -3953,6 +3959,12 @@ parameters:
 			identifier: if.condNotBoolean
 			count: 1
 			path: _/Http/Router/Router.php
+
+		-
+			rawMessage: 'Parameter #3 $value of function curl_setopt expects (callable(CurlHandle, int, int, int, int): int)|null, Closure(): void given.'
+			identifier: argument.type
+			count: 1
+			path: _/HttpClient/CurlHttpClient.php
 
 		-
 			rawMessage: 'Parameter #3 $value of function curl_setopt expects array<int, string>, array<string> given.'
@@ -4125,6 +4137,12 @@ parameters:
 		-
 			rawMessage: 'Cannot call method prepare() on mixed.'
 			identifier: method.nonObject
+			count: 1
+			path: _/Kernel/AbstractKernel.php
+
+		-
+			rawMessage: 'Cannot instantiate class using (callable)|object|string.'
+			identifier: new.nonObject
 			count: 1
 			path: _/Kernel/AbstractKernel.php
 
